@@ -1,0 +1,36 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/yuyisheng"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+ >
+
+    <com.thinksky.tox.SegmentControl xmlns:segmentcontrol="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/segment_control2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:textSize="16sp"
+        segmentcontrol:cornerRadius="6dip"
+        segmentcontrol:direction="horizon"
+        segmentcontrol:horizonGap="25dip"
+        segmentcontrol:selectedBackgroundColors="#2a93d5"
+        segmentcontrol:selectedIndex="0"
+        segmentcontrol:texts="问答|专家课程|百科"
+        segmentcontrol:verticalGap="10dip" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout><!--<com.huibin.androidsegmentcontrol.SegmentControl--><!--xmlns:segmentcontrol="http://schemas.android.com/apk/res-auto"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:textSize="15sp"--><!--segmentcontrol:texts="label1"--><!--segmentcontrol:selectedBackgroundColors="#e00032"--><!--segmentcontrol:cornerRadius="5dip"--><!--segmentcontrol:direction="horizon"--><!--segmentcontrol:verticalGap="8dip"--><!--segmentcontrol:horizonGap="8dip"--><!--segmentcontrol:selectedIndex="0"/>-->
+
+    <!--<com.huibin.androidsegmentcontrol.SegmentControl--><!--xmlns:segmentcontrol="http://schemas.android.com/apk/res-auto"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:textSize="15sp"--><!--segmentcontrol:texts="label1|label2"--><!--segmentcontrol:selectedBackgroundColors="#009688"--><!--segmentcontrol:selectedTextColors="#000"--><!--segmentcontrol:cornerRadius="5dip"--><!--segmentcontrol:direction="horizon"--><!--segmentcontrol:verticalGap="8dip"--><!--segmentcontrol:horizonGap="8dip"--><!--segmentcontrol:selectedIndex="1"--><!--android:layout_marginTop="10dp"/>-->
+
+    <!--<com.huibin.androidsegmentcontrol.SegmentControl--><!--xmlns:segmentcontrol="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/segment_control"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:textSize="15sp"--><!--segmentcontrol:texts="未签到|全部|已签到"--><!--segmentcontrol:selectedBackgroundColors="#e00032"--><!--segmentcontrol:cornerRadius="5dip"--><!--segmentcontrol:direction="horizon"--><!--segmentcontrol:verticalGap="8dip"--><!--segmentcontrol:horizonGap="8dip"--><!--segmentcontrol:selectedIndex="1"--><!--android:layout_marginTop="10dp"/>-->
+
+
+    <!--<com.huibin.androidsegmentcontrol.SegmentControl--><!--xmlns:segmentcontrol="http://schemas.android.com/apk/res-auto"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:textSize="15sp"--><!--segmentcontrol:texts="未签到|全部|已签到"--><!--segmentcontrol:selectedBackgroundColors="#cddc39"--><!--segmentcontrol:cornerRadius="5dip"--><!--segmentcontrol:direction="vertical"--><!--segmentcontrol:verticalGap="8dip"--><!--segmentcontrol:horizonGap="8dip"--><!--segmentcontrol:selectedIndex="1"--><!--android:layout_marginTop="10dp"/>-->
+

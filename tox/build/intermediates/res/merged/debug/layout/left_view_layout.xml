@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/caidan"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/head"
+    android:paddingLeft="15dp">
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:orientation="vertical">
+        <!--头像，昵称信息-->
+        <LinearLayout
+            android:id="@+id/LoginThisAPP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.thinksky.redefine.CircleImageView
+                android:id="@+id/iv_bottom"
+                android:layout_width="63dp"
+                android:layout_height="63dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/side_user_avatar"
+                tools:border_color="@color/light"
+                tools:border_width="2dp" />
+
+            <TextView
+                android:id="@+id/myUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="13dp"
+                android:text="名字:wuyinlei"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/signature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AndroidLoves"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <!--&lt;!&ndash;底部功能条&ndash;&gt;-->
+    <!--<include-->
+    <!--android:id="@+id/bottom_view"-->
+    <!--layout="@layout/left_view_bottom_layout" />-->
+    <!--中间列表-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/ll1"
+        android:layout_marginLeft="62dp"
+
+        android:layout_marginTop="62dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/user"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/personal"
+            android:drawablePadding="17dp"
+            android:gravity="center_vertical"
+
+            android:text="@string/personal"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/message1"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/message"
+            android:drawablePadding="17dp"
+            android:gravity="center_vertical"
+
+            android:text="@string/message"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/collect"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/collect"
+            android:drawablePadding="17dp"
+            android:gravity="center_vertical"
+
+            android:text="@string/collect"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/invite"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/invite"
+            android:drawablePadding="17dp"
+            android:gravity="center_vertical"
+
+
+            android:text="@string/invite"
+
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:drawableLeft="@drawable/settingup"
+            android:drawablePadding="17dp"
+            android:gravity="center_vertical"
+
+
+            android:text="@string/setting"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <!--<ListView-->
+    <!--android:id="@+id/lv"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+
+    <!--android:layout_above="@id/bottom_view"-->
+    <!--android:layout_below="@id/ll1"-->
+    <!--android:layout_marginBottom="30dp"-->
+    <!--android:layout_marginTop="70dp"-->
+    <!--android:cacheColorHint="#00000000"-->
+    <!--android:listSelector="@drawable/lv_click_selector"-->
+    <!--android:divider="@null"-->
+    <!--android:scrollbars="none"-->
+    <!--android:textColor="#ffffff" />-->
+
+</RelativeLayout>

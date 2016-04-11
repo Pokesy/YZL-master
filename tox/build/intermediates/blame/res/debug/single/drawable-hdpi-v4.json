@@ -1,0 +1,706 @@
+[
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\spinner_big_inner.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\spinner_big_inner.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_about.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_about.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_commit_search_api_mtrl_alpha.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_ic_commit_search_api_mtrl_alpha.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_cab_background_top_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_cab_background_top_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_default.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_default.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_divider_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_list_divider_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_photo.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\bg_photo.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_menu_hardkey_panel_mtrl_mult.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_menu_hardkey_panel_mtrl_mult.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_star_black_16dp.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_ic_star_black_16dp.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\input_single_active.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\input_single_active.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\text_ic_expand.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\text_ic_expand.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_btn_rating_star_on_mtrl_alpha.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_btn_rating_star_on_mtrl_alpha.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_drawer.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_drawer.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_drawer_am.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_drawer_am.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_avatar.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_avatar.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\password.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\password.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_smart_update.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_smart_update.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_night_selector.xml",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\btn_night_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\repost.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\repost.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_avatar_white.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_avatar_white.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_more.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_more.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_shoucang.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_shoucang.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\spinner_big_outer.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\spinner_big_outer.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_spinner_mtrl_am_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_exit.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_exit.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_install.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_install.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\direction_left.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\direction_left.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_ab_back_holo_dark.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\abc_ic_ab_back_holo_dark.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\forward_qq_night.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\forward_qq_night.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_scrubber_primary_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_scrubber_primary_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\security_row_forgot.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\security_row_forgot.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_search.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_search.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\input_center_enable_night.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\input_center_enable_night.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_btn_rating_star_off_mtrl_alpha.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_btn_rating_star_off_mtrl_alpha.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\login_user.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\login_user.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_focused_holo.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_list_focused_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_theme.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_theme.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\chat_radius_weibo.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\chat_radius_weibo.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_scrubber_control_off_mtrl_alpha.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_scrubber_control_off_mtrl_alpha.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\friends_sends_pictures_select_icon_unselected.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\friends_sends_pictures_select_icon_unselected.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\friends_sends_pictures_no.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\friends_sends_pictures_no.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_nightmode_off_press.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_nightmode_off_press.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\cab_background_bottom_light.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\cab_background_bottom_light.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\spinner_small_inner.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\spinner_small_inner.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\list_item_bg_normal.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\list_item_bg_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\user.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\user.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_star_black_36dp.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_ic_star_black_36dp.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ab_texture_tile_light.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ab_texture_tile_light.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_home.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_home.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_photo_camera.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_photo_camera.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\nothing.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\nothing.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ab_stacked_solid_light.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ab_stacked_solid_light.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_grey.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_grey.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\progress_normal.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\progress_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_search_api_mtrl_alpha.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_ic_search_api_mtrl_alpha.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\action_download.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\action_download.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_pressed.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\btn_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_uninstall.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_uninstall.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\lv_click_selector.xml",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\lv_click_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\bg_tab.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\bg_tab.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\friends_sends_pictures_select_icon_selected.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\friends_sends_pictures_select_icon_selected.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\security_row_button.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\security_row_button.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\heart_grary.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\heart_grary.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\arrow_up.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\arrow_up.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_selector_disabled_holo_light.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_list_selector_disabled_holo_light.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\pictures_select_icon.xml",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\pictures_select_icon.xml"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\iconfontfanhui.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\iconfontfanhui.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_cancel.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_cancel.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_signature_nor.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_signature_nor.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_selector_disabled_holo_dark.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_list_selector_disabled_holo_dark.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\arrow_down.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\arrow_down.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\indicator_normal.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\indicator_normal.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\security_row_username.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\security_row_username.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\email.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\email.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\spinner_small_outer.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\spinner_small_outer.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\qrcode_selector.xml",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\qrcode_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ab_bottom_solid_light.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ab_bottom_solid_light.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\list_item_action_pressed.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\list_item_action_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_download.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_download.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_resume.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_resume.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_more_night.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_more_night.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\page_indicator_focused.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\page_indicator_focused.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_popup_background_mtrl_mult.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_popup_background_mtrl_mult.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_qrcode_press.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_qrcode_press.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_star_half_black_16dp.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_ic_star_half_black_16dp.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\security_row_password.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\security_row_password.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_wodeguanzhu.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_wodeguanzhu.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\forward_sina_night.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\forward_sina_night.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\rating_small_empty.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\rating_small_empty.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_switch_track_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_switch_track_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\rating_small_half.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\rating_small_half.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\page_icon_nearby.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\page_icon_nearby.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_setting_press.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_setting_press.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_normal.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\btn_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_star_half_black_36dp.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_ic_star_half_black_36dp.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_yijianfankui.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_yijianfankui.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\list_item_bg_pressed.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\list_item_bg_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\security_head_button.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\security_head_button.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_feedback.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_feedback.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\photo_over.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\photo_over.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_error_page.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_error_page.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\drawer_shadow.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\drawer_shadow.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\progress_btn_normal.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\progress_btn_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_signature_other.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_signature_other.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\lock.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\lock.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\heart.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\heart.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\mobile.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\mobile.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_scans.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_scans.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_color2.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_color2.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\albums_icon_bg.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\albums_icon_bg.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_drawer_shadow.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_drawer_shadow.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_scrubber_track_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_scrubber_track_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_clear_search_api_disabled_holo_light.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\abc_ic_clear_search_api_disabled_holo_light.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\list_divider.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\list_divider.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_ab_back_holo_light.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\abc_ic_ab_back_holo_light.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_textfield_default_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_textfield_default_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_search_click.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_search_click.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\default_no_content_grey.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\default_no_content_grey.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\security_row_sina_bg.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\security_row_sina_bg.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_setting.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_setting.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\rating_small_full.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\rating_small_full.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_pause.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_pause.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_qrcode_normal.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_qrcode_normal.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\albums_bg.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\albums_bg.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\progress_bg.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\progress_bg.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\index.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\index.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_clear_search_api_holo_light.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\abc_ic_clear_search_api_holo_light.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_setting.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_setting.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_updates.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_updates.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_redownload.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_redownload.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\take_picture_now.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\take_picture_now.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\grid_item_bg_pressed.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\grid_item_bg_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_bg.jpg",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_bg.jpg"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_photo.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_photo.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\login_password.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\login_password.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\progress_btn_pressed.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\progress_btn_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\detail_btn_pressed.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\detail_btn_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\cab_background_top_light.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\cab_background_top_light.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_ic_menu_moreoverflow_normal_holo_dark.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\abc_ic_menu_moreoverflow_normal_holo_dark.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\indicator_selected.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\indicator_selected.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_pressed_holo_light.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_list_pressed_holo_light.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\extra_icon_filter_normal.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\extra_icon_filter_normal.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_pressed_holo_dark.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_list_pressed_holo_dark.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_btn_switch_to_on_mtrl_00012.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_btn_switch_to_on_mtrl_00012.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\detail_btn_normal.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\detail_btn_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\detail_bottom_bg.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\detail_bottom_bg.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\page_indicator_unfocused.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\page_indicator_unfocused.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_fav.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_fav.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\grid_item_bg_normal.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\grid_item_bg_normal.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_update.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_update.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\progress_pressed.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\progress_pressed.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\trash.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\trash.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_empty_page.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_empty_page.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\review_rules_content.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\review_rules_content.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\one_profile_bg1.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\one_profile_bg1.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\forward_sina.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\forward_sina.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_scrubber_control_to_pressed_mtrl_000.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\drawable-hdpi-v4\\abc_scrubber_control_to_pressed_mtrl_000.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\sidebar_nightmode_off.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\sidebar_nightmode_off.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\reply.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\reply.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ab_solid_light.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ab_solid_light.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\icon_zhanghaoxinxi.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\icon_zhanghaoxinxi.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\security_row_qq_bg.9.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\security_row_qq_bg.9.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\btn_setting_selector.xml",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\btn_setting_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\security_row_sina.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\security_row_sina.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_home_slide.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\ic_home_slide.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\my_profile_edit_normal.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\my_profile_edit_normal.png"
+    },
+    {
+        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\forward_qq.png",
+        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\drawable-hdpi\\forward_qq.png"
+    }
+]

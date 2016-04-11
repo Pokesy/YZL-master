@@ -1,0 +1,253 @@
+package com.thinksky.fragment;
+
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.thinksky.rsen.RViewHolder;
+import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.tox.IssueActivity2;
+import com.thinksky.tox.IssueDetail;
+import com.thinksky.tox.R;
+import com.tox.ToastHelper;
+import com.tox.Url;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class ZhuanjiActivity extends AppCompatActivity {
+    private List<String> pictureListUrls;
+    View rootView;
+    ListView listView;
+
+   ImageView back_menu;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_zhuanji_activity);
+        listView = (ListView) findViewById(R.id.listView);
+        back_menu= (ImageView) findViewById(R.id.back_menu);
+        back_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RsenUrlUtil.execute(this, RsenUrlUtil.URL_ZJ, new RsenUrlUtil.OnNetHttpResultListener() {
+            @Override
+            public void onNoNetwork(String msg) {
+                ToastHelper.showToast(msg, Url.context);
+            }
+
+
+            @Override
+            public void onResult(boolean state, String result, JSONObject jsonObject) {
+                if (state) {
+                    ArrayList<ZjBean> beans = parseJson(jsonObject);
+                    listView.setAdapter(new ZjAdapter(ZhuanjiActivity.this, beans));
+                }
+            }
+        });
+    }
+
+    public static ArrayList<ZjBean> parseJson(JSONObject object) {
+        ArrayList<ZjBean> beans = new ArrayList<>();
+        if (object != null) {
+            try {
+                JSONArray array = object.getJSONArray("list");
+                for (int i = 0; i < array.length(); i++) {
+                    ZjBean bean = new ZjBean();
+                    JSONObject jsonObject = array.getJSONObject(i);
+                    bean.title = jsonObject.getString("title");//title 赋值
+                    bean.id = jsonObject.getInt("id");
+                    //其他字段。。。赋值
+
+                    // TODO: 2016/2/17
+
+                    ArrayList<IssueBean> issueBeens = new ArrayList<>();
+                    JSONArray issueList = jsonObject.getJSONArray("$IssueList");
+                    for (int j = 0; j < issueList.length(); j++) {
+                        JSONObject issueListJSONObject = issueList.getJSONObject(j);
+                        IssueBean issueBean = new IssueBean();
+                        issueBean.title = issueListJSONObject.getString("title");// issue title 赋值
+                        issueBean.cover_url = issueListJSONObject.getString("cover_url");// issue cover_url 赋值
+                        issueBean.id = issueListJSONObject.getInt("id");
+                        //其他字段。。。赋值
+                        // TODO: 2016/2/17
+
+                        issueBeens.add(issueBean);
+                    }
+
+                    bean.IssueList = issueBeens;
+                    beans.add(bean);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return beans;
+    }
+
+    private ArrayList<String> mDatas;
+
+    private static final String ARG_PARAM1 = "param1";
+
+    private String mParam1;
+
+
+    public static class ZjAdapter extends BaseAdapter {
+
+        Context context;
+        ArrayList<ZjBean> beans;
+
+        public ZjAdapter(Context context, ArrayList<ZjBean> beans) {
+            this.context = context;
+            this.beans = beans;
+        }
+
+        @Override
+        public int getCount() {
+            if (beans == null) {
+                return 0;
+            }
+            return beans.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return beans.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            RViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.fragment_zhuanji_adapter_item, parent, false);
+                viewHolder = new RViewHolder(convertView);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (RViewHolder) convertView.getTag();
+            }
+
+
+            final ZjBean bean = beans.get(position);
+            ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(bean.title);
+            ((TextView) viewHolder.itemView.findViewById(R.id.xianshi)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", bean.id);
+                    Intent intent = new Intent(context, IssueActivity2.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
+            ((GridView) viewHolder.itemView.findViewById(R.id.gridView)).setAdapter(new ZjGridAdapter(context, bean.IssueList));
+
+            return convertView;
+        }
+    }
+
+    public static class ZjGridAdapter extends BaseAdapter {
+
+        Context context;
+        ArrayList<IssueBean> beans;
+
+        public ZjGridAdapter(Context context, ArrayList<IssueBean> beans) {
+            this.context = context;
+            this.beans = beans;
+        }
+
+        @Override
+        public int getCount() {
+            if (beans == null) {
+                return 0;
+            }
+            return beans.size() > 3 ? 3 : beans.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return beans.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            RViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.fragment_zhuanji_adapter_issue_item, parent, false);
+                viewHolder = new RViewHolder(convertView);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (RViewHolder) convertView.getTag();
+            }
+
+            final IssueBean bean = beans.get(position);
+            ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(bean.title);
+            ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,
+                    (ImageView) viewHolder.itemView.findViewById(R.id.imageView));
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", bean.id);
+                    Intent intent = new Intent(context, IssueDetail.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+//                    IssueDetailFragmentActivity1.launch(context, bean.id);
+                }
+            });
+            return convertView;
+        }
+    }
+
+    public static class ZjBean {
+        //需要什么字段，自己添加
+
+
+        public String title;
+        public int id;
+        public ArrayList<IssueBean> IssueList;
+    }
+
+    public static class IssueBean {
+        public String title;
+        public String cover_url;//需要加上 URL_BASE
+        public int id;
+    }
+
+
+}
