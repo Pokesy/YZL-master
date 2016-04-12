@@ -16,7 +16,7 @@ public final class R {
 		public static final int mm_transformDuration = 0x7f0100f2;
 	}
 	public static final class dimen {
-		public static final int mm_up_arrow_margin = 0x7f08007d;
+		public static final int mm_up_arrow_margin = 0x7f08007f;
 	}
 	public static final class styleable {
 		public static final int[] MaterialMenuView = { 0x7f0100f0, 0x7f0100f1, 0x7f0100f2, 0x7f0100f3, 0x7f0100f4, 0x7f0100f5 };

@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\values-sw720dp-land-v13\\values-sw720dp-land-v13.xml",
+        "outputFile": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/values-sw720dp-land-v13/values-sw720dp-land-v13.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 109
                 },
                 "from": {
-                    "file": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\values-sw720dp-land\\dimens.xml",
+                    "file": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/values-sw720dp-land/dimens.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,

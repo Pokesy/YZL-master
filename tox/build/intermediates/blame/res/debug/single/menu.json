@@ -1,66 +1,66 @@
 [
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_new_main.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_new_main.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_ldrawer.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_ldrawer.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\capture.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\capture.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_send_post.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_send_post.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\check_in.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\check_in.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/qr_main.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/qr_main.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\scan_photo.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\scan_photo.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/check_in.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/check_in.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_send_post2.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_send_post2.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_forum_activity2.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_forum_activity2.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\qr_main.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\qr_main.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_land_lord.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_land_lord.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_forum_activity2.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_forum_activity2.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/main.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_post_detaila.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_post_detaila.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_forum.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_forum.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_ldrawer.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_ldrawer.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_send_post2.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_send_post2.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\ashamed_detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\ashamed_detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_post_detaila.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_post_detaila.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\send_comment.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\send_comment.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/capture.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/capture.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_send_post.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_send_post.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_new_main.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_new_main.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_forum.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_forum.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/menu_forum_activity3.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/menu_forum_activity3.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_land_lord.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_land_lord.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/scan_photo.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/scan_photo.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\main.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/ashamed_detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/ashamed_detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\menu\\menu_forum_activity3.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\menu\\menu_forum_activity3.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/menu/send_comment.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/menu/send_comment.xml"
     }
 ]

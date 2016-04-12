@@ -1,934 +1,934 @@
 [
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\event_listview_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\event_listview_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/left_view_bottom_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/left_view_bottom_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_content_include.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_screen_content_include.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/myspinner_dropdown_items.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/myspinner_dropdown_items.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_auditcenter.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_auditcenter.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/layout_title_bar.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/layout_title_bar.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\mall_mall.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\mall_mall.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_event.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_event.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_question_detail_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_question_detail_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_news_detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_news_detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\list_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\list_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_menu_item_action_area.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_menu_item_action_area.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\notification_media_action.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_media_action.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_remenhuti_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_remenhuti_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_rsen_common.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_rsen_common.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_ldrawer.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_ldrawer.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/notification_template_part_chronometer.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_post_detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_post_detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_rsen_common.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_rsen_common.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\view_kenburns.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\view_kenburns.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/item_faceview_gridview.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/item_faceview_gridview.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_checkbox.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_list_menu_item_checkbox.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_luntan.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_luntan.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\image_detail_pager.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\image_detail_pager.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_wodexiaozu_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_wodexiaozu_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\event_fragment.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\event_fragment.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/list_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/list_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\news_post.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\news_post.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/news_reply_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/news_reply_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_discover.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_discover.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_discover.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_discover.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_navigation_item_header.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/event_fragment.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/event_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\news_fragment.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\news_fragment.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_wentixiangqing_list_item_zjw.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_wentixiangqing_list_item_zjw.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_screen_simple.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_weibo_detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_weibo_detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\rsen_base_dialog_fragment_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\rsen_base_dialog_fragment_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_search_dropdown_item_icons_2line.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_search_dropdown_item_icons_2line.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\post_detail_item_head.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\post_detail_item_head.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_call.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_call.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_zhuanji_activity.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_zhuanji_activity.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/item_left_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/item_left_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_zhuanji.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_zhuanji.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_list_menu_item_icon.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_list_menu_item_icon.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\griditem_addpic.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\griditem_addpic.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_xiaozujingxuan_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_xiaozujingxuan_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_geocoder.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_geocoder.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_issue_detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_issue_detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_register.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_register.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\item_faceview_gridview.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\item_faceview_gridview.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_action_bar_title_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_action_bar_title_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_big_media.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_template_big_media.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/zhuanjishipin.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/zhuanjishipin.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_icon.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_layout_tab_icon.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_group_post_info.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_group_post_info.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\post.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\post.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_screen_toolbar.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_screen_toolbar.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_baike.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_baike.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/event_listview_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/event_listview_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\group_hot_post_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\group_hot_post_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_action_mode_close_item_material.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_action_mode_close_item_material.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_remen_ylq__detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_remen_ylq__detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/image_detail_pager.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/image_detail_pager.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\zjsp.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\zjsp.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_post_detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_post_detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\issuepost.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\issuepost.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/news_post.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/news_post.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_activity_chooser_view.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/layout_slideshow.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/layout_slideshow.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\show_image_activity.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\show_image_activity.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_wenda_adapter_wenda_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_wenda_adapter_wenda_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_remenhuti_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_remenhuti_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_auditcenter.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_auditcenter.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_radio.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_list_menu_item_radio.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_near.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_near.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\stick_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\stick_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_my_news.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_my_news.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\left_view_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\left_view_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/item_near.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/item_near.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_group_post_info.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_group_post_info.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/zjlist_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/zjlist_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\one_line.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\one_line.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_userinfo.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_userinfo.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\common_datetime.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\common_datetime.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/whats2.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/whats2.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\title.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\title.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/whats4.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/whats4.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\simple_list_item_activity_1.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\simple_list_item_activity_1.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_luntan_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_luntan_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_remen_ylq_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_remen_ylq_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/layout_faceview_gridview.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/layout_faceview_gridview.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/halving_line.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/halving_line.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_ldrawer.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_ldrawer.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/view_kenburns.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/view_kenburns.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_wodexiaozu_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_wodexiaozu_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/load_more_bar.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/load_more_bar.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_remen_ylq.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_remen_ylq.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_yulequan.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_yulequan.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\whats2.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\whats2.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/news_fragment.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/news_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_popup_menu_item_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_navigation_menu.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_navigation_menu.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\group_lzl_reply_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\group_lzl_reply_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/notification_template_big_media_narrow.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/notification_template_big_media_narrow.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_xiaozujingxuan_adapter_sub_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_xiaozujingxuan_adapter_sub_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/left_view_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/left_view_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_auditbottem.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_auditbottem.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_navigation_item_separator.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_navigation_item_separator.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_register.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_register.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/notification_template_big_media.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/notification_template_big_media.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\myspinner_dropdown_items.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\myspinner_dropdown_items.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_baike_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_baike_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\layout_faceview.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\layout_faceview.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_groupdetail_talk_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_groupdetail_talk_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_groupdetail_talk_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_groupdetail_talk_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_zhuanji_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_zhuanji_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\issue_fragment_scroview.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\issue_fragment_scroview.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_wenda_myquestion.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_wenda_myquestion.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_baike_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_baike_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/louzhu.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/louzhu.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\select_dialog_singlechoice_material.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_layout_tab_text.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_layout_tab_text.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_multichoice_material.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\select_dialog_multichoice_material.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_audit.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_audit.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\frame_cross.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\frame_cross.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/event_reply_list.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/event_reply_list.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/post_landlord_com_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/post_landlord_com_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\check_in.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\check_in.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_group_detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_group_detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_send_post.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_send_post.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/detail_list_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/detail_list_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\group_post_comment_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\group_post_comment_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_xiaozhitiao.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_xiaozhitiao.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_send_question.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_send_question.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/frame_cross.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/frame_cross.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\post_comment_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\post_comment_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_groupdetail_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_groupdetail_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_navigation_menu_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/drawer_list_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/drawer_list_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\issue_daohang_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\issue_daohang_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_list_menu_item_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_list_menu_item_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_icon.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_list_menu_item_icon.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/loading_page_error.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/loading_page_error.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\select_dialog_item_material.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_dialog_title_material.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_dialog_title_material.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_template_part_time.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_wentixiangqing.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_wentixiangqing.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\photo_scan_main.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\photo_scan_main.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_yuyisheng.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_yuyisheng.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\listview_auto_load_bar.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\listview_auto_load_bar.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/loading_page_loading.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/loading_page_loading.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\before_regist.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\before_regist.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_screen_simple.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_screen_simple.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\halving_line.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\halving_line.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/listview_auto_load_bar.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/listview_auto_load_bar.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_check_in.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_check_in.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/griditem_addpic.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/griditem_addpic.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_luntan_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_luntan_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/one_line.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/one_line.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_up_container.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_action_bar_up_container.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/grid_child_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/grid_child_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_main.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_main.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/mygroup_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/mygroup_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_template_lines.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/slidingmenumain.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/YZL-master/slidingmenu_library/unspecified/res/layout/slidingmenumain.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_close_item_material.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_action_mode_close_item_material.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_question_detail_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_question_detail_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_land_lord.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_land_lord.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_navigation_item_subheader.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_navigation_item_subheader.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_issue.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_issue.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_xiaozujingxuan_adapter.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_xiaozujingxuan_adapter.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_event_detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_event_detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/issue_detail_listview_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/issue_detail_listview_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\item_left_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\item_left_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/group_lzl_reply_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/group_lzl_reply_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\zhuanjishipin.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\zhuanjishipin.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_discover.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_discover.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\leftview.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\leftview.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_myquestion_common.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_myquestion_common.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\setting.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\setting.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/xiaozhitiao_listvile.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/xiaozhitiao_listvile.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_xiaozujingxuan_adapter.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_xiaozujingxuan_adapter.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/title_bar_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/title_bar_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_item_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_action_menu_item_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/group_post_comment_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/group_post_comment_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_zhuanji_adapter_issue_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_zhuanji_adapter_issue_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_action_menu_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_action_menu_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_forums.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_forums.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_forum.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_forum.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_forums.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_forums.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_group_detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_group_detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_nearby.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_nearby.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_audit.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_audit.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/notification_template_media.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/notification_template_media.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_big_media_narrow.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_template_big_media_narrow.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/title.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/title.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_wenda_myquestion.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_wenda_myquestion.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/layout_faceview.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/layout_faceview.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_wentixiangqing_list_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_wentixiangqing_list_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/notification_media_cancel_action.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/notification_media_cancel_action.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\item_near.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\item_near.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/notification_media_action.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/notification_media_action.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_forum.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_forum.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_remenhuti_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_remenhuti_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_xiaozhitiao.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_xiaozhitiao.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_geocoder.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_geocoder.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\image_detail_fragment.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\image_detail_fragment.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_baike.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_baike.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_luntan.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_luntan.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/mylistview_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/mylistview_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_group_info.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_group_info.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_message.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_message.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_forum_activity2.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_forum_activity2.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/photo_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/photo_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\setting_guanyu.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\setting_guanyu.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/notification_template_lines.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/notification_template_lines.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\news_info_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\news_info_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_group.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_group.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\zjlist_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\zjlist_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_activity_chooser_view.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\xiaozhitiao_listvile.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\xiaozhitiao_listvile.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/issue_daohang_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/issue_daohang_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_question_detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_question_detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_alert_dialog_button_bar_material.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_snackbar.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_layout_snackbar.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_bottom_sheet_dialog.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_bottom_sheet_dialog.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_list_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_activity_chooser_view_list_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_group.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_group.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_list_menu_item_checkbox.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\frame_picture.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\frame_picture.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_send_question.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_send_question.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\louzhu.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\louzhu.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_layout_snackbar.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_layout_snackbar.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_screen_toolbar.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_alert_dialog_material.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_alert_dialog_material.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_alert_dialog_material.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/before_regist.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/before_regist.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_news_detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_news_detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_screen_content_include.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_screen_content_include.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\layout_faceview_gridview.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\layout_faceview_gridview.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/round_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/round_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\left_view_bottom_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\left_view_bottom_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/group_hot_post_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/group_hot_post_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_capture.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_capture.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_screen_simple_overlay_action_mode.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_screen_simple_overlay_action_mode.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\notification_media_cancel_action.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_media_cancel_action.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/show_image_activity.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/show_image_activity.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_issue_xq.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_issue_xq.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/issue_fragment_scroview.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/issue_fragment_scroview.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_dialog_title_material.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/addgroup.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/addgroup.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_message.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_message.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_baike_two.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_baike_two.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\group_postcate_popview.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\group_postcate_popview.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/frame_picture.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/frame_picture.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\check_in_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\check_in_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_list_menu_item_radio.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_list_menu_item_radio.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\whats3.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\whats3.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_base_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_base_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\issue_detail_listview_probar.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\issue_detail_listview_probar.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_capture.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_capture.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_group_floor_reply.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_group_floor_reply.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_send_comment.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_send_comment.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_set_user_info.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_set_user_info.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_bottom_sheet_dialog.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_bottom_sheet_dialog.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_news.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_news.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_zhuanji.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_zhuanji.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_send_comment.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_send_comment.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/post_detail_item_head.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/post_detail_item_head.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\drawer_list_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\drawer_list_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/whats1.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/whats1.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_weibo_detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_weibo_detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/answer_dialog_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/answer_dialog_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_splash.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_splash.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/common_datetime.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/common_datetime.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\mypinner_dropdown.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\mypinner_dropdown.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/group_postcate_popview.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/group_postcate_popview.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\event_join_alertview.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\event_join_alertview.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/check_in.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/check_in.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_myquestion_common.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_myquestion_common.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_issue.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_issue.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\home_home.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\home_home.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/whats3.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/whats3.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\headl.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\headl.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/frame_nice.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/frame_nice.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\frame_home.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\frame_home.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/issuepost.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/issuepost.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\issue_detail_listview_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\issue_detail_listview_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/issue_detail_listview_probar.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/issue_detail_listview_probar.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_near.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_near.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/notification_template_part_time.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_wenda_adapter_wenda_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_wenda_adapter_wenda_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/rsen_base_dialog_fragment_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/rsen_base_dialog_fragment_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\event_reply_list.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\event_reply_list.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/select_dialog_item_material.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/select_dialog_item_material.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_send_discover.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_send_discover.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_upload.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_upload.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_userinfo.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_userinfo.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/demo.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/demo.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\mygroup_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\mygroup_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/simple_list_item_activity_1.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/simple_list_item_activity_1.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_menu_item_action_area.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_menu_item_action_area.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_zhuanji_adapter_issue_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_zhuanji_adapter_issue_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_action_mode_bar.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/event_join_alertview.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/event_join_alertview.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_action_bar_title_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/photo_scan_main.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/photo_scan_main.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\mylistview_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\mylistview_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/stick_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/stick_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_discover_select.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_discover_select.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_event_detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_event_detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_list.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_list.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_group_floor_reply.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_group_floor_reply.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_zhuanji_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_zhuanji_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/mall_mall.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/mall_mall.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_chronometer.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_template_part_chronometer.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/grouppost.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/grouppost.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\loading_page_error.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\loading_page_error.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/select_dialog_multichoice_material.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/select_dialog_multichoice_material.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_login.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_login.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_wenda.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_wenda.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\grouppost.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\grouppost.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/check_in_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/check_in_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\answer_dialog_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\answer_dialog_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/zjsp.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/zjsp.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_snackbar_include.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_layout_snackbar_include.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_search_view.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_search_view.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_new_main.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_new_main.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_issue_xq.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_issue_xq.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_groupdetail_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_groupdetail_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_expanded_menu_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_expanded_menu_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\whats4.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\whats4.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/view_pop.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/view_pop.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_navigation_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/setting_yijianfankui.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/setting_yijianfankui.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\post_landlord_com_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\post_landlord_com_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/support_simple_spinner_dropdown_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/support_simple_spinner_dropdown_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_wenda.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_wenda.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_send_discover.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_send_discover.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\title_bar_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\title_bar_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_discover_select.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_discover_select.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\poplayout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\poplayout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_land_lord.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_land_lord.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_issue_detail.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_issue_detail.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/news_info_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/news_info_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_wentixiangqing.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_wentixiangqing.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_list.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_list.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\loading_page_loading.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\loading_page_loading.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_question_detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_question_detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_discover.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_discover.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_wodexiaozu_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_wodexiaozu_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_action_menu_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/post_comment_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/post_comment_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\view_pop.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\view_pop.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/headl.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/headl.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_text.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_layout_tab_text.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_news.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_news.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_call.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_call.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_new_main.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_new_main.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\demo.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\demo.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_action_bar_up_container.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_action_bar_up_container.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_wenda_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_wenda_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_luntan_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_luntan_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_expanded_menu_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_expanded_menu_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_navigation_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_navigation_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\news_reply_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\news_reply_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_select_dialog_material.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_select_dialog_material.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_remen_ylq_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_remen_ylq_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\addgroup.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\addgroup.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_forum_activity2.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_forum_activity2.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_my_news.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_my_news.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_navigation_menu_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_navigation_menu_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\whats1.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\whats1.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_home.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_home.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\locationfilter.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\locationfilter.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_main.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_subheader.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_navigation_item_subheader.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_login.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_login.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_search_view.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_action_bar_view_list_nav_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_r_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_r_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/grid_group_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/grid_group_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\notification_template_media.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_action_mode_bar.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_action_mode_bar.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\detail_list_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\detail_list_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/setting.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/setting.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\grid_child_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\grid_child_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_popup_menu_item_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_popup_menu_item_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_base_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_base_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_xiaozujingxuan_adapter_sub_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_xiaozujingxuan_adapter_sub_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_forum_activity3.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_forum_activity3.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_layout_snackbar_include.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_layout_snackbar_include.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_yuyisheng.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_yuyisheng.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_remen_ylq.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_remen_ylq.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_xiaozujingxuan_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_xiaozujingxuan_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_splash.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_splash.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\slidingmenumain.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\YZL-master\\slidingmenu_library\\unspecified\\res\\layout\\slidingmenumain.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/loading_page_empty.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/loading_page_empty.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_event.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_event.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_remen_ylq__detail.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_remen_ylq__detail.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\photo_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\photo_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_layout_tab_icon.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_layout_tab_icon.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\load_more_bar.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\load_more_bar.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/group_post_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/group_post_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_select_dialog_material.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_discover_friend.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_discover_friend.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\group_post_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\group_post_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/image_detail_fragment.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/image_detail_fragment.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_list_menu_item_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/issue_spinner_style.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/issue_spinner_style.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\round_layout.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\round_layout.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fake_header.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fake_header.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_wodexiaozu_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_wodexiaozu_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_forum_activity3.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_forum_activity3.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_luntan_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_luntan_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_zhuanji_activity.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_zhuanji_activity.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.0\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/locationfilter.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/locationfilter.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fake_header.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fake_header.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/frame_home.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/frame_home.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_navigation_item_separator.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/eventpost.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/eventpost.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\eventpost.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\eventpost.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_check_in.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_check_in.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_remenhuti_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_remenhuti_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/leftview.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/leftview.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_baike_two.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_baike_two.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_wenda_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_wenda_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_nearby.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_nearby.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/poplayout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/poplayout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_upload.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_upload.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/setting_guanyu.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/setting_guanyu.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_discover_friend.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_discover_friend.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_r_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_r_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\issue_spinner_style.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\issue_spinner_style.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/mypinner_dropdown.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/mypinner_dropdown.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\layout_slideshow.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\layout_slideshow.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/abc_action_menu_item_layout.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/abc_action_menu_item_layout.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_yulequan.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_yulequan.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_wentixiangqing_list_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_wentixiangqing_list_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\grid_group_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\grid_group_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/design_navigation_item_header.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/design/23.2.0/res/layout/design_navigation_item_header.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_wentixiangqing_list_item_zjw.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_wentixiangqing_list_item_zjw.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_send_post.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_send_post.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\layout_title_bar.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\layout_title_bar.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_set_user_info.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_set_user_info.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_xiaozujingxuan_adapter_item.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\fragment_xiaozujingxuan_adapter_item.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/select_dialog_singlechoice_material.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/res/layout/select_dialog_singlechoice_material.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\setting_yijianfankui.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\setting_yijianfankui.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/home_home.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/home_home.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\activity_home.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\activity_home.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/post.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/post.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.2.0\\res\\layout\\design_navigation_menu.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_group_info.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_group_info.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\frame_nice.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\frame_nice.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/fragment_xiaozujingxuan_adapter_item.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/fragment_xiaozujingxuan_adapter_item.xml"
     },
     {
-        "merged": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\build\\intermediates\\res\\merged\\debug\\layout\\loading_page_empty.xml",
-        "source": "C:\\Users\\jiao\\Desktop\\YZL-master\\tox\\src\\main\\res\\layout\\loading_page_empty.xml"
+        "merged": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/build/intermediates/res/merged/debug/layout/activity_auditbottem.xml",
+        "source": "/Users/zhaozeyang/Documents/workspace/yzl/YZL-master/tox/src/main/res/layout/activity_auditbottem.xml"
     }
 ]

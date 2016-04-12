@@ -3,8 +3,6 @@ package com.thinksky.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,12 +23,10 @@ import android.widget.Toast;
 import com.thinksky.adapter.WeiboAdapter;
 import com.thinksky.info.AshamedInfo;
 import com.thinksky.info.WeiboInfo;
-import com.thinksky.model.ActivityModel;
 import com.thinksky.myview.MyListView;
 import com.thinksky.myview.MyListView.OnRefreshListener;
-import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.R;
-import com.thinksky.tox.UploadActivity;
+import com.thinksky.tox.SegmentControl;
 import com.thinksky.tox.WeiboDetailActivity;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseApi;
@@ -54,13 +49,13 @@ import java.util.List;
  * 热门的fragment
  */
 public class WeiboFragment extends Fragment implements OnClickListener {
+    private static final int TAB_INDEX_HOT = 0;
+    private static final int TAB_INDEX_FOLLOW = 1;
+    private static final int TAB_INDEX_MY = 2;
 
     private String hotUrl = Url.WEIBO;
-    private int topMeunFlag = 1;
+    private int topMeunFlag = TAB_INDEX_HOT;
     private View view;
-    private ImageView mTopImg;
-    private ImageView mSendAshamed;
-    private TextView mTopMenuOne, mTopMenuTwo, mTopMenuThree;
     private MyListView myListView;
     private LinearLayout mLinearLayout, load_progressBar;
     private TextView HomeNoValue;
@@ -83,6 +78,9 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     private String session_id;
     private String userUid;
     private BaseApi baseApi;
+
+    private SegmentControl mTabs;
+
     //获取可用注册方式
     private ArrayList<String> ways = new ArrayList<String>();
 
@@ -102,7 +100,46 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     private void initView() {
         //更新左侧的名字
 //        mHotFragmentCallBack.callback(R.id.myUserName);
+        mTabs = (SegmentControl) view.findViewById(R.id.segment_control);
+        mTabs.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {
+            @Override
+            public void onSegmentControlClick(int index) {
+                switch (index) {
+                    case TAB_INDEX_HOT:
+                        if (topMeunFlag != TAB_INDEX_HOT) {
+                            hotUrl = Url.WEIBO;
+                            topMeunFlag = TAB_INDEX_HOT;
+                            createListModel();
+                        }
+                        break;
+                    case TAB_INDEX_FOLLOW:
+                        if (topMeunFlag != TAB_INDEX_FOLLOW) {
+                            hotUrl = Url.MYFOLLOWINGWEIBO;
+                            topMeunFlag = TAB_INDEX_FOLLOW;
+                            createListModel();
+                        }
+                        break;
+                    case TAB_INDEX_MY:
+                        if (topMeunFlag != TAB_INDEX_MY) {
+                            hotUrl = Url.MYWEIBO;
+                            topMeunFlag = TAB_INDEX_MY;
+                            createListModel();
+                        }
+                        break;
+                }
+            }
+        });
 
+        mTabs.setTouchInterceptor(new SegmentControl.TouchInterceptor() {
+            @Override
+            public boolean onIntercept(int index) {
+                boolean intercept = !BaseFunction.isLogin() && (index == TAB_INDEX_FOLLOW || index == TAB_INDEX_MY);
+                if (intercept) {
+                    ToastHelper.showToast(R.string.prompt_offline, ctx);
+                }
+                return intercept;
+            }
+        });
 
         load_progressBar = (LinearLayout) view
                 .findViewById(R.id.load_progressBar);
@@ -111,19 +148,10 @@ public class WeiboFragment extends Fragment implements OnClickListener {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         myListView.setDivider(null);
+        myListView.setDividerHeight(0);
 //        myListView.setFadingEdgeLength(10);
         mLinearLayout.addView(myListView);
-        mTopImg = (ImageView) view.findViewById(R.id.Menu);
-        mSendAshamed = (ImageView) view.findViewById(R.id.SendWeibo);
-        mTopMenuOne = (TextView) view.findViewById(R.id.TopMenuOne);
-        mTopMenuTwo = (TextView) view.findViewById(R.id.TopMenuTwo);
-        mTopMenuThree = (TextView) view.findViewById(R.id.TopMenuThree);
         HomeNoValue = (TextView) view.findViewById(R.id.HomeNoValue);
-        mTopImg.setOnClickListener(this);
-        mSendAshamed.setOnClickListener(this);
-        mTopMenuOne.setOnClickListener(this);
-        mTopMenuTwo.setOnClickListener(this);
-        mTopMenuThree.setOnClickListener(this);
         HomeNoValue.setVisibility(View.GONE);
         baseApi = new BaseApi();
         session_id = baseApi.getSeesionId();
@@ -217,70 +245,26 @@ public class WeiboFragment extends Fragment implements OnClickListener {
             case R.id.Menu:
 //                mHotFragmentCallBack.callback(R.id.Menu);
                 break;
-            case R.id.SendWeibo:
-//                mHotFragmentCallBack.callback(R.id.SendWeibo);.
+            // TODO 需要标题栏处理
+//            case R.id.SendWeibo:
+////                mHotFragmentCallBack.callback(R.id.SendWeibo);.
+//
+//                if (!Url.SESSIONID.equals("")) {
+//                    Intent intent = new Intent(getActivity(),
+//                            UploadActivity.class);
+//                    startActivity(intent);
+//                } else {
+//                    Log.e(">>>>>>>>>>>>>>>", "login Form WeiboFragment");
+//
+//                    String[] s = new String[ways.size()];
+//                    s = ways.toArray(s);
+//                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                    intent.putExtra("ways", s);
+//                    intent.putExtra("entryActivity", ActivityModel.SENDWEIBO);
+//                    startActivity(intent);
+//                }
+//                break;
 
-                if (!Url.SESSIONID.equals("")) {
-                    Intent intent = new Intent(getActivity(),
-                            UploadActivity.class);
-                    startActivity(intent);
-                } else {
-                    Log.e(">>>>>>>>>>>>>>>", "login Form WeiboFragment");
-
-                    String[] s = new String[ways.size()];
-                    s = ways.toArray(s);
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    intent.putExtra("ways", s);
-                    intent.putExtra("entryActivity", ActivityModel.SENDWEIBO);
-                    startActivity(intent);
-                }
-                break;
-            case R.id.TopMenuOne:
-
-//                createTextColor();
-                mTopMenuOne.setBackgroundColor(getResources().getColor(R.color.title));
-                mTopMenuTwo.setBackgroundColor(getResources().getColor(R.color.white));
-                mTopMenuThree.setBackgroundColor(getResources().getColor(R.color.white));
-//                mTopMenuOne.setTextColor(Color.parseColor("#ffffff"));
-                if (topMeunFlag != 1) {
-                    hotUrl = Url.WEIBO;
-                    topMeunFlag = 1;
-                    createListModel();
-                }
-
-                break;
-            case R.id.TopMenuTwo:
-                if (BaseFunction.isLogin()) {
-//                    createTextColor();
-                    mTopMenuTwo.setBackgroundColor(getResources().getColor(R.color.title));
-                    mTopMenuOne.setBackgroundColor(getResources().getColor(R.color.white));
-                    mTopMenuThree.setBackgroundColor(getResources().getColor(R.color.white));
-//                    mTopMenuTwo.setTextColor(Color.parseColor("#ffffff"));
-                    if (topMeunFlag != 2) {
-                        hotUrl = Url.MYFOLLOWINGWEIBO;
-                        topMeunFlag = 2;
-                        createListModel();
-                    }
-                } else {
-                    ToastHelper.showToast("还未登录", ctx);
-                }
-                break;
-            case R.id.TopMenuThree:
-                if (BaseFunction.isLogin()) {
-//                    createTextColor();
-                    mTopMenuThree.setBackgroundColor(getResources().getColor(R.color.title));
-                    mTopMenuTwo.setBackgroundColor(getResources().getColor(R.color.white));
-                    mTopMenuOne.setBackgroundColor(getResources().getColor(R.color.white));
-//                    mTopMenuTwo.setTextColor(Color.parseColor("#ffffff"));
-                    if (topMeunFlag != 3) {
-                        hotUrl = Url.MYWEIBO;
-                        topMeunFlag = 3;
-                        createListModel();
-                    }
-                } else {
-                    ToastHelper.showToast("还未登录", ctx);
-                }
-                break;
 
             default:
                 break;
@@ -301,7 +285,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         } else if (hotUrl.equals(Url.WEIBO)) {
             weiboApi.setHandler(hand);
             weiboApi.listAllWeibo(1, 0 + "");
-        } else if (hotUrl.equals(Url.MYWEIBO)){
+        } else if (hotUrl.equals(Url.MYWEIBO)) {
             weiboApi.setHandler(hand);
             weiboApi.listMyWeibo(1, userUid);
         }
@@ -319,60 +303,6 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private void createTextColor() {
-        Drawable background = new BitmapDrawable();
-        mTopMenuOne.setTextColor(getResources().getColor(R.color.tab));
-        mTopMenuTwo.setTextColor(getResources().getColor(R.color.tab));
-        mTopMenuThree.setTextColor(getResources().getColor(R.color.tab));
-
-        mTopMenuOne.setBackgroundColor(getResources().getColor(R.color.title));
-        mTopMenuTwo.setBackgroundColor(getResources().getColor(R.color.title));
-        mTopMenuThree.setBackgroundColor(getResources().getColor(R.color.title));
-        HomeNoValue.setVisibility(View.GONE);
-    }
-
-//    public void setCallBack(HotFragmentCallBack mHotFragmentCallBack) {
-//        this.mHotFragmentCallBack = mHotFragmentCallBack;
-//    }
-
-//    public interface HotFragmentCallBack {
-//        public void callback(int flag);
-//    }
-//    private class MyHotFragmentCallBack implements HotFragmentCallBack {
-//        @Override
-//        public void callback(int flag) {
-////            setLeftMenu();
-//            switch (flag) {
-//                //点击menu则调用toggle（）切换fragment
-//                case R.id.Menu:
-//                    getActivity().toggle();
-//                    break;
-//                case R.id.SendWeibo:
-//                    if (!Url.SESSIONID.equals("")) {
-//                        Intent intent = new Intent(getActivity(),
-//                                UploadActivity.class);
-//                        startActivity(intent);
-//                    } else {
-//                        Log.e(">>>>>>>>>>>>>>>", "login Form WeiboFragment");
-//
-//                        String[] s = new String[ways.size()];
-//                        s = ways.toArray(s);
-//                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-//                        intent.putExtra("ways", s);
-//                        intent.putExtra("entryActivity", ActivityModel.SENDWEIBO);
-//                        startActivity(intent);
-//                    }
-//                    break;
-//                case R.id.myUserName:
-//                    myUserName.setText(BaseFunction.getSharepreference("username",getActivity(),Url.SharedPreferenceName));
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    }
-//这个？
 
     Handler hand = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -439,11 +369,10 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        Log.e("回来了", "所以onstart");
         //删除微博后刷新页面
         if (Url.activityFrom.equals("DeleteWeiBoActivity")) {
             Url.activityFrom = "";
-            if (topMeunFlag != 1) {
+            if (topMeunFlag != TAB_INDEX_HOT) {
                 hotUrl = Url.MYFOLLOWINGWEIBO;
                 createListModel();
             } else {
@@ -456,7 +385,6 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("回来了", "所以resume");
         insertWeibo();
     }
 

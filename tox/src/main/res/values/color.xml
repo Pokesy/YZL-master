@@ -83,4 +83,10 @@
     <!--默认layout 按下状态的颜色-->
     <color name="default_layout_press_color">#20000000</color>
     <color name="default_divider_color">#f7f7f8</color>
+
+    <color name="font_color_orange">#FC9C39</color>
+    <color name="font_color_black">#666666</color>
+    <color name="font_color_dark_gray">#999999</color>
+
+    <color name="bg_color_divider">#F1F1F1</color>
 </resources>

@@ -95,4 +95,8 @@
     <string name="map_traffic">交通图</string>
     <string name="map_heat">热力图</string>
 
+    <string name="prompt_offline">尚未登录</string>
+
+    <string name="feed_btn_retweet">转发</string>
+
 </resources>

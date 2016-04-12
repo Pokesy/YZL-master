@@ -52,6 +52,7 @@ public class SegmentControl extends View {
     private int mSelectedBackgroundColors;
     private int mCornerRadius;
     private OnSegmentControlClickListener mOnSegmentControlClickListener;
+    private TouchInterceptor mTouchInterceptor;
 
     public SegmentControl(Context context) {
         this(context, null);
@@ -96,7 +97,7 @@ public class SegmentControl extends View {
 
         mBackgroundDrawable = new RadiusDrawable(mCornerRadius, true, 0);
         mBackgroundDrawable.setStrokeWidth(2);
-            mBackgroundDrawable.setStrokeColor(mSelectedBackgroundColors);
+        mBackgroundDrawable.setStrokeColor(mSelectedBackgroundColors);
 
         if (Build.VERSION.SDK_INT < 16) {
             setBackgroundDrawable(mBackgroundDrawable);
@@ -128,6 +129,10 @@ public class SegmentControl extends View {
 
     public void setOnSegmentControlClickListener(OnSegmentControlClickListener onSegmentControlClickListener) {
         mOnSegmentControlClickListener = onSegmentControlClickListener;
+    }
+
+    public void setTouchInterceptor(TouchInterceptor interceptor) {
+        mTouchInterceptor = interceptor;
     }
 
     public OnSegmentControlClickListener getOnSegmentControlClicklistener() {
@@ -362,6 +367,10 @@ public class SegmentControl extends View {
                         index = (int) (mStartY / mSingleChildHeight);
                     }
 
+                    if (null != mTouchInterceptor && mTouchInterceptor.onIntercept(index)) {
+                        return true;
+                    }
+
                     if (mCurrentIndex != index) {
                         if (mOnSegmentControlClickListener != null)
                             mOnSegmentControlClickListener.onSegmentControlClick(index);
@@ -432,7 +441,7 @@ public class SegmentControl extends View {
                 }
 
                 //draw texts
-                canvas.drawText(mTexts[i], mCacheBounds[i].left + (mSingleChildWidth - mTextBounds[i].width()) / 2, mCacheBounds[i].top + (mSingleChildHeight-mPaint.ascent()-mPaint.descent()) / 2, mPaint);
+                canvas.drawText(mTexts[i], mCacheBounds[i].left + (mSingleChildWidth - mTextBounds[i].width()) / 2, mCacheBounds[i].top + (mSingleChildHeight - mPaint.ascent() - mPaint.descent()) / 2, mPaint);
             }
         }
 
@@ -449,6 +458,10 @@ public class SegmentControl extends View {
     }
 
     public interface OnSegmentControlClickListener {
-        public void onSegmentControlClick(int index);
+        void onSegmentControlClick(int index);
+    }
+
+    public interface TouchInterceptor {
+        boolean onIntercept(int index);
     }
 }

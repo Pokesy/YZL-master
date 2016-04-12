@@ -16,19 +16,26 @@ public class ToastHelper {
     }
 
     public static void showToast(String showTxet, Context context) {
-        if (context!= null) {
+        if (context != null) {
             Toast.makeText(context, showTxet, Toast.LENGTH_LONG).show();
         }
     }
-    public static void showToast(String showText,Context context,int imgId){
-        Toast toast=Toast.makeText(context,showText,Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER,25,0);
-        LinearLayout toastView=(LinearLayout)toast.getView();
-        ImageView imageView=new ImageView(context);
+
+    public static void showToast(int textId, Context context) {
+        if (null != context) {
+            Toast.makeText(context, textId, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void showToast(String showText, Context context, int imgId) {
+        Toast toast = Toast.makeText(context, showText, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 25, 0);
+        LinearLayout toastView = (LinearLayout) toast.getView();
+        ImageView imageView = new ImageView(context);
         imageView.setImageResource(imgId);
         imageView.setMinimumWidth(65);
         imageView.setMinimumHeight(65);
-        toastView.addView(imageView,0);
+        toastView.addView(imageView, 0);
         toast.show();
     }
 }

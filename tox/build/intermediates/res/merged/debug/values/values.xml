@@ -31,6 +31,7 @@
     <color name="background_material_light">@color/material_grey_50</color>
     <color name="background_tab_pressed">#8833B5E5</color>
     <color name="bg_color">#EDEDED</color>
+    <color name="bg_color_divider">#F1F1F1</color>
     <color name="bg_page">#ffebebeb</color>
     <color name="bg_tab_pressed">#6633b5e5</color>
     <color name="bg_tab_pressed2">#ff3898ff</color>
@@ -80,6 +81,9 @@
     <color name="dim_foreground_material_light">#ff323232</color>
     <color name="encode_view">#ffffffff</color>
     <color name="floatingButton">#EFF3F4</color>
+    <color name="font_color_black">#666666</color>
+    <color name="font_color_dark_gray">#999999</color>
+    <color name="font_color_orange">#FC9C39</color>
     <color name="foreground_material_dark">@android:color/white</color>
     <color name="foreground_material_light">@android:color/black</color>
     <color name="forumAdd">#F0F4F5</color>
@@ -330,7 +334,9 @@
     <dimen name="design_tab_text_size_2line">12sp</dimen>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
+    <dimen name="divider">0.5dp</dimen>
     <dimen name="floating_label_text_size">12sp</dimen>
+    <dimen name="font_size_small">11sp</dimen>
     <dimen name="header_height">298dp</dimen>
     <dimen name="header_logo_size">100dp</dimen>
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
@@ -431,6 +437,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">dummy_content</string>
     <string name="event_name">活动</string>
+    <string name="feed_btn_retweet">转发</string>
     <string name="forum_name">论坛</string>
     <string name="group_name">群组</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -466,6 +473,7 @@
     <string name="news_post">资讯投稿</string>
     <string name="personal">个人信息</string>
     <string name="post">投稿</string>
+    <string name="prompt_offline">尚未登录</string>
     <string name="remenhuati">热门话题</string>
     <string name="removeItem">删除</string>
     <string name="reply">回复</string>
