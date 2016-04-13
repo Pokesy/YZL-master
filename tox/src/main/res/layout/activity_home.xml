@@ -69,18 +69,21 @@
                 style="@style/main_tab_bottom"
                 android:checked="false"
                 android:drawableTop="@drawable/home_progress"
+                android:textColor="@color/tab_text_color"
                 android:text="@string/tab_function" />
 
             <RadioButton
                 android:id="@+id/rb_weibo"
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/dongtai_progress"
+                android:textColor="@color/tab_text_color"
                 android:text="@string/tab_news_center" />
 
             <RadioButton
                 android:id="@+id/rb_yulequan"
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/ylq_progress"
+                android:textColor="@color/tab_text_color"
                 android:text="@string/tab_smart_service" />
 
             <RadioButton
@@ -88,12 +91,14 @@
                 style="@style/main_tab_bottom"
                 android:checked="false"
                 android:drawableTop="@drawable/yys_progress"
+                android:textColor="@color/tab_text_color"
                 android:text="@string/tab_gov_affairs" />
 
             <RadioButton
                 android:id="@+id/rb_mall"
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/mall_progress"
+                android:textColor="@color/tab_text_color"
                 android:text="@string/tab_setting" />
         </RadioGroup>
     </LinearLayout>
