@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <com.thinksky.redefine.CircleImageView
+        android:id="@+id/Forum_logo"
+        android:layout_width="@dimen/header_logo_size"
+        android:layout_height="@dimen/header_logo_size"
+        android:layout_gravity="center"
+        android:src="@drawable/side_user_avatar"
+        tools:border_color="@color/light"
+        tools:border_width="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/forum_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_color_dark_black"
+            android:textSize="@dimen/font_size_big"
+            tools:text="此处显示交流组名称" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/Label"
+                android:text="@string/forum_detail_label_post" />
+
+            <TextView
+                android:id="@+id/post_count"
+                style="@style/Label"
+                tools:text="299" />
+
+            <TextView
+                style="@style/Label"
+                android:layout_marginLeft="12dp"
+                android:text="@string/forum_detail_label_topic" />
+
+            <TextView
+                android:id="@+id/topic_count"
+                style="@style/Label"
+                tools:text="100" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/Forum_lastReply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="最后回复：01月25日 22:23"
+            android:textColor="#999999"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

@@ -29,6 +29,7 @@ import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RectIndicator;
 import com.thinksky.tox.ForumActivity2;
+import com.thinksky.tox.ForumDetailActivity;
 import com.thinksky.tox.R;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -37,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +93,6 @@ public class LuntanFragment extends Fragment {
             public void onNoNetwork(String msg) {
                 ToastHelper.showToast(msg, Url.context);
             }
-
 
 
             @Override
@@ -169,6 +170,12 @@ public class LuntanFragment extends Fragment {
                         issueBean.title = issueListJSONObject.getString("title");// issue title 赋值
                         issueBean.logo = issueListJSONObject.getString("logo");// issue cover_url 赋值
                         issueBean.total_count = issueListJSONObject.getString("total_count");//total_count赋值
+                        issueBean.id = issueListJSONObject.getString("id");
+                        issueBean.last_reply_time = issueListJSONObject.getLong("last_reply_time");
+                        issueBean.post_count = issueListJSONObject.getInt("post_count");
+                        issueBean.topic_count = issueListJSONObject.getInt("topic_count");
+                        issueBean.description = issueListJSONObject.getString("description");
+                        issueBean.background = issueListJSONObject.getString("background");
                         //其他字段。。。赋值
                         // TODO: 2016/2/17
 
@@ -386,7 +393,7 @@ public class LuntanFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = itemViewList.get(position);
-            ForumBean bean = beans.get(position);
+            final ForumBean bean = beans.get(position);
             LTSubViewHolder viewHolder = (LTSubViewHolder) view.getTag();
             ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.logo, viewHolder.userLogo,
                     new DisplayImageOptions.Builder()
@@ -401,7 +408,8 @@ public class LuntanFragment extends Fragment {
             viewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, ForumActivity2.class);
+                    Intent intent = new Intent(context, ForumDetailActivity.class);
+                    intent.putExtra(ForumDetailActivity.BUNDLE_KEY_FORUM_INFO, bean);
                     context.startActivity(intent);
                 }
             });
@@ -488,7 +496,7 @@ public class LuntanFragment extends Fragment {
         public ArrayList<ForumBean> forumList;
     }
 
-    public static class ForumBean {
+    public static class ForumBean implements Serializable{
         /**
          * "allow_user_group": "1",
          * "background": "/opensns/Public/App/images/default_head.jpg",
@@ -508,5 +516,11 @@ public class LuntanFragment extends Fragment {
         public String title;
         public String logo;//需要加上 URL_BASE
         public String total_count;
+        public String id;
+        public int topic_count;
+        public int post_count;
+        public String background;
+        public String description;
+        public long last_reply_time;
     }
 }

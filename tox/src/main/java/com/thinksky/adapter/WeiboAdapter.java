@@ -414,7 +414,7 @@ public class WeiboAdapter extends BaseAdapter {
 //            return (Url.USERHEADURL+"/"+url).replace("com///","com/").replace("com//","com/").replace("cn///","cn/").replace("cn//","cn/").replace("net///","net/").replace("net//","net/");
             url2= (Url.USERHEADURL+"/"+url).replace("opensns///opensns","opensns").replace("opensns//opensns","opensns").replace("/api.php/opensns/","/api.php/");
         }
-        BaseFunction.showImage(ctx, weiboImg, url2, loadImgMainImg, Url.IMGTYPE_WEIBO);
+         BaseFunction.showImage(ctx, weiboImg, url2, loadImgMainImg, Url.IMGTYPE_WEIBO);
     }
 
     private void startPhotoBrowser(int arg0, int index) {

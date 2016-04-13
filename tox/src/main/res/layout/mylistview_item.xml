@@ -49,7 +49,7 @@
                         android:layout_marginLeft="10dp"
                         android:singleLine="true"
                         android:text="UserName"
-                        android:textColor="@color/font_color_black"
+                        android:textColor="@color/font_color_dark_black"
                         android:textSize="16sp" />
 
                     <TextView
@@ -109,7 +109,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="15dp"
-            android:textColor="@color/font_color_black"
+            android:textColor="@color/font_color_dark_black"
             android:textSize="16sp"
             tools:text="　一日，将军潜入花木兰帐内欲行不归，强行要上木兰姐姐，就在这时，将军忽然指着花木兰大叫一声：你~你~你~竟然是个女的......" />
 

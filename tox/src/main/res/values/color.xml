@@ -85,8 +85,11 @@
     <color name="default_divider_color">#f7f7f8</color>
 
     <color name="font_color_orange">#FC9C39</color>
-    <color name="font_color_black">#666666</color>
+    <color name="font_color_dark_black">#666666</color>
+    <color name="font_color_light_black">#333333</color>
     <color name="font_color_dark_gray">#999999</color>
+    <color name="font_color_light_gray">#a3a7aa</color>
 
     <color name="bg_color_divider">#F1F1F1</color>
+    <color name="bg_color_divider_dark">#d9d9d9</color>
 </resources>

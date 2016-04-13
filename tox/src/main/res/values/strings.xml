@@ -99,4 +99,7 @@
 
     <string name="feed_btn_retweet">转发</string>
 
+    <string name="forum_detail_label_post">主题\u0020:\u0020</string>
+    <string name="forum_detail_label_topic">帖子\u0020:\u0020 </string>
+
 </resources>
