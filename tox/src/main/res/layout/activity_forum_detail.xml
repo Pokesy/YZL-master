@@ -64,18 +64,21 @@
             android:text="加载中" />
     </RelativeLayout>
     <!--内容-->
-
-    <ListView
-        android:id="@+id/listView"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:scrollbars="none"
-        android:visibility="visible" />
+        android:layout_height="wrap_content">
 
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:scrollbars="none"
+            android:visibility="visible" />
+    </android.support.v4.widget.SwipeRefreshLayout>
     <!--页脚-->
     <RelativeLayout
 

@@ -31,15 +31,21 @@ public class WendaListActivity extends Activity {
     ListView mListView;
     WendaListAdapter mAdapter;
     private ImageView back_menu;
+    private TextView mTitleView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wenda_common);
-        mListView = (ListView)findViewById(R.id.listView);
-        back_menu= (ImageView) findViewById(R.id.back_menu);
+        mListView = (ListView) findViewById(R.id.listView);
+        back_menu = (ImageView) findViewById(R.id.back_menu);
         String whichActivity = getIntent().getStringExtra("whichActivity");
+        initView();
         initData(whichActivity);
+    }
 
+    private void initView() {
+        mTitleView = (TextView) findViewById(R.id.group_name);
     }
 
     private void initData(String whichActivity) {
@@ -50,20 +56,22 @@ public class WendaListActivity extends Activity {
             }
         });
         String url = null;
-        switch (whichActivity)
-        {
+        switch (whichActivity) {
             case "HOT"://热门
-                url= RsenUrlUtil.URL_HOT_WD;
-            break;
+                url = RsenUrlUtil.URL_HOT_WD;
+                mTitleView.setText(R.string.activity_wenda_title_hot);
+                break;
             case "MON"://悬赏
-                url= RsenUrlUtil.URL_MON_WD;
+                url = RsenUrlUtil.URL_MON_WD;
+                mTitleView.setText(R.string.activity_wenda_title_mon);
                 break;
             case "SOLUTION"://已解决
-                url= RsenUrlUtil.URL_SOLUTE_WD;
+                url = RsenUrlUtil.URL_SOLUTE_WD;
+                mTitleView.setText(R.string.activity_wenda_title_solution);
                 break;
         }
 
-        RsenUrlUtil.execute(WendaListActivity.this,url, new RsenUrlUtil.OnNetHttpResultListener() {
+        RsenUrlUtil.execute(WendaListActivity.this, url, new RsenUrlUtil.OnNetHttpResultListener() {
             @Override
             public void onNoNetwork(String msg) {
                 ToastHelper.showToast(msg, Url.context);
@@ -74,15 +82,11 @@ public class WendaListActivity extends Activity {
             public void onResult(boolean state, String result, JSONObject jsonObject) {
                 if (state) {
                     WendaFragment.WendaBean wendaBean = JSON.parseObject(result, WendaFragment.WendaBean.class);
-                    mListView.setAdapter(new WendaListAdapter(WendaListActivity.this,wendaBean.getList()));
+                    mListView.setAdapter(new WendaListAdapter(WendaListActivity.this, wendaBean.getList()));
                 }
             }
         });
     }
-
-
-
-
 
 
     public class WendaListAdapter extends BaseAdapter {
@@ -137,7 +141,7 @@ public class WendaListActivity extends Activity {
 //            }
             if (s.equals("0")) {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
-            }else {
+            } else {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
             }
             /*点击事件响应*/

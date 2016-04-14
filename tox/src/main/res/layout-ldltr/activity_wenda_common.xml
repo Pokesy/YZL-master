@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="标题"
+            android:text="@string/activity_wenda_my_question_title"
             android:textColor="@color/tab"
             android:textSize="18sp"
             />

@@ -102,4 +102,10 @@
     <string name="forum_detail_label_post">主题\u0020:\u0020</string>
     <string name="forum_detail_label_topic">帖子\u0020:\u0020 </string>
 
+
+    <string name="activity_wenda_my_question_title">我的提问</string>
+    <string name="activity_wenda_title_hot">热门问答</string>
+    <string name="activity_wenda_title_mon">最高悬赏</string>
+    <string name="activity_wenda_title_solution">已解决</string>
+
 </resources>
