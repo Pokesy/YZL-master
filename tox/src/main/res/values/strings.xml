@@ -110,4 +110,13 @@
 
     <string name="title_bar_right_btn_write_feed">写动态</string>
 
+    <!-- pull to refresh -->
+    <string name="pull_to_refresh_from_top_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_from_top_release_label">释放立即刷新</string>
+    <string name="pull_to_refresh_from_top_refreshing_label">刷新中…</string>
+    <string name="pull_to_refresh_from_bottom_pull_label">上拉加载</string>
+    <string name="pull_to_refresh_from_bottom_release_label">释放立即加载</string>
+    <string name="pull_to_refresh_from_bottom_refreshing_label">加载中…</string>
+    <string name="pull_to_refresh_slogan_default"></string>
+
 </resources>

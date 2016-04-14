@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -24,23 +22,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nineoldandroids.view.ViewHelper;
 import com.thinksky.ParallaxHeaderViewPagerForum.SampleListFragment;
 import com.thinksky.ParallaxHeaderViewPagerForum.ScrollTabHolder;
 import com.thinksky.ParallaxHeaderViewPagerForum.ScrollTabHolderFragment;
@@ -48,6 +40,7 @@ import com.thinksky.adapter.PostAdapter;
 import com.thinksky.fragment.LuntanFragment;
 import com.thinksky.info.ForumInfo;
 import com.thinksky.info.PostInfo;
+import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseFunction;
@@ -69,6 +62,9 @@ import java.util.List;
 public class ForumDetailActivity extends ActionBarActivity implements View.OnClickListener {
 
     public static final String BUNDLE_KEY_FORUM_INFO = "forum";
+    private static final int PAGE_COUNT = 8;
+    private static final int REFRESH_THRESHOLD = 3;
+    private static final int START_INDEX = 1;
 
     private static AccelerateDecelerateInterpolator sSmoothInterpolator = new AccelerateDecelerateInterpolator();
     private static boolean GETFORUMPOST = false;
@@ -77,25 +73,17 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
     private static boolean REFRESH = false;
     private static boolean SENDPOSTCOMMENT = false;
 
+    private PullToRefreshListView mRefreshListView;
     private ListView mListView;
     private View mHeaderView;
     private KJBitmap kjBitmap;
-    private FinalBitmap finalBitmap;
     private Button ListBottom = null;
-    private ProgressBar mAddMoreProgressBar;
     private boolean isInitView = false;
     private SampleListFragment.SampListCallBack sampListCallBack;
 
     private LinearLayout mEditBox, mForumBackground;
     private int mActionBarHeight;
     private int mMinHeaderHeight;
-    private int mHeaderHeight;
-    private int mMinHeaderTranslation;
-    private RelativeLayout mForumTop;
-    private RelativeLayout mParentlayout;
-    private RectF mRect1 = new RectF();
-    private RectF mRect2 = new RectF();
-    private ImageView floatImg;
     private RelativeLayout floatingRelative, mForumBody, mForumLoading;
     private TypedValue mTypedValue = new TypedValue();
     private EditText editText;
@@ -104,9 +92,6 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
     private TextView mForumSendCom, mPostCountView, mTopicCountView, mForumLastReply, mForumNameView;
     private ForumApi forumApi = new ForumApi();
     private MyJson myJson = new MyJson();
-    //当前论坛的加载页数
-    private int page = 1;
-    private List<PostInfo> mPostList = new ArrayList<PostInfo>();
     //第几个论坛
     private int fragPage = 0;
     private LoadImg imgLoad;
@@ -120,6 +105,8 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
 
     private PostAdapter mAdapter;
 
+    private int mCurrentIndex = START_INDEX;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,9 +115,6 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
 
         mMinHeaderHeight = getResources().getDimensionPixelSize(
                 R.dimen.min_header_height);
-        mHeaderHeight = getResources().getDimensionPixelSize(
-                R.dimen.header_height);
-        mMinHeaderTranslation = -mMinHeaderHeight;
 
         //获取session_id
         IssueApi issueApi = new IssueApi();
@@ -150,10 +134,10 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
         imgLoad = new LoadImg(this);
         mForumBody = (RelativeLayout) findViewById(R.id.Forum_body);
         mForumLoading = (RelativeLayout) findViewById(R.id.Forum_loading);
-        mForumTop = (RelativeLayout) findViewById(R.id.Forum_top);
-        mParentlayout = (RelativeLayout) findViewById(R.id.Forum_parent_layout);
 
-        mListView = (ListView) findViewById(R.id.listView);
+        mRefreshListView = (PullToRefreshListView) findViewById(R.id.listView);
+        mRefreshListView.setPageCount(PAGE_COUNT);
+        mListView = mRefreshListView.getRefreshListView();
         mHeaderView = LayoutInflater.from(this).inflate(R.layout.forum_detail_list_header, mListView, false);
         mListView.addHeaderView(mHeaderView);
 
@@ -173,10 +157,6 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
         mWritePost = (ImageView) findViewById(R.id.Forum_writePost);
         mMenu.setOnClickListener(this);
         mWritePost.setOnClickListener(this);
-        floatImg = (ImageView) findViewById(R.id.floating_view);
-        floatingRelative = (RelativeLayout) findViewById(R.id.floating_relativeLayout);
-        floatingRelative.setAlpha(80f);
-        floatingRelative.setOnClickListener(this);
         editText = (EditText) findViewById(R.id.Forum_index_edittext);
         editText.addTextChangedListener(watcher);
         mForumSendCom = (TextView) findViewById(R.id.Forum_index_send_com);
@@ -194,24 +174,21 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
         for (int i = 0; i <= 10; i++) {
             postInfos.add(postInfo);
         }
-        //设置底部加载
-        ListBottom = new Button(this);
-        ListBottom.setBackgroundColor(getResources().getColor(R.color.forumAdd));
-        ListBottom.setTextColor(getResources().getColor(R.color.black));
-        ListBottom.setText("点击加载更多");
-//            ListBottom.setPadding(20,10,20,10);
-        ListBottom.setOnClickListener(new View.OnClickListener() {
+
+        mRefreshListView.setScrollToLoadListener(new PullToRefreshListView.ScrollToLoadListener() {
             @Override
-            public void onClick(View v) {
-                sampListCallBack.callback(19, page);
-                listBottom();
+            public void onPullUpLoadData() {
+                forumApi.getPosts(mForumBean.id, String.valueOf(mCurrentIndex), String.valueOf(PAGE_COUNT));
             }
-        });
-        mAddMoreProgressBar = new ProgressBar(this);
-        mAddMoreProgressBar.setIndeterminate(false);
-        mAddMoreProgressBar.setBackgroundColor(getResources().getColor(R.color.forumAdd));
-        mAddMoreProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bg));
-        mAddMoreProgressBar.setVisibility(View.GONE);
+
+            @Override
+            public void onPullDownLoadData() {
+                mCurrentIndex = START_INDEX;
+                initFlag(false, false, true, false, false);
+                getForumPost(mForumBean.id);
+            }
+        }, REFRESH_THRESHOLD);
+
             /*mListView.addFooterView(ListBottom, null, false);
             ListBottom.setVisibility(View.VISIBLE);*/
         mAdapter = new PostAdapter(mPostInfos, this, mEditBox, kjBitmap, finalBitmap);
@@ -284,22 +261,18 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
                 break;
             case R.id.floating_relativeLayout:
 //                ToastHelper.showToast("refresh刷新",ctx);
-                AnimationSet animationSet = new AnimationSet(true);
-                RotateAnimation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5f);
-                rotateAnimation.setDuration(2000);
-                animationSet.addAnimation(rotateAnimation);
-                floatImg.startAnimation(animationSet);
+                mCurrentIndex = 1;
                 initFlag(false, false, true, false, false);
-                getForumPost(mForumBean.id, "1", "10", fragPage);
+                getForumPost(mForumBean.id);
                 break;
             case R.id.Forum_index_send_com:
                 //ToastHelper.showToast("发送评论",this);
                 String com = editText.getText().toString().trim();
-                if (com.equals("")) {
+                if ("".equals(com)) {
                     Toast.makeText(ForumDetailActivity.this, "评论不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (session_id.equals("")) {
+                if ("".equals(session_id)) {
                     Toast.makeText(ForumDetailActivity.this, "未登录", Toast.LENGTH_SHORT).show();
                 }
                 initFlag(false, false, false, false, true);
@@ -370,33 +343,6 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
         }
     }
 
-    public static void showEditBox(int position) {
-
-    }
-
-    private void showEditbox(int position) {
-        // ToastHelper.showToast("show position:"+position,ctx);
-        mEditBox.setVisibility(View.VISIBLE);
-    }
-
-    private class MySampleListCallBack implements SampleListFragment.SampListCallBack {
-
-        @Override
-        public void callback(int flag, int page) {
-            switch (flag) {
-                case R.id.Post_comImg:
-
-                    break;
-                case 19:
-                    // ToastHelper.showToast("callback被点击了,当前page +"+page,ctx);
-                    addFlag = true;
-                    forumApi.getPosts(mForumBean.id, page + "", "10");
-                    break;
-            }
-        }
-
-    }
-
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -411,23 +357,25 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
                     if (ADDFORUMPOST) {
 
                     }
+                    List<PostInfo> newList;
                     if (GETFORUMPOST) {
-                        mPostList = myJson.getPostInfos(result, forumTitle);
-                        if (mPostList.size() > 0) {
-                            updatePosts(mPostList, addFlag);
-                            addFlag = false;
+                        newList = myJson.getPostInfos(result, forumTitle);
+                        if (newList.size() > 0) {
+                            updatePosts(newList, null != newList && newList.size() == PAGE_COUNT);
+                            mRefreshListView.setPullUpToRefresh(newList.size() >= PAGE_COUNT);
                         } else {
                             ToastHelper.showToast("数据请求失败", ForumDetailActivity.this);
                         }
+                        mRefreshListView.resetPullStatus();
                     }
                     if (REFRESH) {
-                        mPostList = myJson.getPostInfos(result, forumTitle);
-                        if (mPostList.size() > 0) {
-                            updatePosts(mPostList, addFlag);
-                            floatImg.clearAnimation();
+                        newList = myJson.getPostInfos(result, forumTitle);
+                        if (newList.size() > 0) {
+                            updatePosts(newList, null != newList && newList.size() == PAGE_COUNT);
                         } else {
                             ToastHelper.showToast("数据请求失败", ForumDetailActivity.this);
                         }
+                        mRefreshListView.resetPullStatus();
                     }
                     if (SENDPOSTCOMMENT) {
                         if (myJson.getSuccess(result)) {
@@ -458,18 +406,15 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
     private void getInitData() {
         initFlag(false, false, false, true, false);
         forumApi.setHandler(handler);
-        getForumPost(mForumBean.id, "1", "count", 0);
+        getForumPost(mForumBean.id);
     }
 
     /**
      * @param fourmId
-     * @param page
-     * @param count
-     * @param fragPostion
      */
-    private void getForumPost(String fourmId, String page, String count, int fragPostion) {
+    private void getForumPost(String fourmId) {
         initFlag(false, true, false, false, false);
-        forumApi.getPosts(fourmId, "1", "10");
+        forumApi.getPosts(fourmId, String.valueOf(mCurrentIndex), String.valueOf(PAGE_COUNT));
 
     }
 
@@ -490,23 +435,19 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
         addFlag = false;
     }
 
-    public void updatePosts(List<PostInfo> list, boolean addFlag) {
+    public void updatePosts(List<PostInfo> list, boolean hasMoreData) {
         //ToastHelper.showToast("fragment postion"+this.getArguments().getInt(ARG_POSITION),ctx);
-        if (!addFlag) {
+        if (mCurrentIndex == START_INDEX) {
             mPostInfos.removeAll(mPostInfos);
-            page = 2;
-        } else {
-            page++;
         }
-        for (PostInfo post : list) {
-            mPostInfos.add(post);
+        if (hasMoreData) {
+            mCurrentIndex++;
         }
 
+        mPostInfos.addAll(list);
         mAdapter.notifyDataSetChanged();
 
         if (list.size() < 10 && list.size() > 0) {
-            mListView.removeFooterView(mAddMoreProgressBar);
-            mListView.removeFooterView(ListBottom);
             Button noBtn = new Button(this);
             noBtn.setText("没有更多了111");
             noBtn.setBackgroundColor(getResources().getColor(R.color.forumAdd));
@@ -516,7 +457,6 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
 //                mListView.addFooterView(noBtn);
 
         } else if (list.size() >= 10) {
-            mListView.removeFooterView(mAddMoreProgressBar);
             mListView.removeFooterView(ListBottom);
             mListView.addFooterView(ListBottom);
         }
@@ -535,12 +475,6 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
         mForumNameView.setText(mForumBean.title);
         BaseFunction.showImage(this, mForumLogo, mForumBean.logo, imgLoad, Url.IMGTYPE_WEIBO);
         BaseFunction.setLayoutBackGround(mForumLogo, this, mForumBackground, mForumBean.background, imgLoad);
-    }
-
-    private void listBottom() {
-        mAddMoreProgressBar.setVisibility(View.VISIBLE);
-        mListView.removeFooterView(ListBottom);
-        mListView.addFooterView(mAddMoreProgressBar, null, false);
     }
 
     private class MyListItemClickListener implements AdapterView.OnItemClickListener {
