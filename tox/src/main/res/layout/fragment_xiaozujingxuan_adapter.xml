@@ -4,17 +4,19 @@
     android:id="@+id/fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f2f2f2"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+    android:paddingLeft="5dp"
+
+ >
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
         android:orientation="vertical"
-
         android:paddingTop="14dp">
 
         <ImageView
@@ -77,8 +79,8 @@
                         android:id="@+id/post_count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:textColor="#999999"
                         android:textSize="12sp"
                         tools:text="aaabbbbbb" />
@@ -104,8 +106,8 @@
                         android:id="@+id/member_count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
                         android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:textColor="#999999"
                         android:textSize="12sp"
                         tools:text="aaaaaaa" />

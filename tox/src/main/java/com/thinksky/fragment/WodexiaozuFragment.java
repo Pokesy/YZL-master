@@ -1,6 +1,7 @@
 package com.thinksky.fragment;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,7 +52,7 @@ public class WodexiaozuFragment extends RBaseFragment {
     private boolean isLastRow = false;
     boolean count = true;
     boolean onClick = false;
-
+    private int entryActivity;
     protected TextView progressBarText;
     private LinearLayout group_probar, mygroup;
 
@@ -72,8 +73,18 @@ public class WodexiaozuFragment extends RBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+    @Override
+    protected void initViewData() {
+
+    }
+    protected void init() {
+        session_id = baseApi.getSeesionId();
         Map map = new HashMap();
         map.put("session_id", session_id);
+
         RsenUrlUtil.executeGetWidthMap(getActivity(), RsenUrlUtil.URL_WODE, map, new RsenUrlUtil.OnJsonResultListener<MyBean>() {
             @Override
             public void onNoNetwork(String msg) {
@@ -93,23 +104,23 @@ public class WodexiaozuFragment extends RBaseFragment {
                 try {
 
 
-                        for (int i=0;i<jsonObject.length();i++){
-                            MyBean bean = new MyBean();
-                            bean.logo = jsonObject.getJSONObject(String.valueOf(i)).getString("logo");
-                            bean.title = jsonObject.getJSONObject(String.valueOf(i)).getString("title");
-                            bean.id = jsonObject.getJSONObject(String.valueOf(i)).getString("id");
-                            bean.memberCount = jsonObject.getJSONObject(String.valueOf(i)).getString("menmberCount");
-                            bean.group_background = jsonObject.getJSONObject(String.valueOf(i)).getString("background");
-                            bean.type_id = jsonObject.getJSONObject(String.valueOf(i)).getString("type_id");
-                            bean.is_join = jsonObject.getJSONObject(String.valueOf(i)).getString("is_join");
-                            bean.uid = jsonObject.getJSONObject(String.valueOf(i)).getString("uid");
-                            bean.post_count = jsonObject.getJSONObject(String.valueOf(i)).getString("post_count");
-                            bean.group_type = jsonObject.getJSONObject(String.valueOf(i)).getString("type");
+                    for (int i = 0; i < jsonObject.length(); i++) {
+                        MyBean bean = new MyBean();
+                        bean.logo = jsonObject.getJSONObject(String.valueOf(i)).getString("logo");
+                        bean.title = jsonObject.getJSONObject(String.valueOf(i)).getString("title");
+                        bean.id = jsonObject.getJSONObject(String.valueOf(i)).getString("id");
+                        bean.memberCount = jsonObject.getJSONObject(String.valueOf(i)).getString("menmberCount");
+                        bean.group_background = jsonObject.getJSONObject(String.valueOf(i)).getString("background");
+                        bean.type_id = jsonObject.getJSONObject(String.valueOf(i)).getString("type_id");
+                        bean.is_join = jsonObject.getJSONObject(String.valueOf(i)).getString("is_join");
+                        bean.uid = jsonObject.getJSONObject(String.valueOf(i)).getString("uid");
+                        bean.post_count = jsonObject.getJSONObject(String.valueOf(i)).getString("post_count");
+                        bean.group_type = jsonObject.getJSONObject(String.valueOf(i)).getString("type");
 //                            bean.type_name = jsonObject.getJSONObject(String.valueOf(i)).getString("type_name");
-                            bean.detail = jsonObject.getJSONObject(String.valueOf(i)).getString("detail");
-                            bean.activity = jsonObject.getJSONObject(String.valueOf(i)).getString("activity");
-                            beans.add(bean);
-                        }
+                        bean.detail = jsonObject.getJSONObject(String.valueOf(i)).getString("detail");
+                        bean.activity = jsonObject.getJSONObject(String.valueOf(i)).getString("activity");
+                        beans.add(bean);
+                    }
 
 
                 } catch (JSONException e) {
@@ -131,13 +142,8 @@ public class WodexiaozuFragment extends RBaseFragment {
                 }
             }
         });
-    }
-
-    @Override
-    protected void initViewData() {
 
     }
-
     @Override
     protected void initView(View rootView) {
         context = getActivity();
@@ -150,21 +156,22 @@ public class WodexiaozuFragment extends RBaseFragment {
         progressBarText = (TextView) mViewHolder.v(R.id.progressBar_text);
         if (!session_id.equals("")) {
             group_probar.setVisibility(View.GONE);
-            progressBarText.setVisibility(View.GONE);
 
+            mygroup.setVisibility(View.VISIBLE);
+            init();
 
         } else {
             mygroup.setVisibility(View.GONE);
             progressBarText.setVisibility(View.VISIBLE);
             group_probar.setVisibility(View.GONE);
-            ToastHelper.showToast("未登陆，请登陆", context);
+
         }
         progressBarText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, LoginActivity.class);
-                intent.putExtra("entryActivity", ActivityModel.USERINFO);
-                startActivity(intent);
+                intent.putExtra("entryActivity", ActivityModel.UPLOADACTIVITY);
+                startActivityForResult(intent, 8);
 
             }
         });
@@ -249,7 +256,7 @@ public class WodexiaozuFragment extends RBaseFragment {
         //        public String group_id;
         public String group_type;
         public String detail;
-//        public String type_name;
+        //        public String type_name;
         public String post_count;
         public String memberCount;
         public String uid;
@@ -261,6 +268,21 @@ public class WodexiaozuFragment extends RBaseFragment {
 
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        //如果注册成功将用户名复制给输入框
+        if (requestCode == 8 && resultCode == Activity.RESULT_OK ) {
+            group_probar.setVisibility(View.GONE);
+            progressBarText.setVisibility(View.GONE);
+            mygroup.setVisibility(View.VISIBLE);
+            init();
+        }
+
+    }
+
 }
 /*
 type_id = jsonObj.getString("type_id");

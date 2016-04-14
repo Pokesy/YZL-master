@@ -327,6 +327,6 @@ public class ResUtil {
                         .showImageForEmptyUri(R.drawable.ic_launcher)
                         .showImageOnFail(R.drawable.ic_launcher)
                         .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                        .displayer(new RoundedBitmapDisplayer(100)).build());
+                        .displayer(new RoundedBitmapDisplayer(150)).build());
     }
 }

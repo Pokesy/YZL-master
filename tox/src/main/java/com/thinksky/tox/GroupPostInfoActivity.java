@@ -64,10 +64,10 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
     private LinearLayout postBody;
     private TextView post_title;
     private TextView loadingText;
-    private CircleImageView user_logo;
+    private CircleImageView user_logo, group_logo;
     private TextView post_user_name;
     private TextView post_create_time;
-    private TextView post_content;
+    private TextView post_content, user_name, qianming, group_count;
     private LinearLayout reply_bottom_layout;
     private LinearLayout support_button;
     private TextView supportCountView;
@@ -86,7 +86,8 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
     private int width;
     private List<ImageView> mImgList = new ArrayList<ImageView>();
     private ArrayList<String> img = new ArrayList<String>();
-private  RelativeLayout ll_img;
+    private RelativeLayout ll_img;
+
     @Override
     @SuppressWarnings(value = {"unchecked"})
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ private  RelativeLayout ll_img;
         groupApi = new GroupApi();
         groupApi.setHandler(mHandler);
         kjBitmap = KJBitmap.create();
-        setContentView(R.layout.activity_group_post_info);
+        setContentView(R.layout.activity_group_post_info_copy);
         postMap = (HashMap<String, String>) getIntent().getExtras().getSerializable("post_info");
 
         img = getIntent().getExtras().getStringArrayList("imgList");
@@ -111,7 +112,7 @@ private  RelativeLayout ll_img;
         iv1 = (ImageView) findViewById(R.id.iv_1);
         iv2 = (ImageView) findViewById(R.id.iv_2);
         iv3 = (ImageView) findViewById(R.id.iv_3);
-        ll_img= (RelativeLayout) findViewById(R.id.img_layout);
+        ll_img = (RelativeLayout) findViewById(R.id.img_layout);
 //        mImgList.add((ImageView) findViewById(R.id.iv_2));
 //        mImgList.add((ImageView) findViewById(R.id.iv_3));
         back_menu = (ImageView) findViewById(R.id.back_menu);
@@ -120,10 +121,12 @@ private  RelativeLayout ll_img;
         postBody = (LinearLayout) findViewById(R.id.post_body_line);
         post_title = (TextView) findViewById(R.id.post_title);
         user_logo = (CircleImageView) findViewById(R.id.user_logo);
+        group_logo = (CircleImageView) findViewById(R.id.group_logo);
         post_user_name = (TextView) findViewById(R.id.post_user_name);
         post_create_time = (TextView) findViewById(R.id.post_create_time);
         post_content = (TextView) findViewById(R.id.post_content);
         loadingText = (TextView) findViewById(R.id.loading_text);
+        user_name = (TextView) findViewById(R.id.user_name);
 
         //加载更多按钮
         loadingBar = (LinearLayout) findViewById(R.id.loading_bar);
@@ -168,15 +171,18 @@ private  RelativeLayout ll_img;
         group_name.setText(postMap.get("group_name"));
         post_title.setText(postMap.get("title"));
         post_user_name.setText(postMap.get("user_nickname"));
+        user_name.setText(postMap.get("user_nickname"));
         kjBitmap.display(user_logo, postMap.get("user_logo"));
         post_create_time.setText(postMap.get("create_time"));
         post_content.setText(postMap.get("content"));
         support_flag = postMap.get("is_support");
+
+//        kjBitmap.display(group_logo, postMap.get("group_logo"));
         if (img != null && img.size() > 0) {
             ll_img.setVisibility(View.VISIBLE);
 
             int size = img.size();
-           iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
+            iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
             iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
             iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
 

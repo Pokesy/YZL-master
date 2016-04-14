@@ -127,6 +127,7 @@ public class SlideShowView extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.layout_slideshow, this, true);
 
         LinearLayout dotLayout = (LinearLayout) findViewById(R.id.dotLayout);
+
         dotLayout.removeAllViews();
 
         // 热点个数与图片特殊相等
@@ -140,6 +141,7 @@ public class SlideShowView extends FrameLayout {
 
             ImageView dotView = new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
             params.leftMargin = 4;
             params.rightMargin = 4;
             dotLayout.addView(dotView, params);

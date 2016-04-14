@@ -60,13 +60,6 @@
                 android:orientation="vertical"
                 android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/post_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="帖子标题"
-                    android:textColor="@color/black"
-                    android:textSize="17sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -172,11 +165,47 @@
                     android:padding="5dp">
 
                     <TextView
+                        android:id="@+id/post_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="15dp"
+                        android:text="帖子标题"
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:text="作者："
+                            android:textColor="#999999"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="楼主"
+                            android:textColor="#666666"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <TextView
                         android:id="@+id/post_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingTop="18dp"
                         android:text="这里是帖子内容，看看一看内容超越第二排是什么情况啊，再看一遍"
-
                         android:textColor="#666666"
                         android:textSize="14sp" />
                     <!--状态部分-->
@@ -240,15 +269,15 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp">
+                            android:layout_height="match_parent"
+                            android:padding="6dp">
 
                             <TextView
                                 android:id="@+id/louzhu1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
                                 android:text="作者："
                                 android:textColor="#999999"
                                 android:textSize="13sp" />
@@ -257,13 +286,13 @@
                                 android:id="@+id/post_user_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
                                 android:layout_gravity="center"
+                                android:layout_toEndOf="@+id/louzhu1"
+                                android:layout_toRightOf="@+id/louzhu1"
                                 android:text="楼主"
                                 android:textColor="#666666"
-                                android:textSize="13sp"
-                                android:layout_alignParentTop="true"
-                                android:layout_toRightOf="@+id/louzhu1"
-                                android:layout_toEndOf="@+id/louzhu1" />
+                                android:textSize="13sp" />
 
                             <TextView
                                 android:id="@+id/qianming"
@@ -272,12 +301,36 @@
                                 android:layout_alignParentLeft="true"
                                 android:layout_below="@+id/post_user_name"
                                 android:layout_marginLeft="10dp"
-                                android:text="2015-02-04"
+                                android:layout_marginTop="5dp"
+                                android:singleLine="true"
+                                android:text="个性签名aaaaaaaaaaaaaaaaaaa"
                                 android:textColor="#0C0C0C"
                                 android:textSize="12sp" />
                         </RelativeLayout>
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/chengyuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+
+                            android:text="作者："
+                            android:textColor="#999999"
+                            android:textSize="13sp" />
+
+                        <com.thinksky.rsen.view.RRecyclerView
+                            android:id="@+id/recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:tag="HORIZONTAL" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

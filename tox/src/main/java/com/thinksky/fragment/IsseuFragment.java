@@ -50,25 +50,26 @@ public class IsseuFragment extends Fragment implements View.OnClickListener {
 //        fragments.add(IssueFragment.newInstance("问答"));
         fragments.add(BaikeFragment.newInstance("label3"));
         mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
-        mSegmentControl2.setSelectedTextColor(getResources().getColor(android.R.color.black));
+        mSegmentControl2.setSelectedTextColor(getResources().getColor(android.R.color.white));
         mSegmentControl2.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {
             @Override
             public void onSegmentControlClick(int index) {
                 mPager.setCurrentItem(index);
             }
         });
-//        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                mSegmentControl2.setCurrentIndex(position);
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mSegmentControl2.setCurrentIndex(position);
+//                mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.holo_blue_light));
 //                if (position % 2 != 0) {
-//                    mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.darker_gray));
+//                    mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.holo_blue_light));
 //                } else {
-//                    mSegmentControl2.setSelectedBackgroundColors(0xff009688);
+//                    mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.white));
 //                }
-//            }
-//        });
+            }
+        });
 //        FragmentTransaction mFragmentTransaction = mFragmentManager
 //                .beginTransaction();
 //        mFragmentTransaction.replace(R.id.wenda, zhuanjiFragment);

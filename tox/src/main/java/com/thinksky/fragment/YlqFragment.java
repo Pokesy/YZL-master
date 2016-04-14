@@ -52,25 +52,25 @@ public class YlqFragment extends Fragment implements View.OnClickListener {
         fragments.add(WodexiaozuFragment.newInstance("label3"));
         fragments.add(LuntanFragment.newInstance("label4"));
         mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
-        mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.black));
+        mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.white));
         mSegmentControl.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {
             @Override
             public void onSegmentControlClick(int index) {
                 mPager.setCurrentItem(index);
             }
         });
-//        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                mSegmentControl.setCurrentIndex(position);
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mSegmentControl.setCurrentIndex(position);
 //                if(position %2 != 0) {
 //                    mSegmentControl.setSelectedBackgroundColors(getResources().getColor(android.R.color.darker_gray));
 //                }else {
 //                    mSegmentControl.setSelectedBackgroundColors(0xff009688);
 //                }
-//            }
-//        });
+            }
+        });
     }
     private static class PagerAdapter extends FragmentPagerAdapter {
 

@@ -403,7 +403,7 @@ public class LuntanFragment extends Fragment {
                             .displayer(new RoundedBitmapDisplayer(100)).build());
 
             viewHolder.titleView.setText(bean.title);
-            viewHolder.countView.setText("帖数：" + bean.total_count);
+            viewHolder.countView.setText("帖数：" + bean.post_count);
             viewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -1,6 +1,7 @@
 package com.thinksky.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.tox.BaikeItemActivity;
 import com.thinksky.tox.R;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -155,9 +157,18 @@ public class BaikeTwoFragment extends Fragment {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            BktBean bean = beans.get(position);
+            final BktBean bean = beans.get(position);
             ((TextView) viewHolder.itemView.findViewById(R.id.title_bkt)).setText(bean.title);
-
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", bean.id);
+                    Intent intent = new Intent(context, BaikeItemActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
             return convertView;
         }
     }

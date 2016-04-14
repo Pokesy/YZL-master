@@ -40,18 +40,20 @@ import com.tox.GroupApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/5/18 0018.
  */
 public class GroupInfoActivity extends Activity implements View.OnClickListener {
-
+    private List<String> imgs;
     private static boolean PUBLICGROUP = false;
     private static boolean PRIVATEGROUP = false;
     private static boolean DISMISSGROUP = false;
@@ -521,6 +523,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
         postIntent = new Intent(mContext, GroupPostInfoActivity.class);
         postBundle = new Bundle();
         postBundle.putSerializable("post_info", mapTwo);
+        postBundle.putStringArrayList("imgList", (ArrayList<String>) imgs);
         postIntent.putExtras(postBundle);
         startActivity(postIntent);
     }
@@ -543,6 +546,8 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
             map1.put("view_count", jsonObj.getString("view_count"));
             map1.put("reply_count", jsonObj.getString("reply_count"));
             map1.put("is_top", jsonObj.getString("is_top"));
+
+
             map1.put("cate_id", jsonObj.getString("cate_id"));
             map1.put("supportCount", jsonObj.getString("supportCount"));
             map1.put("is_support", jsonObj.getString("is_support"));
@@ -550,6 +555,12 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
             map1.put("user_uid", tempJSONObj.getString("uid"));
             map1.put("user_nickname", tempJSONObj.getString("nickname"));
             map1.put("user_logo", Url.IMAGE + tempJSONObj.getString("avatar128"));
+            JSONArray imgList = jsonObj.getJSONArray("imgList");
+            imgs = new ArrayList<String>();
+            for (int i = 0; imgList != null && i < imgList.length(); i++) {
+                imgs.add(imgList.getString(i));
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

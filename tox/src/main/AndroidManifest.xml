@@ -382,6 +382,10 @@
             android:name="com.thinksky.tox.SendQuestionActivity"
 
             android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.tox.BaikeItemActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
 
 
     </application>

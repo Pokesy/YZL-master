@@ -1,5 +1,6 @@
 package com.tox;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -136,6 +137,7 @@ public class login {
 
                     //将用户信息保存到本地
                     saveUserinfo();
+                    LoginActivity.instance.setResult(Activity.RESULT_OK);
                     if (entryActivity == ActivityModel.SENDWEIBO) {
                         Intent intent = new Intent(context,
                                 UploadActivity.class);
@@ -147,8 +149,10 @@ public class login {
                         context.startActivity(intent);
                         LoginActivity.instance.finish();
                     }else{
+
                         LoginActivity.instance.finish();
                     }
+
                 }
             }
         };

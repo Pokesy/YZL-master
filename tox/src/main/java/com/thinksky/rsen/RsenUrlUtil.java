@@ -34,6 +34,8 @@ public class RsenUrlUtil {
     public static String URL_BK = URL_BASE + URL_SUB_BASE + "Paper/getCategory";
     //百科二级菜单
     public static String URL_BKT = URL_BASE + URL_SUB_BASE + "Paper/getPaperAll&category=";
+    //百科详情
+    public static String URL_BKXQ = URL_BASE + URL_SUB_BASE + "Paper/getPaperDetail";
     //专家
     public static String URL_ZJ = URL_BASE + URL_SUB_BASE + "Issue/getIssList&session_id=&issue_id=";
     //专家详情

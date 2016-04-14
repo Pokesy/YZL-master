@@ -227,6 +227,7 @@ public class LoginActivity extends Activity {
             NameValue = data.getStringExtra("NameValue");
             mName.setText(NameValue);
         }
+
     }
 
 

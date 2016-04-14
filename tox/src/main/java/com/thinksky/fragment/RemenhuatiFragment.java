@@ -75,7 +75,7 @@ public class RemenhuatiFragment extends RBaseFragment {
                     bean.supportCount = jsonObject.getString("supportCount");
                     bean.is_support = jsonObject.getString("is_support");
                     bean.nickname = jsonObject.getJSONObject("user").getString("nickname");
-
+//                    bean.logo = jsonObject.getString("logo");
                     bean.id = jsonObject.getString("id");
                     bean.uid = jsonObject.getString("uid");
                     bean.group_id = jsonObject.getString("group_id");
@@ -86,7 +86,7 @@ public class RemenhuatiFragment extends RBaseFragment {
                     bean.view_count = jsonObject.getString("view_count");
                     bean.reply_count = jsonObject.getString("reply_count");
                     bean.is_top = jsonObject.getString("is_top");
-
+//                    bean.memberCount = jsonObject.getString("memberCount");
                     bean.cate_id = jsonObject.getString("cate_id");
                     bean.user_logo = RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
 //zheli
@@ -137,8 +137,10 @@ public class RemenhuatiFragment extends RBaseFragment {
         public String is_support;
         public String nickname;
         public List<String> imgList;
+        public String memberCount;
         public String id;
         public String uid;
+        public String logo;
         public String group_id;
         public String create_time;
         public String update_time;
@@ -230,7 +232,7 @@ public class RemenhuatiFragment extends RBaseFragment {
                             .showImageOnFail(R.drawable.ic_launcher)
                             .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                             .displayer(new RoundedBitmapDisplayer(100)).build());
-            if (bean.imgList != null && bean.imgList.size()>0) {
+            if (bean.imgList != null && bean.imgList.size() > 0) {
                 holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 
                 int size = bean.imgList.size();
@@ -242,11 +244,11 @@ public class RemenhuatiFragment extends RBaseFragment {
                     String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
 
                     ImageView imageView = null;
-                    if (i==0) {
+                    if (i == 0) {
                         imageView = holder.imgV(R.id.iv_1);
-                    } else if (i==1) {
+                    } else if (i == 1) {
                         imageView = holder.imgV(R.id.iv_2);
-                    } else if (i==2) {
+                    } else if (i == 2) {
                         imageView = holder.imgV(R.id.iv_3);
                     }
 

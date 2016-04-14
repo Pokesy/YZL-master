@@ -3,6 +3,7 @@ package com.thinksky.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -143,6 +144,7 @@ public class WendaMyQuestionActivity extends AppCompatActivity {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
             } else {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
+                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setBackgroundColor(Color.GRAY);
             }
             /*点击事件响应*/
             viewHolder.itemView.findViewById(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
