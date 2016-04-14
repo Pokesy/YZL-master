@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY" />
 
-        <RadioGroup
+        <LinearLayout
             android:id="@+id/main_radio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -112,33 +112,33 @@
             android:paddingRight="15dp"
             android:paddingTop="15dp">
 
-            <RadioButton
+            <TextView
                 android:id="@+id/rb_rmht"
                 style="@style/main_wd"
                 android:checked="false"
                 android:drawableTop="@drawable/iconfontremenwenda"
                 android:text="@string/remenhuati" />
 
-            <RadioButton
+            <TextView
                 android:id="@+id/rb_zgxs"
                 style="@style/main_wd"
                 android:drawableTop="@drawable/iconfontzuigaoxuanshang"
                 android:text="@string/zuigaoxuanshang" />
 
-            <RadioButton
+            <TextView
                 android:id="@+id/rb_wdtw"
                 style="@style/main_wd"
                 android:drawableTop="@drawable/iconfontwodetiwen"
                 android:text="@string/wodetiwen" />
 
-            <RadioButton
+            <TextView
                 android:id="@+id/rb_yjj"
                 style="@style/main_wd"
                 android:checked="false"
                 android:drawableTop="@drawable/iconfontyijiejue"
                 android:text="@string/yijiejue" />
 
-        </RadioGroup>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -194,7 +194,7 @@
                 android:id="@+id/Zx_listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:tag="1"/>
+                android:tag="1" />
         </LinearLayout>
 
         <RelativeLayout
