@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -26,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.thinksky.info.NewsListInfo;
+import com.thinksky.info.NewsListInfo1;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
@@ -36,6 +36,7 @@ import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.NewsActivity;
+import com.thinksky.tox.NewsDetailActivity;
 import com.thinksky.tox.R;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseApi;
@@ -58,7 +59,7 @@ import java.util.List;
 public class HomeFragment extends Fragment implements View.OnClickListener {
     protected AppCompatActivity mBaseActivity;
     private View view;
-    private TextView zx_show, rm_show, ht_show, zj_show;
+    private TextView zx_show, rm_show, ht_show, zj_show, time, count;
     private Intent intent;
     private RecyclerView Zx_listView, Emht_listView;
     private RGridView Rm_listView;
@@ -73,16 +74,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ListView newsListView;
     private KJBitmap kjBitmap;
     private RViewHolder viewHolder;
-    private ArrayList<NewsListInfo> newsListInfos;
+    private ArrayList<NewsListInfo1> newsListInfos;
     private BaseApi baseApi;
     private String session_id;
     private LinearLayout ll_zx;
-
     private View mMenuHot;
     private View mMenuMon;
     private View mMenuMyQuestion;
     private View mMenuSolution;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -142,6 +141,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         startActivity(intent3);
 
                         break;
+                    default:
+
+                        break;
                 }
             }
         };
@@ -152,13 +154,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mMenuSolution.setOnClickListener(menuClickListener);
 
 
+
         bofangshipin = (FrameLayout) view.findViewById(R.id.bofangshipin);
         newsListView = (ListView) view.findViewById(R.id.news_listView);
         Rm_listView = (RGridView) view.findViewById(R.id.Rm_listView);
         Zx_listView = (RecyclerView) view.findViewById(R.id.Zx_listView);
         Emht_listView = (RecyclerView) view.findViewById(R.id.Emht_listView);
-
-
+        time = (TextView) view.findViewById(R.id.time);
+        count = (TextView) view.findViewById(R.id.count);
 //        Zx_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
         Emht_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
 
@@ -231,7 +234,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initzx() {
-        newsListInfos = new ArrayList<NewsListInfo>();
+        newsListInfos = new ArrayList<NewsListInfo1>();
         RsenUrlUtil.execute(mContext, RsenUrlUtil.NEWSALL, new RsenUrlUtil.OnNetHttpResultListener() {
             @Override
             public void onNoNetwork(String msg) {
@@ -242,11 +245,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResult(boolean state, String result, JSONObject jsonObject) {
                 if (state) {
-                    NewsListInfo list = JSON.parseObject(result, NewsListInfo.class);
+                    NewsListInfo1 list = JSON.parseObject(result, NewsListInfo1.class);
 
-                    newsListInfos.add(list);
 
-                    Zx_listView.setAdapter(new ZixunAdapter(mBaseActivity, newsListInfos));
+
+                    Zx_listView.setAdapter(new ZixunAdapter(mBaseActivity, list.getList()));
 
                 }
             }
@@ -293,9 +296,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             holder.v(R.id.ll_zx).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent tempIntent = new Intent(mContext, NewsActivity.class);
+                    Intent tempIntent = new Intent(mContext, NewsDetailActivity.class);
+                    NewsListInfo newsListInfo=new NewsListInfo();
+
                     tempIntent.putExtra("newsInfo", bean);
-                    startActivity(tempIntent);
+                    getActivity().startActivity(tempIntent);
                 }
             });
 
@@ -751,6 +756,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     //                为图片控件加载数据
                     kjBitmap = KJBitmap.create();
                     kjBitmap.display(viewHolder.imgV(R.id.issue_image), RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url);
+                    time.setText(beans.get(0).IssueList.get(0).create_time);
+                    count.setText(beans.get(0).IssueList.get(0).reply_count);
                     bofangshipin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -790,6 +797,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         issueBean.title = issueListJSONObject.getString("title");// issue title 赋值
                         issueBean.cover_url = issueListJSONObject.getString("cover_url");// issue cover_url 赋值
                         issueBean.id = issueListJSONObject.getInt("id");
+                        issueBean.create_time= issueListJSONObject.getString("create_time");
+                        issueBean.reply_count= issueListJSONObject.getString("reply_count");
                         //其他字段。。。赋值
                         // TODO: 2016/2/17
 
