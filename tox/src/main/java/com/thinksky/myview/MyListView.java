@@ -240,7 +240,7 @@ public class MyListView extends ListView implements OnScrollListener {
                 progressBar.setVisibility(View.VISIBLE);
                 arrowImageView.clearAnimation();
                 arrowImageView.setVisibility(View.GONE);
-                tipsTextview.setText("拼命加载中...");
+                tipsTextview.setText("");
                 // lastUpdatedTextView.setVisibility(View.VISIBLE);
 
                 break;

@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:background="@android:color/white"
-        android:paddingBottom="12dp"
-        android:paddingTop="3dp">
+        android:paddingBottom="14dp"
+        android:paddingTop="14dp">
 
 
         <com.thinksky.tox.SegmentControl
@@ -23,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="14dp"
             android:textSize="16sp"
             segmentcontrol:cornerRadius="10dip"
             segmentcontrol:direction="horizon"
@@ -43,19 +42,20 @@
         android:paddingTop="10dp">
 
         <ProgressBar
-            style="@style/myProgressBarStyleLarge"
+            style="?android:attr/progressBarStyleInverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:indeterminate="false"
             android:visibility="visible" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:text="拼命加载中..."
             android:textColor="#815F3D"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone" />
     </LinearLayout>
 
     <TextView
@@ -67,10 +67,10 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="10dp"
-        android:text="暂无微博哦，快点击右上角发表微博吧"
         android:textColor="#815F3D"
         android:textSize="18sp"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:text="暂无微博哦，快点击右上角发表微博吧" />
 
     <LinearLayout
         android:id="@+id/HomeGroup"

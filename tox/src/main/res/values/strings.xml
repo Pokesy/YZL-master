@@ -108,4 +108,6 @@
     <string name="activity_wenda_title_mon">最高悬赏</string>
     <string name="activity_wenda_title_solution">已解决</string>
 
+    <string name="title_bar_right_btn_write_feed">写动态</string>
+
 </resources>

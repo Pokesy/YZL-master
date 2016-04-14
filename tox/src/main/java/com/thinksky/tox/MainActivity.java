@@ -103,9 +103,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public TextView message1;
     private LinearLayout drawer_view;
 
+    private TextView mTitleBarBtnRight;
+
+    private View.OnClickListener mWriteFeedListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (!Url.SESSIONID.equals("")) {
+                Intent intent = new Intent(MainActivity.this,
+                        UploadActivity.class);
+                startActivity(intent);
+            } else {
+                Log.e(">>>>>>>>>>>>>>>", "login Form WeiboFragment");
+
+                String[] s = new String[ways.size()];
+                s = ways.toArray(s);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.putExtra("ways", s);
+                intent.putExtra("entryActivity", ActivityModel.SENDWEIBO);
+                startActivity(intent);
+            }
+        }
+    };
+
     protected void initActionbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
+
         setSupportActionBar(toolbar);
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -179,6 +202,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     protected void initView() {
         setContentView(R.layout.activity_home);
+        mTitleBarBtnRight = (TextView) findViewById(R.id.btn_right);
+
         loadImgMainImg = new LoadImg(this);
 
         myUserName = (TextView) findViewById(R.id.myUserName);
@@ -328,6 +353,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mFragmentTransaction = mFragmentManager.beginTransaction();
         // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
         hideFragments(mFragmentTransaction);
+        performTitleBarChange(index);
         switch (index) {
             case 0:
                 // 当点击了消息tab时，改变控件的图片和文字颜色
@@ -400,6 +426,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
         mFragmentTransaction.commit();
+    }
+
+    private void performTitleBarChange(int tabIndex) {
+        switch (tabIndex) {
+            case 1:
+                sousuo.setVisibility(View.GONE);
+                mTitleBarBtnRight.setVisibility(View.VISIBLE);
+                mTitleBarBtnRight.setOnClickListener(mWriteFeedListener);
+                mTitleBarBtnRight.setText(R.string.title_bar_right_btn_write_feed);
+                break;
+            default:
+                sousuo.setVisibility(View.VISIBLE);
+                mTitleBarBtnRight.setVisibility(View.GONE);
+                break;
+        }
     }
 
 //    /**
