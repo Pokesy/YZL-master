@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:focusableInTouchMode="true"
-    android:scrollbars="none"
     android:fillViewport="true"
-    >
+    android:focusableInTouchMode="true"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,15 +78,15 @@
         <FrameLayout
             android:id="@+id/bofangshipin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
 
-            android:scaleType="fitXY">
+            android:scaleType="centerCrop">
 
             <ImageView
                 android:id="@+id/issue_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/app_banner1" />
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -95,6 +94,12 @@
                 android:layout_gravity="center"
                 android:src="@drawable/bofang" />
         </FrameLayout>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY" />
 
         <RadioGroup
             android:id="@+id/main_radio"
@@ -179,14 +184,17 @@
             android:layout_height="match_parent"
             android:divider="@null"
             android:dividerHeight="2dp" />
+
         <LinearLayout
+            android:id="@+id/ll_zx"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView
+            <com.thinksky.rsen.view.RGridView
                 android:id="@+id/Zx_listView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:tag="1"/>
         </LinearLayout>
 
         <RelativeLayout

@@ -362,6 +362,28 @@
             android:name="com.thinksky.fragment.ZhuanjiActivity"
 
             android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.fragment.XiaozujingxuanActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.fragment.RemenhuatiActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.fragment.WendaMyQuestionActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.fragment.QuestionSelectActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.tox.SendQuestionActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
+
+
     </application>
 
 </manifest>

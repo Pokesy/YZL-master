@@ -4,10 +4,13 @@ package com.thinksky.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -16,7 +19,6 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
-import com.thinksky.rsen.fragment.RBaseFragment;
 import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
@@ -26,40 +28,61 @@ import com.tox.Url;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class RemenhuatiFragment extends RBaseFragment {
+public class RemenhuatiActivity extends AppCompatActivity {
+    private List<String> pictureListUrls;
+
+    ListView listView;
+
+    ImageView back_menu;
     private static final String ARG_PARAM1 = "param1";
     RecyclerView recyclerView;
     private RemenhuatiAdapter adapter;
     private boolean isWeGroup = true;
-    KJBitmap kjBitmap;
-//    private List<ImageView> imgViewList = new ArrayList<ImageView>();
-//    private ImageView iv_1;
-//    private ImageView iv_2;
-//    private ImageView iv_3;
-
-    public static RemenhuatiFragment newInstance(String param1) {
-        RemenhuatiFragment fragment = new RemenhuatiFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private List<ImageView> imgViewList;
+    private ImageView iv_1;
+    private ImageView iv_2;
+    private ImageView iv_3;
 
 
     @Override
-    protected int getBaseLayoutId() {
-        return R.layout.fragment_remenhuti_layout;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_remenhuti_layout);
+        listView = (ListView) findViewById(R.id.listView);
+        back_menu = (ImageView) findViewById(R.id.back_menu);
+        iv_1 = (ImageView) findViewById(R.id.iv_1);
+        iv_2 = (ImageView) findViewById(R.id.iv_2);
+        iv_3 = (ImageView) findViewById(R.id.iv_3);
+        imgViewList = new ArrayList<ImageView>();
+        imgViewList.add(iv_1);
+        imgViewList.add(iv_2);
+        imgViewList.add(iv_3);
+        //默认设置不显示图片
+//        imgViewList.get(0).setVisibility(View.GONE);
+//        imgViewList.get(1).setVisibility(View.GONE);
+//        imgViewList.get(2).setVisibility(View.GONE);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(RemenhuatiActivity.this, LinearLayoutManager.VERTICAL, false));
+        adapter = new RemenhuatiAdapter(RemenhuatiActivity.this);
+        recyclerView.setAdapter(adapter);
+        back_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        initViewData();
     }
 
-    @Override
-    protected void initViewData() {
+
+    private void initViewData() {
         RsenUrlUtil.execute(RsenUrlUtil.URL_REMEN_HUATI, new RsenUrlUtil.OnJsonResultListener<RemenhuatiBean>() {
             @Override
             public void onNoNetwork(String msg) {
@@ -89,7 +112,6 @@ public class RemenhuatiFragment extends RBaseFragment {
 
                     bean.cate_id = jsonObject.getString("cate_id");
                     bean.user_logo = RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
-//zheli
                     JSONArray imgList = jsonObject.getJSONArray("imgList");
                     List<String> imgs = new ArrayList<String>();
                     for (int i = 0; imgList != null && i < imgList.length(); i++) {
@@ -108,26 +130,6 @@ public class RemenhuatiFragment extends RBaseFragment {
         });
     }
 
-    @Override
-    protected void initView(View rootView) {
-//        iv_1 = (ImageView) rootView.findViewById(R.id.iv_1);
-//        iv_2 = (ImageView) rootView.findViewById(R.id.iv_2);
-//        iv_3 = (ImageView) rootView.findViewById(R.id.iv_3);
-//        imgViewList = new ArrayList<ImageView>();
-//        imgViewList.add(iv_1);
-//        imgViewList.add(iv_2);
-//        imgViewList.add(iv_3);
-//        默认设置不显示图片
-//        imgViewList.get(0).setVisibility(View.GONE);
-//        imgViewList.get(1).setVisibility(View.GONE);
-//        imgViewList.get(2).setVisibility(View.GONE);
-        recyclerView = (RecyclerView) mViewHolder.v(R.id.recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
-        adapter = new RemenhuatiAdapter(mBaseActivity);
-        recyclerView.setAdapter(adapter);
-
-
-    }
 
     /*数据bean*/
     public static class RemenhuatiBean {
@@ -182,14 +184,12 @@ public class RemenhuatiFragment extends RBaseFragment {
         map.put("supportCount", bean.supportCount);
         map.put("is_support", bean.is_support);
 
-
 //        JSONObject tempJSONObj = jsonObj.getJSONObject("user");
         map.put("user_uid", bean.uid);
         map.put("user_nickname", bean.nickname);
         map.put("user_logo", bean.user_logo);
 
         bundle.putSerializable("post_info", map);
-        bundle.putStringArrayList("imgList", (ArrayList<String>) bean.imgList);
         bundle.putBoolean("isWeGroup", isWeGroup);
         Intent intent = new Intent(context, GroupPostInfoActivity.class);
         intent.putExtras(bundle);
@@ -221,8 +221,6 @@ public class RemenhuatiFragment extends RBaseFragment {
             holder.tV(R.id.nickname).setText(bean.nickname);
             holder.tV(R.id.reply_count).setText(bean.reply_count);
 //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
-            //为图片控件加载数据
-            kjBitmap = KJBitmap.create();
             ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
                     new DisplayImageOptions.Builder()
                             .showImageOnLoading(R.drawable.ic_launcher)
@@ -230,7 +228,7 @@ public class RemenhuatiFragment extends RBaseFragment {
                             .showImageOnFail(R.drawable.ic_launcher)
                             .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                             .displayer(new RoundedBitmapDisplayer(100)).build());
-            if (bean.imgList != null && bean.imgList.size()>0) {
+            if (bean.imgList != null && bean.imgList.size() > 0) {
                 holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 
                 int size = bean.imgList.size();
@@ -242,11 +240,11 @@ public class RemenhuatiFragment extends RBaseFragment {
                     String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
 
                     ImageView imageView = null;
-                    if (i==0) {
+                    if (i == 0) {
                         imageView = holder.imgV(R.id.iv_1);
-                    } else if (i==1) {
+                    } else if (i == 1) {
                         imageView = holder.imgV(R.id.iv_2);
-                    } else if (i==2) {
+                    } else if (i == 2) {
                         imageView = holder.imgV(R.id.iv_3);
                     }
 
@@ -258,7 +256,7 @@ public class RemenhuatiFragment extends RBaseFragment {
 
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
+                                Intent intent = new Intent(RemenhuatiActivity.this, ImagePagerActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.imgList);
                                 bundle.putInt("image_index", in);
@@ -277,7 +275,24 @@ public class RemenhuatiFragment extends RBaseFragment {
                 public void onClick(View v) {
                     //                    Bundle bundle = new Bundle();
                     launch(mContext, isWeGroup, bean);
-
+//                    for (int i = 0; i < bean.imgList.size(); i++) {
+//                        String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
+//                        imgViewList.get(i).setVisibility(View.VISIBLE);
+//                        kjBitmap.display(imgViewList.get(i), url);
+//                        final int in = i;
+//                        imgViewList.get(in).setOnClickListener(new View.OnClickListener() {
+//
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
+//                                Bundle bundle = new Bundle();
+//                                bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.imgList);
+//                                bundle.putInt("image_index", in);
+//                                intent.putExtras(bundle);
+//                                startActivity(intent);
+//                            }
+//                        });
+//                    }
                 }
             });
         }

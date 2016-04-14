@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <!--页头-->
@@ -35,8 +35,7 @@
             android:paddingTop="5dp"
             android:text="标题"
             android:textColor="@color/tab"
-            android:textSize="18sp"
-           />
+            android:textSize="18sp" />
 
 
     </RelativeLayout>
@@ -52,9 +51,10 @@
 
         <LinearLayout
             android:id="@+id/body_line"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/item_layout"
                 android:layout_width="match_parent"
@@ -164,26 +164,26 @@
                         android:textSize="12sp" />
                     <!--&lt;!&ndash;右边&ndash;&gt;-->
                     <!--<TextView-->
-                        <!--android:id="@+id/answer_num"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:drawableLeft="@drawable/rating_small_empty"-->
-                        <!--android:drawablePadding="5dp"-->
-                        <!--android:text="21"-->
-                        <!--android:textColor="#00faff"-->
-                        <!--android:textSize="13sp" />-->
+                    <!--android:id="@+id/answer_num"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:drawableLeft="@drawable/rating_small_empty"-->
+                    <!--android:drawablePadding="5dp"-->
+                    <!--android:text="21"-->
+                    <!--android:textColor="#00faff"-->
+                    <!--android:textSize="13sp" />-->
                 </RelativeLayout>
 
 
             </LinearLayout>
+
             <TextView
                 android:id="@+id/huida"
-                android:paddingTop="27dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/rating_small_empty"
-                android:drawablePadding="5dp"
+              android:paddingLeft="17dp"
+                android:paddingTop="27dp"
                 android:text="23条回答"
                 android:textColor="#999999"
                 android:textSize="12sp" />
@@ -198,18 +198,17 @@
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="12dp"
-                android:listSelector="@android:color/transparent"
-                android:divider="@null"
                 android:cacheColorHint="@android:color/transparent"
-                />
+                android:divider="@null"
+                android:listSelector="@android:color/transparent"
+                android:paddingTop="12dp" />
         </LinearLayout>
-
 
 
     </ScrollView>
 
     <!--评论发表box-->
+
     <LinearLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
@@ -218,14 +217,69 @@
         android:layout_alignParentLeft="true"
         android:orientation="horizontal"
         android:visibility="visible">
-        <Button
-            android:id="@+id/btn_huida"
+
+        <LinearLayout
+            android:id="@+id/reply_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:text="点击开始回答"/>
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal"
+           >
+
+            <Button
+                android:id="@+id/btn_huida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:text="点击开始回答" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/reply_box"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/forum_edit_backgroud"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="10">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1.1"
+                android:background="@drawable/round_border"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/plus" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/reply_editText"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="8"
+                android:background="@drawable/edittext_background"
+                android:hint="回复楼主" />
+
+            <TextView
+                android:id="@+id/sendPostButn"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1.6"
+                android:background="@drawable/border"
+                android:gravity="center"
+                android:text="发表"
+                android:textColor="#A9ADB0" />
+        </LinearLayout>
     </LinearLayout>
-
-
 </RelativeLayout>

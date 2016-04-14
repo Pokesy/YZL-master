@@ -3,6 +3,7 @@ package com.thinksky.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,18 +11,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.thinksky.rsen.RViewHolder;
+import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.R;
+import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 
 import org.json.JSONObject;
+import org.kymjs.aframe.bitmap.KJBitmap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +38,13 @@ public class WendaFragment extends Fragment {
 
     private String mParam1;
     private TextView textView;
-
+    KJBitmap kjBitmap;
     View rootView;
     ListView listView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //这里写
+
         rootView = inflater.inflate(R.layout.fragment_wenda, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView);
         ((RadioGroup) rootView.findViewById(R.id.main_radio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -59,8 +64,12 @@ public class WendaFragment extends Fragment {
                         cleanCheck();
                         break;
                     case R.id.rb_wdtw:
-                        Intent intent2 = new Intent(getContext(), WendaMyQuestionListActivity.class);
-                        startActivity(intent2);
+                        if (BaseFunction.isLogin()) {
+                            Intent intent2 = new Intent(getContext(), WendaMyQuestionActivity.class);
+                            startActivity(intent2);
+                        } else {
+                            ToastHelper.showToast("请登录", Url.context);
+                        }
                         cleanCheck();
                         break;
                     case R.id.rb_yjj:
@@ -166,6 +175,10 @@ public class WendaFragment extends Fragment {
             ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(listEntity.getAnswer_num());
             ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity.getCreate_time());
 //            ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setDrawablel(listEntity.getUser().getNickname());
+            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(), ((ImageView) viewHolder.itemView.findViewById(R.id.logo)));
+//            //为图片控件加载数据
+//            kjBitmap = KJBitmap.create();
+//            kjBitmap.display(((ImageView) viewHolder.itemView.findViewById(R.id.logo)), RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32());
             String s = listEntity.getBest_answer();
 //            if (s.equals("1")) {
 //                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
@@ -174,6 +187,7 @@ public class WendaFragment extends Fragment {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
             } else {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
+                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setBackgroundColor(Color.GRAY);
             }
             /*点击事件响应*/
             viewHolder.itemView.findViewById(R.id.item_layout).setOnClickListener(new View.OnClickListener() {

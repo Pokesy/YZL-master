@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
- * Created by mwqi on 2014/6/8.
+ * Created by jiao on 2014/6/8.
  */
 public class ImageLoader {
 	/** 图片下载的线程池名称 */

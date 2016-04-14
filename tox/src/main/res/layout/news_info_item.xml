@@ -2,22 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="115dp"
+    android:id="@+id/ll_zx"
     android:background="@drawable/list_item_bg"
     android:orientation="horizontal">
 
-    <!-- 图片logo区域-->
-    <RelativeLayout
-        android:padding="5dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/news_logo"
-            android:src="@drawable/ic_launcher"
-            android:scaleType="centerCrop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+
 
     <!-- 文字信息区域-->
     <RelativeLayout
@@ -87,5 +76,18 @@
                 android:layout_height="wrap_content"
                 android:text="测试数据"/>
         </LinearLayout>
+    </RelativeLayout>
+    <!-- 图片logo区域-->
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/news_logo"
+            android:src="@drawable/ic_launcher"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </RelativeLayout>
 </LinearLayout>

@@ -52,6 +52,7 @@
         <ImageView
             android:id="@+id/news_post"
             android:layout_width="40dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -65,7 +66,8 @@
     <RelativeLayout
         android:id="@+id/proBarLine"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -109,7 +111,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="5dp"/>
+                android:padding="5dp"
+                >
+            <android.support.v4.view.ViewPager
+                android:id="@+id/news_pager1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />   </LinearLayout>
         </HorizontalScrollView>
 
         <LinearLayout
@@ -122,6 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 app:pstsIndicatorHeight="1dp"
+                android:visibility="gone"
                 app:pstsTabPaddingLeftRight="10dp"
                 app:pstsUnderlineHeight="1dp" />
 

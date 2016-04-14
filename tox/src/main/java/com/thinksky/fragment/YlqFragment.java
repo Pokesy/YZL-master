@@ -59,18 +59,18 @@ public class YlqFragment extends Fragment implements View.OnClickListener {
                 mPager.setCurrentItem(index);
             }
         });
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                mSegmentControl.setCurrentIndex(position);
-                if(position %2 != 0) {
-                    mSegmentControl.setSelectedBackgroundColors(getResources().getColor(android.R.color.darker_gray));
-                }else {
-                    mSegmentControl.setSelectedBackgroundColors(0xff009688);
-                }
-            }
-        });
+//        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//                mSegmentControl.setCurrentIndex(position);
+//                if(position %2 != 0) {
+//                    mSegmentControl.setSelectedBackgroundColors(getResources().getColor(android.R.color.darker_gray));
+//                }else {
+//                    mSegmentControl.setSelectedBackgroundColors(0xff009688);
+//                }
+//            }
+//        });
     }
     private static class PagerAdapter extends FragmentPagerAdapter {
 

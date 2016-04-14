@@ -44,12 +44,12 @@ public class RsenUrlUtil {
     public static String URL_LT = URL_BASE + URL_SUB_BASE + "forum/getForumModules";
     //热门话题
     public static String URL_REMEN_HUATI = URL_BASE + URL_SUB_BASE + "group/getHotPostAll";
-    //小组精选
-    public static String SENDDISCOVER = URL_BASE + URL_SUB_BASE + "user/setProfile";
 
+    public static String SENDDISCOVER = URL_BASE + URL_SUB_BASE + "user/setProfile";
+    //小组精选
     public static String URL_XIAOZU_JINGXUAN = URL_BASE + URL_SUB_BASE + "group/getGroupChoice";
     //我的小组
-    public static String URL_WODE = URL_BASE + URL_SUB_BASE + "group/getWeGroupAll&session_id=";
+    public static String URL_WODE = URL_BASE + URL_SUB_BASE + "group/getWeGroupAll";
     //小组详情
     public static String URL_XIAOZU_XIANGQING = URL_BASE + URL_SUB_BASE + "group/getGroupDetail&group_id=";
     //小组详情帖子
@@ -66,11 +66,11 @@ public class RsenUrlUtil {
     //已解决列表
     public static String URL_SOLUTE_WD = URL_BASE + URL_SUB_BASE + "Question/getSoluteQuestionList";
     //问题提问
-    public static String URL_SEND_QUESTION = URL_BASE + URL_SUB_BASE + "/question/sendQuestion&session_id=&category_id=&title=&content=&score=";
+    public static String URL_SEND_QUESTION = URL_BASE + URL_SUB_BASE + "/question/sendQuestion";
     //问题回答
     public static String URL_SEND_QUESTION_ANSWER = URL_BASE + URL_SUB_BASE + "Question/sendQuestionAnswer&session_id=&question_id=&content=";
     //回答点赞
-    public static String URL_SUPPORT_QUESTION_ANSWER = URL_BASE + URL_SUB_BASE + "/Question/supportQuestionAnswer&session_id=&answerid=";
+    public static String URL_SUPPORT_QUESTION_ANSWER = URL_BASE + URL_SUB_BASE + "/Question/supportQuestionAnswer";
     //设置最佳答案
     public static String URL_SET_BEST_ANSWER = URL_BASE + URL_SUB_BASE + "/Question/setBestAnswer&answerid=&score=";
     //问答分类

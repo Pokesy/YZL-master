@@ -12,10 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -34,11 +33,13 @@ import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RGridView;
 import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.GroupPostInfoActivity;
-import com.thinksky.tox.IssueActivity2;
+import com.thinksky.tox.ImagePagerActivity;
+import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.NewsActivity;
 import com.thinksky.tox.R;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseApi;
+import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Intent intent;
     private RecyclerView Zx_listView, Emht_listView;
     private RGridView Rm_listView;
-
+private ListView list;
     private RemenhuatiAdapter rm_adapter;
     private MyAdapter xz_adapter;
     private boolean isWeGroup = true;
@@ -70,21 +71,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
     private MyJson myjson = new MyJson();
     private ListView newsListView;
-
-
+   private KJBitmap kjBitmap;
+   private RViewHolder viewHolder;
     private ArrayList<NewsListInfo> newsListInfos;
     private BaseApi baseApi;
     private String session_id;
+    private LinearLayout ll_zx;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.home_home, null);
         scrollView = (ScrollView) view.findViewById(R.id.scrollView);
+        list= (ListView) view.findViewById(R.id.list);
         baseApi = new BaseApi();
         session_id = baseApi.getSeesionId();
-        newsListInfos = new ArrayList<NewsListInfo>();
-        mContext = getActivity();
 
+        mContext = getActivity();
+        viewHolder = new RViewHolder(view);
         initView();
         initzx();
         initdata();
@@ -109,9 +112,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         startActivity(intent1);
                         break;
                     case R.id.rb_wdtw:
-                        if (!session_id.equals("")) {
+                        if (BaseFunction.isLogin()) {
 
-                            Intent intent2 = new Intent(getContext(), WendaMyQuestionListActivity.class);
+                            Intent intent2 = new Intent(getContext(), WendaMyQuestionActivity.class);
                             startActivity(intent2);
 
                         } else {
@@ -125,7 +128,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         Intent intent3 = new Intent(getContext(), WendaListActivity.class);
                         intent3.putExtra("whichActivity", "SOLUTION");
                         startActivity(intent3);
-                        ;
+
                         break;
                     default:
 
@@ -136,14 +139,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bofangshipin = (FrameLayout) view.findViewById(R.id.bofangshipin);
         newsListView = (ListView) view.findViewById(R.id.news_listView);
         Rm_listView = (RGridView) view.findViewById(R.id.Rm_listView);
+        Zx_listView= (RecyclerView) view.findViewById(R.id.Zx_listView);
         Emht_listView = (RecyclerView) view.findViewById(R.id.Emht_listView);
-//        Rm_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
+
+
+//        Zx_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
         Emht_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
+
         rm_adapter = new RemenhuatiAdapter(mBaseActivity);
-//        xz_adapter = new MyAdapter(mBaseActivity);
+
+
         Emht_listView.setAdapter(rm_adapter);
-//        Rm_listView.setAdapter(xz_adapter);
-//        Zx_listView.setAdapter(new ZxAdapter<>());
+
 
         zx_show = (TextView) view.findViewById(R.id.zx_show);
         rm_show = (TextView) view.findViewById(R.id.rm_show);
@@ -153,14 +160,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         zj_show.setOnClickListener(this);
         rm_show.setOnClickListener(this);
         ht_show.setOnClickListener(this);
-        bofangshipin.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.zj_show:
-                intent = new Intent(getActivity(), IssueActivity2.class);
+                intent = new Intent(getActivity(), ZhuanjiActivity.class);
 
                 getActivity().startActivity(intent);
                 break;
@@ -170,12 +177,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 getActivity().startActivity(intent);
                 break;
             case R.id.rm_show:
-                intent = new Intent(getActivity(), NewsActivity.class);
+                intent = new Intent(getActivity(), XiaozujingxuanActivity.class);
 
                 getActivity().startActivity(intent);
                 break;
             case R.id.ht_show:
-                intent = new Intent(getActivity(), NewsActivity.class);
+                intent = new Intent(getActivity(), RemenhuatiActivity.class);
 
                 getActivity().startActivity(intent);
                 break;
@@ -208,6 +215,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initzx() {
+        newsListInfos = new ArrayList<NewsListInfo>();
         RsenUrlUtil.execute(mContext, RsenUrlUtil.NEWSALL, new RsenUrlUtil.OnNetHttpResultListener() {
             @Override
             public void onNoNetwork(String msg) {
@@ -221,83 +229,68 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     NewsListInfo list = JSON.parseObject(result, NewsListInfo.class);
 
                     newsListInfos.add(list);
-                    newsListView.setAdapter(new ZixunListAdapter(mContext, newsListInfos));
-                    newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if (parent.getItemAtPosition(position) != null) {
-                                Intent tempIntent = new Intent(mContext, NewsActivity.class);
-                                tempIntent.putExtra("newsInfo", (NewsListInfo) parent.getItemAtPosition(position));
-                                startActivity(tempIntent);
-                            }
-                        }
-                    });
+
+                    Zx_listView.setAdapter(new ZixunAdapter(mBaseActivity, newsListInfos));
+
                 }
             }
         });
     }
 
-    public class ZixunListAdapter extends BaseAdapter {
-        private ArrayList<NewsListInfo> newsListInfos;
-        ViewHolder viewHolder;
+    /*数据适配器*/
+    public class ZixunAdapter extends RBaseAdapter<NewsListInfo> {
+        Context context;
         KJBitmap kjBitmap;
-        private Context mContent;
+        public ZixunAdapter(Context context) {
+            super(context);
+        }
 
-        public ZixunListAdapter(Context context, ArrayList<NewsListInfo> newsListInfos) {
-            super();
-            this.newsListInfos = newsListInfos;
-            this.mContent = context;
+        public ZixunAdapter(Context context, List<NewsListInfo> datas) {
+            super(context,datas);
+
         }
 
         @Override
-        public int getCount() {
-            return newsListInfos.size() > 3 ? 3 : newsListInfos.size();
+        protected int getItemLayoutId(int viewType) {
+            return R.layout.news_info_item;
         }
 
         @Override
-        public Object getItem(int position) {
-            return newsListInfos.get(position);
-        }
+        protected void onBindView(RViewHolder holder, int position, final NewsListInfo bean) {
+            holder.tV(R.id.news_title).setText(bean.getTitle());
+//            holder.tV(R.id.news_author_name).setText(newsListInfos.get(position).getUser().getNickname());
+            holder.tV(R.id.news_create_time).setText(bean.getCreate_time());
+            holder.tV(R.id.news_description).setText(bean.getDescription());
+            holder.tV(R.id.news_view_count).setText(bean.getView());
+            kjBitmap= KJBitmap.create();
+            kjBitmap.display(holder.imgV(R.id.news_logo), Url.IMAGE+bean.getCover());
+//            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
+//            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
+//                    new DisplayImageOptions.Builder()
+//                            .showImageOnLoading(R.drawable.ic_launcher)
+//                            .showImageForEmptyUri(R.drawable.ic_launcher)
+//                            .showImageOnFail(R.drawable.ic_launcher)
+//                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+//                            .displayer(new RoundedBitmapDisplayer(100)).build());
 
+            holder.v(R.id.ll_zx).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent tempIntent = new Intent(mContext, NewsActivity.class);
+                    tempIntent.putExtra("newsInfo", bean);
+                    startActivity(tempIntent);
+                }
+            });
+
+
+
+        }
         @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            kjBitmap = KJBitmap.create();
-            if (convertView == null) {
-                viewHolder = new ViewHolder();
-                convertView = LayoutInflater.from(mContent).inflate(R.layout.news_info_item, parent, false);
-                viewHolder.newsLogo = (ImageView) convertView.findViewById(R.id.news_logo);
-                viewHolder.newsTitle = (TextView) convertView.findViewById(R.id.news_title);
-                viewHolder.newsAuthor = (TextView) convertView.findViewById(R.id.news_author_name);
-                viewHolder.newsCreateTime = (TextView) convertView.findViewById(R.id.news_create_time);
-                viewHolder.newsDescription = (TextView) convertView.findViewById(R.id.news_description);
-                viewHolder.newsViewCount = (TextView) convertView.findViewById(R.id.news_view_count);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-            newsListInfos.get(position);
-//            kjBitmap.display(viewHolder.newsLogo, newsListInfos.get(position).getCover(), 280, 260);
-            viewHolder.newsTitle.setText(newsListInfos.get(position).getTitle());
-//            viewHolder.newsAuthor.setText(newsListInfos.get(position).getUser().getNickname());
-            viewHolder.newsCreateTime.setText(newsListInfos.get(position).getCreate_time());
-            viewHolder.newsDescription.setText(newsListInfos.get(position).getDescription());
-            viewHolder.newsViewCount.setText(newsListInfos.get(position).getView());
-            return convertView;
-        }
-
-        //控件缓存器
-        private class ViewHolder {
-            ImageView newsLogo;
-            TextView newsTitle, newsAuthor, newsCreateTime, newsDescription, newsViewCount;
+        public int getItemCount() {
+            return mAllDatas.size() > 3 ? 3 : mAllDatas.size();
         }
 
     }
-
 
     protected void initdata() {
         RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_JINGXUAN, new RsenUrlUtil.OnJsonResultListener<MyBean>() {
@@ -391,6 +384,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     bean.is_top = jsonObject.getString("is_top");
 
                     bean.cate_id = jsonObject.getString("cate_id");
+                    JSONArray imgList = jsonObject.getJSONArray("imgList");
+                    List<String> imgs = new ArrayList<String>();
+                    for (int i = 0; imgList != null && i < imgList.length(); i++) {
+                        imgs.add(imgList.getString(i));
+                    }
+                    bean.imgList = imgs;
                 } catch (JSONException e) {
                 }
                 beans.add(bean);
@@ -438,6 +437,49 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                             .displayer(new RoundedBitmapDisplayer(100)).build());
 
+            if (bean.imgList != null && bean.imgList.size()>0) {
+                holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
+
+                int size = bean.imgList.size();
+                holder.v(R.id.iv_1).setVisibility(size > 0 ? View.VISIBLE : View.GONE);
+                holder.v(R.id.iv_2).setVisibility(size > 1 ? View.VISIBLE : View.GONE);
+                holder.v(R.id.iv_3).setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+
+                for (int i = 0; i < bean.imgList.size(); i++) {
+                    String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
+                    ImageView imageView = null;
+                    if (i==0) {
+                        imageView = holder.imgV(R.id.iv_1);
+                    } else if (i==1) {
+                        imageView = holder.imgV(R.id.iv_2);
+                    } else if (i==2) {
+                        imageView = holder.imgV(R.id.iv_3);
+                    }
+
+                    if (imageView != null) {
+
+                        ImageLoader.getInstance().displayImage(url, imageView);
+                        final int in = i;
+                        imageView.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.imgList);
+                                bundle.putInt("image_index", in);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                }
+            } else {
+                holder.v(R.id.img_layout).setVisibility(View.GONE);
+            }
+
+
+
             holder.v(R.id.root_layout).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -462,7 +504,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         public String supportCount;
         public String is_support;
         public String nickname;
-
+        public List<String> imgList;
         public String id;
         public String uid;
         public String group_id;
@@ -515,6 +557,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         bundle.putSerializable("post_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
+        bundle.putStringArrayList("imgList", (ArrayList<String>) bean.imgList);
         Intent intent = new Intent(context, GroupPostInfoActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
@@ -590,10 +633,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         }
 
-//        @Override
-//        public int getItemCount() {
-//            return mAllDatas.size() > 3 ? 3 : mAllDatas.size();
-//        }
+        @Override
+        public int getItemCount() {
+            return mAllDatas.size() > 3 ? 3 : mAllDatas.size();
+        }
     }
 
 //    /*成员头像*/
@@ -673,5 +716,78 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(context, GroupInfoActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+               RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_ZJ, new RsenUrlUtil.OnNetHttpResultListener() {
+            @Override
+            public void onNoNetwork(String msg) {
+                ToastHelper.showToast(msg, Url.context);
+            }
+
+
+            @Override
+            public void onResult(boolean state, String result, JSONObject jsonObject) {
+                if (state) {
+                    final ArrayList<ZhuanjiFragment.ZjBean> beans = parseJson(jsonObject);
+                    //                为图片控件加载数据
+                    kjBitmap= KJBitmap.create();
+                    kjBitmap.display(viewHolder.imgV(R.id.issue_image), RsenUrlUtil.URL_BASE +   beans.get(0).IssueList.get(0).cover_url);
+                    bofangshipin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("id", beans.get(0).IssueList.get(0).id);
+                            Intent intent = new Intent(getActivity(), IssueDetail.class);
+                            intent.putExtras(bundle);
+                           startActivity(intent);
+                        }
+                    });
+
+
+                }
+            }
+        });
+    }
+
+    public static ArrayList<ZhuanjiFragment.ZjBean> parseJson(JSONObject object) {
+        ArrayList<ZhuanjiFragment.ZjBean> beans = new ArrayList<>();
+        if (object != null) {
+            try {
+                JSONArray array = object.getJSONArray("list");
+                for (int i = 0; i < array.length(); i++) {
+                    ZhuanjiFragment.ZjBean bean = new ZhuanjiFragment.ZjBean();
+                    JSONObject jsonObject = array.getJSONObject(i);
+                    bean.title = jsonObject.getString("title");//title 赋值
+                    bean.id = jsonObject.getInt("id");
+                    //其他字段。。。赋值
+
+                    // TODO: 2016/2/17
+
+                    ArrayList<ZhuanjiFragment.IssueBean> issueBeens = new ArrayList<>();
+                    JSONArray issueList = jsonObject.getJSONArray("$IssueList");
+                    for (int j = 0; j < issueList.length(); j++) {
+                        JSONObject issueListJSONObject = issueList.getJSONObject(j);
+                        ZhuanjiFragment.IssueBean issueBean = new ZhuanjiFragment.IssueBean();
+                        issueBean.title = issueListJSONObject.getString("title");// issue title 赋值
+                        issueBean.cover_url = issueListJSONObject.getString("cover_url");// issue cover_url 赋值
+                        issueBean.id = issueListJSONObject.getInt("id");
+                        //其他字段。。。赋值
+                        // TODO: 2016/2/17
+
+                        issueBeens.add(issueBean);
+                    }
+
+                    bean.IssueList = issueBeens;
+                    beans.add(bean);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return beans;
     }
 }

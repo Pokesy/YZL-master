@@ -90,14 +90,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ActionBarDrawerToggle mDrawerToggle;// actionBar打开关闭的
     private String mTitle;
     private TextView text;
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_home);
-//        initActionbar();
-//        initView();
-//    }
-
     private Toolbar toolbar;
     private DrawerLayout drawer_layout;
     private ActionBarDrawerToggle drawerToggle;
@@ -113,11 +105,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     protected void initActionbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(true);
-//        toolbar.setLogo(R.drawable.iconfont_gerenshezhi);
-
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
@@ -292,7 +281,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 intent_Share = new Intent(Intent.ACTION_SEND);
                 intent_Share.setType("text/plain");
                 intent_Share.putExtra(Intent.EXTRA_SUBJECT, "分享");
-                intent_Share.putExtra(Intent.EXTRA_TEXT, " （来自OpenSNS手机客户端）");//分享内容体
+                intent_Share.putExtra(Intent.EXTRA_TEXT, " （来自手机客户端）");//分享内容体
                 startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
                 break;
             case R.id.message1:
@@ -456,7 +445,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (!sp.getString("avatar", "").equalsIgnoreCase("")) {
                 BaseFunction.showImage(this, mleftHead, sp.getString("avatar", ""), loadImgMainImg, Url.IMGTYPE_HEAD);
             }
-            if (!sp.getString("nickname", "").equalsIgnoreCase("")) {
+            if (!("").equalsIgnoreCase(sp.getString("nickname", ""))) {
                 myUserName.setText(sp.getString("nickname", ""));
             } else {
                 myUserName.setText(sp.getString("username", ""));
@@ -467,8 +456,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (backAvater != null) {
                 mleftHead.setImageBitmap(BitmapFactory.decodeFile(backAvater));
             }
-//            if (signature != null) {
+//            if (!("").equals(Url.MYUSERINFO.getSignature())) {
 //                signature.setText(Url.MYUSERINFO.getSignature());
+//            }else{
+//                signature.setText("这个人很懒，什么都没写");
 //            }
 
         } else {

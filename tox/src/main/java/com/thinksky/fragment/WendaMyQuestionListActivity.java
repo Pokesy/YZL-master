@@ -61,13 +61,13 @@ public class WendaMyQuestionListActivity extends RBaseAppActivity {
         WendaMyQuestionCommonFragment solutedFragment = new WendaMyQuestionCommonFragment();
         WendaMyQuestionCommonFragment noSolutedFragment = new WendaMyQuestionCommonFragment();
 
-        solutedFragment.setUrl(RsenUrlUtil.URL_SOLUTE_WD);
+        solutedFragment.setUrl(RsenUrlUtil.URL_MY_WD);
         noSolutedFragment.setUrl(RsenUrlUtil.URL_MY_WD);
 
         Bundle args = new Bundle();
         args.putBoolean(WendaMyQuestionCommonFragment.KEY_NEED_ID, true);
         noSolutedFragment.setArguments(args);
-
+        solutedFragment.setArguments(args);
         fragments.add(solutedFragment);
         fragments.add(noSolutedFragment);
 

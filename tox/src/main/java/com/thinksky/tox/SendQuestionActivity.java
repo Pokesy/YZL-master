@@ -28,22 +28,32 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.thinksky.fragment.DiscoverFragment;
+import com.thinksky.fragment.QuestionSelectActivity;
 import com.thinksky.info.PostInfo;
+import com.thinksky.rsen.RBaseAdapter;
+import com.thinksky.rsen.RViewHolder;
+import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.rsen.view.RGridView;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.FileUtiles;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.ForumApi;
 import com.tox.ToastHelper;
 import com.tox.TouchHelper;
 import com.tox.Url;
+import com.tox.WeiboApi;
 
 import net.tsz.afinal.FinalBitmap;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
+import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
 import org.kymjs.aframe.http.KJHttp;
 import org.kymjs.aframe.ui.widget.HorizontalListView;
@@ -53,7 +63,9 @@ import org.kymjs.kjframe.http.HttpParams;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class SendQuestionActivity extends Activity implements View.OnClickListener {
@@ -61,7 +73,8 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
     private String mTempPhotoName;
     private EditText mTitleEdit, mContentEdit;
 
-    private RelativeLayout postSendLayout;
+    private TextView postSendLayout;
+    private RGridView gridView;
     /**
      * 已选择准备上传的图片数量
      */
@@ -74,12 +87,13 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
     /**
      * 用来保存准备选择上传的图片路径
      */
+    private List<String> strs;
     private List<String> scrollImg = new ArrayList<String>();
     private List<ImageView> imgList = new ArrayList<ImageView>();
     private MyJson myJson = new MyJson();
     private ForumApi forumApi = new ForumApi();
     private List<String> attachIds = new ArrayList<String>();
-    private String forumId = "";
+    private TextView score;
     private RelativeLayout backBtn;
     private HorizontalListView horizontalListView;
     private LinearLayout mAttachLayout, mAttachBtn, mFaceBtn;
@@ -90,39 +104,76 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
     private TextView photoCount;
     private List<String> imgPathList;
     private int photo_num = 0;
+    private LinearLayout title;
+    private LinearLayout attachBtns;
+    private LinearLayout score_select;
+    private int fishid = 1;
+    private BaseApi baseApi;
+    private String session_id;
+    private String l;
+    private LinearLayout location;
+    //    private String longitude;
+//    private String latitude;
+    private String category_id;
+    private TextView dizhi;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_post);
+        setContentView(R.layout.activity_send_question);
         initView();
     }
 
     private void initView() {
         kjBitmap = KJBitmap.create();
         finalBitmap = FinalBitmap.create(this);
-        forumApi.setHandler(hand);
+//        forumApi.setHandler(hand);
         Intent intent = getIntent();
-        forumId = intent.getStringExtra("forumId");
+//        forumId=intent.getStringExtra("forumId");
+//        address = intent.getStringExtra("address");
+//        longitude = intent.getStringExtra("longitude");
+//        latitude = intent.getStringExtra("latitude");
         photoLayout = (LinearLayout) findViewById(R.id.Post_send_photo);
+//        score_select = (LinearLayout) findViewById(R.id.score_select);
+        location = (LinearLayout) findViewById(R.id.location);
+        dizhi = (TextView) findViewById(R.id.dizhi);
+        score = (TextView) findViewById(R.id.score);
         photoLayout.setOnClickListener(this);
         photoLayout.setOnTouchListener(new TouchHelper(this, R.drawable.borderradius_postsend + "", R.drawable.borderradius_postsend_touched + "", "drawable"));
+        baseApi = new BaseApi();
+        session_id = baseApi.getSeesionId();
+        strs = new ArrayList<String>();
+        strs.add("0");
+        strs.add("5");
+        strs.add("10");
+        strs.add("20");
+        strs.add("30");
+        strs.add("50");
+        strs.add("70");
+        strs.add("100");
+
 
         mContentEdit = (EditText) findViewById(R.id.Post_send_contentEdit);
+        gridView = (RGridView) findViewById(R.id.gridView);
         mTitleEdit = (EditText) findViewById(R.id.Post_send_titleEdit);
-        postSendLayout = (RelativeLayout) findViewById(R.id.Post_send);
+        postSendLayout = (TextView) findViewById(R.id.Post_send);
         mAttachLayout = (LinearLayout) findViewById(R.id.Post_attach_layout);
         mPhotoShowLayout = (FrameLayout) findViewById(R.id.Post_photo_layout);
         horizontalListView = (HorizontalListView) findViewById(R.id.HorizontalListView);
         photoAdapter = new PhotoAdapter(this, finalBitmap, kjBitmap, scrollImg);
         horizontalListView.setAdapter(photoAdapter);
         mAttachBtn = (LinearLayout) findViewById(R.id.Post_send_attachBtn);
+        title = (LinearLayout) findViewById(R.id.title);
+        attachBtns = (LinearLayout) findViewById(R.id.attachBtns);
         mFaceBtn = (LinearLayout) findViewById(R.id.Post_send_faceBtn);
         backBtn = (RelativeLayout) findViewById(R.id.Post_send_Back);
+        score.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         mFaceBtn.setOnClickListener(this);
         mAttachBtn.setOnClickListener(this);
         postSendLayout.setOnClickListener(this);
+        location.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
         photoCount = (TextView) findViewById(R.id.photo_count);
@@ -154,7 +205,7 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
                                     startActivityForResult(intent3, 9);
                                     break;
                                 case 1:
-                                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                     File file = new File(Environment.getExternalStorageDirectory() + "/tox/photos");
                                     mTempPhotoName = System.currentTimeMillis() + ".png";
                                     if (!file.exists()) {
@@ -162,14 +213,14 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 
                                         File photo = new File(file, mTempPhotoName);
                                         Uri u = Uri.fromFile(photo);
-                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+                                        intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
                                     } else {
 
                                         File photo = new File(file, mTempPhotoName);
                                         Uri u = Uri.fromFile(photo);
-                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+                                        intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
                                     }
-                                    startActivityForResult(intent, 1);
+                                    startActivityForResult(intent1, 1);
                                     break;
                             }
                         }
@@ -185,10 +236,6 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
                         ToastHelper.showToast("请填写标题", this);
                         return;
                     }
-                    if (mContentEdit.getText().toString().length() < 20) {
-                        ToastHelper.showToast("内容长度不能小于20", this);
-                        return;
-                    }
                     if (BaseFunction.isLogin()) {
                         uploadImages();
                     } else {
@@ -199,22 +246,20 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
                         Toast.makeText(SendQuestionActivity.this, "请填写标题", Toast.LENGTH_LONG).show();
                         return;
                     }
-                    if (mContentEdit.getText().toString().length() < 20) {
-                        Toast.makeText(SendQuestionActivity.this, "内容长度不能小于20", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
+
                     if (BaseFunction.isLogin()) {
 
 
-                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                        progressDialog.setTitle("发布中请等待");
-                        progressDialog.setCanceledOnTouchOutside(false);
-                        progressDialog.show();
+//                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                        progressDialog.setTitle("发布中请等待");
+//                        progressDialog.setCanceledOnTouchOutside(false);
+//                        progressDialog.show();
                         sendWeibo();
                     } else {
                         Toast.makeText(SendQuestionActivity.this, "未登入", Toast.LENGTH_LONG).show();
                     }
                 }
+
                 break;
             case R.id.Post_send_attachBtn:
                 if (mAttachLayout.isShown()) {
@@ -225,13 +270,50 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
                     mPhotoShowLayout.setVisibility(View.GONE);
                 }
                 break;
-            case R.id.Post_send_faceBtn:
+            case R.id.score:
+                gridView.setVisibility(View.VISIBLE);
+                gridView.setAdapter(new MySubAdapter(SendQuestionActivity.this, strs));
                 break;
             case R.id.Post_send_Back:
                 SendQuestionActivity.this.finish();
                 break;
+            case R.id.location:
+                Intent intent4 = new Intent();
+                intent4.setClass(SendQuestionActivity.this, QuestionSelectActivity.class);
+                startActivityForResult(intent4, 0);
+                break;
+            default:
+                break;
+
+        }
+    }
 
 
+    /*成员头像*/
+    public class MySubAdapter extends RBaseAdapter<String> {
+
+        public MySubAdapter(Context context, List<String> datas) {
+            super(context, datas);
+        }
+
+        @Override
+        protected int getItemLayoutId(int viewType) {
+            return R.layout.activity_send_question_adapter;
+        }
+
+        @Override
+        protected void onBindView(final RViewHolder holder, final int position, String bean) {
+
+            holder.tV(R.id.title).setText(strs.get(position));
+            /*点击用户头像*/
+            holder.v(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    score.setText(strs.get(position));
+                    gridView.setVisibility(View.GONE);
+                }
+            });
         }
     }
 
@@ -248,6 +330,13 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
         /**
          * 对ShowImageActivity直接返回的
          */
+
+        if (resultCode == RESULT_OK) {
+            Bundle b = data.getExtras(); //data为B中回传的Intent
+            category_id = b.getString("category_id");//str即为回传的值
+
+            dizhi.setText(b.getString("title"));
+        }
         if (requestCode == 8 && resultCode == 999) {
             Log.e("scroll返回", "");
             imgPathList = data.getStringArrayListExtra("data");
@@ -387,10 +476,10 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 
     private void uploadImages() {
         attachIds.clear();
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setTitle("发布中请等待");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.setTitle("发布中请等待");
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.show();
         for (int i = 0; i < scrollImg.size() - 1; i++) {
             //kjUpload(scrollImg.get(i));
             AjaxParams params = new AjaxParams();
@@ -419,11 +508,13 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 
                     @Override
                     public void onSuccess(Object o) {
-                        //progressDialog.dismiss();
-                        attachIds.add(myJson.getAttachId(o));
+                        progressDialog.dismiss();
+                        String s = myJson.getAttachId(o);
+                        attachIds.add(s);
                         Log.e("上传照片成功", o.toString());
                         if (attachIds.size() == scrollImg.size() - 1) {
-                            //progressDialog1.show(UploadActivity.this,"提示","发布中...",true,false);
+                            progressDialog1.show(SendQuestionActivity.this, "提示", "发布中...", true, false);
+                            l = WeiboApi.getAttachIds(attachIds);
                             sendWeibo();
                         }
                     }
@@ -454,11 +545,47 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
     }
 
     private void sendWeibo() {
-        if (mContentEdit.getText().toString().equals("") || mTitleEdit.getText().toString().trim().length() == 0) {
-            Toast.makeText(SendQuestionActivity.this, "内容不能为空", Toast.LENGTH_LONG).show();
-            return;
-        }
-//        forumApi.sendQuestion(mTitleEdit.getText().toString().trim(), mContentEdit.getText().toString().trim(),id, attachIds, Url.SESSIONID,score);
+
+//        Map map = new HashMap();
+//        map.put("session_id", session_id);
+//        map.put("title", mTitleEdit.getText().toString().trim());
+//        map.put("content", mContentEdit.getText().toString().trim());
+//        map.put("score", score.getText().toString().trim());
+//        map.put("category_id", category_id);
+
+        RsenUrlUtil.execute(this, RsenUrlUtil.URL_SEND_QUESTION, new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
+            @Override
+            public void onNoNetwork(String msg) {
+                ToastHelper.showToast(msg, Url.context);
+            }
+
+            @Override
+            public Map getMap() {
+                Map map = new HashMap();
+                map.put("session_id", session_id);
+                map.put("title", mTitleEdit.getText().toString().trim());
+                map.put("content", mContentEdit.getText().toString().trim());
+                map.put("score", score.getText().toString().trim());
+                map.put("category_id", category_id);
+                return map;
+
+            }
+
+            @Override
+            public void onParseJsonBean(List<DiscoverFragment.FXBean> beans, JSONObject jsonObject) {
+                String result = jsonObject.toString();
+                DiscoverFragment.FXBean discoverInfo = JSON.parseObject(result, DiscoverFragment.FXBean.class);
+                beans.add(discoverInfo);
+            }
+
+            @Override
+            public void onResult(boolean state, List beans) {
+
+            }
+        });
+
+//        progressDialog.dismiss();
+        SendQuestionActivity.this.finish();
     }
 
     public class PhotoAdapter extends BaseAdapter {

@@ -118,7 +118,7 @@ public class ImageDetailFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
         } else {
 
-            final String url=(Url.IMAGE+largeImageUrl).replace("com//","com/").replace("cn//","cn/").replace("com///","com/");
+            final String url=(Url.IMAGE+largeImageUrl).replace("com//","com/").replace("cn//","cn/").replace("com///","com/").replace(Url.IMAGE+Url.IMAGE,Url.IMAGE);
             // ToastHelper.showToast(url,ctx);
             final Bitmap bitmap=loadImg.loadImage(mImageView,url,new LoadImg.ImageDownloadCallBack() {
                 @Override

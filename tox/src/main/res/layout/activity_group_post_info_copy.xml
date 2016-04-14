@@ -25,17 +25,6 @@
             android:paddingTop="10dp"
             android:src="@drawable/arrow_left" />
 
-        <TextView
-            android:id="@+id/group_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="群组"
-            android:textColor="@color/tab"
-            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/cate_menu"
@@ -89,7 +78,7 @@
                         android:layout_height="wrap_content">
 
                         <com.thinksky.redefine.CircleImageView
-                            android:id="@+id/user_logo"
+                            android:id="@+id/group_logo"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:layout_marginTop="5dp"
@@ -102,7 +91,7 @@
                         android:padding="5dp">
 
                         <TextView
-                            android:id="@+id/post_user_name"
+                            android:id="@+id/group_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -111,24 +100,68 @@
                             android:textSize="17sp" />
 
                         <TextView
+                            android:id="@+id/louzhu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="6dp"
-                            android:layout_toRightOf="@id/post_user_name"
+                            android:layout_toRightOf="@id/group_name"
                             android:background="@drawable/text_blue_round"
                             android:text="楼主"
                             android:textColor="@color/white" />
 
                         <TextView
-                            android:id="@+id/post_create_time"
+                            android:id="@+id/join"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_below="@+id/post_user_name"
-                            android:layout_marginLeft="5dp"
-                            android:text="2015-02-04"
-                            android:textColor="#0C0C0C"
-                            android:textSize="12sp" />
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="6dp"
+
+
+                            android:text="楼主" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/group_name"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/post_create_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+
+                                android:layout_marginLeft="5dp"
+                                android:text="2015-02-04"
+                                android:textColor="#0C0C0C"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/louzhu"
+
+                                android:layout_marginLeft="5dp"
+                                android:text="发布" />
+
+                            <TextView
+                                android:id="@+id/group_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/louzhu"
+                                android:layout_marginLeft="5dp"
+                                android:text="5" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/louzhu"
+
+                                android:layout_marginLeft="5dp"
+                                android:text="个成员" />
+                        </LinearLayout>
+
+
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -187,6 +220,64 @@
                                 android:visibility="invisible" />
                         </LinearLayout>
                     </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.thinksky.redefine.CircleImageView
+                                android:id="@+id/user_logo"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_marginTop="5dp"
+                                android:src="@drawable/side_user_avatar" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/louzhu1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_gravity="center"
+                                android:text="发帖人"
+                                android:textColor="#999999"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/post_user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="楼主"
+                                android:textColor="#666666"
+                                android:textSize="13sp"
+                                android:layout_alignParentTop="true"
+                                android:layout_toRightOf="@+id/louzhu1"
+                                android:layout_toEndOf="@+id/louzhu1" />
+
+                            <TextView
+                                android:id="@+id/qianming"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_below="@+id/post_user_name"
+                                android:layout_marginLeft="10dp"
+                                android:text="2015-02-04"
+                                android:textColor="#0C0C0C"
+                                android:textSize="12sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 

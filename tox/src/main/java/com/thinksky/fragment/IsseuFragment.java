@@ -36,7 +36,7 @@ public class IsseuFragment extends Fragment implements View.OnClickListener {
         initView();
         return view;
     }
-//交给你了
+
     private void initView() {
         mSegmentControl2 = (SegmentControl) view.findViewById(R.id.segment_control2);
         mPager = (ViewPager) view.findViewById(R.id.pager);
@@ -48,7 +48,7 @@ public class IsseuFragment extends Fragment implements View.OnClickListener {
         fragments.add(WendaFragment.newInstance("label1"));
         fragments.add(ZhuanjiFragment.newInstance("label2"));
 //        fragments.add(IssueFragment.newInstance("问答"));
-        fragments.add(BaikeFragment.newInstance("label3"));//我就写这一个Fragment。
+        fragments.add(BaikeFragment.newInstance("label3"));
         mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
         mSegmentControl2.setSelectedTextColor(getResources().getColor(android.R.color.black));
         mSegmentControl2.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {
@@ -57,18 +57,18 @@ public class IsseuFragment extends Fragment implements View.OnClickListener {
                 mPager.setCurrentItem(index);
             }
         });
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                mSegmentControl2.setCurrentIndex(position);
-                if (position % 2 != 0) {
-                    mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.darker_gray));
-                } else {
-                    mSegmentControl2.setSelectedBackgroundColors(0xff009688);
-                }
-            }
-        });
+//        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//                mSegmentControl2.setCurrentIndex(position);
+//                if (position % 2 != 0) {
+//                    mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.darker_gray));
+//                } else {
+//                    mSegmentControl2.setSelectedBackgroundColors(0xff009688);
+//                }
+//            }
+//        });
 //        FragmentTransaction mFragmentTransaction = mFragmentManager
 //                .beginTransaction();
 //        mFragmentTransaction.replace(R.id.wenda, zhuanjiFragment);

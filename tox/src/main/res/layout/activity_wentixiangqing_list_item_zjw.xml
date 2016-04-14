@@ -22,8 +22,7 @@
             <ImageView
                 android:id="@+id/avatar32"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_launcher" />
+                android:layout_height="30dp" />
 
             <TextView
                 android:id="@+id/nickname"
@@ -74,9 +73,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="38dp"
+                    android:text="采纳"
                     android:textColor="@color/head"
-                    android:visibility="gone"
-                    android:text="采纳" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/dianzan"

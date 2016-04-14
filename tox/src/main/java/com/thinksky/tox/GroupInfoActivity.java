@@ -316,7 +316,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
         group_logo = (ImageView) findViewById(R.id.group_logo);
         group_name = (TextView) findViewById(R.id.group_name);
         group_type = (TextView) findViewById(R.id.group_type);
-        group_type_name = (TextView) findViewById(R.id.group_type_name);
+//        group_type_name = (TextView) findViewById(R.id.group_type_name);
         post_count = (TextView) findViewById(R.id.post_count);
         man_count = (TextView) findViewById(R.id.man_count);
         join_status = (TextView) findViewById(R.id.join_status);
@@ -399,7 +399,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
             group_type.setText("私有群组");
         }
         group_detail.setText("群组简介：" + groupInfoMap.get("detail"));
-        group_type_name.setText(groupInfoMap.get("type_name"));
+//        group_type_name.setText(groupInfoMap.get("type_name"));
         post_count.setText(groupInfoMap.get("post_count"));
         man_count.setText(groupInfoMap.get("memberCount"));
         if (groupInfoMap.get("group_logo").equals(Url.USERHEADURL + "Public/Core/images/nopic.png")) {

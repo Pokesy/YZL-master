@@ -133,10 +133,12 @@ public class NewsActivity extends FragmentActivity implements View.OnClickListen
                                 textView.setTextColor(activity.context.getResources().getColor(R.color.black));
                                 textView.setText(navigationLineList.get(i).getTitle());
                                 textView.setTag(navigationLineList.get(i).getNewsSecond());
+
                                 textView.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     @SuppressWarnings(value = {"unchecked"})
                                     public void onClick(View v) {
+
                                         setBackColor(activity.firstNavigationLine);
                                         v.setBackgroundResource(R.color.post_time);
                                         secondList = (ArrayList<NewsCategory>) v.getTag();

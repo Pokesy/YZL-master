@@ -2,23 +2,31 @@ package com.thinksky.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.thinksky.info.WendaXianqingInfo;
+import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
-import com.thinksky.rsen.fragment.AnswerDialogFragment;
 import com.thinksky.tox.R;
 import com.thinksky.utils.LoadImg;
+import com.thinksky.utils.MyJson;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -52,6 +60,10 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
     public static boolean upFlag = false;
     public static boolean flag = false;
     private SharedPreferences sp = null;
+    private LinearLayout reply_button;
+    private LinearLayout reply_box;
+    private EditText reply_editText;
+    private TextView sendPostButtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,8 +79,44 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
         listView = (ListView) findViewById(R.id.listView);
         btn_huida = (Button) findViewById(R.id.btn_huida);
         back_menu = (ImageView) findViewById(R.id.back_menu);
-        btn_huida.setOnClickListener(this);
+
+        reply_button = (LinearLayout) findViewById(R.id.reply_button);
+        reply_box = (LinearLayout) findViewById(R.id.reply_box);
+        reply_editText = (EditText) findViewById(R.id.reply_editText);
+        sendPostButtn = (TextView) findViewById(R.id.sendPostButn);
+        //发表回复文本框的事件监听器
+        reply_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count != 0) {
+                    sendPostButtn.setBackgroundResource(R.drawable.forum_enable_btn_send);
+                    sendPostButtn.setTextColor(Color.WHITE);
+                } else {
+                    sendPostButtn.setBackgroundResource(R.drawable.border);
+                    sendPostButtn.setTextColor(Color.parseColor("#A9ADB0"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() != 0) {
+                    sendPostButtn.setBackgroundResource(R.drawable.forum_enable_btn_send);
+                    sendPostButtn.setTextColor(Color.WHITE);
+                } else {
+                    sendPostButtn.setBackgroundResource(R.drawable.border);
+                    sendPostButtn.setTextColor(Color.parseColor("#A9ADB0"));
+                }
+            }
+        });
+
         back_menu.setOnClickListener(this);
+        btn_huida.setOnClickListener(this);
+        sendPostButtn.setOnClickListener(this);
         mListData = new ArrayList<WendaXianqingInfo>();
         baseApi = new BaseApi();
         session_id = baseApi.getSeesionId();
@@ -133,13 +181,14 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                         flag = true;
                     } else {
                         best_answer.setText("已解决");
+                        best_answer.setBackgroundColor(Color.GRAY);
                         flag = false;
                     }
                     money.setText(questionEntity.getScore());
                     creat_time.setText(questionEntity.getCreate_time());
                     content.setText(questionEntity.getDescription1());
-                    nickname.setText(questionEntity.getUid());
-                    huida.setText(questionEntity.getAnswer_num());
+                    nickname.setText(questionEntity.getCategory_title());
+                    huida.setText(questionEntity.getAnswer_num()+"条回答");
 
                 } else {
                     ToastHelper.showToast("请求失败", Url.context);
@@ -152,8 +201,42 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            //回复按钮
             case R.id.btn_huida:
-                AnswerDialogFragment.show(getSupportFragmentManager(), new AnswerDialogFragment.ArgBean());
+                if (BaseFunction.isLogin()) {
+
+                    reply_button.setVisibility(View.GONE);
+                    reply_box.setVisibility(View.VISIBLE);
+                    //自动打开软键盘并获取焦点
+                    reply_editText.setFocusable(true);
+                    reply_editText.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
+                } else {
+                    ToastHelper.showToast("请登录后操作", this);
+                }
+                break;
+            //发表评论按钮
+            case R.id.sendPostButn:
+                if (reply_editText.getText().length() > 0 && !"".equals(reply_editText.getText().toString().trim())) {
+                    sendPostButtn.setBackgroundResource(R.drawable.border);
+                    sendPostButtn.setTextColor(Color.parseColor("#A9ADB0"));
+                    reply_button.setVisibility(View.VISIBLE);
+                    reply_box.setVisibility(View.GONE);
+                    InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm2.isActive()) {
+                        imm2.hideSoftInputFromWindow(reply_editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                    Log.e("评论内容>>>>>>>>>>", reply_editText.getText().toString());
+                    send();
+//                    initFlag(false,true);
+//                    groupApi.postComment(post_id+"",reply_editText.getText().toString());
+                    reply_editText.setText(null);
+
+                } else {
+                    ToastHelper.showToast("评论不能为空", this);
+                }
                 break;
 
             case R.id.back_menu:
@@ -162,6 +245,45 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
             default:
                 break;
         }
+    }
+
+    private void send() {
+
+//        Map map = new HashMap();
+//        map.put("session_id", session_id);
+//        map.put("content", reply_editText.getText().toString().trim());
+//        map.put("question_id", mQuestionId);
+
+
+        RsenUrlUtil.execute(this, RsenUrlUtil.URL_SEND_QUESTION_ANSWER, new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
+            @Override
+            public void onNoNetwork(String msg) {
+                ToastHelper.showToast(msg, Url.context);
+            }
+
+            @Override
+            public Map getMap() {
+                Map map = new HashMap();
+                map.put("session_id", session_id);
+                map.put("content", reply_editText.getText().toString().trim());
+                map.put("question_id", mQuestionId);
+                return map;
+
+            }
+
+            @Override
+            public void onParseJsonBean(List<DiscoverFragment.FXBean> beans, JSONObject jsonObject) {
+                String result = jsonObject.toString();
+                DiscoverFragment.FXBean discoverInfo = JSON.parseObject(result, DiscoverFragment.FXBean.class);
+                beans.add(discoverInfo);
+            }
+
+            @Override
+            public void onResult(boolean state, List beans) {
+
+            }
+        });
+
     }
 
     public class WentixiangqingListAdapter extends BaseAdapter {
@@ -220,10 +342,13 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
 //            WendaXianqingInfo bean = beans.get(position);
 //            list =bean.getQuestionAnswer();
             final WendaXianqingInfo.QuestionAnswerEntity bean = list.get(position);
+            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE +bean.getUser().getAvatar32(),  holder.avatar32);
             holder.nickname.setText(bean.getUser().getNickname());
             holder.content.setText(bean.getContent());
-            holder.creat_time.setText(bean.getCreate_time());
+            holder.creat_time.setText(MyJson.getStandardDate(bean.getCreate_time()));
             holder.reply_count.setText(bean.getSupport_count());
+
+
             if (!(bean.getIs_supported().equals("0"))) {//已点赞
                 holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
                 upFlag = true;
@@ -232,11 +357,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                 upFlag = false;
             }
 
-//            if (bean.isDianZan) {
-//                holder.dianzan.setImageResource(R.drawable.iconfontdianzan);
-//            } else {
-//                holder.dianzan.setImageResource(R.drawable.iconfontweidianzan);
-//            }
+
             if (bean.getIsbest() != 0) {
                 //采纳
                 holder.caina.setVisibility(View.VISIBLE);
@@ -248,129 +369,8 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
 
             /*点击图标和文本,都支持点赞操作*/
             holder.dianzan.setOnClickListener(new DianZanListener(holder, bean));
-                holder.reply_count.setOnClickListener(new DianZanListener(holder, bean));
-//                @Override
-//                public void onClick(View v) {
-//                    if (BaseFunction.isLogin()) {
-//                        if (bean.getIs_supported().equals("0")) {
-//                            holder.reply_count.setText(Integer.parseInt(bean.getSupport_count()) + 1 + "");
-//                            holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
-////                            mDetail_Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, wentixiangqing.this));
-////                            support();
-//                            RsenUrlUtil.execute(RsenUrlUtil.URL_SUPPORT_QUESTION_ANSWER, new RsenUrlUtil.OnJsonResultListener<DianzanBean>() {
-//                                @Override
-//                                public void onNoNetwork(String msg) {
-//                                    ToastHelper.showToast(msg, Url.context);
-//                                }
+            holder.reply_count.setOnClickListener(new DianZanListener(holder, bean));
 //
-//                                @Override
-//                                public Map getMap() {
-//                                    Map map = new HashMap();
-//                                    map.put("session_id", session_id);
-//                                    map.put("answerid", list.get(position).getId());
-//                                    return map;
-//                                }
-//
-//                                @Override
-//                                public void onParseJsonBean(List<DianzanBean> beans, JSONObject jsonObject) {
-//                                    try {
-//                                        DianzanBean bean = new DianzanBean();
-//                                        bean.message = jsonObject.getString("message");
-//                                        bean.success = jsonObject.getString("success");
-//                                        beans.add(bean);
-//                                    } catch (Exception e) {
-//
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onResult(boolean state, List<DianzanBean> beans) {
-////                            if (state) {
-////                                ToastHelper.showToast("采纳了", Url.context);
-////                            } else {
-////                                ToastHelper.showToast("请求失败", Url.context);
-////                            }
-//
-//                                    DianzanBean bean_bean = beans.get(0);
-//                                    if (bean_bean.success.equals("true")) {
-//                                        ToastHelper.showToast("点赞成功", Url.context);
-//                                        holder.caina.setVisibility(View.GONE);
-//                                        bean.setIssetbest(0);
-//                                        notifyDataSetChanged();
-//                                    }
-//                                }
-//                            });
-//                        } else {
-//                            holder.acept.setVisibility(View.GONE);
-//                            ToastHelper.showToast("点赞失败", Url.context);
-//                        }
-//                    } else {
-//                        ToastHelper.showToast("请先登录", wentixiangqing.this);
-//                    }
-//                }
-//                {
-//                    if (BaseFunction.isLogin()) {
-//                        sp = getSharedPreferences("userInfo", 0);
-//                        Log.e(sp.getString("avatar", "空空空"), "");
-//                        session_id = sp.getString("session_id", Url.SESSIONID);
-//                        if ((bean.getIs_supported().equals("0"))) {
-//
-//                            holder.reply_count.setText(Integer.parseInt(bean.getSupport_count()) + 1 + "");
-//                            holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
-////                            mDetail_Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, wentixiangqing.this));
-////                            support();
-//                            RsenUrlUtil.execute(RsenUrlUtil.URL_SUPPORT_QUESTION_ANSWER, new RsenUrlUtil.OnJsonResultListener<DianzanBean>() {
-//                                @Override
-//                                public void onNoNetwork(String msg) {
-//                                    ToastHelper.showToast(msg, Url.context);
-//                                }
-//
-//                                @Override
-//                                public Map getMap() {
-//                                    Map map = new HashMap();
-//                                    map.put("session_id", session_id);
-//                                    map.put("answerid", list.get(position).getId());
-//                                    return map;
-//                                }
-//
-//                                @Override
-//                                public void onParseJsonBean(List<DianzanBean> beans, JSONObject jsonObject) {
-//                                    try {
-//                                        DianzanBean bean = new DianzanBean();
-//                                        bean.message = jsonObject.getString("message");
-//                                        bean.success = jsonObject.getString("success");
-//                                        beans.add(bean);
-//                                    } catch (Exception e) {
-//
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onResult(boolean state, List<DianzanBean> beans) {
-////                                    if (state) {
-////                                        ToastHelper.showToast("采纳了", Url.context);
-////                                    } else {
-////                                        ToastHelper.showToast("请求失败", Url.context);
-////                                    }
-//
-//                                    DianzanBean bean_bean = beans.get(0);
-//                                    if (bean_bean.success.equals("true")) {
-//                                        ToastHelper.showToast("点赞成功", Url.context);
-//
-//                                        bean.setIssetbest(0);
-//                                        notifyDataSetChanged();
-//                                    }
-//                                }
-//                            });
-//                        } else {
-//                            holder.acept.setVisibility(View.GONE);
-//                            ToastHelper.showToast("点赞失败，重复点赞", Url.context);
-//                        }
-//                    } else {
-//                        ToastHelper.showToast("请先登录", wentixiangqing.this);
-//                    }
-//                }
-//            });
             holder.reply_count.setOnClickListener(new DianZanListener(holder, bean));
 
             /*采纳*/
@@ -453,9 +453,9 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                     if (!upFlag) {
                         upFlag = true;
                         holder.reply_count.setText(Integer.parseInt(bean.getSupport_count()) + 1 + "");
-//                            mDetail_Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, wentixiangqing.this));
-//                            support();
-                        RsenUrlUtil.execute(RsenUrlUtil.URL_SUPPORT_QUESTION_ANSWER, new RsenUrlUtil.OnJsonResultListener<DianzanBean>() {
+                        holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
+//
+                        RsenUrlUtil.execute(wentixiangqing.this, RsenUrlUtil.URL_SUPPORT_QUESTION_ANSWER, new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
                             @Override
                             public void onNoNetwork(String msg) {
                                 ToastHelper.showToast(msg, Url.context);
@@ -467,39 +467,59 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                                 map.put("session_id", session_id);
                                 map.put("answerid", bean.getId());
                                 return map;
+
                             }
 
                             @Override
-                            public void onParseJsonBean(List<DianzanBean> beans, JSONObject jsonObject) {
-                                try {
-                                    DianzanBean bean2 = new DianzanBean();
-                                    bean2.message = jsonObject.getString("message");
-                                    bean2.success = jsonObject.getString("success");
-                                    beans.add(bean2);
-                                } catch (Exception e) {
-
-                                }
+                            public void onParseJsonBean(List<DiscoverFragment.FXBean> beans, JSONObject jsonObject) {
+                                String result = jsonObject.toString();
+                                DiscoverFragment.FXBean discoverInfo = JSON.parseObject(result, DiscoverFragment.FXBean.class);
+                                beans.add(discoverInfo);
                             }
 
                             @Override
-                            public void onResult(boolean state, List<DianzanBean> beans) {
+                            public void onResult(boolean state, List beans) {
 
-
-                                DianzanBean bean1 = beans.get(0);
-                                if (bean1.success.equals("true")) {
-                                    ToastHelper.showToast("点赞成功", Url.context);
-                                    holder.dianzan.setImageResource(R.drawable.iconfontdianzan);
-                                    bean.setIs_supported("0");
-                                    notifyDataSetChanged();
-                                }
-//                                if (state) {
-//                                    ToastHelper.showToast("点赞了", Url.context);
-//                                } else {
-//                                    ToastHelper.showToast("请求失败", Url.context);
-//                                }
                             }
                         });
-
+//                        Map map = new HashMap();
+//                        map.put("session_id", session_id);
+//                        map.put("answerid", bean.getId());
+//
+//                        RsenUrlUtil.executeGetWidthMap(wentixiangqing.this,RsenUrlUtil.URL_SUPPORT_QUESTION_ANSWER,map, new RsenUrlUtil.OnJsonResultListener<DianzanBean>() {
+//                            @Override
+//                            public void onNoNetwork(String msg) {
+//                                ToastHelper.showToast(msg, Url.context);
+//                            }
+//                     @Override
+//                            public void onParseJsonBean(List<DianzanBean> beans, JSONObject jsonObject) {
+//                                try {
+//                                    DianzanBean bean = new DianzanBean();
+//                                    bean.message = jsonObject.getString("message");
+//                                    bean.success = jsonObject.getString("success");
+//                                    beans.add(bean);
+//                                } catch (Exception e) {
+//
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onResult(boolean state, List<DianzanBean> beans) {
+////                            if (state) {
+////                                ToastHelper.showToast("采纳了", Url.context);
+////                            } else {
+////                                ToastHelper.showToast("请求失败", Url.context);
+////                            }
+//
+//                                DianzanBean bean_bean = beans.get(0);
+//                                if (bean_bean.success.equals("true")) {
+//                                    ToastHelper.showToast("采纳成功", Url.context);
+//                                    holder.caina.setVisibility(View.GONE);
+//                                    bean.setIssetbest(0);
+//                                    notifyDataSetChanged();
+//                                }
+//                            }
+//                        });
                     } else {
                         ToastHelper.showToast("点赞失败，重复点赞", wentixiangqing.this);
                     }

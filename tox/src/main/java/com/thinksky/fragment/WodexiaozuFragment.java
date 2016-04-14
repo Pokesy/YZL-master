@@ -72,40 +72,49 @@ public class WodexiaozuFragment extends RBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_JINGXUAN, new RsenUrlUtil.OnJsonResultListener<MyBean>() {
+        Map map = new HashMap();
+        map.put("session_id", session_id);
+        RsenUrlUtil.executeGetWidthMap(getActivity(), RsenUrlUtil.URL_WODE, map, new RsenUrlUtil.OnJsonResultListener<MyBean>() {
             @Override
             public void onNoNetwork(String msg) {
                 ToastHelper.showToast(msg, Url.context);
             }
-            @Override
-            public Map getMap() {
-                Map map = new HashMap();
-                map.put("session_id", session_id);
-                return map;
 
-            }
+            //            @Override
+//            public Map getMap() {
+//                Map map = new HashMap();
+//                map.put("session_id", session_id);
+//                return map;
+//
+//            }
             @Override
             public void onParseJsonBean(List<MyBean> beans, JSONObject jsonObject) {
-                MyBean bean = new MyBean();
+
                 try {
-                    bean.logo = RsenUrlUtil.URL_BASE + jsonObject.getString("logo");
-                    bean.title = jsonObject.getString("title");
-                    bean.id = jsonObject.getString("id");
-                    bean.memberCount = jsonObject.getString("menmberCount");
-                    bean.group_background = jsonObject.getString("background");
-                    bean.type_id = jsonObject.getString("type_id");
-                    bean.is_join = jsonObject.getString("is_join");
-                    bean.uid = jsonObject.getString("uid");
-                    bean.post_count = jsonObject.getString("post_count");
-                    bean.group_type = jsonObject.getString("type");
-                    bean.type_name = jsonObject.getString("type_name");
-                    bean.detail = jsonObject.getString("detail");
-                    bean.activity = jsonObject.getString("activity");
+
+
+                        for (int i=0;i<jsonObject.length();i++){
+                            MyBean bean = new MyBean();
+                            bean.logo = jsonObject.getJSONObject(String.valueOf(i)).getString("logo");
+                            bean.title = jsonObject.getJSONObject(String.valueOf(i)).getString("title");
+                            bean.id = jsonObject.getJSONObject(String.valueOf(i)).getString("id");
+                            bean.memberCount = jsonObject.getJSONObject(String.valueOf(i)).getString("menmberCount");
+                            bean.group_background = jsonObject.getJSONObject(String.valueOf(i)).getString("background");
+                            bean.type_id = jsonObject.getJSONObject(String.valueOf(i)).getString("type_id");
+                            bean.is_join = jsonObject.getJSONObject(String.valueOf(i)).getString("is_join");
+                            bean.uid = jsonObject.getJSONObject(String.valueOf(i)).getString("uid");
+                            bean.post_count = jsonObject.getJSONObject(String.valueOf(i)).getString("post_count");
+                            bean.group_type = jsonObject.getJSONObject(String.valueOf(i)).getString("type");
+//                            bean.type_name = jsonObject.getJSONObject(String.valueOf(i)).getString("type_name");
+                            bean.detail = jsonObject.getJSONObject(String.valueOf(i)).getString("detail");
+                            bean.activity = jsonObject.getJSONObject(String.valueOf(i)).getString("activity");
+                            beans.add(bean);
+                        }
+
 
                 } catch (JSONException e) {
                 }
-                beans.add(bean);
+
             }
 
             @Override
@@ -187,7 +196,7 @@ public class WodexiaozuFragment extends RBaseFragment {
 
         @Override
         protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
-            ResUtil.setRoundImage(bean.logo, holder.imgV(R.id.logo));
+            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.logo, holder.imgV(R.id.logo));
 
             holder.tV(R.id.title).setText(bean.title);
             holder.tV(R.id.memberCount).setText(bean.memberCount);
@@ -219,7 +228,7 @@ public class WodexiaozuFragment extends RBaseFragment {
         map.put("title", bean.title);
         map.put("group_type", bean.group_type);
         map.put("detail", bean.detail);
-        map.put("type_name", bean.type_name);
+//        map.put("type_name", bean.type_name);
         map.put("post_count", bean.post_count);
         map.put("group_logo", bean.logo);
         map.put("memberCount", bean.memberCount);
@@ -240,7 +249,7 @@ public class WodexiaozuFragment extends RBaseFragment {
         //        public String group_id;
         public String group_type;
         public String detail;
-        public String type_name;
+//        public String type_name;
         public String post_count;
         public String memberCount;
         public String uid;
