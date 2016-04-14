@@ -44,7 +44,7 @@ public class LoginActivity extends Activity {
     private String status[]=null;
     private ArrayList<HashMap<String ,String>> list=new ArrayList<HashMap<String, String>>();
     public static Activity instance;
-    String[] shuju=null;
+    String[] shuju={"mobile"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
-        shuju=getIntent().getStringArrayExtra("ways");
+//        shuju=getIntent().getStringArrayExtra("ways");
         loginApi=new LoginApi();
         Intent intent = this.getIntent();
         instance = this;

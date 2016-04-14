@@ -251,6 +251,8 @@ public class ZhuanjiFragment extends Fragment {
         public String title;
         public String cover_url;//需要加上 URL_BASE
         public int id;
+        public String create_time;
+        public String  reply_count;
     }
 
 

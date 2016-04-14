@@ -28,7 +28,6 @@ import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RectIndicator;
-import com.thinksky.tox.ForumActivity2;
 import com.thinksky.tox.ForumDetailActivity;
 import com.thinksky.tox.R;
 import com.tox.ToastHelper;
@@ -466,8 +465,9 @@ public class LuntanFragment extends Fragment {
 
             final ForumBean bean = beans.get(position);
             ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(bean.title);
-            ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.logo,
-                    (ImageView) viewHolder.itemView.findViewById(R.id.imageView));
+//            ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.logo,
+//                    (ImageView) viewHolder.itemView.findViewById(R.id.imageView));
+            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.logo,(ImageView) viewHolder.itemView.findViewById(R.id.imageView));
             ((TextView) viewHolder.itemView.findViewById(R.id.title_tsh)).setText(bean.total_count);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -496,7 +496,7 @@ public class LuntanFragment extends Fragment {
         public ArrayList<ForumBean> forumList;
     }
 
-    public static class ForumBean implements Serializable{
+    public static class ForumBean implements Serializable {
         /**
          * "allow_user_group": "1",
          * "background": "/opensns/Public/App/images/default_head.jpg",

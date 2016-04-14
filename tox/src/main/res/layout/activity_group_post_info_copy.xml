@@ -249,7 +249,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="10dp"
                                 android:layout_gravity="center"
-                                android:text="发帖人"
+                                android:text="作者："
                                 android:textColor="#999999"
                                 android:textSize="13sp" />
 

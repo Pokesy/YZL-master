@@ -36,8 +36,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.thinksky.tox.R.drawable.email;
-
 public class RegistetActivity extends Activity {
     private RelativeLayout mClose,mNext;
     private EditText mName, mPassword,role,nickname,verifyId;
@@ -92,14 +90,14 @@ public class RegistetActivity extends Activity {
             juese=getIntent().getExtras().getString("role");
         }
         arr= (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("title");
-        for (int i=1;i<arr.size();i++){
-            tempButton=new RadioButton(this);
-            tempButton.setText(arr.get(i).get("title"));
-            radioGroup.addView(tempButton, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            if (i==1){
-                tempButton.setChecked(true);
-            }
-        }
+//        for (int i=1;i<arr.size();i++){
+//            tempButton=new RadioButton(this);
+//            tempButton.setText(arr.get(i).get("title"));
+//            radioGroup.addView(tempButton, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            if (i==1){
+//                tempButton.setChecked(true);
+//            }
+//        }
         Log.d("asdf>>>", arr.get(1).get("title"));
         juese=arr.get(1).get("id");
         opinion=getIntent().getExtras().getString("opinion");

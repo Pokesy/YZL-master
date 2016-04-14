@@ -9,43 +9,47 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@drawable/head_border">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="8dp">
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/head_border">
 
-                <TextView
-                    android:id="@+id/text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/head"
 
-                    android:paddingRight="88dp"
+            </android.support.v7.widget.Toolbar>
 
-                    android:text="鱼知乐"
-                    android:textColor="@color/tab"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
 
-                <ImageView
-                    android:id="@+id/sousuo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/iconfont_sousuo" />
-            </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
+                android:background="@color/head"
+                android:text="鱼知乐"
+                android:textColor="@color/tab"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/sousuo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/iconfont_sousuo" />
+        </RelativeLayout>
+
 
         <FrameLayout
             android:id="@+id/content"
@@ -69,37 +73,37 @@
                 style="@style/main_tab_bottom"
                 android:checked="false"
                 android:drawableTop="@drawable/home_progress"
-                android:textColor="@color/tab_text_color"
-                android:text="@string/tab_function" />
+                android:text="@string/tab_function"
+                android:textColor="@color/tab_text_color" />
 
             <RadioButton
                 android:id="@+id/rb_weibo"
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/dongtai_progress"
-                android:textColor="@color/tab_text_color"
-                android:text="@string/tab_news_center" />
+                android:text="@string/tab_news_center"
+                android:textColor="@color/tab_text_color" />
 
             <RadioButton
                 android:id="@+id/rb_yulequan"
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/ylq_progress"
-                android:textColor="@color/tab_text_color"
-                android:text="@string/tab_smart_service" />
+                android:text="@string/tab_smart_service"
+                android:textColor="@color/tab_text_color" />
 
             <RadioButton
                 android:id="@+id/rb_yuyisheng"
                 style="@style/main_tab_bottom"
                 android:checked="false"
                 android:drawableTop="@drawable/yys_progress"
-                android:textColor="@color/tab_text_color"
-                android:text="@string/tab_gov_affairs" />
+                android:text="@string/tab_gov_affairs"
+                android:textColor="@color/tab_text_color" />
 
             <RadioButton
                 android:id="@+id/rb_mall"
                 style="@style/main_tab_bottom"
                 android:drawableTop="@drawable/mall_progress"
-                android:textColor="@color/tab_text_color"
-                android:text="@string/tab_setting" />
+                android:text="@string/tab_setting"
+                android:textColor="@color/tab_text_color" />
         </RadioGroup>
     </LinearLayout>
 
