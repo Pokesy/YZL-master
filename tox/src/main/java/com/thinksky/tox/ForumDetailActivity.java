@@ -350,6 +350,7 @@ public class ForumDetailActivity extends ActionBarActivity implements View.OnCli
 
             if (msg.what == 404) {
                 ToastHelper.showToast("请求失败", ForumDetailActivity.this);
+                mRefreshListView.resetPullStatus();
 
             } else if (msg.what == 0) {
                 String result = (String) msg.obj;

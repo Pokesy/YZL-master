@@ -30,7 +30,8 @@ import java.util.ArrayList;
 
 
 public class NewsFragment extends Fragment {
-    
+    public static final String ARG_KEY_CATEGORY = "news_category";
+
     private Context mContext;
     protected NewsCategory newsTitle;
     private MyListView newsListView;
@@ -46,25 +47,35 @@ public class NewsFragment extends Fragment {
     private Boolean isUpdate = true;
     private int page = 1;
 
+    private NewsCategory mNewsCategory;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         newsApi = new NewsApi(mHandler);
         newsListInfos = new ArrayList<NewsListInfo>();
         mContext = getActivity();
-        newsTitle = (NewsCategory)getArguments().get("newsTitle");
+        newsTitle = (NewsCategory) getArguments().get(ARG_KEY_CATEGORY);
         category = newsTitle.getId();
         message = new Message();
         message.what = 0x620;
         mHandler.sendMessage(message);
     }
 
+    public static NewsFragment newInstance(NewsCategory newsCategory) {
+        NewsFragment fragment = new NewsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ARG_KEY_CATEGORY, newsCategory);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.news_fragment, container, false);
-        newsListView = (MyListView)rootView.findViewById(R.id.news_listView);
-        dotLoadBar = (DotLoadView)rootView.findViewById(R.id.dotLoadBar);
+        newsListView = (MyListView) rootView.findViewById(R.id.news_listView);
+        dotLoadBar = (DotLoadView) rootView.findViewById(R.id.dotLoadBar);
         fistProBarLine = (RelativeLayout) getActivity().findViewById(R.id.proBarLine);
         newsListView.setonRefreshListener(new MyListView.OnRefreshListener() {
             @Override
@@ -130,21 +141,21 @@ public class NewsFragment extends Fragment {
             mFragment = mFragmentReference.get();
             myJson = new MyJson();
             if (mFragment != null) {
-                switch (msg.what){
+                switch (msg.what) {
                     case 0x620:
-                        mFragment.newsApi.getNewsList(mFragment.category,mFragment.page);
+                        mFragment.newsApi.getNewsList(mFragment.category, mFragment.page);
                         break;
                     case 0:
                         String result = (String) msg.obj;
-                        if (mFragment.isUpdate){
+                        if (mFragment.isUpdate) {
                             mFragment.newsListInfos.clear();
                             mFragment.newsListInfos.addAll(myJson.getNewsList(result));
-                            newsListAdapter = new NewsListAdapter(mFragment.mContext,mFragment.newsListInfos);
+                            newsListAdapter = new NewsListAdapter(mFragment.mContext, mFragment.newsListInfos);
                             mFragment.newsListView.setAdapter(newsListAdapter);
                             //结束下拉刷新
                             mFragment.newsListView.onRefreshComplete();
                             mFragment.newsListView.setVisibility(View.VISIBLE);//显示资讯列表
-                        }else {
+                        } else {
                             mFragment.newsListInfos.addAll(myJson.getNewsList(result));
                             mFragment.newsListView.removeFooterView(mFragment.mAddMoreProgressBar);
                             newsListAdapter.notifyDataSetChanged();

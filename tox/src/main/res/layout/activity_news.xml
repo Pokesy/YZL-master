@@ -39,7 +39,6 @@
 
         <ImageView
             android:id="@+id/my_news"
-            android:visibility="gone"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -47,27 +46,27 @@
             android:paddingBottom="13dp"
             android:paddingRight="8dp"
             android:paddingTop="13dp"
-            android:src="@drawable/ic_content_paste" />
+            android:src="@drawable/ic_content_paste"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/news_post"
             android:layout_width="40dp"
-            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingBottom="15dp"
             android:paddingRight="10dp"
             android:paddingTop="15dp"
-            android:src="@drawable/pencil" />
+            android:src="@drawable/pencil"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <!--Body-->
     <RelativeLayout
         android:id="@+id/proBarLine"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -102,21 +101,29 @@
             android:id="@+id/navigation_scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingBottom="14dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:paddingTop="14dp"
             android:scrollbars="none">
 
-            <LinearLayout
+            <com.thinksky.tox.SegmentControl
                 android:id="@+id/first_navigation_line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                >
-            <android.support.v4.view.ViewPager
-                android:id="@+id/news_pager1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />   </LinearLayout>
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                app:cornerRadius="10dip"
+                app:direction="horizon"
+                app:horizonGap="20dip"
+                app:selectedBackgroundColors="#2a93d5"
+                app:selectedIndex="0"
+                app:verticalGap="10dip">
+
+            </com.thinksky.tox.SegmentControl>
+
         </HorizontalScrollView>
 
         <LinearLayout
@@ -128,8 +135,8 @@
                 android:id="@+id/news_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                app:pstsIndicatorHeight="1dp"
                 android:visibility="gone"
+                app:pstsIndicatorHeight="1dp"
                 app:pstsTabPaddingLeftRight="10dp"
                 app:pstsUnderlineHeight="1dp" />
 
