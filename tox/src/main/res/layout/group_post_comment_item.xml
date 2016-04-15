@@ -70,11 +70,12 @@
                     <ImageView
                         android:id="@+id/reply_floor_btn"
                         android:layout_width="wrap_content"
-                        android:src="@drawable/com_function"
+                        android:src="@drawable/iconfontweidianzan"
                         android:layout_gravity="right"
                         android:layout_alignParentRight="true"
+                        android:paddingRight="10dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/item_click_bg"/>
+                       />
                 </RelativeLayout>
 
             </FrameLayout>
@@ -85,7 +86,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:text="妹子好"
-                android:textColor="@color/black" />
+                android:textSize="14sp"
+                android:textColor="#666666" />
 
             <!--//楼中楼区-->
             <LinearLayout

@@ -119,7 +119,7 @@ public class MyPost {
                 while (it.hasNext()) {
                     Map.Entry entry = (Entry) it.next();
                     String name = (String) entry.getKey();
-                    String value = (String) entry.getValue();
+                    String value = String.valueOf(entry.getValue()) ;
 //                    Log.e(">>>>>>>>>>>>>>>>" + name, value);
                     nameValuePairs.add(new BasicNameValuePair(name, value));
                 }

@@ -55,7 +55,7 @@ public class RsenUrlUtil {
     //小组详情
     public static String URL_XIAOZU_XIANGQING = URL_BASE + URL_SUB_BASE + "group/getGroupDetail&group_id=";
     //小组详情帖子
-    public static String URL_XIAOZU_XIANGQINGTZ = URL_BASE + URL_SUB_BASE + "group/getPostAll&group_id=";
+    public static String URL_XIAOZU_XIANGQINGTZ = URL_BASE + URL_SUB_BASE + "group/getPostAll";
 
     //问题详情
     public static String URL_WENTI_XIANGQING = URL_BASE + URL_SUB_BASE + "Question/getQuestionDetail&page=&count=&questionid=";

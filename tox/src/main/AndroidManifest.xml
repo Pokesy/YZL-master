@@ -47,9 +47,10 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <application
         android:name="com.thinksky.holder.BaseApplication"
+
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -384,6 +385,10 @@
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.tox.BaikeItemActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.tox.GroupInfoActivityCopy"
 
             android:theme="@style/ActivityThemeTwo" />
 

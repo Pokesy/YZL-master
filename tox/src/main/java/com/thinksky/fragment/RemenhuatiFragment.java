@@ -89,7 +89,7 @@ public class RemenhuatiFragment extends RBaseFragment {
 //                    bean.memberCount = jsonObject.getString("memberCount");
                     bean.cate_id = jsonObject.getString("cate_id");
                     bean.user_logo = RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
-//zheli
+                    bean.signature = jsonObject.getJSONObject("user").getString("signature");
                     JSONArray imgList = jsonObject.getJSONArray("imgList");
                     List<String> imgs = new ArrayList<String>();
                     for (int i = 0; imgList != null && i < imgList.length(); i++) {
@@ -151,6 +151,7 @@ public class RemenhuatiFragment extends RBaseFragment {
         public String is_top;
         public String cate_id;
         public String user_logo;
+        public String signature;
     }
 
     public static void launch(Context context, boolean isWeGroup, RemenhuatiBean bean) {
@@ -183,7 +184,7 @@ public class RemenhuatiFragment extends RBaseFragment {
         map.put("cate_id", bean.cate_id);
         map.put("supportCount", bean.supportCount);
         map.put("is_support", bean.is_support);
-
+        map.put("signature", bean.signature);
 
 //        JSONObject tempJSONObj = jsonObj.getJSONObject("user");
         map.put("user_uid", bean.uid);

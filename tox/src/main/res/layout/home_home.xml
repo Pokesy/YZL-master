@@ -132,6 +132,7 @@
                     android:textSize="13sp"
                     tools:text="235" />
             </LinearLayout>
+
         </LinearLayout>
 
         <ListView
