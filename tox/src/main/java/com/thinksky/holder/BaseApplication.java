@@ -35,7 +35,7 @@ public class BaseApplication extends Application {
 		this.mMainThread = Thread.currentThread();
 		this.mMainThreadId = android.os.Process.myTid();
 		this.mMainThreadLooper = getMainLooper();
-
+		SDKInitializer.initialize(this);
 		ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
 //		//初始化百度地图
 //		//  SDK初始化
@@ -45,7 +45,7 @@ public class BaseApplication extends Application {
 //        registerReceiver(mSDKInitReceiver, filter);
 		locationService = new LocationService(getApplicationContext());
 		mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-		SDKInitializer.initialize(this);
+
 	}
 
 

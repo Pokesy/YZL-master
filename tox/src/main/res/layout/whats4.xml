@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" 
-    android:background="@drawable/new_feature_4"
-    android:layout_width="fill_parent" 
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-  >
-    
-    <Button
-        android:layout_alignParentBottom="true"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:background="@drawable/new_feature_4_1"
-        android:onClick="startbutton"
-        android:layout_alignParentTop="true"
+    android:background="@drawable/new_feature_4"
+    android:orientation="vertical">
 
-        />
+    <Button
+
+        android:layout_width="189dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="167dp"
+        android:background="@drawable/bg_splash_status_selector"
+        android:gravity="center"
+        android:onClick="startbutton"
+        android:textColor="#ffffff"
+        android:textSize="16dp"
+        android:text="立刻体验" />
 </RelativeLayout>

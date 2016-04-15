@@ -169,7 +169,7 @@
                         android:id="@+id/is_support"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/rating_small_empty"
+                        android:drawableLeft="@drawable/icon_comment_number"
                         android:drawablePadding="5dp"
                         android:text="444"
                         android:layout_marginRight="10dp"

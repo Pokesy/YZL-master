@@ -1,93 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="115dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_zx"
-    android:background="@drawable/list_item_bg"
-    android:orientation="horizontal">
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:padding="12dp">
 
 
     <!-- 文字信息区域-->
-    <RelativeLayout
-        android:paddingLeft="5dp"
-        android:paddingTop="5dp"
-        android:paddingRight="5dp"
-        android:layout_weight="2"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/news_title"
-            android:textColor="@color/black"
-            android:layout_marginBottom="4dp"
-            android:singleLine="true"
-            android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="测试数据"/>
-        <LinearLayout
-            android:id="@+id/linear"
-            android:paddingBottom="2dp"
-            android:layout_below="@+id/news_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textSize="12sp"
-                android:id="@+id/news_author_name"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="测试数据"/>
-            <TextView
-                android:textSize="12sp"
-                android:id="@+id/news_create_time"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="测试数据"/>
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/is_overdue"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_large"
+            tools:text="标题" />
+
+
         <TextView
             android:id="@+id/news_description"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:textColor="@color/group_less"
-            android:layout_below="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="测试数据"/>
-        <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:gravity="right"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingLeft="3dp"
+            android:lineSpacingMultiplier="1.5"
+            android:textColor="@color/font_color_dark_gray"
+            android:textSize="@dimen/font_size_primary"
+            tools:text="春花秋月何时了，往事知多少，小楼昨夜又东风，故国不堪回首月明中，雕栏玉砌应犹在" />
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="18dp">
-            <ImageView
-                android:src="@drawable/ic_visibility"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingLeft="3dp"
+            android:paddingTop="8dp">
+
             <TextView
-                android:id="@+id/news_view_count"
+                android:id="@+id/comment_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="测试数据"/>
-        </LinearLayout>
-    </RelativeLayout>
+                android:drawableLeft="@drawable/icon_comment_number"
+                android:drawablePadding="3dp"
+                android:textColor="@color/font_color_light_gray"
+                android:textSize="@dimen/font_size_small"
+                tools:text="10" />
+
+
+            <TextView
+                android:id="@+id/view_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/comment_count"
+                android:drawableLeft="@drawable/icon_view"
+                android:drawablePadding="3dp"
+                android:textColor="@color/font_color_light_gray"
+                android:textSize="@dimen/font_size_small"
+                tools:text="100" />
+
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawablePadding="3dp"
+                android:textColor="@color/font_color_light_gray"
+                android:textSize="@dimen/font_size_small"
+                tools:text="7分钟前" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
     <!-- 图片logo区域-->
     <RelativeLayout
-        android:padding="5dp"
-        android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="5dp">
+
         <ImageView
-            android:id="@+id/news_logo"
-            android:src="@drawable/ic_launcher"
-            android:scaleType="centerCrop"
+            android:id="@+id/snapshots"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher" />
     </RelativeLayout>
 </LinearLayout>

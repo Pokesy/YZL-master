@@ -191,6 +191,7 @@ public class RemenhuatiActivity extends AppCompatActivity {
 
         bundle.putSerializable("post_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
+        bundle.putStringArrayList("imgList", (ArrayList<String>) bean.imgList);
         Intent intent = new Intent(context, GroupPostInfoActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);

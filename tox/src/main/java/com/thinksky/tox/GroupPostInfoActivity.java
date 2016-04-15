@@ -92,6 +92,7 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
     private int width;
     private List<ImageView> mImgList = new ArrayList<ImageView>();
     private ArrayList<String> img = new ArrayList<String>();
+    private ArrayList<String> logolist = new ArrayList<String>();
     private RelativeLayout ll_img;
     private String nickname = "";
     private RecyclerView recycler;
@@ -108,6 +109,7 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
         postMap = (HashMap<String, String>) getIntent().getExtras().getSerializable("post_info");
         recycler = (RecyclerView) findViewById(R.id.recycler);
         img = getIntent().getExtras().getStringArrayList("imgList");
+        logolist= getIntent().getExtras().getStringArrayList("logolist");
         position = getIntent().getExtras().getString("position");
         Log.e("postMap>>>>>>>>>", postMap.toString());
         post_id = Integer.parseInt(postMap.get("id"));
@@ -138,6 +140,7 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
         user_name = (TextView) findViewById(R.id.user_name);
         join = (TextView) findViewById(R.id.join);
         huifu = (TextView) findViewById(R.id.huifu);
+        group_count = (TextView) findViewById(R.id.group_count);
         //加载更多按钮
         loadingBar = (LinearLayout) findViewById(R.id.loading_bar);
         loadingBarText = (TextView) findViewById(R.id.load_more_text);
@@ -187,7 +190,8 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
         post_content.setText(postMap.get("content"));
         support_flag = postMap.get("is_support");
         qianming.setText(postMap.get("signature"));
-
+        huifu.setText("回复：" + postMap.get("reply_count"));
+//        chengyuan.setText("有" + logolist.size() + "个成员正在热烈的讨论中");
 //        String url = RsenUrlUtil.URL_XIAOZU_XIANGQINGTZ ;
 //        if (BuildConfig.DEBUG) {
 //            url = "http://192.168.1.11:8080/HelloJsp/apptox4.app";
@@ -230,11 +234,12 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
             @Override
             public void onResult(boolean state, List<MyBean> beans) {
                 if (state) {
-                    recycler.setAdapter(new MySubAdapter(GroupPostInfoActivity.this, beans.get(0).userList));
+                    recycler.setAdapter(new MySubAdapter(GroupPostInfoActivity.this, logolist));
                     kjBitmap.display(group_logo, beans.get(0).logo);
                     group_name.setText(beans.get(0).title);
-                    chengyuan.setText("有" + beans.get(0).userList.size() + "个成员正在热烈的讨论中");
-                    huifu.setText("回复：" + beans.get(0).userList.size());
+
+                    group_count.setText(beans.get(0).userList.size());
+
                     if (beans.get(0).is_join.equals("0")) {
                         join.setText("已加入");
                         join.setBackgroundColor(Color.GRAY);
@@ -245,7 +250,7 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
                         join.setLinksClickable(true);
                     }
                 } else {
-                    ToastHelper.showToast("请求失败", Url.context);
+//                    ToastHelper.showToast("请求失败", Url.context);
                 }
             }
         });
@@ -360,7 +365,7 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
         public String is_join;
         public String isCreator;
         public List<String> userList;
-
+        public String   post_count;
     }
 
 

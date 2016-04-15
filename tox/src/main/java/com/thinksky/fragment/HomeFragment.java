@@ -278,11 +278,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         protected void onBindView(RViewHolder holder, int position, final NewsListInfo bean) {
             holder.tV(R.id.news_title).setText(bean.getTitle());
 //            holder.tV(R.id.news_author_name).setText(newsListInfos.get(position).getUser().getNickname());
-            holder.tV(R.id.news_create_time).setText(bean.getCreate_time());
+            holder.tV(R.id.time).setText(bean.getCreate_time());
             holder.tV(R.id.news_description).setText(bean.getDescription());
-            holder.tV(R.id.news_view_count).setText(bean.getView());
+            holder.tV(R.id.view_count).setText(bean.getView());
+            holder.tV(R.id.comment_count).setText(bean.getComment());
+
             kjBitmap = KJBitmap.create();
-            kjBitmap.display(holder.imgV(R.id.news_logo), Url.IMAGE + bean.getCover());
+            kjBitmap.display(holder.imgV(R.id.snapshots), Url.IMAGE + bean.getCover());
 //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
 //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
 //                    new DisplayImageOptions.Builder()
@@ -655,7 +657,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public int getItemCount() {
-            return mAllDatas.size() > 3 ? 3 : mAllDatas.size();
+            return mAllDatas.size() > 4 ? 4 : mAllDatas.size();
         }
     }
 

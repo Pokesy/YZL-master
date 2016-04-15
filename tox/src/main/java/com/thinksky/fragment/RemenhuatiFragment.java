@@ -90,6 +90,8 @@ public class RemenhuatiFragment extends RBaseFragment {
                     bean.cate_id = jsonObject.getString("cate_id");
                     bean.user_logo = RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
                     bean.signature = jsonObject.getJSONObject("user").getString("signature");
+                    JSONArray posts_rply = jsonObject.getJSONArray("posts_rply");
+                    bean.logolist = parseUserList(posts_rply);
                     JSONArray imgList = jsonObject.getJSONArray("imgList");
                     List<String> imgs = new ArrayList<String>();
                     for (int i = 0; imgList != null && i < imgList.length(); i++) {
@@ -106,6 +108,21 @@ public class RemenhuatiFragment extends RBaseFragment {
                 adapter.resetData(beans);
             }
         });
+    }
+
+    private List<String> parseUserList(JSONArray userArray) {
+        List<String> userList = new ArrayList<>();
+        for (int i = 0; i < userArray.length(); i++) {
+            try {
+                JSONObject jsonObject = userArray.getJSONObject(i);
+                JSONObject user = jsonObject.getJSONObject("rp_user");
+                userList.add(RsenUrlUtil.URL_BASE + user.getString("avatar32"));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return userList;
     }
 
     @Override
@@ -137,6 +154,7 @@ public class RemenhuatiFragment extends RBaseFragment {
         public String is_support;
         public String nickname;
         public List<String> imgList;
+        public List<String> logolist;
         public String memberCount;
         public String id;
         public String uid;
@@ -193,6 +211,7 @@ public class RemenhuatiFragment extends RBaseFragment {
 
         bundle.putSerializable("post_info", map);
         bundle.putStringArrayList("imgList", (ArrayList<String>) bean.imgList);
+        bundle.putStringArrayList("logolist", (ArrayList<String>) bean.logolist);
         bundle.putBoolean("isWeGroup", isWeGroup);
         Intent intent = new Intent(context, GroupPostInfoActivity.class);
         intent.putExtras(bundle);

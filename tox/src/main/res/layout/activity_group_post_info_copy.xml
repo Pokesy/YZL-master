@@ -199,6 +199,7 @@
                         android:paddingTop="18dp"
                         android:textColor="#666666"
                         android:textSize="14sp"
+                        android:lineSpacingMultiplier="1.5"
                         tools:text="这里是帖子内容，看看一看内容超越第二排是什么情况啊，再看一遍" />
                     <!--状态部分-->
                     <RelativeLayout
@@ -305,7 +306,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/chengyuan"
@@ -330,7 +332,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:textColor="#999999"
                         android:textSize="18sp"
                         tools:text="回复" />

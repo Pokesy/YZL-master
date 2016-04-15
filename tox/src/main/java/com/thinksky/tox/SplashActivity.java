@@ -21,7 +21,6 @@ import com.thinksky.utils.MyJson;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import com.tox.WeiboApi;
-import com.zxing.activity.CallActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +49,8 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        init();
+        initview();
+//        init();
 
 //        if (BuildConfig.DEBUG) {
 //            startbutton(null);
@@ -58,16 +58,10 @@ public class SplashActivity extends Activity {
     }
 
     private void init() {
-        setContentView(R.layout.activity_splash);
+
 //        tv_splash = (TextView) findViewById(R.id.tv_splash);
         mViewPager = (ViewPager) findViewById(R.id.whatsnew_viewpager);
 
-//        tv_splash.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
         LayoutInflater mLi = LayoutInflater.from(this);
         View view1 = mLi.inflate(R.layout.whats1, null);
@@ -142,7 +136,7 @@ public class SplashActivity extends Activity {
 //            //mPageImg.startAnimation(animation);
 //        }
 
-//        @Override
+    //        @Override
 //        public void onPageScrolled(int arg0, float arg1, int arg2) {
 //        }
 //
@@ -150,12 +144,18 @@ public class SplashActivity extends Activity {
 //        public void onPageScrollStateChanged(int arg0) {
 //        }
 //    }
-
     public void startbutton(View v) {
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        startActivity(intent);
+        SplashActivity.this.finish();
+    }
+
+    private void initview() {
         weiboApi.setHandler(handler);
         mContext = SplashActivity.this;
         SharedPreferences sp = getSharedPreferences("userInfo", 0);
         sp.edit().putString("version", "0.1.1").commit();
+
         Url.sp = sp;
         Url.context = getApplicationContext();
         if (IsNet.IsConnect()) {
@@ -170,18 +170,22 @@ public class SplashActivity extends Activity {
 
                     Log.e("TIME>>>>>>>>>>>>>>", times + "");
                     SharedPreferences.Editor editor = startTimes.edit();
-                    if (times == 0) {
-                        editor.putInt("times", 1);
+                    if (times == 1) {
+                        ++times;
+                        editor.putInt("times", times);
                         editor.commit();
+
                         Log.e("AfterSave>>>>>>>>>>", startTimes.getInt("times", 0) + "");
-                        Intent intent = new Intent(SplashActivity.this, CallActivity.class);
-                        startActivity(intent);
-                        SplashActivity.this.finish();
+                        init();
+//                        Intent intent = new Intent(SplashActivity.this, CallActivity.class);
+//                        startActivity(intent);
+//                        SplashActivity.this.finish();
                     } else {
                         ++times;
                         editor.putInt("times", times);
                         editor.commit();
                         Log.e("AfterSave>>>>>>>>>>", startTimes.getInt("times", 0) + "");
+//                        init();
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         SplashActivity.this.finish();
@@ -212,15 +216,17 @@ public class SplashActivity extends Activity {
 
                                 Log.e("TIME>>>>>>>>>>>>>>", times + "");
                                 SharedPreferences.Editor editor = startTimes.edit();
-                                if (times == 0) {
-                                    editor.putInt("times", 1);
+                                if (times == 1) {
+                                    ++times;
+                                    editor.putInt("times", times);
                                     editor.commit();
                                     Log.e("AfterSave>>>>>>>>>>", startTimes.getInt("times", 0) + "");
-                                    Intent intent = new Intent(SplashActivity.this, CallActivity.class);
-                                    startActivity(intent);
+//                                    Intent intent = new Intent(SplashActivity.this, CallActivity.class);
+//                                    startActivity(intent);
                                     if (dlg != null && dlg.isShowing()) {
                                         dlg.dismiss();
                                     }
+                                    init();
                                     SplashActivity.this.finish();
                                     mTimer.cancel();
                                 } else {
@@ -246,17 +252,17 @@ public class SplashActivity extends Activity {
     }
 
 
-    /*private void is2getParameters() {
-        SharedPreferences sp = getSharedPreferences("Parameters", 0);
-    Calendar calendar = Calendar.getInstance();
-    month = calendar.get(Calendar.MONTH) + 1;
-    day = calendar.get(Calendar.DAY_OF_MONTH);
-    if (month == sp.getInt("month", 0) && day == sp.getInt("day", 0)) {
-        Url.WEIBOWORDS = sp.getString("weiboWordsLimit", "200");
-    } else {
-        weiboApi.getWeiboWordsLimit();
-    }
-}*/
+//    private void is2getParameters() {
+//        SharedPreferences sp = getSharedPreferences("Parameters", 0);
+//    Calendar calendar = Calendar.getInstance();
+//    month = calendar.get(Calendar.MONTH) + 1;
+//    day = calendar.get(Calendar.DAY_OF_MONTH);
+//    if (month == sp.getInt("month", 0) && day == sp.getInt("day", 0)) {
+//        Url.WEIBOWORDS = sp.getString("weiboWordsLimit", "200");
+//    } else {
+//        weiboApi.getWeiboWordsLimit();
+//    }
+//}
 
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {

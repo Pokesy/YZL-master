@@ -143,7 +143,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="这里是帖子内容，看看一看内容超越第二排是什么情况啊，再看一遍"
-
+                        android:lineSpacingMultiplier="1.5"
                         android:textColor="#666666"
                         android:textSize="14sp" />
                     <!--状态部分-->

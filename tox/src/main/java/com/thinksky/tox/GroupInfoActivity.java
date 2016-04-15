@@ -486,7 +486,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
                     linear_body.setVisibility(View.VISIBLE);
                     body_probar.setVisibility(View.GONE);
                 } else {
-                    ToastHelper.showToast("请求失败", Url.context);
+//                    ToastHelper.showToast("请求失败", Url.context);
                 }
             }
         });
