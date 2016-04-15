@@ -146,7 +146,7 @@ public class NewsActivity extends FragmentActivity implements View.OnClickListen
                     case 0:
                         String result = (String) msg.obj;
                         navigationLineList = myJson.getNewsNavigation(result);
-                        if (navigationLineList.size() > 0) {
+                        if (null != result && navigationLineList.size() > 0) {
                             LinearLayout.LayoutParams textLpa = new LinearLayout.LayoutParams(
                                     ViewGroup.LayoutParams.WRAP_CONTENT,
                                     ViewGroup.LayoutParams.WRAP_CONTENT);

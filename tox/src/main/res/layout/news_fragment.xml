@@ -4,21 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <com.thinksky.myview.DotLoadView
         android:id="@+id/dotLoadBar"
-        dots:period="1000"
-        dots:autoplay="true"
-        android:textSize="50sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="50sp"
+        dots:autoplay="true"
+        dots:period="1000" />
+
     <com.thinksky.myview.MyListView
-        android:visibility="gone"
         android:id="@+id/news_listView"
-        android:divider="@null"
-        android:dividerHeight="2dp"
-        android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@color/bg_color_divider"
+        android:dividerHeight="1dp"
+        android:padding="5dp"
+        android:visibility="gone" />
 </RelativeLayout>

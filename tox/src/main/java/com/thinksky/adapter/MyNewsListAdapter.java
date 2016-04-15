@@ -55,11 +55,11 @@ public class MyNewsListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.news_info_item, parent, false);
             viewHolder.newsLogo = (ImageView)convertView.findViewById(R.id.news_logo);
             viewHolder.newsTitle = (TextView)convertView.findViewById(R.id.news_title);
-            viewHolder.newsAuthor = (TextView)convertView.findViewById(R.id.news_author_name);
-            viewHolder.newsCreateTime = (TextView)convertView.findViewById(R.id.news_create_time);
-            viewHolder.isOverdue = (TextView)convertView.findViewById(R.id.is_overdue);
+//            viewHolder.newsAuthor = (TextView)convertView.findViewById(R.id.news_author_name);
+//            viewHolder.newsCreateTime = (TextView)convertView.findViewById(R.id.news_create_time);
+//            viewHolder.isOverdue = (TextView)convertView.findViewById(R.id.is_overdue);
             viewHolder.newsDescription = (TextView)convertView.findViewById(R.id.news_description);
-            viewHolder.newsViewCount = (TextView)convertView.findViewById(R.id.news_view_count);
+//            viewHolder.newsViewCount = (TextView)convertView.findViewById(R.id.news_view_count);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder)convertView.getTag();

@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private View mMenuMon;
     private View mMenuMyQuestion;
     private View mMenuSolution;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -152,7 +153,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mMenuMon.setOnClickListener(menuClickListener);
         mMenuMyQuestion.setOnClickListener(menuClickListener);
         mMenuSolution.setOnClickListener(menuClickListener);
-
 
 
         bofangshipin = (FrameLayout) view.findViewById(R.id.bofangshipin);
@@ -248,7 +248,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     NewsListInfo1 list = JSON.parseObject(result, NewsListInfo1.class);
 
 
-
                     Zx_listView.setAdapter(new ZixunAdapter(mBaseActivity, list.getList()));
 
                 }
@@ -272,7 +271,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         @Override
         protected int getItemLayoutId(int viewType) {
-            return R.layout.news_info_item;
+            return R.layout.home_new_list_item;
         }
 
         @Override
@@ -297,7 +296,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onClick(View v) {
                     Intent tempIntent = new Intent(mContext, NewsDetailActivity.class);
-                    NewsListInfo newsListInfo=new NewsListInfo();
+                    NewsListInfo newsListInfo = new NewsListInfo();
 
                     tempIntent.putExtra("newsInfo", bean);
                     getActivity().startActivity(tempIntent);
@@ -797,8 +796,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         issueBean.title = issueListJSONObject.getString("title");// issue title 赋值
                         issueBean.cover_url = issueListJSONObject.getString("cover_url");// issue cover_url 赋值
                         issueBean.id = issueListJSONObject.getInt("id");
-                        issueBean.create_time= issueListJSONObject.getString("create_time");
-                        issueBean.reply_count= issueListJSONObject.getString("reply_count");
+                        issueBean.create_time = issueListJSONObject.getString("create_time");
+                        issueBean.reply_count = issueListJSONObject.getString("reply_count");
                         //其他字段。。。赋值
                         // TODO: 2016/2/17
 
