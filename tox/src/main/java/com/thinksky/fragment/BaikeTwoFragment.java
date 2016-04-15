@@ -150,7 +150,7 @@ public class BaikeTwoFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.fragment_baike_adapter_item, parent, false);
+                convertView = LayoutInflater.from(context).inflate(R.layout.fragment_baike_adapter_sub_item, parent, false);
                 viewHolder = new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
             } else {

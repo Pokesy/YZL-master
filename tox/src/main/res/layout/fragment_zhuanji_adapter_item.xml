@@ -1,36 +1,40 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:orientation="vertical">
         <!--头部信息-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f2f2f2">
+            android:paddingBottom="@dimen/space_vertical_tiny"
+            android:paddingLeft="@dimen/space_horizontal"
+            android:paddingRight="@dimen/space_horizontal"
+            android:paddingTop="@dimen/space_vertical_tiny">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:textColor="#333333"
-                android:textSize="17sp" />
+                android:layout_centerVertical="true"
+                android:textColor="@color/font_color_dark_black"
+                android:textSize="@dimen/font_size_big"
+                tools:text="葒鱼如何饲养" />
 
             <TextView
                 android:id="@+id/xianshi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:text="显示全部>"
-                android:textSize="10sp" />
+                android:layout_centerVertical="true"
+                android:text="显示全部 >"
+                android:textColor="@color/font_color_light_gray"
+                android:textSize="@dimen/font_size_small" />
         </RelativeLayout>
 
         <!--图片信息-->
@@ -38,6 +42,7 @@
             android:id="@+id/gridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/white"
             android:numColumns="3" />
     </LinearLayout>
 

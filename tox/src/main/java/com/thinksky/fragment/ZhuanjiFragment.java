@@ -9,9 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,6 +39,7 @@ public class ZhuanjiFragment extends Fragment {
     View rootView;
     ListView listView;
     private Context ctx;
+    private SlideShowView mSlideShowView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -44,8 +47,15 @@ public class ZhuanjiFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_zhuanji, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView);
         ctx = rootView.getContext();
-
+        initHeaderSlideView();
         return rootView;
+    }
+
+    private void initHeaderSlideView() {
+        mSlideShowView = new SlideShowView(ctx);
+        mSlideShowView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                getResources().getDimensionPixelOffset(R.dimen.slide_view_height)));
+        listView.addHeaderView(mSlideShowView);
     }
 
     @Override
@@ -252,7 +262,7 @@ public class ZhuanjiFragment extends Fragment {
         public String cover_url;//需要加上 URL_BASE
         public int id;
         public String create_time;
-        public String  reply_count;
+        public String reply_count;
     }
 
 

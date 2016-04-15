@@ -30,4 +30,10 @@
 
     <dimen name="divider">0.5dp</dimen>
 
+    <dimen name="space_horizontal">15dp</dimen>
+    <dimen name="space_vertical">15dp</dimen>
+    <dimen name="space_vertical_tiny">5dp</dimen>
+
+    <dimen name="slide_view_height">150dp</dimen>
+
 </resources>

@@ -1,14 +1,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:id="@+id/id_content"
-   >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <ListView
         android:id="@+id/myListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/bg_color_divider_dark"
+        android:dividerHeight="@dimen/divider"
+        android:paddingLeft="@dimen/space_horizontal" />
 
 
 </FrameLayout>

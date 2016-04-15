@@ -14,7 +14,8 @@
         <RelativeLayout
             android:id="@+id/btn_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
 
             <RadioGroup
                 android:id="@+id/main_radio"
@@ -24,8 +25,7 @@
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="15dp">
+                android:paddingRight="25dp">
 
                 <RadioButton
                     android:id="@+id/rb_rmht"
