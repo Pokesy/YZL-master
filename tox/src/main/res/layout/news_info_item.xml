@@ -32,7 +32,7 @@
             android:orientation="horizontal"
             android:scaleType="fitXY"
             android:visibility="visible"
-            tools:src="@drawable/app_banner1"/>
+            tools:src="@drawable/app_banner1" />
 
         <TextView
             android:id="@+id/news_description"
@@ -62,30 +62,19 @@
                 android:textSize="@dimen/font_size_small"
                 tools:text="10" />
 
-            <RelativeLayout
+
+            <TextView
+                android:id="@+id/view_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@id/comment_count">
+                android:layout_toRightOf="@id/comment_count"
+                android:drawableLeft="@drawable/icon_view"
+                android:drawablePadding="3dp"
+                android:textColor="@color/font_color_light_gray"
+                android:textSize="@dimen/font_size_small"
+                tools:text="100" />
 
-                <ImageView
-                    android:id="@+id/icon_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_view"
-                    android:layout_marginTop="-3dp"/>
-
-                <TextView
-                    android:id="@+id/view_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_toRightOf="@id/icon_view"
-                    android:textColor="@color/font_color_light_gray"
-                    android:textSize="@dimen/font_size_small"
-                    tools:text="100" />
-
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/time"
