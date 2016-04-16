@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -62,6 +63,7 @@ import org.kymjs.kjframe.http.HttpParams;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +77,7 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 
     private TextView postSendLayout;
     private RGridView gridView;
+    private View mWealthContainer;
     /**
      * 已选择准备上传的图片数量
      */
@@ -111,18 +114,22 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
     private BaseApi baseApi;
     private String session_id;
     private String l;
-    private LinearLayout location;
     //    private String longitude;
 //    private String latitude;
     private String category_id;
     private TextView dizhi;
-
+    private TextView mWealthView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_question);
         initView();
+        initData();
+    }
+
+    private void initData() {
+        mWealthView.setText(getResources().getString(R.string.available_wealth_text, Url.MYUSERINFO.getScore()));
     }
 
     private void initView() {
@@ -136,7 +143,6 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 //        latitude = intent.getStringExtra("latitude");
         photoLayout = (LinearLayout) findViewById(R.id.Post_send_photo);
 //        score_select = (LinearLayout) findViewById(R.id.score_select);
-        location = (LinearLayout) findViewById(R.id.location);
         dizhi = (TextView) findViewById(R.id.dizhi);
         score = (TextView) findViewById(R.id.score);
         photoLayout.setOnClickListener(this);
@@ -156,6 +162,8 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 
         mContentEdit = (EditText) findViewById(R.id.Post_send_contentEdit);
         gridView = (RGridView) findViewById(R.id.gridView);
+        mWealthContainer = findViewById(R.id.wealth_container);
+        mWealthView = (TextView) findViewById(R.id.available_wealth);
         mTitleEdit = (EditText) findViewById(R.id.Post_send_titleEdit);
         postSendLayout = (TextView) findViewById(R.id.Post_send);
         mAttachLayout = (LinearLayout) findViewById(R.id.Post_attach_layout);
@@ -173,7 +181,7 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
         mFaceBtn.setOnClickListener(this);
         mAttachBtn.setOnClickListener(this);
         postSendLayout.setOnClickListener(this);
-        location.setOnClickListener(this);
+        dizhi.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
         photoCount = (TextView) findViewById(R.id.photo_count);
@@ -271,13 +279,14 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
                 }
                 break;
             case R.id.score:
+                mWealthContainer.setVisibility(View.VISIBLE);
                 gridView.setVisibility(View.VISIBLE);
                 gridView.setAdapter(new MySubAdapter(SendQuestionActivity.this, strs));
                 break;
             case R.id.Post_send_Back:
                 SendQuestionActivity.this.finish();
                 break;
-            case R.id.location:
+            case R.id.dizhi:
                 Intent intent4 = new Intent();
                 intent4.setClass(SendQuestionActivity.this, QuestionSelectActivity.class);
                 startActivityForResult(intent4, 0);
@@ -305,15 +314,21 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
         protected void onBindView(final RViewHolder holder, final int position, String bean) {
 
             holder.tV(R.id.title).setText(strs.get(position));
+            holder.tV(R.id.title).setSelected(isHighLight(Integer.parseInt(strs.get(position))));
             /*点击用户头像*/
             holder.v(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     score.setText(strs.get(position));
+                    mWealthContainer.setVisibility(View.GONE);
                     gridView.setVisibility(View.GONE);
                 }
             });
+        }
+
+        private boolean isHighLight(int wealth) {
+            return wealth <= Integer.parseInt(Url.MYUSERINFO.getScore());
         }
     }
 

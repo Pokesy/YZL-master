@@ -119,4 +119,8 @@
     <string name="pull_to_refresh_from_bottom_refreshing_label">加载中…</string>
     <string name="pull_to_refresh_slogan_default"></string>
 
+    <string name="label_text_set_award_info">请设置悬赏金额</string>
+    <string name="available_wealth_text">您可用的财富值:%s</string>
+    <string name="info_more_award">提高悬赏,更容易吸引高手为您解答</string>
+
 </resources>

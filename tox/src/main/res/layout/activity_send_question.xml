@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical"
     tools:context="com.thinksky.tox.SendQuestionActivity">
     //页头
@@ -23,9 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-
-            >
+            android:layout_centerVertical="true">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -41,7 +38,6 @@
             android:layout_centerInParent="true"
             android:background="@color/head"
             android:gravity="center_vertical|center_horizontal"
-
             android:orientation="horizontal">
 
             <TextView
@@ -51,9 +47,9 @@
                 android:background="@color/head"
                 android:gravity="center_vertical|center_horizontal"
                 android:singleLine="true"
-                android:text="描述你的提问"
-                android:textColor="@color/tab"
-                android:textSize="20sp"
+                android:text="描述你的问题"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_size_large"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -73,81 +69,98 @@
 
     </RelativeLayout>
 
-    //页脚
-
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:layout_below="@+id/SendPostheader">
+        android:layout_below="@+id/SendPostheader"
+        android:background="@color/bg_color_main">
 
         <LinearLayout
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="17dp">
+            android:layout_marginTop="3dp"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/Post_send_titleEdit"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/edittext_background_noborder"
-                android:hint="标题：请描述你的问题"
-                android:padding="10dp"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_horizontal"
+                android:layout_marginRight="@dimen/space_horizontal"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/Post_send_titleEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="标题：请描述你的问题"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="6dp"
+                    android:textSize="@dimen/font_size_medium" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider"
+                    android:background="@color/bg_color_divider_dark" />
+
+                <EditText
+                    android:id="@+id/Post_send_contentEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/edittext_background_noborder"
+                    android:gravity="start"
+                    android:hint="请填写问题相关描述（选填）"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="5dp"
+                    android:textSize="@dimen/font_size_medium" />
+
+                <LinearLayout
+                    android:id="@+id/attachBtns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="3dp"
+                    android:weightSum="10">
+
+                    <LinearLayout
+                        android:id="@+id/Post_send_attachBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_add_photo" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/Post_send_faceBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/smile" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E9EDEE" />
-
-            <EditText
-                android:id="@+id/Post_send_contentEdit"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-
-                android:background="@drawable/edittext_background_noborder"
-                android:gravity="start"
-                android:hint="请填写问题相关描述（选填）"
-                android:padding="10dp"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:id="@+id/attachBtns"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <LinearLayout
-                    android:id="@+id/Post_send_attachBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.5"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="78dp"
-                        android:layout_height="78dp"
-                        android:src="@drawable/add_post_photo" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/Post_send_faceBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.5"
-                    android:gravity="center"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/smile" />
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="@dimen/divider"
+                android:layout_marginLeft="@dimen/space_horizontal"
+                android:layout_marginTop="3dp"
+                android:background="@color/bg_color_divider_dark" />
 
             <RelativeLayout
                 android:id="@+id/Post_footer"
@@ -156,10 +169,6 @@
 
                 android:background="#EDF1F2"
                 android:visibility="visible">
-
-
-                <!--页脚btn区-->
-
 
                 <!--页脚btn对应的控制区-->
                 <LinearLayout
@@ -256,169 +265,93 @@
                 </FrameLayout>
             </RelativeLayout>
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
+                android:layout_marginLeft="@dimen/space_horizontal"
+                android:drawableLeft="@drawable/inconfontrmb"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="@string/label_text_set_award_info"
+                android:textColor="@color/font_color_light_black"
+                android:textSize="@dimen/font_size_primary" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@color/bg_color_divider_dark" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginTop="3dp"
+                android:background="@color/bg_color_divider_dark" />
+
+
+            <LinearLayout android:id="@+id/wealth_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <com.thinksky.rsen.view.RGridView
+                    android:id="@+id/gridView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/inconfontrmb" />
+                    android:layout_gravity="center_horizontal"
+                    android:tag="4" />
 
                 <TextView
-                    android:id="@+id/score"
+                    android:id="@+id/available_wealth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="设置悬赏金额"
-                    android:textSize="13sp" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/available_wealth_text"
+                    android:textColor="@color/font_color_dark_black"
+                    android:textSize="@dimen/font_size_medium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/info_more_award"
+                    android:textColor="@color/font_color_dark_gray"
+                    android:textSize="@dimen/font_size_medium" />
 
             </LinearLayout>
 
-            <com.thinksky.rsen.view.RGridView
-                android:id="@+id/gridView"
+            <TextView
+                android:id="@+id/dizhi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:tag="4"
-                android:visibility="gone" />
+                android:layout_marginLeft="@dimen/space_horizontal"
+                android:drawableLeft="@drawable/iconfontbiaoqian2"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:text="请选择分类"
+                android:textColor="@color/font_color_light_black"
+                android:textSize="@dimen/font_size_medium" />
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/score_select"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--&gt;-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_marginBottom="30dp"-->
-            <!--android:layout_marginTop="10dp">-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="22dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/default_score_bg_selector"-->
-            <!--android:gravity="center"-->
-            <!--android:text="0"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="24sp" />-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="22dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/default_score_bg_selector"-->
-            <!--android:gravity="center"-->
-            <!--android:text="5"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="24sp" />-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="22dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/default_score_bg_selector"-->
-            <!--android:gravity="center"-->
-            <!--android:text="10"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="24sp" />-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="22dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/default_score_bg_selector"-->
-            <!--android:gravity="center"-->
-            <!--android:text="20"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="24sp" />-->
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="22dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/default_score_bg_selector"-->
-            <!--android:gravity="center"-->
-            <!--android:text="30"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="24sp" />-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="22dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/default_score_bg_selector"-->
-            <!--android:gravity="center"-->
-            <!--android:text="50"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="24sp" />-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="22dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/default_score_bg_selector"-->
-            <!--android:gravity="center"-->
-            <!--android:text="70"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="24sp" />-->
-
-            <!--<TextView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginLeft="22dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/default_score_bg_selector"-->
-            <!--android:gravity="center"-->
-            <!--android:text="100"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:textSize="24sp" />-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-
-            <LinearLayout
-                android:id="@+id/location"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
+                android:layout_height="@dimen/divider"
+                android:background="@color/bg_color_divider_dark" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/iconfontbiaoqian2" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginTop="3dp"
+                android:background="@color/bg_color_divider_dark" />
 
-                <TextView
-                    android:id="@+id/dizhi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingLeft="10dp"
-                    android:text="请选择分类"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
