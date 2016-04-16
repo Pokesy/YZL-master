@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -22,20 +22,38 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <FrameLayout
+                android:id="@+id/icon_accept_container"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/icon_accept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/iconfonthuangguan" />
+            </FrameLayout>
+
             <ImageView
                 android:id="@+id/avatar32"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_height="30dp"
+                android:layout_below="@id/icon_accept_container" />
 
             <TextView
                 android:id="@+id/nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/avatar32"
+                android:layout_alignTop="@id/avatar32"
+                android:layout_toRightOf="@id/avatar32"
+                android:gravity="center_vertical"
                 android:textColor="@color/font_color_dark_gray"
                 android:textSize="@dimen/font_size_medium"
                 tools:text="慕容紫英 " />
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <TextView

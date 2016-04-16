@@ -339,6 +339,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                 holder.creat_time = (TextView) convertView.findViewById(R.id.creat_time);
                 holder.reply_count = (TextView) convertView.findViewById(R.id.reply_count);
                 holder.acept = (TextView) convertView.findViewById(R.id.acept);
+                holder.mIconAccept = (ImageView) convertView.findViewById(R.id.icon_accept);
                 if (flag) {
                     holder.acept.setVisibility(View.VISIBLE);
                 }
@@ -368,8 +369,10 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
             if (bean.getIsbest() != 0) {
                 //采纳
                 holder.caina.setVisibility(View.VISIBLE);
+                holder.mIconAccept.setVisibility(View.VISIBLE);
             } else {
                 holder.caina.setVisibility(View.GONE);
+                holder.mIconAccept.setVisibility(View.GONE);
             }
 
             BaseFunction.showImage(context, holder.avatar32, bean.getUser().getAvatar32(), loadImg, Url.IMGTYPE_HEAD);
@@ -543,6 +546,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
         ImageView avatar32;
         ImageView dianzan;
         ImageView caina;
+        ImageView mIconAccept;
         TextView nickname;
         TextView content;
         TextView creat_time;
