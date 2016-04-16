@@ -36,4 +36,6 @@
 
     <dimen name="slide_view_height">150dp</dimen>
 
+    <dimen name="list_header_height_wenda">12dp</dimen>
+
 </resources>

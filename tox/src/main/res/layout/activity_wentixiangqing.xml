@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color_main"
     android:orientation="vertical">
 
     <!--页头-->
@@ -59,33 +60,28 @@
                 android:id="@+id/item_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/default_layout_bg_selector"
+                android:background="@android:color/white"
                 android:orientation="vertical"
                 android:paddingBottom="10dp"
-                android:paddingLeft="17dp"
-                android:paddingRight="17dp">
+                android:paddingLeft="25dp"
+                android:paddingRight="16dp"
+                android:paddingTop="12dp">
 
                 <!--标题部分-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp">
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#333333"
-                        android:textSize="17sp"
-                        tools:text="aaaaaaaaaaaaaaabbbbbbbbbbbbb" />
-                </RelativeLayout>
+                    android:textColor="@color/font_color_dark_black"
+                    android:textSize="@dimen/font_size_large"
+                    tools:text="问:娱乐悦乐项目组，大酒店基督教在哪里" />
 
 
                 <!--状态部分-->
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
                     <!--左边状态图标信息-->
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -96,112 +92,92 @@
                             android:id="@+id/best_answer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:background="#ee0000"
+                            android:background="@drawable/bg_question_status_selector"
                             android:text="求助中"
-                            android:textColor="#FFFFFF" />
+                            android:textColor="@color/text_question_status_selector"
+                            android:textSize="@dimen/font_size_medium" />
 
                         <TextView
                             android:id="@+id/money"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp"
                             android:drawableLeft="@drawable/iconfonticonfontqian"
-                            android:drawablePadding="5dp"
-                            android:text="20"
-                            android:textColor="#999999" />
-
-
+                            android:drawablePadding="3dp"
+                            android:textColor="@color/font_color_dark_gray"
+                            android:textSize="@dimen/font_size_medium"
+                            tools:text="20" />
                     </LinearLayout>
 
                     <!--右边状态信息-->
-                    <LinearLayout
+
+                    <TextView
+                        android:id="@+id/creat_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/creat_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="23秒前"
-                            android:textColor="#999999" />
-                    </LinearLayout>
+                        android:text="23秒前"
+                        android:textColor="@color/font_color_dark_gray" />
                 </RelativeLayout>
 
 
-                <!--内容部分-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp">
-
-                    <TextView
-                        android:id="@+id/content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#666666"
-                        android:textSize="15sp"
-                        tools:text="neironnnnnnnnnnnnnnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmm" />
-                </RelativeLayout>
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/font_color_light_black"
+                    android:textSize="@dimen/font_size_big"
+                    tools:text="neironnnnnnnnnnnnnnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmm" />
 
 
-                <!--用户部分-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/nickname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/iconfontbiaoqian1"
-                        android:drawablePadding="5dp"
-                        android:text="龙鱼"
-                        android:textColor="#999999"
-                        android:textSize="12sp" />
-                    <!--&lt;!&ndash;右边&ndash;&gt;-->
-                    <!--<TextView-->
-                    <!--android:id="@+id/answer_num"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:drawableLeft="@drawable/rating_small_empty"-->
-                    <!--android:drawablePadding="5dp"-->
-                    <!--android:text="21"-->
-                    <!--android:textColor="#00faff"-->
-                    <!--android:textSize="13sp" />-->
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/iconfontbiaoqian1"
+                    android:drawablePadding="5dp"
+                    android:text="龙鱼"
+                    android:textColor="@color/font_color_dark_gray"
+                    android:textSize="@dimen/font_size_medium" />
 
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/huida"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-              android:paddingLeft="17dp"
-                android:paddingTop="27dp"
-                android:text="23条回答"
-                android:textColor="#999999"
-                android:textSize="12sp" />
-            <!--结尾分割线-->
             <View
                 android:layout_width="match_parent"
-                android:layout_height="6dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/default_divider_color" />
+                android:layout_height="@dimen/divider"
+                android:background="@color/bg_color_divider_dark" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:layout_marginTop="5dp"
+                android:background="@color/bg_color_divider_dark" />
+
+            <TextView
+                android:id="@+id/huida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/white"
+                android:paddingBottom="8dp"
+                android:paddingLeft="25dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/font_color_blue"
+                android:textSize="@dimen/font_size_medium"
+                tools:text="23条回答" />
+
             <!--内容列表-->
             <com.thinksky.rsen.view.RInnerListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:cacheColorHint="@android:color/transparent"
-                android:divider="@null"
-                android:listSelector="@android:color/transparent"
-                android:paddingTop="12dp" />
+                android:divider="@android:color/transparent"
+                android:dividerHeight="5dp"
+                android:listSelector="@android:color/transparent" />
         </LinearLayout>
 
 
@@ -212,7 +188,7 @@
     <LinearLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:orientation="horizontal"
@@ -221,19 +197,24 @@
         <LinearLayout
             android:id="@+id/reply_button"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
             android:orientation="horizontal"
-           >
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
 
             <Button
                 android:id="@+id/btn_huida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:text="点击开始回答" />
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
+                android:background="@drawable/bg_btn_blue"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="点击开始回答"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_size_large" />
         </LinearLayout>
 
         <LinearLayout

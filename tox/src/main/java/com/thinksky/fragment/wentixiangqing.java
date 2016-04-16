@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -77,6 +79,10 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
         nickname = (TextView) findViewById(R.id.nickname);
         huida = (TextView) findViewById(R.id.huida);
         listView = (ListView) findViewById(R.id.listView);
+//        View headerView = new View(this);
+//        headerView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.header_height)));
+//        listView.addHeaderView(headerView);
+
         btn_huida = (Button) findViewById(R.id.btn_huida);
         back_menu = (ImageView) findViewById(R.id.back_menu);
 
@@ -178,17 +184,18 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                     title.setText(questionEntity.getTitle());
                     if (questionEntity.getBest_answer().equals("0")) {
                         best_answer.setText("求助中");
+                        best_answer.setSelected(false);
                         flag = true;
                     } else {
                         best_answer.setText("已解决");
-                        best_answer.setBackgroundColor(Color.GRAY);
+                        best_answer.setSelected(true);
                         flag = false;
                     }
                     money.setText(questionEntity.getScore());
                     creat_time.setText(questionEntity.getCreate_time());
                     content.setText(questionEntity.getDescription1());
                     nickname.setText(questionEntity.getCategory_title());
-                    huida.setText(questionEntity.getAnswer_num()+"条回答");
+                    huida.setText(questionEntity.getAnswer_num() + "条回答");
 
                 } else {
                     ToastHelper.showToast("请求失败", Url.context);
@@ -342,7 +349,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
 //            WendaXianqingInfo bean = beans.get(position);
 //            list =bean.getQuestionAnswer();
             final WendaXianqingInfo.QuestionAnswerEntity bean = list.get(position);
-            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE +bean.getUser().getAvatar32(),  holder.avatar32);
+            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getUser().getAvatar32(), holder.avatar32);
             holder.nickname.setText(bean.getUser().getNickname());
             holder.content.setText(bean.getContent());
             holder.creat_time.setText(MyJson.getStandardDate(bean.getCreate_time()));

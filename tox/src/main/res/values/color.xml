@@ -99,4 +99,6 @@
     <color name="bg_color_red">#f26767</color>
     <color name="bg_color_blue">#007afe</color>
     <color name="bg_color_red_solution">#e83f38</color>
+
+    <color name="bg_color_btn_blue">#2994d5</color>
 </resources>

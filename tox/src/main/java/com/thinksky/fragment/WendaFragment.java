@@ -10,7 +10,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -47,6 +49,7 @@ public class WendaFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_wenda, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView);
+        addHeaderView();
         ((RadioGroup) rootView.findViewById(R.id.main_radio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -85,6 +88,13 @@ public class WendaFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    private void addHeaderView() {
+        FrameLayout header = new FrameLayout(getActivity());
+        header.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                getResources().getDimensionPixelOffset(R.dimen.list_header_height_wenda)));
+        listView.addHeaderView(header);
     }
 
     private void cleanCheck() {

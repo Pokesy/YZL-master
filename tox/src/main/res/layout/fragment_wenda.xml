@@ -81,8 +81,7 @@
             android:cacheColorHint="@android:color/transparent"
             android:divider="@android:color/transparent"
             android:dividerHeight="3dp"
-            android:listSelector="@android:color/transparent"
-            android:paddingTop="12dp" />
+            android:listSelector="@android:color/transparent" />
     </LinearLayout>
 
 </FrameLayout>

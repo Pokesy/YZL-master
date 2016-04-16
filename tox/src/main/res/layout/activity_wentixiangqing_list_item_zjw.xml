@@ -1,15 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/default_layout_bg_selector"
+        android:background="@drawable/bg_list_item_white_with_boarder"
         android:clickable="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,7 +31,9 @@
                 android:id="@+id/nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="内容 " />
+                android:textColor="@color/font_color_dark_gray"
+                android:textSize="@dimen/font_size_medium"
+                tools:text="慕容紫英 " />
 
         </LinearLayout>
 
@@ -37,7 +42,12 @@
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="内容 " />
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:lineSpacingExtra="10dp"
+            android:textColor="@color/font_color_light_black"
+            android:textSize="@dimen/font_size_big"
+            tools:text="昨日之日不可留，今日之日多烦忧 " />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -56,7 +66,9 @@
                     android:id="@+id/creat_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23秒前" />
+                    android:textColor="@color/font_color_dark_gray"
+                    android:textSize="@dimen/font_size_medium"
+                    tools:text="23秒前" />
 
             </LinearLayout>
             <!--支持数量-->
@@ -73,9 +85,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="38dp"
-                    android:text="采纳"
                     android:textColor="@color/head"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    tools:text="采纳" />
 
                 <ImageView
                     android:id="@+id/dianzan"
@@ -90,7 +102,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:drawablePadding="5dp"
-                    android:text="327" />
+                    android:text="327"
+                    android:textColor="@color/font_color_blue"
+                    android:textSize="@dimen/font_size_medium" />
 
             </LinearLayout>
         </RelativeLayout>
