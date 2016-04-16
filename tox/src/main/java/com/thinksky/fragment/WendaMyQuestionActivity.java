@@ -142,9 +142,10 @@ public class WendaMyQuestionActivity extends AppCompatActivity {
             String s = listEntity.getBest_answer();
             if (s.equals("0")) {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
+                viewHolder.itemView.findViewById(R.id.best_answer).setSelected(false);
             } else {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
-                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setBackgroundColor(Color.GRAY);
+                viewHolder.itemView.findViewById(R.id.best_answer).setSelected(true);
             }
             /*点击事件响应*/
             viewHolder.itemView.findViewById(R.id.item_layout).setOnClickListener(new View.OnClickListener() {

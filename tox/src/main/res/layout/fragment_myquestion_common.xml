@@ -43,20 +43,22 @@
                 android:id="@+id/tiwen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="提问"
-                android:paddingRight="10dp"
-                android:textColor="@color/tab"
-                android:textSize="18sp"
-                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:text="提问"
+                android:textColor="@color/tab"
+                android:textSize="18sp" />
 
         </RelativeLayout>
         <!--内容列表-->
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="3dp" />
     </LinearLayout>
 
 
