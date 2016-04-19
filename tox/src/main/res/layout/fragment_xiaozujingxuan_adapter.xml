@@ -18,8 +18,7 @@
         android:layout_height="wrap_content"
         android:background="#ffffff"
         android:orientation="vertical"
-
-        android:paddingTop="14dp">
+        android:padding="15dp">
 
         <ImageView
             android:id="@+id/logo"
@@ -32,8 +31,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical"
-
-            android:paddingLeft="10dp">
+           >
 
             <TextView
                 android:id="@+id/title"
@@ -48,8 +46,9 @@
                 android:id="@+id/detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lineSpacingMultiplier="1.5"
+
                 android:ellipsize="end"
+                android:lineSpacingMultiplier="1.5"
                 android:lines="2"
                 android:paddingTop="11dp"
                 android:textColor="#666666"
@@ -60,7 +59,9 @@
                 android:layout_width="50dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
-                android:background="#2a93d5" />
+                android:background="#2a93d5"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
             <!--内部行-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,7 +82,7 @@
                         android:id="@+id/post_count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+
                         android:gravity="center"
                         android:textColor="#999999"
                         android:textSize="12sp"
@@ -90,7 +91,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+
                         android:gravity="center"
                         android:text="话题"
                         android:textColor="#666666"
@@ -108,7 +109,7 @@
                         android:id="@+id/member_count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+
                         android:gravity="center"
                         android:textColor="#999999"
                         android:textSize="12sp"
@@ -129,6 +130,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_alignParentBottom="true"
+
         android:background="#d9d9d9" />
 </LinearLayout>

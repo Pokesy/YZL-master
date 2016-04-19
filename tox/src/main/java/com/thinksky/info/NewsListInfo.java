@@ -48,6 +48,15 @@ public class NewsListInfo implements Serializable{
     private String comment;
     private String approval;
     private UserInfo user;
+    private String support_count;
+
+    public String getSupport_count() {
+        return support_count;
+    }
+
+    public void setSupport_count(String support_count) {
+        this.support_count = support_count;
+    }
 
     public void setUid(String uid) {
         this.uid = uid;

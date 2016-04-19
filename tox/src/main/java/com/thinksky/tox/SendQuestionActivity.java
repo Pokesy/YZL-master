@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -63,7 +62,6 @@ import org.kymjs.kjframe.http.HttpParams;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -496,7 +494,7 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 //        progressDialog.setCanceledOnTouchOutside(false);
 //        progressDialog.show();
         for (int i = 0; i < scrollImg.size() - 1; i++) {
-            //kjUpload(scrollImg.get(i));
+//            kjUpload(scrollImg.get(i));
             AjaxParams params = new AjaxParams();
             try {
                 String path1 = scrollImg.get(i);
@@ -528,7 +526,7 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
                         attachIds.add(s);
                         Log.e("上传照片成功", o.toString());
                         if (attachIds.size() == scrollImg.size() - 1) {
-                            progressDialog1.show(SendQuestionActivity.this, "提示", "发布中...", true, false);
+//                            progressDialog1.show(SendQuestionActivity.this, "提示", "发布中...", true, false);
                             l = WeiboApi.getAttachIds(attachIds);
                             sendWeibo();
                         }
@@ -582,6 +580,7 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
                 map.put("content", mContentEdit.getText().toString().trim());
                 map.put("score", score.getText().toString().trim());
                 map.put("category_id", category_id);
+                map.put("attach_ids", l);
                 return map;
 
             }

@@ -116,6 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
+                    android:lineSpacingMultiplier="1.5"
                     android:textColor="#666666"
                     android:textSize="15sp"
                     tools:text="neironnnnnnnnnnnnnnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmm"/>
@@ -159,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:drawableLeft="@drawable/iconfontdianzan"
+                        android:drawableLeft="@drawable/dianzan"
                         android:drawablePadding="5dp"
                         android:text="21"
                         android:textColor="#00faff"

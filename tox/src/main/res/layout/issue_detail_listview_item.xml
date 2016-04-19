@@ -39,6 +39,7 @@
             android:id="@+id/huiFuPingLun"
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
+            android:visibility="gone"
             android:background="@drawable/item_click_bg">
              <ImageView
                 android:background="@drawable/forum_com"

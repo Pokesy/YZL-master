@@ -326,7 +326,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
         groupApi.setHandler(tempHandler);
         groupApi.getGroupInfo(String.valueOf(group_id));
 
-        post = new Intent(mContext, PostGroupActivity.class);
+        post = new Intent(mContext, SendTieziActivity.class);
         post.putExtra("group_id", group_id);
 
         back_menu = (ImageView) findViewById(R.id.back_menu);
@@ -501,8 +501,8 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
         }
         group_detail.setText("群组简介：" + groupInfoMap.get("detail"));
 //        group_type_name.setText(groupInfoMap.get("type_name"));
-        post_count.setText(groupInfoMap.get("post_count"));
-        man_count.setText(groupInfoMap.get("memberCount"));
+        post_count.setText(groupInfoMap.get("user_nickname"));
+        man_count.setText(groupInfoMap.get("post_count"));
 
 
         ResUtil.setRoundImage(groupInfoMap.get("group_logo"),group_logo);
@@ -614,7 +614,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
     //判断发帖权限
     public void sendPost() {
         if (!joinFlag) {
-            post.putExtra("categoryList", categoryList);
+//            post.putExtra("categoryList", categoryList);
             startActivity(post);
         } else {
             ToastHelper.showToast("加群才能发帖", mContext);

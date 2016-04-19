@@ -24,15 +24,20 @@
             android:textSize="@dimen/font_size_large"
             tools:text="标题" />
 
-        <ImageView
-            android:id="@+id/snapshots"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:scaleType="fitXY"
-            android:visibility="visible"
-            tools:src="@drawable/app_banner1" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/snapshots"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:scaleType="fitXY"
+                android:visibility="visible"
+                tools:src="@drawable/app_banner1" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/news_description"

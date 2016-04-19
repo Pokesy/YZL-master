@@ -22,6 +22,7 @@
             android:id="@+id/geocodekey"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:hint="请长按地图标记你的位置"
             android:layout_weight="8" />
 
         <Button

@@ -174,17 +174,19 @@
                 <ImageView
                     android:id="@+id/Item_MainImg"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="3"
+                    android:scaleType="center"
                     android:src="@drawable/friends_sends_pictures_no"
                     android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/Item_MainImg1"
+                    android:scaleType="center"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="3"
@@ -194,10 +196,11 @@
                 <ImageView
                     android:id="@+id/Item_MainImg2"
                     android:layout_width="0dp"
-                    android:layout_height="130dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
+                    android:scaleType="center"
                     android:layout_weight="3"
                     android:src="@drawable/friends_sends_pictures_no"
                     android:visibility="visible" />

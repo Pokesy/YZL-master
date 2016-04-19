@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 /**
  * Created by angcyo on 16-03-02-002.
  */
-public class RInnerGridRecyclerView extends RGridView {
+public class  RInnerGridRecyclerView extends RGridView {
     public RInnerGridRecyclerView(Context context) {
         super(context);
     }

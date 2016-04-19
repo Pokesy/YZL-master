@@ -34,6 +34,7 @@ import com.thinksky.info.NewsDetailInfo;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.info.NewsReplyInfo;
 import com.thinksky.redefine.CircleImageView;
+import com.thinksky.rsen.ResUtil;
 import com.thinksky.utils.MyJson;
 import com.tox.ImageLoader;
 import com.tox.NewsApi;
@@ -63,10 +64,10 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
     private ScrollView newsScroll;
     private RelativeLayout proBarLine;
     private TextView newsType,newsTitle,newsDescription,newsAuthor,newsTime,replyCount;
-    LinearLayout replyBox,replyModule;
+    LinearLayout replyBox,replyModule,news_fast_reply,support_button;
     private EditText replyEditText;
     private WebView newWebView;
-    private TextView newsContent,sendButn;
+    private TextView newsContent,sendButn,supportCount;
     private NewsListInfo newsListInfo;
     private NewsApi newsApi;
     private MyHandler mHandler = new MyHandler(this);
@@ -126,6 +127,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         mContext = NewsDetailActivity.this;
         newsListInfo = (NewsListInfo)getIntent().getExtras().get("newsInfo");
         newsId = newsListInfo.getId();
+
         newsApi = new NewsApi(mHandler);
         imageLoader = ImageLoader.getInstance();
         taskCollection = new HashSet<AsyncTask>();
@@ -136,8 +138,10 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
     public void intView(){
         backMenu = (ImageView) findViewById(R.id.back_menu);
         newsReply = (ImageView) findViewById(R.id.news_reply);
+
         newsShare = (ImageView) findViewById(R.id.news_share);
         newsType = (TextView) findViewById(R.id.news_type);
+        supportCount= (TextView) findViewById(R.id.supportCount);
         proBarLine = (RelativeLayout) findViewById(R.id.proBarLine);
         newsScroll = (ScrollView) findViewById(R.id.news_scroll);
         newsTitle = (TextView) findViewById(R.id.news_title);
@@ -149,8 +153,9 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         newWebView = (WebView)findViewById(R.id.news_web);
         newsContent = (TextView)findViewById(R.id.news_content);
         replyModule = (LinearLayout) findViewById(R.id.reply_module);
-
+        support_button = (LinearLayout) findViewById(R.id.support_button);
         replyBox = (LinearLayout) findViewById(R.id.reply_box);
+        news_fast_reply= (LinearLayout) findViewById(R.id.news_fast_reply);
         replyEditText = (EditText) findViewById(R.id.reply_editText);
         sendButn = (TextView) findViewById(R.id.sendButn);
 
@@ -172,7 +177,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
             }
         });
         backMenu.setOnClickListener(this);
-        newsReply.setOnClickListener(this);
+        news_fast_reply.setOnClickListener(this);
         newsShare.setOnClickListener(this);
         sendButn.setOnClickListener(this);
         //获取资讯信息
@@ -369,6 +374,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         replyerHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //点击头像跳转信息
                 if (replyInfo.getUser() != null) {
                     newsApi.goUserInfo(mContext, replyInfo.getUser().getUid());
                 }
@@ -412,7 +418,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
                 replyAvatar.setText("游客");
             }
         }else {
-            kjBitmap.display(replyerHead, replyInfo.getUser().getAvatar(), 128, 128);
+            kjBitmap.display(replyerHead, replyInfo.getUser().getAvatar().replace("opensns//opensns","opensns"), 128, 128);
             replyAvatar.setText(replyInfo.getUser().getNickname());
         }
         replyTime.setText(replyInfo.getCreate_time());
@@ -431,7 +437,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
         LoadImageTask task = new LoadImageTask(newsLogo,540);
         task.execute(newsDetailInfo.getCover());
         taskCollection.add(task);
-
+        
         newsDescription.setText(Html.fromHtml(newsDetailInfo.getDescription()));
         newsAuthor.setText(newsDetailInfo.getUser().getNickname());
         newsTime.setText(newsDetailInfo.getCreate_time());

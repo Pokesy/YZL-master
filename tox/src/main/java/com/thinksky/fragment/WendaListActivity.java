@@ -3,7 +3,6 @@ package com.thinksky.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +14,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.thinksky.rsen.RViewHolder;
+import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.R;
+import com.thinksky.tox.SendQuestionActivity;
+import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 
@@ -33,13 +35,25 @@ public class WendaListActivity extends Activity {
     WendaListAdapter mAdapter;
     private ImageView back_menu;
     private TextView mTitleView;
-
+    private TextView   tiwen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wenda_common);
         mListView = (ListView) findViewById(R.id.listView);
+        tiwen = (TextView) findViewById(R.id.tiwen);
         back_menu = (ImageView) findViewById(R.id.back_menu);
+        tiwen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (BaseFunction.isLogin()) {
+                    Intent intent = new Intent(WendaListActivity.this, SendQuestionActivity.class);
+                    startActivity(intent);
+                }else{
+                    ToastHelper.showToast("请登录", Url.context);
+                }
+            }
+        });
         String whichActivity = getIntent().getStringExtra("whichActivity");
         initView();
         initData(whichActivity);
@@ -140,6 +154,7 @@ public class WendaListActivity extends Activity {
 //            if (s.equals("1")) {
 //                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
 //            }
+            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getCover_url(), viewHolder.imgV(R.id.logo));
             if (s.equals("0")) {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
                 viewHolder.itemView.findViewById(R.id.best_answer).setSelected(false);

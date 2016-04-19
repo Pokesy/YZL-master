@@ -1,6 +1,8 @@
 package com.thinksky.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,20 +14,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.info.WendaXianqingInfo;
+import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
@@ -58,14 +62,22 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
     private String mQuestionId;
     private BaseApi baseApi;
     private String session_id;
-    private ImageView back_menu;
+    private ImageView back_menu ,iv1,iv2,iv3;
     public static boolean upFlag = false;
     public static boolean flag = false;
+    public static boolean FLAG = false;
     private SharedPreferences sp = null;
     private LinearLayout reply_button;
     private LinearLayout reply_box;
     private EditText reply_editText;
     private TextView sendPostButtn;
+    private List<String> listflag = new ArrayList<String>();
+    private StringBuffer sb = new StringBuffer();
+    private String string = null;
+    private String suid;
+    private ProgressDialog mProgressDialog;
+    private RViewHolder holder;
+     private RelativeLayout img_layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +85,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_wentixiangqing);
         title = (TextView) findViewById(R.id.title);
         best_answer = (TextView) findViewById(R.id.best_answer);
+        img_layout= (RelativeLayout) findViewById(R.id.img_layout);
         money = (TextView) findViewById(R.id.money);
         creat_time = (TextView) findViewById(R.id.creat_time);
         content = (TextView) findViewById(R.id.content);
@@ -85,6 +98,10 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
 
         btn_huida = (Button) findViewById(R.id.btn_huida);
         back_menu = (ImageView) findViewById(R.id.back_menu);
+        iv1 = (ImageView) findViewById(R.id.iv_1);
+        iv2 = (ImageView) findViewById(R.id.iv_2);
+        iv3 = (ImageView) findViewById(R.id.iv_3);
+
 
         reply_button = (LinearLayout) findViewById(R.id.reply_button);
         reply_box = (LinearLayout) findViewById(R.id.reply_box);
@@ -131,6 +148,28 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    private void showProgressDialog() {
+        if (null == mProgressDialog) {
+            mProgressDialog = new ProgressDialog(this);
+        }
+        if (mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+        mProgressDialog.show();
+    }
+
+    private void cancelDialog() {
+        if (null != mProgressDialog && mProgressDialog.isShowing()) {
+            mProgressDialog.cancel();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cancelDialog();
+    }
+
     private void initXiangQingData() {
 
         String url = RsenUrlUtil.URL_WENTI_XIANGQING;
@@ -172,9 +211,52 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onResult(boolean state, List<WendaXianqingInfo> beans) {
+            public void onResult(boolean state, final List<WendaXianqingInfo> beans) {
                 if (state) {
+                    suid = beans.get(0).getUid();
 
+                    if (beans.get(0).getQuestionimages() != null && beans.get(0).getQuestionimages().size() > 0) {
+                        img_layout.setVisibility(View.VISIBLE);
+
+                        int size = beans.get(0).getQuestionimages().size();
+                       iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
+                       iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
+                       iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+
+                        for (int i = 0; i < size; i++) {
+                            String url = RsenUrlUtil.URL_BASE + beans.get(0).getQuestionimages().get(i);
+
+                            ImageView imageView = null;
+                            if (i == 0) {
+                                imageView = iv1;
+                            } else if (i == 1) {
+                                imageView = iv2;
+                            } else if (i == 2) {
+                                imageView =iv3;
+                            }
+
+                            if (imageView != null) {
+
+                                ImageLoader.getInstance().displayImage(url, imageView);
+                                final int in = i;
+                                imageView.setOnClickListener(new View.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(wentixiangqing.this, ImagePagerActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putStringArrayList("image_urls", (ArrayList<String>) beans.get(0).getQuestionimages());
+                                        bundle.putInt("image_index", in);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    else {
+                       img_layout.setVisibility(View.GONE);
+                    }
                     //回答
                     mListAdapter = new WentixiangqingListAdapter(wentixiangqing.this, beans.get(0).getQuestionAnswer());
                     listView.setAdapter(mListAdapter);
@@ -185,11 +267,11 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                     if (questionEntity.getBest_answer().equals("0")) {
                         best_answer.setText("求助中");
                         best_answer.setSelected(false);
-                        flag = true;
+                        FLAG = true;
                     } else {
                         best_answer.setText("已解决");
                         best_answer.setSelected(true);
-                        flag = false;
+                        FLAG = false;
                     }
                     money.setText(questionEntity.getScore());
                     creat_time.setText(questionEntity.getCreate_time());
@@ -226,6 +308,8 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                 break;
             //发表评论按钮
             case R.id.sendPostButn:
+                // TODO 显示进度条 转个菊花
+                showProgressDialog();
                 if (reply_editText.getText().length() > 0 && !"".equals(reply_editText.getText().toString().trim())) {
                     sendPostButtn.setBackgroundResource(R.drawable.border);
                     sendPostButtn.setTextColor(Color.parseColor("#A9ADB0"));
@@ -237,6 +321,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                     }
                     Log.e("评论内容>>>>>>>>>>", reply_editText.getText().toString());
                     send();
+
 //                    initFlag(false,true);
 //                    groupApi.postComment(post_id+"",reply_editText.getText().toString());
                     reply_editText.setText(null);
@@ -266,6 +351,13 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onNoNetwork(String msg) {
                 ToastHelper.showToast(msg, Url.context);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        cancelDialog();
+                    }
+                });
+
             }
 
             @Override
@@ -287,7 +379,13 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onResult(boolean state, List beans) {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        cancelDialog();
+                        initXiangQingData();
+                    }
+                });
             }
         });
 
@@ -340,7 +438,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                 holder.reply_count = (TextView) convertView.findViewById(R.id.reply_count);
                 holder.acept = (TextView) convertView.findViewById(R.id.acept);
                 holder.mIconAccept = (ImageView) convertView.findViewById(R.id.icon_accept);
-                if (flag) {
+                if (FLAG && BaseFunction.isLogin()) {
                     holder.acept.setVisibility(View.VISIBLE);
                 }
                 convertView.setTag(holder);
@@ -359,10 +457,14 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
 
             if (!(bean.getIs_supported().equals("0"))) {//已点赞
                 holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
-                upFlag = true;
+
+                string = bean.getIs_supported();
+                listflag.add(string);
+
             } else {
                 holder.dianzan.setBackgroundResource(R.drawable.iconfontweidianzan);
                 upFlag = false;
+
             }
 
 
@@ -388,7 +490,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onClick(View v) {
                     if (BaseFunction.isLogin()) {
-                        if (bean.getUser().getUid().equals(Url.USERID)) {
+                        if (suid.equals(Url.USERID)) {
                             RsenUrlUtil.execute(RsenUrlUtil.URL_SET_BEST_ANSWER, new RsenUrlUtil.OnJsonResultListener<DianzanBean>() {
                                 @Override
                                 public void onNoNetwork(String msg) {
@@ -417,19 +519,23 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
 
                                 @Override
                                 public void onResult(boolean state, List<DianzanBean> beans) {
-//                            if (state) {
-//                                ToastHelper.showToast("采纳了", Url.context);
-//                            } else {
-//                                ToastHelper.showToast("请求失败", Url.context);
-//                            }
+                                    if (state) {
+                                        ToastHelper.showToast("采纳了", Url.context);
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                holder.acept.setVisibility(View.GONE);
+                                                holder.caina.setVisibility(View.VISIBLE);
+                                                initXiangQingData();
+                                            }
+                                        });
 
-                                    DianzanBean bean_bean = beans.get(0);
-                                    if (bean_bean.success.equals("true")) {
-                                        ToastHelper.showToast("采纳成功", Url.context);
-                                        holder.caina.setVisibility(View.GONE);
-                                        bean.setIssetbest(0);
                                         notifyDataSetChanged();
+                                    } else {
+                                        ToastHelper.showToast("请求失败", Url.context);
                                     }
+
+
                                 }
                             });
                         } else {
@@ -460,8 +566,8 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 if (BaseFunction.isLogin()) {
-                    if (!upFlag) {
-                        upFlag = true;
+                    if (bean.getIs_supported().equals("0")) {
+
                         holder.reply_count.setText(Integer.parseInt(bean.getSupport_count()) + 1 + "");
                         holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
 //
@@ -489,6 +595,14 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
 
                             @Override
                             public void onResult(boolean state, List beans) {
+
+                                if (state) {
+                                    bean.setIs_supported("1");
+                                    ToastHelper.showToast("点赞成功", Url.context);
+                                } else {
+                                    ToastHelper.showToast("请求失败", Url.context);
+                                }
+//
 
                             }
                         });

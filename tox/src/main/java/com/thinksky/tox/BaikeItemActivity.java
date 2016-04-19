@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.thinksky.rsen.RsenUrlUtil;
 
@@ -19,6 +20,7 @@ public class BaikeItemActivity extends Activity {
     private RelativeLayout fanhui;
     private String id;
     private WebView web;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +33,22 @@ public class BaikeItemActivity extends Activity {
     private void initView() {
         fanhui = (RelativeLayout) findViewById(R.id.guanyuqibai_back);
         web = (WebView) findViewById(R.id.webView1);
-
+        title = (TextView) findViewById(R.id.title);
         MyOnclickListener mOnclickListener = new MyOnclickListener();
         fanhui.setOnClickListener(mOnclickListener);
-        Map map = new HashMap();
-        map.put("id", id);
-        RsenUrlUtil.executeGetWidthMap(this, RsenUrlUtil.URL_BKXQ, map, new RsenUrlUtil.OnJsonResultListener<BaikeBean>() {
+
+        RsenUrlUtil.execute(this, RsenUrlUtil.URL_BKXQ, new RsenUrlUtil.OnJsonResultListener<BaikeBean>() {
 
             @Override
             public void onNoNetwork(String msg) {
+
+            }
+
+            @Override
+            public Map getMap() {
+                Map map = new HashMap();
+                map.put("id", id);
+                return map;
 
             }
 
@@ -58,7 +67,8 @@ public class BaikeItemActivity extends Activity {
 
             @Override
             public void onResult(boolean state, List<BaikeBean> beans) {
-                web.loadUrl("beans.get(0).content");
+                title.setText(beans.get(0).title);
+                web.loadDataWithBaseURL(null, beans.get(0).content, "text/html", "UTF-8", null);
             }
         });
     }

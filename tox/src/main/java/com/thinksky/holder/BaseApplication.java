@@ -37,12 +37,7 @@ public class BaseApplication extends Application {
 		this.mMainThreadLooper = getMainLooper();
 		SDKInitializer.initialize(this);
 		ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
-//		//初始化百度地图
-//		//  SDK初始化
-//		IntentFilter filter = new IntentFilter();
-//		filter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
-//		filter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
-//        registerReceiver(mSDKInitReceiver, filter);
+
 		locationService = new LocationService(getApplicationContext());
 		mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 

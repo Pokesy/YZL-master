@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:more="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/group_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -93,9 +94,30 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
 
-                        android:layout_gravity="center"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true" />
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center" />
+
+                    <LinearLayout
+                        android:id="@+id/join_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginTop="15dp">
+
+                        <TextView
+                            android:id="@+id/join_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:background="#FFCC00"
+                            android:gravity="center"
+                            android:textColor="#ffffff"
+                            android:textSize="13sp"
+                            tools:text="加入" />
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -142,7 +164,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
+
                         android:layout_below="@+id/group_type"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -156,7 +178,7 @@
                             android:paddingLeft="5dp"
                             android:paddingTop="3dp"
 
-                            android:text="帖子:"
+                            android:text="组长:"
                             android:textColor="@color/group_less" />
 
                         <TextView
@@ -189,24 +211,11 @@
                             android:paddingTop="3dp"
                             android:text="99"
                             android:textColor="@color/group_less" />
+
+
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/join_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"
-                        android:padding="5dp">
 
-                        <TextView
-                            android:id="@+id/join_status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/circular_border"
-                            android:padding="2dp"
-                            android:textColor="@color/group_less" />
-                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -299,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingLeft="5dp"
-                    android:paddingRight="5dp"/>
+                    android:paddingRight="5dp" />
 
                 <LinearLayout
                     android:id="@+id/linear_isnull"

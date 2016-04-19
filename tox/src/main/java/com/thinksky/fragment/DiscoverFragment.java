@@ -33,6 +33,7 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.DiscoverSelectActivity;
 import com.thinksky.tox.ImagePagerActivity;
@@ -72,7 +73,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     /**
      * 点击POI后弹出的泡泡
      */
-    private LinearLayout mPopView;
+    private LinearLayout mPopView,images;
     MapView mMapView;
     BaiduMap mBaiduMap;
     KJBitmap kjBitmap;
@@ -125,6 +126,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
             public void onResult(boolean state, String result, JSONObject jsonObject) {
                 if (state) {
                     final FXBean wendaBean = JSON.parseObject(result, FXBean.class);
+
                     for (FXBean.ResultEntity info : wendaBean.getResult()) {
                         String s = info.getIsfactory();
                         Double d = info.getLatitude();
@@ -179,6 +181,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_discover, null);
         mMapView = (MapView) view.findViewById(R.id.bmapView);
         mPopView = (LinearLayout) view.findViewById(R.id.pop);
+        images= (LinearLayout) view.findViewById(R.id.images);
         dizhi = (TextView) view.findViewById(R.id.dizhi);
         dianhua = (TextView) view.findViewById(R.id.dianhua);
         mark = (Button) view.findViewById(R.id.button_mark);
@@ -187,14 +190,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
         iv_1 = (ImageView) view.findViewById(R.id.iv_1);
         iv_2 = (ImageView) view.findViewById(R.id.iv_2);
         iv_3 = (ImageView) view.findViewById(R.id.iv_3);
-        imgViewList = new ArrayList<ImageView>();
-        imgViewList.add(iv_1);
-        imgViewList.add(iv_2);
-        imgViewList.add(iv_3);
-        //默认设置不显示图片
-        imgViewList.get(0).setVisibility(View.GONE);
-        imgViewList.get(1).setVisibility(View.GONE);
-        imgViewList.get(2).setVisibility(View.GONE);
+
         mSegmentControl = (SegmentControl) view.findViewById(R.id.segment_control);
         baseApi = new BaseApi();
         session_id = baseApi.getSeesionId();
@@ -255,24 +251,49 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                 //为图片控件加载数据
                 kjBitmap = KJBitmap.create();
                 kjBitmap.display(iv_round, RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32());
-                for (int i = 0; i < bean.getImages().size(); i++) {
-                    String url = RsenUrlUtil.URL_BASE + bean.getImages().get(i);
-                    imgViewList.get(i).setVisibility(View.VISIBLE);
-                    kjBitmap.display(imgViewList.get(i), url);
-                    final int in = i;
-                    imgViewList.get(in).setOnClickListener(new View.OnClickListener() {
 
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.getImages());
-                            bundle.putInt("image_index", in);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
+                if (bean.getImages() != null && bean.getImages().size() > 0) {
+                    images.setVisibility(View.VISIBLE);
+
+                    int size = bean.getImages().size();
+                    iv_1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
+                    iv_2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
+                    iv_3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+
+                    for (int i = 0; i < size; i++) {
+                        String url = RsenUrlUtil.URL_BASE + bean.getImages().get(i);
+
+                        ImageView imageView = null;
+                        if (i == 0) {
+                            imageView = iv_1;
+                        } else if (i == 1) {
+                            imageView =iv_2;
+                        } else if (i == 2) {
+                            imageView = iv_3;
                         }
-                    });
+
+                        if (imageView != null) {
+
+                            ImageLoader.getInstance().displayImage(url, imageView);
+                            final int in = i;
+                            imageView.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.getImages());
+                                    bundle.putInt("image_index", in);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    images.setVisibility(View.GONE);
                 }
+
                 return true;
             }
         });

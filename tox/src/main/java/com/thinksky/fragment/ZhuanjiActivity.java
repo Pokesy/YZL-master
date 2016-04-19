@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
-import com.thinksky.tox.IssueActivity2;
 import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.R;
 import com.tox.ToastHelper;
@@ -165,7 +164,8 @@ public class ZhuanjiActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putInt("id", bean.id);
-                    Intent intent = new Intent(context, IssueActivity2.class);
+                    bundle.putString("title", bean.title);
+                    Intent intent = new Intent(context, ZhuanjiFenLeiActivity.class);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 }

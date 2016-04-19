@@ -66,7 +66,7 @@ public class NewsListAdapter extends BaseAdapter {
         }
         NewsListInfo info = newsListInfos.get(position);
         viewHolder.mSnapshotsView.setVisibility(TextUtils.isEmpty(info.getCover()) ? View.GONE : View.VISIBLE);
-        kjBitmap.display(viewHolder.mSnapshotsView, info.getCover());
+        kjBitmap.display(viewHolder.mSnapshotsView, info.getCover().replace("opensns//opensns","opensns"));
         viewHolder.newsTitle.setText(info.getTitle());
         viewHolder.mTimeView.setText(info.getCreate_time());
         viewHolder.newsDescription.setText(Html.fromHtml(info.getDescription()));

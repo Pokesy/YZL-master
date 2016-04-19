@@ -80,6 +80,7 @@ public class WodexiaozuFragment extends RBaseFragment {
     protected void initViewData() {
 
     }
+
     protected void init() {
         session_id = baseApi.getSeesionId();
         Map map = new HashMap();
@@ -106,6 +107,8 @@ public class WodexiaozuFragment extends RBaseFragment {
 
                     for (int i = 0; i < jsonObject.length(); i++) {
                         MyBean bean = new MyBean();
+                        bean.MyGroupCount=jsonObject.getInt("MyGroupCount");
+                        bean.MyPostCount=jsonObject.getInt("MyPostCount");
                         bean.logo = jsonObject.getJSONObject(String.valueOf(i)).getString("logo");
                         bean.title = jsonObject.getJSONObject(String.valueOf(i)).getString("title");
                         bean.id = jsonObject.getJSONObject(String.valueOf(i)).getString("id");
@@ -119,6 +122,19 @@ public class WodexiaozuFragment extends RBaseFragment {
 //                            bean.type_name = jsonObject.getJSONObject(String.valueOf(i)).getString("type_name");
                         bean.detail = jsonObject.getJSONObject(String.valueOf(i)).getString("detail");
                         bean.activity = jsonObject.getJSONObject(String.valueOf(i)).getString("activity");
+                        JSONObject jsonObject1 = jsonObject.getJSONObject(String.valueOf(i)).getJSONObject("user");
+//                        bean.userList.add(RsenUrlUtil.URL_BASE + jsonObject1.getString("avatar32"));
+                        bean.gm_logo = RsenUrlUtil.URL_BASE + jsonObject1.getString("avatar32");
+                        bean.gm_nickname = jsonObject1.getString("nickname");
+//                        for (int j = 0; j < userArray.length(); j++) {
+//                            try {
+//                                bean.userList.add( userArray.getJSONObject(j).getString("avatar32"));
+//                                bean.gm_logo = RsenUrlUtil.URL_BASE + userArray.getJSONObject(j).getString("avatar32");
+//                                bean.gm_nickname = userArray.getJSONObject(j).getString("nickname");
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
                         beans.add(bean);
                     }
 
@@ -131,11 +147,8 @@ public class WodexiaozuFragment extends RBaseFragment {
             @Override
             public void onResult(boolean state, List<MyBean> beans) {
                 if (state) {
-//                    if (BuildConfig.DEBUG) {
-//                        for (int i = 0; i < 30; i++) {
-//                            beans.add(beans.get(0));
-//                        }
-//                    }
+                    mViewHolder.tV(R.id.xiaozu).setText("已加入"+String.valueOf(beans.get(0).MyGroupCount)+"个小组");
+                    mViewHolder.tV(R.id.huati).setText("已发表"+String.valueOf(beans.get(0).MyPostCount)+"个话题");
                     gridView.setAdapter(new MyAdapter(mBaseActivity, beans));
                 } else {
                     ToastHelper.showToast("请求失败", Url.context);
@@ -144,6 +157,7 @@ public class WodexiaozuFragment extends RBaseFragment {
         });
 
     }
+
     @Override
     protected void initView(View rootView) {
         context = getActivity();
@@ -179,7 +193,9 @@ public class WodexiaozuFragment extends RBaseFragment {
         mViewHolder.tV(R.id.huati).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent1 = new Intent(context, MyhuatiActivity.class);
 
+                startActivity(intent1);
             }
         });
         mViewHolder.tV(R.id.xiaozu).setOnClickListener(new View.OnClickListener() {
@@ -237,10 +253,14 @@ public class WodexiaozuFragment extends RBaseFragment {
         map.put("detail", bean.detail);
 //        map.put("type_name", bean.type_name);
         map.put("post_count", bean.post_count);
-        map.put("group_logo", bean.logo);
+        map.put("group_logo", Url.IMAGE +bean.logo);
         map.put("memberCount", bean.memberCount);
         map.put("uid", bean.uid);
+        map.put("activity", bean.activity);
 
+        map.put("is_join", bean.is_join);
+        map.put("user_nickname", bean.gm_nickname);
+        map.put("user_logo", bean.gm_logo);
 
         bundle.putSerializable("group_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
@@ -253,6 +273,8 @@ public class WodexiaozuFragment extends RBaseFragment {
         public String id;
         public String logo;
         public String title;
+        public int MyGroupCount;
+        public int MyPostCount;
         //        public String group_id;
         public String group_type;
         public String detail;
@@ -260,13 +282,14 @@ public class WodexiaozuFragment extends RBaseFragment {
         public String post_count;
         public String memberCount;
         public String uid;
-        public String group_logo;
+
         public String group_background;
         public String type_id;
         public String activity;
         public String is_join;
-
-
+        public String gm_logo;
+        public String gm_nickname;
+        public List<String> userList;//用户头像
     }
 
     @Override
@@ -274,7 +297,7 @@ public class WodexiaozuFragment extends RBaseFragment {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         //如果注册成功将用户名复制给输入框
-        if (requestCode == 8 && resultCode == Activity.RESULT_OK ) {
+        if (requestCode == 8 && resultCode == Activity.RESULT_OK) {
             group_probar.setVisibility(View.GONE);
             progressBarText.setVisibility(View.GONE);
             mygroup.setVisibility(View.VISIBLE);

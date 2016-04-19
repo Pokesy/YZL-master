@@ -8,7 +8,6 @@ import android.util.Log;
 import com.thinksky.net.IsNet1;
 import com.thinksky.net.ThreadPoolUtils;
 import com.thinksky.thread.HttpPostThread;
-import com.thinksky.tox.BuildConfig;
 import com.tox.Url;
 
 import org.json.JSONArray;
@@ -26,8 +25,11 @@ import java.util.Set;
  */
 public class RsenUrlUtil {
 
-    public static String URL_BASE = BuildConfig.URL_BASE;
-    public static String URL_SUB_BASE = "/opensns/api.php?s=";
+//    public static String URL_BASE = BuildConfig.URL_BASE;
+//    public static String URL_SUB_BASE = "/opensns/api.php?s=";
+
+    public static String URL_BASE = "http://122.5.45.150";
+    public static String URL_SUB_BASE = "/api.php?s=";
     //发现
     public static String URL_FX = URL_BASE + URL_SUB_BASE + "user/getUserList";
     //百科服务器地址
@@ -38,6 +40,9 @@ public class RsenUrlUtil {
     public static String URL_BKXQ = URL_BASE + URL_SUB_BASE + "Paper/getPaperDetail";
     //专家
     public static String URL_ZJ = URL_BASE + URL_SUB_BASE + "Issue/getIssList&session_id=&issue_id=";
+
+    //专家分类
+    public static String URL_ZJ_FL = URL_BASE + URL_SUB_BASE + "/Issue/getIssuelist";
     //专家详情
     public static String URL_ZJXQ = URL_BASE + URL_SUB_BASE + "Issue/getIssueDetail&id=";
     //问答
@@ -46,7 +51,8 @@ public class RsenUrlUtil {
     public static String URL_LT = URL_BASE + URL_SUB_BASE + "forum/getForumModules";
     //热门话题
     public static String URL_REMEN_HUATI = URL_BASE + URL_SUB_BASE + "group/getHotPostAll";
-
+    //我的话题
+    public static String URL_MY_HUATI = URL_BASE + URL_SUB_BASE + "group/getHotPostAll";
     public static String SENDDISCOVER = URL_BASE + URL_SUB_BASE + "user/setProfile";
     //小组精选
     public static String URL_XIAOZU_JINGXUAN = URL_BASE + URL_SUB_BASE + "group/getGroupChoice";
@@ -69,6 +75,7 @@ public class RsenUrlUtil {
     public static String URL_SOLUTE_WD = URL_BASE + URL_SUB_BASE + "Question/getSoluteQuestionList";
     //问题提问
     public static String URL_SEND_QUESTION = URL_BASE + URL_SUB_BASE + "/question/sendQuestion";
+    public static String URL_SEND_HT = URL_BASE + URL_SUB_BASE+  "/group/sendPost";
     //问题回答
     public static String URL_SEND_QUESTION_ANSWER = URL_BASE + URL_SUB_BASE + "Question/sendQuestionAnswer&session_id=&question_id=&content=";
     //回答点赞

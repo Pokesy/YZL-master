@@ -66,6 +66,7 @@
                 <RelativeLayout
                     android:layout_width="140dp"
                     android:layout_gravity="right"
+                    android:visibility="gone"
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/reply_floor_btn"

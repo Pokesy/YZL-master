@@ -183,8 +183,8 @@ private String s;
         String result = obj.toString();
         try {
             JSONObject jsonObject = new JSONObject(result);
-//            JSONObject jsonObject1= (JSONObject) jsonObject.get("message");
-            img_attachId = jsonObject.getString("id");
+            JSONObject jsonObject1= (JSONObject) jsonObject.get("message");
+            img_attachId = jsonObject1.getString("id");
 
         } catch (JSONException e) {
 

@@ -388,9 +388,18 @@
 
             android:theme="@style/ActivityThemeTwo" />
         <activity
-            android:name="com.thinksky.tox.GroupInfoActivityCopy"
+            android:name="com.thinksky.fragment.MyhuatiActivity"
 
             android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.fragment.ZhuanjiFenLeiActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.tox.SendTieziActivity"
+
+            android:theme="@style/ActivityThemeTwo" />
+
 
 
     </application>

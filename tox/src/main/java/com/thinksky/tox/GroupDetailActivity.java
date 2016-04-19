@@ -86,7 +86,7 @@ public class GroupDetailActivity extends Activity implements View.OnClickListene
         groupName = (TextView) findViewById(R.id.group_name);
         groupType = (TextView) findViewById(R.id.group_type);
         groupBelong = (TextView) findViewById(R.id.group_type_belong);
-        postCount = (TextView) findViewById(R.id.post_count);
+//        postCount = (TextView) findViewById(R.id.post_count);
         manCount = (TextView) findViewById(R.id.man_count);
         userInfo = (LinearLayout) findViewById(R.id.user_info);
         creatorHead = (CircleImageView) findViewById(R.id.creator_user_head);
@@ -97,7 +97,6 @@ public class GroupDetailActivity extends Activity implements View.OnClickListene
         hotLine = (LinearLayout) findViewById(R.id.hot_line);
         hotPostView = (IssueListView) findViewById(R.id.hot_post_listView);
         backBefore = (TextView) findViewById(R.id.back_before);
-
         InitThisView(groupInfoMap);
 
         backMenu.setOnClickListener(this);
@@ -124,7 +123,7 @@ public class GroupDetailActivity extends Activity implements View.OnClickListene
         }
         groupDetail.setText(groupInfoMap.get("detail"));
         groupBelong.setText(groupInfoMap.get("type_name"));
-        postCount.setText(groupInfoMap.get("post_count"));
+//        postCount.setText(groupInfoMap.get("post_count"));
         manCount.setText(groupInfoMap.get("memberCount"));
         if (groupInfoMap.get("group_logo").equals(Url.USERHEADURL +"Public/Core/images/nopic.png")) {
             groupLogo.setImageResource(R.drawable.side_user_avatar);
@@ -153,7 +152,7 @@ public class GroupDetailActivity extends Activity implements View.OnClickListene
             case R.id.user_info:
                 groupApi.goUserInfo(mContext,groupInfoMap.get("user_uid"));
                 break;
-            case R.id.join_group:
+            case R.id.join_status:
                 if (joinFlag){
                     //做加入群组的操作
 

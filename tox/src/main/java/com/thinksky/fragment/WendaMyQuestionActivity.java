@@ -3,7 +3,6 @@ package com.thinksky.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +16,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.thinksky.rsen.RViewHolder;
+import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendQuestionActivity;
+import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 
@@ -52,8 +53,12 @@ public class WendaMyQuestionActivity extends AppCompatActivity {
         tiwen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WendaMyQuestionActivity.this, SendQuestionActivity.class);
-                startActivity(intent);
+                if (BaseFunction.isLogin()) {
+                    Intent intent = new Intent(WendaMyQuestionActivity.this, SendQuestionActivity.class);
+                    startActivity(intent);
+                }else{
+
+                }
             }
         });
         init();
@@ -139,6 +144,8 @@ public class WendaMyQuestionActivity extends AppCompatActivity {
             ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setText(listEntity.getUser().getNickname());
             ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(listEntity.getAnswer_num());
             ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity.getCreate_time());
+
+            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getCover_url(), viewHolder.imgV(R.id.logo));
             String s = listEntity.getBest_answer();
             if (s.equals("0")) {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");

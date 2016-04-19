@@ -35,15 +35,17 @@
             android:textColor="@color/tab"
             android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/cate_menu"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
+        <TextView
+            android:id="@+id/tiwen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/menu" />
+            android:paddingRight="10dp"
+            android:text="提问"
+            android:textColor="@color/tab"
+            android:textSize="18sp" />
     </RelativeLayout>
 
 

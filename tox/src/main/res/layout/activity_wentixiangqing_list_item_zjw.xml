@@ -103,9 +103,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="38dp"
-                    android:textColor="@color/head"
                     android:visibility="gone"
-                    tools:text="采纳" />
+                    android:textColor="@color/head"
+                    android:text="采纳" />
 
                 <ImageView
                     android:id="@+id/dianzan"

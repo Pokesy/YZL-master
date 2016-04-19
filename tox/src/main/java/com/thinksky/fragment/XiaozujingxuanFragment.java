@@ -269,14 +269,13 @@ public class XiaozujingxuanFragment extends RBaseFragment {
         map.put("title", bean.title);
         map.put("group_type", bean.group_type);
         map.put("detail", bean.detail);
-        map.put("type_name", bean.type_name);
         map.put("post_count", bean.post_count);
         map.put("group_logo", bean.logo);
         map.put("memberCount", bean.memberCount);
         map.put("uid", bean.uid);
         map.put("is_join", bean.is_join);
         map.put("user_nickname", bean.gm_nickname);
-        map.put("user_logo", Url.IMAGE + bean.gm_logo);
+        map.put("user_logo",  bean.gm_logo);
         bundle.putSerializable("group_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
         Intent intent = new Intent(context, GroupInfoActivity.class);
