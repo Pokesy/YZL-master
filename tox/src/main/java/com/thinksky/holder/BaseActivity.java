@@ -2,9 +2,10 @@ package com.thinksky.holder;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-public abstract class BaseActivity extends AppCompatActivity {
+import com.bugtags.library.Bugtags;
+
+public abstract class BaseActivity extends BaseBActivity {
 
 	// 获取到前台进程的Activity
 	private static Activity mForegroundActivity = null;
@@ -37,12 +38,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		Bugtags.onResume(this);
 		this.mForegroundActivity = this;
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Bugtags.onPause(this);
 		this.mForegroundActivity = null;
 	}
 	@Override

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.utils.MyJson;
 import com.tox.LoginApi;
 import com.tox.Url;
@@ -24,7 +25,7 @@ import com.tox.login;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseBActivity {
 
     private RelativeLayout mClose;
     private RelativeLayout mLogin, mWeibo, mQQ;

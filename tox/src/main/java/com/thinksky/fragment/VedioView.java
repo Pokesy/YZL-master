@@ -1,6 +1,5 @@
 package com.thinksky.fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,10 +8,11 @@ import android.view.WindowManager;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.tox.R;
 
 
-public class VedioView extends Activity {
+public class VedioView extends BaseBActivity {
     VideoView videoView;
     MediaController mController;
     private String url;

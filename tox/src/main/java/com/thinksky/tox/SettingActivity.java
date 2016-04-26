@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SettingActivity extends Activity {
+import com.thinksky.holder.BaseBActivity;
+
+public class SettingActivity extends BaseBActivity {
     private CheckBox yejianmoshi, tongzhi, baocunjindu;
     private RelativeLayout tupianjiazai, zitidaxiao, qingchuhuancun,
             setting_chongzhimima, yijianfankui, guoduandianzan, banbenjiance,

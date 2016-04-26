@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.utils.MyJson;
 import com.tox.LoginApi;
 import com.tox.Url;
@@ -19,7 +19,7 @@ import com.tox.Url;
 /**
  * Created by 王杰 on 2015/7/9.
  */
-public class BeforeRegistetActivity extends Activity{
+public class BeforeRegistetActivity extends BaseBActivity {
     private RelativeLayout next,registClose;
     private LoginApi loginApi;
     private MyJson myJson=new MyJson();

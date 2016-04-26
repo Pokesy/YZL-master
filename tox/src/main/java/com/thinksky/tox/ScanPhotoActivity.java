@@ -1,7 +1,6 @@
 package com.thinksky.tox;
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -19,6 +18,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.thinksky.adapter.GroupAdapter;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.ImageBean;
 
 import net.tsz.afinal.FinalBitmap;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ScanPhotoActivity extends Activity {
+public class ScanPhotoActivity extends BaseBActivity {
     private HashMap<String, List<String>> mGruopMap = new HashMap<String, List<String>>();
     private List<ImageBean> list = new ArrayList<ImageBean>();
     private final static int SCAN_OK = 1;

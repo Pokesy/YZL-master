@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,6 +15,7 @@ import android.widget.ImageView;
 
 import com.thinksky.PagerSlidingTabStrip.PagerSlidingTabStrip;
 import com.thinksky.fragment.MyNewsFragment;
+import com.thinksky.holder.BaseBActivity;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * 自己的咨询列表
  * Created by Administrator on 2015/7/24 0024.
  */
-public class NewsMeActivity extends FragmentActivity implements View.OnClickListener{
+public class NewsMeActivity extends BaseBActivity implements View.OnClickListener{
 
     private int activityCloseEnterAnimation;
     private int activityCloseExitAnimation;

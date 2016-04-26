@@ -1,15 +1,15 @@
 package com.thinksky.thread;
 
-import java.io.IOException;
-
-import org.apache.http.client.ClientProtocolException;
-
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
 import com.thinksky.net.MyGet;
 import com.thinksky.utils.MyJson;
+
+import org.apache.http.client.ClientProtocolException;
+
+import java.io.IOException;
 
 /**
  * 网络Get请求的线程
@@ -31,7 +31,7 @@ public class HttpGetThread implements Runnable {
     public void run() {
         // 获取我们回调主ui的message
         Message msg = hand.obtainMessage();
-        Log.e("liuxiaowei", url);
+        Log.e("dajiao", url);
         try {
             String result = myGet.doGet(url);
 

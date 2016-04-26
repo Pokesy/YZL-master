@@ -1,7 +1,6 @@
 package com.thinksky.tox;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,12 +16,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.adapter.DetailListAdapter;
 import com.thinksky.anim3d.RoundBitmap;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.Com2Com;
 import com.thinksky.info.WeiboCommentInfo;
 import com.thinksky.info.WeiboInfo;
@@ -44,12 +44,12 @@ import net.tsz.afinal.FinalBitmap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeiboDetailActivity extends Activity {
+public class WeiboDetailActivity extends BaseBActivity {
 
     private WeiboInfo Weiboinfo = null;
     private LoadImg loadImg;
     private MyJson myJson = new MyJson();
-    private RelativeLayout Detail_Back;
+    private ImageView Detail_Back;
     private ImageView mDetail_UserHead, delete_button;
     private LinearLayout mDetail_Up, mDetail_Share, mDetail__progressBar, mDetail_SendComment, mDetail_repostWeibo, mDeleteButton;
     private ProgressBar mComment_ProgressBar;
@@ -130,7 +130,7 @@ public class WeiboDetailActivity extends Activity {
         mDetail_repostContent = (TextView) findViewById(R.id.Detail_Repost_content);
         mDetail_repostName = (TextView) findViewById(R.id.Detail_Repost_name);
         mDetail_repostTime = (TextView) findViewById(R.id.Detail_Repost_time);
-        Detail_Back = (RelativeLayout) findViewById(R.id.Detail_Back);
+        Detail_Back = (ImageView) findViewById(R.id.Detail_Back);
         delete_button = (ImageView) findViewById(R.id.delete_button);
         mDetail_SendComment = (LinearLayout) findViewById(R.id.Detail_SendComment);
         mDetail_AshameID = (TextView) findViewById(R.id.Detail_AshameID);
@@ -153,6 +153,9 @@ public class WeiboDetailActivity extends Activity {
         mDetail_CommentsNum = (TextView) findViewById(R.id.Detail_ComNum);
         mDetail_Ctime = (TextView) findViewById(R.id.Detail_ctime);
         Detail_Back.setOnClickListener(myOnclick);
+        if (Weiboinfo.getUser().getUid().equals(Url.USERID)) {
+            delete_button.setVisibility(View.VISIBLE);
+        }
         delete_button.setOnClickListener(myOnclick);
         mDetail_UserHead.setOnClickListener(myOnclick);
         mDetail_Up.setOnClickListener(myOnclick);
@@ -281,41 +284,46 @@ public class WeiboDetailActivity extends Activity {
                     break;
                 //删除微博
                 case R.id.delete_button:
-                    if (Weiboinfo.getCan_delete()) {
-                        weiboApi.setHandler(new Handler() {
-                            @Override
-                            public void handleMessage(Message msg) {
-                                switch (msg.what) {
-                                    case 0:
-                                        Url.activityFrom = "DeleteWeiBoActivity";
-                                        ToastHelper.showToast("删除成功", WeiboDetailActivity.this);
-                                        finish();
-                                        break;
-                                    case 401:
-                                        ToastHelper.showToast("操作失败，需要登录", WeiboDetailActivity.this);
-                                        break;
-                                    default:
-                                        break;
+                    if (BaseFunction.isLogin()) {
+                        if (Weiboinfo.getUser().getUid().equals(Url.USERID)) {
+                            weiboApi.setHandler(new Handler() {
+                                @Override
+                                public void handleMessage(Message msg) {
+                                    switch (msg.what) {
+                                        case 0:
+                                            Url.activityFrom = "DeleteWeiBoActivity";
+                                            ToastHelper.showToast("删除成功", WeiboDetailActivity.this);
+                                            finish();
+                                            break;
+                                        case 401:
+                                            ToastHelper.showToast("操作失败，需要登录", WeiboDetailActivity.this);
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
-                            }
-                        });
-                        new AlertDialog.Builder(WeiboDetailActivity.this)
-                                .setMessage("确定删除微博？")
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        weiboApi.deleteWeiBo(Weiboinfo.getWid());
-                                    }
-                                })
-                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                }).show();
-                    } else {
-                        delete_button.setClickable(false);
-                        ToastHelper.showToast("没有权限操作", WeiboDetailActivity.this);
+                            });
+                            new AlertDialog.Builder(WeiboDetailActivity.this)
+                                    .setMessage("确定删除微博？")
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            weiboApi.deleteWeiBo(Weiboinfo.getWid());
+                                        }
+                                    })
+                                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    }).show();
+                        } else {
+                            delete_button.setClickable(false);
+                            ToastHelper.showToast("没有权限操作", WeiboDetailActivity.this);
+                        }
+                    }else
+                    {
+                        ToastHelper.showToast("操作失败，需要登录", WeiboDetailActivity.this);
                     }
                     break;
                 case R.id.Detail_MainImg:
@@ -460,7 +468,8 @@ public class WeiboDetailActivity extends Activity {
             Log.e("不加载图片", "111111111111111111111");
             mDetail_UserHead.setImageResource(R.drawable.side_user_avatar);
         } else {
-            BaseFunction.showImage(WeiboDetailActivity.this, mDetail_UserHead, Weiboinfo.getUser().getAvatar(), loadImg, Url.IMGTYPE_HEAD);
+//            BaseFunction.showImage(WeiboDetailActivity.this, mDetail_UserHead, Weiboinfo.getUser().getAvatar(), loadImg, Url.IMGTYPE_HEAD);
+            ImageLoader.getInstance().displayImage(Weiboinfo.getUser().getAvatar(), mDetail_UserHead);
         }
         //加载图片
         //Log.e("加载图片",Weiboinfo.getImgList().size()+"");
@@ -473,7 +482,7 @@ public class WeiboDetailActivity extends Activity {
             for (int i = 0; i < imageCount; i++) {
                 BaseFunction.showImage(WeiboDetailActivity.this, mImgList.get(i), Weiboinfo.getImgList().get(i), loadImg, Url.IMGTYPE_WEIBO);
                 mImgList.get(i).setVisibility(View.VISIBLE);
-                loadWeiboImg(mImgList.get(i), Url.IMAGE + "/" + Weiboinfo.getImgList().get(i));
+                loadWeiboImg(mImgList.get(i), Url.IMAGE + Weiboinfo.getImgList().get(i));
             }
         } else {
 

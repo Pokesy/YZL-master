@@ -2,7 +2,6 @@ package com.thinksky.rsen.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,13 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.tox.R;
 
 /**
  * Created by dajiao on 16-03-20-020.
  */
-public abstract class RBaseAppActivity extends AppCompatActivity {
+public abstract class RBaseAppActivity extends BaseBActivity {
 
     public static Toast T;
     protected ImageView backImage;

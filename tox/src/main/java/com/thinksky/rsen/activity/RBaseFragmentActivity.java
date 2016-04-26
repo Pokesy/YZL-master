@@ -2,15 +2,15 @@ package com.thinksky.rsen.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.fragment.RBaseFragment;
 import com.thinksky.tox.R;
 
 /**
  * Created by dajiao on 16-03-02-002.
  */
-public abstract class RBaseFragmentActivity extends AppCompatActivity {
+public abstract class RBaseFragmentActivity extends BaseBActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

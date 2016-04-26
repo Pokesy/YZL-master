@@ -4,65 +4,66 @@
     android:layout_height="match_parent"
     android:background="#EDEDED"
     android:orientation="vertical">
-
+    <!--页头-->
     <RelativeLayout
+        android:id="@+id/group_post_top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_alignParentTop="true"
         android:background="@drawable/head_border"
         android:paddingBottom="0dp"
         android:paddingTop="0dp">
 
-        <RelativeLayout
-
-            android:id="@+id/Detail_Back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:padding="12dp"
-                android:src="@drawable/arrow_left"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-
         <ImageView
-            android:id="@+id/delete_button"
-            android:layout_width="60dp"
+            android:id="@+id/Detail_Back"
+            android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:paddingBottom="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="15dp"
-            android:src="@drawable/trash" />
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/arrow_left" />
 
         <TextView
             android:id="@+id/Detail_AshameID"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/delete_button"
-            android:layout_toRightOf="@+id/Detail_Back"
-            android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:singleLine="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:text="@string/weibo_name"
             android:textColor="@color/tab"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="12dp"
+            android:paddingRight="10dp"
+            android:paddingTop="12dp"
+            android:src="@drawable/trash"
+            android:textColor="@color/tab"
+            android:textSize="18sp" />
     </RelativeLayout>
 
+
     <ScrollView
-    android:id="@+id/Detail_ScrollView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+        android:id="@+id/Detail_ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <LinearLayout
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,26 +76,26 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="8dp"
-                    android:weightSum="10"
                     android:layout_marginTop="5dp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
                     <com.thinksky.redefine.CircleImageView
                         android:id="@+id/Detail_UserHead"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        tools:border_width="2dp"
+                        android:src="@drawable/side_user_avatar"
                         tools:border_color="@color/light"
-                        android:src="@drawable/side_user_avatar" />
+                        tools:border_width="2dp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_vertical|center_horizontal"
                         android:layout_toRightOf="@+id/Detail_UserHead"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:orientation="vertical"
                         android:weightSum="5">
 
                         <TextView
@@ -110,11 +111,11 @@
                             android:id="@+id/WeiboDetail_from"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="left"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="3dp"
-                            android:text="来自:网站端"
                             android:singleLine="true"
-                            android:layout_gravity="left"
+                            android:text="来自:网站端"
                             android:textColor="#9A9A9A"
                             android:textSize="11sp" />
                     </LinearLayout>
@@ -124,25 +125,26 @@
                         android:id="@+id/Weibo_top"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="置顶"
-                        android:padding="2dp"
-                        android:textColor="#ffffff"
-                        android:layout_marginTop="7dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/text_blue_round"
+
+                        android:layout_marginTop="7dp"
                         android:layout_toLeftOf="@+id/Detail_ctime"
-                        android:visibility="visible" />
+                        android:background="@drawable/text_blue_round"
+                        android:padding="2dp"
+                        android:text="置顶"
+                        android:textColor="#ffffff"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/Detail_ctime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="2014.7.16"
                         android:textColor="#815F3D"
-                        android:textSize="15sp"
-                        android:text="2014.7.16" />
+                        android:textSize="15sp" />
 
                 </RelativeLayout>
 
@@ -161,101 +163,101 @@
                 <!--转发微博区-->
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
                     android:id="@+id/Detail_RepostWeibo"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="#F7F7F7"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
                     android:orientation="vertical"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
                     android:visibility="gone">
 
                     <TextView
                         android:id="@+id/Detail_Repost_name"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text=" @小泽玛丽罗"
                         android:paddingLeft="15dp"
+                        android:text=" @小泽玛丽罗"
                         android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/Detail_Repost_content"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text=" 爱的季节上课吃饭你好数据库的方寸山潍坊潍坊为人父为人父服务服务范围分"
+                        android:paddingBottom="5dp"
                         android:paddingLeft="10dp"
-                        android:paddingTop="8dp"
                         android:paddingRight="5dp"
-                        android:visibility="gone"
-                        android:paddingBottom="5dp" />
+                        android:paddingTop="8dp"
+                        android:text=" 爱的季节上课吃饭你好数据库的方寸山潍坊潍坊为人父为人父服务服务范围分"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="5dp">
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp">
 
                         <TextView
                             android:id="@+id/Detail_Repost_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
                             android:paddingRight="10dp"
                             android:text="2014.7.31"
-                            android:visibility="gone"
-                            android:layout_alignParentRight="true" />
+                            android:visibility="gone" />
                     </RelativeLayout>
                     <!--图片区-->
 
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="9"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginRight="5dp"
+                        android:weightSum="9">
 
                         <ImageView
                             android:id="@+id/Detail_MainImg"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
+                            android:layout_weight="2.8"
                             android:src="@drawable/friends_sends_pictures_no"
                             android:visibility="gone" />
 
                         <ImageView
                             android:id="@+id/Detail_MainImg1"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
-                            android:src="@drawable/friends_sends_pictures_no"
                             android:layout_marginLeft="5dp"
+                            android:layout_weight="2.8"
+                            android:src="@drawable/friends_sends_pictures_no"
                             android:visibility="gone" />
 
                         <ImageView
                             android:id="@+id/Detail_MainImg2"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
-                            android:src="@drawable/friends_sends_pictures_no"
                             android:layout_marginLeft="5dp"
+                            android:layout_weight="2.8"
+                            android:src="@drawable/friends_sends_pictures_no"
                             android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="9"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginRight="5dp"
+                        android:weightSum="9">
 
                         <ImageView
                             android:id="@+id/Detail_MainImg3"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
+                            android:layout_weight="2.8"
                             android:src="@drawable/friends_sends_pictures_no"
 
                             android:visibility="gone" />
@@ -263,37 +265,37 @@
                         <ImageView
                             android:id="@+id/Detail_MainImg4"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
-                            android:src="@drawable/friends_sends_pictures_no"
                             android:layout_marginLeft="5dp"
+                            android:layout_weight="2.8"
+                            android:src="@drawable/friends_sends_pictures_no"
                             android:visibility="gone" />
 
                         <ImageView
                             android:id="@+id/Detail_MainImg5"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
-                            android:src="@drawable/friends_sends_pictures_no"
                             android:layout_marginLeft="5dp"
+                            android:layout_weight="2.8"
+                            android:src="@drawable/friends_sends_pictures_no"
                             android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="9"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginRight="5dp"
+                        android:weightSum="9">
 
                         <ImageView
                             android:id="@+id/Detail_MainImg6"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
+                            android:layout_weight="2.8"
                             android:src="@drawable/friends_sends_pictures_no"
 
                             android:visibility="gone" />
@@ -301,54 +303,123 @@
                         <ImageView
                             android:id="@+id/Detail_MainImg7"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
-                            android:src="@drawable/friends_sends_pictures_no"
                             android:layout_marginLeft="5dp"
+                            android:layout_weight="2.8"
+                            android:src="@drawable/friends_sends_pictures_no"
                             android:visibility="gone" />
 
                         <ImageView
                             android:id="@+id/Detail_MainImg8"
                             android:layout_width="0dp"
-                            android:layout_weight="2.8"
                             android:layout_height="130dp"
                             android:layout_marginBottom="5dp"
-                            android:src="@drawable/friends_sends_pictures_no"
                             android:layout_marginLeft="5dp"
+                            android:layout_weight="2.8"
+                            android:src="@drawable/friends_sends_pictures_no"
                             android:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <com.thinksky.myview.SwipeLayout
                     android:id="@+id/swipeLayout"
-                    android:background="@drawable/mylistview_bottom_corner"
-                    android:padding="1dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/mylistview_bottom_corner"
+                    android:padding="1dp">
+
                     <LinearLayout
 
                         android:layout_width="80dp"
-                        android:gravity="center"
                         android:layout_height="match_parent"
-                        android:background="#ff0000">
+                        android:background="#ff0000"
+                        android:gravity="center">
+
                         <View
                             android:layout_width="28dp"
                             android:layout_height="28dp"
-                            android:background="@drawable/trash"/>
+                            android:background="@drawable/trash" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:weightSum="9"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/mylistview_bottom_corner"
-                        android:layout_height="wrap_content">
+                        android:weightSum="9">
+
+
+                        <LinearLayout
+                            android:id="@+id/Detail_Share"
+                            android:layout_width="0dp"
+                            android:layout_height="35dp"
+                            android:layout_weight="3"
+                            android:background="#ffffff"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:id="@+id/Detail_Down_Img"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:src="@drawable/repost" />
+
+                            <TextView
+                                android:id="@+id/Detail_ShareNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="3dp"
+                                android:text="转发"
+                                android:textColor="#9A9A9A"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="1dp"
+                            android:layout_height="fill_parent"
+                            android:background="@drawable/jbshape"></LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/Detail_SendComment"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="3"
+                            android:background="#ffffff"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp">
+
+                            <ImageView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:src="@drawable/icon_comment_number" />
+
+                            <TextView
+                                android:id="@+id/Detail_ComNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="3dp"
+                                android:text="评论"
+                                android:textColor="#9A9A9A"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="1dp"
+                            android:layout_height="fill_parent"
+                            android:background="@drawable/jbshape">
+
+                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/Detail_Up"
                             android:layout_width="0dp"
-                            android:layout_weight="3"
                             android:layout_height="35dp"
+                            android:layout_weight="3"
                             android:background="#FFFFFF"
                             android:gravity="center_vertical|center_horizontal"
                             android:orientation="horizontal">
@@ -369,79 +440,13 @@
                                 android:textColor="#9A9A9A"
                                 android:textSize="13sp" />
                         </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="1dp"
-                            android:background="@drawable/jbshape"
-                            android:layout_height="fill_parent">
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/Detail_Share"
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="35dp"
-                            android:background="#ffffff"
-                            android:gravity="center_vertical|center_horizontal"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/Detail_Down_Img"
-                                android:layout_width="wrap_content"
-                                android:layout_height="fill_parent"
-                                android:src="@drawable/repost" />
-
-                            <TextView
-                                android:id="@+id/Detail_ShareNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="fill_parent"
-                                android:paddingLeft="3dp"
-                                android:gravity="center_vertical"
-                                android:text="转发"
-                                android:textColor="#9A9A9A"
-                                android:textSize="13sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="1dp"
-                            android:background="@drawable/jbshape"
-                            android:layout_height="fill_parent">
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/Detail_SendComment"
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
-                            android:layout_height="fill_parent"
-                            android:background="#ffffff"
-                            android:gravity="center_horizontal|center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp">
-
-                            <ImageView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="fill_parent"
-                                android:src="@drawable/chat_radius_weibo" />
-                            <TextView
-                                android:id="@+id/Detail_ComNum"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="3dp"
-                                android:text="评论"
-                                android:textColor="#9A9A9A"
-                                android:textSize="13sp" />
-                        </LinearLayout>
                     </LinearLayout>
                 </com.thinksky.myview.SwipeLayout>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
-                    android:background="@drawable/jbline"
-                    android:layout_height="2dp">
+                    android:layout_height="2dp"
+                    android:background="@drawable/jbline">
 
                 </LinearLayout>
             </LinearLayout>
@@ -476,8 +481,8 @@
                     android:visibility="visible">
 
                     <ProgressBar
-                        style="@style/myProgressBarStyleLarge"
                         android:id="@+id/Comment_ProgressBar"
+                        style="@style/myProgressBarStyleLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

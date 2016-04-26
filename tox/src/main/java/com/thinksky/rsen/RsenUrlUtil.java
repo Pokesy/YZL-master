@@ -28,10 +28,12 @@ public class RsenUrlUtil {
 //    public static String URL_BASE = BuildConfig.URL_BASE;
 //    public static String URL_SUB_BASE = "/opensns/api.php?s=";
 
-    public static String URL_BASE = "http://122.5.45.150";
+    public static String URL_BASE = "http://122.5.45.150/";
     public static String URL_SUB_BASE = "/api.php?s=";
     //发现
     public static String URL_FX = URL_BASE + URL_SUB_BASE + "user/getUserList";
+    //发现获取信息
+    public static String URL_FXU = URL_BASE + URL_SUB_BASE + "user/getProfile";
     //百科服务器地址
     public static String URL_BK = URL_BASE + URL_SUB_BASE + "Paper/getCategory";
     //百科二级菜单
@@ -40,7 +42,13 @@ public class RsenUrlUtil {
     public static String URL_BKXQ = URL_BASE + URL_SUB_BASE + "Paper/getPaperDetail";
     //专家
     public static String URL_ZJ = URL_BASE + URL_SUB_BASE + "Issue/getIssList&session_id=&issue_id=";
+    //收藏
+    public static String URL_SC = URL_BASE + URL_SUB_BASE + "Paper/getMyColection&session_id=";
 
+    //消息
+    public static String URL_XX = URL_BASE + URL_SUB_BASE + "Message/getAllMessage";
+   //取消收藏
+    public static String URL_DLSC = URL_BASE + URL_SUB_BASE + "paper/rejectBookmark";
     //专家分类
     public static String URL_ZJ_FL = URL_BASE + URL_SUB_BASE + "/Issue/getIssuelist";
     //专家详情
@@ -52,7 +60,8 @@ public class RsenUrlUtil {
     //热门话题
     public static String URL_REMEN_HUATI = URL_BASE + URL_SUB_BASE + "group/getHotPostAll";
     //我的话题
-    public static String URL_MY_HUATI = URL_BASE + URL_SUB_BASE + "group/getHotPostAll";
+    public static String URL_MY_HUATI = URL_BASE + URL_SUB_BASE + "group/getMyPostAll";
+
     public static String SENDDISCOVER = URL_BASE + URL_SUB_BASE + "user/setProfile";
     //小组精选
     public static String URL_XIAOZU_JINGXUAN = URL_BASE + URL_SUB_BASE + "group/getGroupChoice";
@@ -143,7 +152,8 @@ public class RsenUrlUtil {
                         }
                     } else {
                         if (listener != null && listener instanceof OnNetHttpResultListener) {
-                            ((OnNetHttpResultListener) listener).onNoNetwork(msg.what + "-->" + data);
+                            ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
+//                            ((OnNetHttpResultListener) listener).onNoNetwork(msg.what + "-->" + data);
                         }
                     }
                 }

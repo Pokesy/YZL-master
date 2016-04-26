@@ -175,6 +175,7 @@ public class LuntanFragment extends Fragment {
                         issueBean.topic_count = issueListJSONObject.getInt("topic_count");
                         issueBean.description = issueListJSONObject.getString("description");
                         issueBean.background = issueListJSONObject.getString("background");
+                        issueBean.reply_count= issueListJSONObject.getString("reply_count");
                         //其他字段。。。赋值
                         // TODO: 2016/2/17
 
@@ -344,7 +345,7 @@ public class LuntanFragment extends Fragment {
             viewHolder.userLogo = new ImageView(context);
             viewHolder.titleView = new TextView(context);
             viewHolder.countView = new TextView(context);
-
+//            viewHolder.replyview = new TextView(context);
             viewHolder.rootLayout.setLayoutParams(new GridView.LayoutParams(-1, -1));
 
             viewHolder.itemLayout.setOrientation(LinearLayout.VERTICAL);
@@ -369,7 +370,8 @@ public class LuntanFragment extends Fragment {
             viewHolder.titleView.setPadding(2, 2, 2, 2);
             viewHolder.itemLayout.addView(viewHolder.countView, new LinearLayout.LayoutParams(-2, -2));
             viewHolder.countView.setPadding(2, 2, 2, 2);
-
+//            viewHolder.itemLayout.addView(viewHolder.replyview, new LinearLayout.LayoutParams(-2, -2));
+//            viewHolder.replyview.setPadding(2, 2, 2, 2);
             viewHolder.rootLayout.addView(viewHolder.itemLayout);
             return viewHolder;
         }
@@ -403,7 +405,8 @@ public class LuntanFragment extends Fragment {
                             .displayer(new RoundedBitmapDisplayer(100)).build());
 
             viewHolder.titleView.setText(bean.title);
-            viewHolder.countView.setText("帖数：" + bean.post_count);
+            viewHolder.countView.setText("帖数：" + bean.post_count+"    回复：" + bean.reply_count);
+//            viewHolder.replyview.setText("回复：" + bean.reply_count);
             viewHolder.itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -422,6 +425,7 @@ public class LuntanFragment extends Fragment {
         public ImageView userLogo;
         public TextView titleView;
         public TextView countView;
+//        public TextView replyview;
     }
 
     public static class LTGridAdapter extends BaseAdapter {
@@ -522,5 +526,6 @@ public class LuntanFragment extends Fragment {
         public String background;
         public String description;
         public long last_reply_time;
+        public String reply_count;
     }
 }

@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class XiaozujingxuanActivity extends AppCompatActivity {
+public class XiaozujingxuanActivity extends BaseBActivity {
     private static final String ARG_PARAM1 = "param1";
     private RGridView recyclerView;
     private boolean isWeGroup = true;
@@ -88,33 +88,10 @@ public class XiaozujingxuanActivity extends AppCompatActivity {
                     bean.activity = jsonObject.getString("activity");
 
                     bean.id = jsonObject.getString("id");
-                    JSONArray userArray = jsonObject.getJSONArray("GroupMenmber");
-                    bean.userList = parseUserList(userArray);
-                    for (int i = 0; i < userArray.length(); i++) {
-                        try {
-                            JSONObject jsonObject2 = userArray.getJSONObject(i);
 
-                            JSONObject user = jsonObject2.getJSONObject("user");
-                            bean.gm_logo=RsenUrlUtil.URL_BASE + user.getString("avatar32");
-                            bean.gm_nickname=user.getString("nickname");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    JSONArray postArray = jsonObject.getJSONArray("PostNew");
+                    bean.gm_logo=jsonObject.getJSONObject("user").getString("avatar32");
+                    bean.gm_nickname=jsonObject.getJSONObject("user").getString("nickname");
 
-                    for (int i = 0; i < postArray.length(); i++) {
-
-                        JSONObject jsonObject1 = postArray.getJSONObject(i);
-                        JSONObject user = jsonObject1.getJSONObject("user");
-                        bean.ht_reply_count = jsonObject1.getString("reply_count");
-                        bean.ht_support_count = jsonObject1.getString("supportCount");
-                        bean.ht_content = jsonObject1.getString("content");
-                        bean.ht_logo=RsenUrlUtil.URL_BASE + user.getString("avatar32");
-                        bean.ht_nickname=user.getString("nickname");
-                        bean.ht_creat_time = myjson.getStandardDate(jsonObject1.getString("create_time"));
-
-                    }
 
                 } catch (JSONException e) {
                 }
@@ -194,19 +171,14 @@ public class XiaozujingxuanActivity extends AppCompatActivity {
         public String detail;
         public String type_name;
         public String post_count;
-        public String memberCount;
+
         public String uid;
         public String group_logo;
         public String group_background;
         public String type_id;
         public String activity;
         public String is_join;
-        public String ht_reply_count;
-        public String ht_support_count;
-        public String ht_logo;
-        public String ht_content;
-        public String ht_creat_time;
-        public String ht_nickname;
+
         public String gm_logo;
         public String gm_nickname;
     }
@@ -221,7 +193,7 @@ public class XiaozujingxuanActivity extends AppCompatActivity {
         map.put("type_name", bean.type_name);
         map.put("post_count", bean.post_count);
         map.put("group_logo", bean.logo);
-        map.put("memberCount", bean.memberCount);
+        map.put("memberCount", bean.menmberCount);
         map.put("uid", bean.uid);
         map.put("is_join", bean.is_join);
         map.put("user_nickname", bean.gm_nickname);

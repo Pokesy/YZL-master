@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -8,10 +7,11 @@ import android.view.MenuItem;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.redefine.MyScrollView;
 
 
-public class ForumActivity3 extends ActionBarActivity implements MyScrollView.OnScrollListener {
+public class ForumActivity3 extends BaseBActivity implements MyScrollView.OnScrollListener {
     /**
      * 自定义的MyScrollView
      */

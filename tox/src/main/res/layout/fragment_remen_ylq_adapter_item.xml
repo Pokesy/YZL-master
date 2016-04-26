@@ -178,10 +178,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:drawableLeft="@drawable/iconfontdianzan"
+                        android:drawableLeft="@drawable/weidianzan"
                         android:drawablePadding="5dp"
                         android:text="21"
-                        android:textColor="#00faff"
+                        android:textColor="#999999"
                         android:textSize="13sp" />
                     <!--右边-->
                     <TextView
@@ -189,10 +189,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:drawableLeft="@drawable/icon_comment_number"
+                        android:drawableLeft="@drawable/huisepinglun"
                         android:drawablePadding="5dp"
                         android:text="444"
-                        android:textColor="#00faff"
+                        android:textColor="#999999"
                         android:textSize="13sp" />
                 </LinearLayout>
 

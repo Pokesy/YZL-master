@@ -1,31 +1,24 @@
 package com.thinksky.tox;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.thinksky.PagerSlidingTabStrip.PagerSlidingTabStrip;
 import com.thinksky.fragment.NewsFragment;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.NewsCategory;
 import com.thinksky.utils.MyJson;
 import com.tox.NewsApi;
@@ -38,7 +31,7 @@ import java.util.List;
 /**
  * Created by HuJiaYu on 2015/7/7
  */
-public class NewsActivity extends FragmentActivity implements View.OnClickListener {
+public class NewsActivity extends BaseBActivity implements View.OnClickListener {
 
     protected ImageView backMenu;
     protected ImageView newsPost, myNews;

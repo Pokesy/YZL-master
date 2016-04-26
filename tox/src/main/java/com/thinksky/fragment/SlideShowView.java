@@ -9,6 +9,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -144,6 +145,7 @@ public class SlideShowView extends FrameLayout {
 
             params.leftMargin = 4;
             params.rightMargin = 4;
+            params.gravity= Gravity.CENTER_HORIZONTAL;
             dotLayout.addView(dotView, params);
             dotViewsList.add(dotView);
         }

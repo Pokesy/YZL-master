@@ -85,7 +85,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MessageActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".SetUserInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -93,43 +94,52 @@
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".GroupDetailActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".GroupFloorReplyActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".GroupPostInfoActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:theme="@style/ActivityThemeTwo"
+           />
         <activity
             android:name=".EventDetailActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".GroupActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".GroupInfoActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".PostGroupActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".EventActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".PostEventActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".IssueActivity2"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".PostIssueActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".IssueDetail"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -146,6 +156,7 @@
         <activity
             android:name=".SettingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
@@ -205,7 +216,8 @@
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+
+            android:theme="@style/ActivityThemeTwo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -225,7 +237,7 @@
             android:name=".ShowImageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".ImagePagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -235,7 +247,7 @@
             android:name=".ForumActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_forum"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".ForumActivity2"
             android:theme="@style/AppBaseThemeRedefine"
@@ -252,17 +264,17 @@
             android:name=".PostDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".SendPostActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name=".LandLordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar"
+            android:theme="@style/ActivityThemeTwo"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".LDrawerActivity"
@@ -343,64 +355,79 @@
         <activity
             android:name="com.thinksky.fragment.VedioViewTest"
             android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
         <activity
             android:name="com.thinksky.fragment.VedioView"
             android:configChanges="orientation|keyboardHidden|screenSize"
 
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+            android:theme="@style/ActivityThemeFullscreen" />
         <activity
             android:name="com.thinksky.fragment.DiscoverFriendActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.tox.DiscoverSendActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.fragment.DisLocationActivity"
-            android:theme="@android:style/Theme.NoTitleBar" />
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.fragment.ZhuanjiActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.fragment.XiaozujingxuanActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.fragment.RemenhuatiActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.fragment.WendaMyQuestionActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.fragment.QuestionSelectActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.tox.SendQuestionActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.tox.BaikeItemActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.fragment.MyhuatiActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.fragment.ZhuanjiFenLeiActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
             android:name="com.thinksky.tox.SendTieziActivity"
-
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
 
-
+        <activity
+            android:name="com.thinksky.fragment.CollectListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.holder.BaseBActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.fragment.MyMessageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
 
     </application>
 

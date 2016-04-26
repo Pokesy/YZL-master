@@ -73,7 +73,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     /**
      * 点击POI后弹出的泡泡
      */
-    private LinearLayout mPopView,images;
+    private LinearLayout mPopView, images;
     MapView mMapView;
     BaiduMap mBaiduMap;
     KJBitmap kjBitmap;
@@ -129,18 +129,21 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
 
                     for (FXBean.ResultEntity info : wendaBean.getResult()) {
                         String s = info.getIsfactory();
-                        Double d = info.getLatitude();
-                        Double f = info.getLongitude();
+                        if (!info.getLatitude().equals("nan")&&!info.getLatitude().equals("nan")) {
+                            String d = info.getLatitude();
+                            String f = info.getLongitude();
+                            double dd=Double.parseDouble(d);
+                            double ff=Double.parseDouble(f);
 
-
-                        if (s.equals(str)) {
-                            LatLng llA = new LatLng(d, f);
-                            ooA = new MarkerOptions().position(llA).icon(fish)
-                                    .zIndex(9).draggable(true);
-                            Marker marker = (Marker) mBaiduMap.addOverlay(ooA);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("info", info);
-                            marker.setExtraInfo(bundle);
+                            if (s.equals(str)) {
+                                LatLng llA = new LatLng(dd, ff);
+                                ooA = new MarkerOptions().position(llA).icon(fish)
+                                        .zIndex(9).draggable(true);
+                                Marker marker = (Marker) mBaiduMap.addOverlay(ooA);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("info", info);
+                                marker.setExtraInfo(bundle);
+                            }
                         }
                     }
                 }
@@ -181,7 +184,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_discover, null);
         mMapView = (MapView) view.findViewById(R.id.bmapView);
         mPopView = (LinearLayout) view.findViewById(R.id.pop);
-        images= (LinearLayout) view.findViewById(R.id.images);
+        images = (LinearLayout) view.findViewById(R.id.images);
         dizhi = (TextView) view.findViewById(R.id.dizhi);
         dianhua = (TextView) view.findViewById(R.id.dianhua);
         mark = (Button) view.findViewById(R.id.button_mark);
@@ -216,13 +219,10 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
 
                 switch (index) {
                     case 0:
-
-
                         mPopView.setVisibility(View.GONE);
                         initMarker("1", fish);
                         break;
                     case 1:
-
                         mPopView.setVisibility(View.GONE);
                         initMarker("2", fish1);
                         break;
@@ -242,16 +242,25 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                 mark.setVisibility(View.GONE);
                 dizhi.setText(bean.getAddress());
                 dianhua.setText(bean.getMobile1());
-                name.setText(bean.getFactory_name());
-
+                if (marker.getIcon().equals(fish1)) {
+                    name.setText(bean.getFactory_name());
+                } else if (marker.getIcon().equals(fish)) {
+                    name.setText(bean.getNickname());
+                }
 
 //                iv_round.setImageResource(R.drawable.ab_ic_logo);
-                String a = RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32();
+//                String a = RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32();
 //                ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(), iv_round);
                 //为图片控件加载数据
                 kjBitmap = KJBitmap.create();
-                kjBitmap.display(iv_round, RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32());
-
+//                kjBitmap.display(iv_round, RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32());
+                ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(), iv_round);
+                iv_round.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        baseApi.goUserInfo(getActivity(), bean.getUid());
+                    }
+                });
                 if (bean.getImages() != null && bean.getImages().size() > 0) {
                     images.setVisibility(View.VISIBLE);
 
@@ -267,7 +276,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                         if (i == 0) {
                             imageView = iv_1;
                         } else if (i == 1) {
-                            imageView =iv_2;
+                            imageView = iv_2;
                         } else if (i == 2) {
                             imageView = iv_3;
                         }
@@ -533,8 +542,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
             private String total_check;
             private String isfactory;
             private String factory_name;
-            private Double longitude;
-            private Double latitude;
+            private String longitude;
+            private String latitude;
             private String isdisplay;
             private String data;
             private String mobile1;
@@ -767,19 +776,19 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                 this.factory_name = factory_name;
             }
 
-            public Double getLongitude() {
+            public String getLongitude() {
                 return longitude;
             }
 
-            public void setLongitude(Double longitude) {
+            public void setLongitude(String longitude) {
                 this.longitude = longitude;
             }
 
-            public Double getLatitude() {
+            public String getLatitude() {
                 return latitude;
             }
 
-            public void setLatitude(Double latitude) {
+            public void setLatitude(String latitude) {
                 this.latitude = latitude;
             }
 

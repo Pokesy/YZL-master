@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -28,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.FileUtiles;
@@ -56,7 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SendPostActivity extends Activity implements View.OnClickListener{
+public class SendPostActivity extends BaseBActivity implements View.OnClickListener{
     private LinearLayout photoLayout;
     private String mTempPhotoName;
     private EditText mTitleEdit,mContentEdit;

@@ -92,32 +92,39 @@
                     <ImageView
                         android:id="@+id/group_logo"
                         android:layout_width="100dp"
-                        android:layout_height="100dp"
 
+                        android:layout_height="100dp"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop" />
 
                     <LinearLayout
                         android:id="@+id/join_group"
                         android:layout_width="wrap_content"
+
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginTop="15dp">
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/group_logo"
+                        android:layout_toRightOf="@+id/group_logo"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/join_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="5dp"
+                            android:layout_marginLeft="46dp"
+                            android:layout_marginStart="46dp"
                             android:background="#FFCC00"
                             android:gravity="center"
+                            android:padding="5dp"
                             android:textColor="#ffffff"
                             android:textSize="13sp"
                             tools:text="加入" />
                     </LinearLayout>
+
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -248,8 +255,9 @@
                         android:layout_gravity="right"
                         android:background="@drawable/ic_keyboard_arrow_right" />
                 </RelativeLayout>
-
+                <include layout="@layout/one_line" />
                 <com.thinksky.myview.MoreTextView
+                     android:visibility="gone"
                     android:id="@+id/group_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

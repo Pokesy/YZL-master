@@ -1,12 +1,11 @@
 package com.thinksky.tox;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import com.thinksky.holder.BaseBActivity;
 
 
-public class NewMainActivity extends ActionBarActivity {
+public class NewMainActivity extends BaseBActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -23,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -36,7 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RegistetActivity extends Activity {
+public class RegistetActivity extends BaseBActivity {
     private RelativeLayout mClose,mNext;
     private EditText mName, mPassword,role,nickname,verifyId;
     private TextView openRegist,registerText;

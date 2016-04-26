@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
@@ -38,6 +37,7 @@ import com.thinksky.ParallaxHeaderViewPagerForum.ScrollTabHolder;
 import com.thinksky.ParallaxHeaderViewPagerForum.ScrollTabHolderFragment;
 import com.thinksky.adapter.PostAdapter;
 import com.thinksky.fragment.LuntanFragment;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.ForumInfo;
 import com.thinksky.info.PostInfo;
 import com.thinksky.ui.common.PullToRefreshListView;
@@ -59,7 +59,7 @@ import java.util.List;
 /**
  * Created by zhaozeyang on 16/4/12.
  */
-public class ForumDetailActivity extends ActionBarActivity implements View.OnClickListener {
+public class ForumDetailActivity extends BaseBActivity implements View.OnClickListener {
 
     public static final String BUNDLE_KEY_FORUM_INFO = "forum";
     private static final int PAGE_COUNT = 8;

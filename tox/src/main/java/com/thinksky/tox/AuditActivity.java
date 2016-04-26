@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,12 +13,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.thinksky.anim3d.Rotate3dAnimation;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.AuditView;
 import com.thinksky.myview.AuditView.CallBack;
 import com.thinksky.myview.FrameLinear;
 import com.thinksky.myview.FrameLinear.MyScroll;
 
-public class AuditActivity extends Activity {
+public class AuditActivity extends BaseBActivity {
 
     private LinearLayout mBottemGroup;
     private FrameLinear mCenterGroup;

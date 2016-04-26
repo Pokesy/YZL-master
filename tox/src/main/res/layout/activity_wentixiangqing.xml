@@ -34,7 +34,7 @@
             android:layout_centerVertical="true"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-
+            android:text="问答"
             android:textColor="@color/tab"
             android:textSize="18sp" />
 
@@ -135,8 +135,7 @@
                 <RelativeLayout
                     android:id="@+id/img_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    >
+                    android:layout_height="170dp">
                     <!--图片部分-->
                     <LinearLayout
                         android:id="@+id/images"
@@ -148,29 +147,29 @@
                         <ImageView
                             android:id="@+id/iv_1"
                             android:layout_width="0dp"
-                            android:scaleType="centerCrop"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
-                            android:visibility="invisible"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:scaleType="centerCrop"
+                            android:visibility="invisible" />
 
                         <ImageView
                             android:id="@+id/iv_2"
                             android:layout_width="0dp"
-                            android:scaleType="centerCrop"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
-                            android:visibility="invisible"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:scaleType="centerCrop"
+                            android:visibility="invisible" />
 
                         <ImageView
                             android:id="@+id/iv_3"
-                            android:scaleType="centerCrop"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
-                            android:visibility="invisible"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:scaleType="centerCrop"
+                            android:visibility="invisible" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -211,6 +210,12 @@
                 android:textSize="@dimen/font_size_medium"
                 tools:text="23条回答" />
 
+            <TextView
+                android:id="@+id/wutu"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/nocomment"/>
             <!--内容列表-->
             <com.thinksky.rsen.view.RInnerListView
                 android:id="@+id/listView"
@@ -220,6 +225,7 @@
                 android:divider="@android:color/transparent"
                 android:dividerHeight="5dp"
                 android:listSelector="@android:color/transparent" />
+
         </LinearLayout>
 
 
@@ -291,8 +297,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="8"
                 android:background="@drawable/edittext_background"
-                android:paddingLeft="5dp"
-                android:hint="回复楼主" />
+                android:hint="回复楼主"
+                android:paddingLeft="5dp" />
 
             <TextView
                 android:id="@+id/sendPostButn"

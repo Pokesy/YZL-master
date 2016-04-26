@@ -64,6 +64,7 @@
                         android:textSize="@dimen/font_size_medium" />
 
                     <TextView
+                        android:id="@+id/score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
@@ -74,6 +75,7 @@
                         android:textSize="@dimen/font_size_medium" />
 
                     <TextView
+                        android:id="@+id/category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/iconfontbiaoqian1"

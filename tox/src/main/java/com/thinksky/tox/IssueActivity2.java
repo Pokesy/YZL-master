@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -26,6 +25,7 @@ import android.widget.Toast;
 
 import com.thinksky.PagerSlidingTabStrip.PagerSlidingTabStrip;
 import com.thinksky.fragment.IssueFragment;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.net.IsNet;
 import com.tox.IssueData;
 import com.tox.Url;
@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class IssueActivity2 extends FragmentActivity {
+public class IssueActivity2 extends BaseBActivity {
     ArrayList<HashMap<String, String>> issueTitle;
     private LinearLayout layout;
     private ListView listView;

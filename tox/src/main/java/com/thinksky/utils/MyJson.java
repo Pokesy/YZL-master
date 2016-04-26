@@ -191,7 +191,25 @@ private String s;
         }
         return img_attachId;
     }
+    /**
+     * 图片上传后从结果中获取图片的attach_id
+     *
+     * @param obj
+     * @return
+     */
+    public String getAttachId1(Object obj) {
+        String img_attachId = "";
+        String result = obj.toString();
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+//            JSONObject jsonObject1= (JSONObject) jsonObject.get("message");
+            img_attachId = jsonObject.getString("id");
 
+        } catch (JSONException e) {
+
+        }
+        return img_attachId;
+    }
     // 解析糗事方法
     public List<AshamedInfo> getAshamedList(String value) {
         List<AshamedInfo> list = null;

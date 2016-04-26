@@ -3,7 +3,6 @@ package com.thinksky.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -48,6 +47,7 @@ public class WendaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_wenda, container, false);
+
         listView = (ListView) rootView.findViewById(R.id.listView);
         addHeaderView();
         ((RadioGroup) rootView.findViewById(R.id.main_radio)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -184,6 +184,8 @@ public class WendaFragment extends Fragment {
             ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setText(listEntity.getUser().getNickname());
             ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(listEntity.getAnswer_num());
             ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity.getCreate_time());
+            ((TextView) viewHolder.itemView.findViewById(R.id.score)).setText(listEntity.getScore());
+            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(listEntity.getCategory());
 //            ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setDrawablel(listEntity.getUser().getNickname());
             ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(), ((ImageView) viewHolder.itemView.findViewById(R.id.logo)));
 //            //为图片控件加载数据
@@ -304,6 +306,16 @@ public class WendaFragment extends Fragment {
             private String support_count;
             private String title;
             private String uid;
+
+            public String getScore() {
+                return score;
+            }
+
+            public void setScore(String score) {
+                this.score = score;
+            }
+
+            private String score;
             private String update_time;
             /**
              * avatar128 : /opensns/Public/images/default_avatar_128_128.jpg

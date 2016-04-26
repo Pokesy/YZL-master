@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
 
@@ -46,8 +47,8 @@ public class BaseFunction {
         File file = new File(Url.IMGLOCAL);
         file.mkdirs();
         String ss = devide(imageUrl);
-        String fileName = (ss.substring(ss.lastIndexOf("/", ss.lastIndexOf("/") - 1) + 1, ss.length())).replace("/", "");
-        fileName = Url.IMGLOCAL + fileName.replaceAll("[/]", "");
+        String fileName = (ss.substring(ss.lastIndexOf("/", ss.lastIndexOf("/") - 1) + 1, ss.length()));
+        fileName = Url.IMGLOCAL + fileName;
         Log.d("fileName>>>>>>", fileName);
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(fileName);
@@ -71,7 +72,7 @@ public class BaseFunction {
     public static boolean fileExists(String imageUrl) {
 
         String fileUrl = imageUrl.substring(imageUrl.lastIndexOf("/", imageUrl.lastIndexOf("/") - 1) + 1, imageUrl.length());
-        fileUrl = Url.IMGLOCAL + fileUrl.replaceAll("[/]", "");
+        fileUrl = Url.IMGLOCAL + fileUrl;
         Log.d("fleUrl", fileUrl);
         try {
             File file = new File(fileUrl);
@@ -118,7 +119,7 @@ public class BaseFunction {
      */
     public static void setLayoutBackGround(ImageView imageView, Context ctx, final LinearLayout linearLayout, String imgUrl, LoadImg loadImg) {
         String imgPath = imgUrl.substring(imgUrl.lastIndexOf("/", imgUrl.lastIndexOf("/") - 1) + 1, imgUrl.length());
-        imgPath = Url.IMGLOCAL + imgPath.replaceAll("[/]", "");
+        imgPath = Url.IMGLOCAL + imgPath;
         if (fileExists(imgUrl) && !imgUrl.equals("")) {
             Drawable drawable = Drawable.createFromPath(imgPath);
             linearLayout.setBackgroundDrawable(drawable);
@@ -149,7 +150,7 @@ public class BaseFunction {
     public static void showImage(Context context, ImageView imageView, String imgUrl, LoadImg loadImg, int type) {
 
         String imgPath = imgUrl.substring(imgUrl.lastIndexOf("/", imgUrl.lastIndexOf("/") - 1) + 1, imgUrl.length());
-        imgPath = Url.IMGLOCAL + imgPath.replaceAll("[/]", "");
+        imgPath = Url.IMGLOCAL + imgPath;
         imageView.setTag(imgPath);
         //判断图片是否存在，不存在就下载
         if (fileExists(imgUrl) /*&& !imgUrl.equals("")*/) {
@@ -166,7 +167,8 @@ public class BaseFunction {
                     Bitmap bitmap=BitmapFactory.decodeFile(imgPath,options);*/
             if (type == Url.IMGTYPE_HEAD) {
                 Log.e("头像", imgPath);
-                kjBitmap.display(imageView, imgPath, 128, 128);
+//                kjBitmap.display(imageView, imgPath, 128, 128);
+                ImageLoader.getInstance().displayImage(imgPath, imageView);
                 Log.d("imgPath>>>1", imgPath);
                 //finalBitmap.display(imageView,imgPath,40,40,BitmapUtiles.drawableTobitmap(R.drawable.side_user_avatar,context),BitmapUtiles.drawableTobitmap(R.drawable.side_user_avatar,context));
 //                        imageView.setImageBitmap(roundBitmap.getRoundedCornerBitmap(bitmap));
@@ -180,8 +182,10 @@ public class BaseFunction {
             } else if (type == Url.IMGTYPE_WEIBO) {
 
                 Log.e("非头像", imgUrl);
+
 //                imageView.setImageBitmap(BitmapUtiles.loadBitmap(imgPath, 1));
-                kjBitmap.display(imageView, imgUrl);//,BitmapUtiles.drawableTobitmap(R.drawable.friends_sends_pictures_no,context),BitmapUtiles.drawableTobitmap(R.drawable.friends_sends_pictures_no,context));
+                ImageLoader.getInstance().displayImage(imgUrl, imageView);
+//                kjBitmap.display(imageView, imgUrl);//,BitmapUtiles.drawableTobitmap(R.drawable.friends_sends_pictures_no,context),BitmapUtiles.drawableTobitmap(R.drawable.friends_sends_pictures_no,context));
 //                        imageView.setImageBitmap(bitmap);
                 imageView.setVisibility(View.VISIBLE);
             }
@@ -202,7 +206,7 @@ public class BaseFunction {
             return url;
         } else {
 //            return (Url.USERHEADURL+"/"+url).replace("com///","com/").replace("com//","com/").replace("cn///","cn/").replace("cn//","cn/").replace("net///","net/").replace("net//","net/");
-            return (Url.USERHEADURL + "/" + url).replace("opensns///opensns","opensns").replace("opensns//opensns","opensns");
+            return (Url.USERHEADURL + "/" + url).replace("opensns///opensns", "opensns").replace("opensns//opensns", "opensns");
         }
 
     }

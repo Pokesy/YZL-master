@@ -1,13 +1,11 @@
 package com.thinksky.tox;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +17,10 @@ import android.widget.RelativeLayout;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuIcon;
 import com.thinksky.fragment.ContentFragment;
+import com.thinksky.holder.BaseBActivity;
 
 
-public class LDrawerActivity extends FragmentActivity {
+public class LDrawerActivity extends BaseBActivity {
     /** DrawerLayout */
     private DrawerLayout mDrawerLayout;
     /** 左边栏菜单 */

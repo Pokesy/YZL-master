@@ -4,7 +4,6 @@ package com.thinksky.tox;
  * 发表微博
  * */
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +35,7 @@ import android.widget.Toast;
 
 import com.thinksky.Face.FaceParser;
 import com.thinksky.Face.FaceView;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.WeiboInfo;
 import com.thinksky.model.ActivityModel;
 import com.thinksky.tox.CameralActivity.IMGCallBack;
@@ -56,7 +56,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UploadActivity extends Activity implements FaceView.Work{
+public class UploadActivity extends BaseBActivity implements FaceView.Work{
 
     private Context context=this;
     private ImageView mCamera, mAlbum,mFace;

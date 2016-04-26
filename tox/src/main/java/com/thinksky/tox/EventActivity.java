@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 
 import com.thinksky.PagerSlidingTabStrip.PagerSlidingTabStrip;
 import com.thinksky.fragment.EventFragment;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.net.IsNet;
 import com.tox.EventApi;
 import com.tox.ToastHelper;
@@ -35,7 +35,7 @@ import java.util.HashMap;
 /**
  * Created by 王杰 on 2015/4/24.
  */
-public class EventActivity extends FragmentActivity {
+public class EventActivity extends BaseBActivity {
 
 
     ImageView event_Menu;

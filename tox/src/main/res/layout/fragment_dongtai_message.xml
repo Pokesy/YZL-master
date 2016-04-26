@@ -1,0 +1,47 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wenda"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color_main"
+    tools:context="com.thinksky.fragment.WendaFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--顶部模块预留-->
+        <RelativeLayout
+            android:id="@+id/btn_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white">
+
+        </RelativeLayout>
+
+
+        <!--内容列表-->
+        <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="3dp"
+        android:listSelector="@android:color/transparent"
+        />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="232dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:drawableTop="@drawable/ohno"
+        android:padding="20dp"
+        android:drawablePadding="20dp"
+        android:visibility="gone"
+        android:text="还没有消息呢，快去看看吧"/>
+
+</FrameLayout>

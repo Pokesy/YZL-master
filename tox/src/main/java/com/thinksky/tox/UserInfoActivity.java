@@ -1,7 +1,6 @@
 package com.thinksky.tox;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -21,13 +19,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thinksky.adapter.WeiboAdapter;
 import com.thinksky.anim3d.RoundBitmap;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.UserInfo;
 import com.thinksky.info.WeiboInfo;
 import com.thinksky.myview.MyDetailsListView;
@@ -46,7 +44,7 @@ import org.kymjs.aframe.bitmap.KJBitmap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserInfoActivity extends Activity {
+public class UserInfoActivity extends BaseBActivity {
 
     private UserInfo info = null;
     private ImageView mUserRevise, mUserMore, mUserCamera;

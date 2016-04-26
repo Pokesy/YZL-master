@@ -19,12 +19,14 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
+
 
 /**
  * 拍照界面
  */
 
-public class CameralActivity extends Activity {
+public class CameralActivity extends BaseBActivity {
 
     private Bitmap bitmap;
     String imgPath = "/sdcard/img.jpg";

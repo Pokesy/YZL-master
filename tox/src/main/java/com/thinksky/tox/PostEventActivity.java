@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.net.IsNet;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.MyJson;
@@ -63,7 +63,7 @@ import java.util.List;
  * @author wwj_748
  *
  */
-public class PostEventActivity extends Activity {
+public class PostEventActivity extends BaseBActivity {
     public static long SDATETIME=System.currentTimeMillis()/1000;
     public static long SPDATETIME=System.currentTimeMillis()/1000-1;
     public static long EDATETIME=System.currentTimeMillis()/1000;

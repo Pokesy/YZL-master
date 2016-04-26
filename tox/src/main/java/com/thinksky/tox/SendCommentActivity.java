@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 
 import com.thinksky.Face.FaceParser;
 import com.thinksky.Face.FaceView;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.AshamedInfo;
 import com.thinksky.info.WeiboCommentInfo;
 import com.thinksky.info.WeiboInfo;
@@ -38,7 +38,7 @@ import com.tox.WeiboApi;
  * @author 534429149
  */
 
-public class SendCommentActivity extends Activity implements FaceView.Work {
+public class SendCommentActivity extends BaseBActivity implements FaceView.Work {
 
     private static int FACESHOW=1;
     private static int FACELOAD=1;

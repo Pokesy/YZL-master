@@ -50,6 +50,95 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/image_progress"
+            android:layout_width="25dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:visibility="gone" />
+        <!--<ImageView-->
+        <!--android:id="@+id/image_progress"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/empty_photo"/>-->
+        <FrameLayout
+            android:id="@+id/bofangshipin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY">
+
+            <ImageView
+                android:id="@+id/issue_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@drawable/bofang" />
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/top"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="5dp">
+
+                <com.thinksky.redefine.CircleImageView
+                    android:id="@+id/issue_userImage"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/side_user_avatar" />
+
+                <TextView
+                    android:id="@+id/issue_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/top">
+
+                <TextView
+                    android:id="@+id/issue_signature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F5F5F5"
+                    android:padding="3dp"
+                    android:singleLine="true"
+                    android:text="测试使用"
+                    android:textColor="@color/group_less"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
     <!--页脚-->
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
@@ -61,7 +150,8 @@
     <!--android:visibility="visible">-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp">
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -73,92 +163,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="360dp"
-                    android:orientation="vertical">
 
-                    <ProgressBar
-                        android:id="@+id/image_progress"
-                        android:layout_width="25dp"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1" />
-                    <!--<ImageView-->
-                    <!--android:id="@+id/image_progress"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:src="@drawable/empty_photo"/>-->
-                    <FrameLayout
-                        android:id="@+id/bofangshipin"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:scaleType="fitXY">
-
-                        <ImageView
-                            android:id="@+id/issue_image"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/bofang" />
-                    </FrameLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.5"
-                        android:orientation="vertical"
-                        android:padding="5dp">
-
-                        <LinearLayout
-                            android:id="@+id/top"
-                            android:layout_width="match_parent"
-                            android:layout_height="35dp"
-                            android:layout_marginBottom="5dp">
-
-                            <com.thinksky.redefine.CircleImageView
-                                android:id="@+id/issue_userImage"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:src="@drawable/side_user_avatar" />
-
-                            <TextView
-                                android:id="@+id/issue_userName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:layout_marginLeft="10dp"
-                                android:textColor="@color/black" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/top">
-
-                            <TextView
-                                android:id="@+id/issue_signature"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="#F5F5F5"
-
-                                android:padding="3dp"
-                                android:text="测试使用"
-                                android:textColor="@color/group_less"
-                                android:textSize="12sp" />
-
-                        </LinearLayout>
-
-
-                    </RelativeLayout>
-                </LinearLayout>
                 <!--</LinearLayout>-->
                 <RelativeLayout
                     android:layout_width="match_parent"

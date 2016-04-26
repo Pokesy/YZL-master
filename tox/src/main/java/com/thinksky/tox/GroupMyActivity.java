@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
 import com.tox.BaseApi;
@@ -40,7 +41,7 @@ import java.util.HashMap;
 /**
  * Created by jiao on 2015/6/10 0010.
  */
-public class GroupMyActivity extends Activity implements View.OnClickListener{
+public class GroupMyActivity extends BaseBActivity implements View.OnClickListener{
 
     private HashMap<String,String> groupInfoMap;
     private Context mContext;
@@ -139,9 +140,12 @@ public class GroupMyActivity extends Activity implements View.OnClickListener{
         if (groupInfoMap.get("group_logo").equals(Url.USERHEADURL +"Public/Core/images/nopic.png")) {
             groupLogo.setImageResource(R.drawable.side_user_avatar);
         }else {
-            kjBitmap.display(groupLogo, groupInfoMap.get("group_logo"));
+//            kjBitmap.display(groupLogo, groupInfoMap.get("group_logo"));
+            ImageLoader.getInstance().displayImage( groupInfoMap.get("group_logo"),groupLogo);
         }
-        kjBitmap.display(creatorHead,groupInfoMap.get("user_logo"));
+//        kjBitmap.display(creatorHead,groupInfoMap.get("user_logo"));
+        ImageLoader.getInstance().displayImage(groupInfoMap.get("user_logo"),creatorHead);
+        ImageLoader.getInstance().displayImage( groupInfoMap.get("user_logo"),creatorHead);
         creatorNickName.setText(groupInfoMap.get("user_nickname"));
         if (Integer.parseInt(groupInfoMap.get("is_join")) == 1) {
             joinFlag = false;

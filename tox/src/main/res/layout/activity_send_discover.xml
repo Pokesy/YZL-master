@@ -339,7 +339,7 @@
                         android:gravity="end"
                         android:paddingRight="20dp"
                         android:text=">"
-                        android:textSize="20sp" />
+                        android:textSize="25sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -388,16 +388,22 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:text="隐藏我的位置"
+                        android:textColor="#666666"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
+
+                    <ToggleButton
+                        android:id="@+id/mTogBtn"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="end"
-                        android:paddingRight="20dp"
-                        android:text=">"
-                        android:textSize="20sp" />
+                        android:layout_marginLeft="150dp"
+
+                        android:background="@android:color/transparent"
+                        android:button="@drawable/toggle_btn"
+                        android:checked="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
                 </LinearLayout>
 
             </LinearLayout>

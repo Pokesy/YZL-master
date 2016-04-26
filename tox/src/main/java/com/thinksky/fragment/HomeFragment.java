@@ -284,7 +284,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             holder.tV(R.id.comment_count).setText(bean.getComment());
 
             kjBitmap = KJBitmap.create();
-            kjBitmap.display(holder.imgV(R.id.snapshots), Url.IMAGE + bean.getCover());
+//            kjBitmap.display(holder.imgV(R.id.snapshots), Url.IMAGE + bean.getCover());
+            ImageLoader.getInstance().displayImage(Url.IMAGE + bean.getCover(),holder.imgV(R.id.snapshots));
 //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
 //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
 //                    new DisplayImageOptions.Builder()
@@ -343,22 +344,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     bean.activity = jsonObject.getString("activity");
 
                     bean.id = jsonObject.getString("id");
-                    JSONArray userArray = jsonObject.getJSONArray("GroupMenmber");
-//                    bean.userList = parseUserList(userArray);
-                    JSONArray postArray = jsonObject.getJSONArray("PostNew");
-
-                    for (int i = 0; i < postArray.length(); i++) {
-
-                        JSONObject jsonObject1 = postArray.getJSONObject(i);
-                        JSONObject user = jsonObject1.getJSONObject("user");
-                        bean.ht_reply_count = jsonObject1.getString("reply_count");
-                        bean.ht_support_count = jsonObject1.getString("supportCount");
-                        bean.ht_content = jsonObject1.getString("content");
-                        bean.ht_logo = RsenUrlUtil.URL_BASE + user.getString("avatar32");
-                        bean.ht_nickname = user.getString("nickname");
-                        bean.ht_creat_time = myjson.getStandardDate(jsonObject1.getString("create_time"));
-
-                    }
+                    bean.gm_logo=jsonObject.getJSONObject("user").getString("avatar32");
+                    bean.gm_nickname=jsonObject.getJSONObject("user").getString("nickname");
                 } catch (JSONException e) {
                 }
                 beans.add(bean);
@@ -704,19 +691,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         public String detail;
         public String type_name;
         public String post_count;
-        public String memberCount;
+
         public String uid;
         public String group_logo;
         public String group_background;
         public String type_id;
         public String activity;
         public String is_join;
-        public String ht_reply_count;
-        public String ht_support_count;
-        public String ht_logo;
-        public String ht_content;
-        public String ht_creat_time;
-        public String ht_nickname;
+
+        public String gm_logo;
+        public String gm_nickname;
     }
 
     public static void launch_xz(Context context, boolean isWeGroup, MyBean bean) {
@@ -729,10 +713,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         map.put("type_name", bean.type_name);
         map.put("post_count", bean.post_count);
         map.put("group_logo", bean.logo);
-        map.put("memberCount", bean.memberCount);
+        map.put("memberCount", bean.menmberCount);
         map.put("uid", bean.uid);
-
-
+        map.put("is_join", bean.is_join);
+        map.put("user_nickname", bean.gm_nickname);
+        map.put("user_logo",  bean.gm_logo);
         bundle.putSerializable("group_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
         Intent intent = new Intent(context, GroupInfoActivity.class);
@@ -756,7 +741,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     final ArrayList<ZhuanjiFragment.ZjBean> beans = parseJson(jsonObject);
                     //                为图片控件加载数据
                     kjBitmap = KJBitmap.create();
-                    kjBitmap.display(viewHolder.imgV(R.id.issue_image), RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url);
+//                    kjBitmap.display(viewHolder.imgV(R.id.issue_image), RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url);
+                    ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url,viewHolder.imgV(R.id.issue_image));
                     time.setText(beans.get(0).IssueList.get(0).create_time);
                     count.setText(beans.get(0).IssueList.get(0).reply_count);
                     bofangshipin.setOnClickListener(new View.OnClickListener() {

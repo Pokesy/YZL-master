@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,6 +15,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class RemenhuatiActivity extends AppCompatActivity {
+public class RemenhuatiActivity extends BaseBActivity {
     private List<String> pictureListUrls;
 
     ListView listView;

@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,6 +25,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.net.IsNet;
 import com.tox.BaseFunction;
@@ -59,7 +59,8 @@ import java.util.regex.Pattern;
 /**
  * Created by Administrator on 2015/4/30 0030.
  */
-public class EventDetailActivity extends Activity{
+public class EventDetailActivity extends BaseBActivity
+{
 
     RelativeLayout event_detail_page;
     RelativeLayout event_back;

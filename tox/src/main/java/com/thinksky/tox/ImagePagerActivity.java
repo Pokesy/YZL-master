@@ -2,18 +2,18 @@ package com.thinksky.tox;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.TextView;
 
 import com.thinksky.fragment.ImageDetailFragment;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.redefine.HackyViewPager;
 
 import java.util.List;
 
-public class ImagePagerActivity extends FragmentActivity {
+public class ImagePagerActivity extends BaseBActivity {
     private static final String STATE_POSITION = "STATE_POSITION";
     public static final String EXTRA_IMAGE_INDEX = "image_index";
     public static final String EXTRA_IMAGE_URLS = "image_urls";

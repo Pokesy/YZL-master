@@ -1,6 +1,5 @@
 package com.thinksky.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +26,7 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.tox.DiscoverSendActivity;
 import com.thinksky.tox.R;
 
@@ -34,7 +34,7 @@ import com.thinksky.tox.R;
  * o
  * Created by jiao on 2016/4/8.
  */
-public class DisLocationActivity extends Activity implements OnGetGeoCoderResultListener {
+public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderResultListener {
     GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
     BaiduMap mBaiduMap = null;
     MapView mMapView = null;
@@ -123,6 +123,7 @@ public class DisLocationActivity extends Activity implements OnGetGeoCoderResult
     protected void onResume() {
         mMapView.onResume();
         super.onResume();
+
     }
 
     @Override

@@ -1,22 +1,20 @@
 package com.thinksky.tox;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.thinksky.PagerSlidingTabStrip.PagerSlidingTabStrip;
 import com.thinksky.fragment.PagerSlidingTabFragment;
+import com.thinksky.holder.BaseBActivity;
 
 
-public class ForumActivity extends FragmentActivity {
+public class ForumActivity extends BaseBActivity {
     PagerSlidingTabStrip tabs;
     ViewPager viewPager;
     String[] titles={"gggggg","qqqqqq","bbbbbb"};

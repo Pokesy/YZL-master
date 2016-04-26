@@ -1,6 +1,5 @@
 package com.thinksky.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.R;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Created by jiao on 2016/3/13.
  */
-public class QuestionSelectActivity extends Activity {
+public class QuestionSelectActivity extends BaseBActivity {
 
     ListView mListView;
     WendaListAdapter mAdapter;

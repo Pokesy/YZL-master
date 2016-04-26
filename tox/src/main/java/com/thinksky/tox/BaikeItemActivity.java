@@ -1,12 +1,12 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RsenUrlUtil;
 
 import org.json.JSONException;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BaikeItemActivity extends Activity {
+public class BaikeItemActivity extends BaseBActivity {
     private RelativeLayout fanhui;
     private String id;
     private WebView web;

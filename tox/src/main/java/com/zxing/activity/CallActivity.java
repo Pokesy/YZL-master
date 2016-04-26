@@ -1,6 +1,5 @@
 package com.zxing.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -11,11 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.thinksky.tox.R;
 import com.google.zxing.WriterException;
+import com.thinksky.holder.BaseBActivity;
+import com.thinksky.tox.R;
 import com.zxing.encoding.EncodingHandler;
 
-public class CallActivity extends Activity {
+public class CallActivity extends BaseBActivity {
 
     private TextView resultTextView;
     private EditText qrStrEditText;

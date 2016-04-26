@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,12 +15,14 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
+import com.tox.BaseApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
 
@@ -32,9 +33,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-public class MyhuatiActivity extends AppCompatActivity {
+public class MyhuatiActivity extends BaseBActivity {
     private List<String> pictureListUrls;
 
     ListView listView;
@@ -49,11 +51,16 @@ public class MyhuatiActivity extends AppCompatActivity {
     private ImageView iv_2;
     private ImageView iv_3;
 
+    private String session_id;
+    private String userUid;
+    private BaseApi baseApi;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wodehuti_layout);
+        baseApi = new BaseApi();
+        session_id = baseApi.getSeesionId();
         listView = (ListView) findViewById(R.id.listView);
         back_menu = (ImageView) findViewById(R.id.back_menu);
         iv_1 = (ImageView) findViewById(R.id.iv_1);
@@ -87,6 +94,13 @@ public class MyhuatiActivity extends AppCompatActivity {
             @Override
             public void onNoNetwork(String msg) {
                 ToastHelper.showToast(msg, Url.context);
+            }
+
+            @Override
+            public Map getMap() {
+                Map map = new HashMap();
+                map.put("session_id", session_id);
+                return map;
             }
 
             @Override

@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,6 +22,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.tox.R;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import java.util.HashMap;
 /**
  * Created by jiao on 2016/3/31.
  */
-public class DiscoverFriendActivity extends FragmentActivity {
+public class DiscoverFriendActivity extends BaseBActivity {
     private GridView gridView1;                   //网格显示缩略图
     private Button buttonPublish;                //发布按钮
     private final int IMAGE_OPEN = 1;        //打开图片标记
@@ -171,6 +171,7 @@ public class DiscoverFriendActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         if (!TextUtils.isEmpty(pathImage)) {
             Bitmap addbmp = BitmapFactory.decodeFile(pathImage);
             HashMap<String, Object> map = new HashMap<String, Object>();
@@ -198,6 +199,7 @@ public class DiscoverFriendActivity extends FragmentActivity {
             pathImage = null;
         }
     }
+
 
     /*
      * Dialog对话框提示用户删除操作

@@ -1,12 +1,13 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 
-public class AboutActivity extends Activity {
+import com.thinksky.holder.BaseBActivity;
+
+public class AboutActivity extends BaseBActivity {
     private Button fanhui;
 
     @Override

@@ -18,11 +18,13 @@ import android.util.Base64;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
+
 
 /**
  * 图库界面
  */
-public class PhotoAct extends Activity {
+public class PhotoAct extends BaseBActivity {
 
     private Bitmap bm = null;
     private String Tag = "ImgAct";

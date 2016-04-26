@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ZhuanjiFenLeiActivity extends AppCompatActivity {
+public class ZhuanjiFenLeiActivity extends BaseBActivity {
 
     View rootView;
     ListView listView;

@@ -1,6 +1,5 @@
 package com.thinksky.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -29,13 +29,14 @@ import java.util.List;
 /**
  * Created by jiao on 2016/3/13.
  */
-public class WendaListActivity extends Activity {
+public class WendaListActivity extends BaseBActivity {
 
     ListView mListView;
     WendaListAdapter mAdapter;
     private ImageView back_menu;
     private TextView mTitleView;
-    private TextView   tiwen;
+    private TextView tiwen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +50,7 @@ public class WendaListActivity extends Activity {
                 if (BaseFunction.isLogin()) {
                     Intent intent = new Intent(WendaListActivity.this, SendQuestionActivity.class);
                     startActivity(intent);
-                }else{
+                } else {
                     ToastHelper.showToast("请登录", Url.context);
                 }
             }
@@ -150,11 +151,13 @@ public class WendaListActivity extends Activity {
             ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setText(listEntity.getUser().getNickname());
             ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(listEntity.getAnswer_num());
             ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity.getCreate_time());
+            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(listEntity.getAnswer_num());
+            ((TextView) viewHolder.itemView.findViewById(R.id.score)).setText(listEntity.getScore());
             String s = listEntity.getBest_answer();
 //            if (s.equals("1")) {
 //                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
 //            }
-            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getCover_url(), viewHolder.imgV(R.id.logo));
+            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(), viewHolder.imgV(R.id.logo));
             if (s.equals("0")) {
                 ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
                 viewHolder.itemView.findViewById(R.id.best_answer).setSelected(false);

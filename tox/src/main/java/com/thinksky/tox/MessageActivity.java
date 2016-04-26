@@ -1,9 +1,10 @@
 package com.thinksky.tox;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
-public class MessageActivity extends FragmentActivity {
+import com.thinksky.holder.BaseBActivity;
+
+public class MessageActivity extends BaseBActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

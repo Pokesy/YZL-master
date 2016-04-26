@@ -2,10 +2,10 @@ package com.thinksky.tox;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.tox.ToastHelper;
@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Created by jiao on 2016/2/22.
  */
-public class IssueActivity1 extends AppCompatActivity {
+public class IssueActivity1 extends BaseBActivity {
 
     private TextView title;
     private TextView fb_time;

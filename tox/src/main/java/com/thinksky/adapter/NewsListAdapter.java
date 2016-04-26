@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.tox.R;
 
@@ -66,7 +67,8 @@ public class NewsListAdapter extends BaseAdapter {
         }
         NewsListInfo info = newsListInfos.get(position);
         viewHolder.mSnapshotsView.setVisibility(TextUtils.isEmpty(info.getCover()) ? View.GONE : View.VISIBLE);
-        kjBitmap.display(viewHolder.mSnapshotsView, info.getCover().replace("opensns//opensns","opensns"));
+//        kjBitmap.display(viewHolder.mSnapshotsView, info.getCover().replace("opensns//opensns","opensns"));
+        ImageLoader.getInstance().displayImage(info.getCover().replace("opensns//opensns","opensns"),viewHolder.mSnapshotsView);
         viewHolder.newsTitle.setText(info.getTitle());
         viewHolder.mTimeView.setText(info.getCreate_time());
         viewHolder.newsDescription.setText(Html.fromHtml(info.getDescription()));

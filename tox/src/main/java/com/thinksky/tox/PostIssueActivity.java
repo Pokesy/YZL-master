@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,6 +34,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
 import com.thinksky.net.IsNet;
 import com.thinksky.utils.BitmapUtiles;
@@ -76,7 +76,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostIssueActivity extends Activity implements AdapterView.OnItemSelectedListener{
+public class PostIssueActivity extends BaseBActivity implements AdapterView.OnItemSelectedListener{
     private static String ISSUEID=null;
     private static String PICTURE=null;
     private static String IMG_ID=null;

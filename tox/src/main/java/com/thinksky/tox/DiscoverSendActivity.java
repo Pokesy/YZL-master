@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -27,10 +27,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.alibaba.fastjson.JSON;
 import com.thinksky.fragment.DisLocationActivity;
 import com.thinksky.fragment.DiscoverFragment;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.utils.BitmapUtiles;
@@ -50,6 +52,7 @@ import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
 import org.kymjs.aframe.http.KJHttp;
@@ -59,13 +62,14 @@ import org.kymjs.kjframe.http.HttpParams;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class DiscoverSendActivity extends Activity implements View.OnClickListener {
+public class DiscoverSendActivity extends BaseBActivity implements View.OnClickListener {
     private LinearLayout photoLayout;
     private String mTempPhotoName;
     private EditText mTitleEdit, mContentEdit;
@@ -102,8 +106,10 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
     private LinearLayout title;
     private LinearLayout attachBtns;
     private int fishid = 1;
-    private BaseApi baseApi;
+
     private String session_id;
+    private String userUid;
+    private BaseApi baseApi;
     private String l;
     private LinearLayout location;
     private String longitude;
@@ -111,6 +117,8 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
     private String address;
     private TextView dizhi;
     private String isfactory = "2";
+    private ToggleButton mTogBtn;
+    private String isdisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +132,23 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
         finalBitmap = FinalBitmap.create(this);
 //        forumApi.setHandler(hand);
         Intent intent = getIntent();
+        mTogBtn = (ToggleButton) findViewById(R.id.mTogBtn); // 获取到控件
+        mTogBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                // TODO Auto-generated method stub
+                if (isChecked) {
+                    isdisplay = "0";
+                } else {
+                    //未选中
+                    isdisplay = "1";
+                }
+            }
+        });// 添加监听事件
 //        forumId=intent.getStringExtra("forumId");
-        address = intent.getStringExtra("address");
-        longitude = intent.getStringExtra("longitude");
-        latitude = intent.getStringExtra("latitude");
+
         photoLayout = (LinearLayout) findViewById(R.id.Post_send_photo);
         location = (LinearLayout) findViewById(R.id.location);
         dizhi = (TextView) findViewById(R.id.dizhi);
@@ -136,6 +157,7 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
         photoLayout.setOnTouchListener(new TouchHelper(this, R.drawable.borderradius_postsend + "", R.drawable.borderradius_postsend_touched + "", "drawable"));
         baseApi = new BaseApi();
         session_id = baseApi.getSeesionId();
+        userUid = baseApi.getUid();
         mContentEdit = (EditText) findViewById(R.id.Post_send_contentEdit);
         mTitleEdit = (EditText) findViewById(R.id.Post_send_titleEdit);
         postSendLayout = (RelativeLayout) findViewById(R.id.Post_send);
@@ -164,10 +186,58 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
         progressDialog = new ProgressDialog(this);
         photoCount = (TextView) findViewById(R.id.photo_count);
         initList();
+        address = intent.getStringExtra("address");
+        longitude = intent.getStringExtra("longitude");
+        latitude = intent.getStringExtra("latitude");
     }
 
     private void initList() {
+        Map map = new HashMap();
+        map.put("uid", userUid);
 
+        RsenUrlUtil.executeGetWidthMap(this, RsenUrlUtil.URL_FXU, map, new RsenUrlUtil.OnJsonResultListener<FUBean>() {
+            @Override
+            public void onNoNetwork(String msg) {
+                ToastHelper.showToast(msg, Url.context);
+            }
+
+
+            @Override
+            public void onParseJsonBean(List<FUBean> beans, JSONObject jsonObject) {
+
+                try {
+
+                    FUBean bean = new FUBean();
+                    bean.address = jsonObject.getString("address");
+                    bean.mobile1 = jsonObject.getString("mobile1");
+                    bean.isdisplay = jsonObject.getString("isdisplay");
+                    bean.isfactory = jsonObject.getString("isfactory");
+                    beans.add(bean);
+
+
+                } catch (JSONException e) {
+                }
+
+            }
+
+            @Override
+            public void onResult(boolean state, List<FUBean> beans) {
+                if (state) {
+                    if (!beans.get(0).address.equals(null) && !beans.get(0).address.equals("")) {
+                        dizhi.setText(beans.get(0).address);
+                    }
+                    if (!beans.get(0).mobile1.equals(null) && !beans.get(0).mobile1.equals("")) {
+                        mContentEdit.setText(beans.get(0).mobile1);
+                    }
+                    if (beans.get(0).isdisplay.equals("0")) {
+                        mTogBtn.setChecked(true);
+                    }
+
+                } else {
+                    ToastHelper.showToast("请求失败", Url.context);
+                }
+            }
+        });
     }
 
     @Override
@@ -222,8 +292,8 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
                         ToastHelper.showToast("请填写标题", this);
                         return;
                     }
-                    if (mContentEdit.getText().toString().length() < 11) {
-                        ToastHelper.showToast("内容长度不能小于20", this);
+                    if (mContentEdit.getText().toString().length() != 11) {
+                        ToastHelper.showToast("手号码必须是11位", this);
                         return;
                     }
                     if (BaseFunction.isLogin()) {
@@ -243,10 +313,6 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
                     if (BaseFunction.isLogin()) {
 
 
-                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                        progressDialog.setTitle("发布中请等待");
-                        progressDialog.setCanceledOnTouchOutside(false);
-                        progressDialog.show();
                         sendWeibo();
                     } else {
                         Toast.makeText(DiscoverSendActivity.this, "未登入", Toast.LENGTH_LONG).show();
@@ -453,10 +519,10 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
 
     private void uploadImages() {
         attachIds.clear();
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setTitle("发布中请等待");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.setTitle("发布中请等待");
+//        progressDialog.setCanceledOnTouchOutside(false);
+//        progressDialog.show();
         for (int i = 0; i < scrollImg.size() - 1; i++) {
             //kjUpload(scrollImg.get(i));
             AjaxParams params = new AjaxParams();
@@ -485,7 +551,7 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
 
                     @Override
                     public void onSuccess(Object o) {
-                        //progressDialog.dismiss();
+                        progressDialog.dismiss();
                         String s = myJson.getAttachId(o);
                         attachIds.add(s);
                         Log.e("上传照片成功", o.toString());
@@ -528,11 +594,14 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
         map.put("factory_name", mTitleEdit.getText().toString().trim());
         map.put("mobile", mContentEdit.getText().toString().trim());
         map.put("data", l);
-        map.put("latitude", latitude);
+        if (!"".equals(latitude) && !"".equals(longitude)) {
+            map.put("latitude", latitude);
+            map.put("longitude", longitude);
+        }
         map.put("address", address);
-        map.put("longitude", longitude);
-        map.put("isfactory", isfactory);
 
+        map.put("isfactory", isfactory);
+        map.put("isdisplay", isdisplay);
         RsenUrlUtil.executeGetWidthMap(this, RsenUrlUtil.SENDDISCOVER, map, new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
             @Override
             public void onNoNetwork(String msg) {
@@ -548,10 +617,13 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
 
             @Override
             public void onResult(boolean state, List beans) {
-
+                progressDialog.dismiss();
+                if (state) {
+                    ToastHelper.showToast("发送成功", DiscoverSendActivity.this);
+                }
             }
         });
-        progressDialog.dismiss();
+
         DiscoverSendActivity.this.finish();
     }
 
@@ -746,4 +818,472 @@ public class DiscoverSendActivity extends Activity implements View.OnClickListen
         v.startAnimation(translateAnimation);
     }
 
+    public static class FUBean implements Serializable {
+
+        /**
+         * success : true
+         * error_code : 0
+         * message : 获取成功
+         * avatar32 : Uploads/Avatar/2016-04-21/57188d24f35f3_32_32.png
+         * avatar64 : Uploads/Avatar/2016-04-21/57188d24f35f3_64_64.png
+         * avatar128 : Uploads/Avatar/2016-04-21/57188d24f35f3_128_128.png
+         * avatar256 : Uploads/Avatar/2016-04-21/57188d24f35f3_256_256.png
+         * avatar512 : Uploads/Avatar/2016-04-21/57188d24f35f3_512_512.png
+         * sex : 1
+         * nickname : admin
+         * username : admin
+         * rank_link : []
+         * expand_info : {"qq":"","生日":"2016-04-21"}
+         * fans : 3
+         * following : 4
+         * title : Lv5 经理
+         * signature : 走自己的路，说别人去吧
+         * birthday : 0000-00-00
+         * pos_city : null
+         * pos_district : null
+         * pos_province : {"id":"110000","name":"北京市","level":"1","upid":"0"}
+         * isfactory : 1
+         * longitude : 114.1013555031497
+         * latitude : 22.737535613155853
+         * isdisplay : 0
+         * mobile1 : 15822024827
+         * address : 广东省深圳市宝安区X231(高尔夫大道)
+         * score1 : 404
+         * qq :
+         * factory_name :
+         * email :
+         * real_nickname : admin
+         * score : 404
+         * uid : 1
+         * mobile : 15822024827
+         * data : 357
+         * cover_url : ["357"]
+         * images : ["Uploads/Picture/2016-04-21/57184876dee2b_100_100.jpg"]
+         * is_follow : 0
+         */
+
+        private boolean success;
+        private int error_code;
+        private String message;
+        private String avatar32;
+        private String avatar64;
+        private String avatar128;
+        private String avatar256;
+        private String avatar512;
+        private String sex;
+        private String nickname;
+        private String username;
+        /**
+         * qq :
+         * 生日 : 2016-04-21
+         */
+
+        private ExpandInfoEntity expand_info;
+        private String fans;
+        private String following;
+        private String title;
+        private String signature;
+        private String birthday;
+        private Object pos_city;
+        private Object pos_district;
+        /**
+         * id : 110000
+         * name : 北京市
+         * level : 1
+         * upid : 0
+         */
+
+        private PosProvinceEntity pos_province;
+        private String isfactory;
+        private String longitude;
+        private String latitude;
+        private String isdisplay;
+        private String mobile1;
+        private String address;
+        private String score1;
+        private String qq;
+        private String factory_name;
+        private String email;
+        private String real_nickname;
+        private String score;
+        private String uid;
+        private String mobile;
+        private String data;
+        private int is_follow;
+        private List<?> rank_link;
+        private List<String> cover_url;
+        private List<String> images;
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public void setSuccess(boolean success) {
+            this.success = success;
+        }
+
+        public int getError_code() {
+            return error_code;
+        }
+
+        public void setError_code(int error_code) {
+            this.error_code = error_code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getAvatar32() {
+            return avatar32;
+        }
+
+        public void setAvatar32(String avatar32) {
+            this.avatar32 = avatar32;
+        }
+
+        public String getAvatar64() {
+            return avatar64;
+        }
+
+        public void setAvatar64(String avatar64) {
+            this.avatar64 = avatar64;
+        }
+
+        public String getAvatar128() {
+            return avatar128;
+        }
+
+        public void setAvatar128(String avatar128) {
+            this.avatar128 = avatar128;
+        }
+
+        public String getAvatar256() {
+            return avatar256;
+        }
+
+        public void setAvatar256(String avatar256) {
+            this.avatar256 = avatar256;
+        }
+
+        public String getAvatar512() {
+            return avatar512;
+        }
+
+        public void setAvatar512(String avatar512) {
+            this.avatar512 = avatar512;
+        }
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public ExpandInfoEntity getExpand_info() {
+            return expand_info;
+        }
+
+        public void setExpand_info(ExpandInfoEntity expand_info) {
+            this.expand_info = expand_info;
+        }
+
+        public String getFans() {
+            return fans;
+        }
+
+        public void setFans(String fans) {
+            this.fans = fans;
+        }
+
+        public String getFollowing() {
+            return following;
+        }
+
+        public void setFollowing(String following) {
+            this.following = following;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getSignature() {
+            return signature;
+        }
+
+        public void setSignature(String signature) {
+            this.signature = signature;
+        }
+
+        public String getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(String birthday) {
+            this.birthday = birthday;
+        }
+
+        public Object getPos_city() {
+            return pos_city;
+        }
+
+        public void setPos_city(Object pos_city) {
+            this.pos_city = pos_city;
+        }
+
+        public Object getPos_district() {
+            return pos_district;
+        }
+
+        public void setPos_district(Object pos_district) {
+            this.pos_district = pos_district;
+        }
+
+        public PosProvinceEntity getPos_province() {
+            return pos_province;
+        }
+
+        public void setPos_province(PosProvinceEntity pos_province) {
+            this.pos_province = pos_province;
+        }
+
+        public String getIsfactory() {
+            return isfactory;
+        }
+
+        public void setIsfactory(String isfactory) {
+            this.isfactory = isfactory;
+        }
+
+        public String getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(String longitude) {
+            this.longitude = longitude;
+        }
+
+        public String getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(String latitude) {
+            this.latitude = latitude;
+        }
+
+        public String getIsdisplay() {
+            return isdisplay;
+        }
+
+        public void setIsdisplay(String isdisplay) {
+            this.isdisplay = isdisplay;
+        }
+
+        public String getMobile1() {
+            return mobile1;
+        }
+
+        public void setMobile1(String mobile1) {
+            this.mobile1 = mobile1;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getScore1() {
+            return score1;
+        }
+
+        public void setScore1(String score1) {
+            this.score1 = score1;
+        }
+
+        public String getQq() {
+            return qq;
+        }
+
+        public void setQq(String qq) {
+            this.qq = qq;
+        }
+
+        public String getFactory_name() {
+            return factory_name;
+        }
+
+        public void setFactory_name(String factory_name) {
+            this.factory_name = factory_name;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getReal_nickname() {
+            return real_nickname;
+        }
+
+        public void setReal_nickname(String real_nickname) {
+            this.real_nickname = real_nickname;
+        }
+
+        public String getScore() {
+            return score;
+        }
+
+        public void setScore(String score) {
+            this.score = score;
+        }
+
+        public String getUid() {
+            return uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        public String getData() {
+            return data;
+        }
+
+        public void setData(String data) {
+            this.data = data;
+        }
+
+        public int getIs_follow() {
+            return is_follow;
+        }
+
+        public void setIs_follow(int is_follow) {
+            this.is_follow = is_follow;
+        }
+
+        public List<?> getRank_link() {
+            return rank_link;
+        }
+
+        public void setRank_link(List<?> rank_link) {
+            this.rank_link = rank_link;
+        }
+
+        public List<String> getCover_url() {
+            return cover_url;
+        }
+
+        public void setCover_url(List<String> cover_url) {
+            this.cover_url = cover_url;
+        }
+
+        public List<String> getImages() {
+            return images;
+        }
+
+        public void setImages(List<String> images) {
+            this.images = images;
+        }
+
+        public static class ExpandInfoEntity {
+            private String qq;
+            private String 生日;
+
+            public String getQq() {
+                return qq;
+            }
+
+            public void setQq(String qq) {
+                this.qq = qq;
+            }
+
+            public String get生日() {
+                return 生日;
+            }
+
+            public void set生日(String 生日) {
+                this.生日 = 生日;
+            }
+        }
+
+        public static class PosProvinceEntity {
+            private String id;
+            private String name;
+            private String level;
+            private String upid;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getLevel() {
+                return level;
+            }
+
+            public void setLevel(String level) {
+                this.level = level;
+            }
+
+            public String getUpid() {
+                return upid;
+            }
+
+            public void setUpid(String upid) {
+                this.upid = upid;
+            }
+        }
+    }
 }

@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.tox.R;
 
-public class RsenCommonActivity extends AppCompatActivity {
+public class RsenCommonActivity extends BaseBActivity {
 
     public static final String KEY_TYPE = "key_type";//
     public static final int TYPE_QDETAIL = 1;//问题详情

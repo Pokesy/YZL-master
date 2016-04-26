@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thinksky.adapter.PostCommentAdapter;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostComment;
 import com.thinksky.info.PostInfo;
 import com.thinksky.myview.MyDetailsListView;
@@ -45,7 +45,7 @@ import org.kymjs.aframe.bitmap.KJBitmap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostDetailActivity extends Activity implements View.OnClickListener ,MyScrollView.OnScrollListener{
+public class PostDetailActivity extends BaseBActivity implements View.OnClickListener ,MyScrollView.OnScrollListener{
    private static boolean SUPPORTPOST=false;
     private static boolean SENDCOMMENT=false;
     private static boolean GETPOSTCOM=true;

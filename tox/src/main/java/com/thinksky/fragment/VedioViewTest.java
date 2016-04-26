@@ -1,6 +1,5 @@
 package com.thinksky.fragment;
 
-import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +8,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.LinearLayout;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.tox.R;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ import java.io.IOException;
  * @author Administrator
  */
 
-public class VedioViewTest extends Activity implements MediaPlayer.OnCompletionListener,MediaPlayer.OnErrorListener,MediaPlayer.OnInfoListener,
+public class VedioViewTest extends BaseBActivity implements MediaPlayer.OnCompletionListener,MediaPlayer.OnErrorListener,MediaPlayer.OnInfoListener,
         MediaPlayer.OnPreparedListener, MediaPlayer.OnSeekCompleteListener,MediaPlayer.OnVideoSizeChangedListener,SurfaceHolder.Callback{
     private Display currDisplay;
     private SurfaceView surfaceView;

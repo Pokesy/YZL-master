@@ -77,34 +77,8 @@ public class XiaozujingxuanFragment extends RBaseFragment {
                     bean.activity = jsonObject.getString("activity");
 
                     bean.id = jsonObject.getString("id");
-                    JSONArray userArray = jsonObject.getJSONArray("GroupMenmber");
-                    bean.userList = parseUserList(userArray);
-                    for (int i = 0; i < userArray.length(); i++) {
-                        try {
-                            JSONObject jsonObject2 = userArray.getJSONObject(i);
-
-                            JSONObject user = jsonObject2.getJSONObject("user");
-                            bean.gm_logo=RsenUrlUtil.URL_BASE + user.getString("avatar32");
-                            bean.gm_nickname=user.getString("nickname");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    JSONArray postArray = jsonObject.getJSONArray("PostNew");
-
-                    for (int i = 0; i < postArray.length(); i++) {
-
-                        JSONObject jsonObject1 = postArray.getJSONObject(i);
-                        JSONObject user = jsonObject1.getJSONObject("user");
-                        bean.ht_reply_count = jsonObject1.getString("reply_count");
-                        bean.ht_support_count = jsonObject1.getString("supportCount");
-                        bean.ht_content = jsonObject1.getString("content");
-                        bean.ht_logo=RsenUrlUtil.URL_BASE + user.getString("avatar32");
-                        bean.ht_nickname=user.getString("nickname");
-                        bean.ht_creat_time = myjson.getStandardDate(jsonObject1.getString("create_time"));
-
-                    }
-
+                    bean.gm_logo=jsonObject.getJSONObject("user").getString("avatar32");
+                    bean.gm_nickname=jsonObject.getJSONObject("user").getString("nickname");
                 } catch (JSONException e) {
                 }
                 beans.add(bean);
@@ -245,7 +219,7 @@ public class XiaozujingxuanFragment extends RBaseFragment {
         public String detail;
         public String type_name;
         public String post_count;
-        public String memberCount;
+
         public String uid;
         public String group_logo;
         public String group_background;
@@ -271,7 +245,7 @@ public class XiaozujingxuanFragment extends RBaseFragment {
         map.put("detail", bean.detail);
         map.put("post_count", bean.post_count);
         map.put("group_logo", bean.logo);
-        map.put("memberCount", bean.memberCount);
+        map.put("memberCount", bean.menmberCount);
         map.put("uid", bean.uid);
         map.put("is_join", bean.is_join);
         map.put("user_nickname", bean.gm_nickname);

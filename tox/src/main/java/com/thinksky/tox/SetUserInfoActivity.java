@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -24,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.UserInfo;
 import com.thinksky.net.IsNet;
 import com.thinksky.utils.BitmapUtiles;
@@ -51,7 +51,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Administrator on 2015/6/19 0019.
  */
-public class SetUserInfoActivity extends Activity implements View.OnClickListener {
+public class SetUserInfoActivity extends BaseBActivity implements View.OnClickListener {
     private static String PICTURE=null;
     private static boolean CHANGESEX=false;
     private static boolean CHANGENAME=false;
@@ -442,7 +442,7 @@ public class SetUserInfoActivity extends Activity implements View.OnClickListene
                 @Override
                 public void onSuccess(Object o) {
                     Log.e("Object",o.toString());
-                    attachIds.add(myJson.getAttachId(o));
+                    attachIds.add(myJson.getAttachId1(o));
                     Log.e("上传照片成功", o.toString());
                     Log.e("上传照片成功", "Test!!!");
                     String img_id=attachIds.get(0);

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -25,6 +24,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.WendaXianqingInfo;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
@@ -46,9 +46,9 @@ import java.util.List;
 import java.util.Map;
 
 
-public class wentixiangqing extends AppCompatActivity implements View.OnClickListener {
+public class wentixiangqing extends BaseBActivity implements View.OnClickListener {
 
-    private TextView title;
+    private TextView title, wutu;
     private TextView best_answer;
     private TextView money;
     private TextView creat_time;
@@ -62,7 +62,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
     private String mQuestionId;
     private BaseApi baseApi;
     private String session_id;
-    private ImageView back_menu ,iv1,iv2,iv3;
+    private ImageView back_menu, iv1, iv2, iv3;
     public static boolean upFlag = false;
     public static boolean flag = false;
     public static boolean FLAG = false;
@@ -77,7 +77,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
     private String suid;
     private ProgressDialog mProgressDialog;
     private RViewHolder holder;
-     private RelativeLayout img_layout;
+    private RelativeLayout img_layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,11 +85,12 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_wentixiangqing);
         title = (TextView) findViewById(R.id.title);
         best_answer = (TextView) findViewById(R.id.best_answer);
-        img_layout= (RelativeLayout) findViewById(R.id.img_layout);
+        img_layout = (RelativeLayout) findViewById(R.id.img_layout);
         money = (TextView) findViewById(R.id.money);
         creat_time = (TextView) findViewById(R.id.creat_time);
         content = (TextView) findViewById(R.id.content);
         nickname = (TextView) findViewById(R.id.nickname);
+        wutu = (TextView) findViewById(R.id.wutu);
         huida = (TextView) findViewById(R.id.huida);
         listView = (ListView) findViewById(R.id.listView);
 //        View headerView = new View(this);
@@ -219,9 +220,9 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                         img_layout.setVisibility(View.VISIBLE);
 
                         int size = beans.get(0).getQuestionimages().size();
-                       iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
-                       iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
-                       iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+                        iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
+                        iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
+                        iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
 
                         for (int i = 0; i < size; i++) {
                             String url = RsenUrlUtil.URL_BASE + beans.get(0).getQuestionimages().get(i);
@@ -232,7 +233,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                             } else if (i == 1) {
                                 imageView = iv2;
                             } else if (i == 2) {
-                                imageView =iv3;
+                                imageView = iv3;
                             }
 
                             if (imageView != null) {
@@ -253,13 +254,11 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                                 });
                             }
                         }
-                    }
-                    else {
-                       img_layout.setVisibility(View.GONE);
+                    } else {
+                        img_layout.setVisibility(View.GONE);
                     }
                     //回答
-                    mListAdapter = new WentixiangqingListAdapter(wentixiangqing.this, beans.get(0).getQuestionAnswer());
-                    listView.setAdapter(mListAdapter);
+
 
                     //问题
                     WendaXianqingInfo questionEntity = beans.get(0);
@@ -279,6 +278,13 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                     nickname.setText(questionEntity.getCategory_title());
                     huida.setText(questionEntity.getAnswer_num() + "条回答");
 
+                    mListAdapter = new WentixiangqingListAdapter(wentixiangqing.this, beans.get(0).getQuestionAnswer());
+                    listView.setAdapter(mListAdapter);
+//                    if (beans.get(0).getQuestionAnswer().isEmpty()) {
+//                        wutu.setVisibility(View.VISIBLE);
+//                    } else {
+//
+//                    }
                 } else {
                     ToastHelper.showToast("请求失败", Url.context);
                 }
@@ -438,7 +444,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                 holder.reply_count = (TextView) convertView.findViewById(R.id.reply_count);
                 holder.acept = (TextView) convertView.findViewById(R.id.acept);
                 holder.mIconAccept = (ImageView) convertView.findViewById(R.id.icon_accept);
-                if (FLAG && BaseFunction.isLogin()) {
+                if (FLAG && BaseFunction.isLogin() && suid.equals(Url.USERID)) {
                     holder.acept.setVisibility(View.VISIBLE);
                 }
                 convertView.setTag(holder);
@@ -477,7 +483,7 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
                 holder.mIconAccept.setVisibility(View.GONE);
             }
 
-            BaseFunction.showImage(context, holder.avatar32, bean.getUser().getAvatar32(), loadImg, Url.IMGTYPE_HEAD);
+//            BaseFunction.showImage(context, holder.avatar32, bean.getUser().getAvatar32(), loadImg, Url.IMGTYPE_HEAD);
 
             /*点击图标和文本,都支持点赞操作*/
             holder.dianzan.setOnClickListener(new DianZanListener(holder, bean));
@@ -489,62 +495,58 @@ public class wentixiangqing extends AppCompatActivity implements View.OnClickLis
             holder.acept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (BaseFunction.isLogin()) {
-                        if (suid.equals(Url.USERID)) {
-                            RsenUrlUtil.execute(RsenUrlUtil.URL_SET_BEST_ANSWER, new RsenUrlUtil.OnJsonResultListener<DianzanBean>() {
-                                @Override
-                                public void onNoNetwork(String msg) {
-                                    ToastHelper.showToast(msg, Url.context);
-                                }
+                    if (!bean.getUid().equals(Url.USERID)) {
+                        RsenUrlUtil.execute(RsenUrlUtil.URL_SET_BEST_ANSWER, new RsenUrlUtil.OnJsonResultListener<DianzanBean>() {
+                            @Override
+                            public void onNoNetwork(String msg) {
+                                ToastHelper.showToast(msg, Url.context);
+                            }
 
-                                @Override
-                                public Map getMap() {
-                                    Map map = new HashMap();
-                                    map.put("session_id", session_id);
-                                    map.put("answerid", list.get(position).getId());
-                                    return map;
-                                }
+                            @Override
+                            public Map getMap() {
+                                Map map = new HashMap();
+                                map.put("session_id", session_id);
+                                map.put("answerid", list.get(position).getId());
+                                return map;
+                            }
 
-                                @Override
-                                public void onParseJsonBean(List<DianzanBean> beans, JSONObject jsonObject) {
-                                    try {
-                                        DianzanBean bean = new DianzanBean();
-                                        bean.message = jsonObject.getString("message");
-                                        bean.success = jsonObject.getString("success");
-                                        beans.add(bean);
-                                    } catch (Exception e) {
-
-                                    }
-                                }
-
-                                @Override
-                                public void onResult(boolean state, List<DianzanBean> beans) {
-                                    if (state) {
-                                        ToastHelper.showToast("采纳了", Url.context);
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                holder.acept.setVisibility(View.GONE);
-                                                holder.caina.setVisibility(View.VISIBLE);
-                                                initXiangQingData();
-                                            }
-                                        });
-
-                                        notifyDataSetChanged();
-                                    } else {
-                                        ToastHelper.showToast("请求失败", Url.context);
-                                    }
-
+                            @Override
+                            public void onParseJsonBean(List<DianzanBean> beans, JSONObject jsonObject) {
+                                try {
+                                    DianzanBean bean = new DianzanBean();
+                                    bean.message = jsonObject.getString("message");
+                                    bean.success = jsonObject.getString("success");
+                                    beans.add(bean);
+                                } catch (Exception e) {
 
                                 }
-                            });
-                        } else {
-                            holder.acept.setVisibility(View.GONE);
-                            ToastHelper.showToast("您无采纳权限", Url.context);
-                        }
+                            }
+
+                            @Override
+                            public void onResult(boolean state, List<DianzanBean> beans) {
+                                if (state) {
+                                    ToastHelper.showToast("采纳了", Url.context);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            holder.acept.setVisibility(View.GONE);
+                                            holder.caina.setVisibility(View.VISIBLE);
+                                            initXiangQingData();
+                                        }
+                                    });
+
+                                    notifyDataSetChanged();
+                                } else {
+                                    ToastHelper.showToast("请求失败", Url.context);
+                                }
+
+
+                            }
+                        });
                     } else {
-                        ToastHelper.showToast("请先登录", wentixiangqing.this);
+                        ToastHelper.showToast("不能采纳自己的回答", Url.context);
                     }
+
                 }
             });
 

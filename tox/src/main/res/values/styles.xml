@@ -10,7 +10,11 @@
         <item name="android:windowAnimationStyle">@style/ActivityInOutAnimation</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+    <style name="ActivityThemeFullscreen" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/ActivityInOutAnimation</item>
+        <item name="android:windowIsTranslucent">true</item>
 
+    </style>
     <style name="ActivityInOutAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/for_left</item>
         <item name="android:activityOpenExitAnimation">@anim/for_right</item>

@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,12 +28,16 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.utils.MyJson;
+import com.tox.BaseApi;
+import com.tox.BaseFunction;
 import com.tox.GroupApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -52,8 +55,9 @@ import java.util.Map;
 /**
  * Created by Administrator on 2015/5/28 0028.
  */
-public class GroupPostInfoActivity extends Activity implements View.OnClickListener, View.OnTouchListener {
-
+public class GroupPostInfoActivity extends BaseBActivity implements View.OnClickListener, View.OnTouchListener {
+    private MyJson myjson = new MyJson();
+    private boolean isWeGroup = true;
     LinearLayout loadingBar;
     private static boolean SUPPORT = false;
     private static boolean POSTCOMMENT = false;
@@ -96,6 +100,11 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
     private RelativeLayout ll_img;
     private String nickname = "";
     private RecyclerView recycler;
+    private RelativeLayout enter;
+    private String group_id;
+    private String session_id;
+    private String userUid;
+    private BaseApi baseApi;
 
     @Override
     @SuppressWarnings(value = {"unchecked"})
@@ -105,14 +114,20 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
         groupApi = new GroupApi();
         groupApi.setHandler(mHandler);
         kjBitmap = KJBitmap.create();
+        baseApi = new BaseApi();
+        session_id = baseApi.getSeesionId();
+        userUid = baseApi.getUid();
+
         setContentView(R.layout.activity_group_post_info_copy);
         postMap = (HashMap<String, String>) getIntent().getExtras().getSerializable("post_info");
         recycler = (RecyclerView) findViewById(R.id.recycler);
+        enter = (RelativeLayout) findViewById(R.id.enter);
         img = getIntent().getExtras().getStringArrayList("imgList");
-        logolist= getIntent().getExtras().getStringArrayList("logolist");
+        logolist = getIntent().getExtras().getStringArrayList("logolist");
         position = getIntent().getExtras().getString("position");
         Log.e("postMap>>>>>>>>>", postMap.toString());
         post_id = Integer.parseInt(postMap.get("id"));
+
         //获取手机的分辨率
         Display display = getWindowManager().getDefaultDisplay(); //Activity#getWindowManager()
         Point size = new Point();
@@ -155,7 +170,7 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
         replyCountView = (TextView) findViewById(R.id.replyCount);
         reply_editText = (EditText) findViewById(R.id.reply_editText);
         sendPostButtn = (TextView) findViewById(R.id.sendPostButn);
-        qianming= (TextView) findViewById(R.id.qianming);
+        qianming = (TextView) findViewById(R.id.qianming);
         back_menu.setOnClickListener(this);
         user_logo.setOnClickListener(this);
         support_button.setOnClickListener(this);
@@ -181,11 +196,12 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
     //初始化activity
     public void InitPostView(final HashMap<String, String> postMap) {
 
-        group_name.setText(postMap.get("group_name"));
+//        group_name.setText(postMap.get("group_name"));
         post_title.setText(postMap.get("title"));
         post_user_name.setText(postMap.get("user_nickname"));
         user_name.setText(postMap.get("user_nickname"));
-        kjBitmap.display(user_logo, postMap.get("user_logo"));
+//        kjBitmap.display(user_logo, postMap.get("user_logo"));
+        ImageLoader.getInstance().displayImage(postMap.get("user_logo"), user_logo);
         post_create_time.setText(postMap.get("create_time"));
         post_content.setText(postMap.get("content"));
         support_flag = postMap.get("is_support");
@@ -198,7 +214,7 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
 //        } else {
 //            url = RsenUrlUtil.URL_XIAOZU_XIANGQING + group_id;
 //        }
-
+        group_id = postMap.get("group_id");
 
         RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_XIANGQING, new RsenUrlUtil.OnJsonResultListener<MyBean>() {
             @Override
@@ -209,7 +225,10 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
             @Override
             public Map getMap() {
                 Map map = new HashMap();
-                map.put("group_id", postMap.get("group_id"));
+                map.put("group_id", group_id);
+                if (BaseFunction.isLogin()) {
+                    map.put("session_id", session_id);
+                }
                 return map;
             }
 
@@ -219,26 +238,52 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
                     MyBean bean = new MyBean();
                     bean.logo = RsenUrlUtil.URL_BASE + jsonObject.getString("logo");
                     bean.title = jsonObject.getString("title");
+                    bean.detail = jsonObject.getString("detail");
+//                    bean.menmberCount = jsonObject.getString("menmberCount");
+                    bean.member_count = jsonObject.getString("member_count");
+
+                    bean.group_background = jsonObject.getString("background");
+                    bean.type_id = jsonObject.getString("type_id");
                     bean.is_join = jsonObject.getString("is_join");
-                    bean.menmberCount = jsonObject.getString("menmberCount");
-//                    bean.isCreator = jsonObject.getString("isCreator");
-                    JSONArray userArray = jsonObject.getJSONArray("GroupMenmber");
-                    bean.userList = parseUserList(userArray);
+                    bean.uid = jsonObject.getString("uid");
+                    bean.post_count = jsonObject.getString("post_count");
+                    bean.group_type = jsonObject.getString("type");
+//                    bean.type_name = jsonObject.getString("type_name");
+//
+                    bean.activity = jsonObject.getString("activity");
+
+                    bean.id = jsonObject.getString("id");
+                    bean.gm_logo = jsonObject.getJSONObject("user").getString("avatar32");
+                    bean.gm_nickname = jsonObject.getJSONObject("user").getString("nickname");
 
                     beans.add(bean);
+
                 } catch (Exception e) {
 
                 }
             }
 
             @Override
-            public void onResult(boolean state, List<MyBean> beans) {
+            public void onResult(boolean state, final List<MyBean> beans) {
                 if (state) {
                     recycler.setAdapter(new MySubAdapter(GroupPostInfoActivity.this, logolist));
-                    kjBitmap.display(group_logo, beans.get(0).logo);
+//                    kjBitmap.display(group_logo, beans.get(0).logo);
+                    ImageLoader.getInstance().displayImage(beans.get(0).logo, group_logo);
                     group_name.setText(beans.get(0).title);
+                    group_logo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            launch(GroupPostInfoActivity.this, isWeGroup, beans.get(0));
 
-                    group_count.setText(beans.get(0).userList.size());
+                        }
+                    });
+                    enter.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            launch(GroupPostInfoActivity.this, isWeGroup, beans.get(0));
+
+                        }
+                    });
 
                     if (beans.get(0).is_join.equals("0")) {
                         join.setText("已加入");
@@ -249,6 +294,7 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
                         join.setBackgroundColor(Color.YELLOW);
                         join.setLinksClickable(true);
                     }
+                    group_count.setText(beans.get(0).member_count);
                 } else {
 //                    ToastHelper.showToast("请求失败", Url.context);
                 }
@@ -358,32 +404,58 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
     }
 
     public static class MyBean {
+
+        public String nickname;
+
+        //        public String menmberCount;
+        public String member_count;
+        public List<String> userList;//用户头像
+        public List<String> postList;
+        public String id;
         public String logo;
         public String title;
-        public String nickname;
-        public String menmberCount;
+        //        public String group_id;
+        public String group_type;
+        public String detail;
+        public String type_name;
+        public String post_count;
+
+        public String uid;
+        public String group_logo;
+        public String group_background;
+        public String type_id;
+        public String activity;
         public String is_join;
-        public String isCreator;
-        public List<String> userList;
-        public String   post_count;
+        public String ht_reply_count;
+        public String ht_support_count;
+        public String ht_logo;
+        public String ht_content;
+        public String ht_creat_time;
+        public String ht_nickname;
+        public String gm_logo;
+        public String gm_nickname;
     }
 
-
-    public static class MyTalkBean {
-        public String title;
-        public String nickname;
-        public String content;
-        public String reply_count;
-        public String supportCount;
-        public String avatar32;
-        public ArrayList<RplyeBean> posts_rply;
-
-    }
-
-    public static class RplyeBean {
-        public String content;
-        public String rp_user;
-
+    public static void launch(Context context, boolean isWeGroup, MyBean bean) {
+        HashMap<String, String> map = new HashMap<>();
+        Bundle bundle = new Bundle();
+        map.put("id", bean.id);
+        map.put("title", bean.title);
+        map.put("group_type", bean.group_type);
+        map.put("detail", bean.detail);
+        map.put("type_name", bean.type_name);
+        map.put("post_count", bean.post_count);
+        map.put("group_logo", bean.logo);
+        map.put("memberCount", bean.member_count);
+        map.put("uid", bean.uid);
+        map.put("is_join", bean.is_join);
+        map.put("user_nickname", bean.gm_nickname);
+        map.put("user_logo", Url.IMAGE + bean.gm_logo);
+        bundle.putSerializable("group_info", map);
+        bundle.putBoolean("isWeGroup", isWeGroup);
+        Intent intent = new Intent(context, GroupInfoActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
 
@@ -561,10 +633,12 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
             lzlTask.execute(Integer.parseInt(map.get("id")));
         }
 
+        //楼主
         if (map.get("is_landlord").equals("1")) {
-            viewHolder.replyHost.setVisibility(View.VISIBLE);
+//            viewHolder.replyHost.setVisibility(View.VISIBLE);
         }
-        kjBitmap.display(viewHolder.replyUserHead, map.get("user_logo"));
+        ImageLoader.getInstance().displayImage(map.get("user_logo"), viewHolder.replyUserHead);
+//        kjBitmap.display(viewHolder.replyUserHead, map.get("user_logo"));
         viewHolder.replyUsername.setText(map.get("nickname"));
         viewHolder.replyTime.setText("第" + floorCount + "楼 " + map.get("create_time"));
         viewHolder.replyContent.setText(map.get("content"));
@@ -667,7 +741,8 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
         protected void onPostExecute(final ArrayList<HashMap<String, String>> lzlReplyList) {
             toReplyCount = lzlReplyList.size();
             viewHolder.LzlReplyBox.setVisibility(View.VISIBLE);
-            kjBitmap.display(viewHolder.lzlOneUserLogo, lzlReplyList.get(0).get("user_logo"));
+//            kjBitmap.display(viewHolder.lzlOneUserLogo, lzlReplyList.get(0).get("user_logo"));
+            ImageLoader.getInstance().displayImage(lzlReplyList.get(0).get("user_logo"), viewHolder.lzlOneUserLogo);
             viewHolder.lzlOneUserLogo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -682,7 +757,8 @@ public class GroupPostInfoActivity extends Activity implements View.OnClickListe
             }
             if (toReplyCount >= 2) {
                 viewHolder.lzlTwoLayout.setVisibility(View.VISIBLE);
-                kjBitmap.display(viewHolder.lzlTwoUserLogo, lzlReplyList.get(1).get("user_logo"));
+//                kjBitmap.display(viewHolder.lzlTwoUserLogo, lzlReplyList.get(1).get("user_logo"));
+                ImageLoader.getInstance().displayImage(lzlReplyList.get(1).get("user_logo"), viewHolder.lzlTwoUserLogo);
                 viewHolder.lzlTwoUserLogo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

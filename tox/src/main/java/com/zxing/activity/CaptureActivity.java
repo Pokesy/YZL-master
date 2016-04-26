@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.tox.R;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ import com.zxing.decoding.CaptureActivityHandler;
 import com.zxing.decoding.InactivityTimer;
 import com.zxing.view.ViewfinderView;
 
-public class CaptureActivity extends Activity implements Callback {
+public class CaptureActivity extends BaseBActivity implements Callback {
 
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;

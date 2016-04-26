@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.bugtags.library.plugin'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.hengrtech.yuzhile"
@@ -49,6 +50,12 @@ android {
     }
     useLibrary 'org.apache.http.legacy'
 }
+bugtags {
+    appKey "309e5c0b10a89d083fcb08b0c17543e2"  //这里是你的 appKey
+    appSecret "3851ebf6b9e2ecbd2296608c0b9119e3"    //这里是你的 appSecret，管理员在设置页可以查看
+
+    trackingNetworkEnabled true //开启网络请求跟踪功能(企业版)
+}
 
 dependencies {
     compile(name: 'library-1.8.2', ext: 'aar')
@@ -69,4 +76,5 @@ dependencies {
     compile files('libs/baidumapapi_map_v3_7_3.jar')
     compile files('libs/baidumapapi_radar_v3_7_3.jar')
     compile files('libs/baidumapapi_util_v3_7_3.jar')
+    compile 'com.bugtags.library:bugtags-lib:latest.integration'
 }

@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.tox.IssueApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * Created by 王杰 on 2015/5/8.
  */
-public class PostGroupActivity extends Activity implements View.OnClickListener{
+public class PostGroupActivity extends BaseBActivity implements View.OnClickListener{
     private ArrayList<HashMap<String, String>> categoryList;
     //arr[0]是发送成功   arr[1]是返回的信息
     private String arr[]=null;

@@ -1,7 +1,6 @@
 package com.thinksky.tox;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,6 +27,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.model.ActivityModel;
 import com.thinksky.myview.MyListView;
 import com.tox.BaseApi;
@@ -46,7 +46,7 @@ import java.util.HashMap;
 /**
  * Created by Administrator on 2015/5/7 0007.
  */
-public class GroupActivity extends Activity implements View.OnClickListener {
+public class GroupActivity extends BaseBActivity implements View.OnClickListener {
 
     RelativeLayout group_top;
     protected ImageView group_menu;

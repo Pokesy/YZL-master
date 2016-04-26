@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.IssueDetail;
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ZhuanjiActivity extends AppCompatActivity {
+public class ZhuanjiActivity extends BaseBActivity {
     private List<String> pictureListUrls;
     View rootView;
     ListView listView;

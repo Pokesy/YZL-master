@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.tox.R;
 
@@ -64,7 +65,9 @@ public class MyNewsListAdapter extends BaseAdapter {
         }else {
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        kjBitmap.display(viewHolder.newsLogo,newsListInfos.get(position).getCover(),280,260);
+
+//        kjBitmap.display(viewHolder.newsLogo,newsListInfos.get(position).getCover(),280,260);
+        ImageLoader.getInstance().displayImage(newsListInfos.get(position).getCover(),viewHolder.newsLogo);
         viewHolder.newsTitle.setText(newsListInfos.get(position).getTitle());
         viewHolder.newsAuthor.setVisibility(View.GONE);
         viewHolder.isOverdue.setVisibility(View.VISIBLE);

@@ -1,7 +1,6 @@
 package com.thinksky.tox;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,12 +36,14 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.MoreTextView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.tox.BaseApi;
+import com.tox.BaseFunction;
 import com.tox.GroupApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -60,7 +61,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2015/5/18 0018.
  */
-public class GroupInfoActivity extends Activity implements View.OnClickListener {
+public class GroupInfoActivity extends BaseBActivity implements View.OnClickListener {
     private List<String> imgs;
     private static boolean PUBLICGROUP = false;
     private static boolean PRIVATEGROUP = false;
@@ -68,6 +69,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
     protected ScrollView group_scro;
     protected ImageView back_menu;
     protected ImageView cate_menu;
+
     protected RelativeLayout refreshButn;
     protected ArrayList<HashMap<String, String>> categoryList;
     private RemenhuatiAdapter rm_adapter;
@@ -75,6 +77,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
     HashMap<String, String> groupInfoMap;
     Bundle GroupBundle;
     String session_id;
+    private String userUid;
     Boolean isWeGroup;
     Intent postIntent;
     Bundle postBundle;
@@ -119,20 +122,26 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
                 String result = (String) msg.obj;
                 groupInfoMap = groupApi.getGroupInfoMap(result, groupInfoMap);
                 Log.e("groupInfoMap>>>>>>>>", groupInfoMap.toString());
-                isJoin = Integer.parseInt(groupInfoMap.get("is_join"));
-                if (isJoin == 1) {
-                    joinFlag = false;
-                    join_status.setText("退出群组");
-                }
-                if (groupInfoMap.get("uid").equals(groupApi.getUid())) {
-                    join_status.setText("解散群组");
-                }
-                if (isJoin == -1) {
-                    join_status.setText("已申请，审核中");
-                    join_group.setClickable(false);
-                } else if (isJoin != 1) {
-                    join_status.setText("+加入群组");
-                    joinFlag = true;
+                if (BaseFunction.isLogin()) {
+                    join_group.setVisibility(View.VISIBLE);
+//                    isJoin = Integer.parseInt(groupInfoMap.get("is_join"));
+                    if (isJoin == 1) {
+                        joinFlag = false;
+                        join_status.setText("退出群组");
+
+                    } else if (isJoin == -1) {
+                        join_status.setText("已申请，审核中");
+                        join_group.setClickable(false);
+                    } else if (isJoin != 1) {
+                        if (groupInfoMap.get("uid").equals(userUid)) {
+                            join_status.setText("管理小组");
+                        } else {
+                            join_status.setText("+加入群组");
+                            joinFlag = true;
+                        }
+                    }
+                } else {
+                    join_group.setVisibility(View.GONE);
                 }
             }
         }
@@ -313,6 +322,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
         mContext = GroupInfoActivity.this;
         session_id = new BaseApi().getSeesionId();
         groupApi = new GroupApi();
+        userUid = new BaseApi().getUid();
         kjbImage = KJBitmap.create();
         //获得上个activity传递的群组信息
         Intent groupIntent = this.getIntent();
@@ -322,6 +332,50 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
         Log.e("groupInfoMap>>>>>>>>", groupInfoMap.toString());
 
         group_id = Integer.parseInt(groupInfoMap.get("id"));
+
+
+        RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_XIANGQING, new RsenUrlUtil.OnJsonResultListener<MyBean>() {
+            @Override
+            public void onNoNetwork(String msg) {
+                ToastHelper.showToast(msg, Url.context);
+            }
+
+            @Override
+            public Map getMap() {
+                Map map = new HashMap();
+                map.put("group_id", group_id);
+                if (BaseFunction.isLogin()) {
+                    map.put("session_id", session_id);
+                }
+                return map;
+            }
+
+            @Override
+            public void onParseJsonBean(List<MyBean> beans, JSONObject jsonObject) {
+                try {
+                    MyBean bean = new MyBean();
+
+                    bean.is_join = jsonObject.getInt("is_join");
+
+
+                    beans.add(bean);
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onResult(boolean state, final List<MyBean> beans) {
+                if (state) {
+                  isJoin=beans.get(0).is_join;
+                } else {
+//                    ToastHelper.showToast("请求失败", Url.context);
+                }
+            }
+
+
+        });
         //即时获取群组信息线程
         groupApi.setHandler(tempHandler);
         groupApi.getGroupInfo(String.valueOf(group_id));
@@ -397,7 +451,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
 
         //获取帖子分类线程
         postInfoList = new ArrayList<HashMap<String, String>>();
-        new CategoryThread().start();
+//        new CategoryThread().start();
 //        new TopPostThread(page).start();
 //        new GroupPostThread(page, cateID).start();
 
@@ -413,9 +467,11 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
 //        });
 //        group_scro.smoothScrollTo(0, 0);
     }
-
+    public static class MyBean {
+        public int is_join;
+    }
     private void init() {
-        rm_adapter=new RemenhuatiAdapter(mContext);
+        rm_adapter = new RemenhuatiAdapter(mContext);
 
         group_post_listView.setLayoutManager(new LinearLayoutManager(this));
         group_post_listView.setAdapter(rm_adapter);
@@ -476,7 +532,7 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
                         linear_list.setVisibility(View.VISIBLE);
                         linear_isnull.setVisibility(View.GONE);
 
-                                rm_adapter.resetData(beans);
+                        rm_adapter.resetData(beans);
 //                        group_post_listView.setAdapter(new GroupListAdapter(mContext, postInfoList, R.layout.group_post_item, null, null));
 //                        Utility.setListViewHeightBasedOnChildren(group_post_listView);
                     } else {
@@ -496,22 +552,17 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
     public void InitGroupView(HashMap<String, String> groupInfoMap) {
 
         group_name.setText(groupInfoMap.get("title"));
-        if (groupInfoMap.get("group_type").equals("1")) {
-            group_type.setText("私有群组");
-        }
+//        if (groupInfoMap.get("group_type").equals("1")) {
+//            group_type.setText("私有群组");
+//        }
         group_detail.setText("群组简介：" + groupInfoMap.get("detail"));
 //        group_type_name.setText(groupInfoMap.get("type_name"));
         post_count.setText(groupInfoMap.get("user_nickname"));
-        man_count.setText(groupInfoMap.get("post_count"));
+        man_count.setText(groupInfoMap.get("memberCount"));
 
 
-        ResUtil.setRoundImage(groupInfoMap.get("group_logo"),group_logo);
-//        if (groupInfoMap.get("group_logo").equals(Url.USERHEADURL + "Public/Core/images/nopic.png")) {
-//
-//            kjbImage.display(group_logo, Url.USERHEADURL + "Public/Group/images/icon.jpg");
-//        } else {
-//            kjbImage.display(group_logo, groupInfoMap.get("group_logo"));
-//        }
+        ResUtil.setRoundImage(groupInfoMap.get("group_logo"), group_logo);
+
         init();
     }
 
@@ -523,8 +574,12 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.group_post:
-                sendPost();
-                break;
+                if (BaseFunction.isLogin()) {
+                    sendPost();
+                } else{
+                    ToastHelper.showToast("请登陆后操作", mContext);
+                }
+                    break;
             case R.id.cate_menu:
                 cateWindow.showAsDropDown(group_post);
                 break;
@@ -534,24 +589,26 @@ public class GroupInfoActivity extends Activity implements View.OnClickListener 
             case R.id.group_logo:
                 Intent intent = new Intent(mContext, GroupDetailActivity.class);
                 intent.putExtra("groupInfoMap", groupInfoMap);
+                intent.putExtra("is_join", isJoin);
                 startActivity(intent);
                 break;
             case R.id.join_group:
                 if (!groupApi.getSeesionId().equals("")) {
-                    if (groupInfoMap.get("uid").equals(groupApi.getUid())) {
-                        new AlertDialog.Builder(mContext)
-                                .setTitle("解散群组")
-                                .setMessage("确定吗？")
-                                .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        initFlag(false, false, true);
-                                        groupApi.setHandler(myHandler);
-                                        groupApi.dismissGroup(group_id + "");
-                                    }
-                                })
-                                .setNegativeButton("否", null)
-                                .show();
+                    if (groupInfoMap.get("uid").equals(userUid)) {
+//                        new AlertDialog.Builder(mContext)
+//                                .setTitle("解散群组")
+//                                .setMessage("确定吗？")
+//                                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        initFlag(false, false, true);
+//                                        groupApi.setHandler(myHandler);
+//                                        groupApi.dismissGroup(group_id + "");
+//                                    }
+//                                })
+//                                .setNegativeButton("否", null)
+//                                .show();
+                        ToastHelper.showToast("请在网站端操作", mContext);
                         break;
                     }
                     if (isJoin == -1) {

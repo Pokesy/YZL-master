@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.MyJson;
 import com.tox.NewsApi;
@@ -42,7 +42,7 @@ import java.util.List;
 /**
  * Created by 王杰 on 2015/7/20.
  */
-public class PostNewsActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class PostNewsActivity extends BaseBActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private static int RESULT_LOAD_IMAGE = 1;
     RelativeLayout back,send;
     private NewsApi newsApi;

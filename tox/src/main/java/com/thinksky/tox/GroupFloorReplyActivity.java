@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.redefine.CircleImageView;
 import com.tox.GroupApi;
 import com.tox.ToastHelper;
@@ -35,7 +36,7 @@ import java.util.HashMap;
 /**
  * Created by Administrator on 2015/6/4 0004.
  */
-public class GroupFloorReplyActivity extends Activity implements View.OnClickListener{
+public class GroupFloorReplyActivity extends BaseBActivity implements View.OnClickListener{
 
     private Context mContext;
     private GroupApi groupApi;
@@ -127,7 +128,8 @@ public class GroupFloorReplyActivity extends Activity implements View.OnClickLis
 
         String floorNumber = floorInfoMap.get("floor_id");
         roomNumber.setText(floorNumber + "楼");
-        kjBitmap.display(floorUserHead, floorInfoMap.get("user_logo"));
+//        kjBitmap.display(floorUserHead, floorInfoMap.get("user_logo"));
+        ImageLoader.getInstance().displayImage(floorInfoMap.get("user_logo"),floorUserHead);
         floorUserName.setText(floorInfoMap.get("nickname"));
         if (floorInfoMap.get("is_landlord").equals("1")) {
             isHost.setVisibility(View.VISIBLE);
@@ -294,7 +296,8 @@ public class GroupFloorReplyActivity extends Activity implements View.OnClickLis
         viewHolder.replyTime = (TextView) viewHolder.view.findViewById(R.id.lzl_reply_time);
         viewHolder.replyContent = (TextView) viewHolder.view.findViewById(R.id.lzl_reply_content);
 
-        kjBitmap.display(viewHolder.userHead, tempMap.get("user_logo"));
+//        kjBitmap.display(viewHolder.userHead, tempMap.get("user_logo"));
+        ImageLoader.getInstance().displayImage(tempMap.get("user_logo"),viewHolder.userHead);
         viewHolder.userName.setText(tempMap.get("nickname"));
         viewHolder.replyTime.setText(tempMap.get("create_time"));
         viewHolder.replyContent.setText(tempMap.get("content"));

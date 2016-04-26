@@ -73,8 +73,8 @@
 
                         <com.thinksky.redefine.CircleImageView
                             android:id="@+id/group_logo"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_marginTop="5dp"
                             android:src="@drawable/side_user_avatar" />
                     </LinearLayout>
@@ -82,6 +82,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/enter"
                         android:padding="5dp">
 
                         <TextView
@@ -96,6 +97,7 @@
 
                         <TextView
                             android:id="@+id/join"
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -131,6 +133,7 @@
 
                             <TextView
                                 android:id="@+id/group_count"
+                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/louzhu"
@@ -141,7 +144,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/louzhu"
-
+android:visibility="gone"
                                 android:layout_marginLeft="5dp"
                                 android:text="个成员" />
                         </LinearLayout>
@@ -242,7 +245,7 @@
                                 android:visibility="invisible" />
                         </LinearLayout>
                     </RelativeLayout>
-
+                    <include layout="@layout/one_line" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -326,7 +329,7 @@
                             android:layout_marginLeft="10dp"
                             android:tag="HORIZONTAL" />
                     </LinearLayout>
-
+                    <include layout="@layout/one_line" />
                     <TextView
                         android:id="@+id/huifu"
                         android:layout_width="wrap_content"
@@ -420,6 +423,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="30dp"
+                    android:layout_marginLeft="10dp"
                     android:textColor="#787C7F" />
             </LinearLayout>
 
@@ -442,6 +446,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="30dp"
+                    android:layout_marginLeft="10dp"
                     android:textColor="#787C7F" />
             </LinearLayout>
         </LinearLayout>

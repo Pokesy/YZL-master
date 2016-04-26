@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thinksky.adapter.LandlordComAdapter;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.Com2Com;
 import com.thinksky.info.PostComment;
 import com.thinksky.redefine.MyScrollView;
@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LandLordActivity extends Activity implements View.OnClickListener {
+public class LandLordActivity extends BaseBActivity implements View.OnClickListener {
     private static boolean ADDMORECOMMENT=false;
     private static boolean SENDCOMMENT=false;
     private ImageView mUserHead,mFloatBtn;

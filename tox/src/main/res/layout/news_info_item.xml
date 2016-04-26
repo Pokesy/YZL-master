@@ -92,5 +92,7 @@
                 tools:text="7分钟前" />
 
         </RelativeLayout>
+
     </LinearLayout>
+
 </LinearLayout>

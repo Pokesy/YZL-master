@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.info.WeiboCommentInfo;
 import com.thinksky.info.WeiboInfo;
 import com.thinksky.redefine.FaceTextView;
@@ -18,7 +19,6 @@ import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendCommentActivity;
 import com.thinksky.utils.LoadImg;
-import com.tox.BaseFunction;
 import com.tox.Url;
 import com.tox.WeiboApi;
 
@@ -88,7 +88,8 @@ public class DetailListAdapter extends BaseAdapter {
         if (list.get(arg0).getUser().getAvatar().equalsIgnoreCase("")) {
             hold.UserHead.setImageResource(R.drawable.side_user_avatar);
         } else {
-            BaseFunction.showImage(ctx, hold.UserHead, list.get(arg0).getUser().getAvatar(), loadImgHead, Url.IMGTYPE_HEAD);
+//            BaseFunction.showImage(ctx, hold.UserHead, list.get(arg0).getUser().getAvatar(), loadImgHead, Url.IMGTYPE_HEAD);
+            ImageLoader.getInstance().displayImage(list.get(arg0).getUser().getAvatar(), hold.UserHead);
         }
         hold.CommentArea.setOnClickListener(new View.OnClickListener() {
             @Override

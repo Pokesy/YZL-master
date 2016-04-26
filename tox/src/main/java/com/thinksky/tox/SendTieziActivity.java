@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.thinksky.fragment.DiscoverFragment;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RGridView;
@@ -65,7 +66,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class SendTieziActivity extends Activity implements View.OnClickListener {
+public class SendTieziActivity extends BaseBActivity implements View.OnClickListener {
     private LinearLayout photoLayout;
     private String mTempPhotoName;
     private EditText mTitleEdit, mContentEdit;

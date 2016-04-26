@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -25,7 +24,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.fragment.VedioView;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
 import com.tox.IssueApi;
@@ -54,7 +55,7 @@ import java.util.HashMap;
 /**
  * Created by 王杰 on 2015/3/20.
  */
-public class IssueDetail extends Activity {
+public class IssueDetail extends BaseBActivity {
     //detail中的控件
     TextView issue_title;
     ImageView issue_image;
@@ -470,12 +471,13 @@ public class IssueDetail extends Activity {
             //为图片控件加载数据
             kjBitmap = KJBitmap.create();
             String u = comments.get(0).get("cover_url").replace("opensns//opensns", "opensns");
-            kjBitmap.display(issue_image, u);
+//            kjBitmap.display(issue_image, u);
+            ImageLoader.getInstance().displayImage(u,issue_image);
 //            ResUtil.setRoundImage(comments.get(0).get("cover_url"), issue_image);
 //            issue_image.setVisibility(View.VISIBLE);
-            image_progress.setVisibility(View.GONE);
-            kjBitmap.display(issue_userImage, comments.get(0).get("user_image"));
-
+//            image_progress.setVisibility(View.GONE);
+//            kjBitmap.display(issue_userImage, comments.get(0).get("user_image"));
+            ImageLoader.getInstance().displayImage(comments.get(0).get("user_image"),issue_userImage);
             issue_userImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -627,7 +629,8 @@ public class IssueDetail extends Activity {
             });
             //给控件赋值
             if (reply_info.get(position).get("user_image") != null) {
-                kjbImage.display(viewHolder.replyUserImage, reply_info.get(position).get("user_image"));
+//                kjbImage.display(viewHolder.replyUserImage, reply_info.get(position).get("user_image"));
+           ImageLoader.getInstance().displayImage(reply_info.get(position).get("user_image"),viewHolder.replyUserImage);
             }
             viewHolder.replyUserImage.setOnClickListener(new View.OnClickListener() {
                 @Override

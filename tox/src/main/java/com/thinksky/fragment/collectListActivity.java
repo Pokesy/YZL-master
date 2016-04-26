@@ -1,129 +1,186 @@
 package com.thinksky.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.ResUtil;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.tox.BaikeItemActivity;
 import com.thinksky.tox.R;
-import com.thinksky.tox.SendQuestionActivity;
-import com.tox.BaseFunction;
+import com.tox.BaseApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
 
 import org.json.JSONObject;
+import org.kymjs.aframe.bitmap.KJBitmap;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by jiao on 2016/3/13.
  */
-public class collectListActivity extends Activity {
+public class CollectListActivity extends BaseBActivity {
+    private static final String TAG = "ListViewCheckBoxActivity";
 
-    ListView mListView;
-    WendaListAdapter mAdapter;
+
+    private DraftDailyAdapter adapter;
+    private Map<Integer, Boolean> isCheckedMap;
+    private AppCompatCheckBox allCheckBox;
+    KJBitmap kjBitmap;
+    private ImageView dailyPic;
+    private String session_id;
+    private String userUid;
+    private BaseApi baseApi;
+    private ListView listView;
+    private TextView delete, tiwen;
+    private RelativeLayout all_check;
     private ImageView back_menu;
-    private TextView mTitleView;
-    private TextView   tiwen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wenda_common);
-        mListView = (ListView) findViewById(R.id.listView);
+        setContentView(R.layout.activity_collect_common);
+        allCheckBox = (AppCompatCheckBox) findViewById(R.id.all_check_btn);
+        baseApi = new BaseApi();
+        session_id = baseApi.getSeesionId();
+        all_check = (RelativeLayout) findViewById(R.id.all_check);
+        delete = (TextView) findViewById(R.id.delete);
         tiwen = (TextView) findViewById(R.id.tiwen);
         back_menu = (ImageView) findViewById(R.id.back_menu);
-        tiwen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (BaseFunction.isLogin()) {
-                    Intent intent = new Intent(collectListActivity.this, SendQuestionActivity.class);
-                    startActivity(intent);
-                }else{
-                    ToastHelper.showToast("请登录", Url.context);
-                }
-            }
-        });
-        String whichActivity = getIntent().getStringExtra("whichActivity");
-        initView();
-        initData(whichActivity);
-    }
-
-    private void initView() {
-        mTitleView = (TextView) findViewById(R.id.group_name);
-    }
-
-    private void initData(String whichActivity) {
         back_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        String url = null;
-        switch (whichActivity) {
-            case "HOT"://热门
-                url = RsenUrlUtil.URL_HOT_WD;
-                mTitleView.setText(R.string.activity_wenda_title_hot);
-                break;
-            case "MON"://悬赏
-                url = RsenUrlUtil.URL_MON_WD;
-                mTitleView.setText(R.string.activity_wenda_title_mon);
-                break;
-            case "SOLUTION"://已解决
-                url = RsenUrlUtil.URL_SOLUTE_WD;
-                mTitleView.setText(R.string.activity_wenda_title_solution);
-                break;
-        }
+        isCheckedMap = new HashMap<Integer, Boolean>();
 
-        RsenUrlUtil.execute(collectListActivity.this, url, new RsenUrlUtil.OnNetHttpResultListener() {
+        listView = (ListView) findViewById(R.id.listView);
+        init();
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
+            public void onClick(View v) {
+
+                adapter.update();
+            }
+        });
+        tiwen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tiwen.getText().equals("编辑")) {
+                    adapter.show();
+                    tiwen.setText("完成");
+                    all_check.setVisibility(View.VISIBLE);
+                } else if (tiwen.getText().equals("完成")) {
+                    adapter.close();
+                    tiwen.setText("编辑");
+                    all_check.setVisibility(View.GONE);
+                }
+            }
+        });
+        allCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Set<Integer> set = isCheckedMap.keySet();
+                Iterator<Integer> iterator = set.iterator();
+                if (isChecked) {
+                    while (iterator.hasNext()) {
+                        Integer keyId = iterator.next();
+                        isCheckedMap.put(keyId, true);
+                        adapter.selectAll();
+                    }
+                } else {
+                    while (iterator.hasNext()) {
+                        Integer keyId = iterator.next();
+                        isCheckedMap.put(keyId, false);
+                        adapter.invert();
+                    }
+                }
+
+
+//                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+    private void init() {
+        Map map = new HashMap();
+        map.put("session_id", session_id);
+        RsenUrlUtil.executeGetWidthMap(CollectListActivity.this, RsenUrlUtil.URL_SC, map, new RsenUrlUtil.OnJsonResultListener<SCBean>() {
+
             public void onNoNetwork(String msg) {
                 ToastHelper.showToast(msg, Url.context);
             }
 
-
-            @Override
             public void onResult(boolean state, String result, JSONObject jsonObject) {
                 if (state) {
-                    WendaFragment.WendaBean wendaBean = JSON.parseObject(result, WendaFragment.WendaBean.class);
-                    mListView.setAdapter(new WendaListAdapter(collectListActivity.this, wendaBean.getList()));
+                    SCBean bean = JSON.parseObject(result, SCBean.class);
+                    adapter = new DraftDailyAdapter(CollectListActivity.this, bean.getList());
+                    listView.setAdapter(adapter);
+                    isCheckedMap.put(bean.getList().size(), false);
                 }
+            }
+
+            @Override
+            public void onParseJsonBean(List<SCBean> beans, JSONObject jsonObject) {
+
+            }
+
+            @Override
+            public void onResult(boolean state, List<SCBean> beans) {
+
             }
         });
     }
 
+    class DraftDailyAdapter extends BaseAdapter {
 
-    public class WendaListAdapter extends BaseAdapter {
-        private List<WendaFragment.WendaBean.ListEntity> datas;
+        public List<SCBean.ListEntity> list;
         private Context context;
+        LayoutInflater inflater;
+        List<Integer> checkState;
+        private boolean flag = true;
+        List<String> delId;
 
-        public WendaListAdapter(Context context, List<WendaFragment.WendaBean.ListEntity> datas) {
-            this.datas = datas;
+        public DraftDailyAdapter(Context context, List<SCBean.ListEntity> list) {
+            super();
+            this.list = list;
             this.context = context;
+            checkState = new ArrayList<Integer>();
+            delId = new ArrayList<String>();
+            inflater = LayoutInflater.from(this.context);
+
         }
 
         @Override
         public int getCount() {
-            if (datas == null) {
-                return 0;
-            }
-            return datas.size();
+            return list == null ? 0 : list.size();
         }
 
         @Override
-        public Object getItem(int position) {
-            return datas.get(position);
+        public Object getItem(int location) {
+            return list.get(location);
         }
 
         @Override
@@ -133,51 +190,427 @@ public class collectListActivity extends Activity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            RViewHolder viewHolder;
+
+            ViewHolder holder = new ViewHolder();
             if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.fragment_wenda_adapter_item, parent, false);
-                viewHolder = new RViewHolder(convertView);
-                convertView.setTag(viewHolder);
+                convertView = inflater.inflate(R.layout.collect_item, null);
+                holder.tv = (TextView) convertView.findViewById(R.id.dailyName);
+                holder.check = (AppCompatCheckBox) convertView.findViewById(R.id.isCheakBox);
+                convertView.setTag(holder);
+                System.out.println("新的View的位置是：" + position);
             } else {
-                viewHolder = (RViewHolder) convertView.getTag();
+                holder = (ViewHolder) convertView.getTag();
+                System.out.println("旧的View的位置是：" + position);
+
             }
-
-            final WendaFragment.WendaBean.ListEntity listEntity = datas.get(position);
-
-            /*其他控件信息，自己添加 id， 然后从 listEntity对象中获取数据，填充就行了*/
-            ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(listEntity.getTitle());
-            ((TextView) viewHolder.itemView.findViewById(R.id.content)).setText(listEntity.getContent());
-            ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setText(listEntity.getUser().getNickname());
-            ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(listEntity.getAnswer_num());
-            ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity.getCreate_time());
-            String s = listEntity.getBest_answer();
-//            if (s.equals("1")) {
-//                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
-//            }
-            ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getCover_url(), viewHolder.imgV(R.id.logo));
-            if (s.equals("0")) {
-                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
-                viewHolder.itemView.findViewById(R.id.best_answer).setSelected(false);
+            if (flag) {
+                holder.check.setVisibility(View.GONE);
             } else {
-                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
-                viewHolder.itemView.findViewById(R.id.best_answer).setSelected(true);
+                holder.check.setVisibility(View.VISIBLE);
             }
-            /*点击事件响应*/
-            viewHolder.itemView.findViewById(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
+            holder.tv.setText(list.get(position).getTitle());
+
+            holder.check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    RsenCommonActivity.showActivity(context, RsenCommonActivity.TYPE_QDETAIL, null);
-                    //Toast.makeText(v.getContext(), "Click Me " + position, Toast.LENGTH_LONG).show();
+                    CheckBox check = (CheckBox) v;
+                    if (check.isChecked()) {
+                        checkState.add(position);
+                        String s = list.get(position).getId();
+                        delId.add(s);
+                    } else {
+                        checkState.remove((Integer) position);
+                    }
+                }
+            });
+            if (checkState.contains(position)) {
+                holder.check.setChecked(true);
+                delId.add(list.get(position).getId());
+            } else {
+                holder.check.setChecked(false);
+            }
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Toast.makeText(inflater.getContext(), "" + position, Toast.LENGTH_SHORT).show();
                     Bundle bundle = new Bundle();
-
-                    bundle.putString("question_id", listEntity.getId());
-
-                    Intent intent = new Intent(context, wentixiangqing.class);
+                    bundle.putString("id", list.get(position).getId());
+                    Intent intent = new Intent(context, BaikeItemActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
             });
             return convertView;
         }
+
+        //删除选择项
+        public void update() {
+            //根据位置删除list中元素时，由于删除一个元素后面的元素的
+            //位置也相应的改变，所以先进行排序，从list后面开始删除
+            Collections.sort(checkState);
+            for (int i = checkState.size() - 1; i >= 0; i--) {
+                list.remove((int) checkState.get(i));
+            }
+            for (int j = 0; j < delId.size(); j++) {
+                final int finalJ = j;
+                RsenUrlUtil.execute(CollectListActivity.this, RsenUrlUtil.URL_DLSC, new RsenUrlUtil.OnJsonResultListener<SCBean>() {
+                    @Override
+                    public void onNoNetwork(String msg) {
+                        ToastHelper.showToast(msg, Url.context);
+                    }
+
+                    @Override
+                    public Map getMap() {
+                        Map map = new HashMap();
+                        map.put("session_id", session_id);
+                        map.put("paper_id", delId.get(finalJ));
+                        return map;
+
+                    }
+
+                    @Override
+                    public void onParseJsonBean(List<SCBean> beans, JSONObject jsonObject) {
+                        String result = jsonObject.toString();
+                        SCBean discoverInfo = JSON.parseObject(result, SCBean.class);
+                        beans.add(discoverInfo);
+                    }
+
+                    @Override
+                    public void onResult(boolean state, List beans) {
+                        if (state) {
+                            ToastHelper.showToast("删除成功", Url.context);
+                        } else {
+                            ToastHelper.showToast("请求失败", Url.context);
+                        }
+                    }
+                });
+            }
+            checkState.clear();
+            notifyDataSetChanged();
+        }
+
+        public void show() {
+            flag = false;
+            notifyDataSetChanged();
+        }
+
+        public void close() {
+            flag = true;
+            notifyDataSetChanged();
+        }
+
+        //选择全部
+        public void selectAll() {
+            checkState.clear();
+            for (int i = 0; i < list.size(); i++) {
+                checkState.add((Integer) i);
+            }
+            notifyDataSetChanged();
+        }
+
+        //反选
+        public void invert() {
+            for (int i = 0; i < list.size(); i++) {
+                if (checkState.contains((Integer) i)) {
+                    checkState.remove((Integer) i);
+                } else {
+                    checkState.add((Integer) i);
+                }
+            }
+            notifyDataSetChanged();
+        }
+
+        public final class ViewHolder {
+            public TextView tv;
+            public ImageButton deleteButton;
+            public AppCompatCheckBox check;
+        }
+
     }
+
+
+    public static class SCBean {
+        /**
+         * success : true
+         * error_code : 0
+         * message : 返回成功
+         * list : [{"id":"5","uid":"1","title":"龙鱼百科","content":"<ul class=\"lemmaWgt-lemmaTitle lemmaWgt-lemmaTitle- list-paddingleft-2\" style=\"margin: 0px 0px 10px; padding: 0px; width: 700px; font-family: arial, tahoma, 'Microsoft Yahei', 宋体, sans-serif; color: rgb(51, 51, 51); font-size: 12px; line-height: 18px; white-space: normal; background-color: rgb(255, 255, 255);\"><li class=\"lemmaWgt-lemmaTitle-title\" style=\"\"><h1 style=\"margin: 0px 10px 0px 0px; padding: 0px; font-size: 34px; display: inline; line-height: 1.15; font-weight: 400; vertical-align: sub;\">美丽硬仆骨舌鱼<\/h1><p> <a class=\"lock-lemma\" target=\"_blank\" href=\"http://baike.baidu.com/view/10812319.htm\" title=\"锁定\" style=\"color: rgb(160, 160, 160); text-decoration: none; display: inline; outline: 0px; margin: 0px 5px 0px 0px; height: 12px; position: relative; top: -2px;\"><span class=\"cmn-icon wiki-lemma-icons wiki-lemma-icons_lock-lemma\" style=\"font-family: baikeFont_layout; -webkit-font-smoothing: antialiased; speak: none; line-height: 12px; outline: 0px; margin: 0px 5px 0px 0px; height: 12px; vertical-align: text-top;\"><\/span>锁定<\/a><\/p><\/li><\/ul><p><span class=\"view-tip-panel\" style=\"margin: -5px 0px 10px; font-size: 12px; font-family: SimSun; color: rgb(136, 136, 136); display: block; line-height: 18px; background-color: rgb(255, 255, 255);\"><a class=\"viewTip-icon\" href=\"http://baike.baidu.com/subview/71844/10028254.htm\" target=\"_blank\" title=\"同义词\" style=\"color: rgb(87, 155, 224); text-decoration: none; display: inline-block; border: 1px solid rgb(99, 174, 249); width: 40px; height: 18px; text-align: center;\">同义词<\/a> <span class=\"viewTip-fromTitle\" style=\"color: rgb(87, 155, 224);\">龙鱼<\/span>（亚洲龙鱼习称）一般指美丽硬仆骨舌鱼<\/span><\/p><p>本词条由<a href=\"http://www.cast.org.cn/n35081/\" target=\"_blank\" class=\"nslog:7175\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">\u201c科普中国\u201d百科科学词条编写与应用工作项目<\/a> 审核 。<\/p><p>美丽硬仆骨舌鱼（学名：<em>Scleropages formosus<\/em>）：又名<a target=\"_blank\" href=\"http://baike.baidu.com/view/2992300.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">亚洲龙鱼<\/a>、<a target=\"_blank\" href=\"http://baike.baidu.com/subview/31662/5951739.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">金龙鱼<\/a>。属一种古老的原始<a target=\"_blank\" href=\"http://baike.baidu.com/view/964130.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">淡水鱼类<\/a>。原产马来西亚、印尼、苏门答腊等地河流和湖泊。<\/p><p>成鱼体长40-50厘米，寿命可达数十年。性情凶猛，主要猎食活鱼虾、水生昆虫、青蛙等。亲鱼将鱼卵产含于口中直至孵出幼鱼，所以有\u201c龙吐珠\u201d的俗名。自20世纪中后被开发成为观赏鱼，因其泛闪金属光泽如盔甲般的鳞被和鲜艳的光色（金色、红色等）及威风凛凛的仪态而备受瞩目，身价飘升到币值数以万计的程度，成为极名贵的观赏鱼之一，有过背金龙、红龙、青龙等品种。由于资源过度开发造成濒危，被列入<a target=\"_blank\" href=\"http://baike.baidu.com/subview/49952/15184719.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">华盛顿公约<\/a>（CITES）保护名单附录Ⅰ。<\/p><ul class=\"basicInfo-block basicInfo-left list-paddingleft-2\" style=\"margin: 0px; padding: 0px; width: 395px; float: left;\"><li><p>中文学名<\/p><\/li><li><p>美丽硬仆骨舌鱼<\/p><\/li><li><p>拉丁学名<\/p><\/li><li><p><em>Scleropages formosus<\/em><\/p><\/li><li><p>别    称<\/p><\/li><li><p>青龙，黄尾金龙，亚洲龙吐珠<\/p><\/li><li><p>界<\/p><\/li><li><p>动物界<\/p><\/li><li><p>门<\/p><\/li><li><p><a target=\"_blank\" href=\"http://baike.baidu.com/view/194318.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">脊索动物门<\/a><\/p><\/li><li><p>亚    门<\/p><\/li><li><p><a target=\"_blank\" href=\"http://baike.baidu.com/view/345393.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">脊椎动物亚门<\/a><\/p><\/li><li><p>纲<\/p><\/li><li><p><a target=\"_blank\" href=\"http://baike.baidu.com/view/65992.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">硬骨鱼纲<\/a><\/p><\/li><li><p>亚    纲<\/p><\/li><li><p><a target=\"_blank\" href=\"http://baike.baidu.com/view/14398886.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">新鳍亚纲<\/a><\/p><\/li><li><p>目<\/p><\/li><li><p><a target=\"_blank\" href=\"http://baike.baidu.com/view/278393.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">骨舌鱼目<\/a><\/p><\/li><\/ul><ul class=\"basicInfo-block basicInfo-right list-paddingleft-2\" style=\"margin: 0px; padding: 0px; width: 395px; float: left;\"><li><p>科<\/p><\/li><li><p><a target=\"_blank\" href=\"http://baike.baidu.com/view/686570.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">骨舌鱼科<\/a><\/p><\/li><li><p>属<\/p><\/li><li><p><a target=\"_blank\" href=\"http://baike.baidu.com/item/%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC%E5%B1%9E\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">硬仆骨舌鱼属<\/a><\/p><\/li><li><p>种<\/p><\/li><li><p><a target=\"_blank\" href=\"http://baike.baidu.com/view/113362.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">美丽硬仆骨舌鱼<\/a><\/p><\/li><li><p>命名者及年代<\/p><\/li><li><p>Müller & Schlegel, 1844<\/p><\/li><li><p>英文名称<\/p><\/li><li><p>Asian Arowana <\/p><\/li><li><p>英文名称<\/p><\/li><li><p>Golden Arowana<\/p><\/li><li><p>英文名称<\/p><\/li><li><p>Golden Dragon Fish<\/p><\/li><li><p>英文名称<\/p><\/li><li><p>Asian Bonytongue、Kelesa<\/p><\/li><li><p>西班牙名称<\/p><\/li><li><p>Pez lengüihueso malayo<\/p><\/li><\/ul><h2 class=\"block-title\" style=\"margin: 22px 0px 0px 20px; padding: 0px; font-size: 18px; float: left; width: 63px; height: 48px; text-align: center; line-height: 48px; font-weight: 400;\">目录<\/h2><ol style=\"list-style-type: none;\" class=\" list-paddingleft-2\"><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">1<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#1\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">物种溯源<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">2<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#2\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">形态特征<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">3<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#3\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">物种界定<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">4<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#4\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">主要品种<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">5<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#5\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">分布范围<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">6<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#6\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">种群现状<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">7<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#7\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">保护级别<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">8<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">饲养方法<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_1\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">水质调解<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_2\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">新鱼入缸<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_3\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">日常管理<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_4\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">鱼缸尺寸<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_5\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">光照时间<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_6\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">过滤方法<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_7\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">适时喂食<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_8\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">养殖密度<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_9\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">繁殖方法<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);\">▪<\/span> <span class=\"text\" style=\"display: inline-block; line-height: 16px; width: 115px; vertical-align: top;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_10\" style=\"color: rgb(51, 51, 51); text-decoration: none;\">水质管理<\/a><\/span><\/p><\/li><li><p><span class=\"index\" style=\"display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);\">9<\/span> <span class=\"text\" style=\"display: inline-block; font-size: 16px; vertical-align: top; width: 120px;\"><a href=\"http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#9\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">文化内涵<\/a><\/span><\/p><\/li><\/ol><ol style=\"list-style-type: none;\" class=\" list-paddingleft-2\"><\/ol><p><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"1\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"sub113362_1\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"物种溯源\"><\/a><\/p><h2 class=\"title-text\" style=\"margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;\">物种溯源<\/h2><p>远在三百五十万年以前的太古石炭纪，隶属<a target=\"_blank\" href=\"http://baike.baidu.com/view/686570.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">骨舌鱼科<\/a>（<em>Osteoglossidae<\/em>）科的<a target=\"_blank\" href=\"http://baike.baidu.com/view/15650.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">龙鱼<\/a>便已经开始存在了。骨舌鱼科是<a target=\"_blank\" href=\"http://baike.baidu.com/view/248407.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">华莱士线<\/a>两侧发现的唯一的淡水鱼家族。在1.4亿年前，龙鱼迁移到亚洲和印度次大陆，地球地壳的移动逐渐地把它们分布到世界各大陆去。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[1]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[1]_113362\"><\/a> <\/p><p>龙鱼，原产地称之为\u201cArowana\u201d，华人的发音为\u2018亚罗娃娜\u2019，中文名称\u201d硬仆骨舌鱼\u201c，音译来自西班牙语\u201cPez lengüihueso malayo\u201d。\u201dPez（仆）\u201c在西班牙语中是\u201d鱼\u201c的意思，\u201clengüihueso\u201d是\u201c长舌\u201d的意思。其学名\u201c<em>Scleropages<\/em>\u201d是舌头、硬咽状的意思。<\/p><p>龙鱼，属于骨舌鱼科，是一种大型的<a target=\"_blank\" href=\"http://baike.baidu.com/view/545005.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">淡水鱼<\/a>。早在远古石炭纪时就已经存在。该鱼的发现始于1829 年，在南美亚马逊流域，当时是由美国鱼类学家温带理博士（Vandell）定名的。1933年法国鱼类学家卑鲁告蓝博士在越南西贡又发现红色龙鱼。1966年，法国鱼类学家布蓝和多巴顿在金边又发现了龙鱼的另外一个品种。之后 又有一些国家的专家学者相继在越南，马来西亚半岛，印尼的苏门答腊、班加岛、婆罗洲和泰国发现了另外一些龙鱼品种，于是就把龙鱼分成<a target=\"_blank\" href=\"http://baike.baidu.com/subview/31662/5951739.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">金龙鱼<\/a>、橙红龙鱼、黄金龙鱼、<a target=\"_blank\" href=\"http://baike.baidu.com/view/4920263.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">白金龙鱼<\/a>、<a target=\"_blank\" href=\"http://baike.baidu.com/view/481969.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">青龙鱼<\/a>和<a target=\"_blank\" href=\"http://baike.baidu.com/view/31959.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">银龙鱼<\/a>等。真正作为观赏鱼引入水族箱是始于20世纪50年代后期的美国，直至80年代才逐渐在世界各地风行起来。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[2]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[2]_113362\"><\/a> <\/p><p>龙鱼全身闪烁着青色的光芒，圆大的鳞片受光线照射后发出粉红色的光辉，各鳍也呈现出各种色彩。不同的龙鱼有其不同的色彩。例如，东南亚的红龙幼鱼，鳞片红小，白色微红，成体时鳃盖边缘和鳃舌呈深红色，鳞片闪闪生辉；黄金龙、白金龙和青龙的鳞片边缘分别呈金黄色、白金色和青色，其中有紫红色斑块者最为名贵。这一科龙鱼的主要特征还有它的鳔为网眼状，常有鳃上器官。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[2]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[2]_113362\"><\/a> <\/p><p><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"2\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"sub113362_2\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"形态特征\"><\/a><\/p><h2 class=\"title-text\" style=\"margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;\">形态特征<\/h2><p>美丽硬仆骨舌鱼因其体型硕大扁长，躯干部覆盖着硕大而排列整齐的闪耀着光芒的鳞片；口大，口唇角有两条触须，游动时神态悠然，活像神话中的\u201c龙\u201d，故此得名\u201c龙鱼\u201d。它至今仍保留着远古时代的体型特征，素有\u201c鱼类活化石\u201d之称，极具饲养与观赏价值。下颌具须，体侧扁，腹部有棱突的古老淡水鱼种群。<\/p><p>幼鱼时特征为蓝呈绿底浅红带点内金色细框，成长后浅经的鳞框会转变成金黄色，且金黄色蓝或绿底的鳞杠会达到鳞片的第五排，越过整个墨绿色的背部，其中与红发愤金的差别除了鳞片外，就是发愤部及<a target=\"_blank\" href=\"http://baike.baidu.com/view/406958.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">臀鳍<\/a>的差异，背及<a target=\"_blank\" href=\"http://baike.baidu.com/view/406826.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">尾鳍<\/a>的上<a target=\"_blank\" href=\"http://baike.baidu.com/view/8425845.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">半部<\/a>则应呈现出深蓝色。<\/p><p>浑身金色，是五层鳞片，类似于金条，大受华人商业家的欢迎，主要取其吉利。此外金龙鱼有几个不同颜色的变种：\u201c红龙鱼\u201d、\u201c绿龙鱼\u201d、\u201c黄尾龙鱼\u201d等。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[3]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[3]_113362\"><\/a> <\/p><p><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"3\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"sub113362_3\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"物种界定\"><\/a><\/p><h2 class=\"title-text\" style=\"margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;\">物种界定<\/h2><p>截止2003年，来自东南亚的龙鱼都被认为属于同一物种：美丽硬仆骨舌鱼（<em>Scleropages formosus）<\/em>。之后，有鱼类专家认为这是四种龙鱼，有三个不同的新物种，分别为（<em>S. aureus；S. legendrei；S. macrocephalus<\/em>）。2005年Kottelat和Widjanarti公布了评价的数据，虽然这些物种之间有差别，但公布的数据在量化上并没有达到行业普遍可以认为是不同的物种。在<a target=\"_blank\" href=\"http://baike.baidu.com/view/12878953.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">世界鱼类数据库<\/a>（FishBase）列入同一物种的异名，<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[4]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[4]_113362\"><\/a>  此处特别强调和说明。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[5]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[5]_113362\"><\/a> <\/p><table log-set-param=\"table_view\" width=\"99%\" class=\"transparentBorder\"><tbody><tr class=\"firstRow\"><td width=\"100\" align=\"center\" valign=\"middle\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/0823dd54564e9258f211c99b9b82d158ccbf4e99?fr=lemma&ct=single\" target=\"_blank\" title=\"美丽硬仆骨舌鱼\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 150px;\"><-IMG#0-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); text-align: left; font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">美丽硬仆骨舌鱼<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">美丽硬仆骨舌鱼：<\/span><\/p><p>学名：<em>Scleropages formosus<\/em><\/p><p>又称金龙鱼、亚洲龙鱼，原产于东南亚，浑身金色，没有<a target=\"_blank\" href=\"http://baike.baidu.com/view/31959.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">银龙鱼<\/a>长，也是五层鳞片，金龙鱼有几个不同颜色的变种：\u201c红龙鱼\u201d、\u201c绿龙鱼\u201d、\u201c黄尾龙鱼\u201d等，金龙鱼系列已接近灭绝，是受保护品种。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[6]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[6]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"top\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/cf1b9d16fdfaaf51fab134ca8b5494eef01f7a70?fr=lemma&ct=single\" target=\"_blank\" title=\"金色硬仆骨舌鱼\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 150px;\"><-IMG#1-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">金色硬仆骨舌鱼<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">金色硬仆骨舌鱼<\/span><\/p><p>学名：<em>Scleropages aureus<\/em><\/p><div class=\"para\" label-module=\"para\" style=\"word-wrap: break-word; margin: 0px; line-height: 24px; zoom: 1; height: auto;\"><\/div><p>金色龙鱼从腹侧往上数至第四排鳞片都有着美丽的金色的鳞框，第五排与第六排不像其他龙鱼那样亮起，最主要的是它的珠鳞没有表现，这也是金色龙鱼与其他这样的金龙鱼品种最根本的区别。其尾鳍下叶呈桔黄红色，背鳍、尾鳍为好看的墨绿色。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[5]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[5]_113362\"><\/a> <\/p><p><em><br/>　　<\/em><\/p><\/td><\/tr><tr><td align=\"left\" valign=\"top\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/37d3d539b6003af3ee466815322ac65c1138b6c3?fr=lemma&ct=single\" target=\"_blank\" title=\"利氏硬骨仆舌鱼\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 150px;\"><-IMG#2-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">利氏硬骨仆舌鱼<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">利氏硬<\/span><span style=\"font-weight: 700;\">仆<\/span><span style=\"font-weight: 700;\">骨舌鱼<\/span><\/p><p>学名：<em>Scleropages legendrei<\/em><\/p><p>又名星点珍珠龙鱼，基本和珍珠龙鱼相似，但鳞片上有圆的红色斑点，也是产于澳大利亚。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[7]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[7]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"top\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/b219ebc4b74543a985503fbb19178a82b9011479?fr=lemma&ct=single\" target=\"_blank\" title=\"大头硬仆骨舌鱼\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 150px;\"><-IMG#3-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">大头硬仆骨舌鱼<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">大头硬仆骨舌鱼<\/span><\/p><p>学名：<em>Scleropages macrocephalus<\/em><\/p><p>原产于东南亚，栖息于森林沼泽和湿地水域，生活在底中水层，淡水环境。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[8]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[8]_113362\"><\/a> <\/p><p><em><br/>　　<\/em><\/p><\/td><\/tr><\/tbody><\/table><p><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"4\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"sub113362_4\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"主要品种\"><\/a><\/p><h2 class=\"title-text\" style=\"margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;\">主要品种<\/h2><table log-set-param=\"table_view\" width=\"99%\" class=\"transparentBorder\"><tbody><tr class=\"firstRow\"><td width=\"100\" align=\"left\" valign=\"middle\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/d53f8794a4c27d1e90c287bc1cd5ad6edcc438e5?fr=lemma&ct=single\" target=\"_blank\" title=\"红龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 125px;\"><-IMG#4-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">红龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">红龙（英文名：Red Arowana）：<\/span><\/p><p>又叫红金龙。这种鱼作为濒危物种受到<a target=\"_blank\" href=\"http://baike.baidu.com/subview/49952/15184719.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">华盛顿公约<\/a>的保护。它幼鱼的体色较浅，为白色微红，鳞片细小。但成鱼的体形硕大，腮盖边缘呈现出强烈的深红色、舌头也是如此、大片的鳞的边缘以及各鳍也有浓烈的艳丽红纹、金色的鳞片闪闪发光。是一种极具观赏价值的大型鱼类。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[9]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[9]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/a1ec08fa513d2697dc8a9b2552fbb2fb4316d869?fr=lemma&ct=single\" target=\"_blank\" title=\"辣椒红龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#5-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">辣椒红龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">辣椒红龙<\/span><\/p><p>有两种：第一种鳞片的底色是蓝的，第二种的头部则长有绿色的鱼皮。身上覆盖着粗框鳞片、深红色的鳃盖，比较大的鳍和尾鳍。此鱼的幼鱼可以它较长的身体、较大的眼睛、菱形的尾鳍、较尖和突出的头部以及红色的鳍，特别是其胸鳍，轻易地被确认出来。它的大眼睛的直径通常相等于眼睛和嘴尖的距离。鳞片带有淡淡的绿、黄或橙色。不过，此鱼的色彩最快也要等一年半的时间才会显现出，慢的话就要等上四年或者更长的时间。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[10]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[10]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/f31fbe096b63f624f20bab7b8044ebf81a4ca370?fr=lemma&ct=single\" target=\"_blank\" title=\"血红龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 156px;\"><-IMG#6-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">血红龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">血红龙<\/span><\/p>体长15厘米。血红龙成鱼的身体主要由细框的鳞片覆盖着，鳃盖也同样是红色的。此鱼有红色的鳍，不过身体却比较细长。和<a target=\"_blank\" href=\"http://baike.baidu.com/view/402677.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">辣椒红龙<\/a>不同的是，血红龙的色彩会很快地在一年后便显现，它幼鱼的身体比辣椒红龙幼鱼的相对地来得长，鳍和眼睛也比较小。血红龙幼鱼的鳍也一样是红色的。所不同的是它的尾鳍呈圆形，头部也不比辣椒红龙幼鱼的突，鳞片略带浅绿和粉红的色泽。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[10]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[10]_113362\"><\/a> <\/td><\/tr><tr><td align=\"left\" valign=\"top\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/a71ea8d3fd1f413464e48a04221f95cad0c85efd?fr=lemma&ct=single\" target=\"_blank\" title=\"橘红龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#7-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">橘红龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">橘红龙<\/span><\/p><p>一般体长至90厘米，此鱼的鳃盖为橙红色鳞片通常也只是橙色的。有些橘红龙的鳍是橙红色的，而一些劣等橙红龙的甚至是黄色的呢，独特的是幼鱼的头部比较圆。是龙鱼家族里的一员，有付强健的体魄和对环境超强适应力，是种比较容易饲养的观赏鱼，龙鱼在市场上属于高级观赏鱼品种，因此价格较高，获很多养殖者的喜爱，也让其成为了观赏鱼家族里的宠儿。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[11]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[11]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/37d3d539b6003af3adec571a322ac65c1038b672?fr=lemma&ct=single\" target=\"_blank\" title=\"班加红龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#8-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">班加红龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">班加红龙（英文名称：Banjar Red Arowana）<\/span><\/p><p>班加红龙一度被认为是人工杂交繁殖出的个体，即红龙与青龙杂交的产物。但实际上，班加红龙是原生种。当然，在进行人工繁殖时，有些可能混入了红龙的血统，从而使后三鳍的颜色更红。班加红龙幼鱼的后三鳍为红色，与红龙的幼鱼不容易区分。但长到成鱼后，班加红龙是不会发色的，于是这种龙鱼被冠以一号半红龙或二号红龙。这种冠以红龙的叫法一直延续到今天，但不能把它与红龙混为一谈。<br/>　　班加红龙在幼鱼时期，身体较为圆润饱满，鳞片没有光泽，层次感不强。到成鱼期，头型相对圆润，后三鳍为橘红色，鳞片和鳃盖不会发色，改良后的班加红龙有个别的个体鳃盖会有淡淡的黄色。<\/p><\/td><\/tr><tr><td width=\"100\" align=\"left\" valign=\"middle\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/0b7b02087bf40ad1f009799b502c11dfa8eccedd?fr=lemma&ct=single\" target=\"_blank\" title=\"金龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#9-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">金龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">金龙（英文名：Golden Arowana）：<\/span><\/p><p>又叫黄金龙。其背部为墨绿色鳞框闪耀着金黄色的光芒，腮盖和红龙不同，没有红色而是亮丽的金黄色。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[9]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[9]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"center\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/14ce36d3d539b600fde7b7cfee50352ac65cb799?fr=lemma&ct=single\" target=\"_blank\" title=\"白金龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#10-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); text-align: left; font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">白金龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">白金龙（英文名：Platina Arowana）<\/span><\/p><p>其体形和红龙相似鳞片的颜色为白金色。此鱼也被称为雪龙。这个新品种龙鱼的身体偏向白色或者呈银色并带有一点金属特有的光泽。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[9]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[9]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/8ad4b31c8701a18bfa1eb737992f07082938fed5?fr=lemma&ct=single\" target=\"_blank\" title=\"青龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#11-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">青龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">青龙（英文名：Green Arowana）<\/span><\/p><p>体形较其他亚洲龙鱼短小。鳞片青色侧线明显发达。以鳞片呈现紫色斑纹的最为名贵。产于泰国、缅甸、东埔寨、越南、马来西亚和印尼等地有些青龙鳞片是半透明的，有些是不透明的。它的侧线在其灰绿色的鳞片当中更是显眼。上好青龙的身体上部会有淡淡的蓝或紫色。成鱼的头部也较圆和较小。可以人工繁殖。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[9]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[9]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/b7003af33a87e950fda8491417385343fbf2b40f?fr=lemma&ct=single\" target=\"_blank\" title=\"过背金龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#12-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">过背金龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">过背金龙（英文名：Belly Arowana）<\/span><\/p><p>极为昂贵的龙鱼，很似金龙，不同的是其金色的鳞片越过墨绿色的背部使全身包上一层金壳。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[9]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[9]_113362\"><\/a> <\/p><p>过背金龙栖息于马来西亚半岛中部的美极美拉河。幼鱼时期鳞片亮度可达到第5排以上，珠鳞有部分表现。到成鱼后，鳞片的亮度会越过背部（第6排），背鳍根部的珠鳞会全部发亮。背鳍和尾鳍的上半部为墨绿色，尾鳍的下半部和臀鳍为橘红色，胸鳍与腹鳍为金黄色。依照鳞底在灯光下呈现出的颜色可分为金底过背金龙和蓝底过背金龙。<\/p><\/td><\/tr><tr><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/eaf81a4c510fd9f97bcefb11222dd42a2934a4e9?fr=lemma&ct=single\" target=\"_blank\" title=\"高背红尾金龙\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#13-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">高背红尾金龙<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">高背红尾金龙（英文名: High back golden arowana）：<\/span><\/p><p>体长可达80厘米。金龙里鳞框金色色彩一直延伸到背部的之为过背金龙，此种金龙是马来半岛产的亚洲龙鱼独有特征，鳞框的持续轮状纹路展现豪华气息。在此一范畴里红龙又可分为辣椒红龙、血红龙、树种红龙、黄金红龙。高背金龙背鳍和尾鳍上叶的配色，以及背鳍基部的鳞框金色色彩是散布其上，而不是绕着框缘出现，这是区别的要点。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[12]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[12]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/5243fbf2b2119313756053c862380cd791238da3?fr=lemma&ct=single\" target=\"_blank\" title=\"红尾金龙鱼\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#14-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">红尾金龙鱼<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">红尾金龙（英文名: Redtail Golden Arowana）<\/span><\/p><p>体长可达80厘米。特征是<a target=\"_blank\" href=\"http://baike.baidu.com/view/406958.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">臀鳍<\/a>呈红色，<a target=\"_blank\" href=\"http://baike.baidu.com/view/406940.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">背鳍<\/a>和<a target=\"_blank\" href=\"http://baike.baidu.com/view/406826.htm\" style=\"color: rgb(19, 110, 194); text-decoration: none;\">尾鳍<\/a>上叶为黑褐色。背鳍基底附近的鳞片没有金色鳞框。从腹侧开始数第5排鳞完全没有鳞框。红该种的特征是尾鳍下叶为红色，背部、背鳍及尾鳍上叶呈墨绿色，从腹侧往上数到第4排鳞片有美丽的金色鳞框。尾金龙主要分布在苏门达腊岛中部东岸，以北康巴鲁地方产量最多。主要栖息地的5条河川里所产的个体多少会有色彩上的差异。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[12]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[12]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/503d269759ee3d6dc4a52eb344166d224f4ade63?fr=lemma&ct=single\" target=\"_blank\" title=\"过背金龙鱼\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;\"><-IMG#15-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">过背金龙鱼<\/span><\/p><\/td><td align=\"left\" valign=\"middle\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><p><span style=\"font-weight: 700;\">马来金龙（英文名：Malayan golden Arowana）<\/span><\/p><p>体长可达80厘米。马来西亚原产过背种类：目前约有8种。最美是黄重紫蓝。1.白金. 2. 蓝底. 3. 紫蓝. 4. 挑红. 5.金蓝. 6.挑红蓝. 7.黄金紫蓝.8. 蓝金。 \u201c金条\u201d是属于过背金龙品种交配出来，目前只有马来西亚才有，也并不多，非常非常之贵。<\/p><p>已经发色完成的24k金过背金龙，鳞底已完全通透，泛蓝金属光泽，会因游动角度而有变化，若是正好是捕捉到泛蓝角度，而换了角度或远观则会呈现出通体金黄彷若会游动金条般耀眼。<span style=\"line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[12]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[12]_113362\"><\/a> <\/p><\/td><\/tr><tr><td align=\"left\" valign=\"top\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><br/><\/td><td align=\"left\" valign=\"top\" colspan=\"1\" rowspan=\"1\" style=\"margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;\" height=\"22\"><br/><\/td><\/tr><\/tbody><\/table><p><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"5\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"sub113362_5\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"分布范围\"><\/a><\/p><h2 class=\"title-text\" style=\"margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;\">分布范围<\/h2><p>原产地：柬埔寨、印度尼西亚（加里曼丹、苏门答腊）、马来西亚（马来西亚半岛、沙捞越）、缅甸、泰国和越南。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[13]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[13]_113362\"><\/a> <\/p><p>引进：新加坡。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[13]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[13]_113362\"><\/a> <\/p><p><a class=\"image-link\" nslog-type=\"9317\" href=\"http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/8435e5dde71190efc19c6ba5c91b9d16fdfa6061?fr=lemma&ct=single\" target=\"_blank\" title=\"美丽硬仆骨舌鱼分布图\" style=\"color: rgb(19, 110, 194); text-decoration: none; display: block; width: 500px; height: 225px;\"><-IMG#16-><\/a><span class=\"description\" style=\"display: block; color: rgb(85, 85, 85); font-size: 12px; text-indent: 0px; font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);\">美丽硬仆骨舌鱼分布图<\/span><\/p><p><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"6\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"sub113362_6\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"种群现状\"><\/a><\/p><h2 class=\"title-text\" style=\"margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;\">种群现状<\/h2><p>该物种的野生数量自1970年代以来，在其分布范围内密度非常低，持继显著下跌。是国际水族贸易组织高度重视的物种，已经列入濒危物种贸易公约附录一。自1975年以来，在亚洲有许多注册的CITES育种将它们产生的标本引入到一些国家。其他国家限制或禁止拥有这一物种。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[5]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[5]_113362\"><\/a> <\/p><p>非法交易一直没有停止，时而发生。整个物种的分布范围内，各种人类活动所引起的的栖息地退化，是该物种的主要威胁。例如，一些沼泽栖息地被改造成农业用地，森林生境的地区被转化为种植园。在印尼森林火灾已经影响大部分的分布范围，特别是泥炭沼泽森林。该种在评估其生存环境区域被占用，栖息地质量下降的程度，水平面积的下降的范围，被评为濒危状态。<span style=\"font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;\">[5]<\/span><a style=\"color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;\" name=\"ref_[5]_113362\"><\/a> <\/p><p><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"7\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"sub113362_7\"><\/a><a style=\"color: rgb(19, 110, 194); position: absolute; top: -50px;\" name=\"保护级别\"><\/a><","status":"1","sort":"0","update_time":"1458869978","create_time":"1454394273","category":"1","imgList":[{"pos":"<-IMG#0->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970129254.jpg"},{"pos":"<-IMG#1->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970973335.jpg"},{"pos":"<-IMG#2->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970196267.jpg"},{"pos":"<-IMG#3->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970343866.jpg"},{"pos":"<-IMG#4->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970134452.jpg"},{"pos":"<-IMG#5->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970131999.jpg"},{"pos":"<-IMG#6->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971463064.jpg"},{"pos":"<-IMG#7->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971685022.jpg"},{"pos":"<-IMG#8->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971103297.jpg"},{"pos":"<-IMG#9->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971157453.jpg"},{"pos":"<-IMG#10->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971190071.jpg"},{"pos":"<-IMG#11->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971750775.jpg"},{"pos":"<-IMG#12->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971537897.jpg"},{"pos":"<-IMG#13->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971136337.jpg"},{"pos":"<-IMG#14->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971434836.jpg"},{"pos":"<-IMG#15->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869972188608.jpg"},{"pos":"<-IMG#16->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869972729345.jpg"}],"user":{"avatar32":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar64":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar128":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar256":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar512":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","uid":"1","username":"admin","nickname":"admin","real_nickname":"admin"}},{"id":"4","uid":"1","title":"魟鱼文章测试","content":"<p>魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试魟鱼文章测试<\/p>","status":"1","sort":"0","update_time":"1453806365","create_time":"1453806257","category":"1","imgList":[],"user":{"avatar32":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar64":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar128":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar256":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar512":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","uid":"1","username":"admin","nickname":"admin","real_nickname":"admin"}}]
+         */
+
+        private boolean success;
+        private int error_code;
+        private String message;
+        /**
+         * id : 5
+         * uid : 1
+         * title : 龙鱼百科
+         * content : <ul class="lemmaWgt-lemmaTitle lemmaWgt-lemmaTitle- list-paddingleft-2" style="margin: 0px 0px 10px; padding: 0px; width: 700px; font-family: arial, tahoma, 'Microsoft Yahei', 宋体, sans-serif; color: rgb(51, 51, 51); font-size: 12px; line-height: 18px; white-space: normal; background-color: rgb(255, 255, 255);"><li class="lemmaWgt-lemmaTitle-title" style=""><h1 style="margin: 0px 10px 0px 0px; padding: 0px; font-size: 34px; display: inline; line-height: 1.15; font-weight: 400; vertical-align: sub;">美丽硬仆骨舌鱼</h1><p> <a class="lock-lemma" target="_blank" href="http://baike.baidu.com/view/10812319.htm" title="锁定" style="color: rgb(160, 160, 160); text-decoration: none; display: inline; outline: 0px; margin: 0px 5px 0px 0px; height: 12px; position: relative; top: -2px;"><span class="cmn-icon wiki-lemma-icons wiki-lemma-icons_lock-lemma" style="font-family: baikeFont_layout; -webkit-font-smoothing: antialiased; speak: none; line-height: 12px; outline: 0px; margin: 0px 5px 0px 0px; height: 12px; vertical-align: text-top;"></span>锁定</a></p></li></ul><p><span class="view-tip-panel" style="margin: -5px 0px 10px; font-size: 12px; font-family: SimSun; color: rgb(136, 136, 136); display: block; line-height: 18px; background-color: rgb(255, 255, 255);"><a class="viewTip-icon" href="http://baike.baidu.com/subview/71844/10028254.htm" target="_blank" title="同义词" style="color: rgb(87, 155, 224); text-decoration: none; display: inline-block; border: 1px solid rgb(99, 174, 249); width: 40px; height: 18px; text-align: center;">同义词</a> <span class="viewTip-fromTitle" style="color: rgb(87, 155, 224);">龙鱼</span>（亚洲龙鱼习称）一般指美丽硬仆骨舌鱼</span></p><p>本词条由<a href="http://www.cast.org.cn/n35081/" target="_blank" class="nslog:7175" style="color: rgb(19, 110, 194); text-decoration: none;">“科普中国”百科科学词条编写与应用工作项目</a> 审核 。</p><p>美丽硬仆骨舌鱼（学名：<em>Scleropages formosus</em>）：又名<a target="_blank" href="http://baike.baidu.com/view/2992300.htm" style="color: rgb(19, 110, 194); text-decoration: none;">亚洲龙鱼</a>、<a target="_blank" href="http://baike.baidu.com/subview/31662/5951739.htm" style="color: rgb(19, 110, 194); text-decoration: none;">金龙鱼</a>。属一种古老的原始<a target="_blank" href="http://baike.baidu.com/view/964130.htm" style="color: rgb(19, 110, 194); text-decoration: none;">淡水鱼类</a>。原产马来西亚、印尼、苏门答腊等地河流和湖泊。</p><p>成鱼体长40-50厘米，寿命可达数十年。性情凶猛，主要猎食活鱼虾、水生昆虫、青蛙等。亲鱼将鱼卵产含于口中直至孵出幼鱼，所以有“龙吐珠”的俗名。自20世纪中后被开发成为观赏鱼，因其泛闪金属光泽如盔甲般的鳞被和鲜艳的光色（金色、红色等）及威风凛凛的仪态而备受瞩目，身价飘升到币值数以万计的程度，成为极名贵的观赏鱼之一，有过背金龙、红龙、青龙等品种。由于资源过度开发造成濒危，被列入<a target="_blank" href="http://baike.baidu.com/subview/49952/15184719.htm" style="color: rgb(19, 110, 194); text-decoration: none;">华盛顿公约</a>（CITES）保护名单附录Ⅰ。</p><ul class="basicInfo-block basicInfo-left list-paddingleft-2" style="margin: 0px; padding: 0px; width: 395px; float: left;"><li><p>中文学名</p></li><li><p>美丽硬仆骨舌鱼</p></li><li><p>拉丁学名</p></li><li><p><em>Scleropages formosus</em></p></li><li><p>别    称</p></li><li><p>青龙，黄尾金龙，亚洲龙吐珠</p></li><li><p>界</p></li><li><p>动物界</p></li><li><p>门</p></li><li><p><a target="_blank" href="http://baike.baidu.com/view/194318.htm" style="color: rgb(19, 110, 194); text-decoration: none;">脊索动物门</a></p></li><li><p>亚    门</p></li><li><p><a target="_blank" href="http://baike.baidu.com/view/345393.htm" style="color: rgb(19, 110, 194); text-decoration: none;">脊椎动物亚门</a></p></li><li><p>纲</p></li><li><p><a target="_blank" href="http://baike.baidu.com/view/65992.htm" style="color: rgb(19, 110, 194); text-decoration: none;">硬骨鱼纲</a></p></li><li><p>亚    纲</p></li><li><p><a target="_blank" href="http://baike.baidu.com/view/14398886.htm" style="color: rgb(19, 110, 194); text-decoration: none;">新鳍亚纲</a></p></li><li><p>目</p></li><li><p><a target="_blank" href="http://baike.baidu.com/view/278393.htm" style="color: rgb(19, 110, 194); text-decoration: none;">骨舌鱼目</a></p></li></ul><ul class="basicInfo-block basicInfo-right list-paddingleft-2" style="margin: 0px; padding: 0px; width: 395px; float: left;"><li><p>科</p></li><li><p><a target="_blank" href="http://baike.baidu.com/view/686570.htm" style="color: rgb(19, 110, 194); text-decoration: none;">骨舌鱼科</a></p></li><li><p>属</p></li><li><p><a target="_blank" href="http://baike.baidu.com/item/%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC%E5%B1%9E" style="color: rgb(19, 110, 194); text-decoration: none;">硬仆骨舌鱼属</a></p></li><li><p>种</p></li><li><p><a target="_blank" href="http://baike.baidu.com/view/113362.htm" style="color: rgb(19, 110, 194); text-decoration: none;">美丽硬仆骨舌鱼</a></p></li><li><p>命名者及年代</p></li><li><p>Müller & Schlegel, 1844</p></li><li><p>英文名称</p></li><li><p>Asian Arowana </p></li><li><p>英文名称</p></li><li><p>Golden Arowana</p></li><li><p>英文名称</p></li><li><p>Golden Dragon Fish</p></li><li><p>英文名称</p></li><li><p>Asian Bonytongue、Kelesa</p></li><li><p>西班牙名称</p></li><li><p>Pez lengüihueso malayo</p></li></ul><h2 class="block-title" style="margin: 22px 0px 0px 20px; padding: 0px; font-size: 18px; float: left; width: 63px; height: 48px; text-align: center; line-height: 48px; font-weight: 400;">目录</h2><ol style="list-style-type: none;" class=" list-paddingleft-2"><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">1</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#1" style="color: rgb(19, 110, 194); text-decoration: none;">物种溯源</a></span></p></li><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">2</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#2" style="color: rgb(19, 110, 194); text-decoration: none;">形态特征</a></span></p></li><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">3</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#3" style="color: rgb(19, 110, 194); text-decoration: none;">物种界定</a></span></p></li><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">4</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#4" style="color: rgb(19, 110, 194); text-decoration: none;">主要品种</a></span></p></li><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">5</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#5" style="color: rgb(19, 110, 194); text-decoration: none;">分布范围</a></span></p></li><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">6</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#6" style="color: rgb(19, 110, 194); text-decoration: none;">种群现状</a></span></p></li><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">7</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#7" style="color: rgb(19, 110, 194); text-decoration: none;">保护级别</a></span></p></li><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">8</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8" style="color: rgb(19, 110, 194); text-decoration: none;">饲养方法</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_1" style="color: rgb(51, 51, 51); text-decoration: none;">水质调解</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_2" style="color: rgb(51, 51, 51); text-decoration: none;">新鱼入缸</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_3" style="color: rgb(51, 51, 51); text-decoration: none;">日常管理</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_4" style="color: rgb(51, 51, 51); text-decoration: none;">鱼缸尺寸</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_5" style="color: rgb(51, 51, 51); text-decoration: none;">光照时间</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_6" style="color: rgb(51, 51, 51); text-decoration: none;">过滤方法</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_7" style="color: rgb(51, 51, 51); text-decoration: none;">适时喂食</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_8" style="color: rgb(51, 51, 51); text-decoration: none;">养殖密度</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_9" style="color: rgb(51, 51, 51); text-decoration: none;">繁殖方法</a></span></p></li><li><p><span class="index" style="display: inline-block; padding-left: 41px; padding-right: 5px; width: 5px; line-height: 16px; vertical-align: top; color: rgb(204, 204, 204);">▪</span> <span class="text" style="display: inline-block; line-height: 16px; width: 115px; vertical-align: top;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#8_10" style="color: rgb(51, 51, 51); text-decoration: none;">水质管理</a></span></p></li><li><p><span class="index" style="display: inline-block; width: 18px; font-size: 16px; padding-left: 20px; padding-right: 8px; vertical-align: top; text-align: right; color: rgb(99, 160, 223);">9</span> <span class="text" style="display: inline-block; font-size: 16px; vertical-align: top; width: 120px;"><a href="http://baike.baidu.com/link?url=IUglLBebh1UY0dvAjqLfRZYbJ8PoBJCfeJp4WqjPsPTGUp9b_2owhRxMQJtrX9kfcu3qVYQTWnEc1XO_BGqi--cElSBRtRLuAdTbXPpQMomIM_hg-vQu-i1Cc7RhHGK0P24yPVLFNSCGhBJ2pkrmNHd5YRT7nokQVSCAVe3rKwy#9" style="color: rgb(19, 110, 194); text-decoration: none;">文化内涵</a></span></p></li></ol><ol style="list-style-type: none;" class=" list-paddingleft-2"></ol><p><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="1"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="sub113362_1"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="物种溯源"></a></p><h2 class="title-text" style="margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;">物种溯源</h2><p>远在三百五十万年以前的太古石炭纪，隶属<a target="_blank" href="http://baike.baidu.com/view/686570.htm" style="color: rgb(19, 110, 194); text-decoration: none;">骨舌鱼科</a>（<em>Osteoglossidae</em>）科的<a target="_blank" href="http://baike.baidu.com/view/15650.htm" style="color: rgb(19, 110, 194); text-decoration: none;">龙鱼</a>便已经开始存在了。骨舌鱼科是<a target="_blank" href="http://baike.baidu.com/view/248407.htm" style="color: rgb(19, 110, 194); text-decoration: none;">华莱士线</a>两侧发现的唯一的淡水鱼家族。在1.4亿年前，龙鱼迁移到亚洲和印度次大陆，地球地壳的移动逐渐地把它们分布到世界各大陆去。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[1]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[1]_113362"></a> </p><p>龙鱼，原产地称之为“Arowana”，华人的发音为‘亚罗娃娜’，中文名称”硬仆骨舌鱼“，音译来自西班牙语“Pez lengüihueso malayo”。”Pez（仆）“在西班牙语中是”鱼“的意思，“lengüihueso”是“长舌”的意思。其学名“<em>Scleropages</em>”是舌头、硬咽状的意思。</p><p>龙鱼，属于骨舌鱼科，是一种大型的<a target="_blank" href="http://baike.baidu.com/view/545005.htm" style="color: rgb(19, 110, 194); text-decoration: none;">淡水鱼</a>。早在远古石炭纪时就已经存在。该鱼的发现始于1829 年，在南美亚马逊流域，当时是由美国鱼类学家温带理博士（Vandell）定名的。1933年法国鱼类学家卑鲁告蓝博士在越南西贡又发现红色龙鱼。1966年，法国鱼类学家布蓝和多巴顿在金边又发现了龙鱼的另外一个品种。之后 又有一些国家的专家学者相继在越南，马来西亚半岛，印尼的苏门答腊、班加岛、婆罗洲和泰国发现了另外一些龙鱼品种，于是就把龙鱼分成<a target="_blank" href="http://baike.baidu.com/subview/31662/5951739.htm" style="color: rgb(19, 110, 194); text-decoration: none;">金龙鱼</a>、橙红龙鱼、黄金龙鱼、<a target="_blank" href="http://baike.baidu.com/view/4920263.htm" style="color: rgb(19, 110, 194); text-decoration: none;">白金龙鱼</a>、<a target="_blank" href="http://baike.baidu.com/view/481969.htm" style="color: rgb(19, 110, 194); text-decoration: none;">青龙鱼</a>和<a target="_blank" href="http://baike.baidu.com/view/31959.htm" style="color: rgb(19, 110, 194); text-decoration: none;">银龙鱼</a>等。真正作为观赏鱼引入水族箱是始于20世纪50年代后期的美国，直至80年代才逐渐在世界各地风行起来。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[2]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[2]_113362"></a> </p><p>龙鱼全身闪烁着青色的光芒，圆大的鳞片受光线照射后发出粉红色的光辉，各鳍也呈现出各种色彩。不同的龙鱼有其不同的色彩。例如，东南亚的红龙幼鱼，鳞片红小，白色微红，成体时鳃盖边缘和鳃舌呈深红色，鳞片闪闪生辉；黄金龙、白金龙和青龙的鳞片边缘分别呈金黄色、白金色和青色，其中有紫红色斑块者最为名贵。这一科龙鱼的主要特征还有它的鳔为网眼状，常有鳃上器官。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[2]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[2]_113362"></a> </p><p><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="2"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="sub113362_2"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="形态特征"></a></p><h2 class="title-text" style="margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;">形态特征</h2><p>美丽硬仆骨舌鱼因其体型硕大扁长，躯干部覆盖着硕大而排列整齐的闪耀着光芒的鳞片；口大，口唇角有两条触须，游动时神态悠然，活像神话中的“龙”，故此得名“龙鱼”。它至今仍保留着远古时代的体型特征，素有“鱼类活化石”之称，极具饲养与观赏价值。下颌具须，体侧扁，腹部有棱突的古老淡水鱼种群。</p><p>幼鱼时特征为蓝呈绿底浅红带点内金色细框，成长后浅经的鳞框会转变成金黄色，且金黄色蓝或绿底的鳞杠会达到鳞片的第五排，越过整个墨绿色的背部，其中与红发愤金的差别除了鳞片外，就是发愤部及<a target="_blank" href="http://baike.baidu.com/view/406958.htm" style="color: rgb(19, 110, 194); text-decoration: none;">臀鳍</a>的差异，背及<a target="_blank" href="http://baike.baidu.com/view/406826.htm" style="color: rgb(19, 110, 194); text-decoration: none;">尾鳍</a>的上<a target="_blank" href="http://baike.baidu.com/view/8425845.htm" style="color: rgb(19, 110, 194); text-decoration: none;">半部</a>则应呈现出深蓝色。</p><p>浑身金色，是五层鳞片，类似于金条，大受华人商业家的欢迎，主要取其吉利。此外金龙鱼有几个不同颜色的变种：“红龙鱼”、“绿龙鱼”、“黄尾龙鱼”等。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[3]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[3]_113362"></a> </p><p><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="3"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="sub113362_3"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="物种界定"></a></p><h2 class="title-text" style="margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;">物种界定</h2><p>截止2003年，来自东南亚的龙鱼都被认为属于同一物种：美丽硬仆骨舌鱼（<em>Scleropages formosus）</em>。之后，有鱼类专家认为这是四种龙鱼，有三个不同的新物种，分别为（<em>S. aureus；S. legendrei；S. macrocephalus</em>）。2005年Kottelat和Widjanarti公布了评价的数据，虽然这些物种之间有差别，但公布的数据在量化上并没有达到行业普遍可以认为是不同的物种。在<a target="_blank" href="http://baike.baidu.com/view/12878953.htm" style="color: rgb(19, 110, 194); text-decoration: none;">世界鱼类数据库</a>（FishBase）列入同一物种的异名，<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[4]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[4]_113362"></a>  此处特别强调和说明。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[5]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[5]_113362"></a> </p><table log-set-param="table_view" width="99%" class="transparentBorder"><tbody><tr class="firstRow"><td width="100" align="center" valign="middle" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/0823dd54564e9258f211c99b9b82d158ccbf4e99?fr=lemma&ct=single" target="_blank" title="美丽硬仆骨舌鱼" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 150px;"><-IMG#0-></a><span class="description" style="display: block; color: rgb(85, 85, 85); text-align: left; font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">美丽硬仆骨舌鱼</span></p></td><td align="left" valign="middle" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">美丽硬仆骨舌鱼：</span></p><p>学名：<em>Scleropages formosus</em></p><p>又称金龙鱼、亚洲龙鱼，原产于东南亚，浑身金色，没有<a target="_blank" href="http://baike.baidu.com/view/31959.htm" style="color: rgb(19, 110, 194); text-decoration: none;">银龙鱼</a>长，也是五层鳞片，金龙鱼有几个不同颜色的变种：“红龙鱼”、“绿龙鱼”、“黄尾龙鱼”等，金龙鱼系列已接近灭绝，是受保护品种。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[6]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[6]_113362"></a> </p></td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/cf1b9d16fdfaaf51fab134ca8b5494eef01f7a70?fr=lemma&ct=single" target="_blank" title="金色硬仆骨舌鱼" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 150px;"><-IMG#1-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">金色硬仆骨舌鱼</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">金色硬仆骨舌鱼</span></p><p>学名：<em>Scleropages aureus</em></p><div class="para" label-module="para" style="word-wrap: break-word; margin: 0px; line-height: 24px; zoom: 1; height: auto;"></div><p>金色龙鱼从腹侧往上数至第四排鳞片都有着美丽的金色的鳞框，第五排与第六排不像其他龙鱼那样亮起，最主要的是它的珠鳞没有表现，这也是金色龙鱼与其他这样的金龙鱼品种最根本的区别。其尾鳍下叶呈桔黄红色，背鳍、尾鳍为好看的墨绿色。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[5]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[5]_113362"></a> </p><p><em><br/>　　</em></p></td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/37d3d539b6003af3ee466815322ac65c1138b6c3?fr=lemma&ct=single" target="_blank" title="利氏硬骨仆舌鱼" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 150px;"><-IMG#2-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">利氏硬骨仆舌鱼</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">利氏硬</span><span style="font-weight: 700;">仆</span><span style="font-weight: 700;">骨舌鱼</span></p><p>学名：<em>Scleropages legendrei</em></p><p>又名星点珍珠龙鱼，基本和珍珠龙鱼相似，但鳞片上有圆的红色斑点，也是产于澳大利亚。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[7]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[7]_113362"></a> </p></td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/b219ebc4b74543a985503fbb19178a82b9011479?fr=lemma&ct=single" target="_blank" title="大头硬仆骨舌鱼" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 150px;"><-IMG#3-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">大头硬仆骨舌鱼</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">大头硬仆骨舌鱼</span></p><p>学名：<em>Scleropages macrocephalus</em></p><p>原产于东南亚，栖息于森林沼泽和湿地水域，生活在底中水层，淡水环境。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[8]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[8]_113362"></a> </p><p><em><br/>　　</em></p></td></tr></tbody></table><p><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="4"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="sub113362_4"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="主要品种"></a></p><h2 class="title-text" style="margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;">主要品种</h2><table log-set-param="table_view" width="99%" class="transparentBorder"><tbody><tr class="firstRow"><td width="100" align="left" valign="middle" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/d53f8794a4c27d1e90c287bc1cd5ad6edcc438e5?fr=lemma&ct=single" target="_blank" title="红龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 125px;"><-IMG#4-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">红龙</span></p></td><td align="left" valign="middle" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">红龙（英文名：Red Arowana）：</span></p><p>又叫红金龙。这种鱼作为濒危物种受到<a target="_blank" href="http://baike.baidu.com/subview/49952/15184719.htm" style="color: rgb(19, 110, 194); text-decoration: none;">华盛顿公约</a>的保护。它幼鱼的体色较浅，为白色微红，鳞片细小。但成鱼的体形硕大，腮盖边缘呈现出强烈的深红色、舌头也是如此、大片的鳞的边缘以及各鳍也有浓烈的艳丽红纹、金色的鳞片闪闪发光。是一种极具观赏价值的大型鱼类。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[9]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[9]_113362"></a> </p></td></tr><tr><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/a1ec08fa513d2697dc8a9b2552fbb2fb4316d869?fr=lemma&ct=single" target="_blank" title="辣椒红龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#5-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">辣椒红龙</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">辣椒红龙</span></p><p>有两种：第一种鳞片的底色是蓝的，第二种的头部则长有绿色的鱼皮。身上覆盖着粗框鳞片、深红色的鳃盖，比较大的鳍和尾鳍。此鱼的幼鱼可以它较长的身体、较大的眼睛、菱形的尾鳍、较尖和突出的头部以及红色的鳍，特别是其胸鳍，轻易地被确认出来。它的大眼睛的直径通常相等于眼睛和嘴尖的距离。鳞片带有淡淡的绿、黄或橙色。不过，此鱼的色彩最快也要等一年半的时间才会显现出，慢的话就要等上四年或者更长的时间。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[10]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[10]_113362"></a> </p></td></tr><tr><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/f31fbe096b63f624f20bab7b8044ebf81a4ca370?fr=lemma&ct=single" target="_blank" title="血红龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 156px;"><-IMG#6-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">血红龙</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">血红龙</span></p>体长15厘米。血红龙成鱼的身体主要由细框的鳞片覆盖着，鳃盖也同样是红色的。此鱼有红色的鳍，不过身体却比较细长。和<a target="_blank" href="http://baike.baidu.com/view/402677.htm" style="color: rgb(19, 110, 194); text-decoration: none;">辣椒红龙</a>不同的是，血红龙的色彩会很快地在一年后便显现，它幼鱼的身体比辣椒红龙幼鱼的相对地来得长，鳍和眼睛也比较小。血红龙幼鱼的鳍也一样是红色的。所不同的是它的尾鳍呈圆形，头部也不比辣椒红龙幼鱼的突，鳞片略带浅绿和粉红的色泽。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[10]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[10]_113362"></a> </td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/a71ea8d3fd1f413464e48a04221f95cad0c85efd?fr=lemma&ct=single" target="_blank" title="橘红龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#7-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">橘红龙</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">橘红龙</span></p><p>一般体长至90厘米，此鱼的鳃盖为橙红色鳞片通常也只是橙色的。有些橘红龙的鳍是橙红色的，而一些劣等橙红龙的甚至是黄色的呢，独特的是幼鱼的头部比较圆。是龙鱼家族里的一员，有付强健的体魄和对环境超强适应力，是种比较容易饲养的观赏鱼，龙鱼在市场上属于高级观赏鱼品种，因此价格较高，获很多养殖者的喜爱，也让其成为了观赏鱼家族里的宠儿。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[11]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[11]_113362"></a> </p></td></tr><tr><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/37d3d539b6003af3adec571a322ac65c1038b672?fr=lemma&ct=single" target="_blank" title="班加红龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#8-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">班加红龙</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">班加红龙（英文名称：Banjar Red Arowana）</span></p><p>班加红龙一度被认为是人工杂交繁殖出的个体，即红龙与青龙杂交的产物。但实际上，班加红龙是原生种。当然，在进行人工繁殖时，有些可能混入了红龙的血统，从而使后三鳍的颜色更红。班加红龙幼鱼的后三鳍为红色，与红龙的幼鱼不容易区分。但长到成鱼后，班加红龙是不会发色的，于是这种龙鱼被冠以一号半红龙或二号红龙。这种冠以红龙的叫法一直延续到今天，但不能把它与红龙混为一谈。<br/>　　班加红龙在幼鱼时期，身体较为圆润饱满，鳞片没有光泽，层次感不强。到成鱼期，头型相对圆润，后三鳍为橘红色，鳞片和鳃盖不会发色，改良后的班加红龙有个别的个体鳃盖会有淡淡的黄色。</p></td></tr><tr><td width="100" align="left" valign="middle" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/0b7b02087bf40ad1f009799b502c11dfa8eccedd?fr=lemma&ct=single" target="_blank" title="金龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#9-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">金龙</span></p></td><td align="left" valign="middle" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">金龙（英文名：Golden Arowana）：</span></p><p>又叫黄金龙。其背部为墨绿色鳞框闪耀着金黄色的光芒，腮盖和红龙不同，没有红色而是亮丽的金黄色。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[9]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[9]_113362"></a> </p></td></tr><tr><td align="center" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/14ce36d3d539b600fde7b7cfee50352ac65cb799?fr=lemma&ct=single" target="_blank" title="白金龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#10-></a><span class="description" style="display: block; color: rgb(85, 85, 85); text-align: left; font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">白金龙</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">白金龙（英文名：Platina Arowana）</span></p><p>其体形和红龙相似鳞片的颜色为白金色。此鱼也被称为雪龙。这个新品种龙鱼的身体偏向白色或者呈银色并带有一点金属特有的光泽。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[9]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[9]_113362"></a> </p></td></tr><tr><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/8ad4b31c8701a18bfa1eb737992f07082938fed5?fr=lemma&ct=single" target="_blank" title="青龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#11-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">青龙</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">青龙（英文名：Green Arowana）</span></p><p>体形较其他亚洲龙鱼短小。鳞片青色侧线明显发达。以鳞片呈现紫色斑纹的最为名贵。产于泰国、缅甸、东埔寨、越南、马来西亚和印尼等地有些青龙鳞片是半透明的，有些是不透明的。它的侧线在其灰绿色的鳞片当中更是显眼。上好青龙的身体上部会有淡淡的蓝或紫色。成鱼的头部也较圆和较小。可以人工繁殖。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[9]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[9]_113362"></a> </p></td></tr><tr><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/b7003af33a87e950fda8491417385343fbf2b40f?fr=lemma&ct=single" target="_blank" title="过背金龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#12-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">过背金龙</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">过背金龙（英文名：Belly Arowana）</span></p><p>极为昂贵的龙鱼，很似金龙，不同的是其金色的鳞片越过墨绿色的背部使全身包上一层金壳。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[9]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[9]_113362"></a> </p><p>过背金龙栖息于马来西亚半岛中部的美极美拉河。幼鱼时期鳞片亮度可达到第5排以上，珠鳞有部分表现。到成鱼后，鳞片的亮度会越过背部（第6排），背鳍根部的珠鳞会全部发亮。背鳍和尾鳍的上半部为墨绿色，尾鳍的下半部和臀鳍为橘红色，胸鳍与腹鳍为金黄色。依照鳞底在灯光下呈现出的颜色可分为金底过背金龙和蓝底过背金龙。</p></td></tr><tr><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/eaf81a4c510fd9f97bcefb11222dd42a2934a4e9?fr=lemma&ct=single" target="_blank" title="高背红尾金龙" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#13-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">高背红尾金龙</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">高背红尾金龙（英文名: High back golden arowana）：</span></p><p>体长可达80厘米。金龙里鳞框金色色彩一直延伸到背部的之为过背金龙，此种金龙是马来半岛产的亚洲龙鱼独有特征，鳞框的持续轮状纹路展现豪华气息。在此一范畴里红龙又可分为辣椒红龙、血红龙、树种红龙、黄金红龙。高背金龙背鳍和尾鳍上叶的配色，以及背鳍基部的鳞框金色色彩是散布其上，而不是绕着框缘出现，这是区别的要点。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[12]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[12]_113362"></a> </p></td></tr><tr><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/5243fbf2b2119313756053c862380cd791238da3?fr=lemma&ct=single" target="_blank" title="红尾金龙鱼" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#14-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">红尾金龙鱼</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">红尾金龙（英文名: Redtail Golden Arowana）</span></p><p>体长可达80厘米。特征是<a target="_blank" href="http://baike.baidu.com/view/406958.htm" style="color: rgb(19, 110, 194); text-decoration: none;">臀鳍</a>呈红色，<a target="_blank" href="http://baike.baidu.com/view/406940.htm" style="color: rgb(19, 110, 194); text-decoration: none;">背鳍</a>和<a target="_blank" href="http://baike.baidu.com/view/406826.htm" style="color: rgb(19, 110, 194); text-decoration: none;">尾鳍</a>上叶为黑褐色。背鳍基底附近的鳞片没有金色鳞框。从腹侧开始数第5排鳞完全没有鳞框。红该种的特征是尾鳍下叶为红色，背部、背鳍及尾鳍上叶呈墨绿色，从腹侧往上数到第4排鳞片有美丽的金色鳞框。尾金龙主要分布在苏门达腊岛中部东岸，以北康巴鲁地方产量最多。主要栖息地的5条河川里所产的个体多少会有色彩上的差异。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[12]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[12]_113362"></a> </p></td></tr><tr><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/503d269759ee3d6dc4a52eb344166d224f4ade63?fr=lemma&ct=single" target="_blank" title="过背金龙鱼" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 220px; height: 119px;"><-IMG#15-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">过背金龙鱼</span></p></td><td align="left" valign="middle" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><p><span style="font-weight: 700;">马来金龙（英文名：Malayan golden Arowana）</span></p><p>体长可达80厘米。马来西亚原产过背种类：目前约有8种。最美是黄重紫蓝。1.白金. 2. 蓝底. 3. 紫蓝. 4. 挑红. 5.金蓝. 6.挑红蓝. 7.黄金紫蓝.8. 蓝金。 “金条”是属于过背金龙品种交配出来，目前只有马来西亚才有，也并不多，非常非常之贵。</p><p>已经发色完成的24k金过背金龙，鳞底已完全通透，泛蓝金属光泽，会因游动角度而有变化，若是正好是捕捉到泛蓝角度，而换了角度或远观则会呈现出通体金黄彷若会游动金条般耀眼。<span style="line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[12]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[12]_113362"></a> </p></td></tr><tr><td align="left" valign="top" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><br/></td><td align="left" valign="top" colspan="1" rowspan="1" style="margin: 0px; padding: 0px; line-height: 22px; border-color: rgb(255, 255, 255) !important;" height="22"><br/></td></tr></tbody></table><p><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="5"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="sub113362_5"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="分布范围"></a></p><h2 class="title-text" style="margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;">分布范围</h2><p>原产地：柬埔寨、印度尼西亚（加里曼丹、苏门答腊）、马来西亚（马来西亚半岛、沙捞越）、缅甸、泰国和越南。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[13]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[13]_113362"></a> </p><p>引进：新加坡。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[13]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[13]_113362"></a> </p><p><a class="image-link" nslog-type="9317" href="http://baike.baidu.com/pic/%E7%BE%8E%E4%B8%BD%E7%A1%AC%E4%BB%86%E9%AA%A8%E8%88%8C%E9%B1%BC/2046731/0/8435e5dde71190efc19c6ba5c91b9d16fdfa6061?fr=lemma&ct=single" target="_blank" title="美丽硬仆骨舌鱼分布图" style="color: rgb(19, 110, 194); text-decoration: none; display: block; width: 500px; height: 225px;"><-IMG#16-></a><span class="description" style="display: block; color: rgb(85, 85, 85); font-size: 12px; text-indent: 0px; font-family: 宋体; word-wrap: break-word; word-break: break-all; line-height: 15px; padding: 8px 7px; min-height: 12px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(224, 224, 224);">美丽硬仆骨舌鱼分布图</span></p><p><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="6"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="sub113362_6"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="种群现状"></a></p><h2 class="title-text" style="margin: 0px; padding: 0px 8px 0px 18px; font-size: 22px; color: rgb(0, 0, 0); float: left; font-weight: 400; background-image: initial; background-attachment: initial; background-size: initial; background-origin: initial; background-clip: initial; background-position: initial; background-repeat: initial;">种群现状</h2><p>该物种的野生数量自1970年代以来，在其分布范围内密度非常低，持继显著下跌。是国际水族贸易组织高度重视的物种，已经列入濒危物种贸易公约附录一。自1975年以来，在亚洲有许多注册的CITES育种将它们产生的标本引入到一些国家。其他国家限制或禁止拥有这一物种。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[5]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[5]_113362"></a> </p><p>非法交易一直没有停止，时而发生。整个物种的分布范围内，各种人类活动所引起的的栖息地退化，是该物种的主要威胁。例如，一些沼泽栖息地被改造成农业用地，森林生境的地区被转化为种植园。在印尼森林火灾已经影响大部分的分布范围，特别是泥炭沼泽森林。该种在评估其生存环境区域被占用，栖息地质量下降的程度，水平面积的下降的范围，被评为濒危状态。<span style="font-size: 12px; line-height: 0; position: relative; vertical-align: baseline; top: -0.5em; margin-left: 2px; color: rgb(51, 102, 204); cursor: default; padding: 0px 2px;">[5]</span><a style="color: rgb(19, 110, 194); position: relative; top: -50px; font-size: 0px; line-height: 0;" name="ref_[5]_113362"></a> </p><p><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="7"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="sub113362_7"></a><a style="color: rgb(19, 110, 194); position: absolute; top: -50px;" name="保护级别"></a><
+         * status : 1
+         * sort : 0
+         * update_time : 1458869978
+         * create_time : 1454394273
+         * category : 1
+         * imgList : [{"pos":"<-IMG#0->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970129254.jpg"},{"pos":"<-IMG#1->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970973335.jpg"},{"pos":"<-IMG#2->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970196267.jpg"},{"pos":"<-IMG#3->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970343866.jpg"},{"pos":"<-IMG#4->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970134452.jpg"},{"pos":"<-IMG#5->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869970131999.jpg"},{"pos":"<-IMG#6->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971463064.jpg"},{"pos":"<-IMG#7->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971685022.jpg"},{"pos":"<-IMG#8->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971103297.jpg"},{"pos":"<-IMG#9->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971157453.jpg"},{"pos":"<-IMG#10->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971190071.jpg"},{"pos":"<-IMG#11->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971750775.jpg"},{"pos":"<-IMG#12->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971537897.jpg"},{"pos":"<-IMG#13->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971136337.jpg"},{"pos":"<-IMG#14->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869971434836.jpg"},{"pos":"<-IMG#15->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869972188608.jpg"},{"pos":"<-IMG#16->","src":"/yuzhile/ueditor/php/upload/image/20160325/1458869972729345.jpg"}]
+         * user : {"avatar32":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar64":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar128":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar256":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","avatar512":"/opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg","uid":"1","username":"admin","nickname":"admin","real_nickname":"admin"}
+         */
+
+        private List<ListEntity> list;
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public void setSuccess(boolean success) {
+            this.success = success;
+        }
+
+        public int getError_code() {
+            return error_code;
+        }
+
+        public void setError_code(int error_code) {
+            this.error_code = error_code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public List<ListEntity> getList() {
+            return list;
+        }
+
+        public void setList(List<ListEntity> list) {
+            this.list = list;
+        }
+
+        public static class ListEntity {
+            private String id;
+            private String uid;
+            private String title;
+            private String content;
+            private String status;
+            private String sort;
+            private String update_time;
+            private String create_time;
+            private String category;
+            /**
+             * avatar32 : /opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg
+             * avatar64 : /opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg
+             * avatar128 : /opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg
+             * avatar256 : /opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg
+             * avatar512 : /opensns/Uploads/Avatar/2016-04-13/570e090724276.jpg
+             * uid : 1
+             * username : admin
+             * nickname : admin
+             * real_nickname : admin
+             */
+
+            private UserEntity user;
+            /**
+             * pos : <-IMG#0->
+             * src : /yuzhile/ueditor/php/upload/image/20160325/1458869970129254.jpg
+             */
+
+            private List<ImgListEntity> imgList;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getUid() {
+                return uid;
+            }
+
+            public void setUid(String uid) {
+                this.uid = uid;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getSort() {
+                return sort;
+            }
+
+            public void setSort(String sort) {
+                this.sort = sort;
+            }
+
+            public String getUpdate_time() {
+                return update_time;
+            }
+
+            public void setUpdate_time(String update_time) {
+                this.update_time = update_time;
+            }
+
+            public String getCreate_time() {
+                return create_time;
+            }
+
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time;
+            }
+
+            public String getCategory() {
+                return category;
+            }
+
+            public void setCategory(String category) {
+                this.category = category;
+            }
+
+            public UserEntity getUser() {
+                return user;
+            }
+
+            public void setUser(UserEntity user) {
+                this.user = user;
+            }
+
+            public List<ImgListEntity> getImgList() {
+                return imgList;
+            }
+
+            public void setImgList(List<ImgListEntity> imgList) {
+                this.imgList = imgList;
+            }
+
+            public static class UserEntity {
+                private String avatar32;
+                private String avatar64;
+                private String avatar128;
+                private String avatar256;
+                private String avatar512;
+                private String uid;
+                private String username;
+                private String nickname;
+                private String real_nickname;
+
+                public String getAvatar32() {
+                    return avatar32;
+                }
+
+                public void setAvatar32(String avatar32) {
+                    this.avatar32 = avatar32;
+                }
+
+                public String getAvatar64() {
+                    return avatar64;
+                }
+
+                public void setAvatar64(String avatar64) {
+                    this.avatar64 = avatar64;
+                }
+
+                public String getAvatar128() {
+                    return avatar128;
+                }
+
+                public void setAvatar128(String avatar128) {
+                    this.avatar128 = avatar128;
+                }
+
+                public String getAvatar256() {
+                    return avatar256;
+                }
+
+                public void setAvatar256(String avatar256) {
+                    this.avatar256 = avatar256;
+                }
+
+                public String getAvatar512() {
+                    return avatar512;
+                }
+
+                public void setAvatar512(String avatar512) {
+                    this.avatar512 = avatar512;
+                }
+
+                public String getUid() {
+                    return uid;
+                }
+
+                public void setUid(String uid) {
+                    this.uid = uid;
+                }
+
+                public String getUsername() {
+                    return username;
+                }
+
+                public void setUsername(String username) {
+                    this.username = username;
+                }
+
+                public String getNickname() {
+                    return nickname;
+                }
+
+                public void setNickname(String nickname) {
+                    this.nickname = nickname;
+                }
+
+                public String getReal_nickname() {
+                    return real_nickname;
+                }
+
+                public void setReal_nickname(String real_nickname) {
+                    this.real_nickname = real_nickname;
+                }
+            }
+
+            public static class ImgListEntity {
+                private String pos;
+                private String src;
+
+                public String getPos() {
+                    return pos;
+                }
+
+                public void setPos(String pos) {
+                    this.pos = pos;
+                }
+
+                public String getSrc() {
+                    return src;
+                }
+
+                public void setSrc(String src) {
+                    this.src = src;
+                }
+            }
+        }
+    }
+
 }

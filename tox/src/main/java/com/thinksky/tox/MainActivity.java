@@ -20,9 +20,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.nineoldandroids.view.ViewHelper;
+import com.thinksky.fragment.CollectListActivity;
 import com.thinksky.fragment.DiscoverFragment;
 import com.thinksky.fragment.HomeFragment;
 import com.thinksky.fragment.IsseuFragment;
+import com.thinksky.fragment.MyMessageActivity;
 import com.thinksky.fragment.WeiboFragment;
 import com.thinksky.fragment.YlqFragment;
 import com.thinksky.holder.BaseActivity;
@@ -31,6 +33,7 @@ import com.thinksky.qqsliding.widget.DragLayout;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
 import com.tox.BaseFunction;
+import com.tox.ToastHelper;
 import com.tox.Url;
 
 import java.util.ArrayList;
@@ -299,8 +302,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.collect:
-                intent = new Intent(MainActivity.this, SettingActivity.class);
-                startActivity(intent);
+                if (!Url.SESSIONID.equals("")) {
+                    intent = new Intent(MainActivity.this, CollectListActivity.class);
+                    startActivity(intent);
+                } else {
+                    String[] s = new String[ways.size()];
+                    s = ways.toArray(s);
+                    Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
+                    intent1.putExtra("ways", s);
+                    intent1.putExtra("entryActivity", ActivityModel.USERINFO);
+                    startActivity(intent1);
+                }
                 break;
             case R.id.invite:
                 intent_Share = new Intent(Intent.ACTION_SEND);
@@ -310,8 +322,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
                 break;
             case R.id.message1:
-                intent = new Intent(MainActivity.this, SettingActivity.class);
-                startActivity(intent);
+                if (BaseFunction.isLogin()) {
+                    Intent intent1= new Intent(MainActivity.this, MyMessageActivity.class);
+                    startActivity(intent1);
+                }else{
+                    ToastHelper.showToast("请登录", this);
+                }
                 break;
             case R.id.LoginThisAPP:
                 if (!Url.SESSIONID.equals("")) {
@@ -437,7 +453,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mTitleBarBtnRight.setText(R.string.title_bar_right_btn_write_feed);
                 break;
             default:
-                sousuo.setVisibility(View.VISIBLE);
+//                sousuo.setVisibility(View.VISIBLE);
                 mTitleBarBtnRight.setVisibility(View.GONE);
                 break;
         }
@@ -497,7 +513,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (backAvater != null) {
                 mleftHead.setImageBitmap(BitmapFactory.decodeFile(backAvater));
             }
-//            if (!("").equals(Url.MYUSERINFO.getSignature())) {
+//            if (!("").equals(Url.MYUSERINFO)) {
 //                signature.setText(Url.MYUSERINFO.getSignature());
 //            }else{
 //                signature.setText("这个人很懒，什么都没写");

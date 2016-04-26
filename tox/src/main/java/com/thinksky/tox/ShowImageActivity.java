@@ -1,24 +1,23 @@
 package com.thinksky.tox;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.thinksky.adapter.ChildAdapter;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.model.ActivityModel;
 import com.tox.TouchHelper;
 
 import net.tsz.afinal.FinalBitmap;
 
-public class ShowImageActivity extends Activity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShowImageActivity extends BaseBActivity implements View.OnClickListener {
     private GridView mGridView;
     private List<String> list;
     private ChildAdapter adapter;

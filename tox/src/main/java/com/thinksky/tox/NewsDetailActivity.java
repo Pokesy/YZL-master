@@ -30,6 +30,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.NewsDetailInfo;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.info.NewsReplyInfo;
@@ -52,7 +53,7 @@ import java.util.Set;
  * 资讯详情页面
  * Created by Administrator on 2015/7/23 0023.
  */
-public class NewsDetailActivity extends Activity implements View.OnClickListener{
+public class NewsDetailActivity extends BaseBActivity implements View.OnClickListener{
 
     protected int activityCloseEnterAnimation;
     protected int activityCloseExitAnimation;
@@ -177,7 +178,7 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
             }
         });
         backMenu.setOnClickListener(this);
-        news_fast_reply.setOnClickListener(this);
+        newsReply.setOnClickListener(this);
         newsShare.setOnClickListener(this);
         sendButn.setOnClickListener(this);
         //获取资讯信息
@@ -418,7 +419,10 @@ public class NewsDetailActivity extends Activity implements View.OnClickListener
                 replyAvatar.setText("游客");
             }
         }else {
-            kjBitmap.display(replyerHead, replyInfo.getUser().getAvatar().replace("opensns//opensns","opensns"), 128, 128);
+//            kjBitmap.display(replyerHead, replyInfo.getUser().getAvatar().replace("opensns//opensns","opensns"), 128, 128);
+//ImageLoader.getInstance().displayImage(imgUrl,imageView);
+
+            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(replyInfo.getUser().getAvatar().replace("opensns//opensns","opensns"),replyerHead);
             replyAvatar.setText(replyInfo.getUser().getNickname());
         }
         replyTime.setText(replyInfo.getCreate_time());

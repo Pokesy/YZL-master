@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.net.IsNet;
 import com.thinksky.utils.MyJson;
 import com.tox.ToastHelper;
@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseBActivity {
     private TextView tv_splash;
     protected final int SPLASH_TIME = BuildConfig.SPLASH_TIME;
     private WeiboApi weiboApi = new WeiboApi();

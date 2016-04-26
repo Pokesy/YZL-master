@@ -22,7 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="12dp" />
+ />
         <!--开头分割线-->
         <!--<View-->
         <!--android:layout_width="match_parent"-->
@@ -31,14 +31,13 @@
         <!--android:background="@color/default_divider_color" />-->
         <LinearLayout
             android:id="@+id/main_radio"
+            android:layout_marginTop="5dp"
             android:layout_width="fill_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp">
+
+    >
 
             <TextView
                 android:id="@+id/rb_rmht"
@@ -73,6 +72,7 @@
             android:layout_height="wrap_content"
             android:background="#E3E3E3"
             android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp">
 
@@ -95,16 +95,17 @@
                 android:id="@+id/zj_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/title"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-
-                android:paddingBottom="8dp"
-                android:paddingRight="30dp"
-                android:paddingTop="8dp"
-                android:text="显示全部   >"
+                android:drawableRight="@drawable/xuanzejinru"
+                android:drawablePadding="15dp"
+                android:text="显示全部"
                 android:textColor="#999999"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_alignBaseline="@+id/title"
+                android:layout_alignBottom="@+id/title"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
         <TextView
@@ -126,7 +127,7 @@
             <FrameLayout
                 android:id="@+id/bofangshipin"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="200dp"
 
                 android:scaleType="centerCrop">
 
@@ -210,16 +211,17 @@
                 android:id="@+id/zx_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:drawableRight="@drawable/xuanzejinru"
+                android:drawablePadding="15dp"
                 android:layout_alignBottom="@+id/zixun"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:paddingBottom="8dp"
-                android:paddingRight="30dp"
-                android:paddingTop="8dp"
-                android:text="显示全部  >"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:text="显示全部"
                 android:textColor="#999999"
                 android:textSize="12sp" />
+
         </RelativeLayout>
 
 
@@ -265,10 +267,11 @@
                 android:layout_alignBottom="@+id/remenxiaozu"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:paddingBottom="8dp"
-                android:paddingRight="30dp"
-                android:paddingTop="8dp"
-                android:text="显示全部  >"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:text="显示全部"
+                android:drawableRight="@drawable/xuanzejinru"
+                android:drawablePadding="15dp"
                 android:textColor="#999999"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -315,10 +318,11 @@
                 android:layout_alignBottom="@+id/remenhuati"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:paddingBottom="8dp"
-                android:paddingRight="30dp"
-                android:paddingTop="8dp"
-                android:text="显示全部  >"
+                android:drawableRight="@drawable/xuanzejinru"
+                android:drawablePadding="15dp"
+                android:text="显示全部"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 android:textColor="#999999"
                 android:textSize="12sp" />
         </RelativeLayout>

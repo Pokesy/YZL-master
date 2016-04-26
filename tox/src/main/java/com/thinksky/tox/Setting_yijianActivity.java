@@ -8,7 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class Setting_yijianActivity extends Activity {
+import com.thinksky.holder.BaseBActivity;
+
+public class Setting_yijianActivity extends BaseBActivity {
     private Button tijiao;
     private ImageView fanhui;
     private EditText yijianfankui_txt1, yijianfankui_txt2;

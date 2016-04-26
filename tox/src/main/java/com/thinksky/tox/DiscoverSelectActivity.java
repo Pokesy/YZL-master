@@ -2,15 +2,15 @@ package com.thinksky.tox;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.thinksky.holder.BaseBActivity;
 import com.tox.BaseApi;
 
 
-public class DiscoverSelectActivity extends FragmentActivity {
+public class DiscoverSelectActivity extends BaseBActivity {
     private String session_id;
     private String userUid;
     private BaseApi baseApi;

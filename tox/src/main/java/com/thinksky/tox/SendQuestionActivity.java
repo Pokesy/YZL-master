@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,6 +30,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.thinksky.fragment.DiscoverFragment;
 import com.thinksky.fragment.QuestionSelectActivity;
+import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
@@ -68,7 +68,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class SendQuestionActivity extends Activity implements View.OnClickListener {
+public class SendQuestionActivity extends BaseBActivity implements View.OnClickListener {
     private LinearLayout photoLayout;
     private String mTempPhotoName;
     private EditText mTitleEdit, mContentEdit;
@@ -237,7 +237,7 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 
                 break;
             case R.id.Post_send:
-                if (scrollImg.size() != 0) {
+                if (scrollImg.size() != 1) {
                     if (mTitleEdit.getText().toString().equals("")) {
                         ToastHelper.showToast("请填写标题", this);
                         return;
@@ -256,10 +256,10 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
                     if (BaseFunction.isLogin()) {
 
 
-//                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//                        progressDialog.setTitle("发布中请等待");
-//                        progressDialog.setCanceledOnTouchOutside(false);
-//                        progressDialog.show();
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressDialog.setTitle("发布中请等待");
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        progressDialog.show();
                         sendWeibo();
                     } else {
                         Toast.makeText(SendQuestionActivity.this, "未登入", Toast.LENGTH_LONG).show();
@@ -489,10 +489,10 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
 
     private void uploadImages() {
         attachIds.clear();
-//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        progressDialog.setTitle("发布中请等待");
-//        progressDialog.setCanceledOnTouchOutside(false);
-//        progressDialog.show();
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setTitle("发布中请等待");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         for (int i = 0; i < scrollImg.size() - 1; i++) {
 //            kjUpload(scrollImg.get(i));
             AjaxParams params = new AjaxParams();
@@ -598,7 +598,7 @@ public class SendQuestionActivity extends Activity implements View.OnClickListen
             }
         });
 
-//        progressDialog.dismiss();
+        progressDialog.dismiss();
         SendQuestionActivity.this.finish();
     }
 
