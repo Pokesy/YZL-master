@@ -16,14 +16,22 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.R;
+import com.tox.ToastHelper;
+import com.tox.Url;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -115,7 +123,34 @@ public class SlideShowView extends FrameLayout {
         dotViewsList = new ArrayList<View>();
 
         // 一步任务获取图片
-        new GetListTask().execute("");
+//        new GetListTask().execute("");
+        Map map = new HashMap();
+        map.put("session_id", "2");
+        RsenUrlUtil.executeGetWidthMap(context, RsenUrlUtil.URL_LBT,map, new RsenUrlUtil.OnNetHttpResultListener() {
+            @Override
+            public void onNoNetwork(String msg) {
+                ToastHelper.showToast(msg, Url.context);
+            }
+
+
+            @Override
+            public void onResult(boolean state, String result, JSONObject jsonObject) {
+                if (state) {
+//                    ArrayList<ZjBean> beans = parseJson(jsonObject);
+//                    listView.setAdapter(new ZjAdapter(getActivity(), beans));
+//                    WendaListAdapter
+
+                    LBBean bean = JSON.parseObject(result, LBBean.class);
+                    imageUrls=new String [bean.getList().size()];
+                    for(int i=0;i<bean.getList().size();i++)
+                    {
+                        imageUrls[i]=RsenUrlUtil.URL_BASE+bean.getList().get(i);
+                    }
+                    initUI(context);
+                }
+            }
+        });
+
     }
 
     /**
@@ -311,11 +346,12 @@ public class SlideShowView extends FrameLayout {
             try {
                 // 这里一般调用服务端接口获取一组轮播图片，下面是从百度找的几个图片
 
-                imageUrls = new String[]{
 
-                        "http://192.168.15.36:8081/opensns/Uploads/Picture/2016-03-16/56e9270e4ec4e.jpg",
-                        "http://192.168.15.36:8081/opensns/Uploads/Picture/2016-03-16/56e9272c72b2d.jpg"
-                };
+//                imageUrls = new String[]{
+//
+//                        "http://192.168.15.36:8081/opensns/Uploads/Picture/2016-03-16/56e9270e4ec4e.jpg",
+//                        "http://192.168.15.36:8081/opensns/Uploads/Picture/2016-03-16/56e9272c72b2d.jpg"
+//                };
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -331,7 +367,52 @@ public class SlideShowView extends FrameLayout {
             }
         }
     }
+    public static class LBBean {
 
+        /**
+         * success : true
+         * error_code : 0
+         * message : 获取成功
+         * list : ["/Uploads/Picture/2016-03-16/56e9270e4ec4e.jpg","/Uploads/Picture/2016-03-16/56e9272c72b2d.jpg"]
+         */
+
+        private boolean success;
+        private int error_code;
+        private String message;
+        private List<String> list;
+
+        public boolean isSuccess() {
+            return success;
+        }
+
+        public void setSuccess(boolean success) {
+            this.success = success;
+        }
+
+        public int getError_code() {
+            return error_code;
+        }
+
+        public void setError_code(int error_code) {
+            this.error_code = error_code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public List<String> getList() {
+            return list;
+        }
+
+        public void setList(List<String> list) {
+            this.list = list;
+        }
+    }
     /**
      * ImageLoader 图片组件初始化
      *

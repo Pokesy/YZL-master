@@ -55,6 +55,8 @@ public class RsenUrlUtil {
     public static String URL_ZJXQ = URL_BASE + URL_SUB_BASE + "Issue/getIssueDetail&id=";
     //问答
     public static String URL_WD = URL_BASE + URL_SUB_BASE + "Question/getQuestionList";
+    //轮播图
+    public static String URL_LBT = URL_BASE + URL_SUB_BASE + "public/getAppLunbo";
     //论坛
     public static String URL_LT = URL_BASE + URL_SUB_BASE + "forum/getForumModules";
     //热门话题

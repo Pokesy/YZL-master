@@ -416,7 +416,7 @@ android:visibility="gone"
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:src="@drawable/forum_like" />
+                    android:src="@drawable/weidianzan" />
 
                 <TextView
                     android:id="@+id/supportCount"
