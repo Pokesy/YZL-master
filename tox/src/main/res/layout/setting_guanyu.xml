@@ -6,32 +6,48 @@
     android:background="#ECE4D7"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:id="@+id/loginTop_guanyu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/top_bar_bg"
-        android:orientation="horizontal">
+        android:layout_height="50dp"
+        android:background="@drawable/head_border">
 
-        <Button
+        <ImageView
             android:id="@+id/guanyuqibai_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/icon_back_enable" />
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/menu" />
 
         <TextView
             android:id="@+id/loginText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_vertical"
-            android:text="关于糗百"
-            android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="关于鱼知乐"
+            android:textColor="@color/tab"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/Issue_writePost"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="15dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/pencil"
+            android:visibility="gone" />
+
     </RelativeLayout>
 
     <WebView

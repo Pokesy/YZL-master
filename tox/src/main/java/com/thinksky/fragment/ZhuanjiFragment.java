@@ -262,6 +262,7 @@ public class ZhuanjiFragment extends Fragment {
         public int id;
         public String create_time;
         public String reply_count;
+        public String support_count;
     }
 
 

@@ -16,7 +16,8 @@
         <RelativeLayout
             android:id="@+id/Issue_Back1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true">
 
@@ -151,12 +152,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp">
+
+        >
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+        >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,6 +185,8 @@
                             android:layout_height="match_parent"
                             android:background="#F5F5F5"
                             android:gravity="center"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -189,14 +194,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
+                                android:paddingTop="20dp"
                                 android:gravity="center_vertical|center_horizontal"
                                 android:marqueeRepeatLimit="marquee_forever"
                                 android:singleLine="true"
                                 android:textColor="#333333"
-                                android:textSize="16sp"
+                                android:textSize="17sp"
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:padding="10dp"
                                 android:id="@+id/issue_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -221,8 +228,8 @@
                                 android:padding="5dp"
                                 android:scrollHorizontally="true"
                                 android:scrollbars="vertical"
-                                android:textColor="#505050"
-                                android:textSize="12sp" />
+                                android:textColor="#666666"
+                                android:textSize="15sp" />
                         </LinearLayout>
 
 
@@ -277,13 +284,15 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/pinglunshu"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="none"
                                 android:paddingBottom="5dp"
-                                android:paddingLeft="5dp"
-                                android:paddingTop="5dp"
+                                android:paddingLeft="15dp"
+                                android:paddingTop="15dp"
                                 android:singleLine="true"
+
                                 android:text="评论--"
                                 android:textColor="#333333" />
 
@@ -293,7 +302,7 @@
                                 android:layout_height="wrap_content"
                                 android:divider="@null"
                                 android:dividerHeight="1dp"
-                                android:padding="5dp" />
+                                 />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -346,7 +355,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:src="@drawable/forum_like" />
+                    android:src="@drawable/weidianzan" />
 
                 <TextView
                     android:id="@+id/detail_supportCounts"

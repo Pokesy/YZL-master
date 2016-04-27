@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
             <com.thinksky.redefine.CircleImageView
                 android:id="@+id/lzl_userHead"
-                android:layout_width="25dp"
+                android:layout_width="32dp"
                 android:src="@drawable/side_user_avatar"
                 android:layout_height="25dp" />
             <TextView
@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:layout_marginLeft="32dp"
             android:text="回复内容"
             android:textColor="#636363" />
     </RelativeLayout>

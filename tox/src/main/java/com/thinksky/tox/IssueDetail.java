@@ -57,7 +57,7 @@ import java.util.HashMap;
  */
 public class IssueDetail extends BaseBActivity {
     //detail中的控件
-    TextView issue_title;
+    TextView issue_title,pinglunshu;
     ImageView issue_image;
     View listLoad;
     int lastVisibleReplyIndex;
@@ -253,6 +253,7 @@ public class IssueDetail extends BaseBActivity {
         //获取Detail里的控件
         issue_back = (ImageView) findViewById(R.id.Issue_Back_list);
         issue_title = (TextView) findViewById(R.id.issue_title);
+        pinglunshu= (TextView) findViewById(R.id.pinglunshu);
         issue_image = (ImageView) findViewById(R.id.issue_image);
         bofangshipin = (FrameLayout) findViewById(R.id.bofangshipin);
         issue_userName = (TextView) findViewById(R.id.issue_userName);
@@ -377,6 +378,7 @@ public class IssueDetail extends BaseBActivity {
 //                        reply_info.add(reply_infos.get(i));
 //                    }
 //                }
+                pinglunshu.setText("评论："+reply_info.size());
                 myAdapter = new IssueListAdapter(IssueDetail.this, reply_info, R.layout.issue_detail_listview_item,
                         null, new int[]{R.id.replyTime, R.id.replyTextView});
                 repListView.setAdapter(myAdapter);

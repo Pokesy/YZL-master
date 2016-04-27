@@ -109,7 +109,8 @@ public class RemenhuatiActivity extends BaseBActivity {
                     bean.view_count = jsonObject.getString("view_count");
                     bean.reply_count = jsonObject.getString("reply_count");
                     bean.is_top = jsonObject.getString("is_top");
-
+                    JSONArray posts_rply = jsonObject.getJSONArray("posts_rply");
+                    bean.logolist = parseUserList(posts_rply);
                     bean.cate_id = jsonObject.getString("cate_id");
                     bean.user_logo = RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
                     JSONArray imgList = jsonObject.getJSONArray("imgList");
@@ -130,7 +131,20 @@ public class RemenhuatiActivity extends BaseBActivity {
         });
     }
 
+    private List<String> parseUserList(JSONArray userArray) {
+        List<String> userList = new ArrayList<>();
+        for (int i = 0; i < userArray.length(); i++) {
+            try {
+                JSONObject jsonObject = userArray.getJSONObject(i);
+                JSONObject user = jsonObject.getJSONObject("rp_user");
+                userList.add(RsenUrlUtil.URL_BASE + user.getString("avatar32"));
 
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return userList;
+    }
     /*数据bean*/
     public static class RemenhuatiBean {
         public String title;
@@ -139,6 +153,7 @@ public class RemenhuatiActivity extends BaseBActivity {
         public String is_support;
         public String nickname;
         public List<String> imgList;
+        public List<String> logolist;
         public String id;
         public String uid;
         public String group_id;
@@ -192,6 +207,7 @@ public class RemenhuatiActivity extends BaseBActivity {
         bundle.putSerializable("post_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
         bundle.putStringArrayList("imgList", (ArrayList<String>) bean.imgList);
+        bundle.putStringArrayList("logolist", (ArrayList<String>) bean.logolist);
         Intent intent = new Intent(context, GroupPostInfoActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);

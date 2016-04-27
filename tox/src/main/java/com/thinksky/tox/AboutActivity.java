@@ -3,12 +3,12 @@ package com.thinksky.tox;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Button;
+import android.widget.TextView;
 
 import com.thinksky.holder.BaseBActivity;
 
 public class AboutActivity extends BaseBActivity {
-    private Button fanhui;
+    private TextView fanhui;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class AboutActivity extends BaseBActivity {
     }
 
     private void initView() {
-        fanhui = (Button) findViewById(R.id.guanyuqibai_back);
+        fanhui = (TextView) findViewById(R.id.guanyuqibai_back);
         WebView web = (WebView) findViewById(R.id.webView1);
         web.loadUrl("file:///android_asset/about.html");
         MyOnclickListener mOnclickListener = new MyOnclickListener();

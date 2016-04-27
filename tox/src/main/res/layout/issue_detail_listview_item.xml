@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="15dp"
     android:background="@drawable/item_click_bg">
     <RelativeLayout
         android:paddingTop="3dp"
@@ -11,8 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <com.thinksky.redefine.CircleImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:src="@drawable/side_user_avatar"
             android:id="@+id/replyUserImage" />
         <TextView
@@ -57,6 +58,7 @@
             android:textColor="@color/group_less"
             android:padding="5dp"
             android:id="@+id/replyTextView"
+            android:layout_marginLeft="32dp"
             android:text="这是一条评论！"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

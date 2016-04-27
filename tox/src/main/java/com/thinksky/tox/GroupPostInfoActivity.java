@@ -640,7 +640,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         ImageLoader.getInstance().displayImage(map.get("user_logo"), viewHolder.replyUserHead);
 //        kjBitmap.display(viewHolder.replyUserHead, map.get("user_logo"));
         viewHolder.replyUsername.setText(map.get("nickname"));
-        viewHolder.replyTime.setText("第" + floorCount + "楼 " + map.get("create_time"));
+//        viewHolder.replyTime.setText("第" + floorCount + "楼 " + map.get("create_time"));
+        viewHolder.replyTime.setText(map.get("create_time"));
         viewHolder.replyContent.setText(map.get("content"));
 
         viewHolder.replyUserHead.setOnClickListener(new View.OnClickListener() {

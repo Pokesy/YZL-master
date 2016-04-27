@@ -59,7 +59,7 @@ import java.util.List;
 public class HomeFragment extends Fragment implements View.OnClickListener {
     protected AppCompatActivity mBaseActivity;
     private View view;
-    private TextView zx_show, rm_show, ht_show, zj_show, time, count;
+    private TextView zx_show, rm_show, ht_show, zj_show, time, count,support_count;
     private Intent intent;
     private RecyclerView Zx_listView, Emht_listView;
     private RGridView Rm_listView;
@@ -162,6 +162,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Emht_listView = (RecyclerView) view.findViewById(R.id.Emht_listView);
         time = (TextView) view.findViewById(R.id.time);
         count = (TextView) view.findViewById(R.id.count);
+        support_count= (TextView) view.findViewById(R.id.support_count);
 //        Zx_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
         Emht_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
 
@@ -392,7 +393,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     bean.view_count = jsonObject.getString("view_count");
                     bean.reply_count = jsonObject.getString("reply_count");
                     bean.is_top = jsonObject.getString("is_top");
-
+                    JSONArray posts_rply = jsonObject.getJSONArray("posts_rply");
+                    bean.logolist = parseUserList(posts_rply);
                     bean.cate_id = jsonObject.getString("cate_id");
                     JSONArray imgList = jsonObject.getJSONArray("imgList");
                     List<String> imgs = new ArrayList<String>();
@@ -413,7 +415,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     }
+    private List<String> parseUserList(JSONArray userArray) {
+        List<String> userList = new ArrayList<>();
+        for (int i = 0; i < userArray.length(); i++) {
+            try {
+                JSONObject jsonObject = userArray.getJSONObject(i);
+                JSONObject user = jsonObject.getJSONObject("rp_user");
+                userList.add(RsenUrlUtil.URL_BASE + user.getString("avatar32"));
 
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return userList;
+    }
     /*数据适配器*/
     public class RemenhuatiAdapter extends RBaseAdapter<RemenhuatiBean> {
         Context context;
@@ -514,6 +529,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         public String is_support;
         public String nickname;
         public List<String> imgList;
+        public List<String> logolist;
         public String id;
         public String uid;
         public String group_id;
@@ -567,6 +583,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bundle.putSerializable("post_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
         bundle.putStringArrayList("imgList", (ArrayList<String>) bean.imgList);
+        bundle.putStringArrayList("logolist", (ArrayList<String>) bean.logolist);
         Intent intent = new Intent(context, GroupPostInfoActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
@@ -745,6 +762,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url,viewHolder.imgV(R.id.issue_image));
                     time.setText(beans.get(0).IssueList.get(0).create_time);
                     count.setText(beans.get(0).IssueList.get(0).reply_count);
+                    support_count.setText(beans.get(0).IssueList.get(0).support_count);
                     bofangshipin.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -786,6 +804,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         issueBean.id = issueListJSONObject.getInt("id");
                         issueBean.create_time = issueListJSONObject.getString("create_time");
                         issueBean.reply_count = issueListJSONObject.getString("reply_count");
+                        issueBean.support_count = issueListJSONObject.getString("support_count");
                         //其他字段。。。赋值
                         // TODO: 2016/2/17
 
