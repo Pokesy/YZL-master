@@ -3,15 +3,14 @@
     android:id="@+id/caidan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/head"
->
+    android:background="@color/head">
 
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="50dp">
         <!--头像，昵称信息-->
         <LinearLayout
             android:id="@+id/LoginThisAPP"
@@ -22,8 +21,8 @@
 
             <com.thinksky.redefine.CircleImageView
                 android:id="@+id/iv_bottom"
-                android:layout_width="63dp"
-                android:layout_height="63dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/side_user_avatar"
                 tools:border_color="@color/light"
@@ -59,58 +58,84 @@
         android:layout_height="wrap_content"
 
         android:layout_below="@+id/ll1"
-        android:layout_marginLeft="62dp"
+        android:orientation="vertical"
 
-        android:layout_marginTop="62dp"
-        android:orientation="vertical">
+        android:paddingTop="50dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+
+            android:background="#DEE2E3" />
 
         <TextView
             android:id="@+id/user"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/personal"
             android:drawablePadding="17dp"
             android:gravity="center_vertical"
-
+            android:paddingLeft="62dp"
             android:text="@string/personal"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+
+            android:background="#DEE2E3" />
+
         <TextView
             android:id="@+id/message1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/message"
             android:drawablePadding="17dp"
             android:gravity="center_vertical"
+            android:paddingLeft="62dp"
 
             android:text="@string/message"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+
+            android:background="#DEE2E3" />
+
         <TextView
             android:id="@+id/collect"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/collect"
             android:drawablePadding="17dp"
             android:gravity="center_vertical"
+            android:paddingLeft="62dp"
 
             android:text="@string/collect"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+
+            android:background="#DEE2E3" />
+
         <TextView
             android:id="@+id/invite"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/invite"
             android:drawablePadding="17dp"
             android:gravity="center_vertical"
+            android:paddingLeft="62dp"
 
 
             android:text="@string/invite"
@@ -118,19 +143,33 @@
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+
+            android:background="#DEE2E3" />
+
         <TextView
             android:id="@+id/setting"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
             android:drawableLeft="@drawable/settingup"
             android:drawablePadding="17dp"
             android:gravity="center_vertical"
+            android:paddingLeft="62dp"
 
 
             android:text="@string/setting"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+
+            android:background="#DEE2E3" />
     </LinearLayout>
     <!--<ListView-->
     <!--android:id="@+id/lv"-->

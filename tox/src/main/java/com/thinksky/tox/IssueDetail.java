@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -452,10 +451,11 @@ public class IssueDetail extends BaseBActivity {
             //为每个文本控件赋值
             issue_title.setText(comments.get(0).get("title"));
             //专辑介绍正则处理
-            str = comments.get(0).get("content").replaceAll("[<][/pbr]{2,3}[>]", "\n").replaceAll("[<][^>]+[>]", "");
+//            str = comments.get(0).get("content").replaceAll("[<][/pbr]{2,3}[>]", "\n").replaceAll("[<][^>]+[>]", "").replace("\\n","\n");
 //            Log.e("测试：",comments.get(0).get("content"));
-//            str = comments.get(0).get("content");
-            issDetails.setText(Html.fromHtml(str));
+            str = comments.get(0).get("content").replace("\\n","\n");
+
+            issDetails.setText(str);
             //给textView加滚动条
 //            issDetails.setMovementMethod(new ScrollingMovementMethod());
 //            issDetails.setBackgroundColor(0);

@@ -26,9 +26,9 @@ public class Url {
     public static String HTTPURL ="http://122.5.45.150/api.php";
     public static String USERHEADURL = "http://122.5.45.150/";
     public static String IMAGE = "http://122.5.45.150/";
-    public static String MYWEIBO = "/weibo/listAllWeibo&uid=";
-    public static String WEIBO = "/weibo/listAllWeibo";
-    public static String MYFOLLOWINGWEIBO = "/weibo/listAllWeibo";
+    public static String MYWEIBO = "/weibo/listAllWeibo";
+    public static String WEIBO = "/weibo/getHotWeibo";
+    public static String MYFOLLOWINGWEIBO = "/weibo/listMyFollowingWeibo";
     public static String SENDWEIBO = "/weibo/sendWeibo";
     public static String DELETEWEIBO = "/weibo/deleteWeibo";
     public static String SENDWEIBOCOMMENT = "/weibo/sendComment";

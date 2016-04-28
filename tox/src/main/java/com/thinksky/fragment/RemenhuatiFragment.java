@@ -90,14 +90,18 @@ public class RemenhuatiFragment extends RBaseFragment {
                     bean.cate_id = jsonObject.getString("cate_id");
                     bean.user_logo = RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
                     bean.signature = jsonObject.getJSONObject("user").getString("signature");
-                    JSONArray posts_rply = jsonObject.getJSONArray("posts_rply");
-                    bean.logolist = parseUserList(posts_rply);
                     JSONArray imgList = jsonObject.getJSONArray("imgList");
                     List<String> imgs = new ArrayList<String>();
                     for (int i = 0; imgList != null && i < imgList.length(); i++) {
                         imgs.add(imgList.getString(i));
                     }
                     bean.imgList = imgs;
+                    JSONArray posts_rply = jsonObject.getJSONArray("posts_rply");
+
+                    if (("").equals(posts_rply)) {
+                        bean.logolist = parseUserList(posts_rply);
+                    }
+
                 } catch (JSONException e) {
                 }
                 beans.add(bean);
@@ -238,7 +242,7 @@ public class RemenhuatiFragment extends RBaseFragment {
         @Override
         protected void onBindView(RViewHolder holder, int position, final RemenhuatiBean bean) {
             holder.tV(R.id.title).setText(bean.title);
-            holder.tV(R.id.content).setText(bean.content);
+            holder.tV(R.id.content).setText(bean.content.replace("\\n", "\n"));
             holder.tV(R.id.supportCount).setText(bean.supportCount);
             holder.tV(R.id.nickname).setText(bean.nickname);
             holder.tV(R.id.reply_count).setText(bean.reply_count);

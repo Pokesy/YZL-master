@@ -68,7 +68,7 @@
             <RelativeLayout
                 android:id="@+id/img_layout"
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_height="130dp">
                 <!--图片部分-->
                 <LinearLayout
                     android:id="@+id/images"

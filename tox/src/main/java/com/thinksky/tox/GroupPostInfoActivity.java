@@ -203,7 +203,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 //        kjBitmap.display(user_logo, postMap.get("user_logo"));
         ImageLoader.getInstance().displayImage(postMap.get("user_logo"), user_logo);
         post_create_time.setText(postMap.get("create_time"));
-        post_content.setText(postMap.get("content"));
+        post_content.setText(postMap.get("content").replace("\\n","\n"));
         support_flag = postMap.get("is_support");
         qianming.setText(postMap.get("signature"));
         huifu.setText("回复：" + postMap.get("reply_count"));
@@ -315,9 +315,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
                 if (i == 0) {
                     imageView = iv1;
                 } else if (i == 1) {
-                    imageView = iv1;
+                    imageView = iv2;
                 } else if (i == 2) {
-                    imageView = iv1;
+                    imageView = iv3;
                 }
 
                 if (imageView != null) {

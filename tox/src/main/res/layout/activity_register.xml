@@ -26,7 +26,7 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
 
-                android:padding="10p"
+                android:padding="10dp"
 
                 android:src="@drawable/arrow_left"
        />

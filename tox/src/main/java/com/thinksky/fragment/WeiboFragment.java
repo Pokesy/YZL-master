@@ -93,6 +93,9 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         finalBitmap.configMemoryCacheSize((int) (Runtime.getRuntime().maxMemory() / 1024));
         finalBitmap.configBitmapLoadThreadSize(30);
         kjBitmap = KJBitmap.create();
+        baseApi = new BaseApi();
+        session_id = baseApi.getSeesionId();
+        userUid = baseApi.getUid();
         initView();
         return view;
     }
@@ -123,7 +126,11 @@ public class WeiboFragment extends Fragment implements OnClickListener {
                         if (topMeunFlag != TAB_INDEX_MY) {
                             hotUrl = Url.MYWEIBO;
                             topMeunFlag = TAB_INDEX_MY;
-                            createListModel();
+                            if ("".equals(userUid)) {
+                                createListModel();
+                            }else{
+                                Toast.makeText(ctx, "请登录", Toast.LENGTH_LONG).show();
+                            }
                         }
                         break;
                 }
@@ -153,9 +160,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         mLinearLayout.addView(myListView);
         HomeNoValue = (TextView) view.findViewById(R.id.HomeNoValue);
         HomeNoValue.setVisibility(View.GONE);
-        baseApi = new BaseApi();
-        session_id = baseApi.getSeesionId();
-        userUid = baseApi.getUid();
+
 //        //设置导航部分按钮的背景
 //        switch (topMeunFlag) {
 //            case 1:
@@ -180,8 +185,20 @@ public class WeiboFragment extends Fragment implements OnClickListener {
             @Override
             public void onClick(View v) {
                 if (flag && listBottemFlag) {
-                    weiboApi.setHandler(hand);
-                    weiboApi.listAllWeibo(mStart, 0 + "");
+//                    weiboApi.setHandler(hand);
+//                    weiboApi.listMyWeibo(mStart, userUid);
+                    if (hotUrl.equals(Url.WEIBO)) {
+                        weiboApi.setHandler(hand);
+                        weiboApi.listAllWeibo(1, 0 + "");
+                    } else if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
+
+                        weiboApi.setHandler(hand);
+                        weiboApi.listMyFollowingWeibo(1, session_id);
+                    } else if (hotUrl.equals(Url.MYWEIBO)) {
+                        weiboApi.setHandler(hand);
+                        weiboApi.listMyWeibo(1, Url.USERID);
+
+                    }
                     listBottom();
                     listBottemFlag = false;
                 } else if (!listBottemFlag)
@@ -211,10 +228,10 @@ public class WeiboFragment extends Fragment implements OnClickListener {
                     } else if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
 
                         weiboApi.setHandler(hand);
-                        weiboApi.listMyFollowingWeibo(1);
-                    } else {
+                        weiboApi.listMyFollowingWeibo(1, session_id);
+                    } else if (hotUrl.equals(Url.MYWEIBO)) {
                         weiboApi.setHandler(hand);
-                        weiboApi.listMyWeibo(1, 1 + "");
+                        weiboApi.listMyWeibo(1, Url.USERID);
 
                     }
                     loadflag = false;
@@ -281,13 +298,13 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         mStart = 1;
         if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
             weiboApi.setHandler(hand);
-            weiboApi.listMyFollowingWeibo(1);
+            weiboApi.listMyFollowingWeibo(1, session_id);
         } else if (hotUrl.equals(Url.WEIBO)) {
             weiboApi.setHandler(hand);
             weiboApi.listAllWeibo(1, 0 + "");
         } else if (hotUrl.equals(Url.MYWEIBO)) {
             weiboApi.setHandler(hand);
-            weiboApi.listMyWeibo(1, userUid);
+            weiboApi.listMyWeibo(1, Url.USERID);
         }
     }
 
@@ -372,11 +389,14 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         //删除微博后刷新页面
         if (Url.activityFrom.equals("DeleteWeiBoActivity")) {
             Url.activityFrom = "";
-            if (topMeunFlag != TAB_INDEX_HOT) {
+            if (topMeunFlag == TAB_INDEX_FOLLOW) {
                 hotUrl = Url.MYFOLLOWINGWEIBO;
                 createListModel();
-            } else {
+            } else if (topMeunFlag == TAB_INDEX_HOT) {
                 hotUrl = Url.WEIBO;
+                createListModel();
+            } else if (topMeunFlag == TAB_INDEX_MY) {
+                hotUrl = Url.MYWEIBO;
                 createListModel();
             }
         }

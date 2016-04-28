@@ -216,7 +216,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                 if (state) {
                     suid = beans.get(0).getUid();
 
-                    if (beans.get(0).getQuestionimages() != null && beans.get(0).getQuestionimages().size() > 0) {
+                    if (beans.get(0).getQuestionimages() != null && !beans.get(0).getQuestionimages().contains("Public/images/nopic.png")) {
                         img_layout.setVisibility(View.VISIBLE);
 
                         int size = beans.get(0).getQuestionimages().size();
@@ -254,6 +254,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                                 });
                             }
                         }
+
                     } else {
                         img_layout.setVisibility(View.GONE);
                     }
@@ -274,17 +275,17 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                     }
                     money.setText(questionEntity.getScore());
                     creat_time.setText(questionEntity.getCreate_time());
-                    content.setText(questionEntity.getDescription1());
+                    content.setText(questionEntity.getDescription1().replace("\\n", "\n"));
                     nickname.setText(questionEntity.getCategory_title());
                     huida.setText(questionEntity.getAnswer_num() + "条回答");
+                    if (("0").equals(questionEntity.getAnswer_num())) {
+                        wutu.setVisibility(View.VISIBLE);
 
-                    mListAdapter = new WentixiangqingListAdapter(wentixiangqing.this, beans.get(0).getQuestionAnswer());
-                    listView.setAdapter(mListAdapter);
-//                    if (beans.get(0).getQuestionAnswer().isEmpty()) {
-//                        wutu.setVisibility(View.VISIBLE);
-//                    } else {
-//
-//                    }
+                    }else{
+                        mListAdapter = new WentixiangqingListAdapter(wentixiangqing.this, beans.get(0).getQuestionAnswer());
+                        listView.setAdapter(mListAdapter);
+
+                    }
                 } else {
                     ToastHelper.showToast("请求失败", Url.context);
                 }
@@ -456,7 +457,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
             final WendaXianqingInfo.QuestionAnswerEntity bean = list.get(position);
             ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getUser().getAvatar32(), holder.avatar32);
             holder.nickname.setText(bean.getUser().getNickname());
-            holder.content.setText(bean.getContent());
+            holder.content.setText(bean.getContent().replace("\\n", "\n"));
             holder.creat_time.setText(MyJson.getStandardDate(bean.getCreate_time()));
             holder.reply_count.setText(bean.getSupport_count());
 

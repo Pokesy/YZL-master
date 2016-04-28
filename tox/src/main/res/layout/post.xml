@@ -205,7 +205,7 @@
                             android:layout_gravity="center"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
-                            android:src="@drawable/heart" />
+                            android:src="@drawable/weidianzan" />
 
                         <TextView
                             android:id="@+id/Post_likeNum"

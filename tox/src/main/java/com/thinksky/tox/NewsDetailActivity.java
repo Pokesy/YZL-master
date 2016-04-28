@@ -446,6 +446,7 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         newsAuthor.setText(newsDetailInfo.getUser().getNickname());
         newsTime.setText(newsDetailInfo.getCreate_time());
         replyCount.setText(newsDetailInfo.getComment());
+        newsContent.setText(newsDetailInfo.getContent().replace("\\n","\n"));
         String content = newsDetailInfo.getContent();
         if (content.contains("style=")) {
             content = content.replaceAll("style=\"[^\"]+\"","style=\"word-wrap: break-word;word-break: normal\"");
@@ -462,6 +463,7 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
                 content = content.replaceFirst(regex, "<img style=\"max-width:100%;height:auto\" src=\"" + newsDetailInfo.getImgList().get(i).getSrc() + "\">");
             }
         }
+        content=content.replaceAll("/n","<br/>");
         newWebView.loadData(content, "text/html; charset=utf-8", "utf-8");
 //        Log.e("content<><><><>", content);
     }

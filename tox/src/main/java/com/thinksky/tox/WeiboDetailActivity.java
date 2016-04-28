@@ -565,7 +565,11 @@ public class WeiboDetailActivity extends BaseBActivity {
             Bundle bundle = new Bundle();
             for (int i = 0; i < Weiboinfo.getImgList().size(); i++) {
                 String str = Weiboinfo.getImgList().get(i);
-                list.add(str.substring(0, str.lastIndexOf("/") - 8));
+                if (str.startsWith("http")) {
+                    list.add(str.substring(0, str.lastIndexOf("/") - 8));
+                } else {
+                    list.add(Url.IMAGE + str);
+                }
             }
             bundle.putStringArrayList("image_urls", (ArrayList<String>) list);
 //            bundle.putStringArrayList("image_urls", (ArrayList<String>) Weiboinfo.getImgList());

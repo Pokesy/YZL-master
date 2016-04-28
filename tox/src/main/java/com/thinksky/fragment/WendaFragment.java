@@ -185,7 +185,11 @@ public class WendaFragment extends Fragment {
             ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(listEntity.getAnswer_num());
             ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity.getCreate_time());
             ((TextView) viewHolder.itemView.findViewById(R.id.score)).setText(listEntity.getScore());
-            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(listEntity.getCategory());
+            if (listEntity.getCategory().equals("1")) {
+                ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("龙鱼");
+            } else {
+                ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("魟鱼");
+            }
 //            ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setDrawablel(listEntity.getUser().getNickname());
             ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(), ((ImageView) viewHolder.itemView.findViewById(R.id.logo)));
 //            //为图片控件加载数据

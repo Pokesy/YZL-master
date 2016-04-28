@@ -61,7 +61,6 @@ public class WeiboAdapter extends BaseAdapter {
     }
 
 
-
     @Override
     public int getCount() {
         return list.size();
@@ -180,7 +179,7 @@ public class WeiboAdapter extends BaseAdapter {
         if (weibotype.equalsIgnoreCase("repost")) {
             WeiboInfo repostWeibo = list.get(arg0).getRepostWeiboInfo();
             Log.d("12354", repostWeibo.getUser() + "");
-            if (repostWeibo.getUser()==null){
+            if (repostWeibo.getUser() == null) {
                 hold.repostName.setText("");
                 hold.repostName.setTextColor(ctx.getResources().getColor(R.color.repostName));
                 hold.repostWeiboTime.setText(".");
@@ -189,7 +188,7 @@ public class WeiboAdapter extends BaseAdapter {
                 hold.repostText.setVisibility(View.VISIBLE);
                 hold.repostWeiboTime.setVisibility(View.VISIBLE);
                 hold.repostName.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 hold.repostLinerLayout.setBackgroundColor(Color.parseColor("#F7F7F7"));
                 hold.repostName.setText("@" + "" + repostWeibo.getUser().getNickname() + "：");
                 hold.repostName.setTextColor(ctx.getResources().getColor(R.color.repostName));
@@ -260,15 +259,15 @@ public class WeiboAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (!Url.SESSIONID.equalsIgnoreCase("")) {
                     Intent intent = new Intent(ctx, UploadActivity.class);
-                    Log.e("转发微博被点击啦啦啦啦啦", arg0+"");
+                    Log.e("转发微博被点击啦啦啦啦啦", arg0 + "");
                     intent.putExtra("weiboType", "repost");
                     if (list.get(number).getType().equals("repost")) {
-                        if (list.get(number).getUser().equals("null")){
+                        if (list.get(number).getUser().equals("null")) {
                             intent.putExtra("weibo_master", "");
                             intent.putExtra("weibo_content", "");
                             intent.putExtra("weibo_id", "");
                             intent.putExtra("source_id", "");
-                        }else {
+                        } else {
                             intent.putExtra("weibo_master", list.get(number).getUser().getNickname());
                             intent.putExtra("weibo_content", list.get(number).getWcontent());
                             intent.putExtra("weibo_id", list.get(number).getWid());
@@ -330,7 +329,7 @@ public class WeiboAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(ctx, WeiboDetailActivity.class);
                 Bundle bund = new Bundle();
-                Log.e("被点击啦啦啦啦啦", arg0+"");
+                Log.e("被点击啦啦啦啦啦", arg0 + "");
                 bund.putSerializable("WeiboInfo", list.get(arg0));
                 intent.putExtra("value", bund);
                 ctx.startActivity(intent);
@@ -341,7 +340,7 @@ public class WeiboAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(ctx, WeiboDetailActivity.class);
                 Bundle bund = new Bundle();
-                Log.e("被点击啦啦啦啦啦", arg0+"");
+                Log.e("被点击啦啦啦啦啦", arg0 + "");
                 bund.putSerializable("WeiboInfo", list.get(arg0));
                 intent.putExtra("value", bund);
                 ctx.startActivity(intent);
@@ -408,27 +407,27 @@ public class WeiboAdapter extends BaseAdapter {
 
     public void loadWeiboImg(Holder hold, final ImageView weiboImg, String url, FinalBitmap finalBitmap, KJBitmap kjBitmap) {
         String url2;
-        if(url.startsWith("http")){
-            url2=url;
-        }else{
+        if (url.startsWith("http")) {
+            url2 = url;
+        } else {
 //            return (Url.USERHEADURL+"/"+url).replace("com///","com/").replace("com//","com/").replace("cn///","cn/").replace("cn//","cn/").replace("net///","net/").replace("net//","net/");
-            url2= (Url.USERHEADURL+"/"+url).replace("opensns///opensns","opensns").replace("opensns//opensns","opensns").replace("/api.php/opensns/","/api.php/");
+            url2 = (Url.USERHEADURL + "/" + url).replace("opensns///opensns", "opensns").replace("opensns//opensns", "opensns").replace("/api.php/opensns/", "/api.php/");
         }
-         BaseFunction.showImage(ctx, weiboImg, url2, loadImgMainImg, Url.IMGTYPE_WEIBO);
+        BaseFunction.showImage(ctx, weiboImg, url2, loadImgMainImg, Url.IMGTYPE_WEIBO);
     }
 
     private void startPhotoBrowser(int arg0, int index) {
         WeiboInfo weiboInfo = list.get(arg0);
-        List list=new ArrayList();
+        List list = new ArrayList();
         if (weiboInfo.getType().equalsIgnoreCase("image")) {
             Intent intent = new Intent(ctx, ImagePagerActivity.class);
             Bundle bundle = new Bundle();
-            for(int i=0;i<weiboInfo.getImgList().size();i++){
-                String str=weiboInfo.getImgList().get(i);
+            for (int i = 0; i < weiboInfo.getImgList().size(); i++) {
+                String str = weiboInfo.getImgList().get(i);
                 if (str.startsWith("http")) {
                     list.add(str.substring(0, str.lastIndexOf("/") - 8));
-                }else{
-                    list.add(Url.IMAGE+str);
+                } else {
+                    list.add(Url.IMAGE + str);
                 }
             }
             bundle.putStringArrayList("image_urls", (ArrayList<String>) list);
@@ -449,8 +448,8 @@ public class WeiboAdapter extends BaseAdapter {
     static class Holder {
         ImageView UserHead;
         TextView UserName;
-        TextView   repostName, repostWeiboTime, WeiboTop, Weibo_From;
-        FaceTextView MainText,repostText;
+        TextView repostName, repostWeiboTime, WeiboTop, Weibo_From;
+        FaceTextView MainText, repostText;
         ImageView MainImg, MainImg1, MainImg2;
         List<ImageView> imgViewList = new ArrayList<ImageView>();
         LinearLayout Up, enterDetail;

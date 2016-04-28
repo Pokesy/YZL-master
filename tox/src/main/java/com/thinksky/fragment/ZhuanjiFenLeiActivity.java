@@ -132,7 +132,7 @@ public class ZhuanjiFenLeiActivity extends BaseBActivity {
         protected void onBindView(RViewHolder holder, int position, final ZjFLBean bean) {
             holder.tV(R.id.title).setText(bean.title);
 
-            holder.tV(R.id.content).setText(bean.content);
+            holder.tV(R.id.content).setText(bean.content.replace("\\n","\n"));
             holder.tV(R.id.reply_count).setText(bean.reply_count);
             holder.tV(R.id.support_count).setText(bean.support_count);
             ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,

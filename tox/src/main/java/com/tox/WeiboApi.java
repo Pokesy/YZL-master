@@ -72,11 +72,11 @@ public class WeiboApi extends BaseApi {
      *
      * @param page
      */
-    public void listMyFollowingWeibo(int page) {
+    public void listMyFollowingWeibo(int page,String session_id) {
         putArg("page", page + "");
         putArg("count", "10");
-        if (!Url.SESSIONID.equals("")) {
-            putArg("session_id", Url.SESSIONID);
+        if (!("").equals(session_id)) {
+            putArg("session_id", session_id);
         }
 
         execute(handler, Url.getApiUrl(Url.MYFOLLOWINGWEIBO), true);

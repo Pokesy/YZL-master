@@ -123,9 +123,9 @@ public class PostAdapter extends BaseAdapter  {
         hold.publicTime.setText(mList.get(position).getCreatTime());
         hold.postTitle.setText(mList.get(position).getPostTitle());
         if(mList.get(position).getPostContent().length()>30){
-            hold.postContent.setText(mList.get(position).getPostContent().substring(0,30));
+            hold.postContent.setText(mList.get(position).getPostContent().substring(0,30).replace("\\n","\n"));
         }else {
-            hold.postContent.setText(mList.get(position).getPostContent());
+            hold.postContent.setText(mList.get(position).getPostContent().replace("\\n","\n"));
         }
 
         hold.userHead.setImageResource(R.drawable.side_user_avatar);
@@ -146,14 +146,14 @@ public class PostAdapter extends BaseAdapter  {
 
         if (hold.supportImg.getTag().equals(mList.get(position).getPostId())) {
             if (mList.get(position).getIs_support()==1) {
-                //hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
+                hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
                 hold.upFlag = true;
             }else{
                 hold.upFlag=false;
             }
         } else {
             if (mList.get(position).getIs_support()==1) {
-               // hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
+                hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
                 hold.upFlag = true;
             } else {
                 hold.upFlag = false;
@@ -175,6 +175,7 @@ public class PostAdapter extends BaseAdapter  {
                         hold.supportCount.setText(Integer.parseInt(mList.get(position).getSupportCount())+1+"");
                         Log.d("post 点赞"+mList.get(position).getPostId(),"");
                         forumApi.supportPost(mList.get(position).getPostId());
+                        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
                     }else{
                         ToastHelper.showToast("重复点赞",ctx);
                     }

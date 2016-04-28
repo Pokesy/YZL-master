@@ -26,7 +26,7 @@ public class ImagePagerActivity extends BaseBActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_detail_pager);
-        pagerPosition = getIntent().getIntExtra("image_index", 0);
+        pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
         List<String> urls = getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
         mPager = (HackyViewPager) findViewById(R.id.pager);
         ImagePagerAdapter mAdapter = new ImagePagerAdapter(

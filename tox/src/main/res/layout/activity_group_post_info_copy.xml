@@ -80,9 +80,9 @@
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/enter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/enter"
                         android:padding="5dp">
 
                         <TextView
@@ -97,13 +97,13 @@
 
                         <TextView
                             android:id="@+id/join"
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_marginTop="6dp"
                             android:textColor="#ffffff"
                             android:textSize="12sp"
+                            android:visibility="gone"
                             tools:text=" +加入 " />
 
                         <LinearLayout
@@ -133,20 +133,20 @@
 
                             <TextView
                                 android:id="@+id/group_count"
-                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/louzhu"
                                 android:layout_marginLeft="5dp"
-                                android:text="5" />
+                                android:text="5"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/louzhu"
-android:visibility="gone"
                                 android:layout_marginLeft="5dp"
-                                android:text="个成员" />
+                                android:text="个成员"
+                                android:visibility="gone" />
                         </LinearLayout>
 
 
@@ -199,53 +199,55 @@ android:visibility="gone"
                         android:id="@+id/post_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:lineSpacingMultiplier="1.5"
                         android:paddingTop="18dp"
                         android:textColor="#666666"
                         android:textSize="14sp"
-                        android:lineSpacingMultiplier="1.5"
                         tools:text="这里是帖子内容，看看一看内容超越第二排是什么情况啊，再看一遍" />
                     <!--状态部分-->
                     <RelativeLayout
                         android:id="@+id/img_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="170dp">
+                        android:layout_height="wrap_content">
                         <!--图片部分-->
                         <LinearLayout
                             android:id="@+id/images"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:id="@+id/iv_1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="170dp"
+                                android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
                                 android:scaleType="centerCrop"
                                 android:visibility="invisible" />
 
                             <ImageView
                                 android:id="@+id/iv_2"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="170dp"
+                                android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
                                 android:scaleType="centerCrop"
                                 android:visibility="invisible" />
 
                             <ImageView
                                 android:id="@+id/iv_3"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="170dp"
+                                android:layout_marginBottom="5dp"
                                 android:layout_marginLeft="5dp"
-                                android:layout_weight="1"
                                 android:scaleType="centerCrop"
                                 android:visibility="invisible" />
                         </LinearLayout>
                     </RelativeLayout>
+
                     <include layout="@layout/one_line" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -329,7 +331,9 @@ android:visibility="gone"
                             android:layout_marginLeft="10dp"
                             android:tag="HORIZONTAL" />
                     </LinearLayout>
+
                     <include layout="@layout/one_line" />
+
                     <TextView
                         android:id="@+id/huifu"
                         android:layout_width="wrap_content"
@@ -422,8 +426,8 @@ android:visibility="gone"
                     android:id="@+id/supportCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="30dp"
                     android:layout_marginLeft="10dp"
+                    android:minWidth="30dp"
                     android:textColor="#787C7F" />
             </LinearLayout>
 
@@ -445,8 +449,8 @@ android:visibility="gone"
                     android:id="@+id/replyCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="30dp"
                     android:layout_marginLeft="10dp"
+                    android:minWidth="30dp"
                     android:textColor="#787C7F" />
             </LinearLayout>
         </LinearLayout>

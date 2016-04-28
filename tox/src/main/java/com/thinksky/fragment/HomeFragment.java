@@ -393,8 +393,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     bean.view_count = jsonObject.getString("view_count");
                     bean.reply_count = jsonObject.getString("reply_count");
                     bean.is_top = jsonObject.getString("is_top");
-                    JSONArray posts_rply = jsonObject.getJSONArray("posts_rply");
-                    bean.logolist = parseUserList(posts_rply);
                     bean.cate_id = jsonObject.getString("cate_id");
                     JSONArray imgList = jsonObject.getJSONArray("imgList");
                     List<String> imgs = new ArrayList<String>();
@@ -402,6 +400,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         imgs.add(imgList.getString(i));
                     }
                     bean.imgList = imgs;
+                    JSONArray posts_rply = jsonObject.getJSONArray("posts_rply");
+                    if (("").equals(posts_rply)) {
+                        bean.logolist = parseUserList(posts_rply);
+                    }
+
                 } catch (JSONException e) {
                 }
                 beans.add(bean);
