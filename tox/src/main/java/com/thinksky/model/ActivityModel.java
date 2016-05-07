@@ -9,4 +9,5 @@ public class ActivityModel {
     public static int USERINFO = 2;
     public static int WEIBOCOMMENT = 3;
     public static int UPLOADACTIVITY = 4;
+    public static int ACTIVITY = 5;
 }

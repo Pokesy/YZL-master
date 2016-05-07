@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.model.ActivityModel;
 import com.thinksky.net.IsNet;
 import com.thinksky.utils.MyJson;
 import com.tox.ToastHelper;
@@ -42,13 +43,14 @@ public class SplashActivity extends BaseBActivity {
     AlertDialog.Builder alertDialog;
     AlertDialog dlg;
     private ViewPager mViewPager;
-
+    private ArrayList<String> ways = new ArrayList<String>();
     private int currIndex = 0;
-
+private  Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         initview();
 //        init();
 
@@ -145,9 +147,24 @@ public class SplashActivity extends BaseBActivity {
 //        }
 //    }
     public void startbutton(View v) {
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//        startActivity(intent);
+//        SplashActivity.this.finish();
+        if (!Url.SESSIONID.equals("")) {
+            Intent intent = new Intent(SplashActivity.this,
+                    UserInfoActivity.class);
+            intent.putExtra("userUid", Url.USERID);
+            startActivityForResult(intent, 0);
+        } else {
+            String[] s = new String[ways.size()];
+            s = ways.toArray(s);
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            intent.putExtra("ways", s);
+            intent.putExtra("entryActivity", ActivityModel.ACTIVITY);
+            startActivity(intent);
+        }
         SplashActivity.this.finish();
+
     }
 
     private void initview() {
@@ -186,7 +203,19 @@ public class SplashActivity extends BaseBActivity {
                         editor.commit();
                         Log.e("AfterSave>>>>>>>>>>", startTimes.getInt("times", 0) + "");
 //                        init();
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                        startActivity(intent);
+//                        SplashActivity.this.finish();
+
+                        String[] s = new String[ways.size()];
+                        s = ways.toArray(s);
+                        if ("".equals(Url.SESSIONID)) {
+                            intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        } else {
+                          intent = new Intent(SplashActivity.this, MainActivity.class);
+                        }
+                        intent.putExtra("ways", s);
+                        intent.putExtra("entryActivity", ActivityModel.ACTIVITY);
                         startActivity(intent);
                         SplashActivity.this.finish();
                     }
@@ -234,8 +263,15 @@ public class SplashActivity extends BaseBActivity {
                                     editor.putInt("times", times);
                                     editor.commit();
                                     Log.e("AfterSave>>>>>>>>>>", startTimes.getInt("times", 0) + "");
-                                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//                                    startActivity(intent);
+                                    String[] s = new String[ways.size()];
+                                    s = ways.toArray(s);
+                                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                                    intent.putExtra("ways", s);
+                                    intent.putExtra("entryActivity", ActivityModel.ACTIVITY);
                                     startActivity(intent);
+//                                    SplashActivity.this.finish();
                                     if (dlg != null && dlg.isShowing()) {
                                         dlg.dismiss();
                                     }

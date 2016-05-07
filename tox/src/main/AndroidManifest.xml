@@ -404,6 +404,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
         <activity
+            android:name="com.thinksky.tox.ChangePasswordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
             android:name="com.thinksky.fragment.MyhuatiActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
@@ -428,7 +432,14 @@
             android:name="com.thinksky.fragment.MyMessageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
-
+        <activity
+            android:name="com.thinksky.tox.ReSetPasswordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.fragment.UserPlaceActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
     </application>
 
 </manifest>

@@ -51,7 +51,16 @@ public class UserApi extends BaseApi {
         putArg("name",name);
         execute(handler, Url.getApiUrl(Url.SETUSERINFO), true);
     }
-
+    public void changePrivance(String name){
+        putArg("session_id",Url.SESSIONID);
+        putArg("province",name);
+        execute(handler, Url.getApiUrl(Url.SETUSERINFO), true);
+    }
+    public void changeCity(String name){
+        putArg("session_id",Url.SESSIONID);
+        putArg("city",name);
+        execute(handler, Url.getApiUrl(Url.SETUSERINFO), true);
+    }
     /**
      * 拓展资料
      * 修改拓展资料：QQ
@@ -63,6 +72,12 @@ public class UserApi extends BaseApi {
         execute(handler,Url.getApiUrl(Url.SETOTHERINFO),true);
     }
 
+    public void changeDQ(String qq) {
+        putArg("session_id",Url.SESSIONID);
+        putArg("data",qq);
+        putArg("id",1+"");
+        execute(handler,Url.getApiUrl(Url.SETOTHERINFO),true);
+    }
     public void changeBirth(String data){
         putArg("session_id",Url.SESSIONID);
         putArg("data",data);
@@ -139,7 +154,7 @@ public class UserApi extends BaseApi {
         putArg("password", password);
         putArg("code", code);
         putArg("role", role);
-        putArg("nickname", nickname);
+        putArg("nickname", username);
         putArg("reg_type",reg_type);
         putArg("reg_verify",verify);
         Log.d("role", role);
@@ -153,6 +168,11 @@ public class UserApi extends BaseApi {
         putArg("account",account);
         putArg("type",type);
         execute(handler,Url.getApiUrl(Url.VERIFY),false);
+    }
+    public void sendVerifymob(String account,String type){
+        putArg("account",account);
+        putArg("type",type);
+        execute(handler,Url.getApiUrl(Url.VERIFYMOB),false);
     }
 
 }

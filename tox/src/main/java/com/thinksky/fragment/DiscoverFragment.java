@@ -34,6 +34,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.DiscoverSelectActivity;
 import com.thinksky.tox.ImagePagerActivity;
@@ -254,7 +255,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                 //为图片控件加载数据
                 kjBitmap = KJBitmap.create();
 //                kjBitmap.display(iv_round, RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32());
-                ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(), iv_round);
+
+              ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(),iv_round);
                 iv_round.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

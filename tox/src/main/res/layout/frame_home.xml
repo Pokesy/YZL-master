@@ -67,10 +67,10 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="10dp"
+        android:text="暂无动态哦，快点击右上角发表动态吧"
         android:textColor="#815F3D"
         android:textSize="18sp"
-        android:visibility="visible"
-        tools:text="暂无微博哦，快点击右上角发表微博吧" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/HomeGroup"

@@ -94,7 +94,7 @@ public class DetailListAdapter extends BaseAdapter {
         hold.CommentArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentToComment(arg0);
+//                CommentToComment(arg0);
             }
         });
         hold.UserHead.setOnClickListener(new View.OnClickListener() {

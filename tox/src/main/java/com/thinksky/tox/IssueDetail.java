@@ -28,6 +28,7 @@ import com.thinksky.fragment.VedioView;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
+import com.tox.BaseFunction;
 import com.tox.IssueApi;
 import com.tox.IssueData;
 import com.tox.ToastHelper;
@@ -56,7 +57,7 @@ import java.util.HashMap;
  */
 public class IssueDetail extends BaseBActivity {
     //detail中的控件
-    TextView issue_title,pinglunshu;
+    TextView issue_title, pinglunshu;
     ImageView issue_image;
     View listLoad;
     int lastVisibleReplyIndex;
@@ -90,7 +91,7 @@ public class IssueDetail extends BaseBActivity {
     IssueListAdapter myAdapter;
     Handler mHandler;
     //定义点赞的按钮
-    private LinearLayout zan;
+    private LinearLayout zan, bottom;
     //session_id
     private String session_id;
     //session_id和status容器 arr[0]是点赞有没有成功   arr[1]是点赞返回的信息！！
@@ -217,6 +218,7 @@ public class IssueDetail extends BaseBActivity {
                             thread1.start();
                             Toast.makeText(IssueDetail.this, "评论成功", Toast.LENGTH_SHORT).show();
                             issue_editBox.setVisibility(View.GONE);
+                            bottom.setVisibility(View.VISIBLE);
                         }
                         break;
                     //回复专辑评论的handler
@@ -252,7 +254,7 @@ public class IssueDetail extends BaseBActivity {
         //获取Detail里的控件
         issue_back = (ImageView) findViewById(R.id.Issue_Back_list);
         issue_title = (TextView) findViewById(R.id.issue_title);
-        pinglunshu= (TextView) findViewById(R.id.pinglunshu);
+        pinglunshu = (TextView) findViewById(R.id.pinglunshu);
         issue_image = (ImageView) findViewById(R.id.issue_image);
         bofangshipin = (FrameLayout) findViewById(R.id.bofangshipin);
         issue_userName = (TextView) findViewById(R.id.issue_userName);
@@ -279,6 +281,7 @@ public class IssueDetail extends BaseBActivity {
 
         //点赞
         zan = (LinearLayout) findViewById(R.id.Post_detail_likeBtn);
+        bottom = (LinearLayout) findViewById(R.id.bottom);
         zan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -339,10 +342,16 @@ public class IssueDetail extends BaseBActivity {
         Post_detail_comBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (issue_editBox.getVisibility() == View.GONE) {
-                    issue_editBox.setVisibility(View.VISIBLE);
+                if (BaseFunction.isLogin()) {
+                    if (issue_editBox.getVisibility() == View.GONE) {
+                        issue_editBox.setVisibility(View.VISIBLE);
+                        bottom.setVisibility(View.GONE);
+                    } else {
+                        issue_editBox.setVisibility(View.GONE);
+                        bottom.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    issue_editBox.setVisibility(View.GONE);
+                    Toast.makeText(IssueDetail.this, "未登录", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -377,7 +386,7 @@ public class IssueDetail extends BaseBActivity {
 //                        reply_info.add(reply_infos.get(i));
 //                    }
 //                }
-                pinglunshu.setText("评论："+reply_info.size());
+                pinglunshu.setText("评论：" + reply_info.size());
                 myAdapter = new IssueListAdapter(IssueDetail.this, reply_info, R.layout.issue_detail_listview_item,
                         null, new int[]{R.id.replyTime, R.id.replyTextView});
                 repListView.setAdapter(myAdapter);
@@ -453,7 +462,7 @@ public class IssueDetail extends BaseBActivity {
             //专辑介绍正则处理
 //            str = comments.get(0).get("content").replaceAll("[<][/pbr]{2,3}[>]", "\n").replaceAll("[<][^>]+[>]", "").replace("\\n","\n");
 //            Log.e("测试：",comments.get(0).get("content"));
-            str = comments.get(0).get("content").replace("\\n","\n");
+            str = comments.get(0).get("content").replace("\\n", "\n");
 
             issDetails.setText(str);
             //给textView加滚动条
@@ -474,12 +483,12 @@ public class IssueDetail extends BaseBActivity {
             kjBitmap = KJBitmap.create();
             String u = comments.get(0).get("cover_url").replace("opensns//opensns", "opensns");
 //            kjBitmap.display(issue_image, u);
-            ImageLoader.getInstance().displayImage(u,issue_image);
+            ImageLoader.getInstance().displayImage(u, issue_image);
 //            ResUtil.setRoundImage(comments.get(0).get("cover_url"), issue_image);
 //            issue_image.setVisibility(View.VISIBLE);
 //            image_progress.setVisibility(View.GONE);
 //            kjBitmap.display(issue_userImage, comments.get(0).get("user_image"));
-            ImageLoader.getInstance().displayImage(comments.get(0).get("user_image"),issue_userImage);
+            ImageLoader.getInstance().displayImage(comments.get(0).get("user_image"), issue_userImage);
             issue_userImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -632,7 +641,7 @@ public class IssueDetail extends BaseBActivity {
             //给控件赋值
             if (reply_info.get(position).get("user_image") != null) {
 //                kjbImage.display(viewHolder.replyUserImage, reply_info.get(position).get("user_image"));
-           ImageLoader.getInstance().displayImage(reply_info.get(position).get("user_image"),viewHolder.replyUserImage);
+                ImageLoader.getInstance().displayImage(reply_info.get(position).get("user_image"), viewHolder.replyUserImage);
             }
             viewHolder.replyUserImage.setOnClickListener(new View.OnClickListener() {
                 @Override

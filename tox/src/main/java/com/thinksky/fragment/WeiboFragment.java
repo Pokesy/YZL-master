@@ -104,6 +104,16 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         //更新左侧的名字
 //        mHotFragmentCallBack.callback(R.id.myUserName);
         mTabs = (SegmentControl) view.findViewById(R.id.segment_control);
+        mTabs.setTouchInterceptor(new SegmentControl.TouchInterceptor() {
+            @Override
+            public boolean onIntercept(int index) {
+                boolean intercept = !BaseFunction.isLogin() && (index == TAB_INDEX_FOLLOW || index == TAB_INDEX_MY);
+                if (intercept) {
+                    ToastHelper.showToast(R.string.prompt_offline, ctx);
+                }
+                return intercept;
+            }
+        });
         mTabs.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {
             @Override
             public void onSegmentControlClick(int index) {
@@ -119,34 +129,26 @@ public class WeiboFragment extends Fragment implements OnClickListener {
                         if (topMeunFlag != TAB_INDEX_FOLLOW) {
                             hotUrl = Url.MYFOLLOWINGWEIBO;
                             topMeunFlag = TAB_INDEX_FOLLOW;
+
                             createListModel();
+
                         }
                         break;
                     case TAB_INDEX_MY:
                         if (topMeunFlag != TAB_INDEX_MY) {
                             hotUrl = Url.MYWEIBO;
                             topMeunFlag = TAB_INDEX_MY;
-                            if ("".equals(userUid)) {
-                                createListModel();
-                            }else{
-                                Toast.makeText(ctx, "请登录", Toast.LENGTH_LONG).show();
-                            }
+
+                            createListModel();
+//                            } else {
+//                                Toast.makeText(ctx, "请登录", Toast.LENGTH_LONG).show();
+//                            }
                         }
                         break;
                 }
             }
         });
 
-        mTabs.setTouchInterceptor(new SegmentControl.TouchInterceptor() {
-            @Override
-            public boolean onIntercept(int index) {
-                boolean intercept = !BaseFunction.isLogin() && (index == TAB_INDEX_FOLLOW || index == TAB_INDEX_MY);
-                if (intercept) {
-                    ToastHelper.showToast(R.string.prompt_offline, ctx);
-                }
-                return intercept;
-            }
-        });
 
         load_progressBar = (LinearLayout) view
                 .findViewById(R.id.load_progressBar);
@@ -159,7 +161,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
 //        myListView.setFadingEdgeLength(10);
         mLinearLayout.addView(myListView);
         HomeNoValue = (TextView) view.findViewById(R.id.HomeNoValue);
-        HomeNoValue.setVisibility(View.GONE);
+
 
 //        //设置导航部分按钮的背景
 //        switch (topMeunFlag) {
@@ -205,15 +207,16 @@ public class WeiboFragment extends Fragment implements OnClickListener {
                     Toast.makeText(ctx, "正在加载中...", Toast.LENGTH_LONG).show();
             }
         });
-
         mAddMoreProgressBar = new ProgressBar(ctx);
         mAddMoreProgressBar.setIndeterminate(false);
         mAddMoreProgressBar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_bg));
         mAddMoreProgressBar.setVisibility(View.GONE);
         myListView.addFooterView(ListBottem, null, false);
         ListBottem.setVisibility(View.GONE);
+
         myListView.setAdapter(mAdapter);
         myListView.setOnItemClickListener(new MainListOnItemClickListener());
+
 
 		/*url = Url.WEIBO ;//+ "start=" + mStart + "&end=" + mEnd;
         ThreadPoolUtils.execute(new HttpGetThread(hand, url));*/
@@ -290,6 +293,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
 
     //加载对应的微博列表
     private void createListModel() {
+        HomeNoValue.setVisibility(View.GONE);
         ListBottem.setVisibility(View.GONE);
         mLinearLayout.setVisibility(View.GONE);
         load_progressBar.setVisibility(View.VISIBLE);
@@ -367,12 +371,16 @@ public class WeiboFragment extends Fragment implements OnClickListener {
                             weiboList.add(info);
                         }
                         listBottemFlag = true;
+                        mLinearLayout.setVisibility(View.VISIBLE);
                     } else {
-                        if (list.size() == 0)
+                        if (list.size() == 0) {
                             HomeNoValue.setVisibility(View.VISIBLE);
+                            mLinearLayout.setVisibility(View.GONE);
+                        }
                     }
+
                 }
-                mLinearLayout.setVisibility(View.VISIBLE);
+
                 load_progressBar.setVisibility(View.GONE);
                 myListView.onRefreshComplete();
                 mAdapter.notifyDataSetChanged();
@@ -380,7 +388,6 @@ public class WeiboFragment extends Fragment implements OnClickListener {
             }
         }
 
-        ;
     };
 
     @Override
@@ -475,6 +482,6 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     private void getWeiboList() {
         weiboList.removeAll(weiboList);
         weiboApi.setHandler(hand);
-        weiboApi.listAllWeibo(1, 0 + "");
+        weiboApi.listAllWeibo(1, Url.USERID);
     }
 }

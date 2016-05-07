@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nineoldandroids.view.ViewHelper;
 import com.thinksky.fragment.CollectListActivity;
@@ -83,6 +85,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 用于对Fragment进行管理
      */
+    private long exitTime = 0;
     private ArrayList<String> ways = new ArrayList<String>();
     private FragmentTransaction mFragmentTransaction;
     private FragmentManager mFragmentManager;
@@ -127,6 +130,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
     };
+
+    //再按一次退出
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+//                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     protected void initActionbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -318,14 +337,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 intent_Share = new Intent(Intent.ACTION_SEND);
                 intent_Share.setType("text/plain");
                 intent_Share.putExtra(Intent.EXTRA_SUBJECT, "分享");
-                intent_Share.putExtra(Intent.EXTRA_TEXT, " （来自手机客户端）");//分享内容体
+                intent_Share.putExtra(Intent.EXTRA_TEXT, " （来自鱼知乐手机客户端）");//分享内容体
+//                intent_Share.putExtra(Intent.ACTION_PACKAGE_ADDED,  "www.baidu.com");//分享内容体
                 startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
                 break;
             case R.id.message1:
                 if (BaseFunction.isLogin()) {
-                    Intent intent1= new Intent(MainActivity.this, MyMessageActivity.class);
+                    Intent intent1 = new Intent(MainActivity.this, MyMessageActivity.class);
                     startActivity(intent1);
-                }else{
+                } else {
                     ToastHelper.showToast("请登录", this);
                 }
                 break;
@@ -518,7 +538,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //            }else{
 //                signature.setText("这个人很懒，什么都没写");
 //            }
-
+            if (!("").equalsIgnoreCase(sp.getString("getSignature", ""))) {
+                signature.setText(sp.getString("nickname", ""));
+            } else {
+                signature.setText("这个人很懒，什么都没写");
+            }
         } else {
             mleftHead.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.side_user_avatar, MainActivity.this));
             myUserName.setText("请登录");

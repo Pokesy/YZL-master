@@ -5,6 +5,7 @@ import android.view.MotionEvent;
 
 import com.bugtags.library.Bugtags;
 
+
 /**
  * Created by jiao on 2016/4/20.
  */

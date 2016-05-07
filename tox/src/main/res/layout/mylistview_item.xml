@@ -59,7 +59,7 @@
                         android:layout_alignLeft="@id/Item_UserName"
                         android:layout_below="@id/Item_UserName"
                         android:layout_marginTop="3dp"
-                        android:textColor="@color/font_color_orange"
+                        android:textColor="#999999"
                         android:textSize="@dimen/font_size_small"
                         tools:text="2014.4" />
 

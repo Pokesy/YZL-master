@@ -391,6 +391,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                     public void run() {
                         cancelDialog();
                         initXiangQingData();
+                        wutu.setVisibility(View.GONE);
                     }
                 });
             }

@@ -151,8 +151,13 @@ public class WendaListActivity extends BaseBActivity {
             ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setText(listEntity.getUser().getNickname());
             ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(listEntity.getAnswer_num());
             ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity.getCreate_time());
-            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(listEntity.getAnswer_num());
+//            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(listEntity.getAnswer_num());
             ((TextView) viewHolder.itemView.findViewById(R.id.score)).setText(listEntity.getScore());
+            if (listEntity.getCategory().equals("1")) {
+                ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("龙鱼");
+            } else {
+                ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("魟鱼");
+            }
             String s = listEntity.getBest_answer();
 //            if (s.equals("1")) {
 //                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");

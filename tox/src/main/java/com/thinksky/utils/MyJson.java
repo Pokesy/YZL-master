@@ -539,12 +539,13 @@ private String s;
             JSONObject jsonObject1 = new JSONObject(jsonObject.getString("expand_info"));
             userInfo.setBirth(jsonObject1.getString("生日"));
             userInfo.setQq(jsonObject1.getString("qq"));
+            JSONObject jsonObject4 = new JSONObject(jsonObject.getString("pos_province"));
+            userInfo.setProvince(jsonObject4.getString("name"));
             JSONObject jsonObject2 = new JSONObject(jsonObject.getString("pos_city"));
             userInfo.setCity(jsonObject2.getString("name"));
             JSONObject jsonObject3 = new JSONObject(jsonObject.getString("pos_district"));
             userInfo.setDistrict(jsonObject3.getString("name"));
-            JSONObject jsonObject4 = new JSONObject(jsonObject.getString("pos_province"));
-            userInfo.setProvince(jsonObject4.getString("name"));
+
         } catch (JSONException e) {
 
         }

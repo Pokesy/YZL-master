@@ -183,6 +183,7 @@ public class Url {
     public static String LOGOUT = "/user/logout";
     public static String REGISTER = "/user/register";
     public static String VERIFY = "/user/sendVerify";
+    public static String VERIFYMOB = "/user/sendVerifymob";
     public static String USERINFO = "/user/getProfile";
     public static String SETUSERINFO = "/user/setProfile";
     public static String OTHERINFO = "/user/getFieldSet";

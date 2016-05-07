@@ -59,11 +59,12 @@ import java.util.List;
 public class HomeFragment extends Fragment implements View.OnClickListener {
     protected AppCompatActivity mBaseActivity;
     private View view;
-    private TextView zx_show, rm_show, ht_show, zj_show, time, count,support_count;
+    private TextView zx_show, rm_show, ht_show, zj_show, time, count, support_count;
     private Intent intent;
     private RecyclerView Zx_listView, Emht_listView;
     private RGridView Rm_listView;
     private ListView list;
+    private LinearLayout load_progressBar;
     private RemenhuatiAdapter rm_adapter;
     private MyAdapter xz_adapter;
     private boolean isWeGroup = true;
@@ -109,6 +110,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mMenuMyQuestion = view.findViewById(R.id.rb_wdtw);
         mMenuSolution = view.findViewById(R.id.rb_yjj);
 
+        load_progressBar = (LinearLayout) view
+                .findViewById(R.id.load_progressBar);
         View.OnClickListener menuClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,7 +165,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Emht_listView = (RecyclerView) view.findViewById(R.id.Emht_listView);
         time = (TextView) view.findViewById(R.id.time);
         count = (TextView) view.findViewById(R.id.count);
-        support_count= (TextView) view.findViewById(R.id.support_count);
+        support_count = (TextView) view.findViewById(R.id.support_count);
 //        Zx_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
         Emht_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
 
@@ -286,7 +289,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             kjBitmap = KJBitmap.create();
 //            kjBitmap.display(holder.imgV(R.id.snapshots), Url.IMAGE + bean.getCover());
-            ImageLoader.getInstance().displayImage(Url.IMAGE + bean.getCover(),holder.imgV(R.id.snapshots));
+            ImageLoader.getInstance().displayImage(Url.IMAGE + bean.getCover(), holder.imgV(R.id.snapshots));
 //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
 //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
 //                    new DisplayImageOptions.Builder()
@@ -345,8 +348,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     bean.activity = jsonObject.getString("activity");
 
                     bean.id = jsonObject.getString("id");
-                    bean.gm_logo=jsonObject.getJSONObject("user").getString("avatar32");
-                    bean.gm_nickname=jsonObject.getJSONObject("user").getString("nickname");
+                    bean.gm_logo = jsonObject.getJSONObject("user").getString("avatar32");
+                    bean.gm_nickname = jsonObject.getJSONObject("user").getString("nickname");
                 } catch (JSONException e) {
                 }
                 beans.add(bean);
@@ -412,12 +415,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onResult(boolean state, List<RemenhuatiBean> beans) {
-                rm_adapter.resetData(beans);
+
+                if (state) {
+                    scrollView.setVisibility(View.VISIBLE);
+                    load_progressBar.setVisibility(View.GONE);
+                    rm_adapter.resetData(beans);
+                }
             }
         });
 
 
     }
+
     private List<String> parseUserList(JSONArray userArray) {
         List<String> userList = new ArrayList<>();
         for (int i = 0; i < userArray.length(); i++) {
@@ -432,6 +441,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
         return userList;
     }
+
     /*数据适配器*/
     public class RemenhuatiAdapter extends RBaseAdapter<RemenhuatiBean> {
         Context context;
@@ -737,7 +747,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         map.put("uid", bean.uid);
         map.put("is_join", bean.is_join);
         map.put("user_nickname", bean.gm_nickname);
-        map.put("user_logo",  bean.gm_logo);
+        map.put("user_logo", bean.gm_logo);
         bundle.putSerializable("group_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
         Intent intent = new Intent(context, GroupInfoActivity.class);
@@ -762,7 +772,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     //                为图片控件加载数据
                     kjBitmap = KJBitmap.create();
 //                    kjBitmap.display(viewHolder.imgV(R.id.issue_image), RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url);
-                    ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url,viewHolder.imgV(R.id.issue_image));
+                    ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url, viewHolder.imgV(R.id.issue_image));
                     time.setText(beans.get(0).IssueList.get(0).create_time);
                     count.setText(beans.get(0).IssueList.get(0).reply_count);
                     support_count.setText(beans.get(0).IssueList.get(0).support_count);

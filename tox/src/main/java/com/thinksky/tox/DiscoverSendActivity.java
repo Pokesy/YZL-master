@@ -306,8 +306,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
                         Toast.makeText(DiscoverSendActivity.this, "请填写标题", Toast.LENGTH_LONG).show();
                         return;
                     }
-                    if (mContentEdit.getText().toString().length() == 10) {
-                        Toast.makeText(DiscoverSendActivity.this, "手号码必须是11位", Toast.LENGTH_SHORT).show();
+                    if (!mContentEdit.getText().toString().matches("^(13|15|17|18)\\d{9}$")) {
+                        Toast.makeText(DiscoverSendActivity.this, "号码填写不正确", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (BaseFunction.isLogin()) {
@@ -524,7 +524,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
 //        progressDialog.setCanceledOnTouchOutside(false);
 //        progressDialog.show();
         for (int i = 0; i < scrollImg.size() - 1; i++) {
-            //kjUpload(scrollImg.get(i));
+            kjUpload(scrollImg.get(i));
             AjaxParams params = new AjaxParams();
             try {
                 String path1 = scrollImg.get(i);

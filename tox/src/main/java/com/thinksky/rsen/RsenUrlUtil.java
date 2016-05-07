@@ -32,6 +32,8 @@ public class RsenUrlUtil {
     public static String URL_SUB_BASE = "/api.php?s=";
     //发现
     public static String URL_FX = URL_BASE + URL_SUB_BASE + "user/getUserList";
+    //修改密码
+    public static String URL_RSPW = URL_BASE + URL_SUB_BASE + "user/changePass";
     //发现获取信息
     public static String URL_FXU = URL_BASE + URL_SUB_BASE + "user/getProfile";
     //百科服务器地址
@@ -47,7 +49,7 @@ public class RsenUrlUtil {
 
     //消息
     public static String URL_XX = URL_BASE + URL_SUB_BASE + "Message/getAllMessage";
-   //取消收藏
+    //取消收藏
     public static String URL_DLSC = URL_BASE + URL_SUB_BASE + "paper/rejectBookmark";
     //专家分类
     public static String URL_ZJ_FL = URL_BASE + URL_SUB_BASE + "/Issue/getIssuelist";
@@ -55,6 +57,9 @@ public class RsenUrlUtil {
     public static String URL_ZJXQ = URL_BASE + URL_SUB_BASE + "Issue/getIssueDetail&id=";
     //问答
     public static String URL_WD = URL_BASE + URL_SUB_BASE + "Question/getQuestionList";
+    //扩展地区信息
+
+    public static String URL_DQ = URL_BASE + URL_SUB_BASE + "public/getDistrict";
     //轮播图
     public static String URL_LBT = URL_BASE + URL_SUB_BASE + "public/getAppLunbo";
     //论坛
@@ -86,7 +91,7 @@ public class RsenUrlUtil {
     public static String URL_SOLUTE_WD = URL_BASE + URL_SUB_BASE + "Question/getSoluteQuestionList";
     //问题提问
     public static String URL_SEND_QUESTION = URL_BASE + URL_SUB_BASE + "/question/sendQuestion";
-    public static String URL_SEND_HT = URL_BASE + URL_SUB_BASE+  "/group/sendPost";
+    public static String URL_SEND_HT = URL_BASE + URL_SUB_BASE + "/group/sendPost";
     //问题回答
     public static String URL_SEND_QUESTION_ANSWER = URL_BASE + URL_SUB_BASE + "Question/sendQuestionAnswer&session_id=&question_id=&content=";
     //回答点赞
@@ -154,8 +159,8 @@ public class RsenUrlUtil {
                         }
                     } else {
                         if (listener != null && listener instanceof OnNetHttpResultListener) {
-                            ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
-//                            ((OnNetHttpResultListener) listener).onNoNetwork(msg.what + "-->" + data);
+//                            ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
+                            ((OnNetHttpResultListener) listener).onNoNetwork(msg.what + "-->" + data);
                         }
                     }
                 }

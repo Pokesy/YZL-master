@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.utils.MD5;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -118,10 +119,10 @@ public class RegistetActivity extends BaseBActivity {
         if (opinion.equals("2")){
             mName.setHint("输入手机号");
             mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
-            registerText.setText("手机号注册");
+            registerText.setText("用户注册");
             Drawable drawable = getResources().getDrawable(R.drawable.mobile);
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-            mName.setCompoundDrawables(drawable, null, null, null);
+//            mName.setCompoundDrawables(drawable, null, null, null);
             reg_type="mobile";
         }
         if (arr.get(0).get("open_invite").equals("0")){
@@ -134,7 +135,7 @@ public class RegistetActivity extends BaseBActivity {
         if (arr.get(0).get("email_verify_type").equals("1")&&registerText.getText()=="邮箱注册"){
             type="email";
         }
-        if (arr.get(0).get("mobile_verify_type").equals("1")&&registerText.getText()=="手机号注册"){
+        if (arr.get(0).get("mobile_verify_type").equals("1")&&registerText.getText()=="用户注册"){
             checkId.setVisibility(View.VISIBLE);
             type="mobile";
         }
@@ -200,7 +201,9 @@ public class RegistetActivity extends BaseBActivity {
                     break;
                 case R.id.next:
                     username = mName.getText().toString();
-                    password = mPassword.getText().toString();
+
+                        password = MD5.md5(mPassword.getText().toString());
+
                     if(opinion.equals("0")) {
                         if (!username.matches("[0-9A-Za-z_]*")) {
                             Toast.makeText(RegistetActivity.this, "用户名只能是英文数字和下划线", Toast.LENGTH_SHORT).show();

@@ -17,6 +17,7 @@ import com.thinksky.model.ActivityModel;
 import com.thinksky.net.ThreadPoolUtils;
 import com.thinksky.thread.HttpPostThread;
 import com.thinksky.tox.LoginActivity;
+import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.UploadActivity;
 import com.thinksky.tox.UserInfoActivity;
@@ -60,6 +61,7 @@ public class login {
     public void setCircularProgressButton(CircularProgressButton circularProgressButton) {
         this.circularProgressButton = circularProgressButton;
     }
+
     public void setLoginHandler() {
         this.loginHandler = new Handler() {
             public void handleMessage(android.os.Message msg) {
@@ -78,7 +80,7 @@ public class login {
                             }
                         }, 3000);
                     }
-                }else if(msg.what==601||msg.what == 602){
+                } else if (msg.what == 601 || msg.what == 602) {
                     if (circularProgressButton != null) {
                         circularProgressButton.setErrorText("用户名或密码错误");
                         circularProgressButton.setProgress(-1);
@@ -89,7 +91,7 @@ public class login {
                             }
                         }, 3000);
                     }
-                }else if (msg.what==801){
+                } else if (msg.what == 801) {
                     if (circularProgressButton != null) {
                         circularProgressButton.setErrorText("账号未激活");
                         circularProgressButton.setProgress(-1);
@@ -100,8 +102,7 @@ public class login {
                             }
                         }, 3000);
                     }
-                }
-                else if (msg.what == 100) {
+                } else if (msg.what == 100) {
                     if (circularProgressButton != null) {
                         circularProgressButton.setErrorText("登录失败");
                         circularProgressButton.setProgress(-1);
@@ -124,7 +125,7 @@ public class login {
                         JSONObject jsonObject = new JSONObject(result);
                         Url.VERSION = jsonObject.getString("version");
 //                        Url.WEIBOWORDS=Integer.parseInt(jsonObject.getString("weibo_words_limit"));
-                        Url.WEIBOWORDS=200;
+                        Url.WEIBOWORDS = 200;
                     } catch (JSONException E) {
 
                     }
@@ -145,10 +146,15 @@ public class login {
                         LoginActivity.instance.finish();
                     } else if (entryActivity == ActivityModel.USERINFO) {
                         Intent intent = new Intent(context, UserInfoActivity.class);
-                        intent.putExtra("userUid",Url.USERID);
+                        intent.putExtra("userUid", Url.USERID);
                         context.startActivity(intent);
                         LoginActivity.instance.finish();
-                    }else{
+                    } else if (entryActivity == ActivityModel.ACTIVITY) {
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
+                        LoginActivity.instance.finish();
+                    } else {
+
 
                         LoginActivity.instance.finish();
                     }

@@ -2,6 +2,7 @@ package com.thinksky.holder;
 
 import android.app.Application;
 import android.app.Service;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
@@ -11,6 +12,7 @@ import com.bugtags.library.Bugtags;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.thinksky.Face.LocationService;
+import com.tox.Url;
 
 
 public class BaseApplication extends Application {
@@ -28,6 +30,7 @@ public class BaseApplication extends Application {
 	private static Looper mMainThreadLooper = null;
 	public LocationService locationService;
 	public Vibrator mVibrator;
+	private SharedPreferences sp = null;
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -42,7 +45,10 @@ public class BaseApplication extends Application {
 
 		locationService = new LocationService(getApplicationContext());
 		mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-
+		sp = getSharedPreferences("userInfo", 0);
+		if (!"".equals(sp)) {
+			Url.SESSIONID = sp.getString("session_id", "");
+		}
 	}
 
 
