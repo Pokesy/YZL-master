@@ -17,15 +17,17 @@
             android:id="@+id/Issue_Back1"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:gravity="center"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/Issue_Back_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:src="@drawable/arrow_left" />
         </RelativeLayout>
 
@@ -33,113 +35,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/Issue_Back1"
-            android:gravity="center_vertical|center_horizontal"
+
+
+            android:layout_gravity="center"
+
             android:orientation="horizontal">
 
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
+
                 android:gravity="center_vertical|center_horizontal"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
-                android:textColor="#333333"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="专家课程"
+                android:textColor="#ffffff"
+                android:textSize="17sp"
+
+                />
         </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/image_progress"
-            android:layout_width="25dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:visibility="gone" />
-        <!--<ImageView-->
-        <!--android:id="@+id/image_progress"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:src="@drawable/empty_photo"/>-->
-        <FrameLayout
-            android:id="@+id/bofangshipin"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:scaleType="fitXY">
-
-            <ImageView
-                android:id="@+id/issue_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/bofang" />
-        </FrameLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:orientation="vertical"
-            android:padding="5dp"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:id="@+id/top"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginBottom="5dp">
-
-                <com.thinksky.redefine.CircleImageView
-                    android:id="@+id/issue_userImage"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/side_user_avatar" />
-
-                <TextView
-                    android:id="@+id/issue_userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/black" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/top">
-
-                <TextView
-                    android:id="@+id/issue_signature"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#F5F5F5"
-                    android:padding="3dp"
-                    android:singleLine="true"
-                    android:text="测试使用"
-                    android:textColor="@color/group_less"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-
-        </RelativeLayout>
-    </LinearLayout>
     <!--页脚-->
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
@@ -158,15 +76,110 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-        >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:orientation="vertical">
 
+                    <ProgressBar
+                        android:id="@+id/image_progress"
+                        android:layout_width="25dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:visibility="gone" />
+
+                    <FrameLayout
+                        android:id="@+id/bofangshipin"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY">
+
+                        <ImageView
+                            android:id="@+id/issue_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#45000000" />
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:src="@drawable/bofang" />
+                        </RelativeLayout>
+                    </FrameLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.4"
+                        android:orientation="vertical"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:id="@+id/top"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_marginBottom="5dp">
+
+                            <com.thinksky.redefine.CircleImageView
+                                android:id="@+id/issue_userImage"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/side_user_avatar" />
+
+                            <TextView
+                                android:id="@+id/issue_userName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/top">
+
+                            <TextView
+                                android:id="@+id/issue_signature"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#F5F5F5"
+                                android:padding="3dp"
+                                android:singleLine="true"
+                                android:text="测试使用"
+                                android:textColor="@color/group_less"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+
+                    </RelativeLayout>
+                </LinearLayout>
                 <!--</LinearLayout>-->
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -185,35 +198,33 @@
                             android:layout_height="match_parent"
                             android:background="#F5F5F5"
                             android:gravity="center"
+                            android:orientation="vertical"
                             android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
-                            android:orientation="vertical">
+                            android:paddingRight="15dp">
 
                             <TextView
                                 android:id="@+id/issue_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
-                                android:paddingTop="20dp"
                                 android:gravity="center_vertical|center_horizontal"
                                 android:marqueeRepeatLimit="marquee_forever"
+                                android:paddingTop="20dp"
                                 android:singleLine="true"
                                 android:textColor="#333333"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
+                                android:textSize="17sp" />
 
                             <TextView
-                                android:padding="10dp"
                                 android:id="@+id/issue_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="marquee"
                                 android:gravity="center_vertical|center_horizontal"
                                 android:marqueeRepeatLimit="marquee_forever"
+                                android:padding="10dp"
                                 android:singleLine="true"
                                 android:textColor="#999999"
-                                android:textSize="13sp"
-                                android:textStyle="bold" />
+                                android:textSize="13sp" />
                             <!--<WebView-->
                             <!--android:hardwareAccelerated="false"-->
                             <!--android:layout_width="match_parent"-->
@@ -225,19 +236,19 @@
                                 android:id="@+id/iss_details"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:lineSpacingMultiplier="1.5"
                                 android:padding="5dp"
                                 android:scrollHorizontally="true"
                                 android:scrollbars="vertical"
                                 android:textColor="#666666"
-                                android:textSize="15sp" />
+                                android:textSize="13sp" />
                         </LinearLayout>
-
-
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+
                             android:orientation="vertical">
 
                             <TextView
@@ -245,22 +256,21 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:ellipsize="none"
-                                android:paddingBottom="5dp"
+                                android:paddingBottom="10dp"
                                 android:paddingLeft="15dp"
-                                android:paddingTop="15dp"
+                                android:paddingTop="10dp"
                                 android:singleLine="true"
-
                                 android:text="评论--"
-                                android:textColor="#333333" />
+                                android:textColor="#333333"
+                                android:textSize="17sp" />
 
                             <com.thinksky.myview.IssueListView
                                 android:id="@+id/issue_list"
+
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:divider="@null"
-                                android:dividerHeight="1dp"
-                                 />
-
+                                android:dividerHeight="1dp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -268,6 +278,7 @@
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -312,12 +323,13 @@
                     android:text="发表"
                     android:textColor="#A9ADB0"></TextView>
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/issue_editBox"
                 android:background="#ffffff"
-                android:id="@+id/bottom"
                 android:orientation="horizontal">
 
                 <!--<LinearLayout-->

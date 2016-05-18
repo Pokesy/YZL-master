@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divider"
                 android:layout_alignBottom="@id/main_radio"
-                android:background="@color/bg_color_divider_dark" />
+                android:background="@color/bg_color_main" />
 
         </RelativeLayout>
 

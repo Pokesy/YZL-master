@@ -473,7 +473,7 @@ public class WeiboDetailActivity extends BaseBActivity {
         }
         //加载图片
         //Log.e("加载图片",Weiboinfo.getImgList().size()+"");
-        if (Weiboinfo.getImgList().size() != 0) {
+        if ("".equals(Weiboinfo.getImgList())) {
             mDetail_repostWeibo.setVisibility(View.VISIBLE);
             int imageCount = Weiboinfo.getImgList().size();
             if (imageCount > 9) {
@@ -515,7 +515,7 @@ public class WeiboDetailActivity extends BaseBActivity {
             mDetail_Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, WeiboDetailActivity.this));
             upFlag = true;
         }
-        if (Weiboinfo.getFrom().equals("")) {
+        if (Weiboinfo.getFrom()==null) {
             mWeiboFrom.setText("来自:网站端");
         } else {
             mWeiboFrom.setText("来自:" + Weiboinfo.getFrom());

@@ -360,7 +360,7 @@ public class LuntanFragment extends Fragment {
             viewHolder.itemLayout.setPadding(margin, 3 * margin, margin, 3 * margin);
 
             ResUtil.setBgDrawable(viewHolder.itemLayout,
-                    ResUtil.generateBorderDrawable(2, 2, Color.parseColor("#333333"), Color.parseColor("#30D9D9D9")));
+                    ResUtil.generateBorderDrawable(2, 2, Color.parseColor("#333333"), Color.parseColor("#50D9D9D9")));
 
             //图片的大小
             int imgSize = (int) ResUtil.dpToPx(context.getResources(), 60);

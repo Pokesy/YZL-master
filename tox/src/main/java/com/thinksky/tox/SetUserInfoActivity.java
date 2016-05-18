@@ -152,9 +152,9 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
         xianshi_email.setText(user.getEmail());
         xianshi_qq.setText(user.getQq());
         Log.d("Province", user.getProvince() + "  123");
-        if ("null".equals(user.getProvince())) {
+        if (user.getProvince()==null) {
             xianshi_place.setText("");
-        } else if ("null".equals(user.getCity())) {
+        } else if (user.getCity()==null) {
             xianshi_place.setText(user.getProvince());
         } else {
             xianshi_place.setText(user.getProvince() + " " + user.getCity());

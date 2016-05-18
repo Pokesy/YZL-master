@@ -63,6 +63,7 @@ public class RegistetActivity extends BaseBActivity {
     private TimeCount time;
     //存储从那种注册方式进来
     private String opinion;
+
     private String reg_type;
 
     @Override
@@ -321,7 +322,7 @@ public class RegistetActivity extends BaseBActivity {
                         BaseFunction.putSharepreference("username", username, RegistetActivity.this, Url.SharedPreferenceName);
                         BaseFunction.putSharepreference("password", password, RegistetActivity.this, Url.SharedPreferenceName);
                         //TODO 注册后的nickname问题，头像路径问题
-                        ToastHelper.showToast("注册成功了", RegistetActivity.this);
+                        ToastHelper.showToast("注册成功", RegistetActivity.this);
                         Url.activityFrom="registe";
                         Url.MYUSERINFO = myJson.getUserAllInfo(result);
                         mUserapi.saveUserInfoToNative(RegistetActivity.this);

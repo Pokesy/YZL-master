@@ -179,6 +179,7 @@ public class login {
 
     public void userLogin(String username, String password) {
         //String url = Url.LOGIN;
+
         if (circularProgressButton != null) {
             circularProgressButton.setIndeterminateProgressMode(true);
             circularProgressButton.setProgress(50);
@@ -191,6 +192,7 @@ public class login {
         mapvalue.put("session_id", "0");
         String url = Url.HTTPURL + "?s=" + Url.LOGIN;
         ThreadPoolUtils.execute(new HttpPostThread(loginHandler, url, mapvalue));
+//        progressDialog.dismiss();
     }
 
 }

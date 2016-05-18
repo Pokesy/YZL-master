@@ -186,9 +186,20 @@ public class WeiboAdapter extends BaseAdapter {
                 hold.repostText.setFaceText("      原微博已删除");
                 hold.repostLinerLayout.setVisibility(View.VISIBLE);
                 hold.repostText.setVisibility(View.VISIBLE);
-                hold.repostWeiboTime.setVisibility(View.VISIBLE);
+                hold.repostWeiboTime.setVisibility(View.GONE);
                 hold.repostName.setVisibility(View.VISIBLE);
             } else {
+                hold.repostLinerLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ctx, WeiboDetailActivity.class);
+                        Bundle bund = new Bundle();
+//                        Log.e("被点击啦啦啦啦啦", arg0 + "");
+                        bund.putSerializable("WeiboInfo", list.get(arg0).getRepostWeiboInfo());
+                        intent.putExtra("value", bund);
+                        ctx.startActivity(intent);
+                    }
+                });
                 hold.repostLinerLayout.setBackgroundColor(Color.parseColor("#F7F7F7"));
                 hold.repostName.setText("@" + "" + repostWeibo.getUser().getNickname() + "：");
                 hold.repostName.setTextColor(ctx.getResources().getColor(R.color.repostName));
@@ -196,7 +207,7 @@ public class WeiboAdapter extends BaseAdapter {
                 hold.repostText.setFaceText(repostWeibo.getWcontent());
                 hold.repostLinerLayout.setVisibility(View.VISIBLE);
                 hold.repostText.setVisibility(View.VISIBLE);
-                hold.repostWeiboTime.setVisibility(View.VISIBLE);
+                hold.repostWeiboTime.setVisibility(View.GONE);
                 hold.repostName.setVisibility(View.VISIBLE);
 
                 String repostWeiboType = repostWeibo.getType();

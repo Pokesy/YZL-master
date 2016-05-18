@@ -7,6 +7,39 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
+        <!--标题-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/Post_detail_jin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="精"
+                android:textColor="#CB5C31"
+                android:layout_marginLeft="15dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:textSize="10sp"
+                android:background="@drawable/text_orange_round"
+                android:visibility="gone" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/Post_detail_title"
+
+                android:textSize="17sp"
+                android:textColor="@color/font_color_dark_black"
+                android:singleLine="true"
+                android:text="【萌萌哒】柔情啊Sir."
+                />
+        </LinearLayout>
         <!--帖子内容的用户信息部分-->
         <LinearLayout
             android:layout_width="fill_parent"
@@ -34,6 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginLeft="5dp"
                     android:gravity="center_vertical|center_horizontal"
                     android:layout_toRightOf="@+id/Post_detail_UserHead"
                     android:weightSum="5">
@@ -41,32 +75,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="3.5"
-                        android:gravity="center_vertical"
+                        android:layout_gravity="left"
                         >
                         <TextView
                             android:id="@+id/Post_detail_UserName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
+
                             android:text="UserName"
-                            android:textColor="#815F3D"
+                            android:textColor="@color/font_color_light_black"
                             android:textSize="16sp" />
                         <TextView
                             android:id="@+id/Post_detail_louzhu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="楼主"
+
                             android:textColor="#ffffff"
                             android:layout_marginLeft="7dp"
                             android:background="@drawable/text_blue_round"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
                     </LinearLayout>
                     <TextView
                         android:id="@+id/Post_detail_from"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1.2"
-                        android:layout_marginLeft="10dp"
+
                         android:layout_marginTop="3dp"
                         android:text="来自:网站端"
                         android:singleLine="true"
@@ -95,37 +130,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:layout_height="wrap_content">
-            <!--标题-->
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/Post_detail_jin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="精"
-                    android:textColor="#CB5C31"
-                    android:layout_marginLeft="15dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:textSize="10sp"
-                    android:background="@drawable/text_orange_round"
-                    android:visibility="gone" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/Post_detail_title"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:singleLine="true"
-                    android:text="【萌萌哒】柔情啊Sir."
-                    />
-            </LinearLayout>
+
             <!--内容-->
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -138,9 +143,10 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/Post_detail_content"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
+                    android:textColor="@color/font_color_light_black"
                     android:text="戳进来戳进来戳进来戳进来戳进来戳进来戳进来戳进来戳进来"
-                    android:lineSpacingMultiplier="1.2"
+                    android:lineSpacingMultiplier="1.5"
                     />
             </LinearLayout>
             <View

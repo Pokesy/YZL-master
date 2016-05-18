@@ -160,7 +160,7 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
         editText = (EditText) findViewById(R.id.Forum_index_edittext);
         editText.addTextChangedListener(watcher);
         mForumSendCom = (TextView) findViewById(R.id.Forum_index_send_com);
-        mForumSendCom.setOnClickListener(this);
+//        mForumSendCom.setOnClickListener(this);
     }
 
     private void initListView() {
@@ -470,8 +470,9 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
      * 显示论坛发的基本信息
      */
     private void initForumData() {
-        mTopicCountView.setText(String.valueOf(mForumBean.topic_count));
-        mPostCountView.setText(String.valueOf(mForumBean.post_count));
+        mTopicCountView.setText(String.valueOf(mForumBean.reply_count));
+        mPostCountView.setText(String.valueOf(mForumBean.topic_count));
+
         mForumLastReply.setText("最后回复时间：" + mForumBean.last_reply_time);
         mForumNameView.setText(mForumBean.title);
         BaseFunction.showImage(this, mForumLogo, mForumBean.logo, imgLoad, Url.IMGTYPE_WEIBO);
@@ -489,7 +490,7 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
             Intent intent = new Intent(ForumDetailActivity.this, PostDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("postInfo", mPostInfos.get(position - 1));
-            intent.putExtra("post", bundle);
+            intent.putExtra("post"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           , bundle);
             startActivity(intent);
         }
     }

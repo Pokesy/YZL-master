@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/back_menu"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:paddingLeft="5dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -99,6 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/news_top"
+
         android:descendantFocusability="blocksDescendants"
         android:visibility="gone">
 
@@ -106,6 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+
             android:padding="5dp">
 
             <!--资讯头-->
@@ -135,6 +137,7 @@
                 <TextView
                     android:id="@+id/news_description"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/group_less" />
@@ -149,29 +152,32 @@
                     android:paddingTop="5dp">
 
                     <TextView
-                        android:id="@+id/news_author"
+                        android:id="@+id/news_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginRight="2dp"
-                        android:textColor="#0E90D2" />
+                        android:layout_marginRight="5dp"
+
+                  />
 
                     <TextView
                         android:id="@+id/textView9"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_toRightOf="@+id/news_author"
-                        android:text="发表于" />
+                        android:layout_toRightOf="@+id/news_time"
+                        android:text="来自：" />
 
                     <TextView
-                        android:id="@+id/news_time"
+                        android:id="@+id/news_author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="1dp"
-                        android:layout_toRightOf="@+id/textView9" />
+                        android:layout_toRightOf="@+id/textView9"
+                        android:textColor="#0E90D2"/>
 
 
                 </RelativeLayout>
@@ -184,7 +190,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingTop="5dp">
+                android:paddingTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
 
                 <WebView
                     android:id="@+id/news_web"
@@ -196,6 +204,7 @@
 
                 <TextView
                     android:id="@+id/news_content"
+                    android:lineSpacingMultiplier="1.5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#666666"
@@ -206,13 +215,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:background="#f2f2f2">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:text="评论"
+
                     android:textColor="@color/black"
                     android:textSize="17sp" />
 
@@ -224,6 +237,7 @@
                 android:id="@+id/reply_module"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:gravity="center"
                 android:orientation="vertical"></LinearLayout>
 
@@ -270,27 +284,40 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:background="#F6FAFB"
+        android:background="#f2f2f2"
         android:gravity="center"
         android:visibility="visible"
         android:weightSum="10">
+        <TextView
+            android:id="@+id/edit_disable_text"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="5.5"
+            android:background="@drawable/shape_reply"
+            android:drawableLeft="@drawable/icon_edit"
+            android:drawablePadding="10dp"
 
+            android:hint="写评论"
+            android:paddingBottom="5dp"
+            android:paddingLeft="8dp"
+            android:paddingTop="5dp" />
         <LinearLayout
             android:id="@+id/support_button"
             android:layout_width="0dp"
             android:layout_height="35dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="4.5"
-            android:background="@drawable/border"
+
+            android:layout_weight="2"
+
             android:gravity="center_horizontal|center_vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:src="@drawable/icon_view" />
+                android:src="@drawable/weidianzan" />
 
             <TextView
                 android:id="@+id/supportCount"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="30dp"
@@ -301,9 +328,9 @@
             android:id="@+id/news_fast_reply"
             android:layout_width="0dp"
             android:layout_height="35dp"
-            android:layout_marginLeft="6dp"
-            android:layout_weight="4.5"
-            android:background="@drawable/border"
+
+            android:layout_weight="2"
+
             android:gravity="center_horizontal|center_vertical">
 
             <ImageView
@@ -314,6 +341,7 @@
 
             <TextView
                 android:id="@+id/reply_count"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="30dp"

@@ -108,7 +108,7 @@ public class PostCommentAdapter extends BaseAdapter {
             holder.photoLayout.setVisibility(View.GONE);
             ImageView view=new ImageView(ctx);
             LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(0,0,0,10);
+            layoutParams.setMargins(10,0,0,10);
             view.setLayoutParams(layoutParams);
             view.setImageResource(R.drawable.friends_sends_pictures_no);
             holder.photoLayout.addView(view);

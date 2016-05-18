@@ -440,6 +440,10 @@
             android:name="com.thinksky.fragment.UserPlaceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
+        <activity
+            android:name="com.thinksky.fragment.UserListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/ActivityThemeTwo" />
     </application>
 
 </manifest>

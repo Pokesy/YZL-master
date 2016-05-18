@@ -304,7 +304,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 public void onClick(View v) {
                     Intent tempIntent = new Intent(mContext, NewsDetailActivity.class);
                     NewsListInfo newsListInfo = new NewsListInfo();
-
+                    tempIntent.putExtra("support", bean.getSupport_count());
+                    tempIntent.putExtra("isSupport", bean.getSupport_count());
                     tempIntent.putExtra("newsInfo", bean);
                     getActivity().startActivity(tempIntent);
                 }
@@ -521,7 +522,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onClick(View v) {
                     //                    Bundle bundle = new Bundle();
-                    launch(mContext, isWeGroup, bean);
+                    if (!"".equals(bean)) {
+                        launch(mContext, isWeGroup, bean);
+                    }
                 }
             });
 
@@ -771,23 +774,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     final ArrayList<ZhuanjiFragment.ZjBean> beans = parseJson(jsonObject);
                     //                为图片控件加载数据
                     kjBitmap = KJBitmap.create();
+                    if (!beans.isEmpty()) {
 //                    kjBitmap.display(viewHolder.imgV(R.id.issue_image), RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url);
                     ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url, viewHolder.imgV(R.id.issue_image));
-                    time.setText(beans.get(0).IssueList.get(0).create_time);
-                    count.setText(beans.get(0).IssueList.get(0).reply_count);
-                    support_count.setText(beans.get(0).IssueList.get(0).support_count);
-                    bofangshipin.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("id", beans.get(0).IssueList.get(0).id);
-                            Intent intent = new Intent(getActivity(), IssueDetail.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    });
 
+                        time.setText(beans.get(0).IssueList.get(0).create_time);
+                        count.setText(beans.get(0).IssueList.get(0).reply_count);
+                        support_count.setText(beans.get(0).IssueList.get(0).support_count);
+                        bofangshipin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("id", beans.get(0).IssueList.get(0).id);
+                                Intent intent = new Intent(getActivity(), IssueDetail.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
 
+                    }
                 }
             }
         });

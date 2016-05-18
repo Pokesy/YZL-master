@@ -36,15 +36,16 @@
                 android:layout_marginTop="13dp"
                 android:text="名字:wuyinlei"
                 android:textColor="#ffffff"
-                android:textSize="15sp" />
+                android:textSize="17sp" />
 
             <TextView
                 android:id="@+id/signature"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="AndroidLoves"
                 android:textColor="#ffffff"
-                android:textSize="15sp" />
+                android:textSize="13sp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -66,8 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="15dp"
-
-            android:background="#DEE2E3" />
+            android:background="#66DEE2E3" />
 
         <TextView
             android:id="@+id/user"
@@ -86,7 +86,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="15dp"
 
-            android:background="#DEE2E3" />
+            android:background="#66DEE2E3" />
 
         <TextView
             android:id="@+id/message1"
@@ -106,7 +106,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="15dp"
 
-            android:background="#DEE2E3" />
+            android:background="#66DEE2E3" />
 
         <TextView
             android:id="@+id/collect"
@@ -126,7 +126,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="15dp"
 
-            android:background="#DEE2E3" />
+            android:background="#66DEE2E3" />
 
         <TextView
             android:id="@+id/invite"
@@ -148,7 +148,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="15dp"
 
-            android:background="#DEE2E3" />
+            android:background="#66DEE2E3" />
 
         <TextView
             android:id="@+id/setting"
@@ -169,7 +169,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="15dp"
 
-            android:background="#DEE2E3" />
+            android:background="#66DEE2E3" />
     </LinearLayout>
     <!--<ListView-->
     <!--android:id="@+id/lv"-->

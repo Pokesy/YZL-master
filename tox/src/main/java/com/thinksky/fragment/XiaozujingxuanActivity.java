@@ -36,13 +36,11 @@ public class XiaozujingxuanActivity extends BaseBActivity {
     private boolean isWeGroup = true;
     private  MyJson myjson =new MyJson();
     ListView listView;
-
     ImageView back_menu;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xiaozujingxuan_layout);
-
         back_menu= (ImageView) findViewById(R.id.back_menu);
         recyclerView = (RGridView)findViewById(R.id.gridView);
         back_menu.setOnClickListener(new View.OnClickListener() {
@@ -59,14 +57,11 @@ public class XiaozujingxuanActivity extends BaseBActivity {
 
     private void initViewData() {
         String url = RsenUrlUtil.URL_XIAOZU_JINGXUAN;
-
-
         RsenUrlUtil.execute(url, new RsenUrlUtil.OnJsonResultListener<MyBean>() {
             @Override
             public void onNoNetwork(String msg) {
                 ToastHelper.showToast(msg, Url.context);
             }
-
             @Override
             public void onParseJsonBean(List<MyBean> beans, JSONObject jsonObject) {
                 MyBean bean = new MyBean();
@@ -76,28 +71,20 @@ public class XiaozujingxuanActivity extends BaseBActivity {
                     bean.detail = jsonObject.getString("detail");
                     bean.menmberCount = jsonObject.getString("menmberCount");
                     bean.member_count = jsonObject.getString("member_count");
-
                     bean.group_background = jsonObject.getString("background");
                     bean.type_id = jsonObject.getString("type_id");
                     bean.is_join = jsonObject.getString("is_join");
                     bean.uid = jsonObject.getString("uid");
                     bean.post_count = jsonObject.getString("post_count");
                     bean.group_type = jsonObject.getString("type");
-//                    bean.type_name = jsonObject.getString("type_name");
-//
                     bean.activity = jsonObject.getString("activity");
-
                     bean.id = jsonObject.getString("id");
-
                     bean.gm_logo=jsonObject.getJSONObject("user").getString("avatar32");
                     bean.gm_nickname=jsonObject.getJSONObject("user").getString("nickname");
-
-
                 } catch (JSONException e) {
                 }
                 beans.add(bean);
             }
-
             @Override
             public void onResult(boolean state, List<MyBean> beans) {
                 if (state) {
@@ -116,7 +103,6 @@ public class XiaozujingxuanActivity extends BaseBActivity {
         for (int i = 0; i < userArray.length(); i++) {
             try {
                 JSONObject jsonObject = userArray.getJSONObject(i);
-
                 JSONObject user = jsonObject.getJSONObject("user");
                 userList.add(RsenUrlUtil.URL_BASE + user.getString("avatar32"));
             } catch (JSONException e) {
@@ -130,19 +116,15 @@ public class XiaozujingxuanActivity extends BaseBActivity {
 
 
     public class MyAdapter extends RBaseAdapter<MyBean> {
-
         public MyAdapter(Context context, List<MyBean> datas) {
             super(context, datas);
         }
-
         @Override
         protected int getItemLayoutId(int viewType) {
             return R.layout.fragment_xiaozujingxuan_adapter;
         }
-
         @Override
         protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
-
             ResUtil.setRoundImage(bean.logo, holder.imgV(R.id.logo));
             holder.tV(R.id.title).setText(bean.title);
             holder.tV(R.id.detail).setText(bean.detail);
@@ -152,8 +134,6 @@ public class XiaozujingxuanActivity extends BaseBActivity {
                 @Override
                 public void onClick(View v) {
                     launch(mContext, isWeGroup, bean);
-//                    GroupInfoActivity.MyBean bean = new GroupInfoActivity.MyBean();
-//                    GroupInfoActivity.launch(mContext,isWeGroup,bean);
                 }
             });
         }
@@ -166,23 +146,19 @@ public class XiaozujingxuanActivity extends BaseBActivity {
         public String id;
         public String logo;
         public String title;
-        //        public String group_id;
         public String group_type;
         public String detail;
         public String type_name;
         public String post_count;
-
         public String uid;
         public String group_logo;
         public String group_background;
         public String type_id;
         public String activity;
         public String is_join;
-
         public String gm_logo;
         public String gm_nickname;
     }
-
     public static void launch(Context context, boolean isWeGroup, MyBean bean) {
         HashMap<String, String> map = new HashMap<>();
         Bundle bundle = new Bundle();

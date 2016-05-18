@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background_login">
+    android:background="@drawable/background_login"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/loginTop"
@@ -18,8 +18,8 @@
             android:id="@+id/registClose"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
 
             >
 
@@ -29,8 +29,7 @@
 
                 android:padding="10dp"
 
-                android:src="@drawable/arrow_left"
-       />
+                android:src="@drawable/arrow_left" />
 
         </RelativeLayout>
 
@@ -41,9 +40,9 @@
             android:layout_centerInParent="true"
             android:gravity="center_vertical"
             android:text=""
-            android:visibility="gone"
             android:textColor="@color/tab"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone" />
 
 
     </RelativeLayout>
@@ -53,8 +52,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
 
 
@@ -65,7 +64,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/openRegist"
                 android:layout_width="match_parent"
                 android:layout_height="38dp"
@@ -73,131 +71,133 @@
                 android:layout_marginRight="1dp"
                 android:background="@drawable/button_edit_normal"
                 android:drawablePadding="10dp"
-                android:text="邀请注册用户请先输入邀请码，再填写注册信息"
-                android:maxLines="2"
                 android:ellipsize="end"
-                android:paddingLeft="10dp" />
+                android:maxLines="2"
+                android:paddingLeft="10dp"
+                android:text="邀请注册用户请先输入邀请码，再填写注册信息"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/Redit_name"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/shape"
+                android:hint="用户名"
+                android:paddingLeft="10dp"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
-                android:hint="用户名"
-                android:paddingLeft="10dp" />
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:visibility="gone"
                 android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp">
-            </LinearLayout>
+                android:layout_marginRight="1dp"
+                android:visibility="gone"></LinearLayout>
 
             <EditText
-                android:visibility="gone"
-                android:maxLength="16"
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
                 android:background="@drawable/button_edit_normal"
-
                 android:hint="昵称"
-                android:paddingLeft="10dp" />
+                android:maxLength="16"
+
+                android:paddingLeft="10dp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp">
-            </LinearLayout>
+                android:layout_marginRight="1dp"></LinearLayout>
 
             <EditText
-                android:maxLength="30"
                 android:id="@+id/Redit_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="0dp"
                 android:background="@drawable/shape"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
                 android:hint="输入密码"
                 android:inputType="textPassword"
-                android:paddingLeft="10dp" />
+                android:maxLength="30"
+                android:paddingLeft="10dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="12dp"
                 android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp">
-            </LinearLayout>
+                android:layout_marginRight="1dp"></LinearLayout>
 
             <EditText
-                android:maxLength="16"
                 android:id="@+id/role"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/button_edit_normal"
                 android:drawableLeft="@drawable/user"
                 android:drawablePadding="10dp"
-                android:paddingLeft="10dp"
                 android:enabled="false"
-                android:visibility="gone"/>
+                android:maxLength="16"
+                android:paddingLeft="10dp"
+                android:visibility="gone" />
 
-           <LinearLayout
-               android:id="@+id/checkId"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/checkId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-               android:orientation="horizontal">
-               <EditText
-                   android:maxLength="16"
-                   android:id="@+id/verifyId"
-                   android:layout_width="0px"
-                   android:layout_weight="2"
-                   android:layout_height="48dp"
-                   android:layout_marginLeft="1dp"
+                android:orientation="horizontal">
 
-                   android:background="@drawable/shape"
+                <EditText
+                    android:id="@+id/verifyId"
+                    android:layout_width="0px"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/shape"
 
-                   android:textColor="#ffffff"
-                   android:textColorHint="#ffffff"
-                   android:hint="输入验证码"
-                   android:paddingLeft="10dp" />
-               <Button
-                   android:id="@+id/sendVerify"
-                   android:layout_width="0px"
-                   android:layout_height="48dp"
-                   android:layout_weight="1"
-                   android:textColor="@color/head"
+                    android:hint="输入验证码"
+                    android:maxLength="16"
+                    android:paddingLeft="10dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:textSize="15sp" />
 
-                   android:background="@drawable/shape"
-                   android:text="获取验证码"
-                   />
-           </LinearLayout>
+                <Button
+                    android:id="@+id/sendVerify"
+                    android:layout_width="0px"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape"
+
+                    android:text="获取验证码"
+                    android:textColor="@color/head" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp">
-            </LinearLayout>
+                android:layout_marginRight="1dp"></LinearLayout>
+
             <RadioGroup
                 android:id="@+id/radioGroup"
-                android:contentDescription="性别"
-                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:contentDescription="性别"
+                android:orientation="horizontal">
 
             </RadioGroup>
 
@@ -206,29 +206,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp">
-            </LinearLayout>
+                android:layout_marginRight="1dp"></LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/next"
                 android:layout_width="match_parent"
-                android:background="@drawable/shape_login"
                 android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
-                android:layout_gravity="center_horizontal">
+                android:background="@drawable/shape_login">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:textColor="#ffffff"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:text="下一步"
+                    android:textColor="#ffffff"
                     android:textSize="21sp" />
             </RelativeLayout>
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击下一步代表您已阅读并同意"
+                    android:textSize="13sp"
+                    android:textColor="#ffffff" />
+
+                <TextView
+                    android:id="@+id/xieyi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用户使用协议"
+                    android:textColor="#87CEEB"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+                       </LinearLayout>
     </LinearLayout>
 
 
@@ -263,8 +285,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="150dp">
+        android:layout_marginTop="180dp"
+        android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -277,8 +299,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="登录"
-            android:textSize="16sp"
-            android:textColor="#87CEEB" />
+            android:textColor="#87CEEB"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>

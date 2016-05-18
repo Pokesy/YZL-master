@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:id="@+id/fragment_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
 
     android:orientation="vertical">
@@ -17,13 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/head_border"
-   >
+        android:background="@drawable/head_border">
 
         <ImageView
             android:id="@+id/back_menu"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:paddingBottom="10dp"
@@ -46,9 +45,10 @@
 
     <com.thinksky.rsen.view.RGridView
         android:id="@+id/gridView"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:tag="2" />
 </LinearLayout>
 

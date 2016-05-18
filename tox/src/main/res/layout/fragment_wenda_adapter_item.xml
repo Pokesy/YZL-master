@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentTop="true"
-            android:background="@color/default_divider_color" />
+            android:background="@color/bg_color_main" />
 
         <LinearLayout
             android:id="@+id/item_layout"
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/bg_question_status_selector"
-                        android:text="求助中"
+                        tools:text="求助中"
                         android:textColor="@color/text_question_status_selector"
                         android:textSize="@dimen/font_size_medium" />
 
@@ -70,7 +70,7 @@
                         android:layout_marginRight="10dp"
                         android:drawableLeft="@drawable/iconfonticonfontqian"
                         android:drawablePadding="5dp"
-                        android:text="20"
+                        tools:text="20"
                         android:textColor="@color/font_color_dark_gray"
                         android:textSize="@dimen/font_size_medium" />
 
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/iconfontbiaoqian1"
                         android:drawablePadding="5dp"
-                        android:text="鱼"
+                        tools:text="鱼"
                         android:textColor="@color/font_color_dark_gray"
                         android:textSize="@dimen/font_size_medium" />
 
@@ -97,7 +97,7 @@
                         android:id="@+id/creat_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="23秒前"
+                        tools:text="23秒前"
                         android:textColor="@color/font_color_dark_gray"
                         android:textSize="@dimen/font_size_small" />
                 </LinearLayout>
@@ -110,6 +110,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:layout_marginTop="12dp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:textColor="@color/font_color_light_black"
                 android:textSize="@dimen/font_size_primary"
                 android:lineSpacingMultiplier="1.5"
@@ -136,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        android:text="犀利的用户名"
+                        tools:text="犀利的用户名"
                         android:textColor="@color/font_color_dark_gray"
                         android:textSize="@dimen/font_size_medium" />
                 </LinearLayout>
@@ -149,7 +151,7 @@
                     android:layout_alignParentRight="true"
                     android:drawableLeft="@drawable/iconfontfaburenwu"
                     android:drawablePadding="5dp"
-                    android:text="21"
+                    tools:text="21"
                     android:textColor="@color/font_color_blue"
                     android:textSize="@dimen/font_size_medium" />
             </RelativeLayout>
@@ -159,7 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider"
             android:layout_alignParentBottom="true"
-            android:background="@color/bg_color_divider_dark" />
+            android:background="@color/bg_color_main" />
     </RelativeLayout>
 
     <View

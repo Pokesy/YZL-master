@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/guanyuqibai_back"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:paddingBottom="10dp"
@@ -34,7 +34,7 @@
             android:paddingTop="5dp"
             android:text="关于鱼知乐"
             android:textColor="@color/tab"
-            android:textSize="18sp" />
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/Issue_writePost"
@@ -50,9 +50,46 @@
 
     </RelativeLayout>
 
-    <WebView
-        android:id="@+id/webView1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:paddingTop="50dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="18dp"
+            android:text="1.0.1"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="18dp"
+            android:text="客服QQ：89898989"
+            android:textColor="@color/font_color_dark_gray"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="18dp"
+            android:text="客服邮箱：account-service@yuzhile.com"
+            android:textColor="@color/font_color_dark_gray"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

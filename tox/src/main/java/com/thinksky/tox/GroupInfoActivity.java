@@ -36,8 +36,10 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.thinksky.fragment.UserListActivity;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.MoreTextView;
+import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
@@ -69,8 +71,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     protected ScrollView group_scro;
     protected ImageView back_menu;
     protected ImageView cate_menu;
-
-    protected RelativeLayout refreshButn;
+    private CircleImageView user_logo;
+    protected RelativeLayout refreshButn,enter_cy;
     protected ArrayList<HashMap<String, String>> categoryList;
     private RemenhuatiAdapter rm_adapter;
     Context mContext;
@@ -104,6 +106,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     private LinearLayout post_at_top;
     private MoreTextView group_detail;
     private ImageView refreshImage;
+    private ArrayList<String> userlist;
     private HashMap<String, String> titleMap;
     private ArrayList<HashMap<String, String>> postInfoList;
     private boolean count = true;
@@ -114,6 +117,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     private boolean joinFlag = false;
     private int isJoin;
     private long lastClick;
+    private RecyclerView memberRecycler;
     //对加入群组的状态进行实时判断
     private Handler tempHandler = new Handler() {
         @Override
@@ -136,7 +140,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                         if (groupInfoMap.get("uid").equals(userUid)) {
                             join_status.setText("管理小组");
                         } else {
-                            join_status.setText("+加入群组");
+                            join_status.setText("加入群组");
                             joinFlag = true;
                         }
                     }
@@ -166,7 +170,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                     if (joinFlag) {
                         joinFlag = true;
                         ToastHelper.showToast("退出群组成功", ctx);
-                        join_status.setText("+加入群组");
+                        join_status.setText("加入群组");
                     } else {
                         if (PUBLICGROUP) {
                             joinFlag = false;
@@ -183,10 +187,10 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                 case 800:
                     if (PUBLICGROUP) {
                         if (joinFlag) {
-                            join_status.setText("+加入群组");
+                            join_status.setText("加入群组");
                             ToastHelper.showToast("退群失败，还未加入该群", ctx);
                         } else {
-                            join_status.setText("+退出群组");
+                            join_status.setText("退出群组");
                             ToastHelper.showToast("你已加入该群", ctx);
                         }
                     }
@@ -330,7 +334,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         isWeGroup = GroupBundle.getBoolean("isWeGroup");
         groupInfoMap = (HashMap<String, String>) GroupBundle.getSerializable("group_info");
         Log.e("groupInfoMap>>>>>>>>", groupInfoMap.toString());
-
+        memberRecycler = (RecyclerView) findViewById(R.id.memberRecycler);
         group_id = Integer.parseInt(groupInfoMap.get("id"));
 
 
@@ -356,8 +360,10 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                     MyBean bean = new MyBean();
 
                     bean.is_join = jsonObject.getInt("is_join");
-
-
+                    bean.uid = jsonObject.getString("uid");
+                    JSONArray userArray = jsonObject.getJSONArray("GroupMenmber");
+                    bean.userList = parseUserList(userArray);
+//                    bean.uidList = parseUidList(userArray);
                     beans.add(bean);
 
                 } catch (Exception e) {
@@ -368,7 +374,10 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
             @Override
             public void onResult(boolean state, final List<MyBean> beans) {
                 if (state) {
-                  isJoin=beans.get(0).is_join;
+                    isJoin = beans.get(0).is_join;
+                    userlist = beans.get(0).uidList;
+                    memberRecycler.setAdapter(new MySubAdapter(GroupInfoActivity.this, beans.get(0).userList));
+
                 } else {
 //                    ToastHelper.showToast("请求失败", Url.context);
                 }
@@ -382,7 +391,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
         post = new Intent(mContext, SendTieziActivity.class);
         post.putExtra("group_id", group_id);
-
+        user_logo = (CircleImageView) findViewById(R.id.user_logo);
         back_menu = (ImageView) findViewById(R.id.back_menu);
         group_post = (ImageView) findViewById(R.id.group_post);
         group_scro = (ScrollView) findViewById(R.id.group_scro);
@@ -406,7 +415,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         refreshButn = (RelativeLayout) findViewById(R.id.refresh_butn);
         refreshImage = (ImageView) findViewById(R.id.refresh_image);
 
-
+        enter_cy=(RelativeLayout) findViewById(R.id.enter_cy);
         group_logo.setOnClickListener(this);
         back_menu.setOnClickListener(this);
         group_post.setOnClickListener(this);
@@ -414,7 +423,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         cate_menu.setOnClickListener(this);
         join_group.setOnClickListener(this);
         refreshButn.setOnClickListener(this);
-
+        enter_cy.setOnClickListener(this);
         InitGroupView(groupInfoMap);
 //        ListView的滑动监听器
 //        group_scro.setOnTouchListener(new View.OnTouchListener() {
@@ -467,9 +476,59 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 //        });
 //        group_scro.smoothScrollTo(0, 0);
     }
+
     public static class MyBean {
         public int is_join;
+        public String uid;
+        public List<String> userList;
+        public ArrayList<String> uidList;
     }
+
+
+
+    private List<String> parseUserList(JSONArray userArray) {
+        List<String> userList = new ArrayList<>();
+        for (int i = 0; i < userArray.length(); i++) {
+            try {
+                JSONObject jsonObject = userArray.getJSONObject(i);
+                JSONObject user = jsonObject.getJSONObject("user");
+                userList.add(RsenUrlUtil.URL_BASE + user.getString("avatar32"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return userList;
+    }
+
+    /*成员头像*/
+    public class MySubAdapter extends RBaseAdapter<String> {
+
+        public MySubAdapter(Context context, List<String> datas) {
+            super(context, datas);
+        }
+        @Override
+        protected int getItemLayoutId(int viewType) {
+            return R.layout.fragment_xiaozujingxuan_adapter_sub_item;
+        }
+
+        @Override
+        protected void onBindView(RViewHolder holder, int position, String bean) {
+            ResUtil.setRoundImage(bean, holder.imgV(R.id.logo));
+
+//            /*点击用户头像*/
+//            holder.v(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(mContext, UserListActivity.class);
+//                    intent.putExtra("group_id", group_id);
+////                    intent.putStringArrayListExtra("uidlist", userlist);
+//                    startActivity(intent);
+//
+//                }
+//            });
+        }
+    }
+
     private void init() {
         rm_adapter = new RemenhuatiAdapter(mContext);
 
@@ -497,9 +556,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                     bean.supportCount = jsonObject.getString("supportCount");
                     bean.is_support = jsonObject.getString("is_support");
                     bean.nickname = jsonObject.getJSONObject("user").getString("nickname");
-
                     bean.user_logo = RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
-
                     bean.id = jsonObject.getString("id");
                     bean.uid = jsonObject.getString("uid");
                     bean.group_id = jsonObject.getString("group_id");
@@ -533,6 +590,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                         linear_isnull.setVisibility(View.GONE);
 
                         rm_adapter.resetData(beans);
+
 //                        group_post_listView.setAdapter(new GroupListAdapter(mContext, postInfoList, R.layout.group_post_item, null, null));
 //                        Utility.setListViewHeightBasedOnChildren(group_post_listView);
                     } else {
@@ -576,15 +634,21 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
             case R.id.group_post:
                 if (BaseFunction.isLogin()) {
                     sendPost();
-                } else{
+                } else {
                     ToastHelper.showToast("请登陆后操作", mContext);
                 }
-                    break;
+                break;
             case R.id.cate_menu:
                 cateWindow.showAsDropDown(group_post);
                 break;
             case R.id.linear_isnull:
                 sendPost();
+                break;
+            case R.id.enter_cy:
+                Intent intent1 = new Intent(mContext, UserListActivity.class);
+                intent1.putExtra("group_id", group_id);
+//                    intent.putStringArrayListExtra("uidlist", userlist);
+                startActivity(intent1);
                 break;
             case R.id.group_logo:
                 Intent intent = new Intent(mContext, GroupDetailActivity.class);
@@ -1045,8 +1109,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                 @Override
                 public void onClick(View v) {
                     //                    Bundle bundle = new Bundle();
-
-                    launch(mContext, isWeGroup, bean);
+                    if (!"".equals(bean)) {
+                        launch(mContext, isWeGroup, bean);
+                    }
                 }
             });
 

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="70dp"
             android:orientation="vertical">
 
             <ImageView
@@ -62,6 +62,7 @@
                 app:singleLineEllipsis="true" />
 
             <EditText
+                android:id="@+id/Ledit_name"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="1dp"
@@ -71,7 +72,6 @@
                 android:clickable="false"
                 android:drawablePadding="10dp"
                 android:hint="手机号码"
-                android:id="@+id/Ledit_name"
                 android:paddingLeft="10dp"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
@@ -102,6 +102,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginRight="0dp"
                 android:layout_marginTop="20dp"
+                android:visibility="gone"
                 android:background="@drawable/shape_login">
 
                 <TextView
@@ -120,10 +121,11 @@
             <RelativeLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginRight="0dp"
-                android:visibility="gone">
+                android:layout_marginTop="20dp"
+               >
 
                 <com.dd.CircularProgressButton
                     android:id="@+id/btn_login"
@@ -131,15 +133,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/white"
-
-                    android:textSize="18sp"
+                    android:background="@drawable/shape_login"
+                    android:textSize="21sp"
                     app:cpb_textComplete="@string/Complete"
                     app:cpb_textError="@string/Error"
                     app:cpb_textIdle="登录" />
             </RelativeLayout>
         </LinearLayout>
-
-
         <RelativeLayout
             android:id="@+id/login_x"
             android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-
+                    android:paddingBottom="20dp"
                     android:text="先去逛逛"
                     android:textColor="#ffffff"
                     android:textSize="13sp" />
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-
+                    android:paddingBottom="20dp"
                     android:text="忘记密码？"
                     android:textColor="#ffffff"
                     android:textSize="13sp" />
@@ -190,21 +190,31 @@
             android:id="@+id/ll_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/login_x"
-            android:layout_marginTop="100dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-
-
                 android:text=""
                 android:textColor="@color/tab"
                 android:textSize="17sp" />
 
+            <TextView
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="注册鱼知乐账户"
+                android:textColor="@color/tab" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -287,19 +297,7 @@
                 android:textColor="#ffffff" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="注册鱼知乐账户"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:textColor="@color/tab"
-            android:textSize="17sp"
-            android:layout_below="@+id/ll_register"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="38dp" />
+
     </RelativeLayout>
 
 

@@ -26,10 +26,10 @@ import java.util.Set;
 public class RsenUrlUtil {
 
 //    public static String URL_BASE = BuildConfig.URL_BASE;
-//    public static String URL_SUB_BASE = "/opensns/api.php?s=";
+    public static String URL_SUB_BASE = "/opensns/api.php?s=";
 
-    public static String URL_BASE = "http://122.5.45.150/";
-    public static String URL_SUB_BASE = "/api.php?s=";
+    public static String URL_BASE = "http://192.168.15.36:8081";
+//    public static String URL_SUB_BASE = "/api.php?s=";
     //发现
     public static String URL_FX = URL_BASE + URL_SUB_BASE + "user/getUserList";
     //修改密码
@@ -42,6 +42,8 @@ public class RsenUrlUtil {
     public static String URL_BKT = URL_BASE + URL_SUB_BASE + "Paper/getPaperAll&category=";
     //百科详情
     public static String URL_BKXQ = URL_BASE + URL_SUB_BASE + "Paper/getPaperDetail";
+    //百科收藏
+    public static String URL_BKSC = URL_BASE + URL_SUB_BASE + "paper/collectionPaper";
     //专家
     public static String URL_ZJ = URL_BASE + URL_SUB_BASE + "Issue/getIssList&session_id=&issue_id=";
     //收藏
@@ -78,7 +80,8 @@ public class RsenUrlUtil {
     public static String URL_XIAOZU_XIANGQING = URL_BASE + URL_SUB_BASE + "group/getGroupDetail&group_id=";
     //小组详情帖子
     public static String URL_XIAOZU_XIANGQINGTZ = URL_BASE + URL_SUB_BASE + "group/getPostAll";
-
+    //成员信息
+    public static String URL_CYXX = URL_BASE + URL_SUB_BASE + "group/getGroupMenmber";
     //问题详情
     public static String URL_WENTI_XIANGQING = URL_BASE + URL_SUB_BASE + "Question/getQuestionDetail&page=&count=&questionid=";
     //热门问答
@@ -161,6 +164,7 @@ public class RsenUrlUtil {
                         if (listener != null && listener instanceof OnNetHttpResultListener) {
 //                            ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
                             ((OnNetHttpResultListener) listener).onNoNetwork(msg.what + "-->" + data);
+//                            Log.e(data,data);
                         }
                     }
                 }

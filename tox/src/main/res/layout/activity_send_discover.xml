@@ -28,8 +28,8 @@
             >
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
 
                 android:padding="10dp"
                 android:src="@drawable/arrow_left" />
@@ -54,8 +54,8 @@
                 android:singleLine="true"
                 android:text="描述你的位置"
                 android:textColor="@color/tab"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="17sp"
+           />
 
         </LinearLayout>
 
@@ -101,8 +101,8 @@
         android:id="@+id/Post_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#EDF1F2"
+        android:layout_below="@+id/message"
+        android:background="#ffffff"
         android:visibility="visible">
 
         <View
@@ -115,6 +115,7 @@
             android:id="@+id/attachBtns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical"
             android:weightSum="10">
 
@@ -122,21 +123,23 @@
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:text="上传照片让别人来一睹渔场风采吧"
-                android:textColor="@color/blue"
+                android:textColor="@color/font_color_dark_black"
                 android:textSize="18sp" />
+
             <LinearLayout
                 android:id="@+id/Post_send_attachBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="10dp">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/attachment" />
+                    android:src="@drawable/icon_add_photo" />
             </LinearLayout>
 
             <LinearLayout
@@ -154,22 +157,19 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/attachBtns"
-            android:background="#C3C4C8" />
+
         <!--页脚btn对应的控制区-->
         <LinearLayout
             android:id="@+id/Post_attach_layout"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@+id/attachBtns"
-            android:background="#DFE3E4"
+            android:background="#ffffff"
             android:orientation="horizontal"
             android:paddingTop="10dp"
             android:visibility="gone"
             android:weightSum="10">
+
 
 
             <LinearLayout
@@ -232,7 +232,7 @@
             android:background="#DFE3E4"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="gone"
+android:visibility="gone"
             android:weightSum="10">
 
             <org.kymjs.aframe.ui.widget.HorizontalListView
@@ -255,15 +255,16 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Post_footer"
+
         android:layout_below="@+id/SendPostheader">
 
         <LinearLayout
             android:layout_width="match_parent"
 
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -288,8 +289,9 @@
 
                     <ImageView
                         android:id="@+id/iv_round"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/house" />
 
@@ -299,13 +301,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
+                        android:background="@drawable/shape"
                         android:hint="请输入渔场名字"
-
-                        />
+                        android:textColor="#333333"
+                        android:textSize="15dp" />
 
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#C3C4C8" />
 
                 <LinearLayout
                     android:id="@+id/location"
@@ -313,14 +320,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingBottom="10dp"
+
                     android:paddingTop="10dp">
 
                     <ImageView
                         android:id="@+id/iv_user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-
                         android:src="@drawable/flag" />
 
                     <TextView
@@ -328,10 +336,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="20dp"
                         android:text="我的位置"
-                        android:textColor="@color/blue"
-                        android:textSize="18sp" />
+                        android:textColor="@color/font_color_dark_black"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -343,6 +351,12 @@
                         android:textSize="25sp" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:background="#C3C4C8" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -351,8 +365,9 @@
                     android:paddingTop="10dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/telephone" />
 
@@ -362,10 +377,19 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:hint="请输入您的联系电话（选填）" />
+                        android:background="@drawable/shape"
+                        android:hint="请输入您的联系电话（选填）"
+                        android:textColor="#333333"
+                        android:textSize="15dp" />
 
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:background="#C3C4C8" />
 
                 <LinearLayout
                     android:id="@+id/yincang"
@@ -375,29 +399,21 @@
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp">
 
-                    <ImageView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/flag" />
-
                     <TextView
                         android:id="@+id/tv_yc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="20dp"
                         android:text="隐藏我的位置"
-                        android:textColor="#666666"
-                        android:textSize="18sp" />
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
 
 
                     <ToggleButton
                         android:id="@+id/mTogBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="150dp"
+                        android:layout_marginLeft="180dp"
 
                         android:background="@android:color/transparent"
                         android:button="@drawable/toggle_btn"
@@ -407,8 +423,14 @@
                         android:textOn="" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:background="#C3C4C8" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>
+

@@ -49,9 +49,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="12dp"
+                android:paddingBottom="6dp"
                 android:paddingLeft="5dp"
-                android:paddingTop="12dp">
+                android:paddingTop="6dp">
 
                 <TextView
                     android:id="@+id/content"
@@ -60,7 +60,7 @@
                     android:lineSpacingMultiplier="1.5"
                     android:maxLines="2"
                     android:textColor="#666666"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     tools:text="neironnnnnnnnnnnnnnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmm" />
             </RelativeLayout>
 

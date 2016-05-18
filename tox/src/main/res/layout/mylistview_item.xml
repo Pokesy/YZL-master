@@ -27,7 +27,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="8"
                 android:gravity="center_vertical">
 
                 <com.thinksky.redefine.CircleImageView
@@ -40,7 +40,8 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingRight="20dp">
 
                     <TextView
                         android:id="@+id/Item_UserName"
@@ -69,6 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/Item_Ctime"
                         android:layout_marginLeft="8dp"
+
                         android:layout_toRightOf="@id/Item_Ctime"
                         android:singleLine="true"
                         android:textColor="@color/font_color_dark_gray"
@@ -80,7 +82,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="2"
                 android:gravity="right"
                 android:paddingRight="15dp">
 
@@ -109,7 +111,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="15dp"
-            android:textColor="@color/font_color_dark_black"
+            android:textColor="@color/font_color_light_black"
             android:textSize="16sp"
             tools:text="　一日，将军潜入花木兰帐内欲行不归，强行要上木兰姐姐，就在这时，将军忽然指着花木兰大叫一声：你~你~你~竟然是个女的......" />
 

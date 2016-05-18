@@ -6,7 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+       >
         <!--轮播布局预留-->
         <!--<com.thinksky.holder.HomePicHolder-->
         <!--android:layout_width="match_parent"-->

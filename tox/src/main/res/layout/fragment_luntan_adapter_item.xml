@@ -1,8 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_margin="10dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:singleLine="true"
-                tools:text="很长的文本标题"/>
+                tools:text="很长的文本标题" />
 
         </RelativeLayout>
 
@@ -36,16 +36,15 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
             <!--添加ViewPager指示器-->
             <com.thinksky.rsen.view.RectIndicator
                 android:id="@+id/circleIndicator"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="6dp"
-                android:layout_height="wrap_content"/>
+                android:layout_marginBottom="6dp" />
 
         </RelativeLayout>
 
@@ -66,7 +65,7 @@
                 <GridView
                     android:id="@+id/gridView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </com.thinksky.fragment.DrawerHScrollView>
     </LinearLayout>

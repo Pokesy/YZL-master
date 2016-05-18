@@ -180,7 +180,7 @@ public class WendaFragment extends Fragment {
 
             /*其他控件信息，自己添加 id， 然后从 listEntity对象中获取数据，填充就行了*/
             ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(listEntity.getTitle());
-            ((TextView) viewHolder.itemView.findViewById(R.id.content)).setText(listEntity.getContent());
+            ((TextView) viewHolder.itemView.findViewById(R.id.content)).setText(listEntity.getDescription1());
             ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setText(listEntity.getUser().getNickname());
             ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(listEntity.getAnswer_num());
             ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity.getCreate_time());

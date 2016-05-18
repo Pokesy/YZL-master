@@ -265,7 +265,6 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                 });
                 if (bean.getImages() != null && bean.getImages().size() > 0) {
                     images.setVisibility(View.VISIBLE);
-
                     int size = bean.getImages().size();
                     iv_1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
                     iv_2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
@@ -273,7 +272,6 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
 
                     for (int i = 0; i < size; i++) {
                         String url = RsenUrlUtil.URL_BASE + bean.getImages().get(i);
-
                         ImageView imageView = null;
                         if (i == 0) {
                             imageView = iv_1;
@@ -282,9 +280,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                         } else if (i == 2) {
                             imageView = iv_3;
                         }
-
                         if (imageView != null) {
-
                             ImageLoader.getInstance().displayImage(url, imageView);
                             final int in = i;
                             imageView.setOnClickListener(new View.OnClickListener() {

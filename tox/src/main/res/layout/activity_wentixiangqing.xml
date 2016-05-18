@@ -210,12 +210,20 @@
                 android:textSize="@dimen/font_size_medium"
                 tools:text="23条回答" />
 
-            <TextView
-                android:id="@+id/wutu"
-                android:visibility="gone"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/nocomment"/>
+                android:layout_height="500dp"
+                android:visibility="gone"
+                >
+
+                <ImageView
+                    android:id="@+id/wutu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/nocomment"
+                    android:gravity="center"
+                    android:visibility="gone"/>
+            </LinearLayout>
             <!--内容列表-->
             <com.thinksky.rsen.view.RInnerListView
                 android:id="@+id/listView"

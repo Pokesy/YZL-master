@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/load_progressBar"
         android:layout_width="match_parent"
@@ -24,11 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
+            android:text="界面加载中"
             android:textColor="#815F3D"
             android:textSize="18sp"
-            android:text="界面加载中"
             android:visibility="gone" />
     </LinearLayout>
+
     <com.thinksky.fragment.MyScrollview
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -36,9 +38,9 @@
         android:background="#ffffff"
         android:fillViewport="true"
         android:focusableInTouchMode="true"
-        android:paddingTop="2dp"
-        android:visibility="gone"
-        android:scrollbars="none">
+
+        android:scrollbars="none"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,7 +64,7 @@
                 android:id="@+id/main_radio"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
 
@@ -119,24 +121,39 @@
 
                     android:textColor="#333333"
                     android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/zj_show"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/title"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginRight="25dp"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/xuanzejinru"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="显示全部"
-                    android:textColor="#999999"
-                    android:textSize="15sp" />
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/zj_show"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="显示全部"
+                        android:textColor="#999999"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text=">"
+                        android:textColor="#999999"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
             </RelativeLayout>
 
             <TextView
@@ -248,24 +265,38 @@
                     android:textColor="#333333"
                     android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/zx_show"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/zixun"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/xuanzejinru"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="显示全部"
-                    android:textColor="#999999"
-                    android:textSize="15sp" />
+                    android:layout_centerVertical="true">
 
+                    <TextView
+                        android:id="@+id/zx_show"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="显示全部"
+                        android:textColor="#999999"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text=">"
+                        android:textColor="#999999"
+                        android:textSize="17sp" />
+                </LinearLayout>
             </RelativeLayout>
 
 
@@ -304,23 +335,39 @@
                     android:textColor="#333333"
                     android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/rm_show"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/remenxiaozu"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/xuanzejinru"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="显示全部"
-                    android:textColor="#999999"
-                    android:textSize="15sp" />
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/rm_show"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="显示全部"
+                        android:textColor="#999999"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text=">"
+                        android:textColor="#999999"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
             </RelativeLayout>
 
             <LinearLayout
@@ -358,23 +405,38 @@
                     android:textColor="#333333"
                     android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/ht_show"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/remenhuati"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@drawable/xuanzejinru"
-                    android:paddingBottom="8dp"
-                    android:paddingTop="8dp"
-                    android:text="显示全部"
-                    android:textColor="#999999"
-                    android:textSize="15sp" />
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/ht_show"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="显示全部"
+                        android:textColor="#999999"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text=">"
+                        android:textColor="#999999"
+                        android:textSize="17sp" />
+                </LinearLayout>
             </RelativeLayout>
 
             <LinearLayout

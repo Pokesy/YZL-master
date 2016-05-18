@@ -1,17 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <!--页头-->
     <RelativeLayout
         android:id="@+id/group_post_top"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/head_border"
-        android:paddingBottom="0dp"
-        android:paddingTop="0dp">
+        android:background="@drawable/head_border">
 
         <ImageView
             android:id="@+id/back_menu"
@@ -31,29 +28,16 @@
             android:layout_centerVertical="true"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="@string/activity_wenda_my_question_title"
-            android:textColor="@color/tab"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tiwen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="10dp"
-            android:text="提问"
+            android:text="小组成员"
             android:textColor="@color/tab"
             android:textSize="18sp" />
     </RelativeLayout>
 
+    <com.thinksky.rsen.view.RRecyclerView
+        android:id="@+id/memberRecycler"
 
-    <com.thinksky.myview.MyListView
-        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="3dp" />
+        android:layout_height="match_parent"
+
+ />
 </LinearLayout>

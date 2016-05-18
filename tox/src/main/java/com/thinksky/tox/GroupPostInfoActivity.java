@@ -105,7 +105,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     private String session_id;
     private String userUid;
     private BaseApi baseApi;
-
+    private TextView edit_disable_text;
     @Override
     @SuppressWarnings(value = {"unchecked"})
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +155,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         user_name = (TextView) findViewById(R.id.user_name);
         join = (TextView) findViewById(R.id.join);
         huifu = (TextView) findViewById(R.id.huifu);
+        edit_disable_text= (TextView) findViewById(R.id.edit_disable_text);
         group_count = (TextView) findViewById(R.id.group_count);
         //加载更多按钮
         loadingBar = (LinearLayout) findViewById(R.id.loading_bar);
@@ -177,7 +178,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         reply_button.setOnClickListener(this);
         sendPostButtn.setOnClickListener(this);
         post_scroll.setOnTouchListener(this);
-
+        edit_disable_text.setOnClickListener(this);
         new PostReplyThread(post_id, page).start();
         InitPostView(postMap);
 
@@ -480,6 +481,20 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
                 break;
             //回复按钮
             case R.id.reply_button:
+                if (!groupApi.getSeesionId().equals("")) {
+                    reply_box.setVisibility(View.VISIBLE);
+                    //自动打开软键盘并获取焦点
+                    reply_editText.setFocusable(true);
+                    reply_editText.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
+                    reply_bottom_layout.setVisibility(View.GONE);
+                } else {
+                    ToastHelper.showToast("请登录后操作", mContext);
+                }
+                break;
+            case R.id.edit_disable_text://回复按钮
                 if (!groupApi.getSeesionId().equals("")) {
                     reply_box.setVisibility(View.VISIBLE);
                     //自动打开软键盘并获取焦点

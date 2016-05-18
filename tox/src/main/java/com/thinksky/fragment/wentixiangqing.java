@@ -48,7 +48,7 @@ import java.util.Map;
 
 public class wentixiangqing extends BaseBActivity implements View.OnClickListener {
 
-    private TextView title, wutu;
+    private TextView title;
     private TextView best_answer;
     private TextView money;
     private TextView creat_time;
@@ -62,7 +62,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
     private String mQuestionId;
     private BaseApi baseApi;
     private String session_id;
-    private ImageView back_menu, iv1, iv2, iv3;
+    private ImageView back_menu, iv1, iv2, iv3,wutu;
     public static boolean upFlag = false;
     public static boolean flag = false;
     public static boolean FLAG = false;
@@ -90,7 +90,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
         creat_time = (TextView) findViewById(R.id.creat_time);
         content = (TextView) findViewById(R.id.content);
         nickname = (TextView) findViewById(R.id.nickname);
-        wutu = (TextView) findViewById(R.id.wutu);
+        wutu = (ImageView) findViewById(R.id.wutu);
         huida = (TextView) findViewById(R.id.huida);
         listView = (ListView) findViewById(R.id.listView);
 //        View headerView = new View(this);

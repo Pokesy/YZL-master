@@ -204,7 +204,7 @@ public class ZhuanjiFragment extends Fragment {
             if (beans == null) {
                 return 0;
             }
-            return beans.size() > 3 ? 3 : beans.size();
+            return beans.size() > 4? 4 : beans.size();
         }
 
         @Override

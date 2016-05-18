@@ -519,6 +519,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void setLeftMenu() {
         //判断是否登入
         if (BaseFunction.isLogin()) {
+            signature.setVisibility(View.VISIBLE);
             if (!sp.getString("avatar", "").equalsIgnoreCase("")) {
                 BaseFunction.showImage(this, mleftHead, sp.getString("avatar", ""), loadImgMainImg, Url.IMGTYPE_HEAD);
             }
@@ -539,13 +540,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                signature.setText("这个人很懒，什么都没写");
 //            }
             if (!("").equalsIgnoreCase(sp.getString("getSignature", ""))) {
+
                 signature.setText(sp.getString("nickname", ""));
             } else {
+
                 signature.setText("这个人很懒，什么都没写");
             }
         } else {
             mleftHead.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.side_user_avatar, MainActivity.this));
-            myUserName.setText("请登录");
+            myUserName.setText("未登录");
         }
 
     }

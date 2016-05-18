@@ -175,6 +175,7 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
         new Thread(new NoticeThread(groupId)).start();
         new Thread(new HotPostThread(groupId, session_id)).start();
         groupApi.setHandler(tempHandler);
+        groupApi.getGroupInfo(group_id + "");
         backMenu = (ImageView) findViewById(R.id.back_menu);
         mScrollView = (ScrollView) findViewById(R.id.group_scrollView);
         topPager = (LinearLayout) findViewById(R.id.top_pager);

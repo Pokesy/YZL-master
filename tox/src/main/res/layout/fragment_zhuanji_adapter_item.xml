@@ -40,10 +40,13 @@
         <!--图片信息-->
         <com.thinksky.rsen.view.RInnerGridView
             android:id="@+id/gridView"
+            android:paddingLeft="10dp"
             android:layout_width="match_parent"
+            android:paddingRight="10dp"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            android:numColumns="3" />
+            android:numColumns="2"
+            />
     </LinearLayout>
 
 </FrameLayout>

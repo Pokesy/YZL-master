@@ -11,13 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:background="@drawable/head_border"
-      >
+        android:background="@drawable/head_border">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:paddingBottom="10dp"
@@ -33,13 +32,13 @@
             android:gravity="center_vertical"
             android:text="设置"
             android:textColor="#ffffff"
-            android:textSize="25dp" />
+            android:textSize="17sp" />
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:paddingTop="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,13 +50,13 @@
                 android:layout_height="wrap_content"
 
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+            >
 
                 <RelativeLayout
                     android:id="@+id/setting_qingchuhuancun"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:paddingLeft="15dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -72,18 +71,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
                         android:background="@drawable/icon_more" />
                 </RelativeLayout>
 
                 <View
-                    android:layout_width="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="#DEE2E3" />
+
+                <View
+                    android:layout_width="match_parent"
                     android:layout_height="1dp" />
 
                 <RelativeLayout
                     android:id="@+id/setting_chongzhimima"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
-
+                    android:paddingLeft="15dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -99,10 +104,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
                         android:background="@drawable/icon_more" />
                 </RelativeLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#DEE2E3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -110,14 +120,13 @@
 
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingTop="20dp"
-                android:paddingRight="10dp">
+               >
 
                 <RelativeLayout
                     android:id="@+id/setting_yijianfankui"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:paddingLeft="15dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -131,14 +140,22 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/icon_more" />
+
                 </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="#DEE2E3" />
 
                 <RelativeLayout
                     android:id="@+id/setting_banbenjiance"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:paddingLeft="15dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -153,13 +170,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
                         android:background="@drawable/icon_more" />
                 </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="#DEE2E3" />
 
                 <RelativeLayout
                     android:id="@+id/setting_guanyuqiubai"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:paddingLeft="15dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -173,9 +197,15 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/icon_more" />
                 </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="#DEE2E3" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -273,9 +273,9 @@ public class UserInfoActivity extends BaseBActivity {
             } else {
                 UserTitle.setText("保密");
             }
-            if ("null".equals(info.getProvince())) {
+            if (info.getProvince()==null) {
                 UserTime.setText("");
-            } else if ("null".equals(info.getCity())) {
+            } else if (info.getCity()==null) {
                 UserTime.setText(info.getProvince());
             } else {
                 UserTime.setText(info.getProvince() + " " + info.getCity());
@@ -400,9 +400,9 @@ public class UserInfoActivity extends BaseBActivity {
         } else {
             UserTitle.setText("保密");
         }
-        if ("null".equals(userInfo.getProvince())) {
+        if (userInfo.getProvince()==null) {
             UserTime.setText("");
-        } else if ("null".equals(userInfo.getCity())) {
+        } else if (userInfo.getCity()==null) {
             UserTime.setText(userInfo.getProvince());
         } else {
             UserTime.setText(userInfo.getProvince() + " " + userInfo.getCity());

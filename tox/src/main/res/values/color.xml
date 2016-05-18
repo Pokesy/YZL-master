@@ -93,7 +93,7 @@
     <color name="font_color_light_gray">#a3a7aa</color>
 
     <color name="bg_color_divider">#F1F1F1</color>
-    <color name="bg_color_divider_dark">#d9d9d9</color>
+    <color name="bg_color_divider_dark">#F7F7F8</color>
 
     <color name="bg_color_main">#F7F7F8</color>
     <color name="bg_color_red">#f26767</color>

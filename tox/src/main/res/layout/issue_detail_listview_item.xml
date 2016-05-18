@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="15dp"
+    android:paddingTop="10dp"
+
     android:background="@drawable/item_click_bg">
     <RelativeLayout
         android:paddingTop="3dp"
@@ -27,10 +29,11 @@
             android:layout_toRightOf="@+id/replyUserImage" />
         <TextView
             android:layout_marginLeft="5dp"
-            android:textColor="@color/group_less"
+            android:textColor="#999999"
             android:id="@+id/replyTime"
             android:text="2018年10月1日"
             android:textSize="10sp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/replyUserName"

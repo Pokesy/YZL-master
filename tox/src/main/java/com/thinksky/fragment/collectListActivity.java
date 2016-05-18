@@ -196,6 +196,7 @@ public class CollectListActivity extends BaseBActivity {
                 convertView = inflater.inflate(R.layout.collect_item, null);
                 holder.tv = (TextView) convertView.findViewById(R.id.dailyName);
                 holder.check = (AppCompatCheckBox) convertView.findViewById(R.id.isCheakBox);
+                holder.dailyPic = (ImageView) convertView.findViewById(R.id.dailyPic);
                 convertView.setTag(holder);
                 System.out.println("新的View的位置是：" + position);
             } else {
@@ -207,6 +208,10 @@ public class CollectListActivity extends BaseBActivity {
                 holder.check.setVisibility(View.GONE);
             } else {
                 holder.check.setVisibility(View.VISIBLE);
+            }
+            if (list.get(position).getImgList() != null && list.get(position).getImgList().size() != 0) {
+                com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + list.get(position).getImgList().get(0).getSrc(), holder.dailyPic);
+
             }
             holder.tv.setText(list.get(position).getTitle());
 
@@ -324,6 +329,7 @@ public class CollectListActivity extends BaseBActivity {
             public TextView tv;
             public ImageButton deleteButton;
             public AppCompatCheckBox check;
+            public ImageView dailyPic;
         }
 
     }

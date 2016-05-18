@@ -242,7 +242,9 @@ public class RemenhuatiFragment extends RBaseFragment {
         @Override
         protected void onBindView(RViewHolder holder, int position, final RemenhuatiBean bean) {
             holder.tV(R.id.title).setText(bean.title);
-            holder.tV(R.id.content).setText(bean.content.replace("\\n", "\n"));
+            if (!"".equals(bean.content)) {
+                holder.tV(R.id.content).setText(bean.content.replace("\\n", "\n"));
+            }
             holder.tV(R.id.supportCount).setText(bean.supportCount);
             holder.tV(R.id.nickname).setText(bean.nickname);
             holder.tV(R.id.reply_count).setText(bean.reply_count);

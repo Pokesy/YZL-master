@@ -244,10 +244,8 @@ public class IssueDetail extends BaseBActivity {
                             new IssueInfoTask().execute(issueID);
                         }
                         break;
-
                     default:
                         break;
-
                 }
             }
         };
@@ -275,10 +273,8 @@ public class IssueDetail extends BaseBActivity {
         issueApi = new IssueApi();
         session_id = issueApi.getSeesionId();
         Log.e("session_id>?>?>", session_id);
-
         //获取访问网络按钮
-//        issue_internet = (LinearLayout) findViewById(R.id.issue_internet);
-
+        //issue_internet = (LinearLayout) findViewById(R.id.issue_internet);
         //点赞
         zan = (LinearLayout) findViewById(R.id.Post_detail_likeBtn);
         bottom = (LinearLayout) findViewById(R.id.bottom);
@@ -386,7 +382,7 @@ public class IssueDetail extends BaseBActivity {
 //                        reply_info.add(reply_infos.get(i));
 //                    }
 //                }
-                pinglunshu.setText("评论：" + reply_info.size());
+                pinglunshu.setText("评论" +"("+ reply_info.size()+")");
                 myAdapter = new IssueListAdapter(IssueDetail.this, reply_info, R.layout.issue_detail_listview_item,
                         null, new int[]{R.id.replyTime, R.id.replyTextView});
                 repListView.setAdapter(myAdapter);

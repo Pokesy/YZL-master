@@ -11,8 +11,8 @@ android {
         targetSdkVersion 23
 
         buildConfigField "int", "SPLASH_TIME", "10"
-//        buildConfigField "String", "URL_BASE", "\"http://192.168.15.36:8081\""
-        buildConfigField "String","URL_BASE","\"http://122.5.45.150\""
+        buildConfigField "String", "URL_BASE", "\"http://192.168.15.36:8081\""
+//        buildConfigField "String","URL_BASE","\"http://122.5.45.150\""
     }
 //    sourceSets {
 //        main {
