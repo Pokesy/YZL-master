@@ -4,32 +4,30 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-
 import com.thinksky.net.IsNet1;
 import com.thinksky.net.ThreadPoolUtils;
 import com.thinksky.thread.HttpPostThread;
+import com.thinksky.tox.BuildConfig;
 import com.tox.Url;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by jiao on 2016/2/17.
  */
 public class RsenUrlUtil {
 
-//    public static String URL_BASE = BuildConfig.URL_BASE;
-    public static String URL_SUB_BASE = "/opensns/api.php?s=";
+    public static String URL_BASE = BuildConfig.URL_BASE;
+    //public static String URL_SUB_BASE = "/opensns/api.php?s=";
 
-    public static String URL_BASE = "http://192.168.15.36:8081";
-//    public static String URL_SUB_BASE = "/api.php?s=";
+    //public static String URL_BASE = "http://192.168.15.36:8081";
+    public static String URL_SUB_BASE = "/api.php?s=";
     //发现
     public static String URL_FX = URL_BASE + URL_SUB_BASE + "user/getUserList";
     //修改密码

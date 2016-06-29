@@ -216,7 +216,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                 if (state) {
                     suid = beans.get(0).getUid();
 
-                    if (beans.get(0).getQuestionimages() != null && !beans.get(0).getQuestionimages().contains("Public/images/nopic.png")) {
+                    if (beans.get(0).getImgList()!= null && !beans.get(0).getImgList().contains("Public/images/nopic.png")) {
                         img_layout.setVisibility(View.VISIBLE);
 
                         int size = beans.get(0).getQuestionimages().size();
@@ -225,7 +225,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                         iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
 
                         for (int i = 0; i < size; i++) {
-                            String url = RsenUrlUtil.URL_BASE + beans.get(0).getQuestionimages().get(i);
+                            String url = RsenUrlUtil.URL_BASE + beans.get(0).getImgList().get(i);
 
                             ImageView imageView = null;
                             if (i == 0) {

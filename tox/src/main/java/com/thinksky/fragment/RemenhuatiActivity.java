@@ -1,6 +1,5 @@
 package com.thinksky.fragment;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,28 +9,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
+import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class RemenhuatiActivity extends BaseBActivity {
@@ -241,14 +235,14 @@ public class RemenhuatiActivity extends BaseBActivity {
             holder.tV(R.id.supportCount).setText(bean.supportCount);
             holder.tV(R.id.nickname).setText(bean.nickname);
             holder.tV(R.id.reply_count).setText(bean.reply_count);
-//            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
-            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
-                    new DisplayImageOptions.Builder()
-                            .showImageOnLoading(R.drawable.ic_launcher)
-                            .showImageForEmptyUri(R.drawable.ic_launcher)
-                            .showImageOnFail(R.drawable.ic_launcher)
-                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                            .displayer(new RoundedBitmapDisplayer(100)).build());
+            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
+            //ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
+            //        new DisplayImageOptions.Builder()
+            //                .showImageOnLoading(R.drawable.ic_launcher)
+            //                .showImageForEmptyUri(R.drawable.ic_launcher)
+            //                .showImageOnFail(R.drawable.ic_launcher)
+            //                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+            //                .displayer(new RoundedBitmapDisplayer(100)).build());
             if (bean.imgList != null && bean.imgList.size() > 0) {
                 holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 

@@ -365,7 +365,7 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
                             updatePosts(newList, null != newList && newList.size() == PAGE_COUNT);
                             mRefreshListView.setPullUpToRefresh(newList.size() >= PAGE_COUNT);
                         } else {
-                            ToastHelper.showToast("数据请求失败", ForumDetailActivity.this);
+                            ToastHelper.showToast("暂无数据", ForumDetailActivity.this);
                         }
                         mRefreshListView.resetPullStatus();
                     }
@@ -374,7 +374,7 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
                         if (newList.size() > 0) {
                             updatePosts(newList, null != newList && newList.size() == PAGE_COUNT);
                         } else {
-                            ToastHelper.showToast("数据请求失败", ForumDetailActivity.this);
+                            ToastHelper.showToast("暂无数据", ForumDetailActivity.this);
                         }
                         mRefreshListView.resetPullStatus();
                     }

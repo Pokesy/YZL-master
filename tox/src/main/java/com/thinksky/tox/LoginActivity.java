@@ -13,14 +13,13 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.dd.CircularProgressButton;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.utils.MD5;
 import com.thinksky.utils.MyJson;
 import com.tox.LoginApi;
 import com.tox.Url;
 import com.tox.login;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -138,8 +137,8 @@ public class LoginActivity extends BaseBActivity {
                 case R.id.btn_login:
                     NameValue = mName.getText().toString();
 
-//                    PasswordValue = MD5.md5(mPassword.getText().toString());
-                    PasswordValue =mPassword.getText().toString();
+                    PasswordValue = MD5.md5(mPassword.getText().toString());
+                    //PasswordValue =mPassword.getText().toString();
                     Log.e("qianpengyu", "NameValue" + NameValue + "  PasswordValue"
                             + PasswordValue);
                     if (NameValue.equalsIgnoreCase(null)

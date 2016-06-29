@@ -81,8 +81,8 @@ public class ReSetPasswordActivity extends BaseBActivity {
 
                 names = mName.getText().toString();
 
-                newname = new_name.getText().toString().trim();
-                newnameagin = new_agin_name.getText().toString().trim();
+                newname = MD5.md5(new_name.getText().toString().trim());
+                newnameagin = MD5.md5(new_agin_name.getText().toString().trim());
                 if (newname.isEmpty() || newnameagin.isEmpty()||names.isEmpty()) {
                     ToastHelper.showToast("密码不能为空", Url.context);
                 } else {

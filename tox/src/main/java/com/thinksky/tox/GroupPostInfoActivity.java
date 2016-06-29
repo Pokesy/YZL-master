@@ -201,7 +201,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         post_title.setText(postMap.get("title"));
         post_user_name.setText(postMap.get("user_nickname"));
         user_name.setText(postMap.get("user_nickname"));
-//        kjBitmap.display(user_logo, postMap.get("user_logo"));
+        //kjBitmap.display(user_logo, postMap.get("user_logo"));
         ImageLoader.getInstance().displayImage(postMap.get("user_logo"), user_logo);
         post_create_time.setText(postMap.get("create_time"));
         post_content.setText(postMap.get("content").replace("\\n","\n"));

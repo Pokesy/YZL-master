@@ -68,7 +68,7 @@ public class WendaXianqingInfo {
      */
 
     private List<QuestionAnswerEntity> QuestionAnswer;
-    private List<?> imgList;
+    private List<String> imgList;
     private List<String> Questionimages;
 
     public void setUid(String uid) {
@@ -143,7 +143,7 @@ public class WendaXianqingInfo {
         this.QuestionAnswer = QuestionAnswer;
     }
 
-    public void setImgList(List<?> imgList) {
+    public void setImgList(List<String> imgList) {
         this.imgList = imgList;
     }
 
