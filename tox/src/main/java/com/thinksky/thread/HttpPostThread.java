@@ -67,7 +67,7 @@ public class HttpPostThread implements Runnable {
         // 获取我们回调主ui的message
         Message msg = hand.obtainMessage();
         String result = null;
-        if (value != "0") {
+        if (!"0".equals(value)) {
 //            Log.e("STRATWEIBO>>>>>>>>>1", "value");
             result = myGet.doPost(url, value);
         } else {

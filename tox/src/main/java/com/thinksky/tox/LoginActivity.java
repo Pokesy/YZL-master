@@ -35,7 +35,7 @@ public class LoginActivity extends BaseBActivity {
     private String value = null;
     private MyJson myJson = new MyJson();
     private ProgressDialog progressDialog;
-    private login login;
+    private login mlogin;
     private int entryActivity;
     private CircularProgressButton btnLogin;
     private LoginApi loginApi;
@@ -58,8 +58,8 @@ public class LoginActivity extends BaseBActivity {
         instance = this;
         Url.activityFrom = "LoginActivity";
         entryActivity = intent.getIntExtra("entryActivity", 0);
-        login = new login(this, entryActivity);
-        login.setLoginHandler();
+        mlogin = new login(this, entryActivity);
+        mlogin.setLoginHandler();
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -111,20 +111,20 @@ public class LoginActivity extends BaseBActivity {
                 case R.id.login:
                     NameValue = mName.getText().toString();
 
-//                    PasswordValue = MD5.md5(mPassword.getText().toString());
-                    PasswordValue =mPassword.getText().toString();
+                    PasswordValue = MD5.md5(mPassword.getText().toString());
+//                    PasswordValue =mPassword.getText().toString();
                     Log.e("qianpengyu", "NameValue" + NameValue + "  PasswordValue"
                             + PasswordValue);
                     if (NameValue.equalsIgnoreCase(null)
                             || PasswordValue.equalsIgnoreCase(null)
-                            || NameValue.equals("") || PasswordValue.equals("")) {
+                            || "".equals(NameValue) || "".equals(PasswordValue)) {
                         Toast.makeText(LoginActivity.this, "别闹,先把帐号密码填上", Toast.LENGTH_LONG).show();
                     } else {
                         progressDialog = ProgressDialog.show(LoginActivity.this, "登录中....", "请等待。", true, false);
-                        login.setProgressDialog(progressDialog);
+                        mlogin.setProgressDialog(progressDialog);
                         //login();
 
-                        login.userLogin(NameValue, PasswordValue);
+                        mlogin.userLogin(NameValue, PasswordValue);
                     }
                     break;
                 case R.id.button_weibo:
@@ -143,14 +143,14 @@ public class LoginActivity extends BaseBActivity {
                             + PasswordValue);
                     if (NameValue.equalsIgnoreCase(null)
                             || PasswordValue.equalsIgnoreCase(null)
-                            || NameValue.equals("") || PasswordValue.equals("")) {
+                            || "".equals(NameValue)  || "".equals(PasswordValue)) {
                         Toast.makeText(LoginActivity.this, "别闹,先把帐号密码填上", Toast.LENGTH_LONG).show();
                     } else {
                         //progressDialog = ProgressDialog.show(LoginActivity.this, "登录中....", "请等待。", true, false);
-                        login.setCircularProgressButton(btnLogin);
+                        mlogin.setCircularProgressButton(btnLogin);
                         //login();
 
-                        login.userLogin(NameValue, PasswordValue);
+                        mlogin.userLogin(NameValue, PasswordValue);
                     }
                     break;
                 case R.id.buton_qq:
