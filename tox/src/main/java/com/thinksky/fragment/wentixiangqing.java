@@ -21,9 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.WendaXianqingInfo;
 import com.thinksky.rsen.RViewHolder;
@@ -33,17 +31,16 @@ import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.json.JSONObject;
 
 
 public class wentixiangqing extends BaseBActivity implements View.OnClickListener {
@@ -216,10 +213,10 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                 if (state) {
                     suid = beans.get(0).getUid();
 
-                    if (beans.get(0).getImgList()!= null && !beans.get(0).getImgList().contains("Public/images/nopic.png")) {
+                    if (beans.get(0).getImgList().size()!=0 && !beans.get(0).getImgList().contains("Public/images/nopic.png")) {
                         img_layout.setVisibility(View.VISIBLE);
 
-                        int size = beans.get(0).getQuestionimages().size();
+                        int size = beans.get(0).getImgList().size();
                         iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
                         iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
                         iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
@@ -237,16 +234,15 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                             }
 
                             if (imageView != null) {
-
-                                ImageLoader.getInstance().displayImage(url, imageView);
+                               ImageLoader.loadOptimizedHttpImage(wentixiangqing.this,url).into(imageView);
+                               // ImageLoader.getInstance().displayImage(url, imageView);
                                 final int in = i;
                                 imageView.setOnClickListener(new View.OnClickListener() {
-
                                     @Override
                                     public void onClick(View v) {
                                         Intent intent = new Intent(wentixiangqing.this, ImagePagerActivity.class);
                                         Bundle bundle = new Bundle();
-                                        bundle.putStringArrayList("image_urls", (ArrayList<String>) beans.get(0).getQuestionimages());
+                                        bundle.putStringArrayList("image_urls", (ArrayList<String>) beans.get(0).getImgList());
                                         bundle.putInt("image_index", in);
                                         intent.putExtras(bundle);
                                         startActivity(intent);
@@ -276,7 +272,12 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
                     money.setText(questionEntity.getScore());
                     creat_time.setText(questionEntity.getCreate_time());
                     content.setText(questionEntity.getDescription1().replace("\\n", "\n"));
-                    nickname.setText(questionEntity.getCategory_title());
+                    if (!"".equals(questionEntity.getCategory())&&"1".equals(questionEntity.getCategory())){
+                        nickname.setText("龙鱼");
+                    }else {
+                        nickname.setText("魟鱼");
+                    }
+
                     huida.setText(questionEntity.getAnswer_num() + "条回答");
                     if (("0").equals(questionEntity.getAnswer_num())) {
                         wutu.setVisibility(View.VISIBLE);

@@ -10,11 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
@@ -22,18 +17,18 @@ import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MyhuatiActivity extends BaseBActivity {
@@ -236,13 +231,16 @@ public class MyhuatiActivity extends BaseBActivity {
             holder.tV(R.id.nickname).setText(bean.nickname);
             holder.tV(R.id.reply_count).setText(bean.reply_count);
 //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
-            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
-                    new DisplayImageOptions.Builder()
-                            .showImageOnLoading(R.drawable.ic_launcher)
-                            .showImageForEmptyUri(R.drawable.ic_launcher)
-                            .showImageOnFail(R.drawable.ic_launcher)
-                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                            .displayer(new RoundedBitmapDisplayer(100)).build());
+//            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
+//                    new DisplayImageOptions.Builder()
+//                            .showImageOnLoading(R.drawable.ic_launcher)
+//                            .showImageForEmptyUri(R.drawable.ic_launcher)
+//                            .showImageOnFail(R.drawable.ic_launcher)
+//                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+//                            .displayer(new RoundedBitmapDisplayer(100)).build());
+            com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(context,
+                bean.user_logo).
+                bitmapTransform(new CropCircleTransformation(context)).into(holder.imgV(R.id.user_logo));
             if (bean.imgList != null && bean.imgList.size() > 0) {
                 holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 
@@ -265,7 +263,8 @@ public class MyhuatiActivity extends BaseBActivity {
 
                     if (imageView != null) {
 
-                        ImageLoader.getInstance().displayImage(url, imageView);
+                        //ImageLoader.getInstance().displayImage(url, imageView);
+                        ImageLoader.loadOptimizedHttpImage(MyhuatiActivity.this,url).into(imageView);
                         final int in = i;
                         imageView.setOnClickListener(new View.OnClickListener() {
 

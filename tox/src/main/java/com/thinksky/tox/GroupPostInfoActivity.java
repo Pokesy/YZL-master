@@ -202,7 +202,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         post_user_name.setText(postMap.get("user_nickname"));
         user_name.setText(postMap.get("user_nickname"));
         //kjBitmap.display(user_logo, postMap.get("user_logo"));
-        ImageLoader.getInstance().displayImage(postMap.get("user_logo"), user_logo);
+        //ImageLoader.getInstance().displayImage(postMap.get("user_logo"), user_logo);
+        com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this, postMap.get("user_logo")).into(user_logo);
         post_create_time.setText(postMap.get("create_time"));
         post_content.setText(postMap.get("content").replace("\\n","\n"));
         support_flag = postMap.get("is_support");
@@ -269,8 +270,10 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
                 if (state) {
                     recycler.setAdapter(new MySubAdapter(GroupPostInfoActivity.this, logolist));
 //                    kjBitmap.display(group_logo, beans.get(0).logo);
-                    ImageLoader.getInstance().displayImage(beans.get(0).logo, group_logo);
+//                    ImageLoader.getInstance().displayImage(beans.get(0).logo, group_logo);
+                    com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this, beans.get(0).logo).into(group_logo);
                     group_name.setText(beans.get(0).title);
+
                     group_logo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -323,7 +326,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
                 if (imageView != null) {
 
-                    ImageLoader.getInstance().displayImage(url, imageView);
+                    //ImageLoader.getInstance().displayImage(url, imageView);
+                    com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this, url).into(imageView);
                     final int in = i;
                     imageView.setOnClickListener(new View.OnClickListener() {
 
@@ -652,7 +656,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         if (map.get("is_landlord").equals("1")) {
 //            viewHolder.replyHost.setVisibility(View.VISIBLE);
         }
-        ImageLoader.getInstance().displayImage(map.get("user_logo"), viewHolder.replyUserHead);
+        //ImageLoader.getInstance().displayImage(map.get("user_logo"), viewHolder.replyUserHead);
+        com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this, map.get("user_logo")).into(viewHolder.replyUserHead);
 //        kjBitmap.display(viewHolder.replyUserHead, map.get("user_logo"));
         viewHolder.replyUsername.setText(map.get("nickname"));
 //        viewHolder.replyTime.setText("第" + floorCount + "楼 " + map.get("create_time"));
@@ -758,7 +763,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
             toReplyCount = lzlReplyList.size();
             viewHolder.LzlReplyBox.setVisibility(View.VISIBLE);
 //            kjBitmap.display(viewHolder.lzlOneUserLogo, lzlReplyList.get(0).get("user_logo"));
-            ImageLoader.getInstance().displayImage(lzlReplyList.get(0).get("user_logo"), viewHolder.lzlOneUserLogo);
+//            ImageLoader.getInstance().displayImage(lzlReplyList.get(0).get("user_logo"), viewHolder.lzlOneUserLogo);
+
+            com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this, lzlReplyList.get(0).get("user_logo")).into(viewHolder.lzlOneUserLogo);
             viewHolder.lzlOneUserLogo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -774,7 +781,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
             if (toReplyCount >= 2) {
                 viewHolder.lzlTwoLayout.setVisibility(View.VISIBLE);
 //                kjBitmap.display(viewHolder.lzlTwoUserLogo, lzlReplyList.get(1).get("user_logo"));
-                ImageLoader.getInstance().displayImage(lzlReplyList.get(1).get("user_logo"), viewHolder.lzlTwoUserLogo);
+//                ImageLoader.getInstance().displayImage(lzlReplyList.get(1).get("user_logo"), viewHolder.lzlTwoUserLogo);
+                com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this, lzlReplyList.get(1).get("user_logo")).into(viewHolder.lzlTwoUserLogo);
                 viewHolder.lzlTwoUserLogo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

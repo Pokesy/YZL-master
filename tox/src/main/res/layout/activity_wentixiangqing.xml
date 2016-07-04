@@ -139,37 +139,43 @@
                     <!--图片部分-->
                     <LinearLayout
                         android:id="@+id/images"
-                        android:layout_width="match_parent"
-                        android:layout_height="130dp"
-
-                        android:orientation="horizontal">
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="9">
 
                         <ImageView
                             android:id="@+id/iv_1"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_marginBottom="5dp"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
+                            android:layout_weight="3"
                             android:scaleType="centerCrop"
-                            android:visibility="invisible" />
+                            android:src="@drawable/friends_sends_pictures_no"
+                            android:visibility="visible" />
 
                         <ImageView
                             android:id="@+id/iv_2"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
                             android:scaleType="centerCrop"
-                            android:visibility="invisible" />
+                            android:layout_width="0dp"
+                            android:layout_height="130dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="3"
+                            android:src="@drawable/friends_sends_pictures_no"
+                            android:visibility="visible" />
 
                         <ImageView
                             android:id="@+id/iv_3"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="130dp"
+                            android:layout_marginBottom="5dp"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
+                            android:layout_marginRight="5dp"
                             android:scaleType="centerCrop"
-                            android:visibility="invisible" />
+                            android:layout_weight="3"
+                            android:src="@drawable/friends_sends_pictures_no"
+                            android:visibility="visible" />
                     </LinearLayout>
                 </RelativeLayout>
 

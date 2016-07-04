@@ -17,22 +17,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.GroupApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 
@@ -141,11 +138,13 @@ public class GroupMyActivity extends BaseBActivity implements View.OnClickListen
             groupLogo.setImageResource(R.drawable.side_user_avatar);
         }else {
 //            kjBitmap.display(groupLogo, groupInfoMap.get("group_logo"));
-            ImageLoader.getInstance().displayImage( groupInfoMap.get("group_logo"),groupLogo);
+//            ImageLoader.getInstance().displayImage( groupInfoMap.get("group_logo"),groupLogo);
+        ImageLoader.loadOptimizedHttpImage(GroupMyActivity.this, groupInfoMap.get("group_logo")).into(groupLogo);
         }
 //        kjBitmap.display(creatorHead,groupInfoMap.get("user_logo"));
-        ImageLoader.getInstance().displayImage(groupInfoMap.get("user_logo"),creatorHead);
-        ImageLoader.getInstance().displayImage( groupInfoMap.get("user_logo"),creatorHead);
+//        ImageLoader.getInstance().displayImage(groupInfoMap.get("user_logo"),creatorHead);
+//        ImageLoader.getInstance().displayImage( groupInfoMap.get("user_logo"),creatorHead);
+//        ImageLoader.loadOptimizedHttpImage(GroupMyActivity.this,  groupInfoMap.get("user_logo")).into(creatorHead);
         creatorNickName.setText(groupInfoMap.get("user_nickname"));
         if (Integer.parseInt(groupInfoMap.get("is_join")) == 1) {
             joinFlag = false;

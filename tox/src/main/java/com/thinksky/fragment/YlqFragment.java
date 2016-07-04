@@ -59,6 +59,7 @@ public class YlqFragment extends Fragment implements View.OnClickListener {
                 mPager.setCurrentItem(index);
             }
         });
+        mPager.setOffscreenPageLimit(4);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {

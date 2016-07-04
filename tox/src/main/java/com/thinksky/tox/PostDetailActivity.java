@@ -25,8 +25,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.adapter.PostCommentAdapter;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostComment;
@@ -36,18 +34,16 @@ import com.thinksky.redefine.MyScrollView;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ForumApi;
 import com.tox.IssueApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import net.tsz.afinal.FinalBitmap;
-
-import org.kymjs.aframe.bitmap.KJBitmap;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.tsz.afinal.FinalBitmap;
+import org.kymjs.aframe.bitmap.KJBitmap;
 
 public class PostDetailActivity extends BaseBActivity implements View.OnClickListener, View.OnTouchListener, MyScrollView.OnScrollListener {
     private static boolean SUPPORTPOST = false;
@@ -454,7 +450,8 @@ public class PostDetailActivity extends BaseBActivity implements View.OnClickLis
 
             if (imgView != null) {
 
-                ImageLoader.getInstance().displayImage(url, imgView);
+                //ImageLoader.getInstance().displayImage(url, imgView);
+                ImageLoader.loadOptimizedHttpImage(PostDetailActivity.this, url).into(imgView);
                 final int in = i;
                 imgView.setOnClickListener(new View.OnClickListener() {
 

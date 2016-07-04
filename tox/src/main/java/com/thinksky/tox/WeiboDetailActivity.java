@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.adapter.DetailListAdapter;
 import com.thinksky.anim3d.RoundBitmap;
 import com.thinksky.holder.BaseBActivity;
@@ -33,16 +31,15 @@ import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.LoadImg.ImageDownloadCallBack;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.TouchHelper;
 import com.tox.Url;
 import com.tox.WeiboApi;
-
-import net.tsz.afinal.FinalBitmap;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.tsz.afinal.FinalBitmap;
 
 public class WeiboDetailActivity extends BaseBActivity {
 
@@ -458,8 +455,10 @@ public class WeiboDetailActivity extends BaseBActivity {
       mDetail_UserHead.setImageResource(R.drawable.side_user_avatar);
     } else {
       //            BaseFunction.showImage(WeiboDetailActivity.this, mDetail_UserHead, Weiboinfo.getUser().getAvatar(), loadImg, Url.IMGTYPE_HEAD);
-      ImageLoader.getInstance().displayImage(Weiboinfo.getUser().getAvatar(), mDetail_UserHead);
+      //ImageLoader.getInstance().displayImage(Weiboinfo.getUser().getAvatar(), mDetail_UserHead);
+      ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, Weiboinfo.getUser().getAvatar()).into(mDetail_UserHead);
     }
+
     //加载图片
     //Log.e("加载图片",Weiboinfo.getImgList().size()+"");
     if (!"".equals(Weiboinfo.getImgList())) {

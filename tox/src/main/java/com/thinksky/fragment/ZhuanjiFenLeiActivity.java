@@ -10,21 +10,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.thinksky.utils.imageloader.ImageLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class ZhuanjiFenLeiActivity extends BaseBActivity {
@@ -135,9 +132,9 @@ public class ZhuanjiFenLeiActivity extends BaseBActivity {
             holder.tV(R.id.content).setText(bean.content.replace("\\n","\n"));
             holder.tV(R.id.reply_count).setText(bean.reply_count);
             holder.tV(R.id.support_count).setText(bean.support_count);
-            ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,
-
-                    holder.imgV(R.id.imageView));
+            //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,
+            //        holder.imgV(R.id.imageView));
+            ImageLoader.loadOptimizedHttpImage(context,RsenUrlUtil.URL_BASE + bean.cover_url).into(holder.imgV(R.id.imageView));
             holder.v(R.id.root_layout).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

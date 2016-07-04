@@ -121,7 +121,7 @@
           android:id="@+id/content"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="12dp"
+
           android:layout_marginTop="12dp"
           android:ellipsize="end"
           android:lineSpacingMultiplier="1.5"
@@ -136,35 +136,47 @@
       <RelativeLayout
           android:id="@+id/img_layout"
           android:layout_width="match_parent"
-          android:layout_height="120dp"
-          android:layout_marginTop="10dp">
-        <!--图片部分-->
+          android:layout_height="wrap_content"
+          >
         <LinearLayout
             android:id="@+id/images"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-
-            android:orientation="horizontal">
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="9">
 
           <ImageView
               android:id="@+id/iv_1"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:visibility="invisible" />
+              android:layout_width="0dp"
+              android:layout_height="130dp"
+              android:layout_marginBottom="5dp"
+              android:layout_marginLeft="5dp"
+              android:layout_weight="3"
+              android:scaleType="centerCrop"
+              android:src="@drawable/friends_sends_pictures_no"
+              android:visibility="visible" />
 
           <ImageView
               android:id="@+id/iv_2"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="2dp"
-              android:visibility="invisible" />
+              android:scaleType="centerCrop"
+              android:layout_width="0dp"
+              android:layout_height="130dp"
+              android:layout_marginBottom="5dp"
+              android:layout_marginLeft="5dp"
+              android:layout_weight="3"
+              android:src="@drawable/friends_sends_pictures_no"
+              android:visibility="visible" />
 
           <ImageView
               android:id="@+id/iv_3"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="2dp"
-              android:visibility="invisible" />
+              android:layout_width="0dp"
+              android:layout_height="130dp"
+              android:layout_marginBottom="5dp"
+              android:layout_marginLeft="5dp"
+              android:layout_marginRight="5dp"
+              android:scaleType="centerCrop"
+              android:layout_weight="3"
+              android:src="@drawable/friends_sends_pictures_no"
+              android:visibility="visible" />
         </LinearLayout>
       </RelativeLayout>
 
@@ -172,7 +184,7 @@
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-
+          android:layout_marginTop="10dp"
           >
 
         <LinearLayout

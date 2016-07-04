@@ -14,22 +14,21 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
 import java.util.List;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
 
@@ -195,8 +194,11 @@ public class WendaFragment extends Fragment {
         ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("魟鱼");
       }
       //            ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setDrawablel(listEntity.getUser().getNickname());
-      ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(),
-          ((ImageView) viewHolder.itemView.findViewById(R.id.logo)));
+      //ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(),
+      //    ((ImageView) viewHolder.itemView.findViewById(R.id.logo)));
+   ImageLoader.loadOptimizedHttpImage(getActivity(),
+          RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32()).
+          bitmapTransform(new CropCircleTransformation(getActivity())).into((ImageView) viewHolder.itemView.findViewById(R.id.logo));
       //            //为图片控件加载数据
       //            kjBitmap = KJBitmap.create();
       //            kjBitmap.display(((ImageView) viewHolder.itemView.findViewById(R.id.logo)), RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32());
@@ -212,11 +214,12 @@ public class WendaFragment extends Fragment {
         iv1 = viewHolder.imgV(R.id.iv_1);
         iv2 = viewHolder.imgV(R.id.iv_2);
         iv3 = viewHolder.imgV(R.id.iv_3);
-        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1.getLayoutParams();
-        linearParams.width = (getScreenWidth(context)-40)/3; // 当控件的高强制设成365象素
-        iv1.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
-        iv2.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
-        iv3.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
+        //LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1.getLayoutParams();
+        //linearParams.width = (getScreenWidth(context)-45)/3; // 当控件的高强制设成365象素
+        //linearParams.height=(getScreenWidth(context)-60)/3;
+        //iv1.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
+        //iv2.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
+        //iv3.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
         iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
         iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
         iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
@@ -240,8 +243,8 @@ public class WendaFragment extends Fragment {
           }
 
           if (imageView != null) {
-
-            ImageLoader.getInstance().displayImage(url, imageView);
+            ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
+            //ImageLoader.getInstance().displayImage(url, imageView);
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {
 

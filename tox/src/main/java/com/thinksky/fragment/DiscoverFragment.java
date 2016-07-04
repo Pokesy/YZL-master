@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -33,24 +32,22 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.DiscoverSelectActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SegmentControl;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONObject;
+import org.kymjs.aframe.bitmap.KJBitmap;
 
 
 public class DiscoverFragment extends Fragment implements View.OnClickListener {
@@ -281,7 +278,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
                             imageView = iv_3;
                         }
                         if (imageView != null) {
-                            ImageLoader.getInstance().displayImage(url, imageView);
+                            //ImageLoader.getInstance().displayImage(url, imageView);
+                            ImageLoader.loadOptimizedHttpImage(getActivity(),url).into(imageView);
                             final int in = i;
                             imageView.setOnClickListener(new View.OnClickListener() {
 

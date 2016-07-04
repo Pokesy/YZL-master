@@ -8,11 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -20,17 +15,17 @@ import com.thinksky.rsen.fragment.RBaseFragment;
 import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class RemenhuatiFragment extends RBaseFragment {
@@ -244,6 +239,8 @@ public class RemenhuatiFragment extends RBaseFragment {
             holder.tV(R.id.title).setText(bean.title);
             if (!"".equals(bean.content)) {
                 holder.tV(R.id.content).setText(bean.content.replace("\\n", "\n"));
+            } else {
+                holder.tV(R.id.content).setVisibility(View.GONE);
             }
             holder.tV(R.id.supportCount).setText(bean.supportCount);
             holder.tV(R.id.nickname).setText(bean.nickname);
@@ -251,13 +248,16 @@ public class RemenhuatiFragment extends RBaseFragment {
 //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
             //为图片控件加载数据
             kjBitmap = KJBitmap.create();
-            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
-                    new DisplayImageOptions.Builder()
-                            .showImageOnLoading(R.drawable.ic_launcher)
-                            .showImageForEmptyUri(R.drawable.ic_launcher)
-                            .showImageOnFail(R.drawable.ic_launcher)
-                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                            .displayer(new RoundedBitmapDisplayer(100)).build());
+            //ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
+            //        new DisplayImageOptions.Builder()
+            //                .showImageOnLoading(R.drawable.ic_launcher)
+            //                .showImageForEmptyUri(R.drawable.ic_launcher)
+            //                .showImageOnFail(R.drawable.ic_launcher)
+            //                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+            //                .displayer(new RoundedBitmapDisplayer(100)).build());
+            ImageLoader.loadOptimizedHttpImage(context,
+                bean.user_logo).
+                bitmapTransform(new CropCircleTransformation(context)).into(holder.imgV(R.id.user_logo));
             if (bean.imgList != null && bean.imgList.size() > 0) {
                 holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 
@@ -279,8 +279,8 @@ public class RemenhuatiFragment extends RBaseFragment {
                     }
 
                     if (imageView != null) {
-
-                        ImageLoader.getInstance().displayImage(url, imageView);
+                        com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(getActivity(),url).into(imageView);
+                        //ImageLoader.getInstance().displayImage(url, imageView);
                         final int in = i;
                         imageView.setOnClickListener(new View.OnClickListener() {
 

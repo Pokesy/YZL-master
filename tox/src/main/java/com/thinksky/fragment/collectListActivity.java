@@ -21,6 +21,7 @@ import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.BaikeItemActivity;
 import com.thinksky.tox.R;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -210,8 +211,8 @@ public class CollectListActivity extends BaseBActivity {
                 holder.check.setVisibility(View.VISIBLE);
             }
             if (list.get(position).getImgList() != null && list.get(position).getImgList().size() != 0) {
-                com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + list.get(position).getImgList().get(0).getSrc(), holder.dailyPic);
-
+                //com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + list.get(position).getImgList().get(0).getSrc(), holder.dailyPic);
+                ImageLoader.loadOptimizedHttpImage(CollectListActivity.this,RsenUrlUtil.URL_BASE + list.get(position).getImgList().get(0).getSrc()).into(holder.dailyPic);
             }
             holder.tv.setText(list.get(position).getTitle());
 

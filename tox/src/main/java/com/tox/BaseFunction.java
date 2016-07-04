@@ -10,19 +10,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
-
-import org.kymjs.aframe.bitmap.KJBitmap;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import org.kymjs.aframe.bitmap.KJBitmap;
 
 
 /**
@@ -168,7 +164,8 @@ public class BaseFunction {
             if (type == Url.IMGTYPE_HEAD) {
                 Log.e("头像", imgPath);
 //                kjBitmap.display(imageView, imgPath, 128, 128);
-                ImageLoader.getInstance().displayImage(imgPath, imageView);
+//                ImageLoader.getInstance().displayImage(imgPath, imageView);
+                com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(context, imgPath).into(imageView);
                 Log.d("imgPath>>>1", imgPath);
                 //finalBitmap.display(imageView,imgPath,40,40,BitmapUtiles.drawableTobitmap(R.drawable.side_user_avatar,context),BitmapUtiles.drawableTobitmap(R.drawable.side_user_avatar,context));
 //                        imageView.setImageBitmap(roundBitmap.getRoundedCornerBitmap(bitmap));
@@ -184,7 +181,8 @@ public class BaseFunction {
                 Log.e("非头像", imgUrl);
 
 //                imageView.setImageBitmap(BitmapUtiles.loadBitmap(imgPath, 1));
-                ImageLoader.getInstance().displayImage(imgUrl, imageView);
+//                ImageLoader.getInstance().displayImage(imgUrl, imageView);
+                com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(context, imgPath).into(imageView);
 //                kjBitmap.display(imageView, imgUrl);//,BitmapUtiles.drawableTobitmap(R.drawable.friends_sends_pictures_no,context),BitmapUtiles.drawableTobitmap(R.drawable.friends_sends_pictures_no,context));
 //                        imageView.setImageBitmap(bitmap);
                 imageView.setVisibility(View.VISIBLE);

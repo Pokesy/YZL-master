@@ -8,14 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.tox.R;
-
-import org.kymjs.aframe.bitmap.KJBitmap;
-
+import com.thinksky.utils.imageloader.ImageLoader;
 import java.util.ArrayList;
+import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
  * 我的资讯列表适配器
@@ -67,7 +64,8 @@ public class MyNewsListAdapter extends BaseAdapter {
         }
 
 //        kjBitmap.display(viewHolder.newsLogo,newsListInfos.get(position).getCover(),280,260);
-        ImageLoader.getInstance().displayImage(newsListInfos.get(position).getCover(),viewHolder.newsLogo);
+//        ImageLoader.getInstance().displayImage(newsListInfos.get(position).getCover(),viewHolder.newsLogo);
+        ImageLoader.loadOptimizedHttpImage(mContext,newsListInfos.get(position).getCover()).into(viewHolder.newsLogo);
         viewHolder.newsTitle.setText(newsListInfos.get(position).getTitle());
         viewHolder.newsAuthor.setVisibility(View.GONE);
         viewHolder.isOverdue.setVisibility(View.VISIBLE);

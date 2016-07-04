@@ -22,8 +22,6 @@ import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.fragment.VedioView;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
@@ -33,7 +31,13 @@ import com.tox.IssueApi;
 import com.tox.IssueData;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -43,14 +47,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by 王杰 on 2015/3/20.
@@ -479,12 +475,14 @@ public class IssueDetail extends BaseBActivity {
             kjBitmap = KJBitmap.create();
             String u = comments.get(0).get("cover_url").replace("opensns//opensns", "opensns");
 //            kjBitmap.display(issue_image, u);
-            ImageLoader.getInstance().displayImage(u, issue_image);
+//            ImageLoader.getInstance().displayImage(u, issue_image);
+            com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this, u).into(issue_image);
 //            ResUtil.setRoundImage(comments.get(0).get("cover_url"), issue_image);
 //            issue_image.setVisibility(View.VISIBLE);
 //            image_progress.setVisibility(View.GONE);
 //            kjBitmap.display(issue_userImage, comments.get(0).get("user_image"));
-            ImageLoader.getInstance().displayImage(comments.get(0).get("user_image"), issue_userImage);
+//            ImageLoader.getInstance().displayImage(comments.get(0).get("user_image"), issue_userImage);
+            com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this, comments.get(0).get("issue_userImage")).into(issue_userImage);
             issue_userImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -635,14 +633,15 @@ public class IssueDetail extends BaseBActivity {
                 }
             });
             //给控件赋值
-            if (reply_info.get(position).get("user_image") != null) {
+            if (null!=reply_info.get(position).get("user_image") ) {
 //                kjbImage.display(viewHolder.replyUserImage, reply_info.get(position).get("user_image"));
-                ImageLoader.getInstance().displayImage(reply_info.get(position).get("user_image"), viewHolder.replyUserImage);
+//                ImageLoader.getInstance().displayImage(reply_info.get(position).get("user_image"), viewHolder.replyUserImage);
+                com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this,reply_info.get(position).get("user_image")).into(viewHolder.replyUserImage);
             }
             viewHolder.replyUserImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (reply_info.get(position).get("user_id") != null) {
+                    if (null!=reply_info.get(position).get("user_id")){
                         issueApi.goUserInfo(mContext, reply_info.get(position).get("user_id"));
                     }
                 }

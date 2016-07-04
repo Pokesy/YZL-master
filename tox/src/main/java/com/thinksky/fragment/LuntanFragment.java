@@ -19,27 +19,22 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RectIndicator;
 import com.thinksky.tox.ForumDetailActivity;
 import com.thinksky.tox.R;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LuntanFragment extends Fragment {
     private static final String TAG = "";
@@ -396,14 +391,16 @@ public class LuntanFragment extends Fragment {
             View view = itemViewList.get(position);
             final ForumBean bean = beans.get(position);
             LTSubViewHolder viewHolder = (LTSubViewHolder) view.getTag();
-            ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.logo, viewHolder.userLogo,
-                    new DisplayImageOptions.Builder()
-                            .showImageOnLoading(R.drawable.ic_launcher)
-                            .showImageForEmptyUri(R.drawable.ic_launcher)
-                            .showImageOnFail(R.drawable.ic_launcher)
-                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                            .displayer(new RoundedBitmapDisplayer(100)).build());
-
+            //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.logo, viewHolder.userLogo,
+            //        new DisplayImageOptions.Builder()
+            //                .showImageOnLoading(R.drawable.ic_launcher)
+            //                .showImageForEmptyUri(R.drawable.ic_launcher)
+            //                .showImageOnFail(R.drawable.ic_launcher)
+            //                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+            //                .displayer(new RoundedBitmapDisplayer(100)).build());
+            ImageLoader.loadOptimizedHttpImage(context,
+                RsenUrlUtil.URL_BASE + bean.logo).
+                bitmapTransform(new CropCircleTransformation(context)).into(viewHolder.userLogo);
             viewHolder.titleView.setText(bean.title);
             viewHolder.countView.setText("帖数：" + bean.post_count+"    回复：" + bean.reply_count);
 //            viewHolder.replyview.setText("回复：" + bean.reply_count);

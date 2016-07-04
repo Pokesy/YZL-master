@@ -13,22 +13,19 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.R;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ZhuanjiActivity extends BaseBActivity {
@@ -217,8 +214,9 @@ public class ZhuanjiActivity extends BaseBActivity {
 
             final IssueBean bean = beans.get(position);
             ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(bean.title);
-            ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,
-                    (ImageView) viewHolder.itemView.findViewById(R.id.imageView));
+            //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,
+            //        (ImageView) viewHolder.itemView.findViewById(R.id.imageView));
+            ImageLoader.loadOptimizedHttpImage(context,RsenUrlUtil.URL_BASE + bean.cover_url).into((ImageView) viewHolder.itemView.findViewById(R.id.imageView));
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

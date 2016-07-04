@@ -496,7 +496,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
 //            kjBitmap.display(replyerHead, replyInfo.getUser().getAvatar().replace("opensns//opensns","opensns"), 128, 128);
 //ImageLoader.getInstance().displayImage(imgUrl,imageView);
 
-            com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(replyInfo.getUser().getAvatar().replace("opensns//opensns", "opensns"), replyerHead);
+            //com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(replyInfo.getUser().getAvatar().replace("opensns//opensns", "opensns"), replyerHead);
+            com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(NewsDetailActivity.this, replyInfo.getUser().getAvatar().replace("opensns//opensns", "opensns")).into(replyerHead);
             replyAvatar.setText(replyInfo.getUser().getNickname());
         }
         replyTime.setText(replyInfo.getCreate_time());

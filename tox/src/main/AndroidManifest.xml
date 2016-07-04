@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksky.tox"
     android:versionCode="12"
     android:versionName="2.2.1">
@@ -315,7 +316,6 @@
                 <action android:name="com.angcyo.rsen" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".IssueActivity1"
@@ -334,7 +334,6 @@
             android:name="com.thinksky.rsen.activity.IssueDetailFragmentActivity1"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.thinksky.fragment.WendaListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -343,7 +342,6 @@
             android:name="com.thinksky.tox.GroupMyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.thinksky.fragment.WendaMyQuestionListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -419,7 +417,6 @@
             android:name="com.thinksky.tox.SendTieziActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
-
         <activity
             android:name="com.thinksky.fragment.CollectListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -444,6 +441,16 @@
             android:name="com.thinksky.fragment.UserListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityThemeTwo" />
+        <!-- Glide Module  -->
+        <meta-data
+            android:name="com.thinksky.utils.imageloader.GlideImageModule"
+            android:value="GlideModule"
+            />
+        <meta-data
+            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:value="GlideModule"
+            tools:node="remove"
+            />
     </application>
 
 </manifest>
