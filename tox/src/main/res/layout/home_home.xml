@@ -13,6 +13,7 @@
       android:gravity="center"
       android:orientation="horizontal"
       android:paddingTop="10dp"
+
       >
 
     <ProgressBar
@@ -45,9 +46,9 @@
         android:background="#ffffff"
         android:fillViewport="true"
         android:focusableInTouchMode="true"
-
         android:scrollbars="none"
         android:visibility="gone"
+
         >
 
       <LinearLayout
@@ -64,6 +65,7 @@
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             />
+
         <!--开头分割线-->
         <!--<View-->
         <!--android:layout_width="match_parent"-->
@@ -83,21 +85,21 @@
           <TextView
               android:id="@+id/rb_rmht"
               android:checked="false"
-              android:drawableTop="@drawable/iconfontremenwenda"
+              android:drawableTop="@drawable/wenda"
               android:text="@string/remenhuati"
               style="@style/main_wd"
               />
 
           <TextView
               android:id="@+id/rb_zgxs"
-              android:drawableTop="@drawable/iconfontzuigaoxuanshang"
+              android:drawableTop="@drawable/xuanshang"
               android:text="@string/zuigaoxuanshang"
               style="@style/main_wd"
               />
 
           <TextView
               android:id="@+id/rb_wdtw"
-              android:drawableTop="@drawable/iconfontwodetiwen"
+              android:drawableTop="@drawable/tiwen"
               android:text="@string/wodetiwen"
               style="@style/main_wd"
               />
@@ -105,7 +107,7 @@
           <TextView
               android:id="@+id/rb_yjj"
               android:checked="false"
-              android:drawableTop="@drawable/iconfontyijiejue"
+              android:drawableTop="@drawable/yijiejue"
               android:text="@string/yijiejue"
               style="@style/main_wd"
               />
@@ -116,10 +118,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="#E3E3E3"
+            android:background="#f2f2f2"
             android:gravity="center_vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             >
 
           <TextView
@@ -129,12 +132,11 @@
               android:layout_alignParentLeft="true"
               android:layout_alignParentStart="true"
               android:layout_centerVertical="true"
-              android:paddingBottom="8dp"
-              android:paddingTop="8dp"
-
+              android:drawableLeft="@drawable/shipin"
+              android:drawablePadding="10dp"
+              android:gravity="center"
               android:text="专家课程"
-
-              android:textColor="#333333"
+              android:textColor="#5B85BB"
               android:textSize="17sp"
               />
           <LinearLayout
@@ -144,6 +146,7 @@
               android:layout_alignParentEnd="true"
               android:layout_alignParentRight="true"
               android:layout_centerVertical="true"
+              android:gravity="center_vertical"
               >
 
             <TextView
@@ -153,10 +156,8 @@
 
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="显示全部"
-                android:textColor="#999999"
+                android:text="查看更多"
+                android:textColor="#96a0aa"
                 android:textSize="13sp"
                 />
 
@@ -165,10 +166,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:text=">"
-                android:textColor="#999999"
+                android:textColor="#96a0aa"
                 android:textSize="17sp"
                 />
           </LinearLayout>
@@ -187,7 +186,7 @@
             android:textSize="15sp"
             />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -217,11 +216,14 @@
           </FrameLayout>
 
           <LinearLayout
-              android:layout_width="wrap_content"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="15dp"
-              android:layout_marginTop="15dp"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentLeft="true"
+              android:background="#20000000"
               android:orientation="horizontal"
+              android:paddingBottom="15dp"
+              android:paddingTop="15dp"
               >
 
             <TextView
@@ -231,7 +233,7 @@
                 android:drawableLeft="@drawable/time"
                 android:drawablePadding="10dp"
                 android:paddingLeft="15dp"
-                android:textColor="#999999"
+                android:textColor="#96a0aa"
                 android:textSize="13sp"
                 tools:text="12:20"
                 />
@@ -243,7 +245,7 @@
                 android:layout_marginLeft="30dp"
                 android:drawableLeft="@drawable/weidianzan"
                 android:drawablePadding="10dp"
-                android:textColor="#999999"
+                android:textColor="#96a0aa"
                 android:textSize="13sp"
                 tools:text="235"
                 />
@@ -253,15 +255,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:drawableLeft="@drawable/huisepinglun"
+                android:drawableLeft="@drawable/pinglun"
                 android:drawablePadding="10dp"
-                android:textColor="#999999"
+                android:textColor="#96a0aa"
                 android:textSize="13sp"
                 tools:text="235"
                 />
           </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <ListView
             android:id="@+id/list"
@@ -274,10 +276,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E3E3E3"
-            android:gravity="center_vertical"
+            android:background="#f2f2f2"
+            android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             >
 
           <TextView
@@ -287,12 +290,12 @@
               android:layout_alignParentLeft="true"
               android:layout_alignParentStart="true"
               android:layout_centerVertical="true"
-              android:paddingBottom="8dp"
-              android:paddingTop="8dp"
+              android:drawableLeft="@drawable/zixun"
+
+              android:drawablePadding="10dp"
 
               android:text="资讯"
-
-              android:textColor="#333333"
+              android:textColor="#5B85BB"
               android:textSize="17sp"
               />
 
@@ -303,6 +306,7 @@
               android:layout_alignParentEnd="true"
               android:layout_alignParentRight="true"
               android:layout_centerVertical="true"
+              android:gravity="center_vertical"
               >
 
             <TextView
@@ -312,10 +316,8 @@
 
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="显示全部"
-                android:textColor="#999999"
+                android:text="查看更多"
+                android:textColor="#96a0aa"
                 android:textSize="13sp"
                 />
 
@@ -324,10 +326,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:text=">"
-                android:textColor="#999999"
+                android:textColor="#96a0aa"
                 android:textSize="17sp"
                 />
           </LinearLayout>
@@ -351,10 +351,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E3E3E3"
+            android:background="#f2f2f2"
             android:gravity="center_vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             >
 
           <TextView
@@ -364,12 +365,12 @@
               android:layout_alignParentLeft="true"
               android:layout_alignParentStart="true"
               android:layout_centerVertical="true"
-              android:paddingBottom="8dp"
-              android:paddingTop="8dp"
+              android:drawableLeft="@drawable/remenxiaozu"
+
+              android:drawablePadding="10dp"
 
               android:text="热门小组"
-
-              android:textColor="#333333"
+              android:textColor="#5B85BB"
               android:textSize="17sp"
               />
 
@@ -380,6 +381,7 @@
               android:layout_alignParentEnd="true"
               android:layout_alignParentRight="true"
               android:layout_centerVertical="true"
+              android:gravity="center_vertical"
               >
 
             <TextView
@@ -389,10 +391,8 @@
 
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="显示全部"
-                android:textColor="#999999"
+                android:text="查看更多"
+                android:textColor="#96a0aa"
                 android:textSize="13sp"
                 />
 
@@ -401,10 +401,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:text=">"
-                android:textColor="#999999"
+                android:textColor="#96a0aa"
                 android:textSize="17sp"
                 />
           </LinearLayout>
@@ -428,10 +426,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#E3E3E3"
+            android:background="#f2f2f2"
             android:gravity="center_vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             >
 
           <TextView
@@ -441,12 +440,10 @@
               android:layout_alignParentLeft="true"
               android:layout_alignParentStart="true"
               android:layout_centerVertical="true"
-              android:paddingBottom="8dp"
-              android:paddingTop="8dp"
-
+              android:drawableLeft="@drawable/remenhuati"
+              android:drawablePadding="10dp"
               android:text="热门话题"
-
-              android:textColor="#333333"
+              android:textColor="#5B85BB"
               android:textSize="17sp"
               />
 
@@ -457,6 +454,7 @@
               android:layout_alignParentEnd="true"
               android:layout_alignParentRight="true"
               android:layout_centerVertical="true"
+              android:gravity="center_vertical"
               >
 
             <TextView
@@ -466,10 +464,8 @@
 
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="显示全部"
-                android:textColor="#999999"
+                android:text="查看更多"
+                android:textColor="#96a0aa"
                 android:textSize="13sp"
                 />
 
@@ -478,10 +474,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
                 android:text=">"
-                android:textColor="#999999"
+                android:textColor="#96a0aa"
                 android:textSize="17sp"
                 />
           </LinearLayout>
@@ -500,5 +494,32 @@
         </LinearLayout>
       </LinearLayout>
     </com.thinksky.fragment.MyScrollview>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:padding="25dp"
+          android:src="@drawable/list"
+          />
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:padding="21dp"
+          android:src="@drawable/logo"
+          />
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:padding="20dp"
+          android:src="@drawable/search"
+          />
+    </RelativeLayout>
   </RelativeLayout>
 </LinearLayout>

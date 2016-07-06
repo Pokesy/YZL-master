@@ -1,5 +1,6 @@
 package com.thinksky.utils;
 
+import android.support.annotation.NonNull;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,33 +9,63 @@ import java.security.NoSuchAlgorithmException;
  * Created by jiao on 2016/4/29.
  */
 public class MD5 {
-    public static String getMD5(String val) throws NoSuchAlgorithmException {
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        md5.update(val.getBytes());
-        byte[] m = md5.digest();//加密
-        return getString(m);
-    }
-    private static String getString(byte[] b){
-        StringBuffer sb = new StringBuffer();
-        for(int i = 0; i < b.length; i ++){
-            sb.append(b[i]);
-        }
-        return sb.toString();
-    }
-    public static String md5(String string) {
-        byte[] hash;
+    private static final String TAG = "MD5Encoder";
+    private static String key = "QCdwsAeliJjXzVKOn1af0237cTUEqpmWhZkIYuHP";
+    public static String md5(@NonNull String text) {
         try {
-            hash = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
+
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(encryptToSHA(text).getBytes("UTF-8"));
+            byte[] encryption = md5.digest();
+
+            StringBuffer strBuf = new StringBuffer();
+            for (int i = 0; i < encryption.length; i++) {
+                if (Integer.toHexString(0xff & encryption[i]).length() == 1) {
+                    strBuf.append("0").append(Integer.toHexString(0xff & encryption[i]));
+                } else {
+                    strBuf.append(Integer.toHexString(0xff & encryption[i]));
+                }
+            }
+            LogUtils.d( "password ===> " + strBuf.toString());
+
+            return strBuf.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Huh, MD5 should be supported?", e);
+            //LogUtils.d(  "", e);
+            return "";
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Huh, UTF-8 should be supported?", e);
+            //LogUtils.d(  "", e);
+            return "";
         }
-        StringBuilder hex = new StringBuilder(hash.length * 2);
-        for (byte b : hash) {
-            if ((b & 0xFF) < 0x10) hex.append("0");
-            hex.append(Integer.toHexString(b & 0xFF));
+    }
+
+    public static String byte2hex(byte[] b) {
+        String hs = "";
+        String stmp = "";
+        for (int n = 0; n < b.length; n++) {
+            stmp = (java.lang.Integer.toHexString(b[n] & 0XFF));
+            if (stmp.length() == 1) {
+                hs = hs + "0" + stmp;
+            } else {
+                hs = hs + stmp;
+            }
         }
-        return hex.toString();
+        return hs;
+    }
+    //SHA1 加密实例
+    public static String encryptToSHA(String info) {
+        byte[] digesta = null;
+        try {
+            // 得到一个SHA-1的消息摘要
+            MessageDigest alga = MessageDigest.getInstance("SHA-1");
+            // 添加要进行计算摘要的信息
+            alga.update(info.getBytes());
+            // 得到该摘要
+            digesta = alga.digest();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        // 将摘要转为字符串
+        String rs = byte2hex(digesta);
+        return rs + key;
     }
 }

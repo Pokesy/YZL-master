@@ -160,8 +160,8 @@ public class RsenUrlUtil {
                         }
                     } else {
                         if (listener != null && listener instanceof OnNetHttpResultListener) {
-//                            ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
-                            ((OnNetHttpResultListener) listener).onNoNetwork(msg.what + "-->" + data);
+                            ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
+                            //((OnNetHttpResultListener) listener).onNoNetwork(msg.what + "-->" + data);
 //                            Log.e(data,data);
                         }
                     }
