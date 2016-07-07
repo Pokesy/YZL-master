@@ -50,7 +50,7 @@ public class YlqFragment extends Fragment implements View.OnClickListener {
         fragments.add(RemenhuatiFragment.newInstance("label1"));
         fragments.add(XiaozujingxuanFragment.newInstance("label2"));
         fragments.add(WodexiaozuFragment.newInstance("label3"));
-        fragments.add(LuntanFragment.newInstance("label4"));
+        //fragments.add(LuntanFragment.newInstance("label4"));
         mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
         mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.white));
         mSegmentControl.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {

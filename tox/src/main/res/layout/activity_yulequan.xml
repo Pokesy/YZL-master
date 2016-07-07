@@ -24,7 +24,7 @@
         segmentcontrol:horizonGap="12dip"
         segmentcontrol:selectedBackgroundColors="#2a93d5"
         segmentcontrol:selectedIndex="0"
-        segmentcontrol:texts="热门话题|小组精选|我的小组|论坛"
+        segmentcontrol:texts="热门话题|小组精选|我的小组"
         segmentcontrol:verticalGap="10dip" />
 
     <android.support.v4.view.ViewPager

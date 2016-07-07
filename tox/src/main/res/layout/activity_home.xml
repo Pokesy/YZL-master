@@ -81,7 +81,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@drawable/head_border"
+
         android:checkedButton="@+id/rb_shouye"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -103,7 +103,13 @@
           android:textColor="@color/tab_text_color"
           style="@style/main_tab_bottom"
           />
-
+      <RadioButton
+          android:id="@+id/rb_mall"
+          android:drawableTop="@drawable/mall_progress"
+          android:text="@string/tab_setting"
+          android:textColor="@color/tab_text_color"
+          style="@style/main_tab_bottom"
+          />
       <RadioButton
           android:id="@+id/rb_yulequan"
           android:drawableTop="@drawable/ylq_progress"
@@ -121,13 +127,7 @@
           style="@style/main_tab_bottom"
           />
 
-      <RadioButton
-          android:id="@+id/rb_mall"
-          android:drawableTop="@drawable/mall_progress"
-          android:text="@string/tab_setting"
-          android:textColor="@color/tab_text_color"
-          style="@style/main_tab_bottom"
-          />
+
     </RadioGroup>
   </LinearLayout>
 

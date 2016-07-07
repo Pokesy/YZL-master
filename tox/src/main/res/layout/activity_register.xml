@@ -96,7 +96,7 @@
                 android:layout_height="15dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
-                android:visibility="gone"></LinearLayout>
+           ></LinearLayout>
 
             <EditText
                 android:id="@+id/nickname"
@@ -104,12 +104,13 @@
                 android:layout_height="48dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
-                android:background="@drawable/button_edit_normal"
+                android:background="@drawable/shape"
                 android:hint="昵称"
                 android:maxLength="16"
-
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
                 android:paddingLeft="10dp"
-                android:visibility="gone" />
+      />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -495,10 +495,17 @@
       </LinearLayout>
     </com.thinksky.fragment.MyScrollview>
     <RelativeLayout
+        android:id="@+id/title_tl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
 
         >
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@android:color/white"
+          android:alpha="0.1"
+          ></FrameLayout>
       <ImageView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"

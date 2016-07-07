@@ -208,8 +208,8 @@ public class RegistetActivity extends BaseBActivity {
                     if(opinion.equals("0")) {
                         if (!username.matches("[0-9A-Za-z_]*")) {
                             Toast.makeText(RegistetActivity.this, "用户名只能是英文数字和下划线", Toast.LENGTH_SHORT).show();
-                        } else if (username.length() > 16 || username.length() < 4) {
-                            Toast.makeText(RegistetActivity.this, "用户名不能小于4或者大于16字符", Toast.LENGTH_SHORT).show();
+                        } else if (username.length() > 8 || username.length() < 0) {
+                            Toast.makeText(RegistetActivity.this, "用户名不能小于0或者大于8字符", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }

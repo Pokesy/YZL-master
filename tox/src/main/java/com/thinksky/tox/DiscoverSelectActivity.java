@@ -3,9 +3,8 @@ package com.thinksky.tox;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-
+import android.widget.TextView;
 import com.thinksky.holder.BaseBActivity;
 import com.tox.BaseApi;
 
@@ -35,7 +34,7 @@ public class DiscoverSelectActivity extends BaseBActivity {
             }
         });
         //鱼友
-        Button mark = (Button) findViewById(R.id.button_friend);
+        TextView mark = (TextView) findViewById(R.id.button_friend);
         mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +46,7 @@ public class DiscoverSelectActivity extends BaseBActivity {
             }
         });
         // 渔场
-        Button mark1 = (Button) findViewById(R.id.button_fishing);
+        TextView mark1 = (TextView) findViewById(R.id.button_fishing);
         mark1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
