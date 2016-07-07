@@ -20,7 +20,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.nineoldandroids.view.ViewHelper;
 import com.thinksky.fragment.CollectListActivity;
 import com.thinksky.fragment.DiscoverFragment;
@@ -37,7 +36,6 @@ import com.thinksky.utils.LoadImg;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
 import java.util.ArrayList;
 
 /**
@@ -106,12 +104,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   public TextView collect;
   public TextView invite;
   public TextView message1;
+  private TextView mFeedbackMenu;
   private LinearLayout drawer_view;
   private RelativeLayout mTitleBar;
   private TextView mTitleBarBtnRight;
 
   private View.OnClickListener mWriteFeedListener = new View.OnClickListener() {
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
       if (!Url.SESSIONID.equals("")) {
         Intent intent = new Intent(MainActivity.this, UploadActivity.class);
         startActivity(intent);
@@ -129,7 +129,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   };
 
   //再按一次退出
-  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
       if ((System.currentTimeMillis() - exitTime) > 2000) {
         Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
@@ -155,7 +156,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     mContent = drawer_layout.getChildAt(0);
     drawerToggle = new ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.drawer_open,
         R.string.drawer_close) {
-      @Override public void onDrawerSlide(View drawerView, float slideOffset) {
+      @Override
+      public void onDrawerSlide(View drawerView, float slideOffset) {
         super.onDrawerSlide(drawerView, slideOffset);
         float scale = 1 - slideOffset;
         ViewHelper.setTranslationX(mContent, drawerView.getMeasuredWidth() * (1 - scale));
@@ -166,7 +168,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     toolbar.setNavigationIcon(R.drawable.iconfont_gerenshezhi);
     drawer_layout.setDrawerListener(drawerToggle);
     drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         if (!drawer_layout.isDrawerOpen(drawer_view)) {
           drawer_layout.openDrawer(drawer_view);
         } else {
@@ -183,7 +186,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   /**
    * 如果想是实现滑动菜单可以滑动，必须实现如下方法
    */
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
     return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
   }
 
@@ -236,11 +240,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     collect = (TextView) findViewById(R.id.collect);
     message1 = (TextView) findViewById(R.id.message1);
     invite = (TextView) findViewById(R.id.invite);
+    mFeedbackMenu = (TextView) findViewById(R.id.feed_back);
     user.setOnClickListener(MainActivity.this);
     setting.setOnClickListener(MainActivity.this);
     message1.setOnClickListener(MainActivity.this);
     collect.setOnClickListener(MainActivity.this);
     invite.setOnClickListener(MainActivity.this);
+    mFeedbackMenu.setOnClickListener(MainActivity.this);
     mLoginThisAPP.setOnClickListener(MainActivity.this);
     text.setOnClickListener(MainActivity.this);
     sousuo.setOnClickListener(MainActivity.this);
@@ -248,7 +254,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     ((RadioGroup) findViewById(R.id.main_radio)).setOnCheckedChangeListener(
         new RadioGroup.OnCheckedChangeListener() {
-          @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
+          @Override
+          public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
               case R.id.rb_weibo:
                 setTabSelection(1);
@@ -278,13 +285,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     setTabSelection(0);
   }
 
-  @Override protected void init() {
+  @Override
+  protected void init() {
     //        if (BuildConfig.DEBUG) {
-    //            AnswerDialogFragment.show(getSupportFragmentManager(), new AnswerDialogFragment.ArgBean());
+    //            AnswerDialogFragment.show(getSupportFragmentManager(), new AnswerDialogFragment
+    // .ArgBean());
     //        }
   }
 
-  @Override public void onClick(View v) {
+  @Override
+  public void onClick(View v) {
     switch (v.getId()) {
       case R.id.user:
         if (!Url.SESSIONID.equals("")) {
@@ -322,7 +332,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         intent_Share.setType("text/plain");
         intent_Share.putExtra(Intent.EXTRA_SUBJECT, "分享");
         intent_Share.putExtra(Intent.EXTRA_TEXT, " （来自鱼知乐手机客户端）");//分享内容体
-        //                intent_Share.putExtra(Intent.ACTION_PACKAGE_ADDED,  "www.baidu.com");//分享内容体
+        //                intent_Share.putExtra(Intent.ACTION_PACKAGE_ADDED,  "www.baidu.com");
+        // 分享内容体
         startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
         break;
       case R.id.message1:
@@ -354,7 +365,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         intent_Share.putExtra(Intent.EXTRA_TEXT, " （来自OpenSNS手机客户端）");//分享内容体
         startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
         break;
-
+      case R.id.feed_back:
+        startActivity(new Intent(this, Setting_yijianActivity.class));
+        break;
       default:
         break;
     }
@@ -543,7 +556,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
   }
 
-  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == 0 && resultCode == 1) {
       Log.d("回来了吗？", "123");

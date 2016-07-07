@@ -1,189 +1,201 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/caidan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/head">
+    android:background="@drawable/bg_main_drawer"
+    android:paddingBottom="15dp"
+    android:paddingLeft="30dp"
+    >
 
+  <RelativeLayout
+      android:id="@+id/ll1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="180dp"
+      android:orientation="vertical"
+      >
+
+    <com.thinksky.redefine.CircleImageView
+        android:id="@+id/iv_bottom"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/side_user_avatar"
+        app:border_color="@color/light"
+        app:border_width="1dp"
+        />
+    <!--头像，昵称信息-->
     <LinearLayout
-        android:id="@+id/ll1"
-        android:layout_width="fill_parent"
+        android:id="@+id/LoginThisAPP"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_bottom"
         android:orientation="vertical"
-        android:paddingTop="50dp">
-        <!--头像，昵称信息-->
-        <LinearLayout
-            android:id="@+id/LoginThisAPP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+        >
 
-            <com.thinksky.redefine.CircleImageView
-                android:id="@+id/iv_bottom"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/side_user_avatar"
-                tools:border_color="@color/light"
-                tools:border_width="2dp" />
+      <TextView
+          android:id="@+id/myUserName"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="6dp"
+          android:textColor="#ffffff"
+          android:textSize="17sp"
+          tools:text="名字:wuyinlei"
+          />
 
-            <TextView
-                android:id="@+id/myUserName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_marginTop="13dp"
-                android:text="名字:wuyinlei"
-                android:textColor="#ffffff"
-                android:textSize="17sp" />
+      <TextView
+          android:id="@+id/signature"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="#ffffff"
+          android:textSize="13sp"
+          android:visibility="invisible"
+          tools:text="AndroidLoves"
+          tools:visibility="visible"
+          />
 
-            <TextView
-                android:id="@+id/signature"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="AndroidLoves"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
-
-        </LinearLayout>
     </LinearLayout>
-    <!--&lt;!&ndash;底部功能条&ndash;&gt;-->
-    <!--<include-->
-    <!--android:id="@+id/bottom_view"-->
-    <!--layout="@layout/left_view_bottom_layout" />-->
-    <!--中间列表-->
-    <LinearLayout
+  </RelativeLayout>
+  <!--&lt;!&ndash;底部功能条&ndash;&gt;-->
+  <!--<include-->
+  <!--android:id="@+id/bottom_view"-->
+  <!--layout="@layout/left_view_bottom_layout" />-->
+  <!--中间列表-->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/ll1"
+      android:layout_marginTop="27dp"
+      android:orientation="vertical"
+      >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#66DEE2E3"
+        />
+
+    <TextView
+        android:id="@+id/user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:drawableLeft="@drawable/personal"
+        android:drawablePadding="17dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/personal"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        />
 
-        android:layout_below="@+id/ll1"
-        android:orientation="vertical"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#66DEE2E3"
+        />
 
-        android:paddingTop="50dp">
+    <TextView
+        android:id="@+id/message1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:drawableLeft="@drawable/message"
+        android:drawablePadding="17dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/message"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="15dp"
-            android:background="#66DEE2E3" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#66DEE2E3"
+        />
 
-        <TextView
-            android:id="@+id/user"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/personal"
-            android:drawablePadding="17dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="62dp"
-            android:text="@string/personal"
-            android:textColor="@android:color/white"
-            android:textSize="15sp" />
+    <TextView
+        android:id="@+id/collect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:drawableLeft="@drawable/collect"
+        android:drawablePadding="17dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/collect"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="15dp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#66DEE2E3"
+        />
 
-            android:background="#66DEE2E3" />
+    <TextView
+        android:id="@+id/invite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:drawableLeft="@drawable/invite"
+        android:drawablePadding="17dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/invite"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        />
 
-        <TextView
-            android:id="@+id/message1"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/message"
-            android:drawablePadding="17dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="62dp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#66DEE2E3"
+        />
 
-            android:text="@string/message"
-            android:textColor="@android:color/white"
-            android:textSize="15sp" />
+  </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="15dp"
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:paddingRight="30dp"
+      >
+    <TextView
+        android:id="@+id/setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:drawableLeft="@drawable/settingup"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/setting"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
+        />
+    <TextView
+        android:id="@+id/feed_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/feedback"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="@string/feed_back"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
+        />
 
-            android:background="#66DEE2E3" />
-
-        <TextView
-            android:id="@+id/collect"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/collect"
-            android:drawablePadding="17dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="62dp"
-
-            android:text="@string/collect"
-            android:textColor="@android:color/white"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="15dp"
-
-            android:background="#66DEE2E3" />
-
-        <TextView
-            android:id="@+id/invite"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/invite"
-            android:drawablePadding="17dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="62dp"
-
-
-            android:text="@string/invite"
-
-            android:textColor="@android:color/white"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="15dp"
-
-            android:background="#66DEE2E3" />
-
-        <TextView
-            android:id="@+id/setting"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/settingup"
-            android:drawablePadding="17dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="62dp"
-
-
-            android:text="@string/setting"
-            android:textColor="@android:color/white"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="15dp"
-
-            android:background="#66DEE2E3" />
-    </LinearLayout>
-    <!--<ListView-->
-    <!--android:id="@+id/lv"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-
-    <!--android:layout_above="@id/bottom_view"-->
-    <!--android:layout_below="@id/ll1"-->
-    <!--android:layout_marginBottom="30dp"-->
-    <!--android:layout_marginTop="70dp"-->
-    <!--android:cacheColorHint="#00000000"-->
-    <!--android:listSelector="@drawable/lv_click_selector"-->
-    <!--android:divider="@null"-->
-    <!--android:scrollbars="none"-->
-    <!--android:textColor="#ffffff" />-->
-
+  </RelativeLayout>
 </RelativeLayout>

@@ -1,126 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">鱼知乐</string>
-    <string name="back_menu">后退</string>
-    <string name="clear_cache">清除缓存</string>
-    <string name="weibo_name">动态</string>
-    <string name="forum_name">论坛</string>
-    <string name="issue_name">专辑</string>
-    <string name="event_name">活动</string>
-    <string name="group_name">群组</string>
-    <string name="news_name">资讯</string>
-    <string name="news_image_name">资讯图片</string>
-    <string name="message_name">消息中心</string>
-    <string name="news_post">资讯投稿</string>
-    <string name="post">投稿</string>
-    <string name="reply">回复</string>
-    <string name="delete">删除</string>
-    <string name="border_top">Border Top</string>
-    <string name="border_bottom">Border Bottom</string>
-    <string name="image_url">Image Url</string>
-    <string name="textColor">#815F3D</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_ashamed_detail">AshamedDetailActivity</string>
-    <string name="title_activity_send_comment">SendCommentActivity</string>
-    <string name="title_activity_qr_main">qrMainActivity</string>
-    <string name="title_activity_capture">CaptureActivity</string>
-    <string name="title_activity_call">CallActivity</string>
-    <string name="title_activity_img_preview">ImgPreview</string>
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="title_activity_photo_browser">图片浏览</string>
-    <string name="title_activity_scan_photo">ScanPhotoActivity</string>
-    <string name="title_activity_check_in">签到</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="viewpager_indicator">%1$d/%2$d</string>
-    <string name="title_activity_forum">Open SNS</string>
-    <string name="title_activity_forum_activity2">ForumActivity2</string>
-    <string name="title_activity_forum_activity3">ForumActivity3</string>
-    <string name="title_activity_post_detaila">PostDetailaActivity</string>
-    <string name="title_activity_send_post">SendPostActivity</string>
-    <string name="title_activity_send_post2">SendPost2Activity</string>
-    <string name="title_activity_land_lord">LandLord</string>
-    <string name="lookmore">查看更多回复</string>
-    <string name="Complete">成功</string>
-    <string name="Error">失败</string>
-    <string name="title_activity_parall_header">ParallHeader</string>
-    <string name="title_activity_new_main">NewMainActivity</string>
+  <string name="app_name">鱼知乐</string>
+  <string name="back_menu">后退</string>
+  <string name="clear_cache">清除缓存</string>
+  <string name="weibo_name">动态</string>
+  <string name="forum_name">论坛</string>
+  <string name="issue_name">专辑</string>
+  <string name="event_name">活动</string>
+  <string name="group_name">群组</string>
+  <string name="news_name">资讯</string>
+  <string name="news_image_name">资讯图片</string>
+  <string name="message_name">消息中心</string>
+  <string name="news_post">资讯投稿</string>
+  <string name="post">投稿</string>
+  <string name="reply">回复</string>
+  <string name="delete">删除</string>
+  <string name="border_top">Border Top</string>
+  <string name="border_bottom">Border Bottom</string>
+  <string name="image_url">Image Url</string>
+  <string name="textColor">#815F3D</string>
+  <string name="drawer_open">Open navigation drawer</string>
+  <string name="drawer_close">Close navigation drawer</string>
+  <string name="action_settings">Settings</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="title_activity_ashamed_detail">AshamedDetailActivity</string>
+  <string name="title_activity_send_comment">SendCommentActivity</string>
+  <string name="title_activity_qr_main">qrMainActivity</string>
+  <string name="title_activity_capture">CaptureActivity</string>
+  <string name="title_activity_call">CallActivity</string>
+  <string name="title_activity_img_preview">ImgPreview</string>
+  <string name="title_activity_splash">SplashActivity</string>
+  <string name="title_activity_photo_browser">图片浏览</string>
+  <string name="title_activity_scan_photo">ScanPhotoActivity</string>
+  <string name="title_activity_check_in">签到</string>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="viewpager_indicator">%1$d/%2$d</string>
+  <string name="title_activity_forum">Open SNS</string>
+  <string name="title_activity_forum_activity2">ForumActivity2</string>
+  <string name="title_activity_forum_activity3">ForumActivity3</string>
+  <string name="title_activity_post_detaila">PostDetailaActivity</string>
+  <string name="title_activity_send_post">SendPostActivity</string>
+  <string name="title_activity_send_post2">SendPost2Activity</string>
+  <string name="title_activity_land_lord">LandLord</string>
+  <string name="lookmore">查看更多回复</string>
+  <string name="Complete">成功</string>
+  <string name="Error">失败</string>
+  <string name="title_activity_parall_header">ParallHeader</string>
+  <string name="title_activity_new_main">NewMainActivity</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+  <string name="title_section1">Section 1</string>
+  <string name="title_section2">Section 2</string>
+  <string name="title_section3">Section 3</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+  <string name="navigation_drawer_open">Open navigation drawer</string>
+  <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
-    <string name="title_activity_ldrawer">LDrawerActivity</string>
-    <string name="load_more">加载中...</string>
-    <string name="load_error">加载失败,点击重试</string>
-    <string-array name="menu_array">
-        <item>Menu 1</item>
-        <item>Menu 2</item>
-        <item>Menu 3</item>
-        <item>Menu 4</item>
-    </string-array>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">dummy_content</string>
-    <string name="tab_function">首页</string>
-    <string name="tab_news_center">动态</string>
-    <string name="tab_smart_service">鱼乐圈</string>
-    <string name="tab_gov_affairs">鱼医生</string>
-    <string name="tab_setting">发现</string>
-    <string name="share_content">恒瑞网络</string>
-    <string name="removeItem">删除</string>
-    <string name="action_personal">个人中心</string>
-    <string name="personal">个人信息</string>
-    <string name="message">消息通知</string>
-    <string name="collect">我的收藏</string>
-    <string name="invite">邀请好友</string>
-    <string name="setting">设置</string>
+  <string name="action_example">Example action</string>
+  <string name="title_activity_ldrawer">LDrawerActivity</string>
+  <string name="load_more">加载中...</string>
+  <string name="load_error">加载失败,点击重试</string>
+  <string-array name="menu_array">
+    <item>Menu 1</item>
+    <item>Menu 2</item>
+    <item>Menu 3</item>
+    <item>Menu 4</item>
+  </string-array>
+  <string name="dummy_button">Dummy Button</string>
+  <string name="dummy_content">dummy_content</string>
+  <string name="tab_function">首页</string>
+  <string name="tab_news_center">动态</string>
+  <string name="tab_smart_service">鱼乐圈</string>
+  <string name="tab_gov_affairs">鱼医生</string>
+  <string name="tab_setting">发现</string>
+  <string name="share_content">恒瑞网络</string>
+  <string name="removeItem">删除</string>
+  <string name="action_personal">个人中心</string>
+  <string name="personal">个人信息</string>
+  <string name="message">消息通知</string>
+  <string name="collect">我的收藏</string>
+  <string name="invite">邀请好友</string>
+  <string name="setting">设置</string>
+  <string name="feed_back">反馈</string>
 
-    <string name="remenhuati">热门问答</string>
-    <string name="zuigaoxuanshang">最高悬赏</string>
-    <string name="wodetiwen">我的提问</string>
-    <string name="yijiejue">已解决</string>
-    <string name="title_discover_select">标记我的位置</string>
+  <string name="remenhuati">热门问答</string>
+  <string name="zuigaoxuanshang">最高悬赏</string>
+  <string name="wodetiwen">我的提问</string>
+  <string name="yijiejue">已解决</string>
+  <string name="title_discover_select">标记我的位置</string>
 
-    <string name="mode_putong">普通</string>
-    <string name="mode_gensui">跟随</string>
-    <string name="mode_luopan">罗盘</string>
-    <string name="map_zhengchang">正常图</string>
-    <string name="map_weixing">卫星图</string>
-    <string name="map_traffic">交通图</string>
-    <string name="map_heat">热力图</string>
+  <string name="mode_putong">普通</string>
+  <string name="mode_gensui">跟随</string>
+  <string name="mode_luopan">罗盘</string>
+  <string name="map_zhengchang">正常图</string>
+  <string name="map_weixing">卫星图</string>
+  <string name="map_traffic">交通图</string>
+  <string name="map_heat">热力图</string>
 
-    <string name="prompt_offline">尚未登录</string>
+  <string name="prompt_offline">尚未登录</string>
 
-    <string name="feed_btn_retweet">转发</string>
+  <string name="feed_btn_retweet">转发</string>
 
-    <string name="forum_detail_label_post">主题\u0020:\u0020</string>
-    <string name="forum_detail_label_topic">帖子\u0020:\u0020 </string>
-    <string name="forum_detail_label_reply">回复\u0020:\u0020 </string>
+  <string name="forum_detail_label_post">主题\u0020:\u0020</string>
+  <string name="forum_detail_label_topic">帖子\u0020:\u0020 </string>
+  <string name="forum_detail_label_reply">回复\u0020:\u0020 </string>
 
-    <string name="activity_wenda_my_question_title">我的提问</string>
-    <string name="activity_wenda_title_hot">热门问答</string>
-    <string name="activity_wenda_title_mon">最高悬赏</string>
-    <string name="activity_wenda_title_solution">已解决</string>
+  <string name="activity_wenda_my_question_title">我的提问</string>
+  <string name="activity_wenda_title_hot">热门问答</string>
+  <string name="activity_wenda_title_mon">最高悬赏</string>
+  <string name="activity_wenda_title_solution">已解决</string>
 
-    <string name="title_bar_right_btn_write_feed">写动态</string>
+  <string name="title_bar_right_btn_write_feed">写动态</string>
 
-    <!-- pull to refresh -->
-    <string name="pull_to_refresh_from_top_pull_label">下拉刷新</string>
-    <string name="pull_to_refresh_from_top_release_label">释放立即刷新</string>
-    <string name="pull_to_refresh_from_top_refreshing_label">刷新中…</string>
-    <string name="pull_to_refresh_from_bottom_pull_label">上拉加载</string>
-    <string name="pull_to_refresh_from_bottom_release_label">释放立即加载</string>
-    <string name="pull_to_refresh_from_bottom_refreshing_label">加载中…</string>
-    <string name="pull_to_refresh_slogan_default"></string>
+  <!-- pull to refresh -->
+  <string name="pull_to_refresh_from_top_pull_label">下拉刷新</string>
+  <string name="pull_to_refresh_from_top_release_label">释放立即刷新</string>
+  <string name="pull_to_refresh_from_top_refreshing_label">刷新中…</string>
+  <string name="pull_to_refresh_from_bottom_pull_label">上拉加载</string>
+  <string name="pull_to_refresh_from_bottom_release_label">释放立即加载</string>
+  <string name="pull_to_refresh_from_bottom_refreshing_label">加载中…</string>
+  <string name="pull_to_refresh_slogan_default"></string>
 
-    <string name="label_text_set_award_info">请设置悬赏金额</string>
-    <string name="available_wealth_text">您可用的财富值:%s</string>
-    <string name="info_more_award">提高悬赏,更容易吸引高手为您解答</string>
+  <string name="label_text_set_award_info">请设置悬赏金额</string>
+  <string name="available_wealth_text">您可用的财富值:%s</string>
+  <string name="info_more_award">提高悬赏,更容易吸引高手为您解答</string>
 
 </resources>
