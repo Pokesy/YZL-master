@@ -45,7 +45,7 @@
       android:id="@+id/textView10"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginLeft="10dp"
+      android:layout_marginLeft="15dp"
       android:layout_marginTop="30dp"
       android:text="请选择您的身份："
       android:textSize="18sp"

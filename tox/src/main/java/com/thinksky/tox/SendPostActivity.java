@@ -290,15 +290,15 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                 }
                 photo_num+=imgPathList.size();
                 Log.d("photo_num",photo_num+"");
-                if (photo_num>9){
-                    Toast.makeText(SendPostActivity.this,"不能超过9张哟",Toast.LENGTH_SHORT).show();
+                if (photo_num>3){
+                    Toast.makeText(SendPostActivity.this,"不能超过3张哟",Toast.LENGTH_SHORT).show();
                     photo_num=photo_num-imgPathList.size();
                     scrollImg.add(img_num,"add");
                     return;
                 }
                 for(int i=0;i<imgPathList.size();i++){
                     if(!BaseFunction.isExistsInList(imgPathList.get(i),scrollImg)){
-                        if (img_num <= 9) {
+                        if (img_num <= 3) {
                             Log.d("Andy",img_num+"");
                             scrollImg.add(imgPathList.get(i));
                             Log.e(">>", scrollImg.get(i));
@@ -309,7 +309,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                         }
                     }
                 }
-                photoCount.setText("已选"+img_num+"张，还剩"+(9-img_num)+"张");
+                photoCount.setText("已选"+img_num+"张，还剩"+(3-img_num)+"张");
                 scrollImg.add(img_num,"add");
                 photoAdapter.notifyDataSetChanged();
             }
@@ -328,13 +328,13 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                 options.inSampleSize = 3;
 
                 if (!BaseFunction.isExistsInList(temFile.getPath(), scrollImg)) {
-                    if (img_num <= 9) {
+                    if (img_num <= 3) {
 
                         scrollImg.add(temFile.getPath());
                         img_num++;
                     }
                 }
-                photoCount.setText("已选"+img_num+"张，还剩"+(9-img_num)+"张");
+                photoCount.setText("已选"+img_num+"张，还剩"+(3-img_num)+"张");
                 scrollImg.add(img_num,"add");
                 photoAdapter.notifyDataSetChanged();
             }
@@ -356,7 +356,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
     }
 
     private void ableAddPhoto(){
-        if(img_num>=9){
+        if(img_num>=3){
 
         }
 
@@ -531,7 +531,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                         if(imgUrl.get(position).equals("add")){
                             Log.d("Andy12345",img_num+"");
                             Log.d("Andy123456",imgUrl.get(position));
-                            if(img_num<9){
+                            if(img_num<3){
                                 //ToastHelper.showToast("点击了罗",ctx);
                                 String[] items={"相册","拍照"};
                                 AlertDialog.Builder builder=new AlertDialog.Builder(ctx);
@@ -568,7 +568,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                                 builder.setCancelable(true);
                                 builder.show();
                             }else{
-                                ToastHelper.showToast("最多上传9张图片",ctx);
+                                ToastHelper.showToast("最多上传3张图片",ctx);
                             }
                         }
                     }
@@ -596,7 +596,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                 scrollImg.remove(index);
                 img_num--;
                 photo_num--;
-                photoCount.setText("已选"+img_num+"张，还剩"+(9-img_num)+"张");
+                photoCount.setText("已选"+img_num+"张，还剩"+(3-img_num)+"张");
                 PhotoAdapter.Holder vh = (PhotoAdapter.Holder)v.getTag();
                 photoAdapter.notifyDataSetChanged();
             }

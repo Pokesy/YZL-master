@@ -1,6 +1,5 @@
 package com.thinksky.tox;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -27,7 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.alibaba.fastjson.JSON;
 import com.thinksky.fragment.DiscoverFragment;
 import com.thinksky.holder.BaseBActivity;
@@ -45,25 +43,22 @@ import com.tox.ToastHelper;
 import com.tox.TouchHelper;
 import com.tox.Url;
 import com.tox.WeiboApi;
-
-import net.tsz.afinal.FinalBitmap;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
-import org.kymjs.aframe.http.KJHttp;
-import org.kymjs.aframe.ui.widget.HorizontalListView;
-import org.kymjs.aframe.utils.FileUtils;
-import org.kymjs.kjframe.http.HttpParams;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.tsz.afinal.FinalBitmap;
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+import org.json.JSONObject;
+import org.kymjs.aframe.bitmap.KJBitmap;
+import org.kymjs.aframe.http.KJHttp;
+import org.kymjs.aframe.ui.widget.HorizontalListView;
+import org.kymjs.aframe.utils.FileUtils;
+import org.kymjs.kjframe.http.HttpParams;
 
 
 public class SendTieziActivity extends BaseBActivity implements View.OnClickListener {
@@ -319,7 +314,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                 img_num = 0;
                 for (int i = 0; i < imgPathList.size(); i++) {
                     if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
-                        if (img_num <= 9) {
+                        if (img_num <= 3) {
                             scrollImg.add(imgPathList.get(i));
                             imgList.get(img_num).setVisibility(View.VISIBLE);
                             imgList.get(img_num).setTag(imgPathList.get(i));
@@ -348,15 +343,15 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                 }
                 photo_num += imgPathList.size();
                 Log.d("photo_num", photo_num + "");
-                if (photo_num > 9) {
-                    Toast.makeText(SendTieziActivity.this, "不能超过9张哟", Toast.LENGTH_SHORT).show();
+                if (photo_num > 3) {
+                    Toast.makeText(SendTieziActivity.this, "不能超过3张哟", Toast.LENGTH_SHORT).show();
                     photo_num = photo_num - imgPathList.size();
                     scrollImg.add(img_num, "add");
                     return;
                 }
                 for (int i = 0; i < imgPathList.size(); i++) {
                     if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
-                        if (img_num <= 9) {
+                        if (img_num <= 3) {
                             Log.d("Andy", img_num + "");
                             scrollImg.add(imgPathList.get(i));
                             Log.e(">>", scrollImg.get(i));
@@ -367,7 +362,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                         }
                     }
                 }
-                photoCount.setText("已选" + img_num + "张，还剩" + (9 - img_num) + "张");
+                photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
                 scrollImg.add(img_num, "add");
                 photoAdapter.notifyDataSetChanged();
             }
@@ -386,13 +381,13 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                 options.inSampleSize = 3;
 
                 if (!BaseFunction.isExistsInList(temFile.getPath(), scrollImg)) {
-                    if (img_num <= 9) {
+                    if (img_num <= 3) {
 
                         scrollImg.add(temFile.getPath());
                         img_num++;
                     }
                 }
-                photoCount.setText("已选" + img_num + "张，还剩" + (9 - img_num) + "张");
+                photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
                 scrollImg.add(img_num, "add");
                 photoAdapter.notifyDataSetChanged();
             }
@@ -415,7 +410,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
     }
 
     private void ableAddPhoto() {
-        if (img_num >= 9) {
+        if (img_num >= 3) {
 
         }
 
@@ -634,7 +629,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                     if (imgUrl.get(position).equals("add")) {
                         Log.d("Andy12345", img_num + "");
                         Log.d("Andy123456", imgUrl.get(position));
-                        if (img_num < 9) {
+                        if (img_num < 3) {
                             //ToastHelper.showToast("点击了罗",ctx);
                             String[] items = {"相册", "拍照"};
                             AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
@@ -671,7 +666,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                             builder.setCancelable(true);
                             builder.show();
                         } else {
-                            ToastHelper.showToast("最多上传9张图片", ctx);
+                            ToastHelper.showToast("最多上传3张图片", ctx);
                         }
                     }
                 }
@@ -700,7 +695,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                 scrollImg.remove(index);
                 img_num--;
                 photo_num--;
-                photoCount.setText("已选" + img_num + "张，还剩" + (9 - img_num) + "张");
+                photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
                 PhotoAdapter.Holder vh = (PhotoAdapter.Holder) v.getTag();
                 photoAdapter.notifyDataSetChanged();
             }

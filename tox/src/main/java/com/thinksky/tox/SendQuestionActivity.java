@@ -363,7 +363,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                 img_num = 0;
                 for (int i = 0; i < imgPathList.size(); i++) {
                     if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
-                        if (img_num <= 9) {
+                        if (img_num <= 3) {
                             scrollImg.add(imgPathList.get(i));
                             imgList.get(img_num).setVisibility(View.VISIBLE);
                             imgList.get(img_num).setTag(imgPathList.get(i));
@@ -392,15 +392,15 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                 }
                 photo_num += imgPathList.size();
                 Log.d("photo_num", photo_num + "");
-                if (photo_num > 9) {
-                    Toast.makeText(SendQuestionActivity.this, "不能超过9张哟", Toast.LENGTH_SHORT).show();
+                if (photo_num > 3) {
+                    Toast.makeText(SendQuestionActivity.this, "不能超过3张哟", Toast.LENGTH_SHORT).show();
                     photo_num = photo_num - imgPathList.size();
                     scrollImg.add(img_num, "add");
                     return;
                 }
                 for (int i = 0; i < imgPathList.size(); i++) {
                     if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
-                        if (img_num <= 9) {
+                        if (img_num <= 3) {
                             Log.d("Andy", img_num + "");
                             scrollImg.add(imgPathList.get(i));
                             Log.e(">>", scrollImg.get(i));
@@ -411,7 +411,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                         }
                     }
                 }
-                photoCount.setText("已选" + img_num + "张，还剩" + (9 - img_num) + "张");
+                photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
                 scrollImg.add(img_num, "add");
                 photoAdapter.notifyDataSetChanged();
             }
@@ -430,13 +430,13 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                 options.inSampleSize = 3;
 
                 if (!BaseFunction.isExistsInList(temFile.getPath(), scrollImg)) {
-                    if (img_num <= 9) {
+                    if (img_num <= 3) {
 
                         scrollImg.add(temFile.getPath());
                         img_num++;
                     }
                 }
-                photoCount.setText("已选" + img_num + "张，还剩" + (9 - img_num) + "张");
+                photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
                 scrollImg.add(img_num, "add");
                 photoAdapter.notifyDataSetChanged();
             }
@@ -459,7 +459,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     }
 
     private void ableAddPhoto() {
-        if (img_num >= 9) {
+        if (img_num >= 3) {
 
         }
 
@@ -679,7 +679,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                     if (imgUrl.get(position).equals("add")) {
                         Log.d("Andy12345", img_num + "");
                         Log.d("Andy123456", imgUrl.get(position));
-                        if (img_num < 9) {
+                        if (img_num < 3) {
                             //ToastHelper.showToast("点击了罗",ctx);
                             String[] items = {"相册", "拍照"};
                             AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
@@ -716,7 +716,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                             builder.setCancelable(true);
                             builder.show();
                         } else {
-                            ToastHelper.showToast("最多上传9张图片", ctx);
+                            ToastHelper.showToast("最多上传3张图片", ctx);
                         }
                     }
                 }
@@ -745,7 +745,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                 scrollImg.remove(index);
                 img_num--;
                 photo_num--;
-                photoCount.setText("已选" + img_num + "张，还剩" + (9 - img_num) + "张");
+                photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
                 PhotoAdapter.Holder vh = (PhotoAdapter.Holder) v.getTag();
                 photoAdapter.notifyDataSetChanged();
             }
