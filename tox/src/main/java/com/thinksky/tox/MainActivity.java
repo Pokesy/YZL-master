@@ -32,7 +32,6 @@ import com.thinksky.fragment.YlqFragment;
 import com.thinksky.holder.BaseActivity;
 import com.thinksky.model.ActivityModel;
 import com.thinksky.qqsliding.widget.DragLayout;
-import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -251,6 +250,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     mLoginThisAPP.setOnClickListener(MainActivity.this);
     text.setOnClickListener(MainActivity.this);
     sousuo.setOnClickListener(MainActivity.this);
+    findViewById(R.id.ll1).setOnClickListener(this);
     mFragmentManager = MainActivity.this.getSupportFragmentManager();
 
     ((RadioGroup) findViewById(R.id.main_radio)).setOnCheckedChangeListener(
@@ -297,6 +297,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   @Override
   public void onClick(View v) {
     switch (v.getId()) {
+      case R.id.ll1:
       case R.id.user:
         if (!Url.SESSIONID.equals("")) {
           Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
@@ -569,8 +570,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         signature.setText("这个人很懒，什么都没写");
       }
     } else {
-      mleftHead.setImageBitmap(
-          BitmapUtiles.drawableTobitmap(R.drawable.side_user_avatar, MainActivity.this));
+      mleftHead.setImageResource(R.drawable.side_user_avatar);
       myUserName.setText("未登录");
     }
   }
