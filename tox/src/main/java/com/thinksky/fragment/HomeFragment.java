@@ -81,11 +81,13 @@ public class HomeFragment extends Fragment
   private RelativeLayout title_tl;
   private View mTitleBg;
   private OnHomeTitleBarClickListener mHomeBtnClickListener;
+  private SlideShowView mSlideView;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     view = inflater.inflate(R.layout.home_home, null);
+    mSlideView = (SlideShowView) view.findViewById(R.id.slideshowView);
     scrollView = (MyScrollview) view.findViewById(R.id.scrollView);
     title_tl = (RelativeLayout) view.findViewById(R.id.title_tl);
     mTitleBg = view.findViewById(R.id.title_bg);
@@ -266,8 +268,8 @@ public class HomeFragment extends Fragment
 
   @Override
   public void onScroll(int scrollY) {
-    float alpha = (float) scrollY / 400;
-    mTitleBg.setAlpha(alpha >= 0.8f ? 1.0f : (alpha));
+    float alpha = (float) scrollY / mSlideView.getHeight();
+    mTitleBg.setAlpha(alpha >= 1.0f ? 1.0f : (alpha));
   }
 
   /**
