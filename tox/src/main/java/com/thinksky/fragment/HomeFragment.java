@@ -79,6 +79,8 @@ public class HomeFragment extends Fragment
   private View mMenuMyQuestion;
   private View mMenuSolution;
   private RelativeLayout title_tl;
+  private View mTitleBg;
+  private OnHomeTitleBarClickListener mHomeBtnClickListener;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,6 +88,7 @@ public class HomeFragment extends Fragment
     view = inflater.inflate(R.layout.home_home, null);
     scrollView = (MyScrollview) view.findViewById(R.id.scrollView);
     title_tl = (RelativeLayout) view.findViewById(R.id.title_tl);
+    mTitleBg = view.findViewById(R.id.title_bg);
     list = (ListView) view.findViewById(R.id.list);
     baseApi = new BaseApi();
     session_id = baseApi.getSeesionId();
@@ -175,6 +178,8 @@ public class HomeFragment extends Fragment
     zj_show.setOnClickListener(this);
     rm_show.setOnClickListener(this);
     ht_show.setOnClickListener(this);
+    view.findViewById(R.id.menu).setOnClickListener(this);
+    view.findViewById(R.id.search).setOnClickListener(this);
 
   }
 
@@ -213,6 +218,17 @@ public class HomeFragment extends Fragment
         Intent intent = new Intent(mContext, VedioView.class);
         intent.putExtras(bundle);
         mContext.startActivity(intent);
+        break;
+      case R.id.menu:
+        if (null != mHomeBtnClickListener) {
+          mHomeBtnClickListener.onMenuBtnClicked();
+        }
+        break;
+      case R.id.search:
+        if (null != mHomeBtnClickListener) {
+          mHomeBtnClickListener.onSearchBtnClicked();
+        }
+        break;
     }
   }
 
@@ -250,10 +266,8 @@ public class HomeFragment extends Fragment
 
   @Override
   public void onScroll(int scrollY) {
-
     float alpha = (float) scrollY / 400;
-    title_tl.setAlpha(alpha >= 0.8f ? 0.8f : (alpha));
-
+    mTitleBg.setAlpha(alpha >= 0.8f ? 1.0f : (alpha));
   }
 
   /**
@@ -492,16 +506,19 @@ public class HomeFragment extends Fragment
         int height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_three);
         if (size == 1) {
           height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_single);
-          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+              .LayoutParams
               .MATCH_PARENT, height);
           holder.v(R.id.images).setLayoutParams(params);
         } else if (size == 2) {
           height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_two);
-          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+              .LayoutParams
               .MATCH_PARENT, height);
           holder.v(R.id.images).setLayoutParams(params);
         } else {
-          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+              .LayoutParams
               .MATCH_PARENT, height);
           holder.v(R.id.images).setLayoutParams(params);
         }
@@ -808,5 +825,15 @@ public class HomeFragment extends Fragment
     }
 
     return beans;
+  }
+
+  public void setOnHomeTitleBarClickListener(OnHomeTitleBarClickListener listener) {
+    mHomeBtnClickListener = listener;
+  }
+
+  public interface OnHomeTitleBarClickListener {
+    void onMenuBtnClicked();
+
+    void onSearchBtnClicked();
   }
 }

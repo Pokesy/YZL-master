@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -395,6 +396,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           // 如果MessageFragment为空，则创建一个并添加到界面上
           homeFragment = new HomeFragment();
           mFragmentTransaction.add(R.id.content, homeFragment);
+          homeFragment.setOnHomeTitleBarClickListener(new HomeFragment
+              .OnHomeTitleBarClickListener() {
+
+
+            @Override
+            public void onMenuBtnClicked() {
+              if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
+                drawer_layout.closeDrawer(Gravity.LEFT);
+              } else {
+                drawer_layout.openDrawer(Gravity.LEFT);
+              }
+            }
+
+            @Override
+            public void onSearchBtnClicked() {
+
+            }
+          });
         } else {
           // 如果MessageFragment不为空，则直接将它显示出来
           mFragmentTransaction.show(homeFragment);
