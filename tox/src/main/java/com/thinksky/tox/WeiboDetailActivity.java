@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -246,11 +247,12 @@ public class WeiboDetailActivity extends BaseBActivity {
           if (BaseFunction.isLogin()) {
             if (!upFlag) {
               upFlag = true;
-              mDetail_Up_text.setText((Integer.parseInt(Weiboinfo.getLikenum()) +1)+"");
+              int LikeNum = TextUtils.isEmpty(Weiboinfo.getLikenum()) ? 0 : Integer.parseInt(Weiboinfo.getLikenum());
+              mDetail_Up_text.setText((LikeNum +1)+"");
               mDetail_Up_Img.setImageBitmap(
                   BitmapUtiles.drawableTobitmap(R.drawable.heart, WeiboDetailActivity.this));
               Weiboinfo.setIs_supported(true);
-              Weiboinfo.setLikenum(Integer.parseInt(Weiboinfo.getLikenum()) + 1 + "");
+              Weiboinfo.setLikenum(LikeNum + 1 + "");
               support();
             } else {
               ToastHelper.showToast("点赞失败，重复点赞", WeiboDetailActivity.this);
