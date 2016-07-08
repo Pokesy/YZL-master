@@ -7,8 +7,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
@@ -42,7 +44,8 @@ public class RemenhuatiActivity extends BaseBActivity {
   private ImageView iv_2;
   private ImageView iv_3;
 
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_remenhuti_layout);
     listView = (ListView) findViewById(R.id.listView);
@@ -64,7 +67,8 @@ public class RemenhuatiActivity extends BaseBActivity {
     adapter = new RemenhuatiAdapter(RemenhuatiActivity.this);
     recyclerView.setAdapter(adapter);
     back_menu.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         finish();
       }
     });
@@ -75,11 +79,13 @@ public class RemenhuatiActivity extends BaseBActivity {
   private void initViewData() {
     RsenUrlUtil.execute(RsenUrlUtil.URL_REMEN_HUATI,
         new RsenUrlUtil.OnJsonResultListener<RemenhuatiBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public void onParseJsonBean(List<RemenhuatiBean> beans, JSONObject jsonObject) {
+          @Override
+          public void onParseJsonBean(List<RemenhuatiBean> beans, JSONObject jsonObject) {
             RemenhuatiBean bean = new RemenhuatiBean();
             try {
               bean.title = jsonObject.getString("title");
@@ -117,7 +123,8 @@ public class RemenhuatiActivity extends BaseBActivity {
             beans.add(bean);
           }
 
-          @Override public void onResult(boolean state, List<RemenhuatiBean> beans) {
+          @Override
+          public void onResult(boolean state, List<RemenhuatiBean> beans) {
             adapter.resetData(beans);
           }
         });
@@ -216,7 +223,8 @@ public class RemenhuatiActivity extends BaseBActivity {
       super(context, datas);
     }
 
-    @Override protected int getItemLayoutId(int viewType) {
+    @Override
+    protected int getItemLayoutId(int viewType) {
       return R.layout.fragment_remen_ylq_adapter_item;
     }
 
@@ -246,6 +254,25 @@ public class RemenhuatiActivity extends BaseBActivity {
         holder.v(R.id.iv_1).setVisibility(size > 0 ? View.VISIBLE : View.GONE);
         holder.v(R.id.iv_2).setVisibility(size > 1 ? View.VISIBLE : View.GONE);
         holder.v(R.id.iv_3).setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+        int height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_three);
+        if (size == 1) {
+          height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_single);
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+              .LayoutParams
+              .MATCH_PARENT, height);
+          holder.v(R.id.images).setLayoutParams(params);
+        } else if (size == 2) {
+          height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_two);
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+              .LayoutParams
+              .MATCH_PARENT, height);
+          holder.v(R.id.images).setLayoutParams(params);
+        } else {
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+              .LayoutParams
+              .MATCH_PARENT, height);
+          holder.v(R.id.images).setLayoutParams(params);
+        }
 
         for (int i = 0; i < size; i++) {
           String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
@@ -265,7 +292,8 @@ public class RemenhuatiActivity extends BaseBActivity {
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {
 
-              @Override public void onClick(View v) {
+              @Override
+              public void onClick(View v) {
                 Intent intent = new Intent(RemenhuatiActivity.this, ImagePagerActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.imgList);
@@ -281,7 +309,8 @@ public class RemenhuatiActivity extends BaseBActivity {
       }
 
       holder.v(R.id.root_layout).setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
           //                    Bundle bundle = new Bundle();
           launch(mContext, isWeGroup, bean);
           //                    for (int i = 0; i < bean.imgList.size(); i++) {
@@ -289,13 +318,16 @@ public class RemenhuatiActivity extends BaseBActivity {
           //                        imgViewList.get(i).setVisibility(View.VISIBLE);
           //                        kjBitmap.display(imgViewList.get(i), url);
           //                        final int in = i;
-          //                        imgViewList.get(in).setOnClickListener(new View.OnClickListener() {
+          //                        imgViewList.get(in).setOnClickListener(new View
+          // .OnClickListener() {
           //
           //                            @Override
           //                            public void onClick(View v) {
-          //                                Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
+          //                                Intent intent = new Intent(getActivity(),
+          // ImagePagerActivity.class);
           //                                Bundle bundle = new Bundle();
-          //                                bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.imgList);
+          //                                bundle.putStringArrayList("image_urls",
+          // (ArrayList<String>) bean.imgList);
           //                                bundle.putInt("image_index", in);
           //                                intent.putExtras(bundle);
           //                                startActivity(intent);

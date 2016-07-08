@@ -348,7 +348,7 @@ public class UserInfoActivity extends BaseBActivity {
                     Log.e("加载 userInfo", "u");
                     Url.MYUSERINFO = myJson.getUserAllInfo(result);
                     info = Url.MYUSERINFO;
-                    Log.d("Url.MYUSERINFO.Avatar()", Url.MYUSERINFO.getAvatar());
+                    //Log.d("Url.MYUSERINFO.Avatar()", Url.MYUSERINFO.getAvatar());
                     BaseFunction.showImage(UserInfoActivity.this, mUserCamera, Url.MYUSERINFO.getAvatar(), loadImgHeadImg, Url.IMGTYPE_WEIBO);
                     if (userUid.equals(Url.USERID)) {
                         saveUserInfoToNative();

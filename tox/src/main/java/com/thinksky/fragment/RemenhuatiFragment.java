@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -266,6 +268,25 @@ public class RemenhuatiFragment extends RBaseFragment {
                 holder.v(R.id.iv_1).setVisibility(size > 0 ? View.VISIBLE : View.GONE);
                 holder.v(R.id.iv_2).setVisibility(size > 1 ? View.VISIBLE : View.GONE);
                 holder.v(R.id.iv_3).setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+                int height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_three);
+                if (size == 1) {
+                    height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_single);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+                        .LayoutParams
+                        .MATCH_PARENT, height);
+                    holder.v(R.id.images).setLayoutParams(params);
+                } else if (size == 2) {
+                    height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_two);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+                        .LayoutParams
+                        .MATCH_PARENT, height);
+                    holder.v(R.id.images).setLayoutParams(params);
+                } else {
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
+                        .LayoutParams
+                        .MATCH_PARENT, height);
+                    holder.v(R.id.images).setLayoutParams(params);
+                }
 
                 for (int i = 0; i < size; i++) {
                     String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
