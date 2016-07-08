@@ -13,7 +13,7 @@
       android:gravity="center"
       android:orientation="horizontal"
       android:paddingTop="10dp"
-
+      tools:visibility="invisible"
       >
 
     <ProgressBar
@@ -48,7 +48,7 @@
         android:focusableInTouchMode="true"
         android:scrollbars="none"
         android:visibility="gone"
-
+        tools:visibility="visible"
         >
 
       <LinearLayout
@@ -57,12 +57,11 @@
           android:orientation="vertical"
           >
 
-
         <!-- 主题图片 -->
         <com.thinksky.fragment.SlideShowView
             android:id="@+id/slideshowView"
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="144dp"
             android:layout_centerHorizontal="true"
             />
 
@@ -76,10 +75,12 @@
             android:id="@+id/main_radio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-
+            android:paddingBottom="8dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:paddingTop="8dp"
             >
 
           <TextView
@@ -122,6 +123,7 @@
             android:gravity="center_vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:paddingTop="10dp"
             >
 
@@ -132,12 +134,10 @@
               android:layout_alignParentLeft="true"
               android:layout_alignParentStart="true"
               android:layout_centerVertical="true"
-              android:drawableLeft="@drawable/shipin"
-              android:drawablePadding="10dp"
+              android:drawableLeft="@drawable/icon_zhuanjiakecheng"
               android:gravity="center"
               android:text="专家课程"
-              android:textColor="#5B85BB"
-              android:textSize="17sp"
+              style="@style/HomeFragmentLabelText"
               />
           <LinearLayout
               android:layout_width="wrap_content"
@@ -153,38 +153,15 @@
                 android:id="@+id/zj_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:text="查看更多"
-                android:textColor="#96a0aa"
-                android:textSize="13sp"
+                style="@style/HomeFragmentMoreText"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:text=">"
-                android:textColor="#96a0aa"
-                android:textSize="17sp"
-                />
           </LinearLayout>
 
         </RelativeLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingTop="10dp"
-            android:text="专家教你更多精彩"
-            android:textColor="#666666"
-            android:textSize="15sp"
-            />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -195,8 +172,7 @@
           <FrameLayout
               android:id="@+id/bofangshipin"
               android:layout_width="match_parent"
-              android:layout_height="200dp"
-
+              android:layout_height="150dp"
               android:scaleType="centerCrop"
               >
 
@@ -210,7 +186,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="38dp"
                 android:src="@drawable/bofang"
                 />
           </FrameLayout>
@@ -219,11 +196,12 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_alignParentBottom="true"
-              android:layout_alignParentLeft="true"
-              android:background="#20000000"
+              android:alpha="0.3"
+              android:background="@android:color/black"
               android:orientation="horizontal"
-              android:paddingBottom="15dp"
-              android:paddingTop="15dp"
+              android:paddingBottom="6dp"
+              android:paddingLeft="16dp"
+              android:paddingTop="6dp"
               >
 
             <TextView
@@ -280,6 +258,7 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:paddingTop="10dp"
             >
 
@@ -291,12 +270,8 @@
               android:layout_alignParentStart="true"
               android:layout_centerVertical="true"
               android:drawableLeft="@drawable/zixun"
-
-              android:drawablePadding="10dp"
-
               android:text="资讯"
-              android:textColor="#5B85BB"
-              android:textSize="17sp"
+              style="@style/HomeFragmentLabelText"
               />
 
           <LinearLayout
@@ -313,23 +288,12 @@
                 android:id="@+id/zx_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:text="查看更多"
-                android:textColor="#96a0aa"
-                android:textSize="13sp"
+                style="@style/HomeFragmentMoreText"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:text=">"
-                android:textColor="#96a0aa"
-                android:textSize="17sp"
-                />
           </LinearLayout>
         </RelativeLayout>
 
@@ -355,6 +319,7 @@
             android:gravity="center_vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:paddingTop="10dp"
             >
 
@@ -366,12 +331,9 @@
               android:layout_alignParentStart="true"
               android:layout_centerVertical="true"
               android:drawableLeft="@drawable/remenxiaozu"
-
               android:drawablePadding="10dp"
-
               android:text="热门小组"
-              android:textColor="#5B85BB"
-              android:textSize="17sp"
+              style="@style/HomeFragmentLabelText"
               />
 
           <LinearLayout
@@ -388,23 +350,12 @@
                 android:id="@+id/rm_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:text="查看更多"
-                android:textColor="#96a0aa"
-                android:textSize="13sp"
+                style="@style/HomeFragmentMoreText"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:text=">"
-                android:textColor="#96a0aa"
-                android:textSize="17sp"
-                />
           </LinearLayout>
 
         </RelativeLayout>
@@ -419,6 +370,10 @@
               android:id="@+id/Rm_listView"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:paddingBottom="6dp"
+              android:paddingLeft="8dp"
+              android:paddingRight="8dp"
+              android:paddingTop="6dp"
               android:tag="2"
               />
         </LinearLayout>
@@ -430,6 +385,7 @@
             android:gravity="center_vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:paddingTop="10dp"
             >
 
@@ -441,10 +397,8 @@
               android:layout_alignParentStart="true"
               android:layout_centerVertical="true"
               android:drawableLeft="@drawable/remenhuati"
-              android:drawablePadding="10dp"
               android:text="热门话题"
-              android:textColor="#5B85BB"
-              android:textSize="17sp"
+              style="@style/HomeFragmentLabelText"
               />
 
           <LinearLayout
@@ -461,23 +415,12 @@
                 android:id="@+id/ht_show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:text="查看更多"
-                android:textColor="#96a0aa"
-                android:textSize="13sp"
+                style="@style/HomeFragmentMoreText"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:text=">"
-                android:textColor="#96a0aa"
-                android:textSize="17sp"
-                />
           </LinearLayout>
         </RelativeLayout>
 
@@ -503,8 +446,8 @@
       <FrameLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@android:color/white"
           android:alpha="0.1"
+          android:background="@android:color/white"
           ></FrameLayout>
       <ImageView
           android:layout_width="wrap_content"

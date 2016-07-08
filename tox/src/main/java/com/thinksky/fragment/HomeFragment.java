@@ -23,7 +23,6 @@ import com.thinksky.info.NewsListInfo;
 import com.thinksky.info.NewsListInfo1;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RGridView;
 import com.thinksky.tox.GroupInfoActivity;
@@ -33,7 +32,6 @@ import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.NewsActivity;
 import com.thinksky.tox.NewsDetailActivity;
 import com.thinksky.tox.R;
-import com.thinksky.utils.LogUtils;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
@@ -80,12 +78,14 @@ public class HomeFragment extends Fragment
   private View mMenuMon;
   private View mMenuMyQuestion;
   private View mMenuSolution;
-private RelativeLayout title_tl;
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  private RelativeLayout title_tl;
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
     view = inflater.inflate(R.layout.home_home, null);
     scrollView = (MyScrollview) view.findViewById(R.id.scrollView);
-    title_tl= (RelativeLayout) view.findViewById(R.id.title_tl);
+    title_tl = (RelativeLayout) view.findViewById(R.id.title_tl);
     list = (ListView) view.findViewById(R.id.list);
     baseApi = new BaseApi();
     session_id = baseApi.getSeesionId();
@@ -108,7 +108,8 @@ private RelativeLayout title_tl;
 
     load_progressBar = (LinearLayout) view.findViewById(R.id.load_progressBar);
     View.OnClickListener menuClickListener = new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         switch (v.getId()) {
           case R.id.rb_rmht:
             Intent intent = new Intent(getContext(), WendaListActivity.class);
@@ -157,7 +158,8 @@ private RelativeLayout title_tl;
     time = (TextView) view.findViewById(R.id.time);
     count = (TextView) view.findViewById(R.id.count);
     support_count = (TextView) view.findViewById(R.id.support_count);
-    //        Zx_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
+    //        Zx_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity,
+    // LinearLayoutManager.VERTICAL, false));
     Emht_listView.setLayoutManager(
         new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
 
@@ -173,9 +175,11 @@ private RelativeLayout title_tl;
     zj_show.setOnClickListener(this);
     rm_show.setOnClickListener(this);
     ht_show.setOnClickListener(this);
+
   }
 
-  @Override public void onClick(View view) {
+  @Override
+  public void onClick(View view) {
     switch (view.getId()) {
       case R.id.zj_show:
         intent = new Intent(getActivity(), ZhuanjiActivity.class);
@@ -199,7 +203,8 @@ private RelativeLayout title_tl;
         break;
       case R.id.bofangshipin:
         String url =
-            "http://112.253.22.157/15/t/d/r/m/tdrmhygxlsciucrdujaezpoynryauu/dd.yinyuetai.com/476801528BD25AF829FEDB10C1296FB9.mp4?sc=5b0ea4268a475629&br=743&rd=Android";
+            "http://112.253.22.157/15/t/d/r/m/tdrmhygxlsciucrdujaezpoynryauu/dd.yinyuetai" +
+                ".com/476801528BD25AF829FEDB10C1296FB9.mp4?sc=5b0ea4268a475629&br=743&rd=Android";
         url.replace("<p>", "").replace("</p>", "");
         Log.d("url------------------>", "url");
         Bundle bundle = new Bundle();
@@ -211,12 +216,15 @@ private RelativeLayout title_tl;
     }
   }
 
-  @Override public void onAttach(Context context) {
+  @Override
+  public void onAttach(Context context) {
     super.onAttach(context);
     mBaseActivity = (AppCompatActivity) context;
   }
 
-  @SuppressWarnings("deprecation") @Override public void onAttach(Activity activity) {
+  @SuppressWarnings("deprecation")
+  @Override
+  public void onAttach(Activity activity) {
     super.onAttach(activity);
     mBaseActivity = (AppCompatActivity) activity;
   }
@@ -224,11 +232,13 @@ private RelativeLayout title_tl;
   private void initzx() {
     newsListInfos = new ArrayList<NewsListInfo1>();
     RsenUrlUtil.execute(mContext, RsenUrlUtil.NEWSALL, new RsenUrlUtil.OnNetHttpResultListener() {
-      @Override public void onNoNetwork(String msg) {
+      @Override
+      public void onNoNetwork(String msg) {
         ToastHelper.showToast(msg, Url.context);
       }
 
-      @Override public void onResult(boolean state, String result, JSONObject jsonObject) {
+      @Override
+      public void onResult(boolean state, String result, JSONObject jsonObject) {
         if (state) {
           NewsListInfo1 list = JSON.parseObject(result, NewsListInfo1.class);
 
@@ -238,16 +248,17 @@ private RelativeLayout title_tl;
     });
   }
 
-  @Override public void onScroll(int scrollY) {
+  @Override
+  public void onScroll(int scrollY) {
 
-      ToastHelper.showToast("sdadsaddsa", getActivity());
-      float alpha = (float)scrollY/400;
-    LogUtils.e(alpha+"");
-      title_tl.setAlpha(alpha >= 0.8f ? 0.8f : (alpha));
+    float alpha = (float) scrollY / 400;
+    title_tl.setAlpha(alpha >= 0.8f ? 0.8f : (alpha));
 
   }
 
-  /*数据适配器*/
+  /**
+   * 数据适配器
+   */
   public class ZixunAdapter extends RBaseAdapter<NewsListInfo> {
     Context context;
     KJBitmap kjBitmap;
@@ -260,13 +271,16 @@ private RelativeLayout title_tl;
       super(context, datas);
     }
 
-    @Override protected int getItemLayoutId(int viewType) {
+    @Override
+    protected int getItemLayoutId(int viewType) {
       return R.layout.home_new_list_item;
     }
 
-    @Override protected void onBindView(RViewHolder holder, int position, final NewsListInfo bean) {
+    @Override
+    protected void onBindView(RViewHolder holder, int position, final NewsListInfo bean) {
       holder.tV(R.id.news_title).setText(bean.getTitle());
-      //            holder.tV(R.id.news_author_name).setText(newsListInfos.get(position).getUser().getNickname());
+      //            holder.tV(R.id.news_author_name).setText(newsListInfos.get(position).getUser
+      // ().getNickname());
       holder.tV(R.id.time).setText(bean.getCreate_time());
       holder.tV(R.id.news_description).setText(bean.getDescription());
       holder.tV(R.id.view_count).setText(bean.getView());
@@ -276,9 +290,11 @@ private RelativeLayout title_tl;
       //            kjBitmap.display(holder.imgV(R.id.snapshots), Url.IMAGE + bean.getCover());
       ImageLoader.loadOptimizedHttpImage(getActivity(), Url.IMAGE + bean.getCover())
           .into(holder.imgV(R.id.snapshots));
-      //ImageLoader.getInstance().displayImage(Url.IMAGE + bean.getCover(), holder.imgV(R.id.snapshots));
+      //ImageLoader.getInstance().displayImage(Url.IMAGE + bean.getCover(), holder.imgV(R.id
+      // .snapshots));
       //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
-      //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
+      //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id
+      // .user_logo),
       //                    new DisplayImageOptions.Builder()
       //                            .showImageOnLoading(R.drawable.ic_launcher)
       //                            .showImageForEmptyUri(R.drawable.ic_launcher)
@@ -287,7 +303,8 @@ private RelativeLayout title_tl;
       //                            .displayer(new RoundedBitmapDisplayer(100)).build());
 
       holder.v(R.id.ll_zx).setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
           Intent tempIntent = new Intent(mContext, NewsDetailActivity.class);
           NewsListInfo newsListInfo = new NewsListInfo();
           tempIntent.putExtra("support", bean.getSupport_count());
@@ -298,7 +315,8 @@ private RelativeLayout title_tl;
       });
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
       return mAllDatas.size() > 3 ? 3 : mAllDatas.size();
     }
   }
@@ -306,11 +324,13 @@ private RelativeLayout title_tl;
   protected void initdata() {
     RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_JINGXUAN,
         new RsenUrlUtil.OnJsonResultListener<MyBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public void onParseJsonBean(List<MyBean> beans, JSONObject jsonObject) {
+          @Override
+          public void onParseJsonBean(List<MyBean> beans, JSONObject jsonObject) {
             MyBean bean = new MyBean();
             try {
               bean.logo = RsenUrlUtil.URL_BASE + jsonObject.getString("logo");
@@ -337,7 +357,8 @@ private RelativeLayout title_tl;
             beans.add(bean);
           }
 
-          @Override public void onResult(boolean state, List<MyBean> beans) {
+          @Override
+          public void onResult(boolean state, List<MyBean> beans) {
             //                xz_adapter.resetData(beans);
             if (state) {
               Rm_listView.setAdapter(new MyAdapter(mBaseActivity, beans));
@@ -351,11 +372,13 @@ private RelativeLayout title_tl;
   protected void initViewData() {
     RsenUrlUtil.execute(RsenUrlUtil.URL_REMEN_HUATI,
         new RsenUrlUtil.OnJsonResultListener<RemenhuatiBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public void onParseJsonBean(List<RemenhuatiBean> beans, JSONObject jsonObject) {
+          @Override
+          public void onParseJsonBean(List<RemenhuatiBean> beans, JSONObject jsonObject) {
             RemenhuatiBean bean = new RemenhuatiBean();
             try {
               bean.title = jsonObject.getString("title");
@@ -393,7 +416,8 @@ private RelativeLayout title_tl;
             beans.add(bean);
           }
 
-          @Override public void onResult(boolean state, List<RemenhuatiBean> beans) {
+          @Override
+          public void onResult(boolean state, List<RemenhuatiBean> beans) {
 
             if (state) {
               scrollView.setVisibility(View.VISIBLE);
@@ -430,7 +454,8 @@ private RelativeLayout title_tl;
       super(context, datas);
     }
 
-    @Override protected int getItemLayoutId(int viewType) {
+    @Override
+    protected int getItemLayoutId(int viewType) {
       return R.layout.fragment_remen_ylq_adapter_item;
     }
 
@@ -446,7 +471,8 @@ private RelativeLayout title_tl;
       holder.tV(R.id.reply_count).setText(bean.reply_count);
       holder.tV(R.id.nickname).setText(bean.nickname);
       //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
-      //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id.user_logo),
+      //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id
+      // .user_logo),
       //                    new DisplayImageOptions.Builder()
       //                            .showImageOnLoading(R.drawable.ic_launcher)
       //                            .showImageForEmptyUri(R.drawable.ic_launcher)
@@ -454,8 +480,7 @@ private RelativeLayout title_tl;
       //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
       //                            .displayer(new RoundedBitmapDisplayer(100)).build());
       ImageLoader.loadOptimizedHttpImage(getActivity(), bean.user_logo)
-          .
-              bitmapTransform(new CropCircleTransformation(getActivity()))
+          .bitmapTransform(new CropCircleTransformation(getActivity()))
           .into(holder.imgV(R.id.user_logo));
       if (bean.imgList != null && bean.imgList.size() > 0) {
         holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
@@ -464,6 +489,22 @@ private RelativeLayout title_tl;
         holder.v(R.id.iv_1).setVisibility(size > 0 ? View.VISIBLE : View.GONE);
         holder.v(R.id.iv_2).setVisibility(size > 1 ? View.VISIBLE : View.GONE);
         holder.v(R.id.iv_3).setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+        int height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_three);
+        if (size == 1) {
+          height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_single);
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
+              .MATCH_PARENT, height);
+          holder.v(R.id.images).setLayoutParams(params);
+        } else if (size == 2) {
+          height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_two);
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
+              .MATCH_PARENT, height);
+          holder.v(R.id.images).setLayoutParams(params);
+        } else {
+          RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams
+              .MATCH_PARENT, height);
+          holder.v(R.id.images).setLayoutParams(params);
+        }
 
         for (int i = 0; i < bean.imgList.size(); i++) {
           String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
@@ -482,7 +523,8 @@ private RelativeLayout title_tl;
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {
 
-              @Override public void onClick(View v) {
+              @Override
+              public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.imgList);
@@ -498,7 +540,8 @@ private RelativeLayout title_tl;
       }
 
       holder.v(R.id.root_layout).setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
           //                    Bundle bundle = new Bundle();
           if (!"".equals(bean)) {
             launch(mContext, isWeGroup, bean);
@@ -507,7 +550,8 @@ private RelativeLayout title_tl;
       });
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
       return mAllDatas.size() > 50 ? 50 : mAllDatas.size();
     }
   }
@@ -602,40 +646,25 @@ private RelativeLayout title_tl;
       super(context, datas);
     }
 
-    @Override protected int getItemLayoutId(int viewType) {
+    @Override
+    protected int getItemLayoutId(int viewType) {
       return R.layout.fragment_xiaozujingxuan_adapter;
     }
 
-    @Override protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
-      ResUtil.setRoundImage(bean.logo, holder.imgV(R.id.logo));
+    @Override
+    protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
+      ImageLoader.loadOptimizedHttpImage(getActivity(), bean.logo).bitmapTransform(new
+          CropCircleTransformation(getActivity())).placeholder(R.drawable.ic_launcher).error(R
+          .drawable.ic_launcher).into
+          (holder.imgV(R.id.logo));
       holder.tV(R.id.title).setText(bean.title);
       holder.tV(R.id.detail).setText(bean.detail);
       holder.tV(R.id.post_count).setText(bean.post_count);
       holder.tV(R.id.member_count).setText(bean.menmberCount);
-      //            holder.tV(R.id.reply_count).setText(bean.ht_reply_count);
-      //            holder.tV(R.id.support_count).setText(bean.ht_support_count);
-      //            holder.tV(R.id.nickname).setText(bean.ht_nickname);
-      //            holder.tV(R.id.time).setText(bean.ht_creat_time);
-      //            holder.tV(R.id.content_xz).setText(bean.ht_content);
-      //            ImageLoader.getInstance().displayImage(bean.ht_logo, holder.imgV(R.id.user_logo),
-      //                    new DisplayImageOptions.Builder()
-      //                            .showImageOnLoading(R.drawable.ic_launcher)
-      //                            .showImageForEmptyUri(R.drawable.ic_launcher)
-      //                            .showImageOnFail(R.drawable.ic_launcher)
-      //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-      //                            .displayer(new RoundedBitmapDisplayer(100)).build());
-
-      //            if (BuildConfig.DEBUG) {
-      //                for (int i = 0; i < 20; i++) {
-      //                    bean_xz.userList.add(bean_xz.userList.get(0));
-      //                }
-      //            }
-
-      //            ((RRecyclerView) holder.v(R.id.recycler)).setAdapter(new MySubAdapter(mContext, bean_xz.userList));
-
-            /*item的点击事件*/
+      //item的点击事件
       holder.v(R.id.fragment_layout).setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
           launch_xz(mContext, isWeGroup, bean);
           //                    GroupInfoActivity.MyBean bean = new GroupInfoActivity.MyBean();
           //                    GroupInfoActivity.launch(mContext,isWeGroup,bean);
@@ -643,41 +672,11 @@ private RelativeLayout title_tl;
       });
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
       return mAllDatas.size() > 4 ? 4 : mAllDatas.size();
     }
   }
-
-  //    /*成员头像*/
-  //    public static class MySubAdapter extends RBaseAdapter<String> {
-  //
-  //        public MySubAdapter(Context context, List<String> datas) {
-  //            super(context, datas);
-  //        }
-  //
-  //        @Override
-  //        protected int getItemLayoutId(int viewType) {
-  //            return R.layout.fragment_xiaozujingxuan_adapter_sub_item;
-  //        }
-  //
-  //        @Override
-  //        protected void onBindView(RViewHolder holder, int position, String bean) {
-  //            ImageLoader.getInstance().displayImage(bean, holder.imgV(R.id.logo),
-  //                    new DisplayImageOptions.Builder()
-  //                            .showImageOnLoading(R.drawable.ic_launcher)
-  //                            .showImageForEmptyUri(R.drawable.ic_launcher)
-  //                            .showImageOnFail(R.drawable.ic_launcher)
-  //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-  //                            .displayer(new RoundedBitmapDisplayer(100)).build());
-  //            /*点击用户头像*/
-  //            holder.v(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
-  //                @Override
-  //                public void onClick(View v) {
-  //
-  //                }
-  //            });
-  //        }
-  //    }
 
   public static class MyBean {
     public String menmberCount;
@@ -725,31 +724,37 @@ private RelativeLayout title_tl;
     context.startActivity(intent);
   }
 
-  @Override public void onResume() {
+  @Override
+  public void onResume() {
     super.onResume();
     RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_ZJ,
         new RsenUrlUtil.OnNetHttpResultListener() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public void onResult(boolean state, String result, JSONObject jsonObject) {
+          @Override
+          public void onResult(boolean state, String result, JSONObject jsonObject) {
             if (state) {
               final ArrayList<ZhuanjiFragment.ZjBean> beans = parseJson(jsonObject);
               //                为图片控件加载数据
               kjBitmap = KJBitmap.create();
               if (!beans.isEmpty()) {
-                //                    kjBitmap.display(viewHolder.imgV(R.id.issue_image), RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url);
+                //                    kjBitmap.display(viewHolder.imgV(R.id.issue_image),
+                // RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url);
                 ImageLoader.loadOptimizedHttpImage(getActivity(),
                     RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url)
                     .into(viewHolder.imgV(R.id.issue_image));
-                //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url, viewHolder.imgV(R.id.issue_image));
+                //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + beans.get(0)
+                // .IssueList.get(0).cover_url, viewHolder.imgV(R.id.issue_image));
 
                 time.setText(beans.get(0).IssueList.get(0).create_time);
                 count.setText(beans.get(0).IssueList.get(0).reply_count);
                 support_count.setText(beans.get(0).IssueList.get(0).support_count);
                 bofangshipin.setOnClickListener(new View.OnClickListener() {
-                  @Override public void onClick(View v) {
+                  @Override
+                  public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putInt("id", beans.get(0).IssueList.get(0).id);
                     Intent intent = new Intent(getActivity(), IssueDetail.class);
