@@ -78,7 +78,7 @@
                 android:visibility="gone" />
 
             <EditText
-                android:id="@+id/Redit_name"
+                android:id="@+id/redit_name"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginLeft="1dp"
@@ -91,12 +91,54 @@
                 android:textColorHint="#ffffff"
                 android:textSize="15sp" />
 
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"></LinearLayout>
+
+            <EditText
+                android:id="@+id/redit_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="0dp"
+                android:background="@drawable/shape"
+                android:hint="输入密码"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:paddingLeft="10dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="15sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"></LinearLayout>
+
+            <EditText
+                android:id="@+id/reset_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="0dp"
+                android:background="@drawable/shape"
+                android:hint="再次输入密码"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:paddingLeft="10dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="15sp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
-           ></LinearLayout>
+                ></LinearLayout>
 
             <EditText
                 android:id="@+id/nickname"
@@ -110,29 +152,7 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
                 android:paddingLeft="10dp"
-      />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"></LinearLayout>
-
-            <EditText
-                android:id="@+id/Redit_password"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="0dp"
-                android:background="@drawable/shape"
-                android:hint="输入密码"
-                android:inputType="textPassword"
-                android:maxLength="30"
-                android:paddingLeft="10dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:textSize="15sp" />
-
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="12dp"

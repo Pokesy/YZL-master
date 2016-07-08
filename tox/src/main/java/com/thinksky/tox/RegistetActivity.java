@@ -156,8 +156,8 @@ public class RegistetActivity extends BaseBActivity {
 
     private void initView() {
         mClose = (RelativeLayout) findViewById(R.id.registClose);
-        mName = (EditText) findViewById(R.id.Redit_name);
-        mPassword = (EditText) findViewById(R.id.Redit_password);
+        mName = (EditText) findViewById(R.id.redit_name);
+        mPassword = (EditText) findViewById(R.id.redit_password);
         verifyId = (EditText) findViewById(R.id.verifyId);
         checkId = (LinearLayout) findViewById(R.id.checkId);
         mNext = (RelativeLayout) findViewById(R.id.next);

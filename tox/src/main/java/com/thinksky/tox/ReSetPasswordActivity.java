@@ -115,7 +115,7 @@ public class ReSetPasswordActivity extends BaseBActivity {
         }
     };
     private void change() {
-        RsenUrlUtil.execute(RsenUrlUtil.URL_RSPW, new RsenUrlUtil.OnJsonResultListener() {
+        RsenUrlUtil.execute(RsenUrlUtil.URL_NSPW, new RsenUrlUtil.OnJsonResultListener() {
             @Override
             public void onNoNetwork(String msg) {
                 ToastHelper.showToast(msg, Url.context);
@@ -133,10 +133,9 @@ public class ReSetPasswordActivity extends BaseBActivity {
 //                } catch (NoSuchAlgorithmException e) {
 //                    e.printStackTrace();
 //                }
-
-                map.put("username", names);
-                map.put("newpassword", MD5.md5(newname));
-                map.put("session_id", Url.SESSIONID);
+                map.put("account", names);
+                map.put("newpassword",newname);
+                //map.put("session_id", Url.SESSIONID);
                 map.put("verify", verify);
                 return map;
             }

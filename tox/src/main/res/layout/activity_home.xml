@@ -103,13 +103,7 @@
           android:textColor="@color/tab_text_color"
           style="@style/main_tab_bottom"
           />
-      <RadioButton
-          android:id="@+id/rb_mall"
-          android:drawableTop="@drawable/mall_progress"
-          android:text="@string/tab_setting"
-          android:textColor="@color/tab_text_color"
-          style="@style/main_tab_bottom"
-          />
+
       <RadioButton
           android:id="@+id/rb_yulequan"
           android:drawableTop="@drawable/ylq_progress"

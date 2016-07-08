@@ -158,7 +158,7 @@ public class LoginActivity extends BaseBActivity {
                 case R.id.reset:
                     Intent intent2 = new Intent(LoginActivity.this, ReSetPasswordActivity.class);
                     startActivity(intent2);
-                    LoginActivity.instance.finish();
+
                     break;
                 case R.id.register:
                     Intent intent1 = new Intent(LoginActivity.this, RegistetActivity.class);

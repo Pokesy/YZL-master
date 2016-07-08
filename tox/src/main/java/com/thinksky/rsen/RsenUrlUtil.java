@@ -32,6 +32,7 @@ public class RsenUrlUtil {
     public static String URL_FX = URL_BASE + URL_SUB_BASE + "user/getUserList";
     //修改密码
     public static String URL_RSPW = URL_BASE + URL_SUB_BASE + "user/changePass";
+    public static String URL_NSPW = URL_BASE + URL_SUB_BASE + "user/changeNewPass";
     //发现获取信息
     public static String URL_FXU = URL_BASE + URL_SUB_BASE + "user/getProfile";
     //百科服务器地址
