@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -228,9 +229,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     sp = getSharedPreferences("userInfo", 0);
     Log.e(sp.getString("avatar", "空空空"), "");
 
-    myUserName.setText(sp.getString("username", "登入ThinkOX"));
-    BaseFunction.showImage(this, mleftHead, sp.getString("avatar", ""), loadImgMainImg,
-        Url.IMGTYPE_HEAD);
+    myUserName.setText(sp.getString("username", "未登录"));
+    if (!TextUtils.isEmpty(sp.getString("avatar", ""))) {
+      BaseFunction.showImage(this, mleftHead, sp.getString("avatar", ""), loadImgMainImg,
+          Url.IMGTYPE_HEAD);
+    } else {
+      mleftHead.setImageResource(R.drawable.side_user_avatar);
+    }
 
     mLoginThisAPP = (LinearLayout) findViewById(R.id.LoginThisAPP);
     signature = (TextView) findViewById(R.id.signature);
