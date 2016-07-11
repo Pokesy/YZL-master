@@ -215,7 +215,7 @@ public class BaseFunction {
      * @return
      */
     public static boolean isLogin() {
-        if (!Url.SESSIONID.equals("")) {
+        if (!"".equals(Url.SESSIONID)) {
             Log.e(">>>>>>>", "已经登入");
             return true;
         }

@@ -191,6 +191,7 @@ public class RegistetActivity extends BaseBActivity {
             }
         });
     }
+
     class MyOnClickListener implements View.OnClickListener {
 
         @Override
