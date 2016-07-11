@@ -33,6 +33,10 @@ public class RsenUrlUtil {
     //修改密码
     public static String URL_RSPW = URL_BASE + URL_SUB_BASE + "user/changePass";
     public static String URL_NSPW = URL_BASE + URL_SUB_BASE + "user/changeNewPass";
+    //注册验证码验证
+    public static String URL_VERIFY = URL_BASE + URL_SUB_BASE + "User/isTrueVerify";
+//验证用户存在
+    public static String URL_USER = URL_BASE + URL_SUB_BASE + "user/getUserInfo";
     //发现获取信息
     public static String URL_FXU = URL_BASE + URL_SUB_BASE + "user/getProfile";
     //百科服务器地址
