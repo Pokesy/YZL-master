@@ -74,7 +74,7 @@
                 android:layout_height="225dp"
                 android:background="@drawable/shape"
                 android:gravity="start"
-                android:hint="在这里感觉如何?留两句言吧"
+                android:hint="鱼知乐感谢有你，欢迎留下宝贵建议。"
                 android:padding="10dp" />
 
             <TextView

@@ -11,30 +11,29 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendQuestionActivity;
-import com.tox.BaseFunction;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.json.JSONObject;
 
 public class WendaMyQuestionActivity extends BaseBActivity {
   ListView mListView;
 
   ImageView back_menu;
   TextView tiwen;
-
+  private ImageView  iv1, iv2, iv3;
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.fragment_myquestion_common);
@@ -48,7 +47,7 @@ public class WendaMyQuestionActivity extends BaseBActivity {
     });
     tiwen.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        if (BaseFunction.isLogin()) {
+        if (null!= Url.MYUSERINFO) {
           Intent intent = new Intent(WendaMyQuestionActivity.this, SendQuestionActivity.class);
           startActivity(intent);
         } else {
@@ -126,7 +125,7 @@ public class WendaMyQuestionActivity extends BaseBActivity {
 
             /*其他控件信息，自己添加 id， 然后从 listEntity对象中获取数据，填充就行了*/
       ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(listEntity.getTitle());
-      ((TextView) viewHolder.itemView.findViewById(R.id.content)).setText(listEntity.getContent());
+      ((TextView) viewHolder.itemView.findViewById(R.id.content)).setText(listEntity.getDescription1());
       ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setText(
           listEntity.getUser().getNickname());
       ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(
@@ -149,6 +148,63 @@ public class WendaMyQuestionActivity extends BaseBActivity {
       } else {
         ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
         viewHolder.itemView.findViewById(R.id.best_answer).setSelected(true);
+      }
+      if (listEntity.getImgList() != null && !listEntity.getImgList()
+          .contains("Public/images/nopic.png")) {
+        viewHolder.itemView.findViewById(R.id.img_layout).setVisibility(View.VISIBLE);
+
+        int size = listEntity.getImgList().size();
+        iv1 = viewHolder.imgV(R.id.iv_1);
+        iv2 = viewHolder.imgV(R.id.iv_2);
+        iv3 = viewHolder.imgV(R.id.iv_3);
+        //LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1.getLayoutParams();
+        //linearParams.width = (getScreenWidth(context)-45)/3; // 当控件的高强制设成365象素
+        //linearParams.height=(getScreenWidth(context)-60)/3;
+        //iv1.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
+        //iv2.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
+        //iv3.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
+        iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
+        iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
+        iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+        //DisplayMetrics metric = new DisplayMetrics();
+        //getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
+        //int width = metric.widthPixels;     // 屏幕宽度（像素）
+        //int height = metric.heightPixels;   // 屏幕高度（像素）
+        //float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
+        //int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
+
+        for (int i = 0; i < size; i++) {
+          String url = RsenUrlUtil.URL_BASE + listEntity.getImgList().get(i);
+
+          ImageView imageView = null;
+          if (i == 0) {
+            imageView = iv1;
+          } else if (i == 1) {
+            imageView = iv2;
+          } else if (i == 2) {
+            imageView = iv3;
+          }
+
+          if (imageView != null) {
+            ImageLoader.loadOptimizedHttpImage(WendaMyQuestionActivity.this, url).into(imageView);
+            //ImageLoader.getInstance().displayImage(url, imageView);
+            final int in = i;
+            imageView.setOnClickListener(new View.OnClickListener() {
+
+              @Override public void onClick(View v) {
+                Intent intent = new Intent(WendaMyQuestionActivity.this, ImagePagerActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("image_urls",
+                    (ArrayList<String>) listEntity.getImgList());
+                bundle.putInt("image_index", in);
+                intent.putExtras(bundle);
+                startActivity(intent);
+              }
+            });
+          }
+        }
+      } else {
+        viewHolder.itemView.findViewById(R.id.img_layout).setVisibility(View.GONE);
       }
             /*点击事件响应*/
       viewHolder.itemView.findViewById(R.id.item_layout)

@@ -20,7 +20,7 @@
       segmentcontrol:horizonGap="25dip"
       segmentcontrol:selectedBackgroundColors="@color/head"
       segmentcontrol:selectedIndex="0"
-      segmentcontrol:texts="问答|专家课程|百科"
+      segmentcontrol:texts="问答|精彩视频|百科"
       segmentcontrol:verticalGap="10dip"
       />
 

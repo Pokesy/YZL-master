@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
-            android:text="专家课程"
+            android:text="精彩视频"
             android:textColor="@color/tab"
             android:textSize="18sp" />
     </RelativeLayout>
