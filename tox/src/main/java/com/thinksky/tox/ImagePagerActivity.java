@@ -34,7 +34,7 @@ public class ImagePagerActivity extends BaseBActivity {
     CharSequence text = getString(R.string.viewpager_indicator, 1, mPager.getAdapter().getCount());
     indicator.setText(text);
     // 更新下标
-    mPager.setOnPageChangeListener(new OnPageChangeListener() {
+    mPager.addOnPageChangeListener(new OnPageChangeListener() {
       @Override public void onPageScrollStateChanged(int arg0) {
       }
 

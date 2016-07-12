@@ -71,7 +71,6 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile project(':slidingmenu_library')
-    compile project(':photoview')
     compile files('libs/locSDK_6.13.jar')
 //    compile files('libs/baidumapapi_v3_5_0.jar')
     compile files('libs/baidumapapi_search_v3_7_3.jar')
@@ -86,4 +85,5 @@ dependencies {
     compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.github.chrisbanes:PhotoView:1.2.6'
 }
