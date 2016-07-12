@@ -4,84 +4,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color_main"
-    tools:context="com.thinksky.fragment.WendaFragment">
+    tools:context="com.thinksky.fragment.WendaFragment"
+    >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <!--顶部模块预留-->
-        <RelativeLayout
-            android:id="@+id/btn_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white">
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      >
+    <!--顶部模块预留-->
+    <RelativeLayout
+        android:id="@+id/btn_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        >
 
-            <RadioGroup
-                android:id="@+id/main_radio"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp">
+      <RadioGroup
+          android:id="@+id/main_radio"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingBottom="10dp"
+          android:paddingLeft="16dp"
+          android:paddingRight="16dp"
+          android:paddingTop="12dp"
+          >
 
-                <RadioButton
-                    android:id="@+id/rb_rmht"
-                    style="@style/main_wd"
-                    android:checked="false"
-                    android:drawableTop="@drawable/iconfontremenwenda"
-                    android:text="@string/remenhuati" />
+        <RadioButton
+            android:id="@+id/rb_rmht"
+            android:checked="false"
+            android:drawableTop="@drawable/wenda"
+            android:text="@string/remenhuati"
+            style="@style/main_wd"
+            />
 
-                <RadioButton
-                    android:id="@+id/rb_zgxs"
-                    style="@style/main_wd"
-                    android:drawableTop="@drawable/iconfontzuigaoxuanshang"
-                    android:text="@string/zuigaoxuanshang" />
+        <RadioButton
+            android:id="@+id/rb_zgxs"
+            android:drawableTop="@drawable/xuanshang"
+            android:text="@string/zuigaoxuanshang"
+            style="@style/main_wd"
+            />
 
-                <RadioButton
-                    android:id="@+id/rb_wdtw"
-                    style="@style/main_wd"
-                    android:drawableTop="@drawable/iconfontwodetiwen"
-                    android:text="@string/wodetiwen" />
+        <RadioButton
+            android:id="@+id/rb_wdtw"
+            android:drawableTop="@drawable/tiwen"
+            android:text="@string/wodetiwen"
+            style="@style/main_wd"
+            />
 
-                <RadioButton
-                    android:id="@+id/rb_yjj"
-                    style="@style/main_wd"
-                    android:checked="false"
-                    android:drawableTop="@drawable/iconfontyijiejue"
-                    android:text="@string/yijiejue" />
+        <RadioButton
+            android:id="@+id/rb_yjj"
+            android:checked="false"
+            android:drawableTop="@drawable/yijiejue"
+            android:text="@string/yijiejue"
+            style="@style/main_wd"
+            />
 
-                <RadioButton
-                    android:id="@+id/hide"
-                    style="@style/main_wd"
-                    android:checked="false"
-                    android:drawableTop="@drawable/iconfontyijiejue"
-                    android:text="@string/yijiejue"
-                    android:visibility="gone" />
+      </RadioGroup>
 
-            </RadioGroup>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/divider"
+          android:layout_alignBottom="@id/main_radio"
+          android:background="@color/bg_color_main"
+          />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider"
-                android:layout_alignBottom="@id/main_radio"
-                android:background="@color/bg_color_main" />
-
-        </RelativeLayout>
+    </RelativeLayout>
 
 
-        <!--内容列表-->
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="3dp"
-            android:listSelector="@android:color/transparent" />
-    </LinearLayout>
+    <!--内容列表-->
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="3dp"
+        android:listSelector="@android:color/transparent"
+        />
+  </LinearLayout>
 
 </FrameLayout>
