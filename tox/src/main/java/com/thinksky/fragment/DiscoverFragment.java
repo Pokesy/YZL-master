@@ -210,7 +210,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
         mLocationClient.start();
         initMarker("1", fish);
 
-        mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.black));
+        mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.white));
         mSegmentControl.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {
             @Override
             public void onSegmentControlClick(int index) {

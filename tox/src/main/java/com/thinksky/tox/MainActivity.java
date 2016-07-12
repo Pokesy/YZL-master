@@ -166,7 +166,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     };
     drawerToggle.setDrawerIndicatorEnabled(false);
     //        drawerToggle.setHomeAsUpIndicator(R.drawable.iconfont_gerenshezhi);
-    toolbar.setNavigationIcon(R.drawable.iconfont_gerenshezhi);
+    toolbar.setNavigationIcon(R.drawable.list);
     drawer_layout.setDrawerListener(drawerToggle);
     drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
       @Override

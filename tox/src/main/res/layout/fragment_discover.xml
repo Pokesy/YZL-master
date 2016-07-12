@@ -37,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="26dp"
             android:textSize="16sp"
-            segmentcontrol:cornerRadius="10dip"
+            segmentcontrol:cornerRadius="4dip"
             segmentcontrol:direction="horizon"
             segmentcontrol:horizonGap="25dip"
             segmentcontrol:selectedBackgroundColors="@color/head"

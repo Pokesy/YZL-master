@@ -62,6 +62,14 @@
             style="@style/main_wd"
             />
 
+        <RadioButton
+            android:id="@+id/hide"
+            style="@style/main_wd"
+            android:checked="false"
+            android:drawableTop="@drawable/iconfontyijiejue"
+            android:text="@string/yijiejue"
+            android:visibility="gone" />
+
       </RadioGroup>
 
       <View
