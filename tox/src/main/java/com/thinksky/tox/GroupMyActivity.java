@@ -19,6 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
+import com.thinksky.myview.MoreTextView;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
@@ -57,7 +58,7 @@ public class GroupMyActivity extends BaseBActivity implements View.OnClickListen
     private LinearLayout userInfo;
     private CircleImageView creatorHead;
     private TextView creatorNickName;
-    private TextView groupDetail;
+    private MoreTextView groupDetail;
     private TextView groupNotice;
     private TextView joinGroup;
     private IssueListView hotPostView;
@@ -99,7 +100,7 @@ public class GroupMyActivity extends BaseBActivity implements View.OnClickListen
         userInfo = (LinearLayout) findViewById(R.id.user_info);
         creatorHead = (CircleImageView) findViewById(R.id.creator_user_head);
         creatorNickName = (TextView) findViewById(R.id.creator_user_name);
-        groupDetail = (TextView) findViewById(R.id.group_detail);
+        groupDetail = (MoreTextView) findViewById(R.id.group_detail);
         groupNotice = (TextView) findViewById(R.id.group_notice);
         joinGroup = (TextView) findViewById(R.id.join_group);
         hotLine = (LinearLayout) findViewById(R.id.hot_line);
