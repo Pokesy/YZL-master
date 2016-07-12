@@ -8,26 +8,24 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
-
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RGridView;
 import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.R;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class XiaozujingxuanActivity extends BaseBActivity {
@@ -125,7 +123,9 @@ public class XiaozujingxuanActivity extends BaseBActivity {
         }
         @Override
         protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
-            ResUtil.setRoundImage(bean.logo, holder.imgV(R.id.logo));
+            ImageLoader.loadOptimizedHttpImage(XiaozujingxuanActivity.this, bean.logo).bitmapTransform(new CropCircleTransformation(XiaozujingxuanActivity.this)).placeholder(R.drawable.picture_1_no).error(R
+                .drawable.picture_1_no).into
+                (holder.imgV(R.id.logo));
             holder.tV(R.id.title).setText(bean.title);
             holder.tV(R.id.detail).setText(bean.detail);
             holder.tV(R.id.post_count).setText(bean.post_count);

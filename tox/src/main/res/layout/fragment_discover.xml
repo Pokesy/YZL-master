@@ -40,7 +40,7 @@
             segmentcontrol:cornerRadius="10dip"
             segmentcontrol:direction="horizon"
             segmentcontrol:horizonGap="25dip"
-            segmentcontrol:selectedBackgroundColors="#0079FF"
+            segmentcontrol:selectedBackgroundColors="@color/head"
             segmentcontrol:selectedIndex="0"
             segmentcontrol:texts="鱼友|渔场"
             segmentcontrol:verticalGap="5dip" />
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:orientation="vertical"
-            android:visibility="gone">
+            >
 
             <Button
                 android:id="@+id/bt_traffic"

@@ -320,12 +320,12 @@ public class ResUtil {
         return context.getResources().getIdentifier(name, type, context.getPackageName());
     }
 
-    public static void setRoundImage(String url, ImageView view) {
+    public static void setRoundImage(String url, ImageView  view) {
         ImageLoader.getInstance().displayImage(url, view,
                 new DisplayImageOptions.Builder()
-                        .showImageOnLoading(R.drawable.ic_launcher)
-                        .showImageForEmptyUri(R.drawable.ic_launcher)
-                        .showImageOnFail(R.drawable.ic_launcher)
+                        .showImageOnLoading(R.drawable.photo_no)
+                        .showImageForEmptyUri(R.drawable.photo_no)
+                        .showImageOnFail(R.drawable.photo_no)
                         .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                         .displayer(new RoundedBitmapDisplayer(150)).build());
     }

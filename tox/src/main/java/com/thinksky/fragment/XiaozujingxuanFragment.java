@@ -5,26 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.fragment.RBaseFragment;
 import com.thinksky.rsen.view.RGridView;
 import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.R;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class XiaozujingxuanFragment extends RBaseFragment {
@@ -137,7 +135,10 @@ public class XiaozujingxuanFragment extends RBaseFragment {
 //                            .showImageOnFail(R.drawable.ic_launcher)
 //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 //                            .displayer(new RoundedBitmapDisplayer(100)).build());
-            ResUtil.setRoundImage(bean.logo, holder.imgV(R.id.logo));
+//            ResUtil.setRoundImage(bean.logo, holder.imgV(R.id.logo));
+            ImageLoader.loadOptimizedHttpImage(getActivity(), bean.logo).bitmapTransform(new CropCircleTransformation(getActivity())).placeholder(R.drawable.picture_1_no).error(R
+                .drawable.picture_1_no).into
+                (holder.imgV(R.id.logo));
             holder.tV(R.id.title).setText(bean.title);
             holder.tV(R.id.detail).setText(bean.detail);
             holder.tV(R.id.post_count).setText(bean.post_count);

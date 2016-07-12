@@ -673,8 +673,8 @@ public class HomeFragment extends Fragment
     @Override
     protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
       ImageLoader.loadOptimizedHttpImage(getActivity(), bean.logo).bitmapTransform(new
-          CropCircleTransformation(getActivity())).placeholder(R.drawable.ic_launcher).error(R
-          .drawable.ic_launcher).into
+          CropCircleTransformation(getActivity())).placeholder(R.drawable.picture_1_no).error(R
+          .drawable.picture_1_no).into
           (holder.imgV(R.id.logo));
       holder.tV(R.id.title).setText(bean.title);
       holder.tV(R.id.detail).setText(bean.detail);
