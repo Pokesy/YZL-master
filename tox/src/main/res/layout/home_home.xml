@@ -436,44 +436,10 @@
         </LinearLayout>
       </LinearLayout>
     </com.thinksky.fragment.MyScrollview>
-    <RelativeLayout
-        android:id="@+id/title_tl"
+    <com.thinksky.ui.common.TitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-
-        >
-      <FrameLayout
-          android:id="@+id/title_bg"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:alpha="0"
-          android:background="@color/head"
-          />
-      <ImageView
-          android:id="@+id/menu"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
-          android:layout_centerVertical="true"
-          android:padding="15dp"
-          android:src="@drawable/list"
-          />
-      <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerVertical="true"
-          android:src="@drawable/logo"
-          />
-      <ImageView
-          android:id="@+id/search"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
-          android:padding="15dp"
-          android:src="@drawable/search"
-          />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        />
   </RelativeLayout>
 </LinearLayout>

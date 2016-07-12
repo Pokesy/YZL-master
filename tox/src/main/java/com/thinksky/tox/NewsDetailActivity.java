@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -511,7 +512,7 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
      * @param newsDetailInfo 资讯信息
      */
     public void setNewsDetail(NewsDetailInfo newsDetailInfo) {
-        newsType.setText(newsDetailInfo.getCategory_title());
+        newsType.setText(TextUtils.isEmpty(newsDetailInfo.getCategory_title()) ? "" : newsDetailInfo.getCategory_title());
         newsTitle.setText(newsDetailInfo.getTitle());
         //加载图片
         LoadImageTask task = new LoadImageTask(newsLogo, 540);

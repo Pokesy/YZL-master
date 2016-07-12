@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.nineoldandroids.view.ViewHelper;
@@ -33,6 +31,7 @@ import com.thinksky.fragment.YlqFragment;
 import com.thinksky.holder.BaseActivity;
 import com.thinksky.model.ActivityModel;
 import com.thinksky.qqsliding.widget.DragLayout;
+import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.LoadImg;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -45,7 +44,7 @@ import java.util.ArrayList;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
   /**
-   * 用于展示首页的Fragment
+   * 用于展示  的Fragment
    */
   private HomeFragment homeFragment;
 
@@ -81,7 +80,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   private LoadImg loadImgMainImg;
   private Intent intent_Share;
   /**
-   * 用于对Fragment进行管理
+   * 用于对Fragment进行 理
    */
   private long exitTime = 0;
   private ArrayList<String> ways = new ArrayList<String>();
@@ -92,9 +91,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   private ArrayList<String> menuLists;
   private ArrayAdapter<String> adapter;
   private ActionBarDrawerToggle mDrawerToggle;// actionBar打开关闭的
-  private String mTitle;
-  private TextView text;
-  private Toolbar toolbar;
   private DrawerLayout drawer_layout;
   private ActionBarDrawerToggle drawerToggle;
   private View mContent;
@@ -107,9 +103,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   public TextView message1;
   private TextView mFeedbackMenu;
   private LinearLayout drawer_view;
-  private RelativeLayout mTitleBar;
-  private TextView mTitleBarBtnRight;
 
+  private TitleBar mTitleBar;
   private View.OnClickListener mWriteFeedListener = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -146,16 +141,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   }
 
   protected void initActionbar() {
-    toolbar = (Toolbar) findViewById(R.id.toolbar);
-    toolbar.setTitle("");
+    mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+    setSupportActionBar(mTitleBar.getToolbar());
 
-    setSupportActionBar(toolbar);
     drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
     drawer_view = (LinearLayout) findViewById(R.id.drawer_view);
     mContent = drawer_layout.getChildAt(0);
-    drawerToggle = new ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.drawer_open,
+    drawerToggle = new ActionBarDrawerToggle(this, drawer_layout, mTitleBar.getToolbar(), R
+        .string.drawer_open,
         R.string.drawer_close) {
       @Override
       public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -166,7 +161,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     };
     drawerToggle.setDrawerIndicatorEnabled(false);
     //        drawerToggle.setHomeAsUpIndicator(R.drawable.iconfont_gerenshezhi);
-    toolbar.setNavigationIcon(R.drawable.list);
     drawer_layout.setDrawerListener(drawerToggle);
     drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
       @Override
@@ -182,10 +176,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     //        lv = (ListView) findViewById(R.id.lv);
     //        lv.setAdapter(new LeftItemAdapter(this));
+
+    mTitleBar.setLogoVisible(true);
+    mTitleBar.setLeftImgMenu(R.drawable.list, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!drawer_layout.isDrawerOpen(drawer_view)) {
+          drawer_layout.openDrawer(drawer_view);
+        } else {
+          drawer_layout.closeDrawer(drawer_view);
+        }
+      }
+    });
   }
 
   /**
-   * 如果想是实现滑动菜单可以滑动，必须实现如下方法
+   * 如果想是实现滑动菜单可以滑动，必 实现如下方法
    */
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
@@ -218,13 +224,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
   protected void initView() {
     setContentView(R.layout.activity_home);
-    mTitleBarBtnRight = (TextView) findViewById(R.id.btn_right);
 
     loadImgMainImg = new LoadImg(this);
-    mTitleBar = (RelativeLayout) findViewById(R.id.title_bar);
+    mTitleBar = (TitleBar) findViewById(R.id.title_bar);
     myUserName = (TextView) findViewById(R.id.myUserName);
     mleftHead = (ImageView) findViewById(R.id.iv_bottom);
-    sousuo = (ImageView) findViewById(R.id.sousuo);
 
     sp = getSharedPreferences("userInfo", 0);
     Log.e(sp.getString("avatar", "空空空"), "");
@@ -239,7 +243,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     mLoginThisAPP = (LinearLayout) findViewById(R.id.LoginThisAPP);
     signature = (TextView) findViewById(R.id.signature);
-    text = (TextView) findViewById(R.id.text);
     user = (TextView) findViewById(R.id.user);
     setting = (TextView) findViewById(R.id.setting);
     collect = (TextView) findViewById(R.id.collect);
@@ -253,8 +256,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     invite.setOnClickListener(MainActivity.this);
     mFeedbackMenu.setOnClickListener(MainActivity.this);
     mLoginThisAPP.setOnClickListener(MainActivity.this);
-    text.setOnClickListener(MainActivity.this);
-    sousuo.setOnClickListener(MainActivity.this);
     findViewById(R.id.ll1).setOnClickListener(this);
     mFragmentManager = MainActivity.this.getSupportFragmentManager();
 
@@ -365,7 +366,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           startActivity(intent);
         }
         break;
-      case R.id.sousuo:
+      // TODO 临时代码
+      case R.id.search:
         intent_Share = new Intent(Intent.ACTION_SEND);
         intent_Share.setType("text/plain");
         intent_Share.putExtra(Intent.EXTRA_SUBJECT, "分享");
@@ -381,9 +383,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   }
 
   /**
-   * 根据传入的index参数来设置选中的tab页。
+   * 根据传入的index参数来设 选中的tab 。
    *
-   * @param index 每个tab页对应的下标。0表示首页，1表示动态，2表示鱼乐圈，3表示鱼医生，4表示商城。
+   * @param index 每个tab 对应的下标。0表示  ，1表示动态，2表示鱼乐圈，3表示鱼医生，4表示商城。
    */
   private void setTabSelection(int index) {
     //        // 每次选中之前先清楚掉上次的选中状态
@@ -488,10 +490,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     switch (tabIndex) {
       case 1:
         mTitleBar.setVisibility(View.VISIBLE);
-        sousuo.setVisibility(View.GONE);
-        mTitleBarBtnRight.setVisibility(View.VISIBLE);
-        mTitleBarBtnRight.setOnClickListener(mWriteFeedListener);
-        mTitleBarBtnRight.setText(R.string.title_bar_right_btn_write_feed);
+        mTitleBar.setRightTextBtn(R.string.title_bar_right_btn_write_feed, mWriteFeedListener);
         break;
       case 0:
         mTitleBar.setVisibility(View.GONE);
@@ -499,8 +498,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
       default:
-        //                sousuo.setVisibility(View.VISIBLE);
-        mTitleBarBtnRight.setVisibility(View.GONE);
+        mTitleBar.setRightTextBtnVisible(false);
         mTitleBar.setVisibility(View.VISIBLE);
         break;
     }
@@ -521,7 +519,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   //    }
 
   /**
-   * 将所有的Fragment都置为隐藏状态。
+   * 将所有的Fragment都 为 藏状态。
    *
    * @param mFragmentTransaction 用于对Fragment执行操作的事务
    */

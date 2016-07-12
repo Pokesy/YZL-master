@@ -42,4 +42,8 @@
   <dimen name="grid_img_height_two">124.8dp</dimen>
   <dimen name="grid_img_height_three">89.6dp</dimen>
 
+  <!-- TitleBar -->
+  <dimen name="title_bar_menu_icon_size">50dp</dimen>
+  <dimen name="title_bar_menu_padding">15dp</dimen>
+
 </resources>

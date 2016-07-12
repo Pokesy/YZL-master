@@ -32,6 +32,7 @@ import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.NewsActivity;
 import com.thinksky.tox.NewsDetailActivity;
 import com.thinksky.tox.R;
+import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
@@ -78,10 +79,9 @@ public class HomeFragment extends Fragment
   private View mMenuMon;
   private View mMenuMyQuestion;
   private View mMenuSolution;
-  private RelativeLayout title_tl;
-  private View mTitleBg;
   private OnHomeTitleBarClickListener mHomeBtnClickListener;
   private SlideShowView mSlideView;
+  private TitleBar mTitleBar;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,14 +89,13 @@ public class HomeFragment extends Fragment
     view = inflater.inflate(R.layout.home_home, null);
     mSlideView = (SlideShowView) view.findViewById(R.id.slideshowView);
     scrollView = (MyScrollview) view.findViewById(R.id.scrollView);
-    title_tl = (RelativeLayout) view.findViewById(R.id.title_tl);
-    mTitleBg = view.findViewById(R.id.title_bg);
     list = (ListView) view.findViewById(R.id.list);
     baseApi = new BaseApi();
     session_id = baseApi.getSeesionId();
     scrollView.setOnScrollListener(this);
     mContext = getActivity();
     viewHolder = new RViewHolder(view);
+    mTitleBar = (TitleBar) view.findViewById(R.id.title_bar);
     initView();
     initzx();
     initdata();
@@ -180,9 +179,26 @@ public class HomeFragment extends Fragment
     zj_show.setOnClickListener(this);
     rm_show.setOnClickListener(this);
     ht_show.setOnClickListener(this);
-    view.findViewById(R.id.menu).setOnClickListener(this);
+    view.findViewById(R.id.left_img_menu).setOnClickListener(this);
     view.findViewById(R.id.search).setOnClickListener(this);
 
+    mTitleBar.setLeftImgMenu(R.drawable.list, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (null != mHomeBtnClickListener) {
+          mHomeBtnClickListener.onMenuBtnClicked();
+        }
+      }
+    });
+    mTitleBar.setSearchBtn(R.drawable.search, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (null != mHomeBtnClickListener) {
+          mHomeBtnClickListener.onSearchBtnClicked();
+        }
+      }
+    });
+    mTitleBar.setLogoVisible(true);
   }
 
   @Override
@@ -220,16 +236,6 @@ public class HomeFragment extends Fragment
         Intent intent = new Intent(mContext, VedioView.class);
         intent.putExtras(bundle);
         mContext.startActivity(intent);
-        break;
-      case R.id.menu:
-        if (null != mHomeBtnClickListener) {
-          mHomeBtnClickListener.onMenuBtnClicked();
-        }
-        break;
-      case R.id.search:
-        if (null != mHomeBtnClickListener) {
-          mHomeBtnClickListener.onSearchBtnClicked();
-        }
         break;
     }
   }
@@ -269,7 +275,7 @@ public class HomeFragment extends Fragment
   @Override
   public void onScroll(int scrollY) {
     float alpha = (float) scrollY / mSlideView.getHeight();
-    mTitleBg.setAlpha(alpha >= 1.0f ? 1.0f : (alpha));
+    mTitleBar.getTitleBgView().setAlpha(alpha >= 1.0f ? 1.0f : (alpha));
   }
 
   /**
