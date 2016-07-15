@@ -57,6 +57,11 @@ public class SplashActivity extends BaseBActivity {
     setContentView(R.layout.activity_splash);
 
     initview();
+//        init();
+
+//        if (BuildConfig.DEBUG) {
+//            startbutton(null);
+//        }
   }
 
   private void init() {
@@ -81,7 +86,14 @@ public class SplashActivity extends BaseBActivity {
 
       @Override
       public Fragment getItem(int position) {
-        return LeadFragment.newInstance(position);
+        LeadFragment fragment = LeadFragment.newInstance(position);
+        fragment.setOnBtnClickListener(new LeadFragment.OnBtnClickListener() {
+          @Override
+          public void onClick() {
+            startbutton();
+          }
+        });
+        return fragment;
       }
 
       @Override
@@ -91,6 +103,27 @@ public class SplashActivity extends BaseBActivity {
     };
 
     mViewPager.setAdapter(mPagerAdapter);
+  }
+
+  public void startbutton() {
+//        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+//        startActivity(intent);
+//        SplashActivity.this.finish();
+    if (!Url.SESSIONID.equals("")) {
+      Intent intent = new Intent(SplashActivity.this,
+          UserInfoActivity.class);
+      intent.putExtra("userUid", Url.USERID);
+      startActivityForResult(intent, 0);
+    } else {
+      String[] s = new String[ways.size()];
+      s = ways.toArray(s);
+      Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+      intent.putExtra("ways", s);
+      intent.putExtra("entryActivity", ActivityModel.ACTIVITY);
+      startActivity(intent);
+    }
+    SplashActivity.this.finish();
+
   }
 
   private void initview() {

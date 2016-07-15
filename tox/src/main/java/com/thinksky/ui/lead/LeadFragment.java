@@ -1,6 +1,5 @@
 package com.thinksky.ui.lead;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,17 +10,14 @@ import android.widget.ImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.thinksky.model.ActivityModel;
-import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.R;
-import com.thinksky.tox.UserInfoActivity;
-import com.tox.Url;
 
 public class LeadFragment extends Fragment {
   static final int[] LEAD_IMG_RES = new int[]{R.drawable.new_feature_1, R.drawable.new_feature_2,
       R.drawable
           .new_feature_3};
   private static final String ARG_PAGE_INDEX = "page_index";
+  private OnBtnClickListener mListener;
 
   @Bind(R.id.btn_enter)
   View mBtnEnter;
@@ -55,17 +51,17 @@ public class LeadFragment extends Fragment {
 
   @OnClick(R.id.btn_enter)
   void onClick() {
-    if (!Url.SESSIONID.equals("")) {
-      Intent intent = new Intent(getActivity(),
-          UserInfoActivity.class);
-      intent.putExtra("userUid", Url.USERID);
-      startActivityForResult(intent, 0);
-    } else {
-      Intent intent = new Intent(getActivity(), LoginActivity.class);
-      intent.putExtra("entryActivity", ActivityModel.ACTIVITY);
-      startActivity(intent);
+    if (null != mListener) {
+      mListener.onClick();
     }
-    getActivity().finish();
+  }
+
+  public void setOnBtnClickListener(OnBtnClickListener listener) {
+    mListener = listener;
+  }
+
+  public interface OnBtnClickListener {
+    void onClick();
   }
 
 }
