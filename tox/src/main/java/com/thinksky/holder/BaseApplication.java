@@ -6,9 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
-
 import com.baidu.mapapi.SDKInitializer;
-import com.bugtags.library.Bugtags;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.thinksky.Face.LocationService;
@@ -41,7 +39,7 @@ public class BaseApplication extends Application {
 		this.mMainThreadLooper = getMainLooper();
 		SDKInitializer.initialize(this);
 		ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
-		Bugtags.start("309e5c0b10a89d083fcb08b0c17543e2", this, Bugtags.BTGInvocationEventBubble);
+		//Bugtags.start("309e5c0b10a89d083fcb08b0c17543e2", this, Bugtags.BTGInvocationEventBubble);
 
 		locationService = new LocationService(getApplicationContext());
 		mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);

@@ -504,7 +504,7 @@ public class RegistetActivity extends BaseBActivity {
       }
 
       if (!username.equalsIgnoreCase(null) && !password.equalsIgnoreCase(null) && !"".equals(
-          username) && !"".equals(password)) {
+          username) && !"".equals(password)&&!"".equals(nickname.getText().toString())) {
         if (!mPassword.getText().toString().equals(reset_password.getText().toString())) {
           Toast.makeText(RegistetActivity.this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
         } else {

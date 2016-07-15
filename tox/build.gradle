@@ -46,7 +46,16 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-
+    productFlavors{
+        flavors_release{
+            manifestPlaceholders = [str:"releaseStr",package_name:"com.hengrtech.yuzhile"]
+            applicationId "com.hengrtech.yuzhile"
+        }
+        flavors_dev{
+            manifestPlaceholders = [str:"devStr",package_name:"com.hengrtech.yuzhile"]
+            applicationId "com.hengrtech.yuzhile"
+        }
+    }
     repositories {
         flatDir {
             dirs 'libs'

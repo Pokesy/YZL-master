@@ -100,8 +100,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
   private TitleBar mTitleBar;
   private View.OnClickListener mWriteFeedListener = new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
       if (!Url.SESSIONID.equals("")) {
         Intent intent = new Intent(MainActivity.this, UploadActivity.class);
         startActivity(intent);
@@ -119,8 +118,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   };
 
   //再按一次退出
-  @Override
-  public boolean onKeyDown(int keyCode, KeyEvent event) {
+  @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
     if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
       if ((System.currentTimeMillis() - exitTime) > 2000) {
         Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
@@ -140,25 +138,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-
     drawer_view = (LinearLayout) findViewById(R.id.drawer_view);
     mContent = drawer_layout.getChildAt(0);
-    drawerToggle = new ActionBarDrawerToggle(this, drawer_layout, mTitleBar.getToolbar(), R
-        .string.drawer_open,
-        R.string.drawer_close) {
-      @Override
-      public void onDrawerSlide(View drawerView, float slideOffset) {
-        super.onDrawerSlide(drawerView, slideOffset);
-        float scale = 1 - slideOffset;
-        ViewHelper.setTranslationX(mContent, drawerView.getMeasuredWidth() * (1 - scale));
-      }
-    };
+    drawerToggle =
+        new ActionBarDrawerToggle(this, drawer_layout, mTitleBar.getToolbar(), R.string.drawer_open,
+            R.string.drawer_close) {
+          @Override public void onDrawerSlide(View drawerView, float slideOffset) {
+            super.onDrawerSlide(drawerView, slideOffset);
+            float scale = 1 - slideOffset;
+            ViewHelper.setTranslationX(mContent, drawerView.getMeasuredWidth() * (1 - scale));
+          }
+        };
     drawerToggle.setDrawerIndicatorEnabled(false);
     //        drawerToggle.setHomeAsUpIndicator(R.drawable.iconfont_gerenshezhi);
     drawer_layout.setDrawerListener(drawerToggle);
     drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
+      @Override public void onClick(View v) {
         if (!drawer_layout.isDrawerOpen(drawer_view)) {
           drawer_layout.openDrawer(drawer_view);
         } else {
@@ -173,8 +168,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     mTitleBar.setLogoVisible(true);
     mTitleBar.setLeftImgMenu(R.drawable.list, new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
+      @Override public void onClick(View v) {
         if (!drawer_layout.isDrawerOpen(drawer_view)) {
           drawer_layout.openDrawer(drawer_view);
         } else {
@@ -187,8 +181,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   /**
    * 如果想是实现滑动菜单可以滑动，必 实现如下方法
    */
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
     return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
   }
 
@@ -231,8 +224,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     ((RadioGroup) findViewById(R.id.main_radio)).setOnCheckedChangeListener(
         new RadioGroup.OnCheckedChangeListener() {
-          @Override
-          public void onCheckedChanged(RadioGroup group, int checkedId) {
+          @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
               case R.id.rb_weibo:
                 setTabSelection(1);
@@ -262,16 +254,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     setTabSelection(0);
   }
 
-  @Override
-  protected void init() {
+  @Override protected void init() {
     //        if (BuildConfig.DEBUG) {
     //            AnswerDialogFragment.show(getSupportFragmentManager(), new AnswerDialogFragment
     // .ArgBean());
     //        }
   }
 
-  @Override
-  public void onClick(View v) {
+  @Override public void onClick(View v) {
     switch (v.getId()) {
       case R.id.ll1:
       case R.id.user:
@@ -306,11 +296,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         break;
       case R.id.invite:
+        //InputStream is=getResources().openRawResource(R.raw.ic_launcher);
+
         intent_Share = new Intent(Intent.ACTION_SEND);
-        intent_Share.setType("text/plain");
+        //Uri imageUri =  Uri.parse("android.resource://package_name/raw/ic_luncher.png");
+        //Uri imageUri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ic_launcher);
+        //intent_Share.putExtra(Intent.EXTRA_STREAM, imageUri);
+        //intent_Share.setType("image/*");
         intent_Share.putExtra(Intent.EXTRA_SUBJECT, "分享");
-        intent_Share.putExtra(Intent.EXTRA_TEXT, " （来自鱼知乐手机客户端）");//分享内容体
-        //                intent_Share.putExtra(Intent.ACTION_PACKAGE_ADDED,  "www.baidu.com");
+        intent_Share.putExtra(Intent.EXTRA_TEXT, " http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile"
+            + "（来自鱼知乐手机客户端）");//分享内容体
+        intent_Share.setType("text/plain");
+
+
+        //intent_Share.putExtra(Intent.ACTION_PACKAGE_ADDED,
+        //    "http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
         // 分享内容体
         startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
         break;
@@ -338,11 +338,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         break;
       // TODO 临时代码
       case R.id.search:
-        intent_Share = new Intent(Intent.ACTION_SEND);
-        intent_Share.setType("text/plain");
-        intent_Share.putExtra(Intent.EXTRA_SUBJECT, "分享");
-        intent_Share.putExtra(Intent.EXTRA_TEXT, " （来自OpenSNS手机客户端）");//分享内容体
-        startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
+
         break;
       case R.id.feed_back:
         startActivity(new Intent(this, Setting_yijianActivity.class));
@@ -374,24 +370,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           // 如果MessageFragment为空，则创建一个并添加到界面上
           homeFragment = new HomeFragment();
           mFragmentTransaction.add(R.id.content, homeFragment);
-          homeFragment.setOnHomeTitleBarClickListener(new HomeFragment
-              .OnHomeTitleBarClickListener() {
+          homeFragment.setOnHomeTitleBarClickListener(
+              new HomeFragment.OnHomeTitleBarClickListener() {
 
+                @Override public void onMenuBtnClicked() {
+                  if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
+                    drawer_layout.closeDrawer(Gravity.LEFT);
+                  } else {
+                    drawer_layout.openDrawer(Gravity.LEFT);
+                  }
+                }
 
-            @Override
-            public void onMenuBtnClicked() {
-              if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
-                drawer_layout.closeDrawer(Gravity.LEFT);
-              } else {
-                drawer_layout.openDrawer(Gravity.LEFT);
-              }
-            }
+                @Override public void onSearchBtnClicked() {
 
-            @Override
-            public void onSearchBtnClicked() {
-
-            }
-          });
+                }
+              });
         } else {
           // 如果MessageFragment不为空，则直接将它显示出来
           mFragmentTransaction.show(homeFragment);
@@ -548,8 +541,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
   }
 
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == 0 && resultCode == 1) {
       Log.d("回来了吗？", "123");

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+
     >
 
   <ImageView
@@ -9,6 +12,7 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:scaleType="centerCrop"
+      tools:src="@drawable/new_feature_3"
       />
 
   <android.support.v7.widget.AppCompatButton
@@ -17,7 +21,7 @@
       android:layout_height="45dp"
       android:layout_alignParentBottom="true"
       android:layout_centerHorizontal="true"
-      android:layout_marginBottom="167dp"
+      android:layout_marginBottom="150dp"
       android:background="@drawable/bg_splash_status_selector"
       android:gravity="center"
       android:text="立刻体验"
