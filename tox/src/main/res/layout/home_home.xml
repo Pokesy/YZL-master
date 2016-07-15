@@ -6,35 +6,6 @@
     android:orientation="vertical"
     >
 
-  <LinearLayout
-      android:id="@+id/load_progressBar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:orientation="horizontal"
-      android:paddingTop="10dp"
-      tools:visibility="invisible"
-      >
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="false"
-        android:visibility="visible"
-        style="?android:attr/progressBarStyleInverse"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:text="界面加载中"
-        android:textColor="#815F3D"
-        android:textSize="18sp"
-        android:visibility="gone"
-        />
-  </LinearLayout>
   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -180,6 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                android:src="@drawable/picture_no"
                 />
 
             <ImageView
@@ -441,5 +413,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+    <LinearLayout
+        android:id="@+id/load_progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        tools:visibility="gone"
+        >
+
+      <ProgressBar
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:indeterminate="false"
+          android:visibility="visible"
+          style="?android:attr/progressBarStyleInverse"
+          />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingLeft="10dp"
+          android:text="界面加载中"
+          android:textColor="#815F3D"
+          android:textSize="18sp"
+          android:visibility="gone"
+          />
+    </LinearLayout>
   </RelativeLayout>
 </LinearLayout>

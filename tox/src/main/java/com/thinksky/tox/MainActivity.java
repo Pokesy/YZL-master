@@ -13,7 +13,6 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -86,11 +85,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   private ArrayList<String> ways = new ArrayList<String>();
   private FragmentTransaction mFragmentTransaction;
   private FragmentManager mFragmentManager;
-  private DrawerLayout mDrawerLayout; // 设置的是左侧的抽屉菜单
-  private ListView mDrawerList;
-  private ArrayList<String> menuLists;
-  private ArrayAdapter<String> adapter;
-  private ActionBarDrawerToggle mDrawerToggle;// actionBar打开关闭的
   private DrawerLayout drawer_layout;
   private ActionBarDrawerToggle drawerToggle;
   private View mContent;
@@ -197,30 +191,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   public boolean onOptionsItemSelected(MenuItem item) {
     return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
   }
-
-  //    private class MyDrawerListener implements DrawerLayout.DrawerListener {
-  //
-  //        @Override
-  //        public void onDrawerClosed(View arg0) {
-  //            drawerToggle.onDrawerClosed(arg0);
-  //        }
-  //
-  //        @Override
-  //        public void onDrawerOpened(View arg0) {
-  //            drawerToggle.onDrawerOpened(arg0);
-  //        }
-  //
-  //        @Override
-  //        public void onDrawerSlide(View arg0, float arg1) {
-  //            drawerToggle.onDrawerSlide(arg0, arg1);
-  //        }
-  //
-  //        @Override
-  //        public void onDrawerStateChanged(int arg0) {
-  //            drawerToggle.onDrawerStateChanged(arg0);
-  //        }
-  //
-  //    }
 
   protected void initView() {
     setContentView(R.layout.activity_home);
@@ -394,7 +364,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     mFragmentTransaction = mFragmentManager.beginTransaction();
     // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
     hideFragments(mFragmentTransaction);
-    performTitleBarChange(index);
+    mTitleBar.setVisibility(View.GONE);
     switch (index) {
       case 0:
         // 当点击了消息tab时，改变控件的图片和文字颜色
@@ -484,6 +454,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         break;
     }
     mFragmentTransaction.commit();
+    performTitleBarChange(index);
   }
 
   private void performTitleBarChange(int tabIndex) {
@@ -495,7 +466,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       case 0:
         mTitleBar.setVisibility(View.GONE);
         break;
-
 
       default:
         mTitleBar.setRightTextBtnVisible(false);

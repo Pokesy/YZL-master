@@ -215,7 +215,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.thinksky.ui.lead.SplashActivity"
             android:screenOrientation="portrait"
 
             android:theme="@style/ActivityThemeTwo">

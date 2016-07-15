@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -67,7 +68,8 @@ public class RegistetActivity extends BaseBActivity {
   private static final String LOG_TAG = "0";
   private String reg_type;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     // TODO Auto-generated method stub
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -94,7 +96,8 @@ public class RegistetActivity extends BaseBActivity {
     //        for (int i=1;i<arr.size();i++){
     //            tempButton=new RadioButton(this);
     //            tempButton.setText(arr.get(i).get("title"));
-    //            radioGroup.addView(tempButton, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    //            radioGroup.addView(tempButton, LinearLayout.LayoutParams.MATCH_PARENT,
+    // LinearLayout.LayoutParams.WRAP_CONTENT);
     //            if (i==1){
     //                tempButton.setChecked(true);
     //            }
@@ -103,13 +106,13 @@ public class RegistetActivity extends BaseBActivity {
     juese = arr.get(1).get("id");
     opinion = getIntent().getExtras().getString("opinion");
     if (opinion.equals("0")) {
-      mName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(16) });
+      mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
       registerText.setText("用户名注册");
       reg_type = "username";
     }
     if (opinion.equals("1")) {
       mName.setHint("输入邮箱");
-      mName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(30) });
+      mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
       registerText.setText("邮箱注册");
       Drawable drawable = getResources().getDrawable(R.drawable.email);
       drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
@@ -135,7 +138,8 @@ public class RegistetActivity extends BaseBActivity {
     }
   }
 
-  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (resultCode == 1) {
       role.setVisibility(View.VISIBLE);
@@ -146,7 +150,8 @@ public class RegistetActivity extends BaseBActivity {
     }
   }
 
-  @Override public void onBackPressed() {
+  @Override
+  public void onBackPressed() {
     mCurrentStep.back();
   }
 
@@ -174,7 +179,8 @@ public class RegistetActivity extends BaseBActivity {
     openRegist.setOnClickListener(my);
     sendVerify.setOnClickListener(my);
     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-      @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
+      @Override
+      public void onCheckedChanged(RadioGroup group, int checkedId) {
         tempButton = (RadioButton) findViewById(
             checkedId); // 通过RadioGroup的findViewById方法，找到ID为checkedID的RadioButton
         // 以下就可以对这个RadioButton进行处理了
@@ -192,11 +198,13 @@ public class RegistetActivity extends BaseBActivity {
   public void nick() {
     RsenUrlUtil.execute(this, RsenUrlUtil.URL_USER,
         new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public Map getMap() {
+          @Override
+          public Map getMap() {
             Map map = new HashMap();
             map.put("username", mName.getText().toString());
             return map;
@@ -207,7 +215,8 @@ public class RegistetActivity extends BaseBActivity {
 
           }
 
-          @Override public void onResult(boolean state, List beans) {
+          @Override
+          public void onResult(boolean state, List beans) {
             if (state) {
               mNext.setEnabled(true);
               if (mName.getText().toString().equals("")) {
@@ -233,11 +242,13 @@ public class RegistetActivity extends BaseBActivity {
   public void verify() {
     RsenUrlUtil.execute(this, RsenUrlUtil.URL_VERIFY,
         new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public Map getMap() {
+          @Override
+          public Map getMap() {
             Map map = new HashMap();
             map.put("account", mName.getText().toString());
             map.put("type", "mobile");
@@ -251,7 +262,8 @@ public class RegistetActivity extends BaseBActivity {
 
           }
 
-          @Override public void onResult(boolean state, List beans) {
+          @Override
+          public void onResult(boolean state, List beans) {
             if (state) {
               mRegisterStep.entry();
             } else {
@@ -263,7 +275,8 @@ public class RegistetActivity extends BaseBActivity {
 
   class MyOnClickListener implements View.OnClickListener {
 
-    @Override public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
       int mId = v.getId();
       switch (mId) {
         case R.id.registClose:
@@ -301,7 +314,8 @@ public class RegistetActivity extends BaseBActivity {
   }
 
   Handler handler = new Handler() {
-    @Override public void handleMessage(Message msg) {
+    @Override
+    public void handleMessage(Message msg) {
       super.handleMessage(msg);
       String result = (String) msg.obj;
       try {
@@ -334,7 +348,8 @@ public class RegistetActivity extends BaseBActivity {
             new AlertDialog.Builder(RegistetActivity.this).setTitle("注意")
                 .setMessage("请先进您的邮箱进行验证,再登入账号")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                  @Override public void onClick(DialogInterface dialog, int which) {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(RegistetActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -376,12 +391,14 @@ public class RegistetActivity extends BaseBActivity {
       super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
     }
 
-    @Override public void onFinish() {//计时完毕时触发
+    @Override
+    public void onFinish() {//计时完毕时触发
       sendVerify.setText("重新验证");
       sendVerify.setClickable(true);
     }
 
-    @Override public void onTick(long millisUntilFinished) {//计时过程显示
+    @Override
+    public void onTick(long millisUntilFinished) {//计时过程显示
       sendVerify.setClickable(false);
       sendVerify.setText(millisUntilFinished / 1000 + "秒");
     }
@@ -401,7 +418,8 @@ public class RegistetActivity extends BaseBActivity {
 
   public class VerifyStep implements Step {
 
-    @Override public void entry() {
+    @Override
+    public void entry() {
       mCurrentStep = this;
       mPassword.setVisibility(View.GONE);
       reset_password.setVisibility(View.GONE);
@@ -410,7 +428,7 @@ public class RegistetActivity extends BaseBActivity {
       checkId.setVisibility(View.VISIBLE);
       // TODO 隐藏第一步不需要的控件， 显示第一步需要的控件
       mName.setHint("输入手机号");
-      mName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(13) });
+      mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
       registerText.setText("用户注册");
       Drawable drawable = getResources().getDrawable(R.drawable.mobile);
       drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
@@ -418,15 +436,17 @@ public class RegistetActivity extends BaseBActivity {
       reg_type = "mobile";
     }
 
-    @Override public void next() {
-      if ("".equals(verifyId.getText().toString())) {
+    @Override
+    public void next() {
+      if (!TextUtils.isEmpty(verifyId.getText().toString())) {
         verify();
-      }else {
+      } else {
         Toast.makeText(RegistetActivity.this, "验证码不能为空", Toast.LENGTH_SHORT).show();
       }
     }
 
-    @Override public void back() {
+    @Override
+    public void back() {
       // TODO 第一步 后退 执行的操作 可能是 finish？
       finish();
     }
@@ -434,7 +454,8 @@ public class RegistetActivity extends BaseBActivity {
 
   public class RegisterStep implements Step {
 
-    @Override public void entry() {
+    @Override
+    public void entry() {
       mCurrentStep = this;
       mPassword.setVisibility(View.VISIBLE);
       reset_password.setVisibility(View.VISIBLE);
@@ -444,7 +465,7 @@ public class RegistetActivity extends BaseBActivity {
       // TODO 隐藏第二步不需要的控件， 显示第二步需要的控件
 
       mName.setHint("输入手机号");
-      mName.setFilters(new InputFilter[] { new InputFilter.LengthFilter(13) });
+      mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
       registerText.setText("用户注册");
       Drawable drawable = getResources().getDrawable(R.drawable.mobile);
       drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
@@ -452,7 +473,8 @@ public class RegistetActivity extends BaseBActivity {
       reg_type = "mobile";
     }
 
-    @Override public void next() {
+    @Override
+    public void next() {
       // TODO 第二步 调用接口进行注册？？？？
       username = mName.getText().toString();
 
@@ -468,7 +490,8 @@ public class RegistetActivity extends BaseBActivity {
       }
       if (opinion.equals("1")) {
         if (!username.matches(
-            "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")) {
+            "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(" +
+                "([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")) {
           Toast.makeText(RegistetActivity.this, "邮箱不正确", Toast.LENGTH_SHORT).show();
           return;
         }
@@ -509,7 +532,8 @@ public class RegistetActivity extends BaseBActivity {
       }
     }
 
-    @Override public void back() {
+    @Override
+    public void back() {
       mVerifyStep.entry();
     }
   }

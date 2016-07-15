@@ -46,7 +46,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
  * Created by jiao on 2016/1/27.
@@ -69,7 +68,6 @@ public class HomeFragment extends Fragment
   private Context mContext;
   private MyJson myjson = new MyJson();
   private ListView newsListView;
-  private KJBitmap kjBitmap;
   private RViewHolder viewHolder;
   private ArrayList<NewsListInfo1> newsListInfos;
   private BaseApi baseApi;
@@ -199,6 +197,7 @@ public class HomeFragment extends Fragment
       }
     });
     mTitleBar.setLogoVisible(true);
+    mTitleBar.getTitleBgView().setAlpha(0);
   }
 
   @Override
@@ -283,7 +282,6 @@ public class HomeFragment extends Fragment
    */
   public class ZixunAdapter extends RBaseAdapter<NewsListInfo> {
     Context context;
-    KJBitmap kjBitmap;
 
     public ZixunAdapter(Context context) {
       super(context);
@@ -308,8 +306,6 @@ public class HomeFragment extends Fragment
       holder.tV(R.id.view_count).setText(bean.getView());
       holder.tV(R.id.comment_count).setText(bean.getComment());
 
-      kjBitmap = KJBitmap.create();
-      //            kjBitmap.display(holder.imgV(R.id.snapshots), Url.IMAGE + bean.getCover());
       ImageLoader.loadOptimizedHttpImage(getActivity(), Url.IMAGE + bean.getCover())
           .into(holder.imgV(R.id.snapshots));
       //ImageLoader.getInstance().displayImage(Url.IMAGE + bean.getCover(), holder.imgV(R.id
@@ -764,15 +760,11 @@ public class HomeFragment extends Fragment
             if (state) {
               final ArrayList<ZhuanjiFragment.ZjBean> beans = parseJson(jsonObject);
               //                为图片控件加载数据
-              kjBitmap = KJBitmap.create();
               if (!beans.isEmpty()) {
-                //                    kjBitmap.display(viewHolder.imgV(R.id.issue_image),
-                // RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url);
                 ImageLoader.loadOptimizedHttpImage(getActivity(),
-                    RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url)
+                    RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url).placeholder(R
+                    .drawable.picture_no).error(R.drawable.picture_no)
                     .into(viewHolder.imgV(R.id.issue_image));
-                //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + beans.get(0)
-                // .IssueList.get(0).cover_url, viewHolder.imgV(R.id.issue_image));
 
                 time.setText(beans.get(0).IssueList.get(0).create_time);
                 count.setText(beans.get(0).IssueList.get(0).reply_count);
