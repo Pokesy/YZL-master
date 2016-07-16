@@ -181,7 +181,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="3"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/friends_sends_pictures_no"
+                    android:src="@drawable/picture_no"
                     android:visibility="visible" />
 
                 <ImageView
@@ -192,7 +192,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="3"
-                    android:src="@drawable/friends_sends_pictures_no"
+                    android:src="@drawable/picture_no"
                     android:visibility="visible" />
 
                 <ImageView
@@ -204,7 +204,7 @@
                     android:layout_marginRight="5dp"
                     android:scaleType="centerCrop"
                     android:layout_weight="3"
-                    android:src="@drawable/friends_sends_pictures_no"
+                    android:src="@drawable/picture_no"
                     android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
