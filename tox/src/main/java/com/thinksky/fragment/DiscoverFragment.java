@@ -4,6 +4,7 @@ package com.thinksky.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     private ImageView iv_2;
     private ImageView iv_3;
     private Button mark;
+
+    private String mCurrentType = "1";
     /**
      * 点击POI后弹出的泡泡
      */
@@ -111,6 +114,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     }
 
     public void initMarker(final String str, final BitmapDescriptor fish) {
+        mCurrentType = str;
         mBaiduMap.clear();
 
         RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_FX, new RsenUrlUtil.OnNetHttpResultListener() {
@@ -122,7 +126,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onResult(boolean state, String result, JSONObject jsonObject) {
-                if (state) {
+                if (state && TextUtils.equals(mCurrentType, str)) {
                     final FXBean wendaBean = JSON.parseObject(result, FXBean.class);
 
                     for (FXBean.ResultEntity info : wendaBean.getResult()) {
@@ -209,7 +213,6 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
         initLocation();
         mLocationClient.start();
         initMarker("1", fish);
-
         mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.black));
         mSegmentControl.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {
             @Override
