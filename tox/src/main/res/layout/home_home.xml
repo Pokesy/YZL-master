@@ -106,7 +106,7 @@
               android:layout_centerVertical="true"
               android:drawableLeft="@drawable/icon_zhuanjiakecheng"
               android:gravity="center"
-              android:text="专家课程"
+              android:text="精彩视频"
               style="@style/HomeFragmentLabelText"
               />
           <LinearLayout

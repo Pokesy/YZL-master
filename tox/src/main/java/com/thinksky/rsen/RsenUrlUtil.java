@@ -164,9 +164,16 @@ public class RsenUrlUtil {
                             }
                         }
                     } else {
+                        Log.e(RsenUrlUtil.class.getSimpleName(), "url-->" + url);
+                        Log.e(RsenUrlUtil.class.getSimpleName(), "data-->" + data);
                         if (listener != null && listener instanceof OnNetHttpResultListener) {
-                            ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
-                            //((OnNetHttpResultListener) listener).onNoNetwork(msg.what + "-->" + data);
+                            //listener.onResult(false, data, null);
+                            //((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
+                            if (msg.what==404){
+                                ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
+                            }if (msg.what==800) {
+                                ((OnNetHttpResultListener) listener).onResult(false, data, null);
+                            }
 //                            Log.e(data,data);
                         }
                     }

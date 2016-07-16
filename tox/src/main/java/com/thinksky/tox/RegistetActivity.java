@@ -241,7 +241,7 @@ public class RegistetActivity extends BaseBActivity {
 
   public void verify() {
     RsenUrlUtil.execute(this, RsenUrlUtil.URL_VERIFY,
-        new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
+        new RsenUrlUtil.OnJsonResultListener<VBean>() {
           @Override
           public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
@@ -258,13 +258,21 @@ public class RegistetActivity extends BaseBActivity {
           }
 
           @Override
-          public void onParseJsonBean(List<DiscoverFragment.FXBean> beans, JSONObject jsonObject) {
-
+          public void onParseJsonBean(List<VBean> beans, JSONObject jsonObject) {
+            VBean bean = new VBean();
+            try {
+              bean.message = jsonObject.getString("message");
+              beans.add(bean);
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
           }
 
           @Override
-          public void onResult(boolean state, List beans) {
+          public void onResult(boolean state, List<VBean> beans) {
+
             if (state) {
+              //ToastHelper.showToast(beans.get(0).message, RegistetActivity.this);
               mRegisterStep.entry();
             } else {
               ToastHelper.showToast("验证码错误", RegistetActivity.this);
@@ -294,7 +302,7 @@ public class RegistetActivity extends BaseBActivity {
           startActivityForResult(intent1, 0);
           break;
         case R.id.sendVerify:
-          if (mName.getText().toString().equals("")) {
+          if (TextUtils.isEmpty(mName.getText().toString())) {
             if (type.equals("email")) {
               Toast.makeText(RegistetActivity.this, "请填写邮箱", Toast.LENGTH_SHORT).show();
               return;
@@ -438,10 +446,10 @@ public class RegistetActivity extends BaseBActivity {
 
     @Override
     public void next() {
-      if (!TextUtils.isEmpty(verifyId.getText().toString())) {
+      if (!TextUtils.isEmpty(verifyId.getText().toString())&&!TextUtils.isEmpty(mName.getText().toString())) {
         verify();
       } else {
-        Toast.makeText(RegistetActivity.this, "验证码不能为空", Toast.LENGTH_SHORT).show();
+        Toast.makeText(RegistetActivity.this, "手机号或验证码不能为空", Toast.LENGTH_SHORT).show();
       }
     }
 
@@ -536,5 +544,8 @@ public class RegistetActivity extends BaseBActivity {
     public void back() {
       mVerifyStep.entry();
     }
+  }
+  public static class VBean {
+    public String message;
   }
 }
