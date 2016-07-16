@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -203,6 +204,9 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
               bean.mobile1 = jsonObject.getString("mobile1");
               bean.isdisplay = jsonObject.getString("isdisplay");
               bean.isfactory = jsonObject.getString("isfactory");
+              bean.factory_name = jsonObject.getString("factory_name");
+              bean.latitude = jsonObject.getString("latitude");
+              bean.longitude = jsonObject.getString("latitude");
               beans.add(bean);
             } catch (JSONException e) {
             }
@@ -210,14 +214,25 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
 
           @Override public void onResult(boolean state, List<FUBean> beans) {
             if (state) {
-              if (!beans.get(0).address.equals(null) && !beans.get(0).address.equals("")) {
+
+              if (!beans.get(0).address.equals(null) && !TextUtils.isEmpty(beans.get(0).address)) {
                 dizhi.setText(beans.get(0).address);
+                address=beans.get(0).address;
               }
-              if (!beans.get(0).mobile1.equals(null) && !beans.get(0).mobile1.equals("")) {
+              if (!beans.get(0).latitude.equals(null) && !TextUtils.isEmpty(beans.get(0).latitude)) {
+                latitude=beans.get(0).latitude;
+              }
+              if (!beans.get(0).longitude.equals(null) && !TextUtils.isEmpty(beans.get(0).longitude)) {
+                longitude=beans.get(0).longitude;
+              }
+              if (!beans.get(0).mobile1.equals(null) && !TextUtils.isEmpty(beans.get(0).mobile1)) {
                 mContentEdit.setText(beans.get(0).mobile1);
               }
               if (beans.get(0).isdisplay.equals("0")) {
                 mTogBtn.setChecked(true);
+              }
+              if (!TextUtils.isEmpty(beans.get(0).factory_name)) {
+                mTitleEdit.setText(beans.get(0).factory_name);
               }
             } else {
               ToastHelper.showToast("请求失败", Url.context);
@@ -276,10 +291,10 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             ToastHelper.showToast("请填写标题", this);
             return;
           }
-          if (mContentEdit.getText().toString().length() != 11) {
-            ToastHelper.showToast("手号码必须是11位", this);
-            return;
-          }
+          //if (mContentEdit.getText().toString().length() != 11) {
+          //  ToastHelper.showToast("手号码必须是11位", this);
+          //  return;
+          //}
           if (BaseFunction.isLogin()) {
             uploadImages();
           } else {
@@ -372,14 +387,14 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         img_num = 0;
         for (int i = 0; i < imgPathList.size(); i++) {
           if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
-            if (img_num <= 4) {
+            if (img_num <= 3) {
               scrollImg.add(imgPathList.get(i));
               imgList.get(img_num).setVisibility(View.VISIBLE);
               imgList.get(img_num).setTag(imgPathList.get(i));
               imgList.get(img_num)
                   .setBackgroundDrawable(
-                      new BitmapDrawable(BitmapUtiles.loadBitmap(imgPathList.get(i), 4)));
-                            /*imgList.get(img_num).setImageBitmap(BitmapUtiles.loadBitmap(imgPathList.get(i), 4));
+                      new BitmapDrawable(BitmapUtiles.loadBitmap(imgPathList.get(i), 3)));
+                            /*imgList.get(img_num).setImageBitmap(BitmapUtiles.loadBitmap(imgPathList.get(i), 3));
                             imgList.get(img_num).setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
                             imgList.get(img_num).setMinimumHeight(100);
                             imgList.get(img_num).setMinimumWidth(80);*/
@@ -403,15 +418,15 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         }
         photo_num += imgPathList.size();
         Log.d("photo_num", photo_num + "");
-        if (photo_num > 4) {
-          Toast.makeText(DiscoverSendActivity.this, "不能超过4张哟", Toast.LENGTH_SHORT).show();
+        if (photo_num > 3) {
+          Toast.makeText(DiscoverSendActivity.this, "不能超过3张哟", Toast.LENGTH_SHORT).show();
           photo_num = photo_num - imgPathList.size();
           scrollImg.add(img_num, "add");
           return;
         }
         for (int i = 0; i < imgPathList.size(); i++) {
           if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
-            if (img_num <= 4) {
+            if (img_num <= 3) {
               Log.d("Andy", img_num + "");
               scrollImg.add(imgPathList.get(i));
               Log.e(">>", scrollImg.get(i));
@@ -422,7 +437,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             }
           }
         }
-        photoCount.setText("已选" + img_num + "张，还剩" + (4 - img_num) + "张");
+        photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
         scrollImg.add(img_num, "add");
         photoAdapter.notifyDataSetChanged();
       }
@@ -442,13 +457,13 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         options.inSampleSize = 3;
 
         if (!BaseFunction.isExistsInList(temFile.getPath(), scrollImg)) {
-          if (img_num <= 4) {
+          if (img_num <= 3) {
 
             scrollImg.add(temFile.getPath());
             img_num++;
           }
         }
-        photoCount.setText("已选" + img_num + "张，还剩" + (4 - img_num) + "张");
+        photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
         scrollImg.add(img_num, "add");
         photoAdapter.notifyDataSetChanged();
       }
@@ -470,7 +485,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
   }
 
   private void ableAddPhoto() {
-    if (img_num >= 4) {
+    if (img_num >= 3) {
 
     }
   }
@@ -675,7 +690,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
           if (imgUrl.get(position).equals("add")) {
             Log.d("Andy12345", img_num + "");
             Log.d("Andy123456", imgUrl.get(position));
-            if (img_num < 4) {
+            if (img_num < 3) {
               //ToastHelper.showToast("点击了罗",ctx);
               String[] items = { "相册", "拍照" };
               AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
@@ -713,7 +728,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
               builder.setCancelable(true);
               builder.show();
             } else {
-              ToastHelper.showToast("最多上传4张图片", ctx);
+              ToastHelper.showToast("最多上传3张图片", ctx);
             }
           }
         }
@@ -738,7 +753,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         scrollImg.remove(index);
         img_num--;
         photo_num--;
-        photoCount.setText("已选" + img_num + "张，还剩" + (4 - img_num) + "张");
+        photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
         PhotoAdapter.Holder vh = (PhotoAdapter.Holder) v.getTag();
         photoAdapter.notifyDataSetChanged();
       }

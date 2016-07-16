@@ -274,7 +274,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center_horizontal|bottom"
           android:layout_marginBottom="10dp"
-          android:text="已选0张，还剩9张可选"
+          android:text="已选0张，还剩3张可选"
           />
     </FrameLayout>
   </RelativeLayout>
@@ -455,7 +455,7 @@
               android:id="@+id/mTogBtn"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="210dp"
+              android:layout_marginLeft="190dp"
               android:background="@android:color/transparent"
               android:button="@drawable/toggle_btn"
               android:checked="false"

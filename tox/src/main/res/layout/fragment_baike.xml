@@ -3,24 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    >
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:text="敬请期待"
+      android:textSize="20dp"
+      />
+  <ListView
+      android:id="@+id/MyListView"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.4"
+      android:divider="@color/bg_color_divider_dark"
+      android:dividerHeight="@dimen/divider"
+      android:paddingLeft="@dimen/space_horizontal"
+      />
 
-    <ListView
-        android:id="@+id/MyListView"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.4"
-        android:divider="@color/bg_color_divider_dark"
-        android:dividerHeight="@dimen/divider"
-        android:paddingLeft="@dimen/space_horizontal" />
 
-
-    <FrameLayout
-        android:id="@+id/list_item"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.6"
-        android:background="#f7f7f8" />
+  <FrameLayout
+      android:id="@+id/list_item"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.6"
+      android:background="#f7f7f8"
+      />
 
 
 </LinearLayout>
