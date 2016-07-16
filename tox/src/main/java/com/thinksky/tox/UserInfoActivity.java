@@ -192,7 +192,7 @@ public class UserInfoActivity extends BaseBActivity {
 
                     new AlertDialog.Builder(UserInfoActivity.this)
                             .setTitle("确认")
-                            .setMessage("确定退出登入")
+                            .setMessage("确定退出?")
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
