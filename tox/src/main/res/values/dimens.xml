@@ -1,6 +1,7 @@
 <resources>
 
   <!-- Default screen margins, per the Android Design guidelines. -->
+  <color name="app_bg_color">#f3f4f6</color>
   <dimen name="activity_horizontal_margin">8dp</dimen>
   <dimen name="activity_vertical_margin">0dp</dimen>
   <dimen name="post_item_margine_left">5dp</dimen>
@@ -22,11 +23,35 @@
        https://developer.android.com/design/patterns/navigation-drawer.html -->
   <dimen name="navigation_drawer_width">240dp</dimen>
 
-  <dimen name="font_size_small">11sp</dimen>
+
+  <!-- 间距 -->
+  <dimen name="margin_smallest">7dp</dimen>
+  <dimen name="margin_small">10dp</dimen>
+  <dimen name="margin_medium">12dp</dimen>
+  <dimen name="margin_primary">13dp</dimen>
+  <dimen name="margin_large">22dp</dimen>
+  <dimen name="margin_xlarge">24dp</dimen>
+  <dimen name="margin_xxlarge">27dp</dimen>
+
+  <dimen name="margin_text_line">3dp</dimen>
+
+  <dimen name="margin_tag">5dp</dimen>
+
+  <!-- 文字大小 -->
   <dimen name="font_size_primary">14sp</dimen>
+  <!-- XS 20px -->
+  <dimen name="font_size_smallest">10sp</dimen>
+  <!-- S 24px -->
+  <dimen name="font_size_small">12sp</dimen>
+  <!-- M 26px -->
   <dimen name="font_size_medium">13sp</dimen>
-  <dimen name="font_size_big">15sp</dimen>
-  <dimen name="font_size_large">17sp</dimen>
+  <!-- L 28px -->
+  <dimen name="font_size_large">14sp</dimen>
+  <!-- XL 30px -->
+  <dimen name="font_size_xlarge">15sp</dimen>
+  <!-- 特殊文字大小 -->
+  <!-- 36px -->
+  <dimen name="font_size_xxlarge">17sp</dimen>
 
   <dimen name="divider">0.5dp</dimen>
 
@@ -45,5 +70,8 @@
   <!-- TitleBar -->
   <dimen name="title_bar_menu_icon_size">50dp</dimen>
   <dimen name="title_bar_menu_padding">15dp</dimen>
+
+  <!-- 分割线大小 -->
+  <dimen name="line_size">0.5dp</dimen>
 
 </resources>

@@ -85,14 +85,42 @@
   <color name="default_divider_color">#f7f7f8</color>
 
   <color name="font_color_orange">#FC9C39</color>
-  <color name="font_color_blue">#007afe</color>
-  <color name="font_color_red">#e83f38</color>
   <color name="font_color_light_black">#646464</color>
   <color name="font_color_dark_black">#333333</color>
   <color name="font_color_dark_gray">#999999</color>
   <color name="font_color_light_gray">#a3a7aa</color>
   <color name="font_color_home_fragment_label">#5b85bb</color>
   <color name="font_color_home_fragment_more">#96a0aa</color>
+  <!-- 强调色 -->
+  <color name="font_color_brand">#45ae3c</color>
+  <!-- 正文 -->
+  <color name="font_color_primary">#414141</color>
+  <!-- 辅助文本色 -->
+  <color name="font_color_secondary">#909090</color>
+  <!-- 警示色 -->
+  <color name="font_color_alert">#ff7800</color>
+  <!-- 注释文本 -->
+  <color name="font_color_hint">#707884</color>
+  <!-- 白色 -->
+  <color name="font_color_white">#ffffff</color>
+  <!-- 蓝文本色 -->
+  <color name="font_color_blue">#25add4</color>
+  <!-- 深蓝-->
+  <color name="font_color_blue_dark">#29297f</color>
+  <!-- 紫色文本 -->
+  <color name="font_color_purple">#9874ff</color>
+  <!-- 黄色 -->
+  <color name="font_color_yellow">#f4e70e</color>
+  <!-- 红色 -->
+  <color name="font_color_red">#f9999a</color>
+  <!-- 深红 -->
+  <color name="font_color_red_dark">#ff4343</color>
+  <!-- 棕色 -->
+  <color name="font_color_brown">#7c493b</color>
+  <!-- 间隔色 -->
+  <color name="font_color_space">#DEE2E3</color>
+
+  <color name="font_color_red_tab_bar">#eb4f38</color>
 
   <color name="bg_color_divider">#F1F1F1</color>
   <color name="bg_color_divider_dark">#F7F7F8</color>
@@ -105,4 +133,7 @@
   <color name="dim_bg">#50000000</color>
 
   <color name="bg_color_btn_blue">#2994d5</color>
+
+  <!-- Register -->
+  <color name="font_color_hint_register">#199bb2</color>
 </resources>

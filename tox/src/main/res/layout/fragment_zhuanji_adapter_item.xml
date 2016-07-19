@@ -23,7 +23,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:textColor="@color/font_color_dark_black"
-                android:textSize="@dimen/font_size_big"
+                android:textSize="@dimen/font_size_xlarge"
                 tools:text="葒鱼如何饲养" />
 
             <TextView

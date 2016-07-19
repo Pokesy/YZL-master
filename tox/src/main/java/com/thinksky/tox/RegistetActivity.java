@@ -14,7 +14,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -25,6 +24,7 @@ import android.widget.Toast;
 import com.thinksky.fragment.DiscoverFragment;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.MD5;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseFunction;
@@ -40,23 +40,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegistetActivity extends BaseBActivity {
-  private RelativeLayout mClose, mNext;
+  private RelativeLayout mNext;
   private EditText mName, mPassword, role, nickname, verifyId, reset_password;
-  private TextView openRegist, registerText;
+  private TextView openRegist;
   private LinearLayout checkId;
   private TextView mStartlogin;
   private String url = null;
   private String value = null;
   private String code = null;
   private String juese = null;
-  private String email_verify_type = null;
-  private String mobile_verify_type = null;
   private String username = null;
   private String password = null;
   private UserApi mUserapi = new UserApi();
   private ProgressDialog progressDialog;
   private login login;
-  private Button sendVerify;
+  private TextView sendVerify;
   private RadioButton tempButton;
   private RadioGroup radioGroup;
   private ArrayList<HashMap<String, String>> arr = new ArrayList<HashMap<String, String>>();
@@ -67,13 +65,13 @@ public class RegistetActivity extends BaseBActivity {
   private String opinion;
   private static final String LOG_TAG = "0";
   private String reg_type;
+  private TitleBar mTitleBar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // TODO Auto-generated method stub
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
-    Log.d("验证声明周期", "asdasda");
     setContentView(R.layout.activity_register);
     myJson = new MyJson();
     login = new login(RegistetActivity.this, 2);
@@ -93,49 +91,14 @@ public class RegistetActivity extends BaseBActivity {
       juese = getIntent().getExtras().getString("role");
     }
     arr = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("title");
-    //        for (int i=1;i<arr.size();i++){
-    //            tempButton=new RadioButton(this);
-    //            tempButton.setText(arr.get(i).get("title"));
-    //            radioGroup.addView(tempButton, LinearLayout.LayoutParams.MATCH_PARENT,
-    // LinearLayout.LayoutParams.WRAP_CONTENT);
-    //            if (i==1){
-    //                tempButton.setChecked(true);
-    //            }
-    //        }
-    Log.d("asdf>>>", arr.get(1).get("title"));
     juese = arr.get(1).get("id");
     opinion = getIntent().getExtras().getString("opinion");
-    if (opinion.equals("0")) {
-      mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
-      registerText.setText("用户名注册");
-      reg_type = "username";
-    }
-    if (opinion.equals("1")) {
-      mName.setHint("输入邮箱");
-      mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
-      registerText.setText("邮箱注册");
-      Drawable drawable = getResources().getDrawable(R.drawable.email);
-      drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-      mName.setCompoundDrawables(drawable, null, null, null);
-      reg_type = "email";
-    }
-    if (opinion.equals("2")) {
-      mVerifyStep.entry();
-    }
+    mVerifyStep.entry();
     if (arr.get(0).get("open_invite").equals("0")) {
       openRegist.setVisibility(View.GONE);
     }
-    if (arr.get(0).get("email_verify_type").equals("2") && registerText.getText() == "邮箱注册") {
-      checkId.setVisibility(View.VISIBLE);
-      type = "email";
-    }
-    if (arr.get(0).get("email_verify_type").equals("1") && registerText.getText() == "邮箱注册") {
-      type = "email";
-    }
-    if (arr.get(0).get("mobile_verify_type").equals("1") && registerText.getText() == "用户注册") {
-      checkId.setVisibility(View.VISIBLE);
-      type = "mobile";
-    }
+    checkId.setVisibility(View.VISIBLE);
+    type = "mobile";
   }
 
   @Override
@@ -156,7 +119,7 @@ public class RegistetActivity extends BaseBActivity {
   }
 
   private void initView() {
-    mClose = (RelativeLayout) findViewById(R.id.registClose);
+    mTitleBar = (TitleBar) findViewById(R.id.title_bar);
     mName = (EditText) findViewById(R.id.redit_name);
     mPassword = (EditText) findViewById(R.id.redit_password);
     verifyId = (EditText) findViewById(R.id.verifyId);
@@ -164,16 +127,14 @@ public class RegistetActivity extends BaseBActivity {
     mNext = (RelativeLayout) findViewById(R.id.next);
     mStartlogin = (TextView) findViewById(R.id.startlogin);
     openRegist = (TextView) findViewById(R.id.openRegist);
-    registerText = (TextView) findViewById(R.id.registerText);
     reset_password = (EditText) findViewById(R.id.reset_password);
     role = (EditText) findViewById(R.id.role);
     nickname = (EditText) findViewById(R.id.nickname);
     radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-    sendVerify = (Button) findViewById(R.id.sendVerify);
+    sendVerify = (TextView) findViewById(R.id.sendVerify);
     progressDialog = new ProgressDialog(this);
     time = new TimeCount(60000, 1000);//构造CountDownTimer对象
     MyOnClickListener my = new MyOnClickListener();
-    mClose.setOnClickListener(my);
     mNext.setOnClickListener(my);
     mStartlogin.setOnClickListener(my);
     openRegist.setOnClickListener(my);
@@ -193,6 +154,14 @@ public class RegistetActivity extends BaseBActivity {
         Log.d("juese", juese);
       }
     });
+    mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        mCurrentStep.back();
+      }
+    });
+    mTitleBar.getTitleBgView().setAlpha(0);
+    mTitleBar.getTitleView().setVisibility(View.GONE);
   }
 
   public void nick() {
@@ -287,9 +256,6 @@ public class RegistetActivity extends BaseBActivity {
     public void onClick(View v) {
       int mId = v.getId();
       switch (mId) {
-        case R.id.registClose:
-          mCurrentStep.back();
-          break;
         case R.id.next:
           mCurrentStep.next();
 
@@ -437,7 +403,7 @@ public class RegistetActivity extends BaseBActivity {
       // TODO 隐藏第一步不需要的控件， 显示第一步需要的控件
       mName.setHint("输入手机号");
       mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
-      registerText.setText("用户注册");
+      //mTitleBar.setMiddleTitle("用户注册");
       Drawable drawable = getResources().getDrawable(R.drawable.mobile);
       drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
       //            mName.setCompoundDrawables(drawable, null, null, null);
@@ -446,7 +412,8 @@ public class RegistetActivity extends BaseBActivity {
 
     @Override
     public void next() {
-      if (!TextUtils.isEmpty(verifyId.getText().toString())&&!TextUtils.isEmpty(mName.getText().toString())) {
+      if (!TextUtils.isEmpty(verifyId.getText().toString()) && !TextUtils.isEmpty(mName.getText()
+          .toString())) {
         verify();
       } else {
         Toast.makeText(RegistetActivity.this, "手机号或验证码不能为空", Toast.LENGTH_SHORT).show();
@@ -474,7 +441,7 @@ public class RegistetActivity extends BaseBActivity {
 
       mName.setHint("输入手机号");
       mName.setFilters(new InputFilter[]{new InputFilter.LengthFilter(13)});
-      registerText.setText("用户注册");
+      //mTitleBar.setMiddleTitle("用户注册");
       Drawable drawable = getResources().getDrawable(R.drawable.mobile);
       drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
       //            mName.setCompoundDrawables(drawable, null, null, null);
@@ -512,7 +479,7 @@ public class RegistetActivity extends BaseBActivity {
       }
 
       if (!username.equalsIgnoreCase(null) && !password.equalsIgnoreCase(null) && !"".equals(
-          username) && !"".equals(password)&&!"".equals(nickname.getText().toString())) {
+          username) && !"".equals(password) && !"".equals(nickname.getText().toString())) {
         if (!mPassword.getText().toString().equals(reset_password.getText().toString())) {
           Toast.makeText(RegistetActivity.this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();
         } else {
@@ -545,6 +512,7 @@ public class RegistetActivity extends BaseBActivity {
       mVerifyStep.entry();
     }
   }
+
   public static class VBean {
     public String message;
   }

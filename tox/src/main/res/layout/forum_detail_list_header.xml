@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/font_color_dark_black"
-            android:textSize="@dimen/font_size_big"
+            android:textSize="@dimen/font_size_xlarge"
             tools:text="此处显示交流组名称" />
 
         <LinearLayout

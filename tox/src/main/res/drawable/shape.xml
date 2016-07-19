@@ -8,12 +8,6 @@
         android:width="1dip"
         android:color="#20ffffff" />
 
-    <padding
-        android:bottom="10dp"
-        android:left="10dp"
-        android:right="10dp"
-        android:top="10dp" />
-
     <corners android:radius="6dp" />
 <!--圆角背景-->
 </shape>

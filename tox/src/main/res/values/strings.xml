@@ -124,4 +124,8 @@
   <string name="available_wealth_text">您可用的财富值:%s</string>
   <string name="info_more_award">提高悬赏,更容易吸引高手为您解答</string>
 
+  <!-- Register -->
+  <string name="register_input_password_hint">请输入6到12个数字、字母或符号组成的密码</string>
+  <string name="register_input_password_again_hint">再输一遍密码</string>
+  <string name="register_input_nickname_hint">请设置您的昵称(少于5个字符,不含特殊字符)</string>
 </resources>

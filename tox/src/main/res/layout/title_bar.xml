@@ -23,8 +23,9 @@
       android:layout_alignParentLeft="true"
       android:layout_centerVertical="true"
       android:scaleType="center"
-      android:src="@drawable/list"
+      android:src="@drawable/arrow_left"
       android:visibility="gone"
+      tools:visibility="visible"
       />
   <ImageView
       android:id="@+id/logo"
@@ -43,7 +44,7 @@
       android:layout_centerHorizontal="true"
       android:layout_centerVertical="true"
       android:textColor="@android:color/white"
-      android:textSize="@dimen/font_size_large"
+      android:textSize="@dimen/font_size_xxlarge"
       android:visibility="gone"
       tools:text="鱼知乐"
       />

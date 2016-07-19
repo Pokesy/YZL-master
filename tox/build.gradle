@@ -1,5 +1,23 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.bugtags.library.plugin'
+apply plugin: 'com.neenbedankt.android-apt'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+    }
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
 
 android {
     compileSdkVersion 23
@@ -12,7 +30,7 @@ android {
 
         buildConfigField "int", "SPLASH_TIME", "10"
 //        buildConfigField "String", "URL_BASE", "\"http://192.168.15.36:8081\""
-        buildConfigField "String","URL_BASE","\"http://122.5.45.150/\""
+        buildConfigField "String","URL_BASE","\"http://www.yuzhile.com/\""
     }
 //    sourceSets {
 //        main {
@@ -96,4 +114,12 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.github.chrisbanes:PhotoView:1.2.6'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'io.reactivex:rxjava:1.0.15'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.squareup:otto:1.3.6'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
 }
