@@ -52,6 +52,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     private static final int TAB_INDEX_HOT = 0;
     private static final int TAB_INDEX_FOLLOW = 1;
     private static final int TAB_INDEX_MY = 2;
+    private static final int INIT_PAGE = 1;
 
     private String hotUrl = Url.WEIBO;
     private int topMeunFlag = TAB_INDEX_HOT;
@@ -65,7 +66,6 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     private ArrayList<WeiboInfo> weiboList = new ArrayList<WeiboInfo>();
     private WeiboAdapter mAdapter = null;
     private Button ListBottem = null;
-    private int mStart = 1;
     private boolean flag = true;
     private boolean loadflag = false;
     private boolean listBottemFlag = true;
@@ -80,6 +80,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     private BaseApi baseApi;
 
     private SegmentControl mTabs;
+    private int mCurrentPage = INIT_PAGE;
 
     //获取可用注册方式
     private ArrayList<String> ways = new ArrayList<String>();
@@ -191,14 +192,14 @@ public class WeiboFragment extends Fragment implements OnClickListener {
 //                    weiboApi.listMyWeibo(mStart, userUid);
                     if (hotUrl.equals(Url.WEIBO)) {
                         weiboApi.setHandler(hand);
-                        weiboApi.listAllWeibo(1, 0 + "");
+                        weiboApi.listAllWeibo(++mCurrentPage, 0 + "");
                     } else if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
 
                         weiboApi.setHandler(hand);
-                        weiboApi.listMyFollowingWeibo(1, session_id);
+                        weiboApi.listMyFollowingWeibo(++mCurrentPage, session_id);
                     } else if (hotUrl.equals(Url.MYWEIBO)) {
                         weiboApi.setHandler(hand);
-                        weiboApi.listMyWeibo(1, Url.USERID);
+                        weiboApi.listMyWeibo(++mCurrentPage, Url.USERID);
 
                     }
                     listBottom();
@@ -224,17 +225,17 @@ public class WeiboFragment extends Fragment implements OnClickListener {
             @Override
             public void onRefresh() {
                 if (loadflag == true) {
-                    mStart = 1;
+                    mCurrentPage = INIT_PAGE;
                     if (hotUrl.equals(Url.WEIBO)) {
                         weiboApi.setHandler(hand);
-                        weiboApi.listAllWeibo(1, 0 + "");
+                        weiboApi.listAllWeibo(mCurrentPage, 0 + "");
                     } else if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
 
                         weiboApi.setHandler(hand);
-                        weiboApi.listMyFollowingWeibo(1, session_id);
+                        weiboApi.listMyFollowingWeibo(mCurrentPage, session_id);
                     } else if (hotUrl.equals(Url.MYWEIBO)) {
                         weiboApi.setHandler(hand);
-                        weiboApi.listMyWeibo(1, Url.USERID);
+                        weiboApi.listMyWeibo(mCurrentPage, Url.USERID);
 
                     }
                     loadflag = false;
@@ -299,7 +300,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         load_progressBar.setVisibility(View.VISIBLE);
 
         loadflag = false;
-        mStart = 1;
+        mCurrentPage = INIT_PAGE;
         if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
             weiboApi.setHandler(hand);
             weiboApi.listMyFollowingWeibo(1, session_id);
@@ -355,7 +356,6 @@ public class WeiboFragment extends Fragment implements OnClickListener {
                     if (newList != null) {
                         if (newList.size() == 10) {
                             ListBottem.setVisibility(View.VISIBLE);
-                            mStart += 1;
                         } else if (newList.size() == 0) {
                             if (list.size() == 0)
                                 HomeNoValue.setVisibility(View.VISIBLE);
@@ -439,7 +439,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
             userApi.autoLogin(sp.getString("username", ""), sp.getString("password", ""));
         } else {
             weiboApi.setHandler(hand);
-            weiboApi.listAllWeibo(1, 0 + "");
+            weiboApi.listAllWeibo(mCurrentPage, 0 + "");
         }
     }
 
@@ -482,6 +482,6 @@ public class WeiboFragment extends Fragment implements OnClickListener {
     private void getWeiboList() {
         weiboList.removeAll(weiboList);
         weiboApi.setHandler(hand);
-        weiboApi.listAllWeibo(1, Url.USERID);
+        weiboApi.listAllWeibo(mCurrentPage, Url.USERID);
     }
 }
