@@ -101,10 +101,10 @@ public class UserInfoActivity extends BaseBActivity {
         }, 7000);
         userApi.setHandler(hand);
         userApi.getUserInfo(userUid);
-        //判断是否是登陆者信息，如果是就保存当前页面以重复使用
-        if (!sp.getString("avatar", "").equalsIgnoreCase("") && userUid.equals(Url.USERID)) {
-            BaseFunction.showImage(this, mUserCamera, sp.getString("avatar", ""), loadImgHeadImg, Url.IMGTYPE_HEAD);
-        }
+        ////判断是否是登陆者信息，如果是就保存当前页面以重复使用
+        //if (!sp.getString("avatar", "").equalsIgnoreCase("") && userUid.equals(Url.USERID)) {
+        //    BaseFunction.showImage(this, mUserCamera, sp.getString("avatar", ""), loadImgHeadImg, Url.IMGTYPE_HEAD);
+        //}
     }
 
     @Override

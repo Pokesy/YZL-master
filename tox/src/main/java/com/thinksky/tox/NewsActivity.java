@@ -158,7 +158,7 @@ public class NewsActivity extends BaseBActivity implements View.OnClickListener 
                             activity.firstNavigationLine.setText(navigationTexts);
                         }
                         activity.newsBody.setVisibility(View.VISIBLE);
-//                        activity.proBarLine.setVisibility(View.GONE);
+                        activity.proBarLine.setVisibility(View.GONE);
                         break;
                     default:
                         break;
