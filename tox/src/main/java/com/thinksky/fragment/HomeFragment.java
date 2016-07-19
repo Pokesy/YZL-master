@@ -188,14 +188,14 @@ public class HomeFragment extends Fragment
         }
       }
     });
-    mTitleBar.setSearchBtn(R.drawable.search, new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (null != mHomeBtnClickListener) {
-          mHomeBtnClickListener.onSearchBtnClicked();
-        }
-      }
-    });
+    //mTitleBar.setSearchBtn(R.drawable.search, new View.OnClickListener() {
+    //  @Override
+    //  public void onClick(View v) {
+    //    if (null != mHomeBtnClickListener) {
+    //      mHomeBtnClickListener.onSearchBtnClicked();
+    //    }
+    //  }
+    //});
     mTitleBar.setLogoVisible(true);
     mTitleBar.getTitleBgView().setAlpha(0);
   }
