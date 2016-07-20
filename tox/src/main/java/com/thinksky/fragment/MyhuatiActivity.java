@@ -212,10 +212,12 @@ public class MyhuatiActivity extends BaseBActivity {
 
         public RemenhuatiAdapter(Context context) {
             super(context);
+            this.context = context;
         }
 
         public RemenhuatiAdapter(Context context, List<RemenhuatiBean> datas) {
             super(context, datas);
+            this.context = context;
         }
 
         @Override

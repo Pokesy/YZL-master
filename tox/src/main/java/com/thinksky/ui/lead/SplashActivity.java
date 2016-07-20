@@ -133,6 +133,7 @@ public class SplashActivity extends BaseBActivity {
     sp.edit().putString("version", "0.1.1").commit();
 
     Url.sp = sp;
+    Url.USERID = sp.getString("uid", "0");
     Url.context = getApplicationContext();
     if (IsNet.IsConnect()) {
 //            is2getParameters();

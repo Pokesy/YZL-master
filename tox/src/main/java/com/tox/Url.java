@@ -214,9 +214,7 @@ public class Url {
      * 自己的信息
      */
     public static UserInfo MYUSERINFO = null;
-
     public static String USERID = "";
-
     public static String SESSIONID = "";
     public static String SharedPreferenceName = "userInfo";
 
@@ -230,7 +228,7 @@ public class Url {
     public static String IMGWEIBOURL = "/sdcard/tox/weibo/";
     public static int CheckIn = 1;
     public static int UnCheckIn = 0;
-    public static int WEIBOWORDS = 0;
+    public static int WEIBOWORDS = 140;
     public static long LASTPOSTTIME = 0;
     public static long SESSIONIDLIFE = 5;
 

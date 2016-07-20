@@ -21,6 +21,7 @@ import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.UploadActivity;
 import com.thinksky.tox.UserInfoActivity;
+import com.thinksky.utils.JsonConverter;
 import com.thinksky.utils.MyJson;
 
 import org.json.JSONException;
@@ -132,6 +133,7 @@ public class login {
                     Log.e("qiangpengyu", result);
 
                     Url.USERID = myJson.getUserID(result);
+                    Url.MYUSERINFO = myJson.getUserAllInfo(result);
                     Url.LASTPOSTTIME = System.currentTimeMillis();
 
                     Url.SESSIONID = myJson.getUserSessionID(result); //Toast.makeText(context, Url.SESSIONID, Toast.LENGTH_LONG).show();Log.e("SessionID<><><><><><><>", Url.SESSIONID);
@@ -172,6 +174,7 @@ public class login {
         editor.putString("password", mPasswordstr);
         editor.putString("uid", Url.USERID);
         editor.putString("session_id", Url.SESSIONID);
+        editor.putString("user_info", JsonConverter.objectToJson(Url.MYUSERINFO));
         editor.commit();
         Log.e("After saving userinfo", sp.getString("username", "kongkong") + sp.getString("password", ""));
 

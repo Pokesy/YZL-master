@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
+import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONObject;
 
 public class WendaMyQuestionActivity extends BaseBActivity {
@@ -33,21 +35,26 @@ public class WendaMyQuestionActivity extends BaseBActivity {
 
   ImageView back_menu;
   TextView tiwen;
-  private ImageView  iv1, iv2, iv3;
-  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+  private ImageView iv1, iv2, iv3;
+  private WendaListAdapter mListAdapter;
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.fragment_myquestion_common);
     mListView = (ListView) findViewById(R.id.listView);
     back_menu = (ImageView) findViewById(R.id.back_menu);
     tiwen = (TextView) findViewById(R.id.tiwen);
     back_menu.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         finish();
       }
     });
     tiwen.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (null!= Url.MYUSERINFO) {
+      @Override
+      public void onClick(View v) {
+        if (!TextUtils.isEmpty(Url.USERID)) {
           Intent intent = new Intent(WendaMyQuestionActivity.this, SendQuestionActivity.class);
           startActivity(intent);
         } else {
@@ -55,34 +62,46 @@ public class WendaMyQuestionActivity extends BaseBActivity {
         }
       }
     });
+    mListAdapter = new WendaListAdapter(WendaMyQuestionActivity.this, null);
+    mListView.setAdapter(mListAdapter);
+    init();
+  }
+
+  @Subscribe
+  public void handleQuestionSendEvent(SendQuestionActivity.QuestionSendEvent event) {
     init();
   }
 
   private void init() {
     RsenUrlUtil.execute(this, RsenUrlUtil.URL_MY_WD, new RsenUrlUtil.OnMapListener() {
-      @Override public Map getMap() {
+      @Override
+      public Map getMap() {
 
         Map map = new HashMap();
         map.put("session_id", Url.SESSIONID);
         return map;
       }
 
-      @Override public void onNoNetwork(String msg) {
+      @Override
+      public void onNoNetwork(String msg) {
         ToastHelper.showToast(msg, Url.context);
       }
 
-      @Override public void onResult(boolean state, String result, JSONObject jsonObject) {
+      @Override
+      public void onResult(boolean state, String result, JSONObject jsonObject) {
         if (state) {
           WendaFragment.WendaBean wendaBean =
               JSON.parseObject(result, WendaFragment.WendaBean.class);
-          mListView.setAdapter(
-              new WendaListAdapter(WendaMyQuestionActivity.this, wendaBean.getList()));
+          mListAdapter.clear();
+          mListAdapter.setData(wendaBean.getList());
+          mListAdapter.notifyDataSetChanged();
         }
       }
     });
   }
 
-  @Override public void onResume() {
+  @Override
+  public void onResume() {
     super.onResume();
   }
 
@@ -95,22 +114,36 @@ public class WendaMyQuestionActivity extends BaseBActivity {
       this.context = context;
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
       if (datas == null) {
         return 0;
       }
       return datas.size();
     }
 
-    @Override public Object getItem(int position) {
+    public void clear() {
+      if (null != datas) {
+        datas.clear();
+      }
+    }
+
+    public void setData(List<WendaFragment.WendaBean.ListEntity> datas) {
+      this.datas = datas;
+    }
+
+    @Override
+    public Object getItem(int position) {
       return datas.get(position);
     }
 
-    @Override public long getItemId(int position) {
+    @Override
+    public long getItemId(int position) {
       return position;
     }
 
-    @Override public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
       RViewHolder viewHolder;
       if (convertView == null) {
         convertView = LayoutInflater.from(context)
@@ -125,22 +158,27 @@ public class WendaMyQuestionActivity extends BaseBActivity {
 
             /*其他控件信息，自己添加 id， 然后从 listEntity对象中获取数据，填充就行了*/
       ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(listEntity.getTitle());
-      ((TextView) viewHolder.itemView.findViewById(R.id.content)).setText(listEntity.getDescription1());
+      ((TextView) viewHolder.itemView.findViewById(R.id.content)).setText(listEntity
+          .getDescription1());
       ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setText(
           listEntity.getUser().getNickname());
       ((TextView) viewHolder.itemView.findViewById(R.id.answer_num)).setText(
           listEntity.getAnswer_num());
       ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(
           listEntity.getCreate_time());
-      //            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(listEntity.getAnswer_num());
+      //            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText
+      // (listEntity.getAnswer_num());
       ((TextView) viewHolder.itemView.findViewById(R.id.score)).setText(listEntity.getScore());
       if (listEntity.getCategory().equals("1")) {
         ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("龙鱼");
       } else {
         ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("魟鱼");
       }
-      ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(),
-          viewHolder.imgV(R.id.logo));
+      ImageLoader.loadOptimizedHttpImage(WendaMyQuestionActivity.this, RsenUrlUtil.URL_BASE +
+          listEntity.getUser().getAvatar32())
+          .placeholder(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar)
+          .bitmapTransform(new CropCircleTransformation(WendaMyQuestionActivity.this))
+          .dontAnimate().into(viewHolder.imgV(R.id.logo));
       String s = listEntity.getBest_answer();
       if (s.equals("0")) {
         ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
@@ -157,7 +195,8 @@ public class WendaMyQuestionActivity extends BaseBActivity {
         iv1 = viewHolder.imgV(R.id.iv_1);
         iv2 = viewHolder.imgV(R.id.iv_2);
         iv3 = viewHolder.imgV(R.id.iv_3);
-        //LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1.getLayoutParams();
+        //LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1
+        // .getLayoutParams();
         //linearParams.width = (getScreenWidth(context)-45)/3; // 当控件的高强制设成365象素
         //linearParams.height=(getScreenWidth(context)-60)/3;
         //iv1.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
@@ -191,7 +230,8 @@ public class WendaMyQuestionActivity extends BaseBActivity {
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {
 
-              @Override public void onClick(View v) {
+              @Override
+              public void onClick(View v) {
                 Intent intent = new Intent(WendaMyQuestionActivity.this, ImagePagerActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("image_urls",
@@ -209,8 +249,10 @@ public class WendaMyQuestionActivity extends BaseBActivity {
             /*点击事件响应*/
       viewHolder.itemView.findViewById(R.id.item_layout)
           .setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-              //                    RsenCommonActivity.showActivity(context, RsenCommonActivity.TYPE_QDETAIL, null);
+            @Override
+            public void onClick(View v) {
+              //                    RsenCommonActivity.showActivity(context, RsenCommonActivity
+              // .TYPE_QDETAIL, null);
               //Toast.makeText(v.getContext(), "Click Me " + position, Toast.LENGTH_LONG).show();
               Bundle bundle = new Bundle();
 

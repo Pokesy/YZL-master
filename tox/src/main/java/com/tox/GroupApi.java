@@ -121,7 +121,7 @@ public class GroupApi extends BaseApi{
             map.put("detail", jsonObjFist.getString("detail"));
             map.put("group_type", jsonObjFist.getString("type"));
             map.put("activity", jsonObjFist.getString("activity"));
-            map.put("memberCount", jsonObjFist.getString("menmberCount"));
+            map.put("memberCount", jsonObjFist.getString("member_count"));
             map.put("is_join", jsonObjFist.getString("is_join"));
             JSONObject tempObj = jsonObjFist.getJSONObject("user");
             map.put("user_uid", tempObj.getString("uid"));

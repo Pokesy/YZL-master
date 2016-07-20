@@ -13,6 +13,7 @@ import com.thinksky.net.IsNet;
 import com.thinksky.net.ThreadPoolUtils;
 import com.thinksky.thread.HttpPostThread;
 import com.thinksky.tox.UserInfoActivity;
+import com.thinksky.utils.JsonConverter;
 import com.thinksky.utils.MyJson;
 
 import org.json.JSONException;
@@ -149,6 +150,7 @@ public class BaseApi {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("nickname", Url.MYUSERINFO.getNickname());
         editor.putString("avatar", Url.MYUSERINFO.getAvatar());
+        editor.putString("user_info", JsonConverter.objectToJson(Url.MYUSERINFO));
         Log.e("我要保存", Url.MYUSERINFO.getAvatar());
         editor.apply();
     }
