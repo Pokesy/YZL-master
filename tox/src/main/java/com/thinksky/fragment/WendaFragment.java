@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +17,13 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
+import com.squareup.otto.Subscribe;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
+import com.thinksky.tox.SendQuestionActivity;
+import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -32,7 +34,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
 
-public class WendaFragment extends Fragment {
+public class WendaFragment extends BasicFragment {
 
   private static final String ARG_PARAM1 = "param1";
 
@@ -42,17 +44,22 @@ public class WendaFragment extends Fragment {
   View rootView;
   ListView listView;
   private ImageView back_menu, iv1, iv2, iv3, wutu;
+  private WendaListAdapter mListAdapter;
 
-  @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+  @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                           @Nullable Bundle savedInstanceState) {
 
     rootView = inflater.inflate(R.layout.fragment_wenda, container, false);
 
     listView = (ListView) rootView.findViewById(R.id.listView);
+    mListAdapter = new WendaListAdapter(WendaFragment.this.getActivity(), null);
+    listView.setAdapter(mListAdapter);
     addHeaderView();
     ((RadioGroup) rootView.findViewById(R.id.main_radio)).setOnCheckedChangeListener(
         new RadioGroup.OnCheckedChangeListener() {
-          @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
+          @Override
+          public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
               case R.id.rb_rmht:
                 Intent intent = new Intent(getContext(), WendaListActivity.class);
@@ -91,22 +98,35 @@ public class WendaFragment extends Fragment {
     return rootView;
   }
 
+  @Subscribe
+  public void handleQuestionSendEvent(SendQuestionActivity.QuestionSendEvent event) {
+    init();
+  }
+
+  @Subscribe
+  public void handleAnswerChangeEvent(QuestionDetailActivity.AnswerChangedEvent event) {
+    init();
+  }
+
   private void init() {
     RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_WD,
         new RsenUrlUtil.OnNetHttpResultListener() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public void onResult(boolean state, String result, JSONObject jsonObject) {
+          @Override
+          public void onResult(boolean state, String result, JSONObject jsonObject) {
             if (state) {
               //                    ArrayList<ZjBean> beans = parseJson(jsonObject);
               //                    listView.setAdapter(new ZjAdapter(getActivity(), beans));
               //                    WendaListAdapter
 
               WendaBean wendaBean = JSON.parseObject(result, WendaBean.class);
-              listView.setAdapter(
-                  new WendaListAdapter(WendaFragment.this.getActivity(), wendaBean.getList()));
+              mListAdapter.clear();
+              mListAdapter.setData(wendaBean.getList());
+              mListAdapter.notifyDataSetChanged();
             }
           }
         });
@@ -123,7 +143,8 @@ public class WendaFragment extends Fragment {
     ((RadioGroup) rootView.findViewById(R.id.main_radio)).check(R.id.hide);
   }
 
-  @Override public void onResume() {
+  @Override
+  public void onResume() {
     super.onResume();
 
   }
@@ -149,22 +170,36 @@ public class WendaFragment extends Fragment {
       this.context = context;
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
       if (datas == null) {
         return 0;
       }
       return datas.size();
     }
 
-    @Override public Object getItem(int position) {
+    public void clear() {
+      if (null != datas) {
+        datas.clear();
+      }
+    }
+
+    public void setData(ArrayList<WendaBean.ListEntity> datas) {
+      this.datas = datas;
+    }
+
+    @Override
+    public Object getItem(int position) {
       return datas.get(position);
     }
 
-    @Override public long getItemId(int position) {
+    @Override
+    public long getItemId(int position) {
       return position;
     }
 
-    @Override public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
       RViewHolder viewHolder;
       if (convertView == null) {
         convertView = LayoutInflater.from(context)
@@ -193,18 +228,22 @@ public class WendaFragment extends Fragment {
       } else {
         ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("魟鱼");
       }
-      //            ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setDrawablel(listEntity.getUser().getNickname());
+      //            ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setDrawablel
+      // (listEntity.getUser().getNickname());
       //ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(),
       //    ((ImageView) viewHolder.itemView.findViewById(R.id.logo)));
-   ImageLoader.loadOptimizedHttpImage(getActivity(),
+      ImageLoader.loadOptimizedHttpImage(getActivity(),
           RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32()).
-          bitmapTransform(new CropCircleTransformation(getActivity())).into((ImageView) viewHolder.itemView.findViewById(R.id.logo));
+          bitmapTransform(new CropCircleTransformation(getActivity())).into((ImageView)
+          viewHolder.itemView.findViewById(R.id.logo));
       //            //为图片控件加载数据
       //            kjBitmap = KJBitmap.create();
-      //            kjBitmap.display(((ImageView) viewHolder.itemView.findViewById(R.id.logo)), RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32());
+      //            kjBitmap.display(((ImageView) viewHolder.itemView.findViewById(R.id.logo)),
+      // RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32());
       String s = listEntity.getBest_answer();
       //            if (s.equals("1")) {
-      //                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
+      //                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText
+      // ("已解决");
       //            }
       if (listEntity.getImgList() != null && !listEntity.getImgList()
           .contains("Public/images/nopic.png")) {
@@ -214,7 +253,8 @@ public class WendaFragment extends Fragment {
         iv1 = viewHolder.imgV(R.id.iv_1);
         iv2 = viewHolder.imgV(R.id.iv_2);
         iv3 = viewHolder.imgV(R.id.iv_3);
-        //LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1.getLayoutParams();
+        //LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1
+        // .getLayoutParams();
         //linearParams.width = (getScreenWidth(context)-45)/3; // 当控件的高强制设成365象素
         //linearParams.height=(getScreenWidth(context)-60)/3;
         //iv1.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
@@ -248,7 +288,8 @@ public class WendaFragment extends Fragment {
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {
 
-              @Override public void onClick(View v) {
+              @Override
+              public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("image_urls",
@@ -273,14 +314,16 @@ public class WendaFragment extends Fragment {
             /*点击事件响应*/
       viewHolder.itemView.findViewById(R.id.item_layout)
           .setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-              //                    RsenCommonActivity.showActivity(context, RsenCommonActivity.TYPE_QDETAIL, null);
+            @Override
+            public void onClick(View v) {
+              //                    RsenCommonActivity.showActivity(context, RsenCommonActivity
+              // .TYPE_QDETAIL, null);
               //Toast.makeText(v.getContext(), "Click Me " + position, Toast.LENGTH_LONG).show();
               Bundle bundle = new Bundle();
 
               bundle.putString("question_id", listEntity.getId());
 
-              Intent intent = new Intent(getActivity(), wentixiangqing.class);
+              Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
               intent.putExtras(bundle);
               startActivity(intent);
             }
@@ -288,6 +331,7 @@ public class WendaFragment extends Fragment {
       return convertView;
     }
   }
+
   //获取屏幕的宽度
   public static int getScreenWidth(Context context) {
     WindowManager manager = (WindowManager) context
@@ -295,6 +339,7 @@ public class WendaFragment extends Fragment {
     Display display = manager.getDefaultDisplay();
     return display.getWidth();
   }
+
   //获取屏幕的高度
   public static int getScreenHeight(Context context) {
     WindowManager manager = (WindowManager) context
@@ -302,31 +347,125 @@ public class WendaFragment extends Fragment {
     Display display = manager.getDefaultDisplay();
     return display.getHeight();
   }
+
   public static class WendaBean {
 
     /**
      * error_code : 0
-     * list : [{"answer_num":"0","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
-     * 11:23","description1":"<p>f&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;ffffffffffff<\/p>","good_question":"0","id":"15","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"f'f'f'f'ffffffffffff","uid":"100","update_time":"02月19日
-     * 11:23","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david","real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
-     * 11:22","description1":"","good_question":"0","id":"14","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字aaa","uid":"100","update_time":"02月19日
-     * 11:22","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david","real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
-     * 11:04","description1":"<p>手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字<\/p>","good_question":"0","id":"13","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字","uid":"100","update_time":"02月19日
-     * 11:04","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david","real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
-     * 10:55","description1":"","good_question":"0","id":"12","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字","uid":"100","update_time":"02月19日
-     * 10:55","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david","real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:48","description1":"","good_question":"0","id":"11","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"测试789","uid":"1","update_time":"02月15日
-     * 16:48","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin","real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"0","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:41","description1":"","good_question":"0","id":"10","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"测试456","uid":"1","update_time":"02月15日
-     * 16:41","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin","real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:40","description1":"","good_question":"0","id":"9","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"测试123","uid":"1","update_time":"02月15日
-     * 16:40","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin","real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"0","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:39","description1":"","good_question":"0","id":"8","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"测试最佳答案","uid":"1","update_time":"02月15日
-     * 16:39","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin","real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:25","description1":"","good_question":"0","id":"7","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"魟鱼饲养怎么会更好","uid":"1","update_time":"02月15日
-     * 16:26","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin","real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1","best_answer":"0","category":"1","category_title":false,"content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 10:32","description1":"","good_question":"0","id":"6","imgList":[],"is_recommend":"0","is_supported":"0","status":"1","support_count":"0","title":"测试问答带图","uid":"1","update_time":"02月15日
-     * 10:32","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin","real_nickname":"admin","signature":"","uid":"1","username":"admin"}}]
+     * list : [{"answer_num":"0","best_answer":"0","category":"1","category_title":false,
+     * "content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
+     * 11:23","description1":"<p>f&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;
+     * fffffffffffff&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;
+     * ffffffffffff<\/p>","good_question":"0","id":"15","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"f'f'f'f'ffffffffffff",
+     * "uid":"100","update_time":"02月19日
+     * 11:23","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
+     * "real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
+     * 11:22","description1":"","good_question":"0","id":"14","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字aaa",
+     * "uid":"100","update_time":"02月19日
+     * 11:22","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
+     * "real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
+     * 11:04",
+     * "description1":"<p
+     * >手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字<\/p>",
+     * "good_question":"0","id":"13","imgList":[],"is_recommend":"0","is_supported":"0",
+     * "status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字","uid":"100","update_time":"02月19日
+     * 11:04","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
+     * "real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
+     * 10:55","description1":"","good_question":"0","id":"12","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字",
+     * "uid":"100","update_time":"02月19日
+     * 10:55","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
+     * "real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
+     * 16:48","description1":"","good_question":"0","id":"11","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"测试789","uid":"1",
+     * "update_time":"02月15日
+     * 16:48","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
+     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"0",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
+     * 16:41","description1":"","good_question":"0","id":"10","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"测试456","uid":"1",
+     * "update_time":"02月15日
+     * 16:41","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
+     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
+     * 16:40","description1":"","good_question":"0","id":"9","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"测试123","uid":"1",
+     * "update_time":"02月15日
+     * 16:40","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
+     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"0",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
+     * 16:39","description1":"","good_question":"0","id":"8","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"测试最佳答案","uid":"1",
+     * "update_time":"02月15日
+     * 16:39","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
+     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
+     * 16:25","description1":"","good_question":"0","id":"7","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"魟鱼饲养怎么会更好","uid":"1",
+     * "update_time":"02月15日
+     * 16:26","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
+     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1",
+     * "best_answer":"0","category":"1","category_title":false,"content":"",
+     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
+     * 10:32","description1":"","good_question":"0","id":"6","imgList":[],"is_recommend":"0",
+     * "is_supported":"0","status":"1","support_count":"0","title":"测试问答带图","uid":"1",
+     * "update_time":"02月15日
+     * 10:32","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
+     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}}]
      * message : 返回成功
      * success : true
      */
@@ -342,7 +481,8 @@ public class WendaFragment extends Fragment {
      * content :
      * cover_url : /opensns/Public/images/nopic.png
      * create_time : 02月19日 11:23
-     * description1 : <p>f&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;ffffffffffff</p>
+     * description1 : <p>f&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;
+     * fffffffffffff&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;ffffffffffff</p>
      * good_question : 0
      * id : 15
      * imgList : []
@@ -353,7 +493,12 @@ public class WendaFragment extends Fragment {
      * title : f'f'f'f'ffffffffffff
      * uid : 100
      * update_time : 02月19日 11:23
-     * user : {"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david","real_nickname":"david","signature":"","uid":"100","username":"david"}
+     * user : {"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
+     * "real_nickname":"david","signature":"","uid":"100","username":"david"}
      */
 
     private ArrayList<ListEntity> list;

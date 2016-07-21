@@ -72,6 +72,11 @@ public class WendaMyQuestionActivity extends BaseBActivity {
     init();
   }
 
+  @Subscribe
+  public void handleAnswerChangeEvent(QuestionDetailActivity.AnswerChangedEvent event) {
+    init();
+  }
+
   private void init() {
     RsenUrlUtil.execute(this, RsenUrlUtil.URL_MY_WD, new RsenUrlUtil.OnMapListener() {
       @Override
@@ -258,7 +263,7 @@ public class WendaMyQuestionActivity extends BaseBActivity {
 
               bundle.putString("question_id", listEntity.getId());
 
-              Intent intent = new Intent(context, wentixiangqing.class);
+              Intent intent = new Intent(context, QuestionDetailActivity.class);
               intent.putExtras(bundle);
               startActivity(intent);
             }

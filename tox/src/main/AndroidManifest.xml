@@ -325,7 +325,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.thinksky.fragment.wentixiangqing"
+            android:name="com.thinksky.fragment.QuestionDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <!--小组详情-->

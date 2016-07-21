@@ -66,7 +66,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
     private String mTempPhotoName;
     private EditText mTitleEdit, mContentEdit;
 
-    private TextView postSendLayout;
+    private ImageView postSendLayout;
     private RGridView gridView;
 //    private View mWealthContainer;
     /**
@@ -160,7 +160,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
 //        mWealthContainer = findViewById(R.id.wealth_container);
 //        mWealthView = (TextView) findViewById(R.id.available_wealth);
         mTitleEdit = (EditText) findViewById(R.id.Post_send_titleEdit);
-        postSendLayout = (TextView) findViewById(R.id.Post_send);
+        postSendLayout = (ImageView) findViewById(R.id.post_send);
         mAttachLayout = (LinearLayout) findViewById(R.id.Post_attach_layout);
         mPhotoShowLayout = (FrameLayout) findViewById(R.id.Post_photo_layout);
         horizontalListView = (HorizontalListView) findViewById(R.id.HorizontalListView);
@@ -233,7 +233,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                 }
 
                 break;
-            case R.id.Post_send:
+            case R.id.post_send:
                 if (scrollImg.size() != 0) {
                     if (mTitleEdit.getText().toString().equals("")) {
                         ToastHelper.showToast("请填写标题", this);

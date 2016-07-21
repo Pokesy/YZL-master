@@ -40,7 +40,7 @@
           android:paddingTop="5dp"
           android:text="我的问题"
           android:textColor="@color/tab"
-          android:textSize="18sp"
+          android:textSize="@dimen/font_size_xxlarge"
           />
 
       <TextView
@@ -50,10 +50,10 @@
           android:layout_alignParentEnd="true"
           android:layout_alignParentRight="true"
           android:layout_centerVertical="true"
-          android:paddingRight="10dp"
+          android:padding="10dp"
           android:text="提问"
           android:textColor="@color/tab"
-          android:textSize="18sp"
+          android:textSize="@dimen/font_size_medium"
           />
 
     </RelativeLayout>

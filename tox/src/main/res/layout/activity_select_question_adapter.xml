@@ -1,23 +1,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/item_layout"
+    android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    android:paddingLeft="15dp">
+    android:padding="15dp"
+    >
 
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="18dp"
-        android:textColor="#666666"
-        android:textSize="16sp"
-        android:background="#f2f2f2"/>
-    <!--开头分割线-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/default_divider_color" />
+  <TextView
+      android:id="@+id/title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="@color/font_color_primary"
+      android:textSize="@dimen/font_size_xlarge"
+      />
 </LinearLayout>

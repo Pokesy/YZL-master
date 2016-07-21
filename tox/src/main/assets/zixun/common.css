@@ -1,0 +1,11 @@
+*{margin:0;padding:0;}
+
+.content{padding:15px;}
+.content h1{font-size:17px;text-align:center;padding:0 50px 20px 50px;color:#444;  letter-spacing: 2px;}
+.content .info{padding-bottom:22px;color:#9c9c9c;font-size:13px;}
+.content .info .edit{display:block;text-align:center;padding-bottom:10px;}
+.content .info .date{display:block; text-align:center}
+.content article{line-height:26px;color:#4c4c4c;font-size:14px;letter-spacing: 2px;}
+.content article p{text-indent:2em;}
+.content article img{width:100%;height:auto;margin:10px 0;}
+.content article p img{width:100%;height:auto;margin-left:-2em;}

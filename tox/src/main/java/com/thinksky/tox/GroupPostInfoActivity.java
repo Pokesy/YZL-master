@@ -32,9 +32,9 @@ import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.GroupApi;
@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -281,7 +282,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 //                    ImageLoader.getInstance().displayImage(beans.get(0).logo, group_logo);
           com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
               .this, beans.get(0).logo).placeholder(R.drawable.side_user_avatar).error(R.drawable
-              .side_user_avatar).into(group_logo);
+              .side_user_avatar).dontAnimate().into(group_logo);
           group_name.setText(beans.get(0).title);
 
           group_logo.setOnClickListener(new View.OnClickListener() {
@@ -968,9 +969,11 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
   /*成员头像*/
   public static class MySubAdapter extends RBaseAdapter<String> {
+    private Context mContext;
 
     public MySubAdapter(Context context, List<String> datas) {
       super(context, datas);
+      mContext = context;
     }
 
     @Override
@@ -980,7 +983,10 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
     @Override
     protected void onBindView(RViewHolder holder, int position, String bean) {
-      ResUtil.setRoundImage(bean, holder.imgV(R.id.logo));
+      ImageLoader.loadOptimizedHttpImage(mContext, bean).dontAnimate()
+          .bitmapTransform(new CropCircleTransformation(mContext))
+          .placeholder(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).into
+          (holder.imgV(R.id.logo));
 
             /*点击用户头像*/
       holder.v(R.id.item_layout).setOnClickListener(new View.OnClickListener() {

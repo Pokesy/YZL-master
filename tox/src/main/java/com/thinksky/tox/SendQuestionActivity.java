@@ -69,7 +69,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   private String mTempPhotoName;
   private EditText mTitleEdit, mContentEdit;
 
-  private TextView postSendLayout;
+  private ImageView postSendLayout;
   private RGridView gridView;
   private View mWealthContainer;
   /**
@@ -165,7 +165,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     mWealthContainer = findViewById(R.id.wealth_container);
     mWealthView = (TextView) findViewById(R.id.available_wealth);
     mTitleEdit = (EditText) findViewById(R.id.Post_send_titleEdit);
-    postSendLayout = (TextView) findViewById(R.id.Post_send);
+    postSendLayout = (ImageView) findViewById(R.id.post_send);
     mAttachLayout = (LinearLayout) findViewById(R.id.Post_attach_layout);
     mPhotoShowLayout = (FrameLayout) findViewById(R.id.Post_photo_layout);
     horizontalListView = (HorizontalListView) findViewById(R.id.HorizontalListView);
@@ -238,7 +238,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
         }
 
         break;
-      case R.id.Post_send:
+      case R.id.post_send:
         if (!BaseFunction.isLogin()) {
           ToastHelper.showToast("未登录", this);
           return;

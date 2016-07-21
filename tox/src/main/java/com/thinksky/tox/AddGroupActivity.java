@@ -107,7 +107,7 @@ public class AddGroupActivity extends BaseBActivity implements AdapterView.OnIte
         group_content = (EditText) findViewById(R.id.group_content);
         upload= (Button) findViewById(R.id.upload);
         Post_send_Back= (RelativeLayout) findViewById(R.id.Post_send_Back);
-        post_send= (RelativeLayout) findViewById(R.id.Post_send);
+        post_send= (RelativeLayout) findViewById(R.id.post_send);
         imageView= (ImageView) findViewById(R.id.imageView);
         group= (RadioGroup) findViewById(R.id.group);
         progressDialog=new ProgressDialog(this);
@@ -165,7 +165,7 @@ public class AddGroupActivity extends BaseBActivity implements AdapterView.OnIte
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
                 break;
-            case R.id.Post_send:
+            case R.id.post_send:
                 if (group_title.getText().toString().equals("")){
                     Toast.makeText(AddGroupActivity.this,"标题不能为空",Toast.LENGTH_SHORT).show();
                     return;

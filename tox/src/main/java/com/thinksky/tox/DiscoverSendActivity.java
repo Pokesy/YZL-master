@@ -153,7 +153,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     userUid = baseApi.getUid();
     mContentEdit = (EditText) findViewById(R.id.Post_send_contentEdit);
     mTitleEdit = (EditText) findViewById(R.id.Post_send_titleEdit);
-    postSendLayout = (RelativeLayout) findViewById(R.id.Post_send);
+    postSendLayout = (RelativeLayout) findViewById(R.id.post_send);
     mAttachLayout = (LinearLayout) findViewById(R.id.Post_attach_layout);
     mPhotoShowLayout = (FrameLayout) findViewById(R.id.Post_photo_layout);
     horizontalListView = (HorizontalListView) findViewById(R.id.HorizontalListView);
@@ -285,7 +285,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         }
 
         break;
-      case R.id.Post_send:
+      case R.id.post_send:
         if (scrollImg.size() != 0) {
           if (mTitleEdit.getText().toString().equals("") && fishid == 1) {
             ToastHelper.showToast("请填写标题", this);

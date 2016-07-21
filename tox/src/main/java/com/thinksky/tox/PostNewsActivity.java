@@ -86,7 +86,7 @@ public class PostNewsActivity extends BaseBActivity implements View.OnClickListe
         newsApi.setHandler(myHandler);
         newsApi.getType();
         back= (RelativeLayout) findViewById(R.id.Post_send_back);
-        send= (RelativeLayout) findViewById(R.id.Post_send);
+        send= (RelativeLayout) findViewById(R.id.post_send);
         spinner= (Spinner) findViewById(R.id.spinner);
         upload= (Button) findViewById(R.id.upload);
         imageView= (ImageView) findViewById(R.id.imageView);
@@ -106,7 +106,7 @@ public class PostNewsActivity extends BaseBActivity implements View.OnClickListe
                 finish();
                 break;
 
-            case R.id.Post_send:
+            case R.id.post_send:
                 title=Post_send_titleEdit.getText().toString();
                 content=Post_send_contentEdit.getText().toString();
                 if (title==null||title.length()<=0){

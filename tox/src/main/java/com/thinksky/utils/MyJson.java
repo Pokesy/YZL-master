@@ -1109,6 +1109,7 @@ private String s;
             newsDetailInfo.setTitle(jsonObject.getString("title"));
             newsDetailInfo.setDescription(jsonObject.getString("description"));
             newsDetailInfo.setContent(jsonObject.getString("content"));
+            newsDetailInfo.setContent_html(jsonObject.getString("content_html"));
             newsDetailInfo.setCategory(jsonObject.getString("category"));
             newsDetailInfo.setCategory_title(jsonObject.getString("category_title"));
             newsDetailInfo.setStatus(jsonObject.getString("status"));

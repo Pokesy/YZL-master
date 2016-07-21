@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="common.css"/>
+</head>
+<body>
+
+<div class="content" id="content">
+
+    <!--标题位置-->
+    <h1>标题</h1>
+
+    <!--发布信息-->
+    <section class="info">
+        <span class="edit">来自：<a>正在加载...</a></span>
+        <span class="date"><a>正在加载...</a></span>
+    </section>
+
+    <!--文章内容-->
+    <article>
+        <p>正在加载...</p>
+    </article>
+
+</div>
+
+</body>
+</html>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.lazyload.js"></script>
+<script type="text/javascript">
+   $(function(){
+       var title,
+           edit,
+           date,
+           article;
+
+       $('#content h1').html(title);
+       $('#content .edit a').html(edit);
+       $('#content .date a').html(date);
+       $('#content article').html(article);
+
+
+     setTimeout(function(){//延迟半秒执行
+       $('#content article img').addClass('lazy');
+       $('img.lazy').lazyload({effect: 'fadeIn'});
+     },1500)
+
+   })
+
+</script>

@@ -25,10 +25,10 @@
             android:layout_centerVertical="true">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:layout_centerVertical="true"
                 android:src="@drawable/arrow_left" />
         </RelativeLayout>
 
@@ -56,15 +56,15 @@
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/Post_send"
+        <ImageView
+            android:id="@+id/post_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/iconfontfenxiangshare"
+            android:src="@drawable/iconfontfenxiangshare"
+            android:padding="15dp"
             android:textColor="@color/tab"
             android:visibility="visible" />
 
@@ -86,8 +86,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_horizontal"
-                android:layout_marginRight="@dimen/space_horizontal"
+                android:padding="@dimen/space_horizontal"
                 android:background="@android:color/white"
                 android:orientation="vertical">
 

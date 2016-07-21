@@ -9,16 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.otto.Subscribe;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SegmentControl;
 
+import com.thinksky.ui.basic.BasicFragment;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by jiao on 2016/1/27.
  */
-public class IsseuFragment extends Fragment implements View.OnClickListener {
+public class IsseuFragment extends BasicFragment implements View.OnClickListener {
     private SegmentControl mSegmentControl2;
     private ViewPager mPager;
     private static final String ARG_PARAM1 = "param1";
@@ -95,5 +97,11 @@ public class IsseuFragment extends Fragment implements View.OnClickListener {
         public int getCount() {
             return fragments.size();
         }
+    }
+
+    @Subscribe
+    public void handleZhuanjiMoreClickEvent(HomeFragment.ZhuanjiMoreClickEvent event) {
+        // TODO 跳转到鱼医生精彩视频
+        mPager.setCurrentItem(1);
     }
 }

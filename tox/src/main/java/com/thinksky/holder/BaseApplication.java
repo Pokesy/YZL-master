@@ -59,7 +59,7 @@ public class BaseApplication extends Application {
     locationService = new LocationService(getApplicationContext());
     mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
     sp = getSharedPreferences("userInfo", 0);
-    if (!"".equals(sp)) {
+    if (null != sp) {
       Url.SESSIONID = sp.getString("session_id", "");
       Url.USERID = sp.getString("uid", "0");
       Url.MYUSERINFO = JsonConverter.jsonToObject(UserInfo.class, sp.getString("user_info", ""));

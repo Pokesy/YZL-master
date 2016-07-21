@@ -430,7 +430,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
               bean.is_top = jsonObject.getString("is_top");
 
               bean.cate_id = jsonObject.getString("cate_id");
-              JSONArray imgList = jsonObject.getJSONArray("imgList");
+              JSONArray imgList = jsonObject.optJSONArray("imgList");
               List<String> imgs = new ArrayList<String>();
               for (int i = 0; imgList != null && i < imgList.length(); i++) {
                 imgs.add(imgList.getString(i));
@@ -482,7 +482,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
     ImageLoader.loadOptimizedHttpImage(this, groupInfoMap.get("group_logo")).bitmapTransform(new
         CropCircleTransformation(this))
-        .error(R.drawable.picture_no).placeholder(R.drawable.picture_no).dontAnimate().into
+        .error(R.drawable.picture_1_no).placeholder(R.drawable.picture_1_no).dontAnimate().into
         (group_logo);
 
     init();

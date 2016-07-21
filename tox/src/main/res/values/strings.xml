@@ -134,4 +134,10 @@
   <string name="http_server_error">无法连接到服务器,请稍后再试</string>
   <string name="server_error">服务器错误</string>
   <string name="session_expired">Session过期,请重新登录</string>
+
+  <!-- 发帖 -->
+  <string name="activity_send_tiezi_title"></string>
+
+  <!-- 专辑 -->
+  <string name="activity_zhuanji_title">精彩视频</string>
 </resources>

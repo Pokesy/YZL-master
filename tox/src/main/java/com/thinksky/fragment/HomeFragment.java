@@ -32,6 +32,7 @@ import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.NewsActivity;
 import com.thinksky.tox.NewsDetailActivity;
 import com.thinksky.tox.R;
+import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -50,7 +51,7 @@ import org.json.JSONObject;
 /**
  * Created by jiao on 2016/1/27.
  */
-public class HomeFragment extends Fragment
+public class HomeFragment extends BasicFragment
     implements View.OnClickListener, MyScrollview.OnScrollListener {
   protected AppCompatActivity mBaseActivity;
   private View view;
@@ -204,24 +205,23 @@ public class HomeFragment extends Fragment
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.zj_show:
-        intent = new Intent(getActivity(), ZhuanjiActivity.class);
-
-        getActivity().startActivity(intent);
+        //intent = new Intent(getActivity(), ZhuanjiActivity.class);
+        //getActivity().startActivity(intent);
+        getComponent().getGlobalBus().post(new ZhuanjiMoreClickEvent());
         break;
       case R.id.zx_show:
         intent = new Intent(getActivity(), NewsActivity.class);
-
         getActivity().startActivity(intent);
         break;
       case R.id.rm_show:
-        intent = new Intent(getActivity(), XiaozujingxuanActivity.class);
-
-        getActivity().startActivity(intent);
+        //intent = new Intent(getActivity(), XiaozujingxuanActivity.class);
+        //getActivity().startActivity(intent);
+        getComponent().getGlobalBus().post(new GroupMoreClickEvent());
         break;
       case R.id.ht_show:
-        intent = new Intent(getActivity(), RemenhuatiActivity.class);
-
-        getActivity().startActivity(intent);
+        //intent = new Intent(getActivity(), RemenhuatiActivity.class);
+        //getActivity().startActivity(intent);
+        getComponent().getGlobalBus().post(new HuatiMoreClickEvent());
         break;
       case R.id.bofangshipin:
         String url =
@@ -761,24 +761,26 @@ public class HomeFragment extends Fragment
               final ArrayList<ZhuanjiFragment.ZjBean> beans = parseJson(jsonObject);
               //                为图片控件加载数据
               if (!beans.isEmpty()) {
-                ImageLoader.loadOptimizedHttpImage(getActivity(),
-                    RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url).placeholder(R
-                    .drawable.picture_no).error(R.drawable.picture_no)
-                    .into(viewHolder.imgV(R.id.issue_image));
+                if (null != beans.get(0).IssueList && beans.get(0).IssueList.size() > 0) {
+                  ImageLoader.loadOptimizedHttpImage(getActivity(),
+                      RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url).placeholder(R
+                      .drawable.picture_no).error(R.drawable.picture_no)
+                      .into(viewHolder.imgV(R.id.issue_image));
+                  time.setText(beans.get(0).IssueList.get(0).create_time);
+                  count.setText(beans.get(0).IssueList.get(0).reply_count);
+                  support_count.setText(beans.get(0).IssueList.get(0).support_count);
+                  bofangshipin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      Bundle bundle = new Bundle();
+                      bundle.putInt("id", beans.get(0).IssueList.get(0).id);
+                      Intent intent = new Intent(getActivity(), IssueDetail.class);
+                      intent.putExtras(bundle);
+                      startActivity(intent);
+                    }
+                  });
+                }
 
-                time.setText(beans.get(0).IssueList.get(0).create_time);
-                count.setText(beans.get(0).IssueList.get(0).reply_count);
-                support_count.setText(beans.get(0).IssueList.get(0).support_count);
-                bofangshipin.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("id", beans.get(0).IssueList.get(0).id);
-                    Intent intent = new Intent(getActivity(), IssueDetail.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                  }
-                });
               }
             }
           }
@@ -835,5 +837,17 @@ public class HomeFragment extends Fragment
     void onMenuBtnClicked();
 
     void onSearchBtnClicked();
+  }
+
+  public class GroupMoreClickEvent {
+
+  }
+
+  public class HuatiMoreClickEvent {
+
+  }
+
+  public class ZhuanjiMoreClickEvent {
+
   }
 }

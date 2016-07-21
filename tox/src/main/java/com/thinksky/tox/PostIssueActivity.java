@@ -296,7 +296,7 @@ public class PostIssueActivity extends BaseBActivity implements AdapterView.OnIt
         issue_Url= (EditText) findViewById(R.id.issue_Url);
         post_send_contentEdit= (EditText) findViewById(R.id.post_send_contentEdit);
         imageView= (ImageView) findViewById(R.id.imageView);
-        Post_send= (RelativeLayout) findViewById(R.id.Post_send);
+        Post_send= (RelativeLayout) findViewById(R.id.post_send);
         mTitleEdit=(EditText)findViewById(R.id.Post_send_titleEdit);
 
         IssueApi issueApi=new IssueApi();
@@ -443,7 +443,7 @@ public class PostIssueActivity extends BaseBActivity implements AdapterView.OnIt
 
         mContentEdit=(EditText)findViewById(R.id.Post_send_contentEdit);
         mTitleEdit=(EditText)findViewById(R.id.Post_send_titleEdit);
-        postSendLayout=(RelativeLayout)findViewById(R.id.Post_send);
+        postSendLayout=(RelativeLayout)findViewById(R.id.post_send);
         mAttachLayout=(LinearLayout)findViewById(R.id.Post_attach_layout);
         mPhotoShowLayout=(FrameLayout)findViewById(R.id.Post_photo_layout);
         horizontalListView=(HorizontalListView)findViewById(R.id.HorizontalListView);

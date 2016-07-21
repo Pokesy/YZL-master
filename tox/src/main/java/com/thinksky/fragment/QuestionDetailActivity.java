@@ -26,7 +26,6 @@ import com.alibaba.fastjson.JSON;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.WendaXianqingInfo;
 import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
@@ -41,10 +40,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONObject;
 
 
-public class wentixiangqing extends BaseBActivity implements View.OnClickListener {
+public class QuestionDetailActivity extends BaseBActivity implements View.OnClickListener {
 
   private TextView title;
   private TextView best_answer;
@@ -194,17 +194,6 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
       public void onParseJsonBean(List<WendaXianqingInfo> beans, JSONObject jsonObject) {
         try {
 
-//                    WendaXianqingInfo.ListEntity listEntity = new WendaXianqingInfo.ListEntity();
-//                    WendaXianqingInfo.UserEntity userEntity = new WendaXianqingInfo.UserEntity();
-//
-//
-//                    ArrayList<WendaXianqingInfo.ListEntity> list =new
-// ArrayList<WendaXianqingInfo.ListEntity>();
-//
-//                    jsonObject.optJSONArray("list");
-//
-//                    WendaXianqingInfo wendaXianqingInfo = new WendaXianqingInfo();
-//                    wendaXianqingInfo.setList(list);
           String result = jsonObject.toString();
           WendaXianqingInfo wendaXianqingInfo = JSON.parseObject(result, WendaXianqingInfo.class);
           beans.add(wendaXianqingInfo);
@@ -241,13 +230,15 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
               }
 
               if (imageView != null) {
-                ImageLoader.loadOptimizedHttpImage(wentixiangqing.this, url).error(R.drawable
+                ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, url).error(R
+                    .drawable
                     .picture_no).placeholder(R.drawable.picture_no).into(imageView);
                 final int in = i;
                 imageView.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View v) {
-                    Intent intent = new Intent(wentixiangqing.this, ImagePagerActivity.class);
+                    Intent intent = new Intent(QuestionDetailActivity.this, ImagePagerActivity
+                        .class);
                     Bundle bundle = new Bundle();
                     bundle.putStringArrayList("image_urls", (ArrayList<String>) beans.get(0)
                         .getImgList());
@@ -292,7 +283,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
             wutu.setVisibility(View.VISIBLE);
 
           } else {
-            mListAdapter = new WentixiangqingListAdapter(wentixiangqing.this, beans.get(0)
+            mListAdapter = new WentixiangqingListAdapter(QuestionDetailActivity.this, beans.get(0)
                 .getQuestionAnswer());
             listView.setAdapter(mListAdapter);
 
@@ -410,6 +401,7 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
             cancelDialog();
             initXiangQingData();
             wutu.setVisibility(View.GONE);
+            getComponent().getGlobalBus().post(new AnswerChangedEvent());
           }
         });
       }
@@ -476,7 +468,11 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
 //            WendaXianqingInfo bean = beans.get(position);
 //            list =bean.getQuestionAnswer();
       final WendaXianqingInfo.QuestionAnswerEntity bean = list.get(position);
-      ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getUser().getAvatar32(), holder.avatar32);
+      ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, RsenUrlUtil.URL_BASE + bean
+          .getUser().getAvatar32())
+          .bitmapTransform(new CropCircleTransformation(QuestionDetailActivity.this)).placeholder
+          (R.drawable.side_user_avatar).error(R.drawable.side_user_avatar)
+          .dontAnimate().into(holder.avatar32);
       holder.nickname.setText(bean.getUser().getNickname());
       holder.content.setText(bean.getContent().replace("\\n", "\n"));
       holder.creat_time.setText(MyJson.getStandardDate(bean.getCreate_time()));
@@ -597,7 +593,8 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
             holder.reply_count.setText(Integer.parseInt(bean.getSupport_count()) + 1 + "");
             holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
 //
-            RsenUrlUtil.execute(wentixiangqing.this, RsenUrlUtil.URL_SUPPORT_QUESTION_ANSWER, new
+            RsenUrlUtil.execute(QuestionDetailActivity.this, RsenUrlUtil
+                .URL_SUPPORT_QUESTION_ANSWER, new
                 RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
                   @Override
                   public void onNoNetwork(String msg) {
@@ -635,52 +632,12 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
 
                   }
                 });
-//                        Map map = new HashMap();
-//                        map.put("session_id", session_id);
-//                        map.put("answerid", bean.getId());
-//
-//                        RsenUrlUtil.executeGetWidthMap(wentixiangqing.this,RsenUrlUtil
-// .URL_SUPPORT_QUESTION_ANSWER,map, new RsenUrlUtil.OnJsonResultListener<DianzanBean>() {
-//                            @Override
-//                            public void onNoNetwork(String msg) {
-//                                ToastHelper.showToast(msg, Url.context);
-//                            }
-//                     @Override
-//                            public void onParseJsonBean(List<DianzanBean> beans, JSONObject
-// jsonObject) {
-//                                try {
-//                                    DianzanBean bean = new DianzanBean();
-//                                    bean.message = jsonObject.getString("message");
-//                                    bean.success = jsonObject.getString("success");
-//                                    beans.add(bean);
-//                                } catch (Exception e) {
-//
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onResult(boolean state, List<DianzanBean> beans) {
-////                            if (state) {
-////                                ToastHelper.showToast("采纳了", Url.context);
-////                            } else {
-////                                ToastHelper.showToast("请求失败", Url.context);
-////                            }
-//
-//                                DianzanBean bean_bean = beans.get(0);
-//                                if (bean_bean.success.equals("true")) {
-//                                    ToastHelper.showToast("采纳成功", Url.context);
-//                                    holder.caina.setVisibility(View.GONE);
-//                                    bean.setIssetbest(0);
-//                                    notifyDataSetChanged();
-//                                }
-//                            }
-//                        });
           } else {
-            ToastHelper.showToast("点赞失败，重复点赞", wentixiangqing.this);
+            ToastHelper.showToast("点赞失败，重复点赞", QuestionDetailActivity.this);
           }
 
         } else {
-          ToastHelper.showToast("请先登录", wentixiangqing.this);
+          ToastHelper.showToast("请先登录", QuestionDetailActivity.this);
         }
       }
     }
@@ -702,8 +659,9 @@ public class wentixiangqing extends BaseBActivity implements View.OnClickListene
   public static class DianzanBean {
     public String success;
     public String message;
+  }
 
-//        public
+  public class AnswerChangedEvent {
 
   }
 }

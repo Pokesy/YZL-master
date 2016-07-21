@@ -52,6 +52,7 @@ public class NewsDetailInfo {
     private String comment;
     private UserInfo user;
     private ArrayList<ImageInfo> imgList;
+    private String content_html;
 
     public void setUid(String uid) {
         this.uid = uid;
@@ -219,5 +220,13 @@ public class NewsDetailInfo {
 
     public String getCategory_title() {
         return category_title;
+    }
+
+    public String getContent_html() {
+        return content_html;
+    }
+
+    public void setContent_html(String content_html) {
+        this.content_html = content_html;
     }
 }

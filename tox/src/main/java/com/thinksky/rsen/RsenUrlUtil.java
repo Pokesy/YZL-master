@@ -104,7 +104,7 @@ public class RsenUrlUtil {
   public static String URL_SEND_HT = URL_BASE + URL_SUB_BASE + "/group/sendPost";
   //问题回答
   public static String URL_SEND_QUESTION_ANSWER = URL_BASE + URL_SUB_BASE +
-      "Question/sendQuestionAnswer&session_id=&question_id=&content=";
+      "Question/sendQuestionAnswer";
   //回答点赞
   public static String URL_SUPPORT_QUESTION_ANSWER = URL_BASE + URL_SUB_BASE +
       "/Question/supportQuestionAnswer";

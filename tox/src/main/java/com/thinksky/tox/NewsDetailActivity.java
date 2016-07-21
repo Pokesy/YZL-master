@@ -1,11 +1,13 @@
 package com.thinksky.tox;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -29,10 +32,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.alibaba.fastjson.JSON;
-import com.thinksky.fragment.DiscoverFragment;
-import com.thinksky.fragment.wentixiangqing;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.NewsDetailInfo;
 import com.thinksky.info.NewsListInfo;
@@ -40,22 +39,15 @@ import com.thinksky.info.NewsReplyInfo;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.utils.MyJson;
-import com.tox.BaseFunction;
 import com.tox.ImageLoader;
 import com.tox.NewsApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
  * 资讯详情页面
@@ -101,16 +93,13 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
   private Handler handler = new Handler() {
     private ArrayList<NewsReplyInfo> replyInfoList;
 
-    @Override public void handleMessage(Message msg) {
+    @Override
+    public void handleMessage(Message msg) {
       super.handleMessage(msg);
       switch (msg.what) {
         case 0:
           MyJson myJson = new MyJson();
           replyInfoList = myJson.getNewsReplyInfo((String) msg.obj);
-          Log.d("66666", (String) msg.obj);
-          Log.d("77777", replyInfoList.get(0).getId());
-          Log.d("77777", replyInfoList.get(0).getRow_id());
-          Log.d("77777", replyInfoList.get(0).getApp());
           if (replyModule.getChildAt(0).getTag() != null && replyModule.getChildAt(0)
               .getTag()
               .equals("isNull")) {
@@ -134,19 +123,40 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     }
   };
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.activity_news_detail);
     mContext = NewsDetailActivity.this;
     newsListInfo = (NewsListInfo) getIntent().getExtras().get("newsInfo");
     newsId = newsListInfo.getId();
-    support = getIntent().getExtras().getString("newsInfo");
+    support = getIntent().getExtras().getString("support");
     newsApi = new NewsApi(mHandler);
     imageLoader = ImageLoader.getInstance();
     taskCollection = new HashSet<AsyncTask>();
     intView();
+    loadHTML();
     exitAnim();
+  }
+
+  @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+  private void loadHTML() {
+    String url = "file:///android_asset/zixun/article.html";
+    WebSettings ws = newWebView.getSettings();
+    ws.setJavaScriptEnabled(true);//开启JavaScript支持
+    ws.setDomStorageEnabled(true);
+    ws.setAllowFileAccessFromFileURLs(true);
+    ws.setAppCacheEnabled(true);
+    ws.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+    newWebView.setWebChromeClient(new WebChromeClient());
+    newWebView.setWebViewClient(new WebViewClient() {
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        return true;
+      }
+    });
+    newWebView.loadUrl(url);
   }
 
   public void intView() {
@@ -179,7 +189,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     loadingBarText = (TextView) findViewById(R.id.load_more_text);
     loadingProBar = (ProgressBar) findViewById(R.id.load_more_pro);
     loadingBar.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         loadingBarText.setVisibility(View.GONE);
         loadingProBar.setVisibility(View.VISIBLE);
         page++;
@@ -201,11 +212,13 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     newsApi.getNewsInfo(newsListInfo.getId());
     //发表回复文本框的事件监听器
     replyEditText.addTextChangedListener(new TextWatcher() {
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
       }
 
-      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (count != 0) {
           sendButn.setBackgroundResource(R.drawable.forum_enable_btn_send);
           sendButn.setTextColor(Color.WHITE);
@@ -215,7 +228,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         }
       }
 
-      @Override public void afterTextChanged(Editable s) {
+      @Override
+      public void afterTextChanged(Editable s) {
         if (s.length() != 0) {
           sendButn.setBackgroundResource(R.drawable.forum_enable_btn_send);
           sendButn.setTextColor(Color.WHITE);
@@ -226,7 +240,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
       }
     });
     newsScroll.setOnTouchListener(new View.OnTouchListener() {
-      @Override public boolean onTouch(View v, MotionEvent event) {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
         //触摸屏幕隐藏回复界面
         replyBox.setVisibility(View.GONE);
         InputMethodManager imm =
@@ -254,7 +269,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     });
   }
 
-  @Override public void onClick(View v) {
+  @Override
+  public void onClick(View v) {
     int viewId = v.getId();
     switch (viewId) {
       case R.id.back_menu:
@@ -268,7 +284,9 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         //                        supportCount.setText(Integer.parseInt(support) + 1 + "");
         //                        supportCount.setBackgroundResource(R.drawable.iconfontdianzan);
         ////
-        //                        RsenUrlUtil.execute(NewsDetailActivity.this, RsenUrlUtil.URL_SUPPORT_QUESTION_ANSWER, new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
+        //                        RsenUrlUtil.execute(NewsDetailActivity.this, RsenUrlUtil
+        // .URL_SUPPORT_QUESTION_ANSWER, new RsenUrlUtil.OnJsonResultListener<DiscoverFragment
+        // .FXBean>() {
         //                            @Override
         //                            public void onNoNetwork(String msg) {
         //                                ToastHelper.showToast(msg, Url.context);
@@ -284,9 +302,11 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         //                            }
         //
         //                            @Override
-        //                            public void onParseJsonBean(List<DiscoverFragment.FXBean> beans, JSONObject jsonObject) {
+        //                            public void onParseJsonBean(List<DiscoverFragment.FXBean>
+        // beans, JSONObject jsonObject) {
         //                                String result = jsonObject.toString();
-        //                                DiscoverFragment.FXBean discoverInfo = JSON.parseObject(result, DiscoverFragment.FXBean.class);
+        //                                DiscoverFragment.FXBean discoverInfo = JSON.parseObject
+        // (result, DiscoverFragment.FXBean.class);
         //                                beans.add(discoverInfo);
         //                            }
         //
@@ -372,7 +392,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
       mActivityReference = new WeakReference<NewsDetailActivity>(activity);
     }
 
-    @Override public void handleMessage(Message msg) {
+    @Override
+    public void handleMessage(Message msg) {
 
       NewsDetailActivity activity = mActivityReference.get();
       myJson = new MyJson();
@@ -454,7 +475,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     delReBtn = (TextView) replyView.findViewById(R.id.del_reply);
 
     replyerHead.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         //点击头像跳转信息
         if (replyInfo.getUser() != null) {
           newsApi.goUserInfo(mContext, replyInfo.getUser().getUid());
@@ -463,7 +485,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     });
     //回复评论按钮
     replyBtn.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         if (!newsApi.getSeesionId().equals("")) {
           replyBox.setVisibility(View.VISIBLE);
           newsApi.openKeyBoard(mContext, replyEditText);
@@ -476,7 +499,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
       }
     });
     delReBtn.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         if (!newsApi.getSeesionId().equals("")) {
           if (!newsApi.getSeesionId().equals("")) {
             newsApi.setHandler(mHandler);
@@ -496,10 +520,6 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         replyAvatar.setText("游客");
       }
     } else {
-      //            kjBitmap.display(replyerHead, replyInfo.getUser().getAvatar().replace("opensns//opensns","opensns"), 128, 128);
-      //ImageLoader.getInstance().displayImage(imgUrl,imageView);
-
-      //com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(replyInfo.getUser().getAvatar().replace("opensns//opensns", "opensns"), replyerHead);
       com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(NewsDetailActivity.this,
           replyInfo.getUser().getAvatar().replace("opensns//opensns", "opensns")).into(replyerHead);
       replyAvatar.setText(replyInfo.getUser().getNickname());
@@ -527,44 +547,13 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     newsAuthor.setText(newsDetailInfo.getUser().getNickname());
     newsTime.setText(newsDetailInfo.getCreate_time());
     replyCount.setText(newsDetailInfo.getComment());
-    newsContent.setText(newsDetailInfo.getContent().replace("\\n", "\n"));
-    String content = newsDetailInfo.getContent();
-    if (content.contains("style=")) {
-      content = content.replaceAll("style=\"[^\"]+\"",
-          "style=\"word-wrap: break-word;word-break: normal\"");
-    }
-    if (content.contains("<a class=\"popup\" href=")) {
-      content = content.replaceAll("<a class=\"popup\" href=[^>]+>", "");
-    }
-    if (content.contains("<pre")) {
-      content = content.replaceAll("<pre",
-          "<pre style =\"white-space: pre-wrap;word-wrap: break-word;\"");
-    }
-    if (content.contains("<-IMG#") && newsDetailInfo.getImgList().size() > 0) {
-      String regex = "<-IMG#[\\d]++->";
-      for (int i = 0; i < newsDetailInfo.getImgList().size(); i++) {
-        content = content.replaceFirst(regex, "<img style=\"max-width:100%;height:auto\" src="
-            + RsenUrlUtil.URL_BASE
-            + "\""
-            + newsDetailInfo.getImgList().get(i).getSrc()
-            + "\">");
-      }
-    }
-    content = content.replaceAll("/n", "<br/>");
-    newWebView.loadData(content, "text/html; charset=utf-8", "utf-8");
-    //        Log.e("content<><><><>", content);
+    newWebView.loadUrl("javascript:$('#content h1').html('" + newsDetailInfo.getTitle() + "')");
+    newWebView.loadUrl("javascript:$('#content .edit a').html('" + newsDetailInfo.getUser()
+        .getNickname() + "')");
+    newWebView.loadUrl("javascript:$('#content .date a').html('" + newsDetailInfo.getCreate_time() + "')");
+    newWebView.loadUrl("javascript:$('#content article').html('" + newsDetailInfo.getContent_html() + "')");
   }
 
-  private String getHtmlData(String bodyHTML) {
-    String head = "<head>"
-        +
-        "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no\" /> "
-        +
-        "<style>img{max-width: 100%; height:auto;}</style>"
-        +
-        "</head>";
-    return "<html>" + head + "<body>" + bodyHTML + "</body></html>";
-  }
 
   /**
    * 图片异步下载器
@@ -580,7 +569,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
       this.imageWidth = imageWidth;
     }
 
-    @Override protected Bitmap doInBackground(String... params) {
+    @Override
+    protected Bitmap doInBackground(String... params) {
       imageUrl = params[0];
       Bitmap bitmap = imageLoader.getBitmapFromMemoryCache(imageUrl);
       if (bitmap == null) {
@@ -589,7 +579,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
       return bitmap;
     }
 
-    @Override protected void onPostExecute(Bitmap bitmap) {
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
       //图片高比宽长1.1倍时采用把图片放于页面中间的方式放置图片，以免图片拉伸过度
       if (bitmap != null) {
         if (bitmap.getHeight() > 1.1 * bitmap.getWidth() || bitmap.getHeight() < 270) {
@@ -614,7 +605,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     this.isDelReply = isDelReply;
   }
 
-  @Override public void finish() {
+  @Override
+  public void finish() {
     super.finish();
     //解决Activity退出动画无效的问题
     overridePendingTransition(activityCloseEnterAnimation, activityCloseExitAnimation);
@@ -625,10 +617,10 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
    */
   public void exitAnim() {
     TypedArray activityStyle =
-        getTheme().obtainStyledAttributes(new int[] { android.R.attr.windowAnimationStyle });
+        getTheme().obtainStyledAttributes(new int[]{android.R.attr.windowAnimationStyle});
     int windowAnimationStyleResId = activityStyle.getResourceId(0, 0);
     activityStyle.recycle();
-    activityStyle = getTheme().obtainStyledAttributes(windowAnimationStyleResId, new int[] {
+    activityStyle = getTheme().obtainStyledAttributes(windowAnimationStyleResId, new int[]{
         android.R.attr.activityCloseEnterAnimation, android.R.attr.activityCloseExitAnimation
     });
     activityCloseEnterAnimation = activityStyle.getResourceId(0, 0);

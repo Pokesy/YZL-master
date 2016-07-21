@@ -253,7 +253,7 @@ public class WendaListActivity extends BaseBActivity {
 
           bundle.putString("question_id", listEntity.getId());
 
-          Intent intent = new Intent(context, wentixiangqing.class);
+          Intent intent = new Intent(context, QuestionDetailActivity.class);
           intent.putExtras(bundle);
           startActivity(intent);
         }

@@ -51,22 +51,22 @@
                 android:singleLine="true"
                 android:text="描述你的问题"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/font_size_large"
-                android:textStyle="bold" />
+                android:textSize="@dimen/font_size_xxlarge" />
 
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/Post_send"
+        <ImageView
+            android:id="@+id/post_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/iconfontfenxiangshare"
-            android:textColor="@color/tab"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/iconfontfenxiangshare"
+            android:padding="10dp"
+            android:scaleType="centerCrop"
             android:visibility="visible" />
 
     </RelativeLayout>
@@ -268,7 +268,7 @@
             </RelativeLayout>
 
 
-            <TextVie
+            <TextView
                 android:id="@+id/score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
