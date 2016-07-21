@@ -30,6 +30,7 @@ import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.squareup.otto.Subscribe;
 import com.thinksky.fragment.UserListActivity;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.MoreTextView;
@@ -393,6 +394,10 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
     group_post_listView.setLayoutManager(new LinearLayoutManager(this));
     group_post_listView.setAdapter(rm_adapter);
+    initTieziList();
+  }
+
+  private void initTieziList() {
     RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_XIANGQINGTZ,
         new RsenUrlUtil.OnJsonResultListener<RemenhuatiBean>() {
           @Override
@@ -411,25 +416,25 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
           public void onParseJsonBean(List<RemenhuatiBean> beans, JSONObject jsonObject) {
             RemenhuatiBean bean = new RemenhuatiBean();
             try {
-              bean.title = jsonObject.getString("title");
-              bean.content = jsonObject.getString("content");
-              bean.supportCount = jsonObject.getString("supportCount");
-              bean.is_support = jsonObject.getString("is_support");
-              bean.nickname = jsonObject.getJSONObject("user").getString("nickname");
+              bean.title = jsonObject.optString("title");
+              bean.content = jsonObject.optString("content");
+              bean.supportCount = jsonObject.optString("supportCount");
+              bean.is_support = jsonObject.optString("is_support");
+              bean.nickname = jsonObject.getJSONObject("user").optString("nickname");
               bean.user_logo =
-                  RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
-              bean.id = jsonObject.getString("id");
-              bean.uid = jsonObject.getString("uid");
-              bean.group_id = jsonObject.getString("group_id");
-              bean.create_time = jsonObject.getString("create_time");
-              bean.update_time = jsonObject.getString("update_time");
-              bean.last_reply_time = jsonObject.getString("last_reply_time");
-              bean.status = jsonObject.getString("status");
+                  RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").optString("avatar32");
+              bean.id = jsonObject.optString("id");
+              bean.uid = jsonObject.optString("uid");
+              bean.group_id = jsonObject.optString("group_id");
+              bean.create_time = jsonObject.optString("create_time");
+              bean.update_time = jsonObject.optString("update_time");
+              bean.last_reply_time = jsonObject.optString("last_reply_time");
+              bean.status = jsonObject.optString("status");
               //                    bean.view_count = jsonObject.getString("view_count");
-              bean.reply_count = jsonObject.getString("reply_count");
-              bean.is_top = jsonObject.getString("is_top");
+              bean.reply_count = jsonObject.optString("reply_count");
+              bean.is_top = jsonObject.optString("is_top");
 
-              bean.cate_id = jsonObject.getString("cate_id");
+              bean.cate_id = jsonObject.optString("cate_id");
               JSONArray imgList = jsonObject.optJSONArray("imgList");
               List<String> imgs = new ArrayList<String>();
               for (int i = 0; imgList != null && i < imgList.length(); i++) {
@@ -451,10 +456,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
                 rm_adapter.resetData(beans);
 
-                //                        group_post_listView.setAdapter(new GroupListAdapter
-                // (mContext, postInfoList, R.layout.group_post_item, null, null));
-                //                        Utility.setListViewHeightBasedOnChildren
-                // (group_post_listView);
               } else {
                 linear_isnull.setVisibility(View.VISIBLE);
                 linear_list.setVisibility(View.GONE);
@@ -466,6 +467,11 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
             }
           }
         });
+  }
+
+  @Subscribe
+  public void handlePostDataChangeEvent(GroupPostInfoActivity.PostDataChangeEvent event) {
+    initTieziList();
   }
 
   //初始化群组固有信息

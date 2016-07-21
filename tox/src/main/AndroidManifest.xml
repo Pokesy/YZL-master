@@ -61,8 +61,11 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
 
-            android:value="bDINd0L9qHfcXMSZNSGluhXOEWhEBe2Z"
+            android:value="h3f6RvtB7NCQM3DlT4tpT98nS3FM2EkO"
             />
+        <!-- Release -->
+        <!--android:value="bDINd0L9qHfcXMSZNSGluhXOEWhEBe2Z"-->
+        <!-- Debug -->
       <!--android:value="h3f6RvtB7NCQM3DlT4tpT98nS3FM2EkO"-->
         <service
             android:name="com.baidu.location.f"

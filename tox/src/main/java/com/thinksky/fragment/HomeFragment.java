@@ -19,8 +19,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
+import com.squareup.otto.Subscribe;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.info.NewsListInfo1;
+import com.thinksky.log.Logger;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -339,6 +341,12 @@ public class HomeFragment extends BasicFragment
     }
   }
 
+  @Subscribe
+  public void handlePostDataChangeEvent(GroupPostInfoActivity.PostDataChangeEvent event) {
+    initdata();
+    initViewData();
+  }
+
   protected void initdata() {
     RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_JINGXUAN,
         new RsenUrlUtil.OnJsonResultListener<MyBean>() {
@@ -399,37 +407,38 @@ public class HomeFragment extends BasicFragment
           public void onParseJsonBean(List<RemenhuatiBean> beans, JSONObject jsonObject) {
             RemenhuatiBean bean = new RemenhuatiBean();
             try {
-              bean.title = jsonObject.getString("title");
-              bean.content = jsonObject.getString("content");
-              bean.supportCount = jsonObject.getString("supportCount");
-              bean.is_support = jsonObject.getString("is_support");
-              bean.nickname = jsonObject.getJSONObject("user").getString("nickname");
+              bean.title = jsonObject.optString("title");
+              bean.content = jsonObject.optString("content");
+              bean.supportCount = jsonObject.optString("supportCount");
+              bean.is_support = jsonObject.optString("is_support");
+              bean.nickname = jsonObject.getJSONObject("user").optString("nickname");
 
               bean.user_logo =
-                  RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").getString("avatar32");
+                  RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").optString("avatar32");
 
-              bean.id = jsonObject.getString("id");
-              bean.uid = jsonObject.getString("uid");
-              bean.group_id = jsonObject.getString("group_id");
-              bean.create_time = jsonObject.getString("create_time");
-              bean.update_time = jsonObject.getString("update_time");
-              bean.last_reply_time = jsonObject.getString("last_reply_time");
-              bean.status = jsonObject.getString("status");
-              bean.view_count = jsonObject.getString("view_count");
-              bean.reply_count = jsonObject.getString("reply_count");
-              bean.is_top = jsonObject.getString("is_top");
-              bean.cate_id = jsonObject.getString("cate_id");
-              JSONArray imgList = jsonObject.getJSONArray("imgList");
+              bean.id = jsonObject.optString("id");
+              bean.uid = jsonObject.optString("uid");
+              bean.group_id = jsonObject.optString("group_id");
+              bean.create_time = jsonObject.optString("create_time");
+              bean.update_time = jsonObject.optString("update_time");
+              bean.last_reply_time = jsonObject.optString("last_reply_time");
+              bean.status = jsonObject.optString("status");
+              bean.view_count = jsonObject.optString("view_count");
+              bean.reply_count = jsonObject.optString("reply_count");
+              bean.is_top = jsonObject.optString("is_top");
+              bean.cate_id = jsonObject.optString("cate_id");
+              JSONArray imgList = jsonObject.optJSONArray("imgList");
               List<String> imgs = new ArrayList<String>();
               for (int i = 0; imgList != null && i < imgList.length(); i++) {
                 imgs.add(imgList.getString(i));
               }
               bean.imgList = imgs;
-              JSONArray posts_rply = jsonObject.getJSONArray("posts_rply");
-              if (("").equals(posts_rply)) {
+              JSONArray posts_rply = jsonObject.optJSONArray("posts_rply");
+              if (null != posts_rply) {
                 bean.logolist = parseUserList(posts_rply);
               }
             } catch (JSONException e) {
+              Logger.e("HomeFragment", e.getMessage());
             }
             beans.add(bean);
           }
@@ -488,15 +497,6 @@ public class HomeFragment extends BasicFragment
       holder.tV(R.id.supportCount).setText(bean.supportCount);
       holder.tV(R.id.reply_count).setText(bean.reply_count);
       holder.tV(R.id.nickname).setText(bean.nickname);
-      //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
-      //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id
-      // .user_logo),
-      //                    new DisplayImageOptions.Builder()
-      //                            .showImageOnLoading(R.drawable.ic_launcher)
-      //                            .showImageForEmptyUri(R.drawable.ic_launcher)
-      //                            .showImageOnFail(R.drawable.ic_launcher)
-      //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-      //                            .displayer(new RoundedBitmapDisplayer(100)).build());
       ImageLoader.loadOptimizedHttpImage(getActivity(), bean.user_logo)
           .bitmapTransform(new CropCircleTransformation(getActivity()))
           .into(holder.imgV(R.id.user_logo));
@@ -539,8 +539,8 @@ public class HomeFragment extends BasicFragment
           }
 
           if (imageView != null) {
-            ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
-            //ImageLoader.getInstance().displayImage(url, imageView);
+            ImageLoader.loadOptimizedHttpImage(getActivity(), url).placeholder(R.drawable.picture_no)
+            .error(R.drawable.picture_no).into(imageView);
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {
 
@@ -603,15 +603,6 @@ public class HomeFragment extends BasicFragment
   public static void launch(Context context, boolean isWeGroup, RemenhuatiBean bean) {
     HashMap<String, String> map = new HashMap<>();
     Bundle bundle = new Bundle();
-    //        map.put("id", bean.id);
-    //        map.put("title", bean.title);
-    //        map.put("group_type", bean.group_type);
-    //        map.put("detail", bean.detail);
-    //        map.put("type_name", bean.type_name);
-    //        map.put("post_count", bean.post_count);
-    //        map.put("group_logo", bean.logo);
-    //        map.put("memberCount", bean.memberCount);
-    //        map.put("uid", bean.uid);
 
     map.put("id", bean.id);
     map.put("uid", bean.uid);

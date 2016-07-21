@@ -574,11 +574,14 @@
       <EditText
           android:id="@+id/reply_editText"
           android:layout_width="0dp"
-          android:layout_height="38dp"
+          android:layout_height="wrap_content"
           android:layout_marginLeft="10dp"
           android:layout_weight="8"
           android:background="@drawable/edittext_background"
           android:hint="回复楼主"
+          android:padding="@dimen/margin_small"
+          android:textColorHint="@color/font_color_dark_gray"
+          style="@style/Widget.App.TextView.Medium.Primary"
           />
 
       <TextView

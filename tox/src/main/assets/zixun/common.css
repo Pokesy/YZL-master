@@ -6,6 +6,6 @@
 .content .info .edit{display:block;text-align:center;padding-bottom:10px;}
 .content .info .date{display:block; text-align:center}
 .content article{line-height:26px;color:#4c4c4c;font-size:14px;letter-spacing: 2px;}
-.content article p{text-indent:2em;}
+.content article p{}
 .content article img{width:100%;height:auto;margin:10px 0;}
-.content article p img{width:100%;height:auto;margin-left:-2em;}
+.content article p img{width:100%;height:auto;}

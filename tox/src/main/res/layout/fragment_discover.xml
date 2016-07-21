@@ -43,7 +43,7 @@
             segmentcontrol:selectedBackgroundColors="@color/head"
             segmentcontrol:selectedIndex="0"
             segmentcontrol:texts="鱼友|渔场"
-            segmentcontrol:verticalGap="5dip" />
+            segmentcontrol:verticalGap="@dimen/margin_small" />
 
         <!--<com.thinksky.widget.SegmentView-->
         <!--android:id="@+id/segment_view"-->

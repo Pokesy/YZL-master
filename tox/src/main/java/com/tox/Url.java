@@ -10,6 +10,7 @@ import com.thinksky.info.UserInfo;
 import com.thinksky.info.WeiboCommentInfo;
 import com.thinksky.info.WeiboInfo;
 
+import com.thinksky.tox.BuildConfig;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +21,9 @@ public class Url {
     public static String VERSION = "";
 
     /*新写的微博接口*/
-    //public static String HTTPURL = "http://192.168.15.36:8081/opensns/api.php";
-    //public static String USERHEADURL = "http://192.168.15.36:8081/opensns/";
-    //public static String IMAGE = "http://192.168.15.36:8081/";
-    public static String HTTPURL ="http://122.5.45.150/api.php";
-    public static String USERHEADURL = "http://122.5.45.150/";
-    public static String IMAGE = "http://122.5.45.150/";
+    public static String HTTPURL = BuildConfig.URL_BASE + "api.php";
+    public static String USERHEADURL = BuildConfig.URL_BASE;
+    public static String IMAGE = BuildConfig.URL_BASE ;
     public static String MYWEIBO = "/weibo/listAllWeibo";
     public static String WEIBO = "/weibo/getHotWeibo";
     public static String MYFOLLOWINGWEIBO = "/weibo/listMyFollowingWeibo";

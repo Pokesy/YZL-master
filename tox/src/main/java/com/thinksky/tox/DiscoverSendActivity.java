@@ -20,7 +20,6 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -28,8 +27,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
 import com.alibaba.fastjson.JSON;
 import com.thinksky.fragment.DisLocationActivity;
 import com.thinksky.fragment.DiscoverFragment;
@@ -47,12 +44,17 @@ import com.tox.ToastHelper;
 import com.tox.TouchHelper;
 import com.tox.Url;
 import com.tox.WeiboApi;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.tsz.afinal.FinalBitmap;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
@@ -61,15 +63,9 @@ import org.kymjs.aframe.ui.widget.HorizontalListView;
 import org.kymjs.aframe.utils.FileUtils;
 import org.kymjs.kjframe.http.HttpParams;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class DiscoverSendActivity extends BaseBActivity implements View.OnClickListener {
+  private static final String STATE_HIDDEN = "0";
+  private static final String STATE_DISPLAY = "1";
   private LinearLayout photoLayout;
   private String mTempPhotoName;
   private EditText mTitleEdit, mContentEdit;
@@ -109,16 +105,17 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
   private String userUid;
   private BaseApi baseApi;
   private String l;
-  private LinearLayout location;
+  private RelativeLayout location;
   private String longitude;
   private String latitude;
   private String address;
   private TextView dizhi;
   private String isfactory = "2";
-  private ToggleButton mTogBtn;
+  private ImageView mTogBtn;
   private String isdisplay;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_send_discover);
     initView();
@@ -128,21 +125,22 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     kjBitmap = KJBitmap.create();
     finalBitmap = FinalBitmap.create(this);
     //        forumApi.setHandler(hand);
-    mTogBtn = (ToggleButton) findViewById(R.id.mTogBtn); // 获取到控件
-    mTogBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-      @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        // TODO Auto-generated method stub
-        if (isChecked) {
-          isdisplay = "0";
+    mTogBtn = (ImageView) findViewById(R.id.mTogBtn); // 获取到控件
+    // 添加监听事件
+    mTogBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        mTogBtn.setSelected(!mTogBtn.isSelected());
+        if (mTogBtn.isSelected()) {
+          isdisplay = STATE_HIDDEN;
         } else {
-          //未选中
-          isdisplay = "1";
+          isdisplay = STATE_DISPLAY;
         }
       }
-    });// 添加监听事件
+    });
     //        forumId=intent.getStringExtra("forumId");
     photoLayout = (LinearLayout) findViewById(R.id.Post_send_photo);
-    location = (LinearLayout) findViewById(R.id.location);
+    location = (RelativeLayout) findViewById(R.id.location);
     dizhi = (TextView) findViewById(R.id.dizhi);
     iv_round = (ImageView) findViewById(R.id.iv_round);
     photoLayout.setOnClickListener(this);
@@ -192,11 +190,13 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     map.put("uid", userUid);
     RsenUrlUtil.executeGetWidthMap(this, RsenUrlUtil.URL_FXU, map,
         new RsenUrlUtil.OnJsonResultListener<FUBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public void onParseJsonBean(List<FUBean> beans, JSONObject jsonObject) {
+          @Override
+          public void onParseJsonBean(List<FUBean> beans, JSONObject jsonObject) {
 
             try {
               FUBean bean = new FUBean();
@@ -212,25 +212,26 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             }
           }
 
-          @Override public void onResult(boolean state, List<FUBean> beans) {
+          @Override
+          public void onResult(boolean state, List<FUBean> beans) {
             if (state) {
 
               if (!beans.get(0).address.equals(null) && !TextUtils.isEmpty(beans.get(0).address)) {
                 dizhi.setText(beans.get(0).address);
-                address=beans.get(0).address;
+                address = beans.get(0).address;
               }
-              if (!beans.get(0).latitude.equals(null) && !TextUtils.isEmpty(beans.get(0).latitude)) {
-                latitude=beans.get(0).latitude;
+              if (!beans.get(0).latitude.equals(null) && !TextUtils.isEmpty(beans.get(0)
+                  .latitude)) {
+                latitude = beans.get(0).latitude;
               }
-              if (!beans.get(0).longitude.equals(null) && !TextUtils.isEmpty(beans.get(0).longitude)) {
-                longitude=beans.get(0).longitude;
+              if (!beans.get(0).longitude.equals(null) && !TextUtils.isEmpty(beans.get(0)
+                  .longitude)) {
+                longitude = beans.get(0).longitude;
               }
               if (!beans.get(0).mobile1.equals(null) && !TextUtils.isEmpty(beans.get(0).mobile1)) {
                 mContentEdit.setText(beans.get(0).mobile1);
               }
-              if (beans.get(0).isdisplay.equals("0")) {
-                mTogBtn.setChecked(true);
-              }
+              mTogBtn.setSelected(TextUtils.equals(beans.get(0).isdisplay, STATE_HIDDEN));
               if (!TextUtils.isEmpty(beans.get(0).factory_name)) {
                 mTitleEdit.setText(beans.get(0).factory_name);
               }
@@ -241,7 +242,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         });
   }
 
-  @Override public void onClick(View v) {
+  @Override
+  public void onClick(View v) {
     int id = v.getId();
     switch (id) {
       case R.id.Post_send_photo:
@@ -249,11 +251,12 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
           mAttachLayout.setVisibility(View.GONE);
           mPhotoShowLayout.setVisibility(View.VISIBLE);
         } else {
-          String[] items = { "相册", "拍照" };
+          String[] items = {"相册", "拍照"};
           AlertDialog.Builder builder = new AlertDialog.Builder(this);
           builder.setTitle("操作");
           builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
               switch (which) {
                 case 0:
                   Intent intent3 = new Intent(DiscoverSendActivity.this, ScanPhotoActivity.class);
@@ -356,13 +359,15 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     }
   }
 
-  @Override public void onBackPressed() {
+  @Override
+  public void onBackPressed() {
     super.onBackPressed();
     FileUtiles.DeleteTempFiles(Url.getDeleteFilesPath());
     DiscoverSendActivity.this.finish();
   }
 
-  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     /**
      * 对ShowImageActivity直接返回的
      */
@@ -394,8 +399,11 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
               imgList.get(img_num)
                   .setBackgroundDrawable(
                       new BitmapDrawable(BitmapUtiles.loadBitmap(imgPathList.get(i), 3)));
-                            /*imgList.get(img_num).setImageBitmap(BitmapUtiles.loadBitmap(imgPathList.get(i), 3));
-                            imgList.get(img_num).setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+                            /*imgList.get(img_num).setImageBitmap(BitmapUtiles.loadBitmap
+                            (imgPathList.get(i), 3));
+                            imgList.get(img_num).setLayoutParams(new ViewGroup.LayoutParams
+                            (ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams
+                            .FILL_PARENT));
                             imgList.get(img_num).setMinimumHeight(100);
                             imgList.get(img_num).setMinimumWidth(80);*/
               img_num++;
@@ -432,7 +440,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
               Log.e(">>", scrollImg.get(i));
                            /* imgList.get(img_num).setVisibility(View.VISIBLE);
                             imgLayList.get(getAbleLocation()).setVisibility(View.VISIBLE);
-                            imgList.get(getAbleLocation()).setImageBitmap(BitmapUtiles.loadBitmap(imgPathList.get(i), 2));*/
+                            imgList.get(getAbleLocation()).setImageBitmap(BitmapUtiles.loadBitmap
+                            (imgPathList.get(i), 2));*/
               img_num++;
             }
           }
@@ -534,14 +543,16 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         params.put("session_id", Url.SESSIONID);
         FinalHttp fh = new FinalHttp();
         fh.post(Url.UPLOADIMGURL, params, new AjaxCallBack<Object>() {
-          @Override public void onLoading(long count, long current) {
+          @Override
+          public void onLoading(long count, long current) {
             progressDialog.setProgressNumberFormat("%1dKB/%2dKB");
             ;
             progressDialog.setMax((int) count / 1024);
             progressDialog.setProgress((int) (current / 1024));
           }
 
-          @Override public void onSuccess(Object o) {
+          @Override
+          public void onSuccess(Object o) {
             progressDialog.dismiss();
             String s = myJson.getAttachId(o);
             attachIds.add(s);
@@ -553,7 +564,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             }
           }
 
-          @Override public void onFailure(Throwable t, int errorNo, String strMsg) {
+          @Override
+          public void onFailure(Throwable t, int errorNo, String strMsg) {
             Log.e("上传照片失败", "");
             progressDialog.dismiss();
             Toast.makeText(DiscoverSendActivity.this, "上传照片失败！", Toast.LENGTH_LONG).show();
@@ -594,7 +606,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     map.put("isdisplay", isdisplay);
     RsenUrlUtil.executeGetWidthMap(this, RsenUrlUtil.SENDDISCOVER, map,
         new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
@@ -606,7 +619,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             beans.add(discoverInfo);
           }
 
-          @Override public void onResult(boolean state, List beans) {
+          @Override
+          public void onResult(boolean state, List beans) {
             progressDialog.dismiss();
             if (state) {
               ToastHelper.showToast("发送成功", DiscoverSendActivity.this);
@@ -625,7 +639,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     private LoadImg loadImg;
 
     public PhotoAdapter(Context ctx, FinalBitmap finalBitmap, KJBitmap kjBitmap,
-        List<String> list) {
+                        List<String> list) {
       this.kjBitmap = kjBitmap;
       this.finalBitmap = finalBitmap;
       this.imgUrl = list;
@@ -633,19 +647,23 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
       loadImg = new LoadImg(ctx);
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
       return imgUrl.size();
     }
 
-    @Override public Object getItem(int position) {
+    @Override
+    public Object getItem(int position) {
       return position;
     }
 
-    @Override public long getItemId(int position) {
+    @Override
+    public long getItemId(int position) {
       return position;
     }
 
-    @Override public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
       final Holder holder;
       final View view;
 
@@ -686,17 +704,19 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         }
       }
       holder.imageView.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
           if (imgUrl.get(position).equals("add")) {
             Log.d("Andy12345", img_num + "");
             Log.d("Andy123456", imgUrl.get(position));
             if (img_num < 3) {
               //ToastHelper.showToast("点击了罗",ctx);
-              String[] items = { "相册", "拍照" };
+              String[] items = {"相册", "拍照"};
               AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
               builder.setTitle("操作");
               builder.setItems(items, new DialogInterface.OnClickListener() {
-                @Override public void onClick(DialogInterface dialog, int which) {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
                   switch (which) {
                     case 0:
                       Intent intent3 =
@@ -734,7 +754,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         }
       });
       holder.delImg.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
           deleteCell(view, position);
         }
       });
@@ -748,7 +769,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
 
   private void deleteCell(final View v, final int index) {
     Animation.AnimationListener al = new Animation.AnimationListener() {
-      @Override public void onAnimationEnd(Animation arg0) {
+      @Override
+      public void onAnimationEnd(Animation arg0) {
         horizontalListView.scrollTo(0);
         scrollImg.remove(index);
         img_num--;
@@ -758,10 +780,12 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         photoAdapter.notifyDataSetChanged();
       }
 
-      @Override public void onAnimationRepeat(Animation animation) {
+      @Override
+      public void onAnimationRepeat(Animation animation) {
       }
 
-      @Override public void onAnimationStart(Animation animation) {
+      @Override
+      public void onAnimationStart(Animation animation) {
       }
     };
     collapse(v, al);
@@ -771,7 +795,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     final int initialHeight = v.getMeasuredHeight();
 
     Animation anim = new Animation() {
-      @Override protected void applyTransformation(float interpolatedTime, Transformation t) {
+      @Override
+      protected void applyTransformation(float interpolatedTime, Transformation t) {
         if (interpolatedTime == 1) {
           v.setVisibility(View.GONE);
         } else {
@@ -780,7 +805,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         }
       }
 
-      @Override public boolean willChangeBounds() {
+      @Override
+      public boolean willChangeBounds() {
         return true;
       }
     };

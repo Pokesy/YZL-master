@@ -2,39 +2,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <com.baidu.mapapi.map.MapView
-        android:id="@+id/bmapView"
-        android:layout_width="fill_parent"
+  <com.baidu.mapapi.map.MapView
+      android:id="@+id/bmapView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:clickable="true"
+      />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_alignParentTop="true"
+      android:gravity="center_vertical"
+      android:padding="@dimen/margin_primary"
+      android:background="@android:color/white"
+      >
+
+
+    <EditText
+        android:id="@+id/geocodekey"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="8"
+        android:hint="请长按地图标记你的位置"
+        android:paddingLeft="@dimen/margin_small"
+        android:paddingRight="@dimen/margin_small"
+        style="@style/Widget.App.TextView.Medium.Primary"
+        />
 
-        android:clickable="true" />
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/geocode"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-
-        android:orientation="horizontal">
-
-
-        <EditText
-            android:id="@+id/geocodekey"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:hint="请长按地图标记你的位置"
-            android:layout_weight="8" />
-
-        <Button
-            android:id="@+id/geocode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-
-
-            android:text="确定" />
-    </LinearLayout>
-
+        android:layout_weight="2"
+        android:padding="@dimen/margin_small"
+        android:text="确定"
+        android:gravity="center"
+        style="@style/Widget.App.TextView.Medium.Primary"
+        />
+  </LinearLayout>
 
 
 </RelativeLayout>

@@ -599,7 +599,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == 0 && resultCode == 1) {
       Log.d("回来了吗？", "123");
-      Log.d("touxiang", data.getExtras().getString("NickName"));
       backName = data.getExtras().getString("NickName");
       backAvater = data.getExtras().getString("Avater");
     }

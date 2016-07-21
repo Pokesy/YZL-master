@@ -17,18 +17,15 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.thinksky.holder.BaseBActivity;
-import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
@@ -48,7 +45,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
  * Created by Administrator on 2015/5/28 0028.
@@ -66,7 +62,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   String support_flag;
   private int post_id;
   private int page = 1;
-  private KJBitmap kjBitmap;
   private ImageView back_menu;
   private TextView group_name, chengyuan;
   private ScrollView post_scroll;
@@ -113,7 +108,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     mContext = GroupPostInfoActivity.this;
     groupApi = new GroupApi();
     groupApi.setHandler(mHandler);
-    kjBitmap = KJBitmap.create();
     baseApi = new BaseApi();
     session_id = baseApi.getSeesionId();
     userUid = baseApi.getUid();
@@ -196,13 +190,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
   //初始化activity
   public void InitPostView(final HashMap<String, String> postMap) {
-
-//        group_name.setText(postMap.get("group_name"));
     post_title.setText(postMap.get("title"));
     post_user_name.setText(postMap.get("user_nickname"));
     user_name.setText(postMap.get("user_nickname"));
-    //kjBitmap.display(user_logo, postMap.get("user_logo"));
-    //ImageLoader.getInstance().displayImage(postMap.get("user_logo"), user_logo);
     if (TextUtils.isEmpty(postMap.get("user_logo"))) {
       user_logo.setImageResource(R.drawable.side_user_avatar);
     } else {
@@ -217,13 +207,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     support_flag = postMap.get("is_support");
     qianming.setText(postMap.get("signature"));
     huifu.setText("回复：" + postMap.get("reply_count"));
-//        chengyuan.setText("有" + logolist.size() + "个成员正在热烈的讨论中");
-//        String url = RsenUrlUtil.URL_XIAOZU_XIANGQINGTZ ;
-//        if (BuildConfig.DEBUG) {
-//            url = "http://192.168.1.11:8080/HelloJsp/apptox4.app";
-//        } else {
-//            url = RsenUrlUtil.URL_XIAOZU_XIANGQING + group_id;
-//        }
+    replyCountView.setText(String.valueOf(postMap.get("reply_count")));
     group_id = postMap.get("group_id");
 
     RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_XIANGQING, new RsenUrlUtil
@@ -278,8 +262,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       public void onResult(boolean state, final List<MyBean> beans) {
         if (state) {
           recycler.setAdapter(new MySubAdapter(GroupPostInfoActivity.this, logolist));
-//                    kjBitmap.display(group_logo, beans.get(0).logo);
-//                    ImageLoader.getInstance().displayImage(beans.get(0).logo, group_logo);
           com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
               .this, beans.get(0).logo).placeholder(R.drawable.side_user_avatar).error(R.drawable
               .side_user_avatar).dontAnimate().into(group_logo);
@@ -575,11 +557,17 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
             ToastHelper.showToast("感谢你的支持", mContext);
             supportCount++;
             supportCountView.setText(supportCount + "");
+            performPostDataChangeEvent();
           }
           if (POSTCOMMENT) {
             replyCount++;
-            replyCountView.setText(replyCount + "");
+            replyCountView.setText(String.valueOf(replyCount));
+            huifu.setText(String.valueOf(replyCount));
             ToastHelper.showToast("评论成功", mContext);
+            countOne = 0;
+            page = 0;
+            new PostReplyThread(post_id, page).start();
+            performPostDataChangeEvent();
           }
           break;
         case 800:
@@ -592,6 +580,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
           replyCount = countMap.get("replyCount");
           supportCountView.setText(supportCount + "");
           replyCountView.setText(replyCount + "");
+          performPostDataChangeEvent();
           break;
         case 0x130:
           postReplyList = (ArrayList<HashMap<String, String>>) msg.obj;
@@ -602,6 +591,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
           if (postReplyList.size() == 0) {
             loadingBarText.setText("暂无更多");
           } else {
+            if (page == 0) {
+              postBody.removeAllViews();
+            }
             if (lock && countTwo == 10) {
               page++;
               for (int i = 0; i < countTwo; i++) {
@@ -739,7 +731,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     startActivity(replyFloorIntent);
   }
 
-  //楼中楼数据异步加载器
+  /**
+   * 楼中楼数据异步加载器
+   */
   class LzlTask extends AsyncTask<Integer, Void, ArrayList<HashMap<String, String>>> {
 
     private ArrayList<JSONObject> jsonObjArrayList;
@@ -785,9 +779,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     protected void onPostExecute(final ArrayList<HashMap<String, String>> lzlReplyList) {
       toReplyCount = lzlReplyList.size();
       viewHolder.LzlReplyBox.setVisibility(View.VISIBLE);
-//            kjBitmap.display(viewHolder.lzlOneUserLogo, lzlReplyList.get(0).get("user_logo"));
-//            ImageLoader.getInstance().displayImage(lzlReplyList.get(0).get("user_logo"),
-// viewHolder.lzlOneUserLogo);
 
       com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
           .this, lzlReplyList.get(0).get("user_logo")).into(viewHolder.lzlOneUserLogo);
@@ -805,10 +796,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       }
       if (toReplyCount >= 2) {
         viewHolder.lzlTwoLayout.setVisibility(View.VISIBLE);
-//                kjBitmap.display(viewHolder.lzlTwoUserLogo, lzlReplyList.get(1).get("user_logo"));
-//                ImageLoader.getInstance().displayImage(lzlReplyList.get(1).get("user_logo"),
-// viewHolder.lzlTwoUserLogo);
-        com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
+        ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
             .this, lzlReplyList.get(1).get("user_logo")).into(viewHolder.lzlTwoUserLogo);
         viewHolder.lzlTwoUserLogo.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -857,7 +845,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
   }
 
-  //帖子回复数据线程
+  /**
+   * 帖子回复数据线程
+   */
   private class PostReplyThread extends Thread implements Runnable {
 
     private ArrayList<HashMap<String, String>> postReplyList;
@@ -878,20 +868,20 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         JSONObject jsonObj = jsonObjArrayList.get(i);
         HashMap<String, String> map = new HashMap<String, String>();
         try {
-          map.put("id", jsonObj.getString("id"));
-          map.put("uid", jsonObj.getString("uid"));
-          map.put("post_id", jsonObj.getString("post_id"));
-          map.put("content", jsonObj.getString("content"));
-          map.put("create_time", jsonObj.getString("create_time"));
-          map.put("update_time", jsonObj.getString("update_time"));
-          map.put("status", jsonObj.getString("status"));
-          map.put("imgList", jsonObj.getString("imgList"));
-          map.put("is_landlord", jsonObj.getString("is_landlord"));
-          map.put("toReplyCount", jsonObj.getString("toReplyCount"));
+          map.put("id", jsonObj.optString("id"));
+          map.put("uid", jsonObj.optString("uid"));
+          map.put("post_id", jsonObj.optString("post_id"));
+          map.put("content", jsonObj.optString("content"));
+          map.put("create_time", jsonObj.optString("create_time"));
+          map.put("update_time", jsonObj.optString("update_time"));
+          map.put("status", jsonObj.optString("status"));
+          map.put("imgList", jsonObj.optString("imgList"));
+          map.put("is_landlord", jsonObj.optString("is_landlord"));
+          map.put("toReplyCount", jsonObj.optString("toReplyCount"));
           JSONObject jsonUserObj = jsonObj.getJSONObject("user");
-          map.put("user_uid", jsonUserObj.getString("uid"));
-          map.put("nickname", jsonUserObj.getString("nickname"));
-          map.put("user_logo", Url.IMAGE + jsonUserObj.getString("avatar128"));
+          map.put("user_uid", jsonUserObj.optString("uid"));
+          map.put("nickname", jsonUserObj.optString("nickname"));
+          map.put("user_logo", Url.IMAGE + jsonUserObj.optString("avatar128"));
         } catch (JSONException e) {
           e.printStackTrace();
         }
@@ -904,7 +894,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     }
   }
 
-  //实时更新帖子点赞数和回复数线程
+  /**
+   * 实时更新帖子点赞数和回复数线程
+   */
   private class PostAllCount extends Thread implements Runnable {
 
     private JSONObject jsonObject;
@@ -929,37 +921,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     }
   }
 
-  //解决ListView在scrollView中显示不全
-  public static class Utility {
-    public static void setListViewHeightBasedOnChildren(IssueListView listView, int width) {
-      //获取ListView对应的Adapter
-      ListAdapter listAdapter = listView.getAdapter();
-      if (listAdapter == null) {
-        // pre-condition
-        return;
-      }
-
-      int totalHeight = 0;
-      for (int i = 0, len = listAdapter.getCount(); i < len; i++) {   //listAdapter.getCount()
-        // 返回数据项的数目
-        View listItem = listAdapter.getView(i, null, listView);
-        //符合中文的解决方式，据说完美，but还未尝试过
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec
-            .AT_MOST);
-        listItem.measure(desiredWidth, 0);   //计算子项View 的宽高
-
-        totalHeight += listItem.getMeasuredHeight();
-        Log.e("totalHeight>>>>>>>", listItem.getMeasuredHeight() + "");
-      }
-      Log.e("totalHeight>>>>>>>", totalHeight + "");
-      ViewGroup.LayoutParams params = listView.getLayoutParams();
-      params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-      //listView.getDividerHeight()获取子项间分隔符占用的高度
-      //params.height最后得到整个ListView完整显示需要的高度
-      listView.setLayoutParams(params);
-    }
-
-  }
 
   //标记状态
   private void initFlag(boolean support, boolean postComment) {
@@ -996,5 +957,13 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         }
       });
     }
+  }
+
+  private void performPostDataChangeEvent() {
+    getComponent().getGlobalBus().post(new PostDataChangeEvent());
+  }
+
+  public class PostDataChangeEvent {
+
   }
 }

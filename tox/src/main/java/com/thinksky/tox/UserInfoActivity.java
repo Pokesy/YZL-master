@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -83,7 +84,7 @@ public class UserInfoActivity extends BaseBActivity {
 
     sp = getSharedPreferences("userInfo", 0);
     initView();
-    if (!userUid.equals(Url.USERID)) {
+    if (!TextUtils.equals(userUid, Url.USERID)) {
       mChangeMsg.setVisibility(View.GONE);
     }
     userApi2 = new UserApi(followHandler);
@@ -103,9 +104,10 @@ public class UserInfoActivity extends BaseBActivity {
     userApi.setHandler(hand);
     userApi.getUserInfo(userUid);
     //判断是否是登陆者信息，如果是就保存当前页面以重复使用
-    if (!sp.getString("avatar", "").equalsIgnoreCase("") && userUid.equals(Url.USERID)) {
-      BaseFunction.showImage(this, mUserCamera, sp.getString("avatar", ""), loadImgHeadImg, Url
-          .IMGTYPE_HEAD);
+    if (!sp.getString("avatar", "").equalsIgnoreCase("") && TextUtils.equals(userUid, Url.USERID)) {
+      ImageLoader.loadOptimizedHttpImage(this, sp.getString("avatar", "")).placeholder(R.drawable
+          .side_user_avatar)
+          .error(R.drawable.side_user_avatar).dontAnimate().into(mUserCamera);
     }
   }
 
@@ -171,7 +173,7 @@ public class UserInfoActivity extends BaseBActivity {
           // startActivity(intent);
           break;
         case R.id.UserCamera:
-          if (userUid.equals(Url.USERID)) {
+          if (TextUtils.equals(userUid,Url.USERID)) {
             Intent intent = new Intent(UserInfoActivity.this, SetUserInfoActivity.class);
             intent.putExtra("info", Url.MYUSERINFO.getAvatar());
             Bundle bundle = new Bundle();
@@ -181,7 +183,7 @@ public class UserInfoActivity extends BaseBActivity {
           }
           break;
         case R.id.changeMsg:
-          if (userUid.equals(Url.USERID)) {
+          if (TextUtils.equals(userUid,Url.USERID)) {
             Intent intent = new Intent(UserInfoActivity.this, SetUserInfoActivity.class);
             intent.putExtra("info", Url.MYUSERINFO.getAvatar());
             Bundle bundle = new Bundle();
@@ -216,7 +218,7 @@ public class UserInfoActivity extends BaseBActivity {
           break;
         //关注按钮事件
         case R.id.follow_btn:
-          if (!userApi.getSeesionId().equals("")) {
+          if (!TextUtils.isEmpty(userApi.getSeesionId())) {
             if (followFlag) {
               //取消关注的操作
               new AlertDialog.Builder(UserInfoActivity.this)
@@ -355,7 +357,7 @@ public class UserInfoActivity extends BaseBActivity {
           ImageLoader.loadOptimizedHttpImage(UserInfoActivity.this, Url.MYUSERINFO.getAvatar())
               .placeholder(R.drawable.side_user_avatar)
               .error(R.drawable.side_user_avatar).dontAnimate().into(mUserCamera);
-          if (userUid.equals(Url.USERID)) {
+          if (TextUtils.equals(userUid,Url.USERID)) {
             saveUserInfoToNative();
           }
           createUserInfo(Url.MYUSERINFO);
@@ -371,10 +373,11 @@ public class UserInfoActivity extends BaseBActivity {
   //保存用户信息至本地
   private void saveUserInfoToNative() {
 
-    if (Url.MYUSERINFO.getAvatar().equals(BaseFunction.getSharepreference("avatar",
+    if (TextUtils.equals(Url.MYUSERINFO.getAvatar(), BaseFunction.getSharepreference("avatar",
         UserInfoActivity.this, Url.SharedPreferenceName))) {
-      BaseFunction.showImage(this, mUserCamera, Url.MYUSERINFO.getAvatar(), loadImgHeadImg, Url
-          .IMGTYPE_HEAD);
+      ImageLoader.loadOptimizedHttpImage(UserInfoActivity.this, Url.MYUSERINFO.getAvatar())
+          .placeholder(R.drawable.side_user_avatar)
+          .error(R.drawable.side_user_avatar).dontAnimate().into(mUserCamera);
     }
     SharedPreferences sp = this.getSharedPreferences("userInfo", 0);
     SharedPreferences.Editor editor = sp.edit();
@@ -384,7 +387,6 @@ public class UserInfoActivity extends BaseBActivity {
     editor.putString("session_id", Url.SESSIONID);
     editor.putString("user_info", JsonConverter.objectToJson(Url.MYUSERINFO));
 
-    Log.e("我要保存", Url.MYUSERINFO.getAvatar());
     editor.commit();
   }
 
@@ -402,9 +404,9 @@ public class UserInfoActivity extends BaseBActivity {
     if (!"".equals(userInfo.getSignature())) {
       signature.setText(userInfo.getSignature());
     }
-    if (userInfo.getSex().equals("1")) {
+    if (TextUtils.equals(userInfo.getSex(), "1")) {
       UserTitle.setText("男");
-    } else if (userInfo.getSex().equals("2")) {
+    } else if (TextUtils.equals(userInfo.getSex(), "2")) {
       UserTitle.setText("女");
     } else {
       UserTitle.setText("保密");
@@ -416,10 +418,9 @@ public class UserInfoActivity extends BaseBActivity {
     } else {
       UserTime.setText(userInfo.getProvince() + " " + userInfo.getCity());
     }
-    Log.d("userInfo.getAvatar()", userInfo.getAvatar());
 //        mUserCamera.setImageBitmap(userInfo.getAvatar());
-    if (!userUid.equals(Url.USERID)) {
-      if (userInfo.getIsFollow().equals("0")) {
+    if (!TextUtils.equals(userUid,Url.USERID)) {
+      if (TextUtils.equals(userInfo.getIsFollow(), "0")) {
         followFlag = false;
         followBtn.setText("添加关注");
         followBtn.setVisibility(View.VISIBLE);

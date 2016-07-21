@@ -1177,10 +1177,10 @@ private String s;
                 try {
                     UserInfo userInfo = new UserInfo();
                     JSONObject tempJson = jsonArray.optJSONObject(i).getJSONObject("user");
-                    userInfo.setUid(tempJson.getString("uid"));
-                    userInfo.setUsername(tempJson.getString("username"));
-                    userInfo.setNickname(tempJson.getString("nickname"));
-                    userInfo.setAvatar(baseApi.getResourcesURL(tempJson.getString("avatar128")));
+                    userInfo.setUid(tempJson.optString("uid"));
+                    userInfo.setUsername(tempJson.optString("username"));
+                    userInfo.setNickname(tempJson.optString("nickname"));
+                    userInfo.setAvatar(baseApi.getResourcesURL(tempJson.optString("avatar128")));
                     replyInfo.setUser(userInfo);
                 }catch (JSONException e){
                     e.printStackTrace();

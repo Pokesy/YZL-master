@@ -14,6 +14,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@drawable/bg_rect_border_gray"
+      android:gravity="center"
       android:orientation="vertical"
       android:padding="10dp"
       >
@@ -30,7 +31,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="vertical"
         >
 
@@ -70,36 +71,25 @@
           />
       <!--内部行-->
       <LinearLayout
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:gravity="center"
-          android:orientation="horizontal"
+          android:orientation="vertical"
           android:paddingLeft="10dp"
           android:paddingRight="10dp"
           >
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/margin_smallest"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             >
-
-          <TextView
-              android:id="@+id/post_count"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="4dp"
-              android:gravity="center"
-              android:textColor="@color/head"
-              android:textSize="13sp"
-              tools:text="aaabbbbbb"
-              />
 
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_marginRight="@dimen/margin_small"
               android:drawableLeft="@drawable/icon_hot_group_topic"
               android:drawablePadding="4dp"
               android:gravity="center"
@@ -107,30 +97,30 @@
               android:textColor="@color/font_color_dark_gray"
               android:textSize="14sp"
               />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            >
 
           <TextView
-              android:id="@+id/member_count"
+              android:id="@+id/post_count"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="4dp"
               android:gravity="center"
               android:textColor="@color/head"
               android:textSize="13sp"
-              tools:text="aaaaaaa"
+              tools:text="aaabbbbbb"
               />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
 
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_marginRight="@dimen/margin_small"
               android:drawableLeft="@drawable/icon_hot_group_member"
               android:drawablePadding="4dp"
               android:gravity="center"
@@ -138,6 +128,17 @@
               android:textColor="@color/font_color_dark_gray"
               android:textSize="14sp"
               />
+
+          <TextView
+              android:id="@+id/member_count"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:textColor="@color/head"
+              android:textSize="13sp"
+              tools:text="aaaaaaa"
+              />
+
         </LinearLayout>
       </LinearLayout>
     </LinearLayout>

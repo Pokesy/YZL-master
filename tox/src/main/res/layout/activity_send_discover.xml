@@ -136,9 +136,9 @@
           android:layout_height="wrap_content"
           android:paddingBottom="10dp"
           android:paddingTop="10dp"
-          android:text="上传照片让别人来一睹渔场风采吧(最多4张)"
-          android:textColor="#646464"
-          android:textSize="18sp"
+          android:text="上传照片让别人来一睹渔场风采吧(最多3张)"
+          style="@style/Widget.App.TextView.XLarge.Primary"
+          android:layout_marginLeft="10dp"
           />
 
       <LinearLayout
@@ -310,15 +310,15 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
             >
 
           <ImageView
               android:id="@+id/iv_round"
-              android:layout_width="25dp"
-              android:layout_height="25dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
               android:layout_gravity="center"
               android:layout_marginLeft="10dp"
               android:src="@drawable/yuyou_1"
@@ -329,11 +329,13 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:layout_marginLeft="10dp"
               android:background="@drawable/shape"
               android:hint="请输入渔场名字"
-              android:textColor="#646464"
-              android:textSize="15dp"
+              android:paddingBottom="15dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="15dp"
+              style="@style/Widget.App.TextView.Large.Primary"
               />
 
 
@@ -342,23 +344,23 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#e4e4e4"
+            android:background="@color/bg_color_divider"
             />
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
-
-            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
             >
 
           <ImageView
               android:id="@+id/iv_user"
-              android:layout_width="25dp"
-              android:layout_height="25dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
               android:layout_gravity="center"
               android:layout_marginLeft="10dp"
               android:src="@drawable/near"
@@ -369,41 +371,45 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:layout_marginLeft="20dp"
-              android:text="我的位置"
-              android:textColor="#646464"
-              android:textSize="15sp"
+              android:layout_toRightOf="@id/iv_user"
+              android:hint="我的位置"
+              android:paddingBottom="15dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="15dp"
+              style="@style/Widget.App.TextView.Large.Primary"
+              android:layout_centerVertical="true"
               />
 
-          <TextView
-              android:layout_width="match_parent"
+          <ImageView
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_gravity="center"
+              android:layout_gravity="right"
               android:gravity="end"
-              android:paddingRight="20dp"
-              android:text=">"
-              android:textSize="25sp"
+              android:src="@drawable/tiaozhuan"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="25dp"
               />
-        </LinearLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-
-            android:background="#e4e4e4"
+            android:background="@color/bg_color_divider"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
             >
 
           <ImageView
-              android:layout_width="25dp"
-              android:layout_height="25dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
               android:layout_gravity="center"
               android:layout_marginLeft="10dp"
               android:src="@drawable/phone"
@@ -414,11 +420,13 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_gravity="center"
-              android:layout_marginLeft="10dp"
               android:background="@drawable/shape"
               android:hint="请输入您的联系电话（选填）"
-              android:textColor="#646464"
-              android:textSize="15dp"
+              android:paddingBottom="15dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="15dp"
+              style="@style/Widget.App.TextView.Large.Primary"
               />
 
 
@@ -431,39 +439,38 @@
             android:background="#e4e4e4"
             />
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/yincang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
             >
 
           <TextView
               android:id="@+id/tv_yc"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="20dp"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
+              android:layout_marginLeft="25dp"
+              android:paddingBottom="15dp"
+              android:paddingTop="15dp"
               android:text="隐藏我的位置"
-              android:textColor="#646464"
-              android:textSize="15sp"
+              style="@style/Widget.App.TextView.Large.Primary"
               />
 
 
-          <ToggleButton
+          <ImageView
               android:id="@+id/mTogBtn"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="190dp"
-              android:background="@android:color/transparent"
-              android:button="@drawable/toggle_btn"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:src="@drawable/toggle_btn"
               android:checked="false"
-              android:text=""
-              android:textOff=""
-              android:textOn=""
+              android:layout_marginRight="20dp"
               />
-        </LinearLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
