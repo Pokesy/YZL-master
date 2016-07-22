@@ -51,25 +51,38 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
     // 地图初始化
     mMapView = (MapView) findViewById(R.id.bmapView);
     mBaiduMap = mMapView.getMap();
+    // 初始化搜索模块，注册事件监听
+    mSearch = GeoCoder.newInstance();
+    mSearch.setOnGetGeoCodeResultListener(this);
     // 开启定位图层
     mBaiduMap.setMyLocationEnabled(true);
     mLocationClient = new LocationClient(this);     //声明LocationClient类
     mLocationClient.registerLocationListener(myListener);    //注册监听函数
     initLocation();
     mLocationClient.start();
-    // 初始化搜索模块，注册事件监听
-    mSearch = GeoCoder.newInstance();
-    mSearch.setOnGetGeoCodeResultListener(this);
+    //// 初始化搜索模块，注册事件监听
+    //mSearch = GeoCoder.newInstance();
+    //mSearch.setOnGetGeoCodeResultListener(this);
+    ////定位我的位置
+    //MyLocationConfiguration config =
+    //    new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING, false, null);
+    //mBaiduMap.setMyLocationConfigeration(config);
+    //
+    ////  设置默认缩放级别。放大我的位置周边信息
+    //MapStatusUpdate statusUpdate = MapStatusUpdateFactory.zoomTo(8);
+    //mBaiduMap.setMapStatus(statusUpdate);
+    ////搜索当前位置
+    //    mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(
+    //        new LatLng(mBaiduMap.getLocationData().latitude, mBaiduMap.getLocationData().longitude)));
+
     mBaiduMap.setOnMapLongClickListener(new BaiduMap.OnMapLongClickListener() {
-      @Override
-      public void onMapLongClick(final LatLng latLng) {
+      @Override public void onMapLongClick(final LatLng latLng) {
         LatLng ptCenter = new LatLng(latLng.latitude, latLng.longitude);
         // 反Geo搜索
-        mSearch.reverseGeoCode(new ReverseGeoCodeOption()
-            .location(ptCenter));
+        mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(ptCenter));
+
         geocode.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
+          @Override public void onClick(View v) {
             Intent intent = new Intent(DisLocationActivity.this, DiscoverSendActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("latitude", String.valueOf(latLng.latitude));
@@ -82,14 +95,12 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
         });
       }
     });
-
-
   }
 
   private void initLocation() {
     LocationClientOption option = new LocationClientOption();
     option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-      //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+    //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
     option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
     int span = 1000;
     option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
@@ -97,10 +108,10 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
     option.setOpenGps(true);//可选，默认false,设置是否使用gps
     option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
     option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation
-      // .getLocationDescribe里得到，结果类似于“在北京天安门附近”
+    // .getLocationDescribe里得到，结果类似于“在北京天安门附近”
     option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
     option.setIgnoreKillProcess(false);
-      //可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+    //可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
     option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
     option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
     mLocationClient.setLocOption(option);
@@ -113,21 +124,17 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
 
   }
 
-  @Override
-  protected void onPause() {
+  @Override protected void onPause() {
     mMapView.onPause();
     super.onPause();
   }
 
-  @Override
-  protected void onResume() {
+  @Override protected void onResume() {
     mMapView.onResume();
     super.onResume();
-
   }
 
-  @Override
-  protected void onDestroy() {
+  @Override protected void onDestroy() {
 
     //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
     mBaiduMap.setMyLocationEnabled(false);
@@ -137,41 +144,31 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
     super.onDestroy();
   }
 
-  @Override
-  public void onGetGeoCodeResult(GeoCodeResult result) {
+  @Override public void onGetGeoCodeResult(GeoCodeResult result) {
     if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-      Toast.makeText(DisLocationActivity.this, "抱歉，未能找到结果", Toast.LENGTH_LONG)
-          .show();
+      Toast.makeText(DisLocationActivity.this, "抱歉，未能找到结果", Toast.LENGTH_LONG).show();
       return;
     }
     mBaiduMap.clear();
     mBaiduMap.addOverlay(new MarkerOptions().position(result.getLocation())
-        .icon(BitmapDescriptorFactory
-            .fromResource(R.drawable.icon_marka)));
-    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result
-        .getLocation()));
-    String strInfo = String.format("纬度：%f 经度：%f",
-        result.getLocation().latitude, result.getLocation().longitude);
+        .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marka)));
+    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result.getLocation()));
+    String strInfo =
+        String.format("纬度：%f 经度：%f", result.getLocation().latitude, result.getLocation().longitude);
     Toast.makeText(DisLocationActivity.this, strInfo, Toast.LENGTH_LONG).show();
     geocodekey.setText(result.getAddress());
   }
 
-  @Override
-  public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+  @Override public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
     if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-      Toast.makeText(DisLocationActivity.this, "抱歉，未能找到结果", Toast.LENGTH_LONG)
-          .show();
+      Toast.makeText(DisLocationActivity.this, "抱歉，未能找到结果", Toast.LENGTH_LONG).show();
       return;
     }
     mBaiduMap.clear();
     mBaiduMap.addOverlay(new MarkerOptions().position(result.getLocation())
-        .icon(BitmapDescriptorFactory
-            .fromResource(R.drawable.icon_marka)));
-    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result
-        .getLocation()));
+        .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marka)));
+    mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(result.getLocation()));
     geocodekey.setText(result.getAddress());
-
-
   }
 
   /**
@@ -179,18 +176,15 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
    */
   public class MyLocationListener implements BDLocationListener {
 
-    @Override
-    public void onReceiveLocation(BDLocation location) {
+    @Override public void onReceiveLocation(BDLocation location) {
       // map view 销毁后不在处理新接收的位置
       //Receive Location
       if (location == null || mMapView == null) {
         return;
       }
 
-
       // 构造定位数据
-      MyLocationData locData = new MyLocationData.Builder()
-          .accuracy(location.getRadius()) //设置精确米数
+      MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius()) //设置精确米数
           .latitude(location.getLatitude())//设置纬度
           .longitude(location.getLongitude())//设置经度
           .build();
@@ -198,13 +192,14 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
       // 把定位信息显示地图上
       mBaiduMap.setMyLocationData(locData);
 
-      LatLng ll = new LatLng(location.getLatitude(),
-          location.getLongitude());
+      LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
+      //搜索当前位置
+      mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(ll));
       MapStatus.Builder builder = new MapStatus.Builder();
-      builder.target(ll).zoom(10.0f);
+      builder.target(ll).zoom(18.0f);
       //把定位设置为普通模式，该模式下，每次位置更新就不会将地图拖到我的位置。这样不影响拖动地图查看其他位置信息
-      MyLocationConfiguration config = new MyLocationConfiguration(
-          MyLocationConfiguration.LocationMode.NORMAL, false, null);
+      MyLocationConfiguration config =
+          new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, false, null);
       mBaiduMap.setMyLocationConfigeration(config);
       mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
       mLocationClient.stop();
@@ -213,5 +208,4 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
     public void onReceivePoi(BDLocation poiLocation) {
     }
   }
-
 }

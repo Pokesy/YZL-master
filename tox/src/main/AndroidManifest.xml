@@ -1,458 +1,459 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.thinksky.tox"
     android:versionCode="13"
-    android:versionName="1.0">
+    android:versionName="1.0"
+    package="com.thinksky.tox">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="23"
-        tools:overrideLibrary="timber.log"/>
+  <uses-sdk
+      android:minSdkVersion="14"
+      android:targetSdkVersion="23"
+      tools:overrideLibrary="timber.log"/>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--百度地图sdk需要权限-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 访问网络，网络定位需要上网-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- SD卡读取权限，用户写入离线定位数据-->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+  <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.VIBRATE"/>
+  <uses-permission android:name="android.permission.FLASHLIGHT"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <!--百度地图sdk需要权限-->
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+  <uses-permission android:name="android.permission.WAKE_LOCK"/>
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.GET_TASKS"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+  <!-- 这个权限用于进行网络定位-->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+  <!-- 这个权限用于访问GPS定位-->
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+  <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+  <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+  <!-- 用于读取手机当前的状态-->
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+  <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <!-- 访问网络，网络定位需要上网-->
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <!-- SD卡读取权限，用户写入离线定位数据-->
+  <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <application
-        android:name="com.thinksky.holder.BaseApplication"
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+  <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+  <application
+      android:name="com.thinksky.holder.BaseApplication"
+
+      android:allowBackup="true"
+      android:icon="@drawable/ic_launcher"
+      android:label="@string/app_name"
+      android:largeHeap="true"
+      android:theme="@style/AppTheme">
+    <meta-data
+        android:name="com.baidu.lbsapi.API_KEY"
+
+        android:value="h3f6RvtB7NCQM3DlT4tpT98nS3FM2EkO"
+        />
+    <!-- Release -->
+    <!--android:value="bDINd0L9qHfcXMSZNSGluhXOEWhEBe2Z"-->
+    <!-- Debug -->
+    <!--android:value="h3f6RvtB7NCQM3DlT4tpT98nS3FM2EkO"-->
+    <service
+        android:name="com.baidu.location.f"
+        android:enabled="true"
+        android:process=":remote">
+      <intent-filter>
+        <action android:name="com.baidu.location.service_v2.2"></action>
+      </intent-filter>
+    </service>
+
+    <activity
+        android:name=".NewsDetailActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".NewsMeActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".NewsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".MessageActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".SetUserInfoActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".GroupDetailActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".GroupFloorReplyActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".GroupPostInfoActivity"
+        android:theme="@style/ActivityThemeTwo"
+        />
+    <activity
+        android:name=".EventDetailActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".GroupActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".GroupInfoActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".PostGroupActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".EventActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".PostEventActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".IssueActivity2"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".PostIssueActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".IssueDetail"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".MainActivity"
         android:label="@string/app_name"
-        android:largeHeap="true"
+        android:launchMode="singleTask"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
 
-            android:value="h3f6RvtB7NCQM3DlT4tpT98nS3FM2EkO"
-            />
-        <!-- Release -->
-        <!--android:value="bDINd0L9qHfcXMSZNSGluhXOEWhEBe2Z"-->
-        <!-- Debug -->
-      <!--android:value="h3f6RvtB7NCQM3DlT4tpT98nS3FM2EkO"-->
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
-            </intent-filter>
-        </service>
+      <!--<intent-filter>-->
+      <!--<action android:name="android.intent.action.MAIN"/>-->
 
-        <activity
-            android:name=".NewsDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".NewsMeActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".NewsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MessageActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".SetUserInfoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".GroupDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".GroupFloorReplyActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".GroupPostInfoActivity"
-            android:theme="@style/ActivityThemeTwo"
-           />
-        <activity
-            android:name=".EventDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".GroupActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".GroupInfoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".PostGroupActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".EventActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".PostEventActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".IssueActivity2"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".PostIssueActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".IssueDetail"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+      <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+      <!--</intent-filter>-->
+    </activity>
+    <activity
+        android:name=".SettingActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
 
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".LoginActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".RegistetActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".AboutActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".Setting_yijianActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".UserInfoActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"/>
+    <activity
+        android:name=".UploadActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize"/>
+    <activity
+        android:name=".WeiboDetailActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".CameralActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".PhotoAct"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".SendCommentActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize"/>
+    <activity
+        android:name=".AuditActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.zxing.activity.CaptureActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.zxing.activity.CallActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.lead.SplashActivity"
+        android:screenOrientation="portrait"
 
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
-        </activity>
-        <activity
-            android:name=".SettingActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".LoginActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".RegistetActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AboutActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Setting_yijianActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UserInfoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name=".UploadActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".WeiboDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".CameralActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PhotoAct"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SendCommentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".AuditActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.zxing.activity.CaptureActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.zxing.activity.CallActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.thinksky.ui.lead.SplashActivity"
-            android:screenOrientation="portrait"
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+    <!--<activity-->
+    <!--android:name=".IssueActivity1"-->
+    <!--android:label="@string/title_activity_new_main" />-->
 
-            android:theme="@style/ActivityThemeTwo">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <activity
+        android:name=".ScanPhotoActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".ShowImageActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".ImagePagerActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".ForumActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/title_activity_forum"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".ForumActivity2"
+        android:theme="@style/AppBaseThemeRedefine"
+        android:windowSoftInputMode="adjustResize"/>
+    <activity
+        android:name=".ForumDetailActivity"
+        android:theme="@style/AppBaseThemeRedefine"
+        android:windowSoftInputMode="adjustResize"/>
+    <activity
+        android:name=".ForumActivity3"
+        android:label="@string/app_name"
+        android:theme="@style/AppBaseThemeRedefine"/>
+    <activity
+        android:name=".PostDetailActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/app_name"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".SendPostActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/app_name"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name=".LandLordActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:label="@string/app_name"
+        android:theme="@style/ActivityThemeTwo"
+        android:windowSoftInputMode="adjustResize"/>
+    <activity
+        android:name=".LDrawerActivity"
+        android:label="@string/title_activity_ldrawer">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <!--<activity-->
-        <!--android:name=".IssueActivity1"-->
-        <!--android:label="@string/title_activity_new_main" />-->
+      <!--
+       <intent-filter>
+           <action android:name="android.intent.action.MAIN" />
 
-        <activity
-            android:name=".ScanPhotoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ShowImageActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".ImagePagerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ForumActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_forum"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".ForumActivity2"
-            android:theme="@style/AppBaseThemeRedefine"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ForumDetailActivity"
-            android:theme="@style/AppBaseThemeRedefine"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ForumActivity3"
-            android:label="@string/app_name"
-            android:theme="@style/AppBaseThemeRedefine" />
-        <activity
-            android:name=".PostDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".SendPostActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name=".LandLordActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/ActivityThemeTwo"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".LDrawerActivity"
-            android:label="@string/title_activity_ldrawer">
+           <category android:name="android.intent.category.LAUNCHER" />
+       </intent-filter>
+      -->
+    </activity>
+    <activity
+        android:name=".NewMainActivity"
+        android:label="@string/title_activity_new_main"/>
+    <activity
+        android:name=".AddGroupActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".BeforeRegistetActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".PostNewsActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".CheckIn"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.rsen.activity.RsenCommonActivity"
+        android:launchMode="singleTop"
+        android:screenOrientation="portrait">
+      <intent-filter>
+        <action android:name="com.angcyo.rsen"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
+    <activity
+        android:name=".IssueActivity1"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.fragment.QuestionDetailActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <!--小组详情-->
+    <activity
+        android:name="com.thinksky.rsen.activity.GroupDetailFragmentActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.rsen.activity.IssueDetailFragmentActivity1"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.fragment.WendaListActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.tox.GroupMyActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.tox.DiscoverSelectActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.fragment.VedioViewTest"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="landscape"
+        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
+    <activity
+        android:name="com.thinksky.fragment.VedioView"
+        android:configChanges="orientation|keyboardHidden|screenSize"
 
-            <!--
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-            -->
-        </activity>
-        <activity
-            android:name=".NewMainActivity"
-            android:label="@string/title_activity_new_main" />
-        <activity
-            android:name=".AddGroupActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".BeforeRegistetActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".PostNewsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".CheckIn"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.thinksky.rsen.activity.RsenCommonActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.angcyo.rsen" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".IssueActivity1"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.thinksky.fragment.QuestionDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <!--小组详情-->
-        <activity
-            android:name="com.thinksky.rsen.activity.GroupDetailFragmentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.thinksky.rsen.activity.IssueDetailFragmentActivity1"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.thinksky.fragment.WendaListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.thinksky.tox.GroupMyActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.thinksky.tox.DiscoverSelectActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.thinksky.fragment.VedioViewTest"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.thinksky.fragment.VedioView"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-
-            android:screenOrientation="landscape"
-            android:theme="@style/ActivityThemeFullscreen" />
-        <activity
-            android:name="com.thinksky.fragment.DiscoverFriendActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.tox.DiscoverSendActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.DisLocationActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.ZhuanjiActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.XiaozujingxuanActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.RemenhuatiActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.WendaMyQuestionActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.QuestionSelectActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.tox.SendQuestionActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.tox.BaikeItemActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.tox.ChangePasswordActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.MyhuatiActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.ZhuanjiFenLeiActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.tox.SendTieziActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.CollectListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.holder.BaseBActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.MyMessageActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.tox.ReSetPasswordActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.UserPlaceActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <activity
-            android:name="com.thinksky.fragment.UserListActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityThemeTwo" />
-        <!-- Glide Module  -->
-        <meta-data
-            android:name="com.thinksky.utils.imageloader.GlideImageModule"
-            android:value="GlideModule"
-            />
-        <meta-data
-            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
-            android:value="GlideModule"
-            tools:node="remove"
-            />
-    </application>
+        android:screenOrientation="landscape"
+        android:theme="@style/ActivityThemeFullscreen"/>
+    <activity
+        android:name="com.thinksky.fragment.DiscoverFriendActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.tox.DiscoverSendActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.DisLocationActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.ZhuanjiActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.XiaozujingxuanActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.RemenhuatiActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.WendaMyQuestionActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.QuestionSelectActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.tox.SendQuestionActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.tox.BaikeItemActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.tox.ChangePasswordActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.MyhuatiActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.ZhuanjiFenLeiActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.tox.SendTieziActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.CollectListActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.holder.BaseBActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.MyMessageActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.tox.ReSetPasswordActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.UserPlaceActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <activity
+        android:name="com.thinksky.fragment.UserListActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:theme="@style/ActivityThemeTwo"/>
+    <!-- Glide Module  -->
+    <meta-data
+        android:name="com.thinksky.utils.imageloader.GlideImageModule"
+        android:value="GlideModule"
+        />
+    <meta-data
+        android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+        android:value="GlideModule"
+        tools:node="remove"
+        />
+  </application>
 
 </manifest>

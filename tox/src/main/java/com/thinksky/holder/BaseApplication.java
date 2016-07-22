@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Vibrator;
+import android.support.multidex.MultiDex;
 import com.baidu.mapapi.SDKInitializer;
 import com.bugtags.library.Bugtags;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,7 +20,6 @@ import com.thinksky.log.Logger;
 import com.thinksky.tox.BuildConfig;
 import com.thinksky.utils.JsonConverter;
 import com.tox.Url;
-
 
 public class BaseApplication extends Application {
 
@@ -40,8 +40,7 @@ public class BaseApplication extends Application {
 
   private GlobalComponent mGlobalComponent;
 
-  @Override
-  public void onCreate() {
+  @Override public void onCreate() {
     super.onCreate();
     Logger.init();
     mGlobalComponent = DaggerGlobalComponent.builder().globalModule(new GlobalModule(this)).build();
@@ -51,6 +50,7 @@ public class BaseApplication extends Application {
     this.mMainThreadId = android.os.Process.myTid();
     this.mMainThreadLooper = getMainLooper();
     SDKInitializer.initialize(this);
+
     ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
     if (BuildConfig.DEBUG) {
       Bugtags.start("309e5c0b10a89d083fcb08b0c17543e2", this, Bugtags.BTGInvocationEventBubble);
@@ -64,6 +64,7 @@ public class BaseApplication extends Application {
       Url.USERID = sp.getString("uid", "0");
       Url.MYUSERINFO = JsonConverter.jsonToObject(UserInfo.class, sp.getString("user_info", ""));
     }
+    MultiDex.install(this);
   }
 
   public GlobalComponent getGlobalComponent() {

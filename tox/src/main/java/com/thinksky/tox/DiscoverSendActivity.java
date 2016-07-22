@@ -298,10 +298,15 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
           //  ToastHelper.showToast("手号码必须是11位", this);
           //  return;
           //}
+          if (imgList.size()==0){
+            ToastHelper.showToast("请选择图片", this);
+            return;
+          }
           if (BaseFunction.isLogin()) {
             uploadImages();
           } else {
             ToastHelper.showToast("未登录", this);
+            return;
           }
         } else {
           if (mTitleEdit.getText().toString().equals("") && fishid == 1) {
@@ -317,6 +322,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             sendWeibo();
           } else {
             Toast.makeText(DiscoverSendActivity.this, "未登入", Toast.LENGTH_LONG).show();
+            return;
           }
         }
 
