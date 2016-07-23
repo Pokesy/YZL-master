@@ -196,7 +196,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     if (TextUtils.isEmpty(postMap.get("user_logo"))) {
       user_logo.setImageResource(R.drawable.side_user_avatar);
     } else {
-      com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
+      ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
           postMap.get("user_logo")).placeholder(R.drawable.side_user_avatar).error(R.drawable
           .side_user_avatar).into(user_logo);
     }
@@ -262,7 +262,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       public void onResult(boolean state, final List<MyBean> beans) {
         if (state) {
           recycler.setAdapter(new MySubAdapter(GroupPostInfoActivity.this, logolist));
-          com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
+          ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
               .this, beans.get(0).logo).placeholder(R.drawable.side_user_avatar).error(R.drawable
               .side_user_avatar).dontAnimate().into(group_logo);
           group_name.setText(beans.get(0).title);
@@ -320,7 +320,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         if (imageView != null) {
 
           //ImageLoader.getInstance().displayImage(url, imageView);
-          com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
+          ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
               .this, url).into(imageView);
           final int in = i;
           imageView.setOnClickListener(new View.OnClickListener() {
@@ -671,7 +671,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 //            viewHolder.replyHost.setVisibility(View.VISIBLE);
     }
     //ImageLoader.getInstance().displayImage(map.get("user_logo"), viewHolder.replyUserHead);
-    com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
+    ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
         map.get("user_logo")).into(viewHolder.replyUserHead);
 //        kjBitmap.display(viewHolder.replyUserHead, map.get("user_logo"));
     viewHolder.replyUsername.setText(map.get("nickname"));
@@ -780,7 +780,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       toReplyCount = lzlReplyList.size();
       viewHolder.LzlReplyBox.setVisibility(View.VISIBLE);
 
-      com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
+      ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
           .this, lzlReplyList.get(0).get("user_logo")).into(viewHolder.lzlOneUserLogo);
       viewHolder.lzlOneUserLogo.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -864,7 +864,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     public void run() {
       postReplyList = new ArrayList<HashMap<String, String>>();
       jsonObjArrayList = groupApi.getPostReply("?s=" + Url.POSTREPLY, post_id, page);
-      for (int i = 0; i < jsonObjArrayList.size(); i++) {
+      for (int i = 0; null != jsonObjArrayList && i < jsonObjArrayList.size(); i++) {
         JSONObject jsonObj = jsonObjArrayList.get(i);
         HashMap<String, String> map = new HashMap<String, String>();
         try {

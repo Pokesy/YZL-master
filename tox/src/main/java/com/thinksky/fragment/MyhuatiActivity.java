@@ -240,7 +240,7 @@ public class MyhuatiActivity extends BaseBActivity {
 //                            .showImageOnFail(R.drawable.ic_launcher)
 //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 //                            .displayer(new RoundedBitmapDisplayer(100)).build());
-            com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(context,
+            ImageLoader.loadOptimizedHttpImage(context,
                 bean.user_logo).
                 bitmapTransform(new CropCircleTransformation(context)).into(holder.imgV(R.id.user_logo));
             if (bean.imgList != null && bean.imgList.size() > 0) {

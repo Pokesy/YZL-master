@@ -1,273 +1,303 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.thinksky.tox.SendQuestionActivity">
-    //页头
+    tools:context="com.thinksky.tox.SendQuestionActivity"
+    >
+  //页头
+
+  <RelativeLayout
+      android:id="@+id/SendPostheader"
+      android:layout_width="match_parent"
+      android:layout_height="?actionBarSize"
+      android:layout_alignParentTop="true"
+      android:background="@drawable/head_border"
+      android:paddingBottom="0dp"
+      android:paddingTop="0dp"
+      >
 
     <RelativeLayout
-        android:id="@+id/SendPostheader"
+
+        android:id="@+id/Post_send_Back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        >
+
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:padding="10dp"
+          android:src="@drawable/arrow_left"
+          />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/head"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal"
+        >
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:background="@color/head"
+          android:gravity="center_vertical|center_horizontal"
+          android:singleLine="true"
+          android:text="发表话题"
+          android:textColor="@android:color/white"
+          style="@style/Widget.App.TextView.XXLarge.White"
+          />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/post_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:padding="15dp"
+        android:src="@drawable/iconfontfenxiangshare"
+        android:textColor="@color/tab"
+        android:visibility="visible"
+        />
+
+  </RelativeLayout>
+
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/SendPostheader"
+      android:background="@color/bg_color_main"
+      >
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/head_border"
-        android:paddingBottom="0dp"
-        android:paddingTop="0dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="3dp"
+        android:orientation="vertical"
+        >
 
-        <RelativeLayout
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@android:color/white"
+          android:orientation="vertical"
+          android:padding="@dimen/space_horizontal"
+          >
 
-            android:id="@+id/Post_send_Back"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true">
+        <EditText
+            android:id="@+id/Post_send_titleEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="标题:"
+            android:paddingBottom="10dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="10dp"
+            style="@style/Widget.App.TextView.Medium.Primary"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/bg_color_divider_dark"
+            />
+
+        <EditText
+            android:id="@+id/Post_send_contentEdit"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/edittext_background_noborder"
+            android:gravity="start"
+            android:hint="请发表话题内容"
+            android:paddingBottom="10dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="10dp"
+            style="@style/Widget.App.TextView.Medium.Primary"
+            />
+
+        <LinearLayout
+            android:id="@+id/attachBtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="3dp"
+            android:weightSum="10"
+            >
+
+          <LinearLayout
+              android:id="@+id/Post_send_attachBtn"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:layout_marginLeft="5dp"
+              >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/arrow_left" />
-        </RelativeLayout>
+                android:src="@drawable/icon_add_photo"
+                />
+          </LinearLayout>
 
+          <LinearLayout
+              android:id="@+id/Post_send_faceBtn"
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1.5"
+              android:gravity="center"
+              android:visibility="gone"
+              >
 
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/smile"
+                />
+          </LinearLayout>
+        </LinearLayout>
+      </LinearLayout>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/divider"
+          android:layout_marginLeft="@dimen/space_horizontal"
+          android:layout_marginTop="3dp"
+          android:background="@color/bg_color_divider_dark"
+          />
+
+      <RelativeLayout
+          android:id="@+id/Post_footer"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+
+          android:background="#EDF1F2"
+          android:visibility="visible"
+          >
+
+        <!--页脚btn对应的控制区-->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@color/head"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal">
+            android:id="@+id/Post_attach_layout"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#DFE3E4"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:visibility="gone"
+
+            android:weightSum="10"
+            >
+
+
+          <LinearLayout
+              android:id="@+id/Post_send_photo"
+              android:layout_width="70dp"
+              android:layout_height="70dp"
+              android:layout_marginLeft="15dp"
+              android:background="@drawable/borderradius_postsend"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:padding="5dp"
+              >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:src="@drawable/photo"
+                />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@color/head"
-                android:gravity="center_vertical|center_horizontal"
-                android:singleLine="true"
-                android:text="描述你的问题"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_size_large"
-                android:textStyle="bold" />
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_weight="4.5"
+                android:gravity="center"
+                android:text="图片"
+                android:textColor="#455562"
+                />
+          </LinearLayout>
 
+          <LinearLayout
+              android:id="@+id/Post_send_takePhoto"
+              android:layout_width="70dp"
+              android:layout_height="70dp"
+              android:layout_marginLeft="15dp"
+              android:background="@drawable/borderradius_postsend"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:padding="5dp"
+              android:visibility="gone"
+              >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:src="@drawable/camera_send_post"
+                />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_weight="4.5"
+                android:gravity="center"
+                android:text="拍照"
+                android:textColor="#455562"
+                />
+          </LinearLayout>
         </LinearLayout>
 
-
-        <ImageView
-            android:id="@+id/post_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/iconfontfenxiangshare"
-            android:padding="15dp"
-            android:textColor="@color/tab"
-            android:visibility="visible" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/SendPostheader"
-        android:background="@color/bg_color_main">
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/Post_photo_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="3dp"
-            android:orientation="vertical">
+            android:layout_height="200dp"
+            android:layout_below="@+id/Post_attach_layout"
+            android:background="#DFE3E4"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="10"
+            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/space_horizontal"
-                android:background="@android:color/white"
-                android:orientation="vertical">
+          <org.kymjs.aframe.ui.widget.HorizontalListView
+              android:id="@+id/HorizontalListView"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingBottom="15dp"
+              android:paddingTop="15dp"
+              >
 
-                <EditText
-                    android:id="@+id/Post_send_titleEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="标题：请描述你的问题"
-                    android:paddingBottom="6dp"
-                    android:paddingLeft="3dp"
-                    android:paddingTop="6dp"
-                    android:textSize="@dimen/font_size_medium" />
+          </org.kymjs.aframe.ui.widget.HorizontalListView>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider"
-                    android:background="@color/bg_color_divider_dark" />
-
-                <EditText
-                    android:id="@+id/Post_send_contentEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/edittext_background_noborder"
-                    android:gravity="start"
-                    android:hint="请填写问题相关描述（选填）"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="3dp"
-                    android:paddingTop="5dp"
-                    android:textSize="@dimen/font_size_medium" />
-
-                <LinearLayout
-                    android:id="@+id/attachBtns"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="3dp"
-                    android:weightSum="10">
-
-                    <LinearLayout
-                        android:id="@+id/Post_send_attachBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.5"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_add_photo" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/Post_send_faceBtn"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.5"
-                        android:gravity="center"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/smile" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider"
-                android:layout_marginLeft="@dimen/space_horizontal"
-                android:layout_marginTop="3dp"
-                android:background="@color/bg_color_divider_dark" />
-
-            <RelativeLayout
-                android:id="@+id/Post_footer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:background="#EDF1F2"
-                android:visibility="visible">
-
-                <!--页脚btn对应的控制区-->
-                <LinearLayout
-                    android:id="@+id/Post_attach_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="#DFE3E4"
-                    android:orientation="horizontal"
-                    android:paddingTop="10dp"
-                    android:visibility="gone"
-
-                    android:weightSum="10">
+          <TextView
+              android:id="@+id/photo_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal|bottom"
+              android:layout_marginBottom="10dp"
+              android:text="已选0张，还剩9张可选"
+              />
+        </FrameLayout>
+      </RelativeLayout>
 
 
-                    <LinearLayout
-                        android:id="@+id/Post_send_photo"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="@drawable/borderradius_postsend"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:padding="5dp">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="6"
-                            android:src="@drawable/photo" />
-
-                        <TextView
-                            android:layout_width="30dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="4.5"
-                            android:gravity="center"
-                            android:text="图片"
-                            android:textColor="#455562" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/Post_send_takePhoto"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="@drawable/borderradius_postsend"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:padding="5dp"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="6"
-                            android:src="@drawable/camera_send_post" />
-
-                        <TextView
-                            android:layout_width="30dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="4.5"
-                            android:gravity="center"
-                            android:text="拍照"
-                            android:textColor="#455562" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <FrameLayout
-                    android:id="@+id/Post_photo_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_below="@+id/Post_attach_layout"
-                    android:background="#DFE3E4"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:weightSum="10">
-
-                    <org.kymjs.aframe.ui.widget.HorizontalListView
-                        android:id="@+id/HorizontalListView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="15dp"
-                        android:paddingTop="15dp">
-
-                    </org.kymjs.aframe.ui.widget.HorizontalListView>
-
-                    <TextView
-                        android:id="@+id/photo_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginBottom="10dp"
-                        android:text="已选0张，还剩9张可选" />
-                </FrameLayout>
-            </RelativeLayout>
-
-
-
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
+  </RelativeLayout>
 
 </RelativeLayout>

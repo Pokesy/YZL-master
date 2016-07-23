@@ -112,7 +112,6 @@ public class CameralActivity extends BaseBActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (isstate && resultCode == Activity.RESULT_OK) {
-            Log.e("<<<<<<<<<<<<>>>>>>>>>>>>>", "gqb101112gqb10111w");
             fial = new File(imgPath);
             uri = Uri.fromFile(fial);
             //设置图片对应属性(压缩图片)
@@ -139,7 +138,7 @@ public class CameralActivity extends BaseBActivity {
             if (bitmap != null) {
                 new MyCamaralThread().start();
             } else {
-                Toast.makeText(CameralActivity.this, "照片获取失败", 1).show();
+                Toast.makeText(CameralActivity.this, "照片获取失败", Toast.LENGTH_SHORT).show();
                 CameralActivity.this.finish();
             }
             return;
@@ -176,7 +175,7 @@ public class CameralActivity extends BaseBActivity {
                     if (bitmap != null) {
                         new MyCamaralThread().start();
                     } else {
-                        Toast.makeText(CameralActivity.this, "照片获取失败", 1).show();
+                        Toast.makeText(CameralActivity.this, "照片获取失败", Toast.LENGTH_SHORT).show();
                         CameralActivity.this.finish();
                     }
                 }

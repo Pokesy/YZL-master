@@ -27,7 +27,7 @@ public class NearbyActivity extends Activity {
         mBack.setOnClickListener(my);
     }
 
-    class MyOnClick implements android.view.View.OnClickListener {
+    class MyOnClick implements View.OnClickListener {
 
         @Override
         public void onClick(View arg0) {

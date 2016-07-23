@@ -301,7 +301,7 @@ public class RemenhuatiFragment extends RBaseFragment {
                     }
 
                     if (imageView != null) {
-                        com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(getActivity(),url).into(imageView);
+                        ImageLoader.loadOptimizedHttpImage(getActivity(),url).into(imageView);
                         //ImageLoader.getInstance().displayImage(url, imageView);
                         final int in = i;
                         imageView.setOnClickListener(new View.OnClickListener() {

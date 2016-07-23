@@ -43,6 +43,7 @@ import com.thinksky.info.PostInfo;
 import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ForumApi;
 import com.tox.IssueApi;
@@ -475,7 +476,7 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
 
         mForumLastReply.setText("最后回复时间：" + mForumBean.last_reply_time);
         mForumNameView.setText(mForumBean.title);
-        BaseFunction.showImage(this, mForumLogo, mForumBean.logo, imgLoad, Url.IMGTYPE_WEIBO);
+        ImageLoader.loadOptimizedHttpImage(this, mForumBean.logo).placeholder(R.drawable.picture_no).into(mForumLogo);
         BaseFunction.setLayoutBackGround(mForumLogo, this, mForumBackground, mForumBean.background, imgLoad);
     }
 

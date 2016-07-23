@@ -1,5 +1,7 @@
 package com.thinksky.myview;
 
+import android.text.TextUtils;
+import com.thinksky.utils.imageloader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,32 +77,9 @@ public class AuditView {
             animFlag = true;
             mText.setText(list.get(ListFlag).getQvalue());
             mImageView.setImageBitmap(null);
-            if (!list.get(ListFlag).getQimg().equals(null)
-                    && !list.get(ListFlag).getQimg().equals("")) {
-                Url.IMGFLAG = true;
-                mImageView
-                        .setTag((Url.QIMGURL + list.get(ListFlag).getQimg()));
-                Bitmap bitHead = loadImgHeadImg.loadImage(mImageView,
-                        Url.QIMGURL + list.get(ListFlag).getQimg(),
-                        new ImageDownloadCallBack() {
-                            @Override
-                            public void onImageDownload(ImageView imageView,
-                                                        Bitmap bitmap) {
-                                Url.IMGFLAG = false;
-                                if (((String) mImageView.getTag())
-                                        .equalsIgnoreCase((Url.QIMGURL + list
-                                                .get(ListFlag - 1).getQimg()))) {
-                                    Log.e("", "设置图片:");
-                                    imageView.setImageBitmap(bitmap);
-                                }
-                            }
-                        }
-                );
-                if (bitHead != null) {
-                    Log.e("", "if (bitHead != null)");
-                    Url.IMGFLAG = false;
-                    mImageView.setImageBitmap(bitHead);
-                }
+            if (!TextUtils.isEmpty(list.get(ListFlag).getQimg())) {
+                ImageLoader.loadOptimizedHttpImage(ctx, Url.QIMGURL + list.get(ListFlag).getQimg())
+                    .placeholder(R.drawable.picture_no).into(mImageView);
             }
             ListFlag++;
             mCallBack.callback(animFlag);
@@ -135,7 +114,7 @@ public class AuditView {
                     NextView();
                     return;
                 } else if (newList == null) {
-                    Toast.makeText(ctx, "最后一条", 1).show();
+                    Toast.makeText(ctx, "最后一条", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }

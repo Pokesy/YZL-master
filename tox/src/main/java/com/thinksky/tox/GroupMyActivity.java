@@ -102,7 +102,7 @@ public class GroupMyActivity extends BaseBActivity implements View.OnClickListen
         creatorNickName = (TextView) findViewById(R.id.creator_user_name);
         groupDetail = (MoreTextView) findViewById(R.id.group_detail);
         groupNotice = (TextView) findViewById(R.id.group_notice);
-        joinGroup = (TextView) findViewById(R.id.join_group);
+        joinGroup = (TextView) findViewById(R.id.join_status);
         hotLine = (LinearLayout) findViewById(R.id.hot_line);
         hotPostView = (IssueListView) findViewById(R.id.hot_post_listView);
         backBefore = (TextView) findViewById(R.id.back_before);

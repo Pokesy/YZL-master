@@ -28,6 +28,7 @@ import com.thinksky.info.PostComment;
 import com.thinksky.redefine.MyScrollView;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ForumApi;
 import com.tox.ToastHelper;
@@ -103,7 +104,8 @@ public class LandLordActivity extends BaseBActivity implements View.OnClickListe
         }else{
             mMoreCom.setVisibility(View.GONE);
         }
-        BaseFunction .showImage(this, mUserHead, postComment.getUserInfo().getAvatar(), loadImg, Url.IMGTYPE_HEAD);
+        ImageLoader.loadOptimizedHttpImage(this,postComment.getUserInfo().getAvatar()).placeholder(R.drawable.side_user_avatar)
+            .dontAnimate().into(mUserHead);
         mUserName.setText(postComment.getUserInfo().getNickname());
         mCtime.setText(postComment.getcTime());
         mContent.setText(postComment.getComContent());
@@ -116,7 +118,7 @@ public class LandLordActivity extends BaseBActivity implements View.OnClickListe
                 imageView.setPadding(0, 0, 0, 0);
            /* imgView.setLayoutParams(layoutParams);*/
                 mPhotoLayout.addView(imageView);
-                BaseFunction.showImage(ctx,imageView,imgUrl,loadImg,Url.IMGTYPE_WEIBO);
+                ImageLoader.loadOptimizedHttpImage(ctx, imgUrl).into(imageView);
             }
         }
         forumApi.setHandler(handler);

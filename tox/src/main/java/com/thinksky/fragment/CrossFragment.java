@@ -89,7 +89,7 @@ public class CrossFragment extends Fragment implements OnClickListener {
         mAdapter = new MyListAdapter(ctx, list, finalBitmap);
         ListBottem = new Button(ctx);
         ListBottem.setText("点击加载更多");
-        ListBottem.setOnClickListener(new View.OnClickListener() {
+        ListBottem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (flag && listBottemFlag) {

@@ -1,6 +1,8 @@
 package com.thinksky.tox;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -20,14 +22,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.thinksky.fragment.DiscoverFragment;
-import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
-import com.thinksky.injection.GlobalModule;
 import com.thinksky.rsen.RsenUrlUtil;
-import com.thinksky.ui.LoginSession;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.MD5;
 import com.thinksky.utils.MyJson;
+import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import com.tox.UserApi;
@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.inject.Inject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,9 +67,6 @@ public class RegisterActivity extends BaseBActivity {
   private String reg_type;
   private TitleBar mTitleBar;
 
-  @Inject
-  LoginSession mLoginSession;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // TODO Auto-generated method stub
@@ -81,7 +77,7 @@ public class RegisterActivity extends BaseBActivity {
     login = new login(RegisterActivity.this, 2);
     login.setLoginHandler();
     initView();
-    if (TextUtils.equals(Url.activityFrom, "LoginActivity")) {
+    if (TextUtils.equals(Url.activityFrom,"LoginActivity")) {
       role.setText("");
       code = "";
       juese = "";
@@ -103,12 +99,6 @@ public class RegisterActivity extends BaseBActivity {
     }
     checkId.setVisibility(View.VISIBLE);
     type = "mobile";
-    inject();
-  }
-
-  private void inject() {
-    //DaggerGlobalComponent.builder().globalModule(new GlobalModule((BaseApplication)
-    //    getApplication())).build().inject(this);
   }
 
   @Override
@@ -328,12 +318,31 @@ public class RegisterActivity extends BaseBActivity {
         JSONObject jsonObject = new JSONObject(result);
 
         if (jsonObject.getBoolean("success")) {
+          if (jsonObject.getString("message").equals("注册成功，请登录邮箱进行激活")) {
+            new AlertDialog.Builder(RegisterActivity.this).setTitle("注意")
+                .setMessage("请先进您的邮箱进行验证,再登入账号")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                  }
+                })
+                .show();
+            return;
+          }
+          BaseFunction.putSharepreference("username", username, RegisterActivity.this,
+              Url.SharedPreferenceName);
+          BaseFunction.putSharepreference("password", password, RegisterActivity.this,
+              Url.SharedPreferenceName);
           //TODO 注册后的nickname问题，头像路径问题
           ToastHelper.showToast("注册成功", RegisterActivity.this);
           Url.activityFrom = "registe";
-
-          mLoginSession.saveUserInfo(username, password, myJson.getUserID(result), myJson
-              .getUserSessionID(result), myJson.getUserAllInfo(result));
+          Url.MYUSERINFO = myJson.getUserAllInfo(result);
+          mUserapi.saveUserInfoToNative(RegisterActivity.this);
+          //                        login.userLogin(username, password);
           Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
           intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
           startActivity(intent);

@@ -307,7 +307,7 @@ public class PostIssueActivity extends BaseBActivity implements AdapterView.OnIt
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(
-                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
@@ -495,7 +495,7 @@ public class PostIssueActivity extends BaseBActivity implements AdapterView.OnIt
 
 
     Handler hand = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 progressDialog.dismiss();

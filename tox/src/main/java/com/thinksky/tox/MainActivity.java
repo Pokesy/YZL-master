@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -33,6 +32,7 @@ import com.thinksky.model.ActivityModel;
 import com.thinksky.qqsliding.widget.DragLayout;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.LoadImg;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -205,12 +205,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     Log.e(sp.getString("avatar", "空空空"), "");
 
     myUserName.setText(sp.getString("username", "未登录"));
-    if (!TextUtils.isEmpty(sp.getString("avatar", ""))) {
-      BaseFunction.showImage(this, mleftHead, sp.getString("avatar", ""), loadImgMainImg,
-          Url.IMGTYPE_HEAD);
-    } else {
-      mleftHead.setImageResource(R.drawable.side_user_avatar);
-    }
+    ImageLoader.loadOptimizedHttpImage(this, sp.getString("avatar", "")).placeholder(R.drawable
+        .side_user_avatar)
+        .dontAnimate().into(mleftHead);
 
     mLoginThisAPP = (LinearLayout) findViewById(R.id.LoginThisAPP);
     signature = (TextView) findViewById(R.id.signature);
@@ -561,10 +558,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     //判断是否登入
     if (BaseFunction.isLogin()) {
       signature.setVisibility(View.VISIBLE);
-      if (!sp.getString("avatar", "").equalsIgnoreCase("")) {
-        BaseFunction.showImage(this, mleftHead, sp.getString("avatar", ""), loadImgMainImg,
-            Url.IMGTYPE_HEAD);
-      }
+      ImageLoader.loadOptimizedHttpImage(this, sp.getString("avatar", "")).placeholder(R.drawable
+          .side_user_avatar)
+          .dontAnimate().into(mleftHead);
       if (!("").equalsIgnoreCase(sp.getString("nickname", ""))) {
         myUserName.setText(sp.getString("nickname", ""));
       } else {

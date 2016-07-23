@@ -184,7 +184,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
         ListBottem = new Button(ctx);
         ListBottem.setBackgroundColor(getResources().getColor(R.color.mycolor));
         ListBottem.setText("点击加载更多");
-        ListBottem.setOnClickListener(new View.OnClickListener() {
+        ListBottem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (flag && listBottemFlag) {
@@ -327,7 +327,7 @@ public class WeiboFragment extends Fragment implements OnClickListener {
 
 
     Handler hand = new Handler() {
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
             if (msg.what == 404) {

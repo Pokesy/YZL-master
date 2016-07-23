@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.thinksky.adapter.DetailListAdapter;
-import com.thinksky.anim3d.RoundBitmap;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.Com2Com;
 import com.thinksky.info.WeiboCommentInfo;
@@ -30,7 +28,6 @@ import com.thinksky.myview.SwipeLayout;
 import com.thinksky.redefine.FaceTextView;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
-import com.thinksky.utils.LoadImg.ImageDownloadCallBack;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
@@ -40,7 +37,6 @@ import com.tox.Url;
 import com.tox.WeiboApi;
 import java.util.ArrayList;
 import java.util.List;
-import net.tsz.afinal.FinalBitmap;
 
 public class WeiboDetailActivity extends BaseBActivity {
 
@@ -66,13 +62,12 @@ public class WeiboDetailActivity extends BaseBActivity {
   private boolean flag = true;
   private boolean upFlag = false;
   private boolean listBottemFlag = true;
-  private RoundBitmap roundBitmap = new RoundBitmap();
   private WeiboApi weiboApi = new WeiboApi();
   private List<ImageView> mImgList = new ArrayList<ImageView>();
-  private FinalBitmap finalBitmap;
   private SwipeLayout mSwipeLayout;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.activity_weibo_detail);
@@ -81,9 +76,6 @@ public class WeiboDetailActivity extends BaseBActivity {
     Weiboinfo = (WeiboInfo) bund.getSerializable("WeiboInfo");
     Log.e("微博内容", Weiboinfo.getWcontent());
     loadImg = new LoadImg(WeiboDetailActivity.this);
-    finalBitmap = FinalBitmap.create(this);
-    finalBitmap.configBitmapLoadThreadSize(5);
-    finalBitmap.configMemoryCacheSize(5);
     initView();
     addInformation();
     addImg();
@@ -92,7 +84,8 @@ public class WeiboDetailActivity extends BaseBActivity {
     ListBottem.setText("点击加载更多");
     ListBottem.setBackgroundColor(Color.parseColor("#ffffff"));
     ListBottem.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         if (flag && listBottemFlag) {
           weiboApi.setHandler(hand);
           weiboApi.getWeiboComment(Weiboinfo.getWid(), mStart + "");
@@ -199,11 +192,13 @@ public class WeiboDetailActivity extends BaseBActivity {
         //                                switch (msg.what) {
         //                                    case 0:
         //                                        Url.activityFrom = "DeleteWeiBoActivity";
-        //                                        ToastHelper.showToast("删除成功",WeiboDetailActivity.this);
+        //                                        ToastHelper.showToast("删除成功",
+        // WeiboDetailActivity.this);
         //                                        finish();
         //                                        break;
         //                                    case 401:
-        //                                        ToastHelper.showToast("操作失败，需要登录",WeiboDetailActivity.this);
+        //                                        ToastHelper.showToast("操作失败，需要登录",
+        // WeiboDetailActivity.this);
         //                                        break;
         //                                    default:
         //                                        break;
@@ -212,15 +207,19 @@ public class WeiboDetailActivity extends BaseBActivity {
         //                        });
         //                        new AlertDialog.Builder(WeiboDetailActivity.this)
         //                                .setMessage("确定删除微博？")
-        //                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        //                                .setPositiveButton("确定", new DialogInterface
+        // .OnClickListener() {
         //                                    @Override
-        //                                    public void onClick(DialogInterface dialog, int which) {
+        //                                    public void onClick(DialogInterface dialog, int
+        // which) {
         //                                        weiboApi.deleteWeiBo(Weiboinfo.getWid());
         //                                    }
         //                                })
-        //                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        //                                .setNegativeButton("取消", new DialogInterface
+        // .OnClickListener() {
         //                                    @Override
-        //                                    public void onClick(DialogInterface dialog, int which) {
+        //                                    public void onClick(DialogInterface dialog, int
+        // which) {
         //                                        dialog.dismiss();
         //                                    }
         //                                }).show();
@@ -247,8 +246,9 @@ public class WeiboDetailActivity extends BaseBActivity {
           if (BaseFunction.isLogin()) {
             if (!upFlag) {
               upFlag = true;
-              int LikeNum = TextUtils.isEmpty(Weiboinfo.getLikenum()) ? 0 : Integer.parseInt(Weiboinfo.getLikenum());
-              mDetail_Up_text.setText((LikeNum +1)+"");
+              int LikeNum = TextUtils.isEmpty(Weiboinfo.getLikenum()) ? 0 : Integer.parseInt
+                  (Weiboinfo.getLikenum());
+              mDetail_Up_text.setText((LikeNum + 1) + "");
               mDetail_Up_Img.setImageBitmap(
                   BitmapUtiles.drawableTobitmap(R.drawable.heart, WeiboDetailActivity.this));
               Weiboinfo.setIs_supported(true);
@@ -285,7 +285,8 @@ public class WeiboDetailActivity extends BaseBActivity {
           if (BaseFunction.isLogin()) {
             if (Weiboinfo.getUser().getUid().equals(Url.USERID)) {
               weiboApi.setHandler(new Handler() {
-                @Override public void handleMessage(Message msg) {
+                @Override
+                public void handleMessage(Message msg) {
                   switch (msg.what) {
                     case 0:
                       Url.activityFrom = "DeleteWeiBoActivity";
@@ -302,12 +303,14 @@ public class WeiboDetailActivity extends BaseBActivity {
               });
               new AlertDialog.Builder(WeiboDetailActivity.this).setMessage("确定删除微博？")
                   .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                       weiboApi.deleteWeiBo(Weiboinfo.getWid());
                     }
                   })
                   .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
                       dialog.dismiss();
                     }
                   })
@@ -373,8 +376,9 @@ public class WeiboDetailActivity extends BaseBActivity {
     }
   };
 
-  @SuppressLint("HandlerLeak") Handler hand = new Handler() {
-    public void handleMessage(android.os.Message msg) {
+  @SuppressLint("HandlerLeak")
+  Handler hand = new Handler() {
+    public void handleMessage(Message msg) {
       super.handleMessage(msg);
       if (msg.what == 404) {
         Toast.makeText(WeiboDetailActivity.this, "请求失败，服务器故障", Toast.LENGTH_LONG).show();
@@ -423,7 +427,8 @@ public class WeiboDetailActivity extends BaseBActivity {
     ;
   };
 
-  @Override protected void onResume() {
+  @Override
+  protected void onResume() {
     super.onResume();
     //评论完后判断是否插入评论列表
     insertComAfterCom();
@@ -451,27 +456,19 @@ public class WeiboDetailActivity extends BaseBActivity {
   }
 
   private void addImg() {
-    Bitmap bit = null;
-    if (Weiboinfo.getUser().getAvatar().equals("null")) {
-      Log.e("不加载图片", "111111111111111111111");
-      mDetail_UserHead.setImageResource(R.drawable.side_user_avatar);
-    } else {
-      //            BaseFunction.showImage(WeiboDetailActivity.this, mDetail_UserHead, Weiboinfo.getUser().getAvatar(), loadImg, Url.IMGTYPE_HEAD);
-      //ImageLoader.getInstance().displayImage(Weiboinfo.getUser().getAvatar(), mDetail_UserHead);
-      ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, Weiboinfo.getUser().getAvatar()).into(mDetail_UserHead);
-    }
+    ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, Weiboinfo.getUser().getAvatar
+        ()).placeholder(R.drawable.side_user_avatar).dontAnimate().into(mDetail_UserHead);
 
-    //加载图片
-    //Log.e("加载图片",Weiboinfo.getImgList().size()+"");
-    if (!"".equals(Weiboinfo.getImgList())) {
+    if (null != Weiboinfo.getImgList()) {
       mDetail_repostWeibo.setVisibility(View.VISIBLE);
       int imageCount = Weiboinfo.getImgList().size();
       if (imageCount > 9) {
         imageCount = 9;
       }
       for (int i = 0; i < imageCount; i++) {
-        BaseFunction.showImage(WeiboDetailActivity.this, mImgList.get(i),
-            Weiboinfo.getImgList().get(i), loadImg, Url.IMGTYPE_WEIBO);
+        ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, Weiboinfo.getImgList().get
+            (i)).placeholder(R.drawable.picture_no).error(R.drawable.picture_no).into(mImgList
+            .get(i));
         mImgList.get(i).setVisibility(View.VISIBLE);
         loadWeiboImg(mImgList.get(i), Url.IMAGE + Weiboinfo.getImgList().get(i));
       }
@@ -481,17 +478,8 @@ public class WeiboDetailActivity extends BaseBActivity {
   }
 
   private void loadWeiboImg(final ImageView weiboImgView, String url) {
-    weiboImgView.setTag(url);
-    final Bitmap imgBitmap = loadImg.loadImage(weiboImgView, url, new ImageDownloadCallBack() {
-      @Override public void onImageDownload(ImageView imageView, Bitmap bitmap) {
-        weiboImgView.setImageBitmap(bitmap);
-        weiboImgView.setVisibility(View.VISIBLE);
-      }
-    });
-    if (imgBitmap != null) {
-      weiboImgView.setImageBitmap(imgBitmap);
-      weiboImgView.setVisibility(View.VISIBLE);
-    }
+    ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, url)
+        .placeholder(R.drawable.picture_no).into(weiboImgView);
   }
 
   //初始化微博的详情页的基本信息
@@ -530,7 +518,8 @@ public class WeiboDetailActivity extends BaseBActivity {
         mDetail_repostWeibo.setVisibility(View.VISIBLE);
         mDetail_repostWeibo.setBackgroundColor(Color.parseColor("#F7F7F7"));
         mDetail_repostWeibo.setOnClickListener(new View.OnClickListener() {
-          @Override public void onClick(View v) {
+          @Override
+          public void onClick(View v) {
             Intent intent = new Intent(WeiboDetailActivity.this, WeiboDetailActivity.class);
             Bundle bund = new Bundle();
             //                        Log.e("被点击啦啦啦啦啦", arg0 + "");
@@ -547,20 +536,19 @@ public class WeiboDetailActivity extends BaseBActivity {
         mDetail_repostContent.setVisibility(View.VISIBLE);
         mDetail_repostTime.setText(Weiboinfo.getRepostWeiboInfo().getCtime());
         mDetail_repostTime.setVisibility(View.VISIBLE);
-        if (Weiboinfo.getRepostWeiboInfo().getType().equals("image")) {
+        if (TextUtils.equals(Weiboinfo.getRepostWeiboInfo().getType(), "image")) {
           for (int i = 0; i < Weiboinfo.getRepostWeiboInfo().getImgList().size(); i++) {
-            BaseFunction.showImage(WeiboDetailActivity.this, mImgList.get(i),
-                Weiboinfo.getRepostWeiboInfo().getImgList().get(i), loadImg, Url.IMGTYPE_WEIBO);
+            ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, Weiboinfo
+                .getRepostWeiboInfo().getImgList().get(i))
+                .placeholder(R.drawable.picture_no).into(mImgList.get(i));
           }
-        } else {
-
         }
       }
     }
   }
 
   private void startPhotoBrowser(int index) {
-    if (Weiboinfo.getType().equalsIgnoreCase("image")) {
+    if (TextUtils.equals(Weiboinfo.getType(), "image")) {
       List list = new ArrayList();
       Intent intent = new Intent(WeiboDetailActivity.this, ImagePagerActivity.class);
       Bundle bundle = new Bundle();
@@ -573,7 +561,8 @@ public class WeiboDetailActivity extends BaseBActivity {
         }
       }
       bundle.putStringArrayList("image_urls", (ArrayList<String>) list);
-      //            bundle.putStringArrayList("image_urls", (ArrayList<String>) Weiboinfo.getImgList());
+      //            bundle.putStringArrayList("image_urls", (ArrayList<String>) Weiboinfo
+      // .getImgList());
 
       bundle.putInt("image_index", index);
       intent.putExtras(bundle);

@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.TextWatcher;
@@ -45,6 +44,7 @@ import com.thinksky.info.ForumInfo;
 import com.thinksky.info.PostInfo;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ForumApi;
 import com.tox.IssueApi;
@@ -558,7 +558,7 @@ public class ForumActivity2 extends BaseBActivity implements ScrollTabHolder,
 
         mForumPostCountTopicCount.setText("主题：" + mForumList.get(fragPage).getTopicCount() + " 帖子：" + mForumList.get(fragPage).getPostCount());
         mForumLastReply.setText("最后回复时间：" + mForumList.get(fragPage).getLastReplyTime());
-        BaseFunction.showImage(ctx, mForumLogo, mForumList.get(fragPage).getLogo(), imgLoad, Url.IMGTYPE_WEIBO);
+        ImageLoader.loadOptimizedHttpImage(ctx, mForumList.get(fragPage).getLogo()).placeholder(R.drawable.picture_no).into(mForumLogo);
         BaseFunction.setLayoutBackGround(mForumLogo, ctx, mForumBackground, mForumList.get(fragPage).getBackground(), imgLoad);
     }
 

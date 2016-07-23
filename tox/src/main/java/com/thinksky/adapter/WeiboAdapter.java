@@ -118,7 +118,7 @@ public class WeiboAdapter extends BaseAdapter {
       hold.sendRepost.setOnTouchListener(new TouchHelper(ctx, "#ededed", "#ffffff", "color"));
       hold.sendComment.setOnTouchListener(new TouchHelper(ctx, "#ededed", "#ffffff", "color"));
       //hold.Up.setOnTouchListener(new TouchHelper(ctx,R.drawable.button_vote_active+"",R
-        // .drawable.button_vote_enable+"","image"));
+      // .drawable.button_vote_enable+"","image"));
       arg1.setTag(hold);
     } else {
       System.out.println("不为空：" + arg0);
@@ -223,8 +223,10 @@ public class WeiboAdapter extends BaseAdapter {
               for (int i = 0; i < 3; i++) {
                 hold.imgViewList.get(i).setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable
                     .picture_no, ctx));
-                //loadWeiboImg(hold, hold.imgViewList.get(i), imglist.get(i), finalBitmap, kjBitmap);
-                ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable.picture_no)
+                //loadWeiboImg(hold, hold.imgViewList.get(i), imglist.get(i), finalBitmap,
+                // kjBitmap);
+                ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R
+                    .drawable.picture_no)
                     .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
                 Log.d("img>><><><>:", getImgURL(imglist.get(i)));
               }
@@ -232,7 +234,8 @@ public class WeiboAdapter extends BaseAdapter {
               // setImgRec(hold,imglist,imglist.size());
               setWeiboImgVisiable(hold, imglist.size());
               for (int i = 0; i < imglist.size(); i++) {
-                ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable.picture_no)
+                ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R
+                    .drawable.picture_no)
                     .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
                 Log.d("img>><><><>:", getImgURL(imglist.get(i)));
               }
@@ -253,7 +256,8 @@ public class WeiboAdapter extends BaseAdapter {
         setWeiboImgVisiable(hold, 3);
         for (int i = 0; i < 3; i++) {
           hold.imgViewList.get(i).setVisibility(View.VISIBLE);
-          ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable.picture_no)
+          ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable
+              .picture_no)
               .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
           Log.d("img>><><><>:", getImgURL(imglist.get(i)));
         }
@@ -262,7 +266,8 @@ public class WeiboAdapter extends BaseAdapter {
         setWeiboImgVisiable(hold, imglist.size());
         for (int i = 0; i < imglist.size(); i++) {
           hold.imgViewList.get(i).setVisibility(View.VISIBLE);
-          ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable.picture_no)
+          ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable
+              .picture_no)
               .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
           Log.d("img>><><><>:", getImgURL(imglist.get(i)));
         }
@@ -391,14 +396,9 @@ public class WeiboAdapter extends BaseAdapter {
 
 
     hold.UserHead.setImageResource(R.drawable.side_user_avatar);
-    if (BaseFunction.fileExists(list.get(arg0).getUser().getAvatar())) {
-      hold.UserHead.setTag(list.get(arg0).getUser().getAvatar());
-      hold.UserHead.setImageBitmap(BitmapUtiles.localImgToBitmap(list.get(arg0).getUser()
-          .getAvatar(), 1));
-    } else {
-      BaseFunction.showImage(ctx, hold.UserHead, list.get(arg0).getUser().getAvatar(),
-          loadImgHeadImg, Url.IMGTYPE_HEAD);
-    }
+    ImageLoader.loadOptimizedHttpImage(ctx, list.get(arg0).getUser().getAvatar()).placeholder(R
+        .drawable.side_user_avatar)
+        .error(R.drawable.side_user_avatar).dontAnimate().into(hold.UserHead);
 
 
     return arg1;
@@ -432,7 +432,7 @@ public class WeiboAdapter extends BaseAdapter {
   private void setWeiboImgVisiable(Holder holder, int num) {
     for (int i = 0; i < num; i++) {
       // holder.imgViewList.get(i).setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable
-        // .friends_sends_pictures_no,ctx));
+      // .friends_sends_pictures_no,ctx));
       holder.imgViewList.get(i).setImageResource(R.drawable.picture_no);
       holder.imgViewList.get(i).setVisibility(View.VISIBLE);
     }
@@ -455,7 +455,7 @@ public class WeiboAdapter extends BaseAdapter {
       url2 = (Url.USERHEADURL + "/" + url).replace("opensns///opensns", "opensns").replace
           ("opensns//opensns", "opensns").replace("/api.php/opensns/", "/api.php/");
     }
-    BaseFunction.showImage(ctx, weiboImg, url2, loadImgMainImg, Url.IMGTYPE_WEIBO);
+    ImageLoader.loadOptimizedHttpImage(ctx, url2).placeholder(R.drawable.picture_no).into(weiboImg);
   }
 
   private void startPhotoBrowser(int arg0, int index) {

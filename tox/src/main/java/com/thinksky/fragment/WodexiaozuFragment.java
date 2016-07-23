@@ -208,7 +208,7 @@ public class WodexiaozuFragment extends RBaseFragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent=new Intent(context,RegistetActivity.class);
+//                Intent intent=new Intent(context,RegisterActivity.class);
 //                intent.putExtra("opinion","2");
 //                startActivityForResult(intent, 8);
                 Intent intent = new Intent(context, LoginActivity.class);

@@ -89,7 +89,7 @@ public class SettingActivity extends BaseBActivity {
     }
     Handler handler = new Handler() {
         @Override
-        public void handleMessage(android.os.Message msg) {
+        public void handleMessage(Message msg) {
             super.handleMessage(msg);
             mProgressDialog1.dismiss();
             if (msg.what == 0) {
@@ -97,7 +97,7 @@ public class SettingActivity extends BaseBActivity {
                 MyJson myJson = new MyJson();
                 String result = (String) msg.obj;
                 final String url = myJson.getApkUrl(result);
-                Dialog dialog = new AlertDialog.Builder(SettingActivity.this)
+                Dialog dialog = new Builder(SettingActivity.this)
                         .setTitle("更新")
                         .setMessage("当前版本v0.1.1,新版本v0.1.2，是否下载更新！")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -131,7 +131,7 @@ public class SettingActivity extends BaseBActivity {
                 },2000);
             }else {
                 //无版本更新
-                Dialog dialog = new AlertDialog.Builder(SettingActivity.this)
+                Dialog dialog = new Builder(SettingActivity.this)
                         .setTitle("更新")
                         .setMessage("当前已经是最新版本！")
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -178,7 +178,7 @@ public class SettingActivity extends BaseBActivity {
         Log.e("OpenFile", file.getName());
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setAction(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(file),
                 "application/vnd.android.package-archive");
         startActivity(intent);

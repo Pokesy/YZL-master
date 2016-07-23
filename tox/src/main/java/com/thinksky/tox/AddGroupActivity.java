@@ -162,7 +162,7 @@ public class AddGroupActivity extends BaseBActivity implements AdapterView.OnIte
             case R.id.upload:
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
                 break;
             case R.id.post_send:

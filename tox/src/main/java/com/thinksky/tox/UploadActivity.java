@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
@@ -67,7 +68,6 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
    * 统计微博字数
    */
   private TextView mlatterCount, mImageLarge, mTitle;
-  private int num = 200;
   /**
    * 用来存放微博图片的水平滑动组件容器
    */
@@ -105,11 +105,8 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
     setContentView(R.layout.activity_upload);
     progressDialog = new ProgressDialog(this);
     progressDialog1 = new ProgressDialog(this);
-
     initView();
     initList();
-
-
   }
 
 
@@ -167,7 +164,7 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
     mAlbum.setOnClickListener(mOnclickListener);
     mFace.setOnClickListener(mOnclickListener);
     imgScrollView.setOnTouchListener(myOnTouchListener);
-    mlatterCount.setText("0/" + Url.WEIBOWORDS);
+    mlatterCount.setText(Url.WEIBOWORDS + "/" + Url.WEIBOWORDS);
 
     mWeiboEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
       @Override
@@ -248,18 +245,14 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
       Log.d("selectionFlag", "flag");
       Log.d("selectionStart", selectionStart + "");
       Log.d("selectionEnd", selectionEnd + "");
-      if (temp.length() > num) {
+      if (temp.length() > Url.WEIBOWORDS) {
         Log.d("selection-temp", temp + "");
         s.delete(selectionStart - 1, selectionEnd);
         int tempSelection = selectionStart;
         Log.d("selection这是显示出来的", s + "");
         mWeiboEdit.setText(s);
         Log.d("selection跳0", tempSelection + "");
-        mWeiboEdit.setSelection(200);//设置光标在最后
-      }
-      //此时应该是用户加了表情或者复制一大段话
-      if (temp.length() > num + 1) {
-
+        mWeiboEdit.setSelection(Url.WEIBOWORDS);//设置光标在最后
       }
     }
   };
@@ -309,26 +302,19 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
           UploadActivity.this.finish();
           break;
         case R.id.sendWeibo:
-          if(mInputExceed) {
+          if (mInputExceed) {
             Toast.makeText(UploadActivity.this, "最大字数超过限制", Toast.LENGTH_LONG).show();
-             return;
+            return;
+          }
+          if (TextUtils.isEmpty(mWeiboEdit.getText()) && scrollImg.size() == 0) {
+            Toast.makeText(UploadActivity.this, "请填写内容或者选择图片", Toast.LENGTH_LONG).show();
+            return;
           }
           if (scrollImg.size() != 0) {
-            if (mWeiboEdit.getText().toString().equals("")) {
-              Toast.makeText(UploadActivity.this, "内容不能为空", Toast.LENGTH_LONG).show();
-              return;
-            }
-
             uploadImages();
           } else {
 
-            if (mWeiboEdit.getText().toString().equals("")) {
-              Toast.makeText(UploadActivity.this, "内容不能为空", Toast.LENGTH_LONG).show();
-              return;
-            }
-
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
             progressDialog.setTitle("发布中请等待");
             progressDialog.setCanceledOnTouchOutside(false);
 
@@ -405,11 +391,6 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
   }
 
   private void sendWeibo() {
-
-    if (mWeiboEdit.getText().toString().equals("")) {
-      Toast.makeText(UploadActivity.this, "内容不能为空", Toast.LENGTH_LONG).show();
-      return;
-    }
 
     weiboApi.setHandler(hand);
     String type = "feed";

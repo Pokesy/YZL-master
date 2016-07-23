@@ -106,7 +106,7 @@ public class LDrawerActivity extends BaseBActivity {
          * 当导航菜单打开时执行
          */
         @Override
-        public void onDrawerOpened(android.view.View drawerView) {
+        public void onDrawerOpened(View drawerView) {
             if (drawerView == mMenuListView) {
                 isDirection_left = true;
             } else if (drawerView == right_drawer) {
@@ -118,7 +118,7 @@ public class LDrawerActivity extends BaseBActivity {
          * 当导航菜单关闭时执行
          */
         @Override
-        public void onDrawerClosed(android.view.View drawerView) {
+        public void onDrawerClosed(View drawerView) {
             if (drawerView == mMenuListView) {
                 isDirection_left = false;
             } else if (drawerView == right_drawer) {

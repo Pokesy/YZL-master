@@ -46,7 +46,7 @@ public class BeforeRegistetActivity extends BaseBActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-//                                Intent intent=new Intent(BeforeRegistetActivity.this,RegistetActivity.class);
+//                                Intent intent=new Intent(BeforeRegistetActivity.this,RegisterActivity.class);
 //                                intent.putExtra("role",status[1]);
 //                                intent.putExtra("id",status[0]);
 //                                intent.putExtra("code",checkbox.getText().toString());

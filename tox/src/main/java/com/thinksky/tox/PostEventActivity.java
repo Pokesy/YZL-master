@@ -193,7 +193,7 @@ public class PostEventActivity extends BaseBActivity {
         post_Send_Num= (EditText) findViewById(R.id.post_Send_Num);
 
         backBtn= (RelativeLayout) findViewById(R.id.Post_send_Back);
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -208,11 +208,11 @@ public class PostEventActivity extends BaseBActivity {
         progressDialog=new ProgressDialog(this);
         //上传图片按钮
         upload= (Button) findViewById(R.id.upload);
-        upload.setOnClickListener(new View.OnClickListener() {
+        upload.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(
-                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }

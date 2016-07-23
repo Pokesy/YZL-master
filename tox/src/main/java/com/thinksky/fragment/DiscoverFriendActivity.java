@@ -128,7 +128,7 @@ public class DiscoverFriendActivity extends BaseBActivity {
                     Toast.makeText(DiscoverFriendActivity.this, "添加图片", Toast.LENGTH_SHORT).show();
                     //选择图片
                     Intent intent = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, IMAGE_OPEN);
                     //通过onResume()刷新数据
                 } else {

@@ -37,7 +37,6 @@ import com.thinksky.info.NewsDetailInfo;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.info.NewsReplyInfo;
 import com.thinksky.redefine.CircleImageView;
-import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.utils.MyJson;
 import com.tox.ImageLoader;
 import com.tox.NewsApi;
@@ -100,7 +99,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         case 0:
           MyJson myJson = new MyJson();
           replyInfoList = myJson.getNewsReplyInfo((String) msg.obj);
-          if (replyModule.getChildAt(0).getTag() != null && replyModule.getChildAt(0)
+          if (replyModule.getChildCount() > 0 && replyModule.getChildAt(0).getTag() != null &&
+              replyModule.getChildAt(0)
               .getTag()
               .equals("isNull")) {
             replyModule.removeViewAt(0);
@@ -550,8 +550,10 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     newWebView.loadUrl("javascript:$('#content h1').html('" + newsDetailInfo.getTitle() + "')");
     newWebView.loadUrl("javascript:$('#content .edit a').html('" + newsDetailInfo.getUser()
         .getNickname() + "')");
-    newWebView.loadUrl("javascript:$('#content .date a').html('" + newsDetailInfo.getCreate_time() + "')");
-    newWebView.loadUrl("javascript:$('#content article').html('" + newsDetailInfo.getContent_html() + "')");
+    newWebView.loadUrl("javascript:$('#content .date a').html('" + newsDetailInfo.getCreate_time
+        () + "')");
+    newWebView.loadUrl("javascript:$('#content article').html('" + newsDetailInfo.getContent_html
+        () + "')");
   }
 
 
