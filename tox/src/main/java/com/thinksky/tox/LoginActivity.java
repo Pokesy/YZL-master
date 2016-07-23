@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class LoginActivity extends BaseBActivity {
 
   //    private RelativeLayout mClose;
-  private RelativeLayout mLogin, mWeibo, mQQ;
+  private RelativeLayout  mWeibo, mQQ;
   private EditText mName, mPassword;
   private TextView mRegister;
   private String nameValue = null;
@@ -88,7 +88,6 @@ public class LoginActivity extends BaseBActivity {
     enter = (TextView) findViewById(R.id.enter);
     reset = (TextView) findViewById(R.id.reset);
     MyOnClickListener my = new MyOnClickListener();
-    mLogin.setOnClickListener(my);
     mWeibo.setOnClickListener(my);
     mQQ.setOnClickListener(my);
     mRegister.setOnClickListener(my);

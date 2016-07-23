@@ -198,7 +198,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     } else {
       ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
           postMap.get("user_logo")).placeholder(R.drawable.side_user_avatar).error(R.drawable
-          .side_user_avatar).into(user_logo);
+          .side_user_avatar).dontAnimate().into(user_logo);
     }
     post_create_time.setText(postMap.get("create_time"));
     post_content.setVisibility(TextUtils.isEmpty(postMap.get("content")) ? View.GONE : View
@@ -263,8 +263,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         if (state) {
           recycler.setAdapter(new MySubAdapter(GroupPostInfoActivity.this, logolist));
           ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
-              .this, beans.get(0).logo).placeholder(R.drawable.side_user_avatar).error(R.drawable
-              .side_user_avatar).dontAnimate().into(group_logo);
+              .this, beans.get(0).logo).placeholder(R.drawable.picture_1_no).error(R.drawable
+              .picture_1_no).dontAnimate().into(group_logo);
           group_name.setText(beans.get(0).title);
 
           group_logo.setOnClickListener(new View.OnClickListener() {
@@ -550,6 +550,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     @Override
     @SuppressWarnings(value = {"unchecked"})
     public void handleMessage(Message msg) {
+      if (hasDestroyed()) {
+        return;
+      }
       switch (msg.what) {
         case 0:
           if (SUPPORT) {
@@ -965,5 +968,11 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
   public class PostDataChangeEvent {
 
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    mHandler.removeCallbacksAndMessages(null);
   }
 }

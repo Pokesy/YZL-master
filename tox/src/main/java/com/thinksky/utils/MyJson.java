@@ -18,6 +18,7 @@ import com.thinksky.info.PostInfo;
 import com.thinksky.info.UserInfo;
 import com.thinksky.info.WeiboCommentInfo;
 import com.thinksky.info.WeiboInfo;
+import com.thinksky.log.Logger;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.Url;
@@ -523,31 +524,31 @@ private String s;
         UserInfo userInfo = new UserInfo();
         try {
             JSONObject jsonObject = new JSONObject(result);
-            userInfo.setNickname(jsonObject.getString("nickname"));
+            userInfo.setNickname(jsonObject.optString("nickname"));
 //            userInfo.setCtime(getStandardDate(jsonObject.getString("reg_time")));
-            userInfo.setFollowing(jsonObject.getString("following"));
-            userInfo.setEmail(jsonObject.getString("email"));
-            userInfo.setScore(jsonObject.getString("score"));
-            userInfo.setTitle(jsonObject.getString("title"));
-            userInfo.setFans(jsonObject.getString("fans"));
-            userInfo.setIsFollow(jsonObject.getString("is_follow"));
-            userInfo.setSex(jsonObject.getString("sex"));
-            userInfo.setSignature(jsonObject.getString("signature"));
+            userInfo.setFollowing(jsonObject.optString("following"));
+            userInfo.setEmail(jsonObject.optString("email"));
+            userInfo.setScore(jsonObject.optString("score"));
+            userInfo.setTitle(jsonObject.optString("title"));
+            userInfo.setFans(jsonObject.optString("fans"));
+            userInfo.setIsFollow(jsonObject.optString("is_follow"));
+            userInfo.setSex(jsonObject.optString("sex"));
+            userInfo.setSignature(jsonObject.optString("signature"));
 //            userInfo.setBirth(jsonObject.getString("birthday"));
 //            Log.d("myjson>>>",jsonObject.getString("birthday"));
-            userInfo.setAvatar(Url.IMAGE + jsonObject.getString("avatar256"));
-            JSONObject jsonObject1 = new JSONObject(jsonObject.getString("expand_info"));
-            userInfo.setBirth(jsonObject1.getString("生日"));
-            userInfo.setQq(jsonObject1.getString("qq"));
-            JSONObject jsonObject4 = new JSONObject(jsonObject.getString("pos_province"));
-            userInfo.setProvince(jsonObject4.getString("name"));
-            JSONObject jsonObject2 = new JSONObject(jsonObject.getString("pos_city"));
-            userInfo.setCity(jsonObject2.getString("name"));
-            JSONObject jsonObject3 = new JSONObject(jsonObject.getString("pos_district"));
-            userInfo.setDistrict(jsonObject3.getString("name"));
+            userInfo.setAvatar(Url.IMAGE + jsonObject.optString("avatar256"));
+            JSONObject jsonObject1 = new JSONObject(jsonObject.optString("expand_info"));
+            userInfo.setBirth(jsonObject1.optString("生日"));
+            userInfo.setQq(jsonObject1.optString("qq"));
+            JSONObject jsonObject4 = new JSONObject(jsonObject.optString("pos_province"));
+            userInfo.setProvince(jsonObject4.optString("name"));
+            JSONObject jsonObject2 = new JSONObject(jsonObject.optString("pos_city"));
+            userInfo.setCity(jsonObject2.optString("name"));
+            JSONObject jsonObject3 = new JSONObject(jsonObject.optString("pos_district"));
+            userInfo.setDistrict(jsonObject3.optString("name"));
 
         } catch (JSONException e) {
-
+            Logger.e("MyJson", e, "parse user info");
         }
         return userInfo;
     }

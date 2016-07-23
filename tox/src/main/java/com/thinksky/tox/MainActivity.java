@@ -2,11 +2,11 @@ package com.thinksky.tox;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -69,7 +69,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   private DiscoverFragment mallFragment;
 
   //从UserInfoActivity返回的信息
-  private String backName, backAvater;
   private TextView myUserName;
   private TextView signature;
   //头像
@@ -274,7 +273,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     switch (v.getId()) {
       case R.id.ll1:
       case R.id.user:
-        if (!Url.SESSIONID.equals("")) {
+        if (!TextUtils.isEmpty(Url.SESSIONID)) {
           Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
           intent.putExtra("userUid", Url.USERID);
           startActivityForResult(intent, 0);
@@ -292,7 +291,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startActivity(intent);
         break;
       case R.id.collect:
-        if (!Url.SESSIONID.equals("")) {
+        if (TextUtils.isEmpty(Url.SESSIONID)) {
           intent = new Intent(MainActivity.this, CollectListActivity.class);
           startActivity(intent);
         } else {
@@ -558,34 +557,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     //判断是否登入
     if (BaseFunction.isLogin()) {
       signature.setVisibility(View.VISIBLE);
-      ImageLoader.loadOptimizedHttpImage(this, sp.getString("avatar", "")).placeholder(R.drawable
+      ImageLoader.loadOptimizedHttpImage(this, Url.MYUSERINFO.getAvatar()).placeholder(R.drawable
           .side_user_avatar)
           .dontAnimate().into(mleftHead);
-      if (!("").equalsIgnoreCase(sp.getString("nickname", ""))) {
-        myUserName.setText(sp.getString("nickname", ""));
-      } else {
-        myUserName.setText(sp.getString("username", ""));
-      }
-      if (backName != null) {
-        myUserName.setText(backName);
-      }
-      if (backAvater != null) {
-        mleftHead.setImageBitmap(BitmapFactory.decodeFile(backAvater));
-      }
-      //            if (!("").equals(Url.MYUSERINFO)) {
-      //                signature.setText(Url.MYUSERINFO.getSignature());
-      //            }else{
-      //                signature.setText("这个人很懒，什么都没写");
-      //            }
-      if (!("").equalsIgnoreCase(sp.getString("getSignature", ""))) {
-
-        signature.setText(sp.getString("nickname", ""));
-      } else {
-
-        signature.setText("这个人很懒，什么都没写");
-      }
+      myUserName.setText(TextUtils.isEmpty(Url.MYUSERINFO.getNickname()) ? Url.MYUSERINFO
+          .getUsername() : Url.MYUSERINFO.getNickname());
+      signature.setText(TextUtils.isEmpty(Url.MYUSERINFO.getSignature()) ? "这个人很懒，什么都没写" : Url
+          .MYUSERINFO.getSignature());
     } else {
       mleftHead.setImageResource(R.drawable.side_user_avatar);
+      signature.setText("");
       myUserName.setText("未登录");
     }
   }
@@ -593,11 +574,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == 0 && resultCode == 1) {
-      Log.d("回来了吗？", "123");
-      backName = data.getExtras().getString("NickName");
-      backAvater = data.getExtras().getString("Avater");
-    }
+    setLeftMenu();
   }
 
   @Subscribe

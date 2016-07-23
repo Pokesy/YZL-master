@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -134,7 +135,6 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
     user = (UserInfo) intent.getSerializableExtra("inf");
 
     sex_flag = Integer.parseInt(user.getSex());
-    Log.d("getSex", user.getSex());
     if (user.getSex().equals("0")) {
       sex = "保密";
     }
@@ -144,6 +144,7 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
     if (user.getSex().equals("2")) {
       sex = "女";
     }
+
     xianshi_nicheng.setText(user.getNickname());
     xianshi_xingbie.setText(sex);
     xianshi_nianling.setText(user.getBirth());
@@ -275,6 +276,7 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
       //更改个性签名按钮
       case R.id.img_edit_sign:
         final EditText editText_sign = new EditText(this);
+        editText_sign.setText(xianshi_qianming.getText());
         new AlertDialog.Builder(this).setTitle("个性签名")
             .setView(editText_sign)
             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
