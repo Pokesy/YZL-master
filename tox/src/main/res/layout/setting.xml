@@ -3,211 +3,229 @@
     android:id="@+id/Setting"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
-    android:orientation="vertical">
+  <RelativeLayout
+      android:id="@+id/setting_back"
+      android:layout_width="match_parent"
+      android:layout_height="?actionBarSize"
+      android:background="@drawable/head_border"
+      >
 
-    <RelativeLayout
-        android:id="@+id/setting_back"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/head_border">
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/menu" />
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:padding="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/menu"
+        />
 
 
-        <TextView
-            android:id="@+id/loginText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center_vertical"
-            android:text="设置"
-            android:textColor="#ffffff"
-            android:textSize="17sp" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:text="设置"
+        style="@style/Widget.App.TextView.XXLarge.White"
+        />
+  </RelativeLayout>
 
-    <ScrollView
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="15dp">
+        android:orientation="vertical"
+        >
 
-        <LinearLayout
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+
+        <RelativeLayout
+            android:id="@+id/setting_qingchuhuancun"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp"
             >
 
-                <RelativeLayout
-                    android:id="@+id/setting_qingchuhuancun"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:paddingLeft="15dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_gravity="center_vertical"
+              android:text="清除缓存"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="清除缓存"
-                        android:textSize="20dp" />
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:background="@drawable/tiaozhuan"
+              />
+        </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/icon_more" />
-                </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/item_divider"
+            />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:background="#DEE2E3" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+        <RelativeLayout
+            android:id="@+id/setting_chongzhimima"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            >
 
-                <RelativeLayout
-                    android:id="@+id/setting_chongzhimima"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:paddingLeft="15dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="重置密码"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:background="@drawable/tiaozhuan"
+              />
+        </RelativeLayout>
+      </LinearLayout>
 
-                        android:text="重置密码"
-                        android:textSize="20dp" />
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dip"
+          android:background="@color/item_divider"
+          />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/icon_more" />
-                </RelativeLayout>
-            </LinearLayout>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="vertical"
+          >
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="#DEE2E3" />
+        <RelativeLayout
+            android:id="@+id/setting_yijianfankui"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:text="意见反馈"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
 
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-               >
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:background="@drawable/tiaozhuan"
+              />
 
-                <RelativeLayout
-                    android:id="@+id/setting_yijianfankui"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:paddingLeft="15dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+        </RelativeLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="意见反馈"
-                        android:textSize="20dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/item_divider"
+            />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/icon_more" />
+        <RelativeLayout
+            android:id="@+id/setting_banbenjiance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            >
 
-                </RelativeLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_gravity="center_vertical"
+              android:text="新版本检测"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:background="#DEE2E3" />
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:background="@drawable/tiaozhuan"
+              />
+        </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/setting_banbenjiance"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:paddingLeft="15dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/item_divider"
+            />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="新版本检测"
-                        android:textSize="20dp" />
+        <RelativeLayout
+            android:id="@+id/setting_guanyuqiubai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            >
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/icon_more" />
-                </RelativeLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_gravity="center_vertical"
+              android:text="关于"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:background="#DEE2E3" />
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:background="@drawable/tiaozhuan"
+              />
+        </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/setting_guanyuqiubai"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:paddingLeft="15dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="关于"
-                        android:textSize="20dp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/icon_more" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:background="#DEE2E3" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/item_divider"
+            />
+      </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
 
 </LinearLayout>

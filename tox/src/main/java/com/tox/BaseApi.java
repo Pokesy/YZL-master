@@ -148,10 +148,9 @@ public class BaseApi {
     public void saveUserInfoToNative(Context context) {
         SharedPreferences sp = context.getSharedPreferences("userInfo", 0);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("nickname", Url.MYUSERINFO.getNickname());
-        editor.putString("avatar", Url.MYUSERINFO.getAvatar());
         editor.putString("user_info", JsonConverter.objectToJson(Url.MYUSERINFO));
-        Log.e("我要保存", Url.MYUSERINFO.getAvatar());
+        editor.putString("uid", Url.USERID);
+        editor.putString("session_id", Url.SESSIONID);
         editor.apply();
     }
 

@@ -341,6 +341,8 @@ public class RegistetActivity extends BaseBActivity {
           ToastHelper.showToast("注册成功", RegistetActivity.this);
           Url.activityFrom = "registe";
           Url.MYUSERINFO = myJson.getUserAllInfo(result);
+          Url.SESSIONID = myJson.getUserSessionID(result);
+          Url.USERID = myJson.getUserID(result);
           mUserapi.saveUserInfoToNative(RegistetActivity.this);
           //                        login.userLogin(username, password);
           Intent intent = new Intent(RegistetActivity.this, MainActivity.class);
