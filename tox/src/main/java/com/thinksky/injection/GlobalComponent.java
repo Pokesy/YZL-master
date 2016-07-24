@@ -15,6 +15,7 @@ import android.content.Context;
 import com.squareup.otto.Bus;
 import com.thinksky.net.HttpErrorUiNotifier;
 import com.thinksky.net.SessionNotifier;
+import com.thinksky.tox.MainActivity;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -45,4 +46,6 @@ public interface GlobalComponent {
 
   //@DeviceId
   //String deviceId();
+
+  void inject(MainActivity activity);
 }

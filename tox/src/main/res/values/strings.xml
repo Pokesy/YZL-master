@@ -140,4 +140,10 @@
 
   <!-- 专辑 -->
   <string name="activity_zhuanji_title">精彩视频</string>
+
+  <!-- 更新 -->
+  <string name="upgrade_info_normal">有新的版本更新，是否下载?</string>
+  <string name="check_upgrade_failed">检测更新失败</string>
+  <string name="btn_confirm">确定</string>
+  <string name="btn_cancel">取消</string>
 </resources>

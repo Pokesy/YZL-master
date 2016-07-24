@@ -13,6 +13,7 @@ package com.thinksky.injection;
 
 import com.squareup.otto.Bus;
 import com.thinksky.net.RpcCallManager;
+import com.thinksky.utils.UpgradeHelper;
 import dagger.Component;
 
 /**
@@ -31,5 +32,5 @@ public interface ActivityComponent extends GlobalComponent {
 
   RpcCallManager rpcCallManager();
 
-  //UpgradeHelper upgradeHelper();
+  UpgradeHelper upgradeHelper();
 }

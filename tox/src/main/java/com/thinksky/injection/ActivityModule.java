@@ -14,6 +14,7 @@ package com.thinksky.injection;
 import android.app.Activity;
 import com.squareup.otto.Bus;
 import com.thinksky.net.RpcCallManager;
+import com.thinksky.utils.UpgradeHelper;
 import dagger.Module;
 import dagger.Provides;
 
@@ -47,8 +48,8 @@ public class ActivityModule {
     return new RpcCallManager.RpcCallManagerImpl();
   }
 
-  //@Provides
-  //public UpgradeHelper providesUpgradeHelper() {
-  //  return new UpgradeHelper(mActivity);
-  //}
+  @Provides
+  public UpgradeHelper providesUpgradeHelper() {
+    return new UpgradeHelper(mActivity);
+  }
 }

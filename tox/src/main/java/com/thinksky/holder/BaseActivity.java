@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.bugtags.library.Bugtags;
+import com.thinksky.injection.DaggerGlobalComponent;
+import com.thinksky.injection.GlobalModule;
 
 public abstract class BaseActivity extends BaseBActivity {
 

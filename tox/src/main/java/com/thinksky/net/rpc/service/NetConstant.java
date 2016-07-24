@@ -11,6 +11,8 @@
  */
 package com.thinksky.net.rpc.service;
 
+import com.thinksky.tox.BuildConfig;
+
 /**
  * 服务器常量<BR>
  *
@@ -20,10 +22,10 @@ package com.thinksky.net.rpc.service;
 public class NetConstant {
   public static final String URL_DOWNLOAD_APP = "http://192.168.0.1";
 
-  public static final String BASE_URL_LOCATION = "http://139.129.133.223/";
+  public static final String BASE_URL_LOCATION = BuildConfig.URL_BASE;
   //public static final String BASE_URL_LOCATION = "http://192.168.15.201:8080/taobei/";
-  public static final String BASE_URL_SERVICE_SUFFIX = "api/";
-  public static final String BASE_URL = BASE_URL_LOCATION + BASE_URL_SERVICE_SUFFIX;
+  public static final String BASE_URL_SERVICE_SUFFIX = "/api.php";
+  public static final String BASE_URL = BASE_URL_LOCATION;
 
   private NetConstant() {
 

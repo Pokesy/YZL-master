@@ -2,6 +2,7 @@ package com.thinksky.tox;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -28,6 +29,9 @@ import com.thinksky.fragment.MyMessageActivity;
 import com.thinksky.fragment.WeiboFragment;
 import com.thinksky.fragment.YlqFragment;
 import com.thinksky.holder.BaseActivity;
+import com.thinksky.holder.BaseApplication;
+import com.thinksky.injection.DaggerGlobalComponent;
+import com.thinksky.injection.GlobalModule;
 import com.thinksky.model.ActivityModel;
 import com.thinksky.qqsliding.widget.DragLayout;
 import com.thinksky.ui.common.TitleBar;
@@ -593,6 +597,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   public void handleHuatiMoreClickEvent(HomeFragment.HuatiMoreClickEvent event) {
     // TODO 跳转到鱼乐圈话题
     mTabGroup.check(R.id.rb_yulequan);
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    inject();
+    checkNewVersion();
+  }
+
+  private void inject() {
+    DaggerGlobalComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication()))
+        .build().inject(this);
+  }
+
+  private void checkNewVersion() {
+    getComponent().upgradeHelper().checkUpgradeInfo();
   }
 }
 
