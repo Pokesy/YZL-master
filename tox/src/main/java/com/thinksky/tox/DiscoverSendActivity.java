@@ -81,7 +81,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
       imgLay9;
   private ProgressDialog progressDialog, progressDialog1;
   /**
-   * 用来保存准备选择上传的图片路径
+   * 用来保存准备选择上传的图片 径
    */
   private List<String> scrollImg = new ArrayList<String>();
   private List<ImageView> imgList = new ArrayList<ImageView>();
@@ -113,6 +113,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
   private String isfactory = "2";
   private ImageView mTogBtn;
   private String isdisplay;
+  private ImageView mIconView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +160,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     horizontalListView.setAdapter(photoAdapter);
     mAttachBtn = (LinearLayout) findViewById(R.id.Post_send_attachBtn);
     title = (LinearLayout) findViewById(R.id.title);
+    mIconView = (ImageView) findViewById(R.id.icon_contact);
     attachBtns = (LinearLayout) findViewById(R.id.attachBtns);
     mFaceBtn = (LinearLayout) findViewById(R.id.Post_send_faceBtn);
     backBtn = (RelativeLayout) findViewById(R.id.Post_send_Back);
@@ -173,9 +175,13 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     if (intent.getIntExtra("fish", 0) == 0) {
       iv_round.setImageResource(R.drawable.yuyou_1);
       title.setVisibility(View.GONE);
+      mIconView.setImageResource(R.drawable.weixin);
+      mContentEdit.setHint("请输入微信号");
       isfactory = "1";
     } else {
       iv_round.setImageResource(R.drawable.yuchang_1);
+      mIconView.setImageResource(R.drawable.phone);
+      mContentEdit.setHint("请输入手机号");
     }
     progressDialog = new ProgressDialog(this);
     photoCount = (TextView) findViewById(R.id.photo_count);
@@ -202,6 +208,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
               FUBean bean = new FUBean();
               bean.address = jsonObject.getString("address");
               bean.mobile1 = jsonObject.getString("mobile1");
+              bean.wechat = jsonObject.getString("wechat");
               bean.isdisplay = jsonObject.getString("isdisplay");
               bean.isfactory = jsonObject.getString("isfactory");
               bean.factory_name = jsonObject.getString("factory_name");
@@ -228,8 +235,12 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
                   .longitude)) {
                 longitude = beans.get(0).longitude;
               }
-              if (!beans.get(0).mobile1.equals(null) && !TextUtils.isEmpty(beans.get(0).mobile1)) {
+              if (!beans.get(0).mobile1.equals(null) && !TextUtils.isEmpty(beans.get(0).mobile1)
+                  && TextUtils.equals(isfactory, "2")) {
                 mContentEdit.setText(beans.get(0).mobile1);
+              }
+              if (!TextUtils.isEmpty(beans.get(0).wechat) && TextUtils.equals(isfactory, "1")) {
+                mContentEdit.setText(beans.get(0).wechat);
               }
               mTogBtn.setSelected(TextUtils.equals(beans.get(0).isdisplay, STATE_HIDDEN));
               if (!TextUtils.isEmpty(beans.get(0).factory_name)) {
@@ -298,7 +309,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
           //  ToastHelper.showToast("手号码必须是11位", this);
           //  return;
           //}
-          if (imgList.size()==0){
+          if (imgList.size() == 0) {
             ToastHelper.showToast("请选择图片", this);
             return;
           }
@@ -419,7 +430,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
       }
     }
     /**
-     * 表示从ScanPhotoActivity返回
+     *  示从ScanPhotoActivity返回
      */
     if (resultCode == 99 && requestCode == 9) {
       List<String> imgPathList = data.getStringArrayListExtra("data");
@@ -457,7 +468,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         photoAdapter.notifyDataSetChanged();
       }
       /**
-       * 表示从拍照的Activity返回
+       *  示从拍照的Activity返回
        */
     } else if (requestCode == 1 && resultCode == RESULT_OK) {
       File temFile =
@@ -600,7 +611,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     Map map = new HashMap();
     map.put("session_id", session_id);
     map.put("factory_name", mTitleEdit.getText().toString().trim());
-    map.put("mobile", mContentEdit.getText().toString().trim());
+    map.put(TextUtils.equals(isfactory, "2") ? "mobile" : "wechat", mContentEdit.getText()
+        .toString().trim());
     map.put("data", l);
     if (!"".equals(latitude) && !"".equals(longitude)) {
       map.put("latitude", latitude);
@@ -630,6 +642,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             progressDialog.dismiss();
             if (state) {
               ToastHelper.showToast("发送成功", DiscoverSendActivity.this);
+              getComponent().getGlobalBus().post(new MarkEvent(isfactory));
             }
           }
         });
@@ -846,7 +859,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
      * fans : 3
      * following : 4
      * title : Lv5 经理
-     * signature : 走自己的路，说别人去吧
+     * signature :  自己的 ， 别人去吧
      * birthday : 0000-00-00
      * pos_city : null
      * pos_district : null
@@ -922,6 +935,15 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     private List<?> rank_link;
     private List<String> cover_url;
     private List<String> images;
+    private String wechat;
+
+    public String getWechat() {
+      return wechat;
+    }
+
+    public void setWechat(String wechat) {
+      this.wechat = wechat;
+    }
 
     public boolean isSuccess() {
       return success;
@@ -1293,6 +1315,14 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
       public void setUpid(String upid) {
         this.upid = upid;
       }
+    }
+  }
+
+  public class MarkEvent {
+    public String isFactory;
+
+    public MarkEvent(String isFactory) {
+      this.isFactory = isFactory;
     }
   }
 }

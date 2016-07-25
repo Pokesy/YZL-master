@@ -295,7 +295,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startActivity(intent);
         break;
       case R.id.collect:
-        if (TextUtils.isEmpty(Url.SESSIONID)) {
+        if (!TextUtils.isEmpty(Url.SESSIONID)) {
           intent = new Intent(MainActivity.this, CollectListActivity.class);
           startActivity(intent);
         } else {
@@ -613,6 +613,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
   private void checkNewVersion() {
     getComponent().upgradeHelper().checkUpgradeInfo();
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
   }
 }
 

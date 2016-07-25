@@ -2,7 +2,6 @@ package com.thinksky.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +31,15 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.squareup.otto.Subscribe;
 import com.thinksky.rsen.ResUtil;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.DiscoverSelectActivity;
+import com.thinksky.tox.DiscoverSendActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SegmentControl;
+import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -49,7 +51,7 @@ import java.util.List;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
 
-public class DiscoverFragment extends Fragment implements View.OnClickListener {
+public class DiscoverFragment extends BasicFragment implements View.OnClickListener {
   private TextView name;
   private TextView dizhi;
   private TextView dianhua;
@@ -69,6 +71,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
   private Button mark;
   public static boolean marks = false;
   private String mCurrentType = "1";
+  private ImageView mIconView;
   /**
    * 点击POI后弹出的泡泡
    */
@@ -85,7 +88,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
 
   private OverlayOptions ooA;
 
-  @Override public void onCreate(Bundle savedInstanceState) {
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
   }
 
@@ -114,11 +118,13 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
 
     RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_FX,
         new RsenUrlUtil.OnNetHttpResultListener() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public void onResult(boolean state, String result, JSONObject jsonObject) {
+          @Override
+          public void onResult(boolean state, String result, JSONObject jsonObject) {
             if (state && TextUtils.equals(mCurrentType, str)) {
               final FXBean wendaBean = JSON.parseObject(result, FXBean.class);
 
@@ -152,7 +158,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
         });
   }
 
-  @Override public void onClick(View v) {
+  @Override
+  public void onClick(View v) {
     switch (v.getId()) {
       case R.id.bt_traffic:
         //  判断当前是否启用交通图，如果没有就打开，如果有，就关闭
@@ -178,8 +185,14 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     }
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+  @Subscribe
+  public void handleMarkEvent(DiscoverSendActivity.MarkEvent event) {
+    initMarker(event.isFactory, TextUtils.equals("1", event.isFactory) ? fish : fish1);
+  }
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
     view = inflater.inflate(R.layout.fragment_discover, null);
     mMapView = (MapView) view.findViewById(R.id.bmapView);
     mPopView = (LinearLayout) view.findViewById(R.id.pop);
@@ -192,6 +205,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     iv_1 = (ImageView) view.findViewById(R.id.iv_1);
     iv_2 = (ImageView) view.findViewById(R.id.iv_2);
     iv_3 = (ImageView) view.findViewById(R.id.iv_3);
+    mIconView = (ImageView) view.findViewById(R.id.icon_contact);
 
     mSegmentControl = (SegmentControl) view.findViewById(R.id.segment_control);
     baseApi = new BaseApi();
@@ -213,7 +227,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.white));
     mSegmentControl.setOnSegmentControlClickListener(
         new SegmentControl.OnSegmentControlClickListener() {
-          @Override public void onSegmentControlClick(int index) {
+          @Override
+          public void onSegmentControlClick(int index) {
 
             switch (index) {
               case 0:
@@ -238,6 +253,15 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
 
         mPopView.setVisibility(View.VISIBLE);
         mark.setVisibility(View.GONE);
+        if (TextUtils.equals("1", bean.isfactory)) {
+          mIconView.setImageResource(R.drawable.weixin);
+          dianhua.setText(bean.getWechat());
+        } else if (TextUtils.equals("2", bean.isfactory)) {
+          dianhua.setText(bean.getMobile1());
+          mIconView.setImageResource(R.drawable.phone);
+        } else {
+          mIconView.setImageResource(R.drawable.weixin);
+        }
         dizhi.setText(bean.getAddress());
         dianhua.setText(bean.getMobile1());
         if (marker.getIcon().equals(fish1)) {
@@ -248,14 +272,17 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
 
         //                iv_round.setImageResource(R.drawable.ab_ic_logo);
         //                String a = RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32();
-        //                ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(), iv_round);
+        //                ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar()
+        // .getAvatar32(), iv_round);
         //为图片控件加载数据
         kjBitmap = KJBitmap.create();
-        //                kjBitmap.display(iv_round, RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32());
+        //                kjBitmap.display(iv_round, RsenUrlUtil.URL_BASE + bean.getAvatar()
+        // .getAvatar32());
 
         ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(), iv_round);
         iv_round.setOnClickListener(new View.OnClickListener() {
-          @Override public void onClick(View v) {
+          @Override
+          public void onClick(View v) {
             baseApi.goUserInfo(getActivity(), bean.getUid());
           }
         });
@@ -282,7 +309,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
               final int in = i;
               imageView.setOnClickListener(new View.OnClickListener() {
 
-                @Override public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                   Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
                   Bundle bundle = new Bundle();
                   bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.getImages());
@@ -307,7 +335,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
   private void initView() {
 
     mark.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         if (BaseFunction.isLogin()) {
           Intent intent = new Intent(getActivity(), DiscoverSelectActivity.class);
           getActivity().startActivity(intent);
@@ -324,7 +353,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
    */
   public class MyLocationListener implements BDLocationListener {
 
-    @Override public void onReceiveLocation(BDLocation location) {
+    @Override
+    public void onReceiveLocation(BDLocation location) {
       // map view 销毁后不在处理新接收的位置
       //Receive Location
       if (location == null || mMapView == null) {
@@ -355,7 +385,8 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     }
   }
 
-  @Override public void onDestroy() {
+  @Override
+  public void onDestroy() {
 
     //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
     mBaiduMap.setMyLocationEnabled(false);
@@ -364,20 +395,22 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     super.onDestroy();
   }
 
-  @Override public void onResume() {
+  @Override
+  public void onResume() {
     super.onResume();
     //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
     mMapView.onResume();
   }
 
-  @Override public void onPause() {
+  @Override
+  public void onPause() {
     super.onPause();
     //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
     mMapView.onPause();
   }
 
   /**
-   * 地图图层的触摸事件
+   * 地图图层的 摸事件
    */
   private BaiduMap.OnMapClickListener mOnMapClickListener = new BaiduMap.OnMapClickListener() {
 
@@ -385,17 +418,19 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
     private MapViewLayoutParams.Builder mPopParamsBuilder;
 
     /**
-     *  点击到POI时触发
+     *  点击到POI时 发
      */
-    @Override public boolean onMapPoiClick(MapPoi poi) {
+    @Override
+    public boolean onMapPoiClick(MapPoi poi) {
 
       return true;
     }
 
     /**
-     * 点击到地图的某个点时触发
+     * 点击到地图的某个点时 发
      */
-    @Override public void onMapClick(LatLng lat) {
+    @Override
+    public void onMapClick(LatLng lat) {
       mPopView.setVisibility(View.GONE);
       mark.setVisibility(View.VISIBLE);
     }
@@ -407,7 +442,54 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
      * success : true
      * error_code : 0
      * message : 获取成功
-     * result : [{"uid":"102","nickname":"唐德骏","sex":"1","birthday":"0000-00-00","qq":"284675291","login":"44","reg_ip":"3232239396","reg_time":"1453701779","last_login_ip":"3232239365","last_login_time":"1458613563","status":"1","last_login_role":"1","show_role":"1","signature":"我养鱼我快乐","pos_province":null,"pos_city":{"id":"370600","name":"烟台市","level":"2","upid":"370000"},"pos_district":null,"pos_community":"0","score1":"315","score2":"0","score3":"0","score4":"0","con_check":"1","total_check":"2","isfactory":"2","factory_name":"天虹渔业","longitude":"116.3926079355504","latitude":"39.91939456451247","isdisplay":"1","data":false,"mobile1":"123456789000","address":"北京市西城区西华门大街","expand_info":{"qq":"","生日":"2016-03-30"},"avatar":{"avatar32":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_32_32.png","avatar64":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_64_64.png","avatar128":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_128_128.png","avatar256":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_256_256.png","avatar512":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_512_512.png"},"mobile":"","cover_url":[""],"images":["/opensns/Public/images/nopic.png"],"is_follow":0},{"uid":"106","nickname":"飞过山","sex":"1","birthday":"0000-00-00","qq":"","login":"16","reg_ip":"3232239365","reg_time":"1455500723","last_login_ip":"3232239365","last_login_time":"1458876046","status":"1","last_login_role":"1","show_role":"1","signature":"从养鱼中发现生活的真知真趣","pos_province":{"id":"370000","name":"山东省","level":"1","upid":"0"},"pos_city":{"id":"370600","name":"烟台市","level":"2","upid":"370000"},"pos_district":{"id":"370613","name":"莱山区","level":"3","upid":"370600"},"pos_community":"0","score1":"287","score2":"0","score3":"0","score4":"0","con_check":"0","total_check":"0","isfactory":"1","factory_name":"南神","longitude":"121.4988404957559","latitude":"37.79427362810932","isdisplay":"1","data":"","mobile1":"15253539423","address":"烟台市蓝海路1号","expand_info":{"qq":"","生日":"2016-03-30"},"avatar":{"avatar32":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_32_32.png","avatar64":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_64_64.png","avatar128":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_128_128.png","avatar256":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_256_256.png","avatar512":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_512_512.png"},"mobile":"","cover_url":[""],"images":["/opensns/Public/images/nopic.png"],"is_follow":0},{"uid":"113","nickname":"18660587271","sex":"0","birthday":"0000-00-00","qq":"","login":"0","reg_ip":"0","reg_time":"0","last_login_ip":"0","last_login_time":"0","status":"1","last_login_role":"0","show_role":"0","signature":"","pos_province":null,"pos_city":null,"pos_district":null,"pos_community":"0","score1":"10","score2":"0","score3":"0","score4":"0","con_check":"0","total_check":"0","isfactory":"2","factory_name":"我们在这里","longitude":"121.4860402118306","latitude":"37.46217811659226","isdisplay":"1","data":"158,142,159","mobile1":"1111111111","address":"山东省烟台市莱山区港城东大街","expand_info":{"qq":"","生日":"2016-03-30"},"avatar":{"avatar32":"/opensns/Public/images/default_avatar_32_32.jpg","avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","avatar128":"/opensns/Public/images/default_avatar_128_128.jpg","avatar256":"/opensns/Public/images/default_avatar_256_256.jpg","avatar512":"/opensns/Public/images/default_avatar_512_512.jpg"},"mobile":"","cover_url":["158","142","159"],"images":["/opensns/Uploads/Picture/2016-03-15/56e75fe7783dd_100_100.png","/opensns/Uploads/Picture/2016-03-10/56e13b6510038_100_100.png","/opensns/Uploads/Picture/2016-03-15/56e75ff6f1cbe_100_100.png"],"is_follow":0}]
+     * result : [{"uid":"102","nickname":"唐德骏","sex":"1","birthday":"0000-00-00",
+     * "qq":"284675291","login":"44","reg_ip":"3232239396","reg_time":"1453701779",
+     * "last_login_ip":"3232239365","last_login_time":"1458613563","status":"1",
+     * "last_login_role":"1","show_role":"1","signature":"我养鱼我快乐","pos_province":null,
+     * "pos_city":{"id":"370600","name":"烟台市","level":"2","upid":"370000"},"pos_district":null,
+     * "pos_community":"0","score1":"315","score2":"0","score3":"0","score4":"0","con_check":"1",
+     * "total_check":"2","isfactory":"2","factory_name":"天虹渔业","longitude":"116.3926079355504",
+     * "latitude":"39.91939456451247","isdisplay":"1","data":false,"mobile1":"123456789000",
+     * "address":"北京市 城区 华门大 ","expand_info":{"qq":"","生日":"2016-03-30"},
+     * "avatar":{"avatar32":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_32_32.png",
+     * "avatar64":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_64_64.png",
+     * "avatar128":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_128_128.png",
+     * "avatar256":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_256_256.png",
+     * "avatar512":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_512_512.png"},"mobile":"",
+     * "cover_url":[""],"images":["/opensns/Public/images/nopic.png"],"is_follow":0},
+     * {"uid":"106","nickname":"飞过山","sex":"1","birthday":"0000-00-00","qq":"","login":"16",
+     * "reg_ip":"3232239365","reg_time":"1455500723","last_login_ip":"3232239365",
+     * "last_login_time":"1458876046","status":"1","last_login_role":"1","show_role":"1",
+     * "signature":"从养鱼中发现生活的真知真 ","pos_province":{"id":"370000","name":"山东省","level":"1",
+     * "upid":"0"},"pos_city":{"id":"370600","name":"烟台市","level":"2","upid":"370000"},
+     * "pos_district":{"id":"370613","name":"莱山区","level":"3","upid":"370600"},
+     * "pos_community":"0","score1":"287","score2":"0","score3":"0","score4":"0","con_check":"0",
+     * "total_check":"0","isfactory":"1","factory_name":"南神","longitude":"121.4988404957559",
+     * "latitude":"37.79427362810932","isdisplay":"1","data":"","mobile1":"15253539423",
+     * "address":"烟台市蓝海 1号","expand_info":{"qq":"","生日":"2016-03-30"},
+     * "avatar":{"avatar32":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_32_32.png",
+     * "avatar64":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_64_64.png",
+     * "avatar128":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_128_128.png",
+     * "avatar256":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_256_256.png",
+     * "avatar512":"/opensns/Uploads/Avatar/2016-03-21/56ef932f49fd2_512_512.png"},"mobile":"",
+     * "cover_url":[""],"images":["/opensns/Public/images/nopic.png"],"is_follow":0},
+     * {"uid":"113","nickname":"18660587271","sex":"0","birthday":"0000-00-00","qq":"",
+     * "login":"0","reg_ip":"0","reg_time":"0","last_login_ip":"0","last_login_time":"0",
+     * "status":"1","last_login_role":"0","show_role":"0","signature":"","pos_province":null,
+     * "pos_city":null,"pos_district":null,"pos_community":"0","score1":"10","score2":"0",
+     * "score3":"0","score4":"0","con_check":"0","total_check":"0","isfactory":"2",
+     * "factory_name":"我们在这里","longitude":"121.4860402118306","latitude":"37.46217811659226",
+     * "isdisplay":"1","data":"158,142,159","mobile1":"1111111111","address":"山东省烟台市莱山区港城东大 ",
+     * "expand_info":{"qq":"","生日":"2016-03-30"},
+     * "avatar":{"avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
+     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg",
+     * "avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
+     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg"},"mobile":"",
+     * "cover_url":["158","142","159"],
+     * "images":["/opensns/Uploads/Picture/2016-03-15/56e75fe7783dd_100_100.png",
+     * "/opensns/Uploads/Picture/2016-03-10/56e13b6510038_100_100.png",
+     * "/opensns/Uploads/Picture/2016-03-15/56e75ff6f1cbe_100_100.png"],"is_follow":0}]
      */
 
     private boolean success;
@@ -445,9 +527,13 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
      * isdisplay : 1
      * data : false
      * mobile1 : 123456789000
-     * address : 北京市西城区西华门大街
+     * address : 北京市 城区 华门大
      * expand_info : {"qq":"","生日":"2016-03-30"}
-     * avatar : {"avatar32":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_32_32.png","avatar64":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_64_64.png","avatar128":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_128_128.png","avatar256":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_256_256.png","avatar512":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_512_512.png"}
+     * avatar : {"avatar32":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_32_32.png",
+     * "avatar64":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_64_64.png",
+     * "avatar128":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_128_128.png",
+     * "avatar256":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_256_256.png",
+     * "avatar512":"/opensns/Uploads/Avatar/2016-03-16/56e90f5f484cb_512_512.png"}
      * mobile :
      * cover_url : [""]
      * images : ["/opensns/Public/images/nopic.png"]
@@ -528,6 +614,7 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
       private String data;
       private String mobile1;
       private String address;
+      private String wechat;
       /**
        * qq :
        * 生日 : 2016-03-30
@@ -547,6 +634,14 @@ public class DiscoverFragment extends Fragment implements View.OnClickListener {
       private int is_follow;
       private List<String> cover_url;
       private List<String> images;
+
+      public String getWechat() {
+        return wechat;
+      }
+
+      public void setWechat(String wechat) {
+        this.wechat = wechat;
+      }
 
       public String getUid() {
         return uid;
