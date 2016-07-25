@@ -154,7 +154,7 @@ public class UserApi extends BaseApi {
         putArg("password", password);
         putArg("code", code);
         putArg("role", role);
-        putArg("nickname", username);
+        putArg("nickname", nickname);
         putArg("reg_type",reg_type);
         putArg("reg_verify",verify);
         Log.d("role", role);
