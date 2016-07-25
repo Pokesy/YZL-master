@@ -135,12 +135,14 @@
         android:text="@string/collect"
         android:textColor="@android:color/white"
         android:textSize="15sp"
+        android:visibility="gone"
         />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#66DEE2E3"
+        android:visibility="gone"
         />
 
     <TextView
