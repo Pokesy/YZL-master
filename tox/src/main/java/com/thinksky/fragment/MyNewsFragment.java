@@ -111,7 +111,7 @@ public class MyNewsFragment extends Fragment{
         return rootView;
     }
 
-    private static class MyHandler extends Handler{
+    private  class MyHandler extends Handler{
 
         private WeakReference<MyNewsFragment> mFragmentReference;
         private String result;
@@ -125,7 +125,9 @@ public class MyNewsFragment extends Fragment{
 
         @Override
         public void handleMessage(Message msg) {
-
+            if (getActivity().isDestroyed() ) {
+                return;
+            }
             mFragment = mFragmentReference.get();
             myJson = new MyJson();
             switch (msg.what){

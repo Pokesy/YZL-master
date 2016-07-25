@@ -130,7 +130,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
 
               for (FXBean.ResultEntity info : wendaBean.getResult()) {
                 String s = info.getIsfactory();
-                if (!info.getLatitude().equals("nan") && !info.getLatitude().equals("nan")) {
+                if (info.getIsdisplay().equals("1") && !TextUtils.isEmpty(info.getLatitude())) {
                   String d = info.getLatitude();
                   String f = info.getLongitude();
                   double dd = Double.parseDouble(d);
@@ -263,7 +263,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
           mIconView.setImageResource(R.drawable.weixin);
         }
         dizhi.setText(bean.getAddress());
-        dianhua.setText(bean.getMobile1());
+        //dianhua.setText(bean.getMobile1());
         if (marker.getIcon().equals(fish1)) {
           name.setText(bean.getFactory_name());
         } else if (marker.getIcon().equals(fish)) {

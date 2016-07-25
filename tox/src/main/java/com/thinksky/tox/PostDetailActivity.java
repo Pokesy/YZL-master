@@ -126,7 +126,8 @@ public class PostDetailActivity extends BaseBActivity implements View.OnClickLis
     mPostSendComBtn = (TextView) findViewById(R.id.Post_detail_sendBtn);
     mPostEdit.addTextChangedListener(watcher);
     mPostSendComBtn.setOnClickListener(this);
-
+    /* *//*myScrollView=(MyScrollView)findViewById(R.id.Post_detail_ScrollView);*//*
+        myScrollView.setOnScrollListener(this);*/
 
     mLikeSupportLayout = (LinearLayout) findViewById(R.id.Post_detail_like_com_layout);
     mPostDetailEditBox = (LinearLayout) findViewById(R.id.Post_detail_editBox);
@@ -137,23 +138,23 @@ public class PostDetailActivity extends BaseBActivity implements View.OnClickLis
     postCommentAdapter = new PostCommentAdapter(ctx, mComList, kjBitmap, finalBitmap, mPostInfo,
         new MyPostDetailCallBack());
     ViewGroup.LayoutParams params = mListView.getLayoutParams();
-//        //设置底部加载
-//        ListBottem = new Button(ctx);
-//        ListBottem.setBackgroundColor(getResources().getColor(R.color.forumAdd));
-//        ListBottem.setTextColor(getResources().getColor(R.color.black));
-//        ListBottem.setText("点击加载更多");
-////            ListBottem.setPadding(20,10,20,10);
-//        ListBottem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (addMoreCom) {
-//                    initFlag(false, false, false, true);
-//                    forumApi.getPostComments(mPostInfo.getPostId(), page + "", "10");
-//                    listBottom();
-//                }
-//            }
-//        });
-//        myScrollView = (MyScrollView) findViewById(R.id.Detail_ScrollView);
+        //设置底部加载
+        ListBottem = new Button(ctx);
+        ListBottem.setBackgroundColor(getResources().getColor(R.color.forumAdd));
+        ListBottem.setTextColor(getResources().getColor(R.color.black));
+        ListBottem.setText("点击加载更多");
+//            ListBottem.setPadding(20,10,20,10);
+        ListBottem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (addMoreCom) {
+                    initFlag(false, false, false, true);
+                    forumApi.getPostComments(mPostInfo.getPostId(), page + "", "10");
+                    listBottom();
+                }
+            }
+        });
+        //myScrollView = (MyScrollView) findViewById(R.id.Detail_ScrollView);
 
     mAddMoreProgressBar = new ProgressBar(ctx);
     mAddMoreProgressBar.setIndeterminate(false);
@@ -189,14 +190,14 @@ public class PostDetailActivity extends BaseBActivity implements View.OnClickLis
       @Override
       public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int
           totalItemCount) {
-
-                   /* mPostDetailEditBox.setVisibility(View.GONE);
-                    mLikeSupportLayout.setVisibility(View.VISIBLE);*/
+                    //
+                    //mPostDetailEditBox.setVisibility(View.GONE);
+                    //mLikeSupportLayout.setVisibility(View.VISIBLE);
 
       }
     });
-//        initHeadView();
-//        myScrollView.setOnTouchListener(this);
+        //initHeadView();
+        //myScrollView.setOnTouchListener(this);
 
   }
 
@@ -374,12 +375,12 @@ public class PostDetailActivity extends BaseBActivity implements View.OnClickLis
             }
 
             postCommentAdapter.notifyDataSetChanged();
-//                        if (list.size() < 10) {
-//                            ListBottem.setText("没有更多了");
-//                            mListView.addFooterView(ListBottem, null, false);
-//                        }
-//                        mListView.addFooterView(ListBottem, null, false);
-//                        page++;
+                        if (list.size() < 10) {
+                            ListBottem.setText("没有更多了");
+                            mListView.addFooterView(ListBottem, null, false);
+                        }
+                        mListView.addFooterView(ListBottem, null, false);
+                        page++;
           }
           if (ADDMOREPOSTCOM) {
             List<PostComment> list = myJson.getPostComments(result);
@@ -389,12 +390,12 @@ public class PostDetailActivity extends BaseBActivity implements View.OnClickLis
             mAddMoreProgressBar.setVisibility(View.GONE);
             postCommentAdapter.notifyDataSetChanged();
             mListView.removeFooterView(mAddMoreProgressBar);
-//                        if (list.size() < 10) {
-//                            ListBottem.setText("没有更多了");
-//                            addMoreCom = false;
-//                            mListView.addFooterView(ListBottem);
-//                        }
-//                        page++;
+                        if (list.size() < 10) {
+                            ListBottem.setText("没有更多了");
+                            addMoreCom = false;
+                            mListView.addFooterView(ListBottem);
+                        }
+                        page++;
           }
         }
       }

@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   /**
    * 用于展示动态的Fragment
    */
-  private WeiboFragment weiboFragment;
+  private WeiboFragment WeiBoFragment;
 
   /**
    * 用于展示鱼医生的Fragment
@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Intent intent = new Intent(MainActivity.this, UploadActivity.class);
         startActivity(intent);
       } else {
-        Log.e(">>>>>>>>>>>>>>>", "login Form WeiboFragment");
+        Log.e(">>>>>>>>>>>>>>>", "login Form WeiBoFragment");
 
         String[] s = new String[ways.size()];
         s = ways.toArray(s);
@@ -386,8 +386,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           }
         });
     // 如果NewsFragment为空，则创建一个并添加到界面上
-    weiboFragment = new WeiboFragment();
-    mFragmentTransaction.add(R.id.content, weiboFragment);
+    WeiBoFragment = new WeiboFragment();
+    mFragmentTransaction.add(R.id.content, WeiBoFragment);
     // 如果SettingFragment为空，则创建一个并添加到界面上
     ylqFragment = new YlqFragment();
     mFragmentTransaction.add(R.id.content, ylqFragment);
@@ -448,13 +448,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // 当点击了动态tab时，改变控件的图片和文字颜色
         //                newsImage.setImageResource(R.drawable.news_selected);
         //                newsText.setTextColor(Color.WHITE);
-        if (weiboFragment == null) {
+        if (WeiBoFragment == null) {
           // 如果NewsFragment为空，则创建一个并添加到界面上
-          weiboFragment = new WeiboFragment();
-          mFragmentTransaction.add(R.id.content, weiboFragment);
+          WeiBoFragment = new WeiboFragment();
+          mFragmentTransaction.add(R.id.content, WeiBoFragment);
         } else {
           // 如果NewsFragment不为空，则直接将它显示出来
-          mFragmentTransaction.show(weiboFragment);
+          mFragmentTransaction.show(WeiBoFragment);
         }
 
         break;
@@ -544,8 +544,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     if (homeFragment != null) {
       mFragmentTransaction.hide(homeFragment);
     }
-    if (weiboFragment != null) {
-      mFragmentTransaction.hide(weiboFragment);
+    if (WeiBoFragment != null) {
+      mFragmentTransaction.hide(WeiBoFragment);
     }
     if (issueFragment != null) {
       mFragmentTransaction.hide(issueFragment);

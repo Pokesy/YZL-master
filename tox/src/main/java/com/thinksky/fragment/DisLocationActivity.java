@@ -41,6 +41,7 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
   private Button geocode;
   public BDLocationListener myListener = new MyLocationListener();
   public LocationClient mLocationClient = null;
+  private LatLng ll;
 
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -77,22 +78,21 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
 
     mBaiduMap.setOnMapLongClickListener(new BaiduMap.OnMapLongClickListener() {
       @Override public void onMapLongClick(final LatLng latLng) {
-        LatLng ptCenter = new LatLng(latLng.latitude, latLng.longitude);
+        ll = new LatLng(latLng.latitude, latLng.longitude);
         // 反Geo搜索
-        mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(ptCenter));
-
-        geocode.setOnClickListener(new View.OnClickListener() {
-          @Override public void onClick(View v) {
-            Intent intent = new Intent(DisLocationActivity.this, DiscoverSendActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("latitude", String.valueOf(latLng.latitude));
-            bundle.putString("longitude", String.valueOf(latLng.longitude));
-            bundle.putString("address", String.valueOf(geocodekey.getText()));
-            intent.putExtras(bundle);
-            setResult(RESULT_OK, intent);
-            finish();
-          }
-        });
+        mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(ll));
+      }
+    });
+    geocode.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(DisLocationActivity.this, DiscoverSendActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("latitude", String.valueOf(ll.latitude));
+        bundle.putString("longitude", String.valueOf(ll.longitude));
+        bundle.putString("address", String.valueOf(geocodekey.getText()));
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
       }
     });
   }
@@ -192,9 +192,21 @@ public class DisLocationActivity extends BaseBActivity implements OnGetGeoCoderR
       // 把定位信息显示地图上
       mBaiduMap.setMyLocationData(locData);
 
-      LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
+      ll = new LatLng(location.getLatitude(), location.getLongitude());
       //搜索当前位置
       mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(ll));
+      geocode.setOnClickListener(new View.OnClickListener() {
+        @Override public void onClick(View v) {
+          Intent intent = new Intent(DisLocationActivity.this, DiscoverSendActivity.class);
+          Bundle bundle = new Bundle();
+          bundle.putString("latitude", String.valueOf(ll.latitude));
+          bundle.putString("longitude", String.valueOf(ll.longitude));
+          bundle.putString("address", String.valueOf(geocodekey.getText()));
+          intent.putExtras(bundle);
+          setResult(RESULT_OK, intent);
+          finish();
+        }
+      });
       MapStatus.Builder builder = new MapStatus.Builder();
       builder.target(ll).zoom(18.0f);
       //把定位设置为普通模式，该模式下，每次位置更新就不会将地图拖到我的位置。这样不影响拖动地图查看其他位置信息

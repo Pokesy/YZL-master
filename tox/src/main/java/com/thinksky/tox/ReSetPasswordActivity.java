@@ -83,8 +83,8 @@ public class ReSetPasswordActivity extends BaseBActivity {
 
                 newname = MD5.md5(new_name.getText().toString().trim());
                 newnameagin = MD5.md5(new_agin_name.getText().toString().trim());
-                if (newname.isEmpty() || newnameagin.isEmpty()||names.isEmpty()) {
-                    ToastHelper.showToast("密码不能为空", Url.context);
+                if (newname.isEmpty() || newnameagin.isEmpty()||names.isEmpty()||verify.isEmpty()) {
+                    ToastHelper.showToast("手机号，密码或验证码不能为空", Url.context);
                 } else {
                     if (!newname.equals(newnameagin)) {
                         ToastHelper.showToast("两次输入密码不一致，请重新输入", Url.context);

@@ -20,7 +20,6 @@ import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.UploadActivity;
-import com.thinksky.tox.UserInfoActivity;
 import com.thinksky.ui.login.LoginEvent;
 import com.thinksky.utils.JsonConverter;
 import com.thinksky.utils.MyJson;
@@ -151,7 +150,7 @@ public class login {
             context.startActivity(intent);
             LoginActivity.instance.finish();
           } else if (entryActivity == ActivityModel.USERINFO) {
-            Intent intent = new Intent(context, UserInfoActivity.class);
+            Intent intent = new Intent(context, MainActivity.class);
             intent.putExtra("userUid", Url.USERID);
             context.startActivity(intent);
             LoginActivity.instance.finish();
