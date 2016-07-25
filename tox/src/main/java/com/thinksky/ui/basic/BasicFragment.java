@@ -5,11 +5,14 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
+import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.ActivityComponent;
 import com.thinksky.injection.ActivityModule;
 import com.thinksky.injection.DaggerActivityComponent;
 import com.thinksky.net.RpcCallManager;
+import com.thinksky.ui.login.LoginEvent;
+import com.thinksky.ui.login.LogoutEvent;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -327,14 +330,14 @@ public abstract class BasicFragment extends Fragment implements RpcCallManager {
   }
 
   private class SessionEventsHandler {
-    //@Subscribe
-    //public void dispatchLogin(LoginEvent event) {
-    //  onLogin();
-    //}
-    //
-    //@Subscribe
-    //public void dispatchLogout(LogoutEvent event) {
-    //  onLogout();
-    //}
+    @Subscribe
+    public void dispatchLogin(LoginEvent event) {
+      onLogin();
+    }
+
+    @Subscribe
+    public void dispatchLogout(LogoutEvent event) {
+      onLogout();
+    }
   }
 }

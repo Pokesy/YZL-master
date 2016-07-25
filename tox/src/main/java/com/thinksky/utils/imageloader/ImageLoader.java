@@ -14,6 +14,8 @@ package com.thinksky.utils.imageloader;
 import android.content.Context;
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.thinksky.holder.BaseApplication;
+import com.thinksky.holder.BaseBActivity;
 
 /**
  * [一句话功能简述]<BR>

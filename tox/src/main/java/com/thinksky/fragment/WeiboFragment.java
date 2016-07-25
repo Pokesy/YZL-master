@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import butterknife.ButterKnife;
 import com.thinksky.myview.CustomViewPager;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SegmentControl;
+import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.weibo.WeiboListFragment;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 /**
  * 热门的fragment
  */
-public class WeiboFragment extends Fragment {
+public class WeiboFragment extends BasicFragment {
 
   @Bind(R.id.segment_control)
   SegmentControl mSegmentControl;
@@ -66,8 +68,37 @@ public class WeiboFragment extends Fragment {
       }
     });
 
+    mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+      }
+
+      @Override
+      public void onPageSelected(int position) {
+        mSegmentControl.setCurrentIndex(position);
+      }
+
+      @Override
+      public void onPageScrollStateChanged(int state) {
+
+      }
+    });
+
   }
 
+  @Override
+  protected void onLogin() {
+    super.onLogin();
+    mPager.setPagingEnabled(BaseFunction.isLogin());
+    mSegmentControl.setCurrentIndex(0);
+  }
+
+  @Override
+  protected void onLogout() {
+    super.onLogout();
+    mPager.setPagingEnabled(BaseFunction.isLogin());
+    mSegmentControl.setCurrentIndex(0);
+  }
 
   @Override
   public void onDestroyView() {

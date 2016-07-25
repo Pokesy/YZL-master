@@ -23,10 +23,12 @@ import android.widget.Toast;
 import com.thinksky.adapter.WeiboAdapter;
 import com.thinksky.info.AshamedInfo;
 import com.thinksky.info.WeiboInfo;
+import com.thinksky.log.Logger;
 import com.thinksky.myview.MyListView;
 import com.thinksky.myview.MyListView.OnRefreshListener;
 import com.thinksky.tox.R;
 import com.thinksky.tox.WeiboDetailActivity;
+import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -43,7 +45,7 @@ import org.kymjs.aframe.bitmap.KJBitmap;
 /**
  * 热门的fragment
  */
-public class WeiboListFragment extends Fragment {
+public class WeiboListFragment extends BasicFragment {
   private static final int TAB_INDEX_HOT = 0;
   private static final int TAB_INDEX_FOLLOW = 1;
   private static final int TAB_INDEX_MY = 2;
@@ -256,6 +258,7 @@ public class WeiboListFragment extends Fragment {
 
   Handler hand = new Handler() {
     public void handleMessage(Message msg) {
+      Logger.e("YZZ", "hotUrl : %s  handleMessage" , hotUrl);
       super.handleMessage(msg);
       if (msg.what == 404) {
         Toast.makeText(ctx, "请求失败，服务器故障", Toast.LENGTH_LONG).show();
@@ -394,5 +397,12 @@ public class WeiboListFragment extends Fragment {
     weiboApi.setHandler(hand);
     //weiboApi.listAllWeibo(mCurrentPage, Url.USERID);
     createListModel();
+  }
+
+  @Override
+  protected void onLogin() {
+    super.onLogin();
+    Logger.e("YZZ", "hotUrl : %s  onLogin" , hotUrl);
+    getWeiboList();
   }
 }

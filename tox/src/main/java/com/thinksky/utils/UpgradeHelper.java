@@ -31,6 +31,7 @@ import com.thinksky.log.Logger;
 import com.thinksky.net.rpc.model.ResponseModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.R;
@@ -229,7 +230,7 @@ public class UpgradeHelper {
                 if (!model.isSuccess()) {
                   return;
                 }
-                showNormalConfirmDialog(model.getFile());
+                showNormalConfirmDialog(NetConstant.BASE_URL + model.getFile());
               }
             }, new Action1<Throwable>() {
               @Override

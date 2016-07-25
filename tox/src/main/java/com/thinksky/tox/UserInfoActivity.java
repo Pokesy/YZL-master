@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.thinksky.anim3d.RoundBitmap;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.UserInfo;
+import com.thinksky.ui.login.LogoutEvent;
 import com.thinksky.utils.JsonConverter;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
@@ -301,6 +302,9 @@ public class UserInfoActivity extends BaseBActivity {
   Handler followHandler = new Handler() {
     @Override
     public void handleMessage(Message msg) {
+      if (hasDestroyed()) {
+        return;
+      }
       switch (msg.what) {
         case 0:
           if (followFlag) {
@@ -325,11 +329,19 @@ public class UserInfoActivity extends BaseBActivity {
     public void handleMessage(Message msg) {
       super.handleMessage(msg);
       closeProgressDialog();
-      clearUserInfo();
-      Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);
-      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      startActivity(intent);
-      finish();
+      switch (msg.what) {
+        case 0:
+          clearUserInfo();
+          getComponent().getGlobalBus().post(new LogoutEvent());
+          Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);
+          intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+          startActivity(intent);
+          finish();
+          break;
+        default:
+          Toast.makeText(UserInfoActivity.this, "退出登录失败", Toast.LENGTH_SHORT).show();
+          break;
+      }
     }
   };
 

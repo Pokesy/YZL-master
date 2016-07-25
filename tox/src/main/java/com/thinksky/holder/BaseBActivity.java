@@ -8,10 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bugtags.library.Bugtags;
+import com.squareup.otto.Subscribe;
 import com.thinksky.injection.ActivityComponent;
 import com.thinksky.injection.ActivityModule;
 import com.thinksky.injection.DaggerActivityComponent;
 import com.thinksky.net.RpcCallManager;
+import com.thinksky.ui.login.LoginEvent;
+import com.thinksky.ui.login.LogoutEvent;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -27,12 +30,14 @@ public class BaseBActivity extends AppCompatActivity {
       new RpcCallManager.RpcCallManagerImpl();
 
   private boolean mIsDestroyed;
+  private SessionHandler mSessionHandler = new SessionHandler();
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     createActivityComponent();
     getComponent().getGlobalBus().register(this);
+    getComponent().getGlobalBus().register(mSessionHandler);
   }
 
   @Override
@@ -40,16 +45,22 @@ public class BaseBActivity extends AppCompatActivity {
     super.onDestroy();
     mIsDestroyed = true;
     getComponent().getGlobalBus().unregister(this);
+    getComponent().getGlobalBus().unregister(mSessionHandler);
     rpcCallManager.unsubscribeAll();
     if (null != mProgressDialog) {
       mProgressDialog.dismiss();
     }
   }
 
+  @Override
+  public void finish() {
+    mIsDestroyed = true;
+    super.finish();
+  }
+
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
   public boolean hasDestroyed() {
-    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ? isDestroyed() :
-        mIsDestroyed;
+    return isFinishing() || mIsDestroyed;
   }
 
   private void createActivityComponent() {
@@ -104,6 +115,26 @@ public class BaseBActivity extends AppCompatActivity {
   public void closeProgressDialog() {
     if (null != mProgressDialog) {
       mProgressDialog.dismiss();
+    }
+  }
+
+  protected void onLogin() {
+
+  }
+
+  protected void onLogout() {
+
+  }
+
+  class SessionHandler {
+    @Subscribe
+    public void handleLoginEvent(LoginEvent event) {
+      onLogin();
+    }
+
+    @Subscribe
+    public void handleLogoutEvent(LogoutEvent event) {
+      onLogout();
     }
   }
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -394,7 +395,50 @@ public class HomeFragment extends BasicFragment
         });
   }
 
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_ZJ,
+        new RsenUrlUtil.OnNetHttpResultListener() {
+          @Override
+          public void onNoNetwork(String msg) {
+            ToastHelper.showToast(msg, Url.context);
+          }
+
+          @Override
+          public void onResult(boolean state, String result, JSONObject jsonObject) {
+            if (state) {
+              final ArrayList<ZhuanjiFragment.ZjBean> beans = parseJson(jsonObject);
+              //                为图片控件加载数据
+              if (!beans.isEmpty()) {
+                if (null != beans.get(0).IssueList && beans.get(0).IssueList.size() > 0) {
+                  ImageLoader.loadOptimizedHttpImage(getActivity(),
+                      RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url).placeholder(R
+                      .drawable.picture_no).error(R.drawable.picture_no)
+                      .into(viewHolder.imgV(R.id.issue_image));
+                  time.setText(beans.get(0).IssueList.get(0).create_time);
+                  count.setText(beans.get(0).IssueList.get(0).reply_count);
+                  support_count.setText(beans.get(0).IssueList.get(0).support_count);
+                  bofangshipin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      Bundle bundle = new Bundle();
+                      bundle.putInt("id", beans.get(0).IssueList.get(0).id);
+                      Intent intent = new Intent(getActivity(), IssueDetail.class);
+                      intent.putExtras(bundle);
+                      startActivity(intent);
+                    }
+                  });
+                }
+
+              }
+            }
+          }
+        });
+  }
+
   protected void initViewData() {
+
     RsenUrlUtil.execute(RsenUrlUtil.URL_REMEN_HUATI,
         new RsenUrlUtil.OnJsonResultListener<RemenhuatiBean>() {
           @Override
@@ -738,43 +782,6 @@ public class HomeFragment extends BasicFragment
   @Override
   public void onResume() {
     super.onResume();
-    RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_ZJ,
-        new RsenUrlUtil.OnNetHttpResultListener() {
-          @Override
-          public void onNoNetwork(String msg) {
-            ToastHelper.showToast(msg, Url.context);
-          }
-
-          @Override
-          public void onResult(boolean state, String result, JSONObject jsonObject) {
-            if (state) {
-              final ArrayList<ZhuanjiFragment.ZjBean> beans = parseJson(jsonObject);
-              //                为图片控件加载数据
-              if (!beans.isEmpty()) {
-                if (null != beans.get(0).IssueList && beans.get(0).IssueList.size() > 0) {
-                  ImageLoader.loadOptimizedHttpImage(getActivity(),
-                      RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url).placeholder(R
-                      .drawable.picture_no).error(R.drawable.picture_no)
-                      .into(viewHolder.imgV(R.id.issue_image));
-                  time.setText(beans.get(0).IssueList.get(0).create_time);
-                  count.setText(beans.get(0).IssueList.get(0).reply_count);
-                  support_count.setText(beans.get(0).IssueList.get(0).support_count);
-                  bofangshipin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                      Bundle bundle = new Bundle();
-                      bundle.putInt("id", beans.get(0).IssueList.get(0).id);
-                      Intent intent = new Intent(getActivity(), IssueDetail.class);
-                      intent.putExtras(bundle);
-                      startActivity(intent);
-                    }
-                  });
-                }
-
-              }
-            }
-          }
-        });
   }
 
   public static ArrayList<ZhuanjiFragment.ZjBean> parseJson(JSONObject object) {
