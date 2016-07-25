@@ -35,58 +35,10 @@
         />
   </RelativeLayout>
 
-  <LinearLayout
-      android:id="@+id/load_progressBar"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:orientation="horizontal"
-      android:paddingTop="10dp"
-      >
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="false"
-        android:visibility="visible"
-        style="?android:attr/progressBarStyleInverse"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:textColor="#815F3D"
-        android:textSize="18sp"
-        android:visibility="gone"
-        />
-  </LinearLayout>
-
-  <TextView
-      android:id="@+id/HomeNoValue"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center_horizontal"
-      android:paddingBottom="10dp"
-      android:paddingLeft="20dp"
-      android:paddingRight="20dp"
-      android:paddingTop="10dp"
-      android:text="暂无动态哦，快点击右上角发表动态吧"
-      android:textColor="#815F3D"
-      android:textSize="18sp"
-      android:visibility="gone"
-      />
-
-  <LinearLayout
-      android:id="@+id/HomeGroup"
+  <com.thinksky.myview.CustomViewPager
+      android:id="@+id/pager"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/background"
-      android:orientation="vertical"
-      android:visibility="gone"
-      >
-
-  </LinearLayout>
+      />
 
 </LinearLayout>

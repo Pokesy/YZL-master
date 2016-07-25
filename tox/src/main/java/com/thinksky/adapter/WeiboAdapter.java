@@ -215,7 +215,6 @@ public class WeiboAdapter extends BaseAdapter {
         if (repostWeiboType != null) {
           if (repostWeiboType.equalsIgnoreCase("image")) {
             List<String> imglist = repostWeibo.getImgList();
-            Log.d("YZZ", arg0 + " --> img size:  " + imglist.size());
             if (imglist.size() >= 3) {
               //setImgRec(hold,imglist,3);
               hold.repostLinerLayout.setVisibility(View.VISIBLE);
@@ -228,7 +227,6 @@ public class WeiboAdapter extends BaseAdapter {
                 ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R
                     .drawable.picture_no)
                     .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
-                Log.d("img>><><><>:", getImgURL(imglist.get(i)));
               }
             } else {
               // setImgRec(hold,imglist,imglist.size());
@@ -250,7 +248,6 @@ public class WeiboAdapter extends BaseAdapter {
       hold.repostWeiboTime.setVisibility(View.GONE);
       hold.repostName.setVisibility(View.GONE);
       List<String> imglist = list.get(arg0).getImgList();
-      Log.d("YZZ", arg0 + " --> img size:  " + imglist.size());
       if (imglist.size() >= 3) {
         //setImgRec(hold,imglist,3);
         setWeiboImgVisiable(hold, 3);
@@ -259,7 +256,6 @@ public class WeiboAdapter extends BaseAdapter {
           ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable
               .picture_no)
               .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
-          Log.d("img>><><><>:", getImgURL(imglist.get(i)));
         }
       } else {
         // setImgRec(hold,imglist,imglist.size());

@@ -82,7 +82,7 @@ public class UserListActivity extends BaseBActivity {
           }
           beans.add(bean);
         } catch (Exception e) {
-          Log.e("YZZ", e.getMessage());
+          //Log.e("YZZ", e.getMessage());
         }
       }
 
