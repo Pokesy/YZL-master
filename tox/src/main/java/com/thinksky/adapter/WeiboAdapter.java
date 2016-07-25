@@ -224,17 +224,25 @@ public class WeiboAdapter extends BaseAdapter {
                     .picture_no, ctx));
                 //loadWeiboImg(hold, hold.imgViewList.get(i), imglist.get(i), finalBitmap,
                 // kjBitmap);
-                ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R
-                    .drawable.picture_no)
-                    .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
+                try {
+                  ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R
+                      .drawable.picture_no)
+                      .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
               }
             } else {
               // setImgRec(hold,imglist,imglist.size());
               setWeiboImgVisiable(hold, imglist.size());
               for (int i = 0; i < imglist.size(); i++) {
-                ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R
-                    .drawable.picture_no)
-                    .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
+                try {
+                  ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R
+                      .drawable.picture_no)
+                      .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
                 Log.d("img>><><><>:", getImgURL(imglist.get(i)));
               }
             }
@@ -253,18 +261,26 @@ public class WeiboAdapter extends BaseAdapter {
         setWeiboImgVisiable(hold, 3);
         for (int i = 0; i < 3; i++) {
           hold.imgViewList.get(i).setVisibility(View.VISIBLE);
-          ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable
-              .picture_no)
-              .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
+          try {
+            ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable
+                .picture_no)
+                .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
         }
       } else {
         // setImgRec(hold,imglist,imglist.size());
         setWeiboImgVisiable(hold, imglist.size());
         for (int i = 0; i < imglist.size(); i++) {
           hold.imgViewList.get(i).setVisibility(View.VISIBLE);
-          ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable
-              .picture_no)
-              .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
+          try {
+            ImageLoader.loadOptimizedHttpImage(ctx, getImgURL(imglist.get(i))).error(R.drawable
+                .picture_no)
+                .placeholder(R.drawable.picture_no).into(hold.imgViewList.get(i));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
           Log.d("img>><><><>:", getImgURL(imglist.get(i)));
         }
       }
@@ -392,9 +408,13 @@ public class WeiboAdapter extends BaseAdapter {
 
 
     hold.UserHead.setImageResource(R.drawable.side_user_avatar);
-    ImageLoader.loadOptimizedHttpImage(ctx, list.get(arg0).getUser().getAvatar()).placeholder(R
-        .drawable.side_user_avatar)
-        .error(R.drawable.side_user_avatar).dontAnimate().into(hold.UserHead);
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, list.get(arg0).getUser().getAvatar()).placeholder(R
+          .drawable.side_user_avatar)
+          .error(R.drawable.side_user_avatar).dontAnimate().into(hold.UserHead);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
 
     return arg1;
@@ -451,7 +471,11 @@ public class WeiboAdapter extends BaseAdapter {
       url2 = (Url.USERHEADURL + "/" + url).replace("opensns///opensns", "opensns").replace
           ("opensns//opensns", "opensns").replace("/api.php/opensns/", "/api.php/");
     }
-    ImageLoader.loadOptimizedHttpImage(ctx, url2).placeholder(R.drawable.picture_no).into(weiboImg);
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, url2).placeholder(R.drawable.picture_no).into(weiboImg);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void startPhotoBrowser(int arg0, int index) {

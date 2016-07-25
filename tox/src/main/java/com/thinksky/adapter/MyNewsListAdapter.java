@@ -65,7 +65,12 @@ public class MyNewsListAdapter extends BaseAdapter {
 
 //        kjBitmap.display(viewHolder.newsLogo,newsListInfos.get(position).getCover(),280,260);
 //        ImageLoader.getInstance().displayImage(newsListInfos.get(position).getCover(),viewHolder.newsLogo);
-        ImageLoader.loadOptimizedHttpImage(mContext,newsListInfos.get(position).getCover()).into(viewHolder.newsLogo);
+
+        try {
+            ImageLoader.loadOptimizedHttpImage(mContext,newsListInfos.get(position).getCover()).into(viewHolder.newsLogo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         viewHolder.newsTitle.setText(newsListInfos.get(position).getTitle());
         viewHolder.newsAuthor.setVisibility(View.GONE);
         viewHolder.isOverdue.setVisibility(View.VISIBLE);

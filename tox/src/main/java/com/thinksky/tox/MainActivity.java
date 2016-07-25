@@ -82,6 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   //下载图片
   private LoadImg loadImgMainImg;
   private Intent intent_Share;
+  private static boolean hasCheckd = false;
   /**
    * 用于对Fragment进行 理
    */
@@ -612,6 +613,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   }
 
   private void checkNewVersion() {
+    if(hasCheckd) {
+      return;
+    }
+    hasCheckd = true;
     getComponent().upgradeHelper().checkUpgradeInfo();
   }
 

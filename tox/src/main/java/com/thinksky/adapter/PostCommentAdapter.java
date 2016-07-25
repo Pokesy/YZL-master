@@ -113,7 +113,12 @@ public class PostCommentAdapter extends BaseAdapter {
       view.setLayoutParams(layoutParams);
       view.setImageResource(R.drawable.friends_sends_pictures_no);
       holder.photoLayout.addView(view);
-      ImageLoader.loadOptimizedHttpImage(ctx, imgUrl).placeholder(R.drawable.picture_no).into(view);
+      try {
+        ImageLoader.loadOptimizedHttpImage(ctx, imgUrl).placeholder(R.drawable.picture_no).into
+              (view);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     }
     if (postCommentList.get(position).getImgList().size() > 0) {
       holder.photoLayout.setVisibility(View.VISIBLE);
@@ -136,9 +141,13 @@ public class PostCommentAdapter extends BaseAdapter {
         forumApi.goUserInfo(ctx, postCommentList.get(position).getUserInfo().getUid());
       }
     });
-    ImageLoader.loadOptimizedHttpImage(ctx, postCommentList.get(position).getUserInfo().getAvatar
-        ()).placeholder(R.drawable.side_user_avatar)
-        .dontAnimate().into(holder.userHead);
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, postCommentList.get(position).getUserInfo().getAvatar
+          ()).placeholder(R.drawable.side_user_avatar)
+          .dontAnimate().into(holder.userHead);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     setMoreComText(holder, position);
     holder.postComTime.setText("第" + (position + 2) + "楼" + postCommentList.get(position)
         .getcTime());
@@ -239,9 +248,13 @@ public class PostCommentAdapter extends BaseAdapter {
           holder.com1Username.setText(com2Com.getUserInfo().getNickname());
           holder.com1Time.setText(com2Com.getcTime());
           holder.com1Content.setText(com2Com.getContent());
-          ImageLoader.loadOptimizedHttpImage(ctx, com2Com.getUserInfo().getAvatar()).placeholder
-              (R.drawable.side_user_avatar)
-              .dontAnimate().into(holder.com1_userHead);
+          try {
+            ImageLoader.loadOptimizedHttpImage(ctx, com2Com.getUserInfo().getAvatar()).placeholder
+                (R.drawable.side_user_avatar)
+                .dontAnimate().into(holder.com1_userHead);
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
           if (com2Com.getIsLandlord()) {
             holder.com1Louzhu.setVisibility(View.VISIBLE);
           }
@@ -281,9 +294,13 @@ public class PostCommentAdapter extends BaseAdapter {
     holder.com1Username.setText(com.getUserInfo().getNickname());
     holder.com1Time.setText(com.getcTime());
     holder.com1Content.setText(com.getContent());
-    ImageLoader.loadOptimizedHttpImage(ctx, com.getUserInfo().getAvatar()).placeholder(R.drawable
-        .side_user_avatar)
-        .dontAnimate().into(holder.com1_userHead);
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, com.getUserInfo().getAvatar()).placeholder(R.drawable
+          .side_user_avatar)
+          .dontAnimate().into(holder.com1_userHead);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     holder.com1_userHead.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -298,9 +315,13 @@ public class PostCommentAdapter extends BaseAdapter {
     holder.com2Username.setText(com1.getUserInfo().getNickname());
     holder.com2Time.setText(com1.getcTime());
     holder.com2Content.setText(com1.getContent());
-    ImageLoader.loadOptimizedHttpImage(ctx, com1.getUserInfo().getAvatar()).placeholder(R.drawable
-        .side_user_avatar)
-        .dontAnimate().into(holder.com2_userHead);
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, com1.getUserInfo().getAvatar()).placeholder(R.drawable
+          .side_user_avatar)
+          .dontAnimate().into(holder.com2_userHead);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     holder.userHead.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

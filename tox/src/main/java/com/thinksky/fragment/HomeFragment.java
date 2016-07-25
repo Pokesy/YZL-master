@@ -412,10 +412,14 @@ public class HomeFragment extends BasicFragment
               //                为图片控件加载数据
               if (!beans.isEmpty()) {
                 if (null != beans.get(0).IssueList && beans.get(0).IssueList.size() > 0) {
-                  ImageLoader.loadOptimizedHttpImage(getActivity(),
-                      RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url).placeholder(R
-                      .drawable.picture_no).error(R.drawable.picture_no)
-                      .into(viewHolder.imgV(R.id.issue_image));
+                  try {
+                    ImageLoader.loadOptimizedHttpImage(getActivity(),
+                        RsenUrlUtil.URL_BASE + beans.get(0).IssueList.get(0).cover_url).placeholder(R
+                        .drawable.picture_no).error(R.drawable.picture_no)
+                        .into(viewHolder.imgV(R.id.issue_image));
+                  } catch (Exception e) {
+                    e.printStackTrace();
+                  }
                   time.setText(beans.get(0).IssueList.get(0).create_time);
                   count.setText(beans.get(0).IssueList.get(0).reply_count);
                   support_count.setText(beans.get(0).IssueList.get(0).support_count);

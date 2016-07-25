@@ -81,9 +81,13 @@ public class NearAdapter extends BaseAdapter {
     } else {
       hold.Near_UserInfo.setVisibility(View.GONE);
     }
-    ImageLoader.loadOptimizedHttpImage(ctx, Url.USERHEADURL + list.get(arg0).getAvatar())
-        .placeholder(R.drawable.side_user_avatar)
-        .dontAnimate().into(hold.Near_Img);
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, Url.USERHEADURL + list.get(arg0).getAvatar())
+          .placeholder(R.drawable.side_user_avatar)
+          .dontAnimate().into(hold.Near_Img);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     return arg1;
   }

@@ -11,9 +11,7 @@ import com.thinksky.info.Com2Com;
 import com.thinksky.tox.R;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.imageloader.ImageLoader;
-import com.tox.BaseFunction;
 import com.tox.ForumApi;
-import com.tox.Url;
 import java.util.List;
 
 /**
@@ -68,14 +66,19 @@ public class LandlordComAdapter extends BaseAdapter {
     holder.userName.setText(list.get(position).getUserInfo().getNickname());
     holder.comTime.setText(list.get(position).getcTime());
     holder.comContent.setText(list.get(position).getContent());
-    ImageLoader.loadOptimizedHttpImage(ctx, list.get(position).getUserInfo().getAvatar())
-        .placeholder(R.drawable.side_user_avatar).into(holder.userHead);
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, list.get(position).getUserInfo().getAvatar())
+          .placeholder(R.drawable.side_user_avatar).into(holder.userHead);
+    } catch (Exception e) {
+
+    }
     holder.userHead.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         forumApi.goUserInfo(ctx, list.get(position).getUserInfo().getUid());
       }
     });
+
     holder.landordLayout.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

@@ -60,7 +60,8 @@ public class BaseBActivity extends AppCompatActivity {
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
   public boolean hasDestroyed() {
-    return isFinishing() || mIsDestroyed;
+    return isFinishing() || mIsDestroyed || ((Build.VERSION.SDK_INT >= Build.VERSION_CODES
+        .JELLY_BEAN_MR1 && isDestroyed()));
   }
 
   private void createActivityComponent() {

@@ -13,7 +13,6 @@ import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
-import com.tox.Url;
 import java.util.List;
 import org.kymjs.aframe.bitmap.KJBitmap;
 
@@ -67,9 +66,13 @@ public class CheckInAdapter extends BaseAdapter {
     holder.CheckTime.setText(BaseFunction.TimeStamp2Date(list.get(position).getCtime(),
         "HH:mm:ss"));
     holder.RankNum.setText(position + 1 + "");
-    ImageLoader.loadOptimizedHttpImage(context, list.get(position).getUserInfo().getAvatar())
-        .placeholder(R.drawable.side_user_avatar)
-        .into(holder.UserHead);
+    try {
+      ImageLoader.loadOptimizedHttpImage(context, list.get(position).getUserInfo().getAvatar())
+          .placeholder(R.drawable.side_user_avatar)
+          .into(holder.UserHead);
+    } catch (Exception e) {
+
+    }
     holder.view.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

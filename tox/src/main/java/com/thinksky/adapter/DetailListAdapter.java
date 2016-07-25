@@ -15,13 +15,11 @@ import com.thinksky.redefine.FaceTextView;
 import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendCommentActivity;
-import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.Url;
 import com.tox.WeiboApi;
 import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 public class DetailListAdapter extends BaseAdapter {
 
@@ -76,11 +74,14 @@ public class DetailListAdapter extends BaseAdapter {
 // .show();
       }
     });
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, list.get(arg0).getUser().getAvatar()).bitmapTransform
+          (new CropCircleTransformation(ctx))
+          .placeholder(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).dontAnimate
+          ().into(hold.UserHead);
+    } catch (Exception e) {
 
-    ImageLoader.loadOptimizedHttpImage(ctx, list.get(arg0).getUser().getAvatar()).bitmapTransform
-        (new CropCircleTransformation(ctx))
-        .placeholder(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).dontAnimate
-        ().into(hold.UserHead);
+    }
     hold.CommentArea.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {

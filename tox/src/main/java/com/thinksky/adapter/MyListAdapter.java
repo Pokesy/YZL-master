@@ -210,8 +210,12 @@ public class MyListAdapter extends BaseAdapter {
             hold.Up_Img.setImageResource(R.drawable.icon_for_active);
             hold.LikeNum.setTextColor(Color.RED);
         }*/
-    ImageLoader.loadOptimizedHttpImage(ctx, list.get(arg0).getUser().getAvatar()).placeholder(R
-        .drawable.side_user_avatar).into(hold.UserHead);
+    try {
+      ImageLoader.loadOptimizedHttpImage(ctx, list.get(arg0).getUser().getAvatar()).placeholder(R
+          .drawable.side_user_avatar).into(hold.UserHead);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     return arg1;
   }
 

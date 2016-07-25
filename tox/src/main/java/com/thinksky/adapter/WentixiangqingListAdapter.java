@@ -77,9 +77,13 @@ public class WentixiangqingListAdapter extends BaseAdapter {
     } else {
       holder.dianzan.setBackgroundResource(R.drawable.iconfontweidianzan);
     }
-    ImageLoader.loadOptimizedHttpImage(context, list.get(position).getUser().getAvatar32())
-        .placeholder(R.drawable.side_user_avatar)
-        .dontAnimate().into(holder.avatar32);
+    try {
+      ImageLoader.loadOptimizedHttpImage(context, list.get(position).getUser().getAvatar32())
+          .placeholder(R.drawable.side_user_avatar)
+          .dontAnimate().into(holder.avatar32);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 //        holder.dianzan.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
