@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     >
 
@@ -19,13 +18,11 @@
 
     <ImageView
         android:id="@+id/back_menu"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="10dp"
+        android:padding="15dp"
         android:src="@drawable/menu"
         />
 
@@ -109,41 +106,24 @@
       android:visibility="gone"
       >
 
-    <HorizontalScrollView
-        android:id="@+id/navigation_scrollView"
-        android:layout_width="match_parent"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/first_navigation_line"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:paddingBottom="14dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="14dp"
-        android:scrollbars="none"
+        android:textSize="@dimen/font_size_xlarge"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/font_color_blue"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/font_color_blue"
+        app:tabTextColor="@color/font_color_secondary"
         >
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          >
-        <com.thinksky.tox.SegmentControl
-            android:id="@+id/first_navigation_line"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:textSize="16sp"
-            app:cornerRadius="10dip"
-            app:direction="horizon"
-            app:horizonGap="20dip"
-            app:selectedBackgroundColors="#2a93d5"
-            app:selectedIndex="0"
-            app:verticalGap="10dip"
-            >
-        </com.thinksky.tox.SegmentControl>
-      </LinearLayout>
-
-    </HorizontalScrollView>
+    </android.support.design.widget.TabLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/bg_color_divider_dark"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

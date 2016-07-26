@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:segmentcontrol="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/yuyisheng"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,20 +8,21 @@
     android:orientation="vertical"
     >
 
-  <com.thinksky.tox.SegmentControl
+  <android.support.design.widget.TabLayout
       android:id="@+id/segment_control2"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="14dp"
-      android:layout_marginTop="14dp"
-      android:textSize="16sp"
-      segmentcontrol:cornerRadius="6dip"
-      segmentcontrol:direction="horizon"
-      segmentcontrol:horizonGap="25dip"
-      segmentcontrol:selectedBackgroundColors="@color/head"
-      segmentcontrol:selectedIndex="0"
-      segmentcontrol:texts="问答|精彩视频|百科"
-      segmentcontrol:verticalGap="10dip"
+      android:textSize="@dimen/font_size_xlarge"
+      app:tabGravity="fill"
+      app:tabIndicatorColor="@color/font_color_blue"
+      app:tabMode="fixed"
+      app:tabSelectedTextColor="@color/font_color_blue"
+      app:tabTextColor="@color/font_color_secondary"
+      />
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:background="@color/bg_color_divider_dark"
       />
 
   <android.support.v4.view.ViewPager

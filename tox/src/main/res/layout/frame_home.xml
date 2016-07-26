@@ -13,7 +13,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
-      android:textSize="@dimen/font_size_primary"
+      android:textSize="@dimen/font_size_xlarge"
       app:tabGravity="fill"
       app:tabIndicatorColor="@color/font_color_blue"
       app:tabMode="fixed"

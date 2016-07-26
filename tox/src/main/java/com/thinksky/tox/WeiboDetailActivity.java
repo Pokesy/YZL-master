@@ -143,7 +143,7 @@ public class WeiboDetailActivity extends BaseBActivity {
     mDetail_CommentsNum = (TextView) findViewById(R.id.Detail_ComNum);
     mDetail_Ctime = (TextView) findViewById(R.id.Detail_ctime);
     Detail_Back.setOnClickListener(myOnclick);
-    if (Weiboinfo.getUser().getUid().equals(Url.USERID)) {
+    if (TextUtils.equals(Url.USERID, Weiboinfo.getUser().getUid())) {
       delete_button.setVisibility(View.VISIBLE);
     }
     delete_button.setOnClickListener(myOnclick);

@@ -1,6 +1,7 @@
 package com.thinksky.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,11 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.squareup.otto.Subscribe;
 import com.thinksky.tox.R;
-import com.thinksky.tox.SegmentControl;
-
 import com.thinksky.ui.basic.BasicFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,87 +19,70 @@ import java.util.List;
  * Created by jiao on 2016/1/27.
  */
 public class IsseuFragment extends BasicFragment implements View.OnClickListener {
-    private SegmentControl mSegmentControl2;
-    private ViewPager mPager;
-    private static final String ARG_PARAM1 = "param1";
-    @Override
-    public void onClick(View view) {
+  private TabLayout mTabLayout;
+  private ViewPager mPager;
+  private static final String ARG_PARAM1 = "param1";
 
-    }
+  @Override
+  public void onClick(View view) {
 
-    private View view;
+  }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_yuyisheng, null);
-        initView();
-        return view;
-    }
+  private View view;
 
-    private void initView() {
-        mSegmentControl2 = (SegmentControl) view.findViewById(R.id.segment_control2);
-        mPager = (ViewPager) view.findViewById(R.id.pager);
-        List<Fragment> fragments = new ArrayList<>();
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+    view = inflater.inflate(R.layout.activity_yuyisheng, null);
+    initView();
+    return view;
+  }
+
+  private void initView() {
+    mTabLayout = (TabLayout) view.findViewById(R.id.segment_control2);
+    mPager = (ViewPager) view.findViewById(R.id.pager);
+    List<Fragment> fragments = new ArrayList<>();
 //        WendaFragment wendaFragment = new WendaFragment();
 //        ZhuanjiFragment zhuanjiFragment = new ZhuanjiFragment();
 //        BaikeFragment baikeFragment = new BaikeFragment();
 //        IssueFragment issueFragment = new IssueFragment();
-        fragments.add(WendaFragment.newInstance("label1"));
-        fragments.add(ZhuanjiFragment.newInstance("label2"));
+    fragments.add(WendaFragment.newInstance("label1"));
+    fragments.add(ZhuanjiFragment.newInstance("label2"));
 //        fragments.add(IssueFragment.newInstance("问答"));
-        fragments.add(BaikeFragment.newInstance("label3"));
-        mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
-        mSegmentControl2.setSelectedTextColor(getResources().getColor(android.R.color.white));
-        mSegmentControl2.setOnSegmentControlClickListener(new SegmentControl.OnSegmentControlClickListener() {
-            @Override
-            public void onSegmentControlClick(int index) {
-                mPager.setCurrentItem(index);
-            }
-        });
-        mPager.setOffscreenPageLimit(3);
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                mSegmentControl2.setCurrentIndex(position);
-//                mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.holo_blue_light));
-//                if (position % 2 != 0) {
-//                    mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.holo_blue_light));
-//                } else {
-//                    mSegmentControl2.setSelectedBackgroundColors(getResources().getColor(android.R.color.white));
-//                }
-            }
-        });
-//        FragmentTransaction mFragmentTransaction = mFragmentManager
-//                .beginTransaction();
-//        mFragmentTransaction.replace(R.id.wenda, zhuanjiFragment);
-//        mFragmentTransaction.commit();
+    fragments.add(BaikeFragment.newInstance("label3"));
+    mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
+    mTabLayout.setupWithViewPager(mPager);
+    String[] titles = getResources().getStringArray(R.array.issue_tab_title);
+    for (int i = 0; i < mTabLayout.getTabCount(); i++) {
+      mTabLayout.getTabAt(i).setText(titles[i]);
+    }
+    mPager.setOffscreenPageLimit(3);
+
+  }
+
+  private static class PagerAdapter extends FragmentPagerAdapter {
+
+    private List<Fragment> fragments;
+
+    public PagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+      super(fm);
+      this.fragments = fragments;
     }
 
-    private static class PagerAdapter extends FragmentPagerAdapter {
-
-        private List<Fragment> fragments;
-
-        public PagerAdapter(FragmentManager fm, List<Fragment> fragments) {
-            super(fm);
-            this.fragments = fragments;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
+    @Override
+    public Fragment getItem(int position) {
+      return fragments.get(position);
     }
 
-    @Subscribe
-    public void handleZhuanjiMoreClickEvent(HomeFragment.ZhuanjiMoreClickEvent event) {
-        // TODO 跳转到鱼医生精彩视频
-        mPager.setCurrentItem(1);
+    @Override
+    public int getCount() {
+      return fragments.size();
     }
+  }
+
+  @Subscribe
+  public void handleZhuanjiMoreClickEvent(HomeFragment.ZhuanjiMoreClickEvent event) {
+    // TODO 跳转到鱼医生精彩视频
+    mPager.setCurrentItem(1);
+  }
 }
