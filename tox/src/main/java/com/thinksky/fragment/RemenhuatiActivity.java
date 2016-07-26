@@ -287,7 +287,11 @@ public class RemenhuatiActivity extends BaseBActivity {
           }
 
           if (imageView != null) {
-            ImageLoader.loadOptimizedHttpImage(RemenhuatiActivity.this, url).into(imageView);
+            try {
+              ImageLoader.loadOptimizedHttpImage(RemenhuatiActivity.this, url).into(imageView);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
             //ImageLoader.getInstance().displayImage(url, imageView);
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {

@@ -123,9 +123,13 @@ public class XiaozujingxuanActivity extends BaseBActivity {
         }
         @Override
         protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
-            ImageLoader.loadOptimizedHttpImage(XiaozujingxuanActivity.this, bean.logo).bitmapTransform(new CropCircleTransformation(XiaozujingxuanActivity.this)).placeholder(R.drawable.picture_1_no).error(R
-                .drawable.picture_1_no).into
-                (holder.imgV(R.id.logo));
+            try {
+                ImageLoader.loadOptimizedHttpImage(XiaozujingxuanActivity.this, bean.logo).bitmapTransform(new CropCircleTransformation(XiaozujingxuanActivity.this)).placeholder(R.drawable.picture_1_no).error(R
+                    .drawable.picture_1_no).into
+                    (holder.imgV(R.id.logo));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             holder.tV(R.id.title).setText(bean.title);
             holder.tV(R.id.detail).setText(bean.detail);
             holder.tV(R.id.post_count).setText(bean.post_count);

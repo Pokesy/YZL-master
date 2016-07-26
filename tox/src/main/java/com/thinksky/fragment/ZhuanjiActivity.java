@@ -216,7 +216,11 @@ public class ZhuanjiActivity extends BaseBActivity {
             ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(bean.title);
             //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,
             //        (ImageView) viewHolder.itemView.findViewById(R.id.imageView));
-            ImageLoader.loadOptimizedHttpImage(context,RsenUrlUtil.URL_BASE + bean.cover_url).into((ImageView) viewHolder.itemView.findViewById(R.id.imageView));
+            try {
+                ImageLoader.loadOptimizedHttpImage(context,RsenUrlUtil.URL_BASE + bean.cover_url).into((ImageView) viewHolder.itemView.findViewById(R.id.imageView));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

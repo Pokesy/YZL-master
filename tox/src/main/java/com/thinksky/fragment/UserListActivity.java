@@ -116,9 +116,13 @@ public class UserListActivity extends BaseBActivity {
     @Override
     protected void onBindView(final RViewHolder holder, int position, final MyBean bean) {
       String url = RsenUrlUtil.URL_BASE + bean.avatar128;
-      ImageLoader.loadOptimizedHttpImage(UserListActivity.this, url).error(R.drawable
-          .side_user_avatar)
-          .placeholder(R.drawable.side_user_avatar).into(holder.imgV(R.id.user_logo));
+      try {
+        ImageLoader.loadOptimizedHttpImage(UserListActivity.this, url).error(R.drawable
+            .side_user_avatar)
+            .placeholder(R.drawable.side_user_avatar).into(holder.imgV(R.id.user_logo));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       holder.tV(R.id.user_name).setText(bean.nickname);
       holder.tV(R.id.fans).setText("粉丝数" + bean.fans);
             /*点击用户头像*/

@@ -136,9 +136,13 @@ public class XiaozujingxuanFragment extends RBaseFragment {
 //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 //                            .displayer(new RoundedBitmapDisplayer(100)).build());
 //            ResUtil.setRoundImage(bean.logo, holder.imgV(R.id.logo));
-            ImageLoader.loadOptimizedHttpImage(getActivity(), bean.logo).bitmapTransform(new CropCircleTransformation(getActivity())).placeholder(R.drawable.picture_1_no).error(R
-                .drawable.picture_1_no).into
-                (holder.imgV(R.id.logo));
+            try {
+                ImageLoader.loadOptimizedHttpImage(getActivity(), bean.logo).bitmapTransform(new CropCircleTransformation(getActivity())).placeholder(R.drawable.picture_1_no).error(R
+                    .drawable.picture_1_no).into
+                    (holder.imgV(R.id.logo));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             holder.tV(R.id.title).setText(bean.title);
             holder.tV(R.id.detail).setText(bean.detail);
             holder.tV(R.id.post_count).setText(bean.post_count);

@@ -240,9 +240,14 @@ public class MyhuatiActivity extends BaseBActivity {
 //                            .showImageOnFail(R.drawable.ic_launcher)
 //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
 //                            .displayer(new RoundedBitmapDisplayer(100)).build());
-            ImageLoader.loadOptimizedHttpImage(context,
-                bean.user_logo).
-                bitmapTransform(new CropCircleTransformation(context)).into(holder.imgV(R.id.user_logo));
+            try {
+                ImageLoader.loadOptimizedHttpImage(context,
+                    bean.user_logo).
+                    bitmapTransform(new CropCircleTransformation(context)).into(holder.imgV(R.id
+                        .user_logo));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             if (bean.imgList != null && bean.imgList.size() > 0) {
                 holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 
@@ -266,7 +271,12 @@ public class MyhuatiActivity extends BaseBActivity {
                     if (imageView != null) {
 
                         //ImageLoader.getInstance().displayImage(url, imageView);
-                        ImageLoader.loadOptimizedHttpImage(MyhuatiActivity.this,url).into(imageView);
+                        try {
+                            ImageLoader.loadOptimizedHttpImage(MyhuatiActivity.this,url).into
+                                    (imageView);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         final int in = i;
                         imageView.setOnClickListener(new View.OnClickListener() {
 

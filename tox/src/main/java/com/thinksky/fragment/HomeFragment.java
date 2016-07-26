@@ -308,8 +308,12 @@ public class HomeFragment extends BasicFragment
       holder.tV(R.id.view_count).setText(bean.getView());
       holder.tV(R.id.comment_count).setText(bean.getComment());
 
-      ImageLoader.loadOptimizedHttpImage(getActivity(), Url.IMAGE + bean.getCover())
-          .into(holder.imgV(R.id.snapshots));
+      try {
+        ImageLoader.loadOptimizedHttpImage(getActivity(), Url.IMAGE + bean.getCover())
+            .into(holder.imgV(R.id.snapshots));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       //ImageLoader.getInstance().displayImage(Url.IMAGE + bean.getCover(), holder.imgV(R.id
       // .snapshots));
       //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
@@ -544,9 +548,13 @@ public class HomeFragment extends BasicFragment
       holder.tV(R.id.supportCount).setText(bean.supportCount);
       holder.tV(R.id.reply_count).setText(bean.reply_count);
       holder.tV(R.id.nickname).setText(bean.nickname);
-      ImageLoader.loadOptimizedHttpImage(getActivity(), bean.user_logo)
-          .bitmapTransform(new CropCircleTransformation(getActivity()))
-          .into(holder.imgV(R.id.user_logo));
+      try {
+        ImageLoader.loadOptimizedHttpImage(getActivity(), bean.user_logo)
+            .bitmapTransform(new CropCircleTransformation(getActivity()))
+            .into(holder.imgV(R.id.user_logo));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       if (bean.imgList != null && bean.imgList.size() > 0) {
         holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 
@@ -586,8 +594,12 @@ public class HomeFragment extends BasicFragment
           }
 
           if (imageView != null) {
-            ImageLoader.loadOptimizedHttpImage(getActivity(), url).placeholder(R.drawable.picture_no)
-            .error(R.drawable.picture_no).into(imageView);
+            try {
+              ImageLoader.loadOptimizedHttpImage(getActivity(), url).placeholder(R.drawable.picture_no)
+              .error(R.drawable.picture_no).into(imageView);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {
 
@@ -712,10 +724,14 @@ public class HomeFragment extends BasicFragment
 
     @Override
     protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
-      ImageLoader.loadOptimizedHttpImage(getActivity(), bean.logo).bitmapTransform(new
-          CropCircleTransformation(getActivity())).placeholder(R.drawable.picture_1_no).error(R
-          .drawable.picture_1_no).into
-          (holder.imgV(R.id.logo));
+      try {
+        ImageLoader.loadOptimizedHttpImage(getActivity(), bean.logo).bitmapTransform(new
+            CropCircleTransformation(getActivity())).placeholder(R.drawable.picture_1_no).error(R
+            .drawable.picture_1_no).into
+            (holder.imgV(R.id.logo));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       holder.tV(R.id.title).setText(bean.title);
       holder.tV(R.id.detail).setText(bean.detail);
       holder.tV(R.id.post_count).setText(bean.post_count);

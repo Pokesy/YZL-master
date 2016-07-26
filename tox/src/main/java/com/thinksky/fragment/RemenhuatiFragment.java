@@ -261,9 +261,13 @@ public class RemenhuatiFragment extends RBaseFragment {
       //                .showImageOnFail(R.drawable.ic_launcher)
       //                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
       //                .displayer(new RoundedBitmapDisplayer(100)).build());
-      ImageLoader.loadOptimizedHttpImage(context,
-          bean.user_logo).
-          bitmapTransform(new CropCircleTransformation(context)).into(holder.imgV(R.id.user_logo));
+      try {
+        ImageLoader.loadOptimizedHttpImage(context,
+            bean.user_logo).
+            bitmapTransform(new CropCircleTransformation(context)).into(holder.imgV(R.id.user_logo));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       if (bean.imgList != null && bean.imgList.size() > 0) {
         holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 
@@ -304,7 +308,11 @@ public class RemenhuatiFragment extends RBaseFragment {
           }
 
           if (imageView != null) {
-            ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
+            try {
+              ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
             //ImageLoader.getInstance().displayImage(url, imageView);
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {

@@ -230,9 +230,13 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
               }
 
               if (imageView != null) {
-                ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, url).error(R
-                    .drawable
-                    .picture_no).placeholder(R.drawable.picture_no).into(imageView);
+                try {
+                  ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, url).error(R
+                      .drawable
+                      .picture_no).placeholder(R.drawable.picture_no).into(imageView);
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
                 final int in = i;
                 imageView.setOnClickListener(new View.OnClickListener() {
                   @Override
@@ -468,11 +472,15 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 //            WendaXianqingInfo bean = beans.get(position);
 //            list =bean.getQuestionAnswer();
       final WendaXianqingInfo.QuestionAnswerEntity bean = list.get(position);
-      ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, RsenUrlUtil.URL_BASE + bean
-          .getUser().getAvatar32())
-          .bitmapTransform(new CropCircleTransformation(QuestionDetailActivity.this)).placeholder
-          (R.drawable.side_user_avatar).error(R.drawable.side_user_avatar)
-          .dontAnimate().into(holder.avatar32);
+      try {
+        ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, RsenUrlUtil.URL_BASE + bean
+            .getUser().getAvatar32())
+            .bitmapTransform(new CropCircleTransformation(QuestionDetailActivity.this)).placeholder
+            (R.drawable.side_user_avatar).error(R.drawable.side_user_avatar)
+            .dontAnimate().into(holder.avatar32);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       holder.nickname.setText(bean.getUser().getNickname());
       holder.content.setText(bean.getContent().replace("\\n", "\n"));
       holder.creat_time.setText(MyJson.getStandardDate(bean.getCreate_time()));

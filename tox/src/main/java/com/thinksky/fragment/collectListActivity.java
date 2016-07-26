@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -25,10 +24,6 @@ import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
-
-import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,6 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.json.JSONObject;
+import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
  * Created by jiao on 2016/3/13.
@@ -212,7 +209,12 @@ public class CollectListActivity extends BaseBActivity {
             }
             if (list.get(position).getImgList() != null && list.get(position).getImgList().size() != 0) {
                 //com.nostra13.universalimageloader.core.ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + list.get(position).getImgList().get(0).getSrc(), holder.dailyPic);
-                ImageLoader.loadOptimizedHttpImage(CollectListActivity.this,RsenUrlUtil.URL_BASE + list.get(position).getImgList().get(0).getSrc()).into(holder.dailyPic);
+
+                try {
+                    ImageLoader.loadOptimizedHttpImage(CollectListActivity.this,RsenUrlUtil.URL_BASE + list.get(position).getImgList().get(0).getSrc()).into(holder.dailyPic);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             holder.tv.setText(list.get(position).getTitle());
 

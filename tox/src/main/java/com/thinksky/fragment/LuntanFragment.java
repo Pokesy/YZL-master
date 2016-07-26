@@ -398,9 +398,13 @@ public class LuntanFragment extends Fragment {
             //                .showImageOnFail(R.drawable.ic_launcher)
             //                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
             //                .displayer(new RoundedBitmapDisplayer(100)).build());
-            ImageLoader.loadOptimizedHttpImage(context,
-                RsenUrlUtil.URL_BASE + bean.logo).
-                bitmapTransform(new CropCircleTransformation(context)).into(viewHolder.userLogo);
+            try {
+                ImageLoader.loadOptimizedHttpImage(context,
+                    RsenUrlUtil.URL_BASE + bean.logo).
+                    bitmapTransform(new CropCircleTransformation(context)).into(viewHolder.userLogo);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             viewHolder.titleView.setText(bean.title);
             viewHolder.countView.setText("帖数：" + bean.post_count+"    回复：" + bean.reply_count);
 //            viewHolder.replyview.setText("回复：" + bean.reply_count);

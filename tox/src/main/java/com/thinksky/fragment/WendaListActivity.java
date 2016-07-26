@@ -169,11 +169,15 @@ public class WendaListActivity extends BaseBActivity {
 //            if (s.equals("1")) {
 //                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
 //            }
-      ImageLoader.loadOptimizedHttpImage(WendaListActivity.this, RsenUrlUtil.URL_BASE +
-          listEntity.getUser()
-              .getAvatar32()).bitmapTransform(new CropCircleTransformation(WendaListActivity.this))
-          .error(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).into(viewHolder
-          .imgV(R.id.logo));
+      try {
+        ImageLoader.loadOptimizedHttpImage(WendaListActivity.this, RsenUrlUtil.URL_BASE +
+            listEntity.getUser()
+                .getAvatar32()).bitmapTransform(new CropCircleTransformation(WendaListActivity.this))
+            .error(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).into(viewHolder
+            .imgV(R.id.logo));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       if (s.equals("0")) {
         ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
         viewHolder.itemView.findViewById(R.id.best_answer).setSelected(false);
@@ -219,8 +223,12 @@ public class WendaListActivity extends BaseBActivity {
           }
 
           if (imageView != null) {
-            ImageLoader.loadOptimizedHttpImage(WendaListActivity.this, url).placeholder(R.drawable
-                .picture_no).error(R.drawable.picture_no).into(imageView);
+            try {
+              ImageLoader.loadOptimizedHttpImage(WendaListActivity.this, url).placeholder(R.drawable
+                  .picture_no).error(R.drawable.picture_no).into(imageView);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
             //ImageLoader.getInstance().displayImage(url, imageView);
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {

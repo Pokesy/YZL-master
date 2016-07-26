@@ -232,10 +232,14 @@ public class WendaFragment extends BasicFragment {
       // (listEntity.getUser().getNickname());
       //ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32(),
       //    ((ImageView) viewHolder.itemView.findViewById(R.id.logo)));
-      ImageLoader.loadOptimizedHttpImage(getActivity(),
-          RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32()).
-          bitmapTransform(new CropCircleTransformation(getActivity())).into((ImageView)
-          viewHolder.itemView.findViewById(R.id.logo));
+      try {
+        ImageLoader.loadOptimizedHttpImage(getActivity(),
+            RsenUrlUtil.URL_BASE + listEntity.getUser().getAvatar32()).
+            bitmapTransform(new CropCircleTransformation(getActivity())).into((ImageView)
+            viewHolder.itemView.findViewById(R.id.logo));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       //            //为图片控件加载数据
       //            kjBitmap = KJBitmap.create();
       //            kjBitmap.display(((ImageView) viewHolder.itemView.findViewById(R.id.logo)),
@@ -283,7 +287,11 @@ public class WendaFragment extends BasicFragment {
           }
 
           if (imageView != null) {
-            ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
+            try {
+              ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
             //ImageLoader.getInstance().displayImage(url, imageView);
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {

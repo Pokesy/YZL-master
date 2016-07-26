@@ -305,7 +305,11 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
             }
             if (imageView != null) {
               //ImageLoader.getInstance().displayImage(url, imageView);
-              ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
+              try {
+                ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
               final int in = i;
               imageView.setOnClickListener(new View.OnClickListener() {
 

@@ -179,11 +179,15 @@ public class WendaMyQuestionActivity extends BaseBActivity {
       } else {
         ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("魟鱼");
       }
-      ImageLoader.loadOptimizedHttpImage(WendaMyQuestionActivity.this, RsenUrlUtil.URL_BASE +
-          listEntity.getUser().getAvatar32())
-          .placeholder(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar)
-          .bitmapTransform(new CropCircleTransformation(WendaMyQuestionActivity.this))
-          .dontAnimate().into(viewHolder.imgV(R.id.logo));
+      try {
+        ImageLoader.loadOptimizedHttpImage(WendaMyQuestionActivity.this, RsenUrlUtil.URL_BASE +
+            listEntity.getUser().getAvatar32())
+            .placeholder(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar)
+            .bitmapTransform(new CropCircleTransformation(WendaMyQuestionActivity.this))
+            .dontAnimate().into(viewHolder.imgV(R.id.logo));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       String s = listEntity.getBest_answer();
       if (s.equals("0")) {
         ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("求助中");
@@ -230,7 +234,11 @@ public class WendaMyQuestionActivity extends BaseBActivity {
           }
 
           if (imageView != null) {
-            ImageLoader.loadOptimizedHttpImage(WendaMyQuestionActivity.this, url).into(imageView);
+            try {
+              ImageLoader.loadOptimizedHttpImage(WendaMyQuestionActivity.this, url).into(imageView);
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
             //ImageLoader.getInstance().displayImage(url, imageView);
             final int in = i;
             imageView.setOnClickListener(new View.OnClickListener() {

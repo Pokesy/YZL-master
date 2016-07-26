@@ -138,8 +138,12 @@ public class ZhuanjiFenLeiActivity extends BaseBActivity {
       holder.tV(R.id.support_count).setText(bean.support_count);
       //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,
       //        holder.imgV(R.id.imageView));
-      ImageLoader.loadOptimizedHttpImage(context, RsenUrlUtil.URL_BASE + bean.cover_url).into
-          (holder.imgV(R.id.imageView));
+      try {
+        ImageLoader.loadOptimizedHttpImage(context, RsenUrlUtil.URL_BASE + bean.cover_url).into
+            (holder.imgV(R.id.imageView));
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       holder.v(R.id.root_layout).setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
