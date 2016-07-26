@@ -234,7 +234,7 @@ public class HomeFragment extends BasicFragment
         Bundle bundle = new Bundle();
         bundle.putString("url", url);
 
-        Intent intent = new Intent(mContext, VedioView.class);
+        Intent intent = new Intent(mContext, VideoPlayActivity.class);
         intent.putExtras(bundle);
         mContext.startActivity(intent);
         break;

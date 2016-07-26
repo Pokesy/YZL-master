@@ -22,7 +22,7 @@ import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.thinksky.fragment.VedioView;
+import com.thinksky.fragment.VideoPlayActivity;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
@@ -511,7 +511,7 @@ public class IssueDetail extends BaseBActivity {
           Log.d("url------------------>", "url");
           Bundle bundle = new Bundle();
           bundle.putString("url", url);
-          Intent intent = new Intent(IssueDetail.this, VedioView.class);
+          Intent intent = new Intent(IssueDetail.this, VideoPlayActivity.class);
           intent.putExtras(bundle);
 
 

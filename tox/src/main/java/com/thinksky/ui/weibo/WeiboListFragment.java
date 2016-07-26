@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.squareup.otto.Subscribe;
 import com.thinksky.adapter.WeiboAdapter;
 import com.thinksky.info.AshamedInfo;
 import com.thinksky.info.WeiboInfo;
@@ -27,6 +28,7 @@ import com.thinksky.log.Logger;
 import com.thinksky.myview.MyListView;
 import com.thinksky.myview.MyListView.OnRefreshListener;
 import com.thinksky.tox.R;
+import com.thinksky.tox.UploadActivity;
 import com.thinksky.tox.WeiboDetailActivity;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.utils.MyJson;
@@ -72,7 +74,6 @@ public class WeiboListFragment extends BasicFragment {
   private KJBitmap kjBitmap;
   private ProgressBar mAddMoreProgressBar;
   private int isAdd = 0;
-  private String session_id;
   private String userUid;
   private BaseApi baseApi;
 
@@ -117,7 +118,6 @@ public class WeiboListFragment extends BasicFragment {
     finalBitmap.configBitmapLoadThreadSize(30);
     kjBitmap = KJBitmap.create();
     baseApi = new BaseApi();
-    session_id = baseApi.getSeesionId();
     userUid = baseApi.getUid();
     return view;
   }
@@ -135,7 +135,7 @@ public class WeiboListFragment extends BasicFragment {
     mLinearLayout = (LinearLayout) view.findViewById(R.id.HomeGroup);
     myListView.setLayoutParams(new LinearLayout.LayoutParams(
         LinearLayout.LayoutParams.MATCH_PARENT,
-        LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams.MATCH_PARENT));
     myListView.setDivider(null);
     myListView.setDividerHeight(0);
 //        myListView.setFadingEdgeLength(10);
@@ -160,7 +160,7 @@ public class WeiboListFragment extends BasicFragment {
           } else if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
 
             weiboApi.setHandler(hand);
-            weiboApi.listMyFollowingWeibo(++mCurrentPage, session_id);
+            weiboApi.listMyFollowingWeibo(++mCurrentPage, Url.SESSIONID);
           } else if (hotUrl.equals(Url.MYWEIBO)) {
             weiboApi.setHandler(hand);
             weiboApi.listMyWeibo(++mCurrentPage, Url.USERID);
@@ -196,7 +196,7 @@ public class WeiboListFragment extends BasicFragment {
           } else if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
 
             weiboApi.setHandler(hand);
-            weiboApi.listMyFollowingWeibo(mCurrentPage, session_id);
+            weiboApi.listMyFollowingWeibo(mCurrentPage, Url.SESSIONID);
           } else if (hotUrl.equals(Url.MYWEIBO)) {
             weiboApi.setHandler(hand);
             weiboApi.listMyWeibo(mCurrentPage, Url.USERID);
@@ -208,11 +208,11 @@ public class WeiboListFragment extends BasicFragment {
         }
       }
     });
-    if (!BaseFunction.isLogin()) {
-      autoLogin();
-    } else {
+    //if (!BaseFunction.isLogin()) {
+    //  autoLogin();
+    //} else {
       getWeiboList();
-    }
+    //}
 
   }
 
@@ -234,13 +234,17 @@ public class WeiboListFragment extends BasicFragment {
     mCurrentPage = INIT_PAGE;
     if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
       weiboApi.setHandler(hand);
-      weiboApi.listMyFollowingWeibo(1, session_id);
+      if(BaseFunction.isLogin()) {
+        weiboApi.listMyFollowingWeibo(1, Url.SESSIONID);
+      }
     } else if (hotUrl.equals(Url.WEIBO)) {
       weiboApi.setHandler(hand);
       weiboApi.listAllWeibo(1, 0 + "");
     } else if (hotUrl.equals(Url.MYWEIBO)) {
       weiboApi.setHandler(hand);
-      weiboApi.listMyWeibo(1, Url.USERID);
+      if(BaseFunction.isLogin()) {
+        weiboApi.listMyWeibo(1, Url.USERID);
+      }
     }
   }
 
@@ -258,7 +262,7 @@ public class WeiboListFragment extends BasicFragment {
 
   Handler hand = new Handler() {
     public void handleMessage(Message msg) {
-      Logger.e("YZZ", "hotUrl : %s  handleMessage" , hotUrl);
+      Logger.e("YZZ", "hotUrl : %s  handleMessage", hotUrl);
       super.handleMessage(msg);
       if (msg.what == 404) {
         Toast.makeText(ctx, "请求失败，服务器故障", Toast.LENGTH_LONG).show();
@@ -320,12 +324,6 @@ public class WeiboListFragment extends BasicFragment {
 
   };
 
-  @Override
-  public void onResume() {
-    super.onResume();
-    insertWeibo();
-  }
-
   private void insertWeibo() {
     if (Url.is2InsertWeibo) {
       weiboList.add(null);
@@ -337,6 +335,20 @@ public class WeiboListFragment extends BasicFragment {
       mAdapter.notifyDataSetChanged();
       Url.is2InsertWeibo = false;
 
+    }
+  }
+
+  @Subscribe
+  public void handleWeiboSendEvent(UploadActivity.WeiboSendSuccessEvent event) {
+    if (TextUtils.equals(hotUrl, Url.MYWEIBO) || TextUtils.equals(hotUrl, Url.WEIBO)) {
+      createListModel();
+    }
+  }
+
+  @Subscribe
+  public void handleDeleteWeiboEvent(WeiboDetailActivity.DeleteWeiboEvent event) {
+    if (TextUtils.equals(hotUrl, Url.MYWEIBO) || TextUtils.equals(hotUrl, Url.WEIBO)) {
+      createListModel();
     }
   }
 
@@ -402,7 +414,6 @@ public class WeiboListFragment extends BasicFragment {
   @Override
   protected void onLogin() {
     super.onLogin();
-    Logger.e("YZZ", "hotUrl : %s  onLogin" , hotUrl);
     getWeiboList();
   }
 }

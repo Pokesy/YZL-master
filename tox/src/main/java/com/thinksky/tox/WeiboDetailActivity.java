@@ -291,6 +291,7 @@ public class WeiboDetailActivity extends BaseBActivity {
                     case 0:
                       Url.activityFrom = "DeleteWeiBoActivity";
                       ToastHelper.showToast("删除成功", WeiboDetailActivity.this);
+                      getComponent().getGlobalBus().post(new DeleteWeiboEvent());
                       finish();
                       break;
                     case 401:
@@ -577,5 +578,9 @@ public class WeiboDetailActivity extends BaseBActivity {
       intent.putExtras(bundle);
       startActivity(intent);
     }
+  }
+
+  public class DeleteWeiboEvent {
+
   }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="weibo_tab_title">
+    <item>热门动态</item>
+    <item>我的关注</item>
+    <item>我的动态</item>
+  </string-array>
+</resources>

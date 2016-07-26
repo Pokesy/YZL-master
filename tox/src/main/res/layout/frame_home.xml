@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:segmentcontrol="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:paddingBottom="0dp"
     android:paddingTop="0dp"
     >
-
-  <RelativeLayout
+  <android.support.design.widget.TabLayout
+      android:id="@+id/tab_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="3dp"
-      android:background="@android:color/white"
-      android:paddingBottom="14dp"
-      android:paddingTop="14dp"
-      >
-
-
-    <com.thinksky.tox.SegmentControl
-        android:id="@+id/segment_control"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="16sp"
-        segmentcontrol:cornerRadius="6dip"
-        segmentcontrol:direction="horizon"
-        segmentcontrol:horizonGap="25dip"
-        segmentcontrol:selectedBackgroundColors="@color/head"
-        segmentcontrol:selectedIndex="0"
-        segmentcontrol:texts="热门动态|我的关注|我的动态"
-        segmentcontrol:verticalGap="10dip"
-        />
-  </RelativeLayout>
+      android:layout_centerHorizontal="true"
+      android:textSize="@dimen/font_size_primary"
+      app:tabGravity="fill"
+      app:tabIndicatorColor="@color/font_color_blue"
+      app:tabMode="fixed"
+      app:tabSelectedTextColor="@color/font_color_blue"
+      app:tabTextColor="@color/font_color_secondary"
+      />
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="0.5dp"
+      android:background="@color/bg_color_divider_dark"
+      />
 
   <com.thinksky.myview.CustomViewPager
       android:id="@+id/pager"

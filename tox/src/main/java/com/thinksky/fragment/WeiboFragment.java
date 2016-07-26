@@ -2,10 +2,10 @@ package com.thinksky.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,25 +13,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.thinksky.myview.CustomViewPager;
 import com.thinksky.tox.R;
-import com.thinksky.tox.SegmentControl;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.weibo.WeiboListFragment;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
-import java.util.ArrayList;
 
 /**
  * 热门的fragment
  */
 public class WeiboFragment extends BasicFragment {
 
-  @Bind(R.id.segment_control)
-  SegmentControl mSegmentControl;
+  @Bind(R.id.tab_layout)
+  TabLayout mTabLayout;
   @Bind(R.id.pager)
   CustomViewPager mPager;
-
-  //获取可用注册方式
-  private ArrayList<String> ways = new ArrayList<String>();
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
@@ -50,54 +45,53 @@ public class WeiboFragment extends BasicFragment {
     mPager.setPagingEnabled(BaseFunction.isLogin());
     mPager.setAdapter(new WeiboPagerAdapter(getChildFragmentManager()));
     mPager.setOffscreenPageLimit(3);
-    mSegmentControl.setTouchInterceptor(new SegmentControl.TouchInterceptor() {
+    mTabLayout.setupWithViewPager(mPager);
+    String[] titles = getResources().getStringArray(R.array.weibo_tab_title);
+    for (int i = 0; i < titles.length; i++) {
+      TabLayout.Tab tab = mTabLayout.getTabAt(i);
+      tab.setText(titles[i]);
+      //tab.setCustomView(new TextView(getActivity()));
+      //View tabView = (View) tab.getCustomView().getParent();
+      //tabView.setTag(i);
+      //tabView.setOnClickListener(mTabClickListener);
+    }
+
+    mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
       @Override
-      public boolean onIntercept(int index) {
-        boolean intercept = !BaseFunction.isLogin() && (index > 0);
-        if (intercept) {
+      public void onTabSelected(TabLayout.Tab tab) {
+        if (tab.getPosition() > 0 && !BaseFunction.isLogin()) {
+          mPager.setCurrentItem(0);
+          mTabLayout.getTabAt(0).select();
           ToastHelper.showToast(R.string.prompt_offline, getActivity());
+        } else {
+          mPager.setCurrentItem(tab.getPosition());
         }
-        return intercept;
-      }
-    });
-    mSegmentControl.setOnSegmentControlClickListener(new SegmentControl
-        .OnSegmentControlClickListener() {
-      @Override
-      public void onSegmentControlClick(int index) {
-        mPager.setCurrentItem(index);
-      }
-    });
-
-    mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-      @Override
-      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
       }
 
       @Override
-      public void onPageSelected(int position) {
-        mSegmentControl.setCurrentIndex(position);
+      public void onTabUnselected(TabLayout.Tab tab) {
+
       }
 
       @Override
-      public void onPageScrollStateChanged(int state) {
+      public void onTabReselected(TabLayout.Tab tab) {
 
       }
     });
-
   }
 
   @Override
   protected void onLogin() {
     super.onLogin();
     mPager.setPagingEnabled(BaseFunction.isLogin());
-    mSegmentControl.setCurrentIndex(0);
+    mTabLayout.getTabAt(0).select();
   }
 
   @Override
   protected void onLogout() {
     super.onLogout();
     mPager.setPagingEnabled(BaseFunction.isLogin());
-    mSegmentControl.setCurrentIndex(0);
+    mTabLayout.getTabAt(0).select();
   }
 
   @Override

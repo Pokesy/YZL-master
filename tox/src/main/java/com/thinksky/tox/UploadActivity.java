@@ -427,14 +427,11 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
           if (getIntent().getStringExtra("weiboType") != null) {
             Toast.makeText(UploadActivity.this, "转发成功", Toast.LENGTH_LONG).show();
             weiboInfo = myJson.getWeiboAfterRepost(result);
-            //将自己发布的微博保存在Url的静态变量中
-
-
+            getComponent().getGlobalBus().post(new WeiboSendSuccessEvent());
           } else {
             weiboInfo = myJson.getWeiboAfterSend(result);
-            //将自己发布的微博保存在Url的静态变量中
-
             ToastHelper.showToast("发布成功", UploadActivity.this);
+            getComponent().getGlobalBus().post(new WeiboSendSuccessEvent());
           }
           Url.weiboInfo = weiboInfo;
           Url.is2InsertWeibo = true;
@@ -611,4 +608,7 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
     super.onBackPressed();
   }
 
+  public class WeiboSendSuccessEvent {
+
+  }
 }

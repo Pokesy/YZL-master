@@ -1,52 +1,58 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+    <!--头部信息-->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <!--头部信息-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/space_vertical_tiny"
-            android:paddingLeft="@dimen/space_horizontal"
-            android:paddingRight="@dimen/space_horizontal"
-            android:paddingTop="@dimen/space_vertical_tiny">
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        >
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:textColor="@color/font_color_dark_black"
-                android:textSize="@dimen/font_size_xlarge"
-                tools:text="葒鱼如何饲养" />
+      <TextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_centerVertical="true"
+          tools:text="葒鱼如何饲养"
+          style="@style/Widget.App.TextView.XXLarge.Primary"
+          />
 
-            <TextView
-                android:id="@+id/xianshi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="显示全部 >"
-                android:textColor="@color/font_color_light_gray"
-                android:textSize="@dimen/font_size_small" />
-        </RelativeLayout>
+      <TextView
+          android:id="@+id/xianshi"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:drawablePadding="@dimen/margin_smallest"
+          android:drawableRight="@drawable/tiaozhuan"
+          android:gravity="center"
+          android:text="显示全部"
+          style="@style/Widget.App.TextView.Large.Secondary"
+          />
+    </RelativeLayout>
 
-        <!--图片信息-->
-        <com.thinksky.rsen.view.RInnerGridView
-            android:id="@+id/gridView"
-            android:paddingLeft="10dp"
-            android:layout_width="match_parent"
-            android:paddingRight="10dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:numColumns="2"
-            />
-    </LinearLayout>
+    <!--图片信息-->
+    <com.thinksky.rsen.view.RInnerGridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:numColumns="2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        />
+  </LinearLayout>
 
 </FrameLayout>

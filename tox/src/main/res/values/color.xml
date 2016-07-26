@@ -104,7 +104,7 @@
   <!-- 白色 -->
   <color name="font_color_white">#ffffff</color>
   <!-- 蓝文本色 -->
-  <color name="font_color_blue">#25add4</color>
+  <color name="font_color_blue">#5b85bb</color>
   <!-- 深蓝-->
   <color name="font_color_blue_dark">#29297f</color>
   <!-- 紫色文本 -->
