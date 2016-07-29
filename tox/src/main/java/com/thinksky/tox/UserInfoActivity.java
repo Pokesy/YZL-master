@@ -368,10 +368,10 @@ public class UserInfoActivity extends BaseBActivity {
       }
       super.handleMessage(msg);
       if (msg.what == 404) {
-        Toast.makeText(UserInfoActivity.this, "请求失败，服务器故障", Toast.LENGTH_LONG).show();
+        Toast.makeText(UserInfoActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG).show();
         listBottemFlag = true;
       } else if (msg.what == 100) {
-        Toast.makeText(UserInfoActivity.this, "服务器无响应", Toast.LENGTH_LONG).show();
+        Toast.makeText(UserInfoActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG).show();
         listBottemFlag = true;
       } else if (msg.what == 0) {
         String result = (String) msg.obj;

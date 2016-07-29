@@ -10,39 +10,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import com.alibaba.fastjson.JSON;
 import com.squareup.otto.Subscribe;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.WendaModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendQuestionActivity;
+import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import org.json.JSONObject;
 
 public class WendaMyQuestionActivity extends BaseBActivity {
-  ListView mListView;
+  private static final int PAGE_LIMIT = 10;
+  private static final int START_PAGE = 1;
+  private static final int LOAD_MORE_COUNT = 3;
+  PullToRefreshListView mListView;
 
   ImageView back_menu;
   TextView tiwen;
   private ImageView iv1, iv2, iv3;
   private WendaListAdapter mListAdapter;
 
+  @Inject
+  AppService mAppService;
+  private int mCurrentPage = START_PAGE;
+
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.fragment_myquestion_common);
-    mListView = (ListView) findViewById(R.id.listView);
+    mListView = (PullToRefreshListView) findViewById(R.id.listView);
     back_menu = (ImageView) findViewById(R.id.back_menu);
     tiwen = (TextView) findViewById(R.id.tiwen);
     back_menu.setOnClickListener(new View.OnClickListener() {
@@ -62,47 +73,68 @@ public class WendaMyQuestionActivity extends BaseBActivity {
         }
       }
     });
-    mListAdapter = new WendaListAdapter(WendaMyQuestionActivity.this, null);
-    mListView.setAdapter(mListAdapter);
+    mListAdapter = new WendaListAdapter(WendaMyQuestionActivity.this);
+    mListView.getRefreshListView().setAdapter(mListAdapter);
+    mListView.setPageCount(PAGE_LIMIT);
+    mListView.setScrollToLoadListener(new PullToRefreshListView.ScrollToLoadListener() {
+      @Override
+      public void onPullUpLoadData() {
+        init();
+      }
+
+      @Override
+      public void onPullDownLoadData() {
+        mCurrentPage = 0;
+        init();
+      }
+    }, LOAD_MORE_COUNT);
+    inject();
     init();
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ())).serviceModule(new ServiceModule())
+        .build().inject(this);
   }
 
   @Subscribe
   public void handleQuestionSendEvent(SendQuestionActivity.QuestionSendEvent event) {
+    mCurrentPage = 0;
     init();
   }
 
   @Subscribe
   public void handleAnswerChangeEvent(QuestionDetailActivity.AnswerChangedEvent event) {
+    mCurrentPage = 0;
     init();
   }
 
   private void init() {
-    RsenUrlUtil.execute(this, RsenUrlUtil.URL_MY_WD, new RsenUrlUtil.OnMapListener() {
-      @Override
-      public Map getMap() {
+    manageRpcCall(mAppService.getMyQuestionList(Url.SESSIONID, mCurrentPage, PAGE_LIMIT), new
+        UiRpcSubscriberSimple<WendaModel>(this) {
 
-        Map map = new HashMap();
-        map.put("session_id", Url.SESSIONID);
-        return map;
-      }
 
-      @Override
-      public void onNoNetwork(String msg) {
-        ToastHelper.showToast(msg, Url.context);
-      }
+          @Override
+          protected void onSuccess(WendaModel wendaModel) {
+            if (null == wendaModel.getList() || wendaModel.getList().size() < PAGE_LIMIT) {
+              mListView.setPullUpToRefresh(false);
+            } else {
+              mListView.setPullUpToRefresh(true);
+            }
+            if (mCurrentPage == 0) {
+              mListAdapter.clear();
+            }
+            mListAdapter.addAll(wendaModel.getList());
+            mListAdapter.notifyDataSetChanged();
+            mCurrentPage++;
+          }
 
-      @Override
-      public void onResult(boolean state, String result, JSONObject jsonObject) {
-        if (state) {
-          WendaFragment.WendaBean wendaBean =
-              JSON.parseObject(result, WendaFragment.WendaBean.class);
-          mListAdapter.clear();
-          mListAdapter.setData(wendaBean.getList());
-          mListAdapter.notifyDataSetChanged();
-        }
-      }
-    });
+          @Override
+          protected void onEnd() {
+            mListView.resetPullStatus();
+          }
+        });
   }
 
   @Override
@@ -111,11 +143,10 @@ public class WendaMyQuestionActivity extends BaseBActivity {
   }
 
   public class WendaListAdapter extends BaseAdapter {
-    private List<WendaFragment.WendaBean.ListEntity> datas;
+    private List<WendaModel.ListBean> datas = new ArrayList<>();
     private Context context;
 
-    public WendaListAdapter(Context context, List<WendaFragment.WendaBean.ListEntity> datas) {
-      this.datas = datas;
+    public WendaListAdapter(Context context) {
       this.context = context;
     }
 
@@ -133,8 +164,8 @@ public class WendaMyQuestionActivity extends BaseBActivity {
       }
     }
 
-    public void setData(List<WendaFragment.WendaBean.ListEntity> datas) {
-      this.datas = datas;
+    public void addAll(List<WendaModel.ListBean> data) {
+      datas.addAll(data);
     }
 
     @Override
@@ -159,7 +190,7 @@ public class WendaMyQuestionActivity extends BaseBActivity {
         viewHolder = (RViewHolder) convertView.getTag();
       }
 
-      final WendaFragment.WendaBean.ListEntity listEntity = datas.get(position);
+      final WendaModel.ListBean listEntity = datas.get(position);
 
             /*其他控件信息，自己添加 id， 然后从 listEntity对象中获取数据，填充就行了*/
       ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(listEntity.getTitle());

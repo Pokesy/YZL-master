@@ -146,4 +146,13 @@
   <string name="check_upgrade_failed">检测更新失败</string>
   <string name="btn_confirm">确定</string>
   <string name="btn_cancel">取消</string>
+
+  <!--群组详情-->
+  <string name="activity_group_info_title">群组</string>
+  <string name="activity_group_info_label_topic">组内近期话题:</string>
+  <string name="activity_group_info_default_text_not_topic">该小组的成员都在睡觉,\n暂无话题哦~</string>
+  <string name="activity_group_info_text_creator">组长 : %s</string>
+  <string name="activity_group_info_text_create_time">成立于 : %s</string>
+  <string name="activity_group_info_right_title">发话题</string>
+  <string name="activity_group_info_member_count">%s个小组成员</string>
 </resources>

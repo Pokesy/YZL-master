@@ -434,6 +434,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     public String ht_nickname;
     public String gm_logo;
     public String gm_nickname;
+    public String create_time;
   }
 
   public static void launch(Context context, boolean isWeGroup, MyBean bean) {
@@ -451,6 +452,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     map.put("is_join", bean.is_join);
     map.put("user_nickname", bean.gm_nickname);
     map.put("user_logo", Url.IMAGE + bean.gm_logo);
+    map.put("create_time", bean.create_time);
     bundle.putSerializable("group_info", map);
     bundle.putBoolean("isWeGroup", isWeGroup);
     Intent intent = new Intent(context, GroupInfoActivity.class);

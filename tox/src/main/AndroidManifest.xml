@@ -165,7 +165,6 @@
     <activity
         android:name=".SettingActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
-
         android:screenOrientation="portrait"/>
     <activity
         android:name=".LoginActivity"
@@ -398,7 +397,7 @@
         android:theme="@style/ActivityThemeTwo"/>
     <activity
         android:name="com.thinksky.tox.SendQuestionActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:windowSoftInputMode="stateHidden|adjustPan"
         android:theme="@style/ActivityThemeTwo"/>
     <activity
         android:name="com.thinksky.tox.BaikeItemActivity"

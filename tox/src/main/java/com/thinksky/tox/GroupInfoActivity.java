@@ -13,6 +13,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,18 +28,18 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.squareup.otto.Subscribe;
+import com.thinksky.fragment.MyScrollview;
 import com.thinksky.fragment.UserListActivity;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.MoreTextView;
-import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -62,10 +64,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private static boolean PUBLICGROUP = false;
   private static boolean PRIVATEGROUP = false;
   private static boolean DISMISSGROUP = false;
-  protected ScrollView group_scro;
-  protected ImageView back_menu;
-  protected ImageView cate_menu;
-  private CircleImageView user_logo;
+  protected MyScrollview group_scro;
   protected RelativeLayout refreshButn, enter_cy;
   protected ArrayList<HashMap<String, String>> categoryList;
   private RemenhuatiAdapter rm_adapter;
@@ -87,7 +86,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private LinearLayout linear_body;
   private LinearLayout linear_isnull;
   private RelativeLayout body_probar;
-  private ImageView group_post;
   private ImageView group_logo;
   private TextView group_name;
   private TextView group_type;
@@ -112,6 +110,11 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private long lastClick;
   private RecyclerView memberRecycler;
   private GroupApi mUpdateGroupApi;
+
+  private TitleBar mTitleBar;
+  private TextView mMemberCountView;
+  private TextView mCreatorView;
+  private TextView mCreateTimeView;
   //对加入群组的状态进行实时判断
   private Handler tempHandler = new Handler() {
     @Override
@@ -304,10 +307,10 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
     post = new Intent(mContext, SendTieziActivity.class);
     post.putExtra("group_id", group_id);
-    user_logo = (CircleImageView) findViewById(R.id.user_logo);
-    back_menu = (ImageView) findViewById(R.id.back_menu);
-    group_post = (ImageView) findViewById(R.id.group_post);
-    group_scro = (ScrollView) findViewById(R.id.group_scro);
+
+    initTitleBar();
+
+    group_scro = (MyScrollview) findViewById(R.id.group_scro);
     linear_list = (LinearLayout) findViewById(R.id.linear_list);
     linear_body = (LinearLayout) findViewById(R.id.linear_body);
     linear_isnull = (LinearLayout) findViewById(R.id.linear_isnull);
@@ -319,7 +322,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     post_count = (TextView) findViewById(R.id.post_count);
     man_count = (TextView) findViewById(R.id.man_count);
     join_status = (TextView) findViewById(R.id.join_status);
-    cate_menu = (ImageView) findViewById(R.id.cate_menu);
 
     join_group = (LinearLayout) findViewById(R.id.join_group);
     post_at_top = (LinearLayout) findViewById(R.id.post_at_top);
@@ -327,18 +329,50 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     group_detail = (MoreTextView) findViewById(R.id.group_detail);
     refreshButn = (RelativeLayout) findViewById(R.id.refresh_butn);
     refreshImage = (ImageView) findViewById(R.id.refresh_image);
+    mMemberCountView = (TextView) findViewById(R.id.member_count);
+    mCreatorView = (TextView) findViewById(R.id.creator);
+    mCreateTimeView = (TextView) findViewById(R.id.create_time);
 
     enter_cy = (RelativeLayout) findViewById(R.id.enter_cy);
     group_logo.setOnClickListener(this);
-    back_menu.setOnClickListener(this);
-    group_post.setOnClickListener(this);
     linear_isnull.setOnClickListener(this);
-    cate_menu.setOnClickListener(this);
     join_group.setOnClickListener(this);
     refreshButn.setOnClickListener(this);
     enter_cy.setOnClickListener(this);
     initGroupView(groupInfoMap);
     postInfoList = new ArrayList<HashMap<String, String>>();
+    final View containerView = findViewById(R.id.group_info_container);
+
+    group_scro.setOnScrollListener(new MyScrollview.OnScrollListener() {
+      @Override
+      public void onScroll(int scrollY) {
+        float alpha = (float)scrollY / (float)containerView.getHeight();
+        Log.i("YZZ", ""+alpha);
+        mTitleBar.getTitleBgView().setAlpha(alpha >= 1.0f ? 1.0f : (alpha));
+      }
+    });
+  }
+
+  private void initTitleBar() {
+    mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+    mTitleBar.setMiddleTitle(R.string.activity_group_info_title);
+    mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        finish();
+      }
+    });
+    mTitleBar.setRightTextBtn(R.string.activity_group_info_right_title, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (BaseFunction.isLogin()) {
+          sendPost();
+        } else {
+          ToastHelper.showToast("请登陆后操作", mContext);
+        }
+      }
+    });
+    mTitleBar.getTitleBgView().setAlpha(0);
   }
 
   public static class MyBean {
@@ -364,7 +398,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
   /*成员头像*/
   public class MySubAdapter extends RBaseAdapter<String> {
-    private static final int MAX_COUT = 6;
+    private static final int MAX_COUNT = 8;
 
     public MySubAdapter(Context context, List<String> datas) {
       super(context, datas);
@@ -385,7 +419,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
     @Override
     public int getItemCount() {
-      return super.getItemCount() >= MAX_COUT ? MAX_COUT : super.getItemCount();
+      return super.getItemCount() >= MAX_COUNT ? MAX_COUNT : super.getItemCount();
     }
   }
 
@@ -478,14 +512,15 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private void initGroupView(HashMap<String, String> groupInfoMap) {
 
     group_name.setText(groupInfoMap.get("title"));
-    //        if (groupInfoMap.get("group_type").equals("1")) {
-    //            group_type.setText("私有群组");
-    //        }
     group_detail.setText("群组简介：" + groupInfoMap.get("detail"));
+    group_detail.setVisibility(View.GONE);
+    mCreatorView.setText(getString(R.string.activity_group_info_text_creator, groupInfoMap.get
+        ("user_nickname")));
     //        group_type_name.setText(groupInfoMap.get("type_name"));
-    post_count.setText(groupInfoMap.get("user_nickname"));
-    man_count.setText(groupInfoMap.get("memberCount"));
-
+    mCreateTimeView.setText(getString(R.string.activity_group_info_text_create_time, TextUtils
+        .isEmpty(groupInfoMap.get("create_time")) ? "" : groupInfoMap.get("create_time")));
+    mMemberCountView.setText(getString(R.string.activity_group_info_member_count, groupInfoMap
+        .get("memberCount")));
     ImageLoader.loadOptimizedHttpImage(this, groupInfoMap.get("group_logo")).bitmapTransform(new
         CropCircleTransformation(this))
         .error(R.drawable.picture_1_no).placeholder(R.drawable.picture_1_no).dontAnimate().into
@@ -501,15 +536,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
       case R.id.back_menu:
         finish();
         break;
-      case R.id.group_post:
-        if (BaseFunction.isLogin()) {
-          sendPost();
-        } else {
-          ToastHelper.showToast("请登陆后操作", mContext);
-        }
-        break;
       case R.id.cate_menu:
-        cateWindow.showAsDropDown(group_post);
+        cateWindow.showAsDropDown(mTitleBar.getTextBtnRight());
         break;
       case R.id.linear_isnull:
         sendPost();

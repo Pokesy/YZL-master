@@ -11,6 +11,9 @@
  */
 package com.thinksky.serviceinjection;
 
+import com.thinksky.fragment.WendaFragment;
+import com.thinksky.fragment.WendaListActivity;
+import com.thinksky.fragment.WendaMyQuestionActivity;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.utils.UpgradeHelper;
 import dagger.Component;
@@ -29,4 +32,10 @@ public interface ServiceComponent {
   AppService appService();
 
   void inject(UpgradeHelper upgradeHelper);
+
+  void inject(WendaFragment wendaFragment);
+
+  void inject(WendaListActivity wendaListActivity);
+
+  void inject(WendaMyQuestionActivity wendaMyQuestionActivity);
 }

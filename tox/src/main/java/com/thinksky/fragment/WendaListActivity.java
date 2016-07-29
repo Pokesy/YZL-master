@@ -8,40 +8,71 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import com.alibaba.fastjson.JSON;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.WendaModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendQuestionActivity;
+import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import org.json.JSONObject;
+import retrofit2.Response;
+import rx.Observable;
 
 /**
  * Created by jiao on 2016/3/13.
  */
 public class WendaListActivity extends BaseBActivity {
+  private static final int PAGE_LIMIT = 10;
+  private static final int START_PAGE = 1;
+  private static final int LOAD_MORE_COUNT = 3;
 
-  ListView mListView;
-  WendaListAdapter mAdapter;
+  PullToRefreshListView mListView;
+  WendaListAdapter mListAdapter;
   private ImageView back_menu;
   private TextView mTitleView;
   private TextView tiwen;
   private ImageView iv1, iv2, iv3;
 
+  @Inject
+  AppService mAppService;
+  private int mCurrentPage = START_PAGE;
+  private String mWhichActivity;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_wenda_common);
-    mListView = (ListView) findViewById(R.id.listView);
+    mListView = (PullToRefreshListView) findViewById(R.id.listView);
+    mListView.setPageCount(PAGE_LIMIT);
+    mListAdapter = new WendaListAdapter(this);
+    mListView.getRefreshListView().setAdapter(mListAdapter);
+    mListView.setScrollToLoadListener(new PullToRefreshListView.ScrollToLoadListener() {
+      @Override
+      public void onPullUpLoadData() {
+        initData(mWhichActivity);
+      }
+
+      @Override
+      public void onPullDownLoadData() {
+        mCurrentPage = 0;
+        initData(mWhichActivity);
+      }
+    }, LOAD_MORE_COUNT);
     tiwen = (TextView) findViewById(R.id.tiwen);
     back_menu = (ImageView) findViewById(R.id.back_menu);
     tiwen.setOnClickListener(new View.OnClickListener() {
@@ -55,63 +86,105 @@ public class WendaListActivity extends BaseBActivity {
         }
       }
     });
-    String whichActivity = getIntent().getStringExtra("whichActivity");
-    initView();
-    initData(whichActivity);
+    inject();
+    mWhichActivity = getIntent().getStringExtra("whichActivity");
+    initView(mWhichActivity);
+    initData(mWhichActivity);
   }
 
-  private void initView() {
+  private void initView(String whichActivity) {
     mTitleView = (TextView) findViewById(R.id.group_name);
-  }
-
-  private void initData(String whichActivity) {
     back_menu.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();
       }
     });
-    String url = null;
     switch (whichActivity) {
       case "HOT"://热门
-        url = RsenUrlUtil.URL_HOT_WD;
         mTitleView.setText(R.string.activity_wenda_title_hot);
         break;
       case "MON"://悬赏
-        url = RsenUrlUtil.URL_MON_WD;
         mTitleView.setText(R.string.activity_wenda_title_mon);
         break;
       case "SOLUTION"://已解决
-        url = RsenUrlUtil.URL_SOLUTE_WD;
         mTitleView.setText(R.string.activity_wenda_title_solution);
         break;
     }
+  }
 
-    RsenUrlUtil.execute(WendaListActivity.this, url, new RsenUrlUtil.OnNetHttpResultListener() {
-      @Override
-      public void onNoNetwork(String msg) {
-        ToastHelper.showToast(msg, Url.context);
-      }
+  private void initData(String whichActivity) {
+    Observable<Response<WendaModel>> observable = null;
+    switch (whichActivity) {
+      case "HOT"://热门
+        observable = mAppService.getHotQuestionList(mCurrentPage, PAGE_LIMIT);
+        break;
+      case "MON"://悬赏
+        observable = mAppService.getMonQuestionList(mCurrentPage, PAGE_LIMIT);
+        break;
+      case "SOLUTION"://已解决
+        observable = mAppService.getSoluteQuestionList(mCurrentPage, PAGE_LIMIT);
+        break;
+    }
+
+    if (null == observable) {
+      return;
+    }
+    manageRpcCall(observable, new
+        UiRpcSubscriberSimple<WendaModel>(this) {
 
 
-      @Override
-      public void onResult(boolean state, String result, JSONObject jsonObject) {
-        if (state) {
-          WendaFragment.WendaBean wendaBean = JSON.parseObject(result, WendaFragment.WendaBean
-              .class);
-          mListView.setAdapter(new WendaListAdapter(WendaListActivity.this, wendaBean.getList()));
-        }
-      }
-    });
+          @Override
+          protected void onSuccess(WendaModel wendaModel) {
+            if (null == wendaModel.getList() || wendaModel.getList().size() < PAGE_LIMIT) {
+              mListView.setPullUpToRefresh(false);
+            } else {
+              mListView.setPullUpToRefresh(true);
+            }
+            if (mCurrentPage == 0) {
+              mListAdapter.clear();
+            }
+            mListAdapter.addAll(wendaModel.getList());
+            mListAdapter.notifyDataSetChanged();
+            mCurrentPage++;
+          }
+
+          @Override
+          protected void onEnd() {
+            mListView.resetPullStatus();
+          }
+        });
+
+    //RsenUrlUtil.execute(WendaListActivity.this, url, new RsenUrlUtil.OnNetHttpResultListener() {
+    //  @Override
+    //  public void onNoNetwork(String msg) {
+    //    ToastHelper.showToast(msg, Url.context);
+    //  }
+    //
+    //
+    //  @Override
+    //  public void onResult(boolean state, String result, JSONObject jsonObject) {
+    //    if (state) {
+    //      WendaModel  wendaBean = JSON.parseObject(result, WendaModel
+    //          .class);
+    //      mListView.setAdapter(new WendaListAdapter(WendaListActivity.this, wendaBean.getList()));
+    //    }
+    //  }
+    //});
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().serviceModule(new ServiceModule()).globalModule(new
+        GlobalModule(BaseApplication.getApplication()))
+        .build().inject(this);
   }
 
 
   public class WendaListAdapter extends BaseAdapter {
-    private List<WendaFragment.WendaBean.ListEntity> datas;
+    private List<WendaModel.ListBean> datas = new ArrayList<>();
     private Context context;
 
-    public WendaListAdapter(Context context, List<WendaFragment.WendaBean.ListEntity> datas) {
-      this.datas = datas;
+    public WendaListAdapter(Context context) {
       this.context = context;
     }
 
@@ -121,6 +194,16 @@ public class WendaListActivity extends BaseBActivity {
         return 0;
       }
       return datas.size();
+    }
+
+    public void clear() {
+      datas.clear();
+    }
+
+    public void addAll(List<WendaModel.ListBean> data) {
+      if (null != data) {
+        datas.addAll(data);
+      }
     }
 
     @Override
@@ -145,7 +228,7 @@ public class WendaListActivity extends BaseBActivity {
         viewHolder = (RViewHolder) convertView.getTag();
       }
 
-      final WendaFragment.WendaBean.ListEntity listEntity = datas.get(position);
+      final WendaModel.ListBean listEntity = datas.get(position);
 
             /*其他控件信息，自己添加 id， 然后从 listEntity对象中获取数据，填充就行了*/
       ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(listEntity.getTitle());
@@ -172,7 +255,8 @@ public class WendaListActivity extends BaseBActivity {
       try {
         ImageLoader.loadOptimizedHttpImage(WendaListActivity.this, RsenUrlUtil.URL_BASE +
             listEntity.getUser()
-                .getAvatar32()).bitmapTransform(new CropCircleTransformation(WendaListActivity.this))
+                .getAvatar32()).bitmapTransform(new CropCircleTransformation(WendaListActivity
+            .this))
             .error(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).into(viewHolder
             .imgV(R.id.logo));
       } catch (Exception e) {

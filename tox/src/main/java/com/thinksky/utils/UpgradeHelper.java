@@ -28,7 +28,6 @@ import android.widget.Toast;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.log.Logger;
-import com.thinksky.net.rpc.model.ResponseModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.NetConstant;
@@ -57,6 +56,7 @@ import rx.subscriptions.CompositeSubscription;
  * @version [Taobei Client V20160411, 16/6/13]
  */
 public class UpgradeHelper {
+  private static final String PLATFORM_IDENTIFIER = "2";
   private static final String TAG = "UpgradeHelper";
   private Context mContext;
   private AlertDialog mUpdateConfirmDialog;
@@ -213,7 +213,7 @@ public class UpgradeHelper {
       e.printStackTrace();
     }
     Subscription subscription = mAppService.getLatestVersion("public/checkUpdate/version/" +
-        versionName)
+        versionName + "/app/" + PLATFORM_IDENTIFIER)
         .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe
             (new Action1<Response<UpgradeModel>>() {
 

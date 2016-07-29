@@ -265,8 +265,8 @@ public class WeiboListFragment extends BasicFragment {
       Logger.e("YZZ", "hotUrl : %s  handleMessage", hotUrl);
       super.handleMessage(msg);
       if (msg.what == 404) {
-        Toast.makeText(ctx, "请求失败，服务器故障", Toast.LENGTH_LONG).show();
-        HomeNoValue.setText("请求失败，服务器故障");
+        Toast.makeText(ctx, R.string.network_not_normal, Toast.LENGTH_LONG).show();
+        HomeNoValue.setText(R.string.network_not_normal);
         load_progressBar.setVisibility(View.GONE);
         HomeNoValue.setVisibility(View.VISIBLE);
 

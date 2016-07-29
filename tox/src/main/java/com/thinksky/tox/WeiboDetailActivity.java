@@ -382,10 +382,10 @@ public class WeiboDetailActivity extends BaseBActivity {
     public void handleMessage(Message msg) {
       super.handleMessage(msg);
       if (msg.what == 404) {
-        Toast.makeText(WeiboDetailActivity.this, "请求失败，服务器故障", Toast.LENGTH_LONG).show();
+        Toast.makeText(WeiboDetailActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG).show();
         listBottemFlag = true;
       } else if (msg.what == 100) {
-        Toast.makeText(WeiboDetailActivity.this, "服务器无响应", Toast.LENGTH_LONG).show();
+        Toast.makeText(WeiboDetailActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG).show();
         listBottemFlag = true;
       } else if (msg.what == 0) {
         String result = (String) msg.obj;

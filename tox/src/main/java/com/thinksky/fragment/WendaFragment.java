@@ -13,28 +13,37 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import com.alibaba.fastjson.JSON;
 import com.squareup.otto.Subscribe;
+import com.thinksky.holder.BaseApplication;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.WendaModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendQuestionActivity;
 import com.thinksky.ui.basic.BasicFragment;
+import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
 
 public class WendaFragment extends BasicFragment {
+  private static final int PAGE_LIMIT = 10;
+  private static final int START_PAGE = 1;
+  private static final int LOAD_MORE_COUNT = 3;
 
   private static final String ARG_PARAM1 = "param1";
 
@@ -42,9 +51,13 @@ public class WendaFragment extends BasicFragment {
   private TextView textView;
   KJBitmap kjBitmap;
   View rootView;
-  ListView listView;
+  PullToRefreshListView listView;
   private ImageView back_menu, iv1, iv2, iv3, wutu;
   private WendaListAdapter mListAdapter;
+  private int mCurrentPage = START_PAGE;
+
+  @Inject
+  AppService mAppService;
 
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,9 +65,22 @@ public class WendaFragment extends BasicFragment {
 
     rootView = inflater.inflate(R.layout.fragment_wenda, container, false);
 
-    listView = (ListView) rootView.findViewById(R.id.listView);
-    mListAdapter = new WendaListAdapter(WendaFragment.this.getActivity(), null);
-    listView.setAdapter(mListAdapter);
+    listView = (PullToRefreshListView) rootView.findViewById(R.id.listView);
+    mListAdapter = new WendaListAdapter(WendaFragment.this.getActivity());
+    listView.getRefreshListView().setAdapter(mListAdapter);
+    listView.setPageCount(PAGE_LIMIT);
+    listView.setScrollToLoadListener(new PullToRefreshListView.ScrollToLoadListener() {
+      @Override
+      public void onPullUpLoadData() {
+        init();
+      }
+
+      @Override
+      public void onPullDownLoadData() {
+        mCurrentPage = 0;
+        init();
+      }
+    }, LOAD_MORE_COUNT);
     addHeaderView();
     ((RadioGroup) rootView.findViewById(R.id.main_radio)).setOnCheckedChangeListener(
         new RadioGroup.OnCheckedChangeListener() {
@@ -98,6 +124,18 @@ public class WendaFragment extends BasicFragment {
     return rootView;
   }
 
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    inject();
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ())).serviceModule(new ServiceModule())
+        .build().inject(this);
+  }
+
   @Subscribe
   public void handleQuestionSendEvent(SendQuestionActivity.QuestionSendEvent event) {
     init();
@@ -109,25 +147,28 @@ public class WendaFragment extends BasicFragment {
   }
 
   private void init() {
-    RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_WD,
-        new RsenUrlUtil.OnNetHttpResultListener() {
+    manageRpcCall(mAppService.getQuestionList(mCurrentPage, PAGE_LIMIT), new
+        UiRpcSubscriberSimple<WendaModel>(getActivity()) {
+
+
           @Override
-          public void onNoNetwork(String msg) {
-            ToastHelper.showToast(msg, Url.context);
+          protected void onSuccess(WendaModel wendaModel) {
+            if (null == wendaModel.getList() || wendaModel.getList().size() < PAGE_LIMIT) {
+              listView.setPullUpToRefresh(false);
+            } else {
+              listView.setPullUpToRefresh(true);
+            }
+            if (mCurrentPage == 0) {
+              mListAdapter.clear();
+            }
+            mListAdapter.addData(wendaModel.getList());
+            mListAdapter.notifyDataSetChanged();
+            mCurrentPage++;
           }
 
           @Override
-          public void onResult(boolean state, String result, JSONObject jsonObject) {
-            if (state) {
-              //                    ArrayList<ZjBean> beans = parseJson(jsonObject);
-              //                    listView.setAdapter(new ZjAdapter(getActivity(), beans));
-              //                    WendaListAdapter
-
-              WendaBean wendaBean = JSON.parseObject(result, WendaBean.class);
-              mListAdapter.clear();
-              mListAdapter.setData(wendaBean.getList());
-              mListAdapter.notifyDataSetChanged();
-            }
+          protected void onEnd() {
+            listView.resetPullStatus();
           }
         });
   }
@@ -136,7 +177,7 @@ public class WendaFragment extends BasicFragment {
     FrameLayout header = new FrameLayout(getActivity());
     header.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
         getResources().getDimensionPixelOffset(R.dimen.list_header_height_wenda)));
-    listView.addHeaderView(header);
+    listView.getRefreshListView().addHeaderView(header);
   }
 
   private void cleanCheck() {
@@ -162,11 +203,10 @@ public class WendaFragment extends BasicFragment {
   }
 
   public class WendaListAdapter extends BaseAdapter {
-    private ArrayList<WendaBean.ListEntity> datas;
+    private List<WendaModel.ListBean> datas = new ArrayList<>();
     private Context context;
 
-    public WendaListAdapter(Context context, ArrayList<WendaBean.ListEntity> datas) {
-      this.datas = datas;
+    public WendaListAdapter(Context context) {
       this.context = context;
     }
 
@@ -184,8 +224,14 @@ public class WendaFragment extends BasicFragment {
       }
     }
 
-    public void setData(ArrayList<WendaBean.ListEntity> datas) {
+    public void setData(List<WendaModel.ListBean> datas) {
       this.datas = datas;
+    }
+
+    public void addData(List<WendaModel.ListBean> data) {
+      if (null != data) {
+        datas.addAll(data);
+      }
     }
 
     @Override
@@ -210,7 +256,7 @@ public class WendaFragment extends BasicFragment {
         viewHolder = (RViewHolder) convertView.getTag();
       }
 
-      final WendaBean.ListEntity listEntity = datas.get(position);
+      final WendaModel.ListBean listEntity = datas.get(position);
 
             /*其他控件信息，自己添加 id， 然后从 listEntity对象中获取数据，填充就行了*/
       ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(listEntity.getTitle());
@@ -288,7 +334,8 @@ public class WendaFragment extends BasicFragment {
 
           if (imageView != null) {
             try {
-              ImageLoader.loadOptimizedHttpImage(getActivity(), url).into(imageView);
+              ImageLoader.loadOptimizedHttpImage(getActivity(), url).placeholder(R.drawable
+                  .picture_no).error(R.drawable.picture_no).into(imageView);
             } catch (Exception e) {
               e.printStackTrace();
             }
@@ -356,481 +403,4 @@ public class WendaFragment extends BasicFragment {
     return display.getHeight();
   }
 
-  public static class WendaBean {
-
-    /**
-     * error_code : 0
-     * list : [{"answer_num":"0","best_answer":"0","category":"1","category_title":false,
-     * "content":"","cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
-     * 11:23","description1":"<p>f&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;
-     * fffffffffffff&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;
-     * ffffffffffff<\/p>","good_question":"0","id":"15","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"f'f'f'f'ffffffffffff",
-     * "uid":"100","update_time":"02月19日
-     * 11:23","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
-     * "real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
-     * 11:22","description1":"","good_question":"0","id":"14","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字aaa",
-     * "uid":"100","update_time":"02月19日
-     * 11:22","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
-     * "real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
-     * 11:04",
-     * "description1":"<p
-     * >手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字手机端登录密码弹出输入盘只有数字<\/p>",
-     * "good_question":"0","id":"13","imgList":[],"is_recommend":"0","is_supported":"0",
-     * "status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字","uid":"100","update_time":"02月19日
-     * 11:04","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
-     * "real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月19日
-     * 10:55","description1":"","good_question":"0","id":"12","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"手机端登录密码弹出输入盘只有数字",
-     * "uid":"100","update_time":"02月19日
-     * 10:55","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
-     * "real_nickname":"david","signature":"","uid":"100","username":"david"}},{"answer_num":"0",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:48","description1":"","good_question":"0","id":"11","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"测试789","uid":"1",
-     * "update_time":"02月15日
-     * 16:48","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
-     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"0",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:41","description1":"","good_question":"0","id":"10","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"测试456","uid":"1",
-     * "update_time":"02月15日
-     * 16:41","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
-     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:40","description1":"","good_question":"0","id":"9","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"测试123","uid":"1",
-     * "update_time":"02月15日
-     * 16:40","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
-     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"0",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:39","description1":"","good_question":"0","id":"8","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"测试最佳答案","uid":"1",
-     * "update_time":"02月15日
-     * 16:39","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
-     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 16:25","description1":"","good_question":"0","id":"7","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"魟鱼饲养怎么会更好","uid":"1",
-     * "update_time":"02月15日
-     * 16:26","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
-     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}},{"answer_num":"1",
-     * "best_answer":"0","category":"1","category_title":false,"content":"",
-     * "cover_url":"/opensns/Public/images/nopic.png","create_time":"02月15日
-     * 10:32","description1":"","good_question":"0","id":"6","imgList":[],"is_recommend":"0",
-     * "is_supported":"0","status":"1","support_count":"0","title":"测试问答带图","uid":"1",
-     * "update_time":"02月15日
-     * 10:32","user":{"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"admin",
-     * "real_nickname":"admin","signature":"","uid":"1","username":"admin"}}]
-     * message : 返回成功
-     * success : true
-     */
-
-    private int error_code;
-    private String message;
-    private boolean success;
-    /**
-     * answer_num : 0
-     * best_answer : 0
-     * category : 1
-     * category_title : false
-     * content :
-     * cover_url : /opensns/Public/images/nopic.png
-     * create_time : 02月19日 11:23
-     * description1 : <p>f&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;
-     * fffffffffffff&#39;f&#39;f&#39;f&#39;fffffffffffff&#39;f&#39;f&#39;f&#39;ffffffffffff</p>
-     * good_question : 0
-     * id : 15
-     * imgList : []
-     * is_recommend : 0
-     * is_supported : 0
-     * status : 1
-     * support_count : 0
-     * title : f'f'f'f'ffffffffffff
-     * uid : 100
-     * update_time : 02月19日 11:23
-     * user : {"avatar128":"/opensns/Public/images/default_avatar_128_128.jpg",
-     * "avatar256":"/opensns/Public/images/default_avatar_256_256.jpg",
-     * "avatar32":"/opensns/Public/images/default_avatar_32_32.jpg",
-     * "avatar512":"/opensns/Public/images/default_avatar_512_512.jpg",
-     * "avatar64":"/opensns/Public/images/default_avatar_64_64.jpg","nickname":"david",
-     * "real_nickname":"david","signature":"","uid":"100","username":"david"}
-     */
-
-    private ArrayList<ListEntity> list;
-
-    public void setError_code(int error_code) {
-      this.error_code = error_code;
-    }
-
-    public void setMessage(String message) {
-      this.message = message;
-    }
-
-    public void setSuccess(boolean success) {
-      this.success = success;
-    }
-
-    public void setList(ArrayList<ListEntity> list) {
-      this.list = list;
-    }
-
-    public int getError_code() {
-      return error_code;
-    }
-
-    public String getMessage() {
-      return message;
-    }
-
-    public boolean isSuccess() {
-      return success;
-    }
-
-    public ArrayList<ListEntity> getList() {
-      return list;
-    }
-
-    public static class ListEntity {
-      private String answer_num;
-      private String best_answer;
-      private String category;
-      private String category_title;
-      private String content;
-      private String cover_url;
-      private String create_time;
-      private String description1;
-      private String good_question;
-      private String id;
-      private String is_recommend;
-      private String is_supported;
-      private String status;
-      private String support_count;
-      private String title;
-      private String uid;
-
-      public String getScore() {
-        return score;
-      }
-
-      public void setScore(String score) {
-        this.score = score;
-      }
-
-      private String score;
-      private String update_time;
-      /**
-       * avatar128 : /opensns/Public/images/default_avatar_128_128.jpg
-       * avatar256 : /opensns/Public/images/default_avatar_256_256.jpg
-       * avatar32 : /opensns/Public/images/default_avatar_32_32.jpg
-       * avatar512 : /opensns/Public/images/default_avatar_512_512.jpg
-       * avatar64 : /opensns/Public/images/default_avatar_64_64.jpg
-       * nickname : david
-       * real_nickname : david
-       * signature :
-       * uid : 100
-       * username : david
-       */
-
-      private UserEntity user;
-      private List<String> imgList;
-
-      public void setAnswer_num(String answer_num) {
-        this.answer_num = answer_num;
-      }
-
-      public void setBest_answer(String best_answer) {
-        this.best_answer = best_answer;
-      }
-
-      public void setCategory(String category) {
-        this.category = category;
-      }
-
-      public void setCategory_title(String category_title) {
-        this.category_title = category_title;
-      }
-
-      public void setContent(String content) {
-        this.content = content;
-      }
-
-      public void setCover_url(String cover_url) {
-        this.cover_url = cover_url;
-      }
-
-      public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-      }
-
-      public void setDescription1(String description1) {
-        this.description1 = description1;
-      }
-
-      public void setGood_question(String good_question) {
-        this.good_question = good_question;
-      }
-
-      public void setId(String id) {
-        this.id = id;
-      }
-
-      public void setIs_recommend(String is_recommend) {
-        this.is_recommend = is_recommend;
-      }
-
-      public void setIs_supported(String is_supported) {
-        this.is_supported = is_supported;
-      }
-
-      public void setStatus(String status) {
-        this.status = status;
-      }
-
-      public void setSupport_count(String support_count) {
-        this.support_count = support_count;
-      }
-
-      public void setTitle(String title) {
-        this.title = title;
-      }
-
-      public void setUid(String uid) {
-        this.uid = uid;
-      }
-
-      public void setUpdate_time(String update_time) {
-        this.update_time = update_time;
-      }
-
-      public void setUser(UserEntity user) {
-        this.user = user;
-      }
-
-      public void setImgList(List<String> imgList) {
-        this.imgList = imgList;
-      }
-
-      public String getAnswer_num() {
-        return answer_num;
-      }
-
-      public String getBest_answer() {
-        return best_answer;
-      }
-
-      public String getCategory() {
-        return category;
-      }
-
-      public String isCategory_title() {
-        return category_title;
-      }
-
-      public String getContent() {
-        return content;
-      }
-
-      public String getCover_url() {
-        return cover_url;
-      }
-
-      public String getCreate_time() {
-        return create_time;
-      }
-
-      public String getDescription1() {
-        return description1;
-      }
-
-      public String getGood_question() {
-        return good_question;
-      }
-
-      public String getId() {
-        return id;
-      }
-
-      public String getIs_recommend() {
-        return is_recommend;
-      }
-
-      public String getIs_supported() {
-        return is_supported;
-      }
-
-      public String getStatus() {
-        return status;
-      }
-
-      public String getSupport_count() {
-        return support_count;
-      }
-
-      public String getTitle() {
-        return title;
-      }
-
-      public String getUid() {
-        return uid;
-      }
-
-      public String getUpdate_time() {
-        return update_time;
-      }
-
-      public UserEntity getUser() {
-        return user;
-      }
-
-      public List<String> getImgList() {
-        return imgList;
-      }
-
-      public static class UserEntity {
-        private String avatar128;
-        private String avatar256;
-        private String avatar32;
-        private String avatar512;
-        private String avatar64;
-        private String nickname;
-        private String real_nickname;
-        private String signature;
-        private String uid;
-        private String username;
-
-        public void setAvatar128(String avatar128) {
-          this.avatar128 = avatar128;
-        }
-
-        public void setAvatar256(String avatar256) {
-          this.avatar256 = avatar256;
-        }
-
-        public void setAvatar32(String avatar32) {
-          this.avatar32 = avatar32;
-        }
-
-        public void setAvatar512(String avatar512) {
-          this.avatar512 = avatar512;
-        }
-
-        public void setAvatar64(String avatar64) {
-          this.avatar64 = avatar64;
-        }
-
-        public void setNickname(String nickname) {
-          this.nickname = nickname;
-        }
-
-        public void setReal_nickname(String real_nickname) {
-          this.real_nickname = real_nickname;
-        }
-
-        public void setSignature(String signature) {
-          this.signature = signature;
-        }
-
-        public void setUid(String uid) {
-          this.uid = uid;
-        }
-
-        public void setUsername(String username) {
-          this.username = username;
-        }
-
-        public String getAvatar128() {
-          return avatar128;
-        }
-
-        public String getAvatar256() {
-          return avatar256;
-        }
-
-        public String getAvatar32() {
-          return avatar32;
-        }
-
-        public String getAvatar512() {
-          return avatar512;
-        }
-
-        public String getAvatar64() {
-          return avatar64;
-        }
-
-        public String getNickname() {
-          return nickname;
-        }
-
-        public String getReal_nickname() {
-          return real_nickname;
-        }
-
-        public String getSignature() {
-          return signature;
-        }
-
-        public String getUid() {
-          return uid;
-        }
-
-        public String getUsername() {
-          return username;
-        }
-      }
-    }
-  }
 }

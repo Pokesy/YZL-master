@@ -17,10 +17,11 @@ package com.thinksky.net.rpc.model;
  * @author zhaozeyang
  * @version [Taobei Client V20160411, 16/4/20]
  */
-public class BaseModel {
+public class BaseModelTemp {
   boolean success;
   String message;
   int error_code;
+  int result;
 
   public boolean isSuccess() {
     return success;
@@ -44,5 +45,13 @@ public class BaseModel {
 
   public void setError_code(int error_code) {
     this.error_code = error_code;
+  }
+
+  public int getResult() {
+    return result;
+  }
+
+  public void setResult(int result) {
+    this.result = result;
   }
 }

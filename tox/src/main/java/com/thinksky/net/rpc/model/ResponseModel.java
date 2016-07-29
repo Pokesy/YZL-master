@@ -17,7 +17,7 @@ package com.thinksky.net.rpc.model;
  * @author zhaozeyang
  * @version [Taobei Client V20160411, 16/4/20]
  */
-public class ResponseModel<T> extends BaseModel {
+public class ResponseModel<T> extends BaseModelTemp {
 
   private T data;
 

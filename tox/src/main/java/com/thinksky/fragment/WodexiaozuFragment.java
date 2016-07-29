@@ -292,6 +292,7 @@ public class WodexiaozuFragment extends RBaseFragment {
         map.put("is_join", bean.is_join);
         map.put("user_nickname", bean.gm_nickname);
         map.put("user_logo", bean.gm_logo);
+        map.put("create_time", bean.create_time);
 
         bundle.putSerializable("group_info", map);
         bundle.putBoolean("isWeGroup", isWeGroup);
@@ -321,6 +322,7 @@ public class WodexiaozuFragment extends RBaseFragment {
         public String gm_logo;
         public String gm_nickname;
         public List<String> userList;//用户头像
+        public String create_time;
     }
 
     @Override

@@ -47,9 +47,6 @@ public class MyScrollview extends ScrollView {
     if (onScrollListener != null) {
       onScrollListener.onScroll(t);
     }
-
-    LogUtils.e(t + "T");
-
   }
 
   /**

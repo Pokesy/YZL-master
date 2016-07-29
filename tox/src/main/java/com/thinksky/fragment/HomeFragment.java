@@ -382,6 +382,7 @@ public class HomeFragment extends BasicFragment
               bean.id = jsonObject.getString("id");
               bean.gm_logo = jsonObject.getJSONObject("user").getString("avatar32");
               bean.gm_nickname = jsonObject.getJSONObject("user").getString("nickname");
+              bean.create_time = jsonObject.getString("create_time");
             } catch (JSONException e) {
             }
             beans.add(bean);
@@ -775,6 +776,7 @@ public class HomeFragment extends BasicFragment
 
     public String gm_logo;
     public String gm_nickname;
+    public String create_time;
   }
 
   public static void launch_xz(Context context, boolean isWeGroup, MyBean bean) {
@@ -792,6 +794,7 @@ public class HomeFragment extends BasicFragment
     map.put("is_join", bean.is_join);
     map.put("user_nickname", bean.gm_nickname);
     map.put("user_logo", bean.gm_logo);
+    map.put("create_time", bean.create_time);
     bundle.putSerializable("group_info", map);
     bundle.putBoolean("isWeGroup", isWeGroup);
     Intent intent = new Intent(context, GroupInfoActivity.class);

@@ -70,7 +70,7 @@ public class login {
         if (msg.what == 404) {
           if (circularProgressButton != null) {
             // Toast.makeText(context, "请求失败，服务器故障", Toast.LENGTH_LONG).show();
-            circularProgressButton.setErrorText("请求失败，服务器故障");
+            circularProgressButton.setErrorText(context.getString(R.string.network_not_normal));
             circularProgressButton.setProgress(-1);
             loginHandler.postDelayed(new Runnable() {
               @Override
@@ -136,8 +136,8 @@ public class login {
           Url.LASTPOSTTIME = System.currentTimeMillis();
 
           Url.SESSIONID = myJson.getUserSessionID(result); //Toast.makeText(context, Url
-            // .SESSIONID, Toast.LENGTH_LONG).show();Log.e("SessionID<><><><><><><>", Url
-            // .SESSIONID);
+          // .SESSIONID, Toast.LENGTH_LONG).show();Log.e("SessionID<><><><><><><>", Url
+          // .SESSIONID);
 
           //将用户信息保存到本地
           saveUserinfo();
