@@ -50,8 +50,9 @@
               android:layout_gravity="center"
               android:layout_marginRight="@dimen/margin_small"
               android:scaleType="centerCrop"
-              android:src="@drawable/picture_no"
+              android:src="@drawable/picture_1_no"
               more:civ_border_width="0.5dp"
+              more:civ_border_color="@android:color/white"
               />
 
           <RelativeLayout
@@ -172,6 +173,8 @@
               android:layout_height="wrap_content"
               android:layout_below="@+id/group_type"
               android:layout_marginBottom="@dimen/margin_small"
+              android:includeFontPadding="false"
+              android:layout_marginLeft="3dp"
               tools:text="45个小组成员:"
               style="@style/Widget.App.TextView.Medium.Blue"
               />
