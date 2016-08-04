@@ -78,7 +78,7 @@ public class WendaListActivity extends BaseBActivity {
     tiwen.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (null != Url.MYUSERINFO) {
+        if (isLogin()) {
           Intent intent = new Intent(WendaListActivity.this, SendQuestionActivity.class);
           startActivity(intent);
         } else {

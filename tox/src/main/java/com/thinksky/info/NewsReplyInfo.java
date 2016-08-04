@@ -1,5 +1,6 @@
 package com.thinksky.info;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class NewsReplyInfo {
     private String area;
     private String create_time;
     private String parse;
-    private UserInfo user;
+    private UserInfoModel user;
 
     public void setIs_landlord(String is_landlord) {
         this.is_landlord = is_landlord;
@@ -97,7 +98,7 @@ public class NewsReplyInfo {
         this.parse = parse;
     }
 
-    public void setUser(UserInfo user) {
+    public void setUser(UserInfoModel user) {
         this.user = user;
     }
 
@@ -157,7 +158,7 @@ public class NewsReplyInfo {
         return parse;
     }
 
-    public UserInfo getUser() {
+    public UserInfoModel getUser() {
         return user;
     }
 }

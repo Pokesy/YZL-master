@@ -1,5 +1,7 @@
 package com.thinksky.info;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
+
 /**
  * Created by Administrator on 2014/8/12.
  */
@@ -8,7 +10,7 @@ public class CheckInfo {
     private String con_num;
     private String total_num;
     private String ctime;
-    private UserInfo userInfo;
+    private UserInfoModel userInfo;
     private String over_tare;
     private int isChecked;
 
@@ -52,11 +54,11 @@ public class CheckInfo {
         this.ctime = ctime;
     }
 
-    public UserInfo getUserInfo() {
+    public UserInfoModel getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
+    public void setUserInfo(UserInfoModel userInfo) {
         this.userInfo = userInfo;
     }
 

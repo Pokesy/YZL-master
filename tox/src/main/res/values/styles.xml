@@ -639,4 +639,38 @@
     <item name="android:textColor">@color/font_color_yellow</item>
   </style>
 
+  <style name="ProfileMenuContainer">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:paddingTop">15dp</item>
+    <item name="android:paddingBottom">15dp</item>
+    <item name="android:paddingRight">15dp</item>
+    <item name="android:paddingLeft">15dp</item>
+    <item name="android:background">@android:color/background_light</item>
+  </style>
+
+  <style name="Widget.App.TextView.Large.Primary.ProfileMenu">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:gravity">center_vertical</item>
+    <item name="android:drawablePadding">12dp</item>
+    <item name="android:layout_centerVertical">true</item>
+  </style>
+
+
+  <style name="ProfileMenuContainer.Detail">
+
+  </style>
+
+  <style name="Widget.App.TextView.Small.Secondary.ProfileDetailArrow">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:drawableRight">@drawable/tiaozhuan</item>
+    <item name="android:drawablePadding">4dp</item>
+    <item name="android:layout_centerVertical">true</item>
+    <item name="android:layout_alignParentRight">true</item>
+    <item name="android:maxLength">15</item>
+    <item name="android:ellipsize">end</item>
+  </style>
+
 </resources>

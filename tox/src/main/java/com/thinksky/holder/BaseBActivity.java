@@ -92,6 +92,10 @@ public class BaseBActivity extends AppCompatActivity {
     Bugtags.onPause(this);
   }
 
+  protected boolean isLogin() {
+    return getComponent().loginSession().isLogin();
+  }
+
   @Override
   public boolean dispatchTouchEvent(MotionEvent event) {
     //注：回调 3

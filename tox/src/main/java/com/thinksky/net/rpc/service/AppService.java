@@ -11,7 +11,9 @@
  */
 package com.thinksky.net.rpc.service;
 
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.WendaModel;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -59,5 +61,11 @@ public interface AppService {
   @GET("api.php?s=Question/getMyQuestionList")
   Observable<Response<WendaModel>> getMyQuestionList(@Query("session_id") String sessionId,
                                                      @Query("page") int page, @Query("count") int
-      count);
+                                                         count);
+
+  @GET("api.php?s=user/getProfile")
+  Observable<Response<UserInfoModel>> getProfile(@Query("uid") String uid);
+
+  @GET("api.php?s=user/logout")
+  Observable<Response<BaseModel>> logout(@Query("session_id") String sessionId);
 }

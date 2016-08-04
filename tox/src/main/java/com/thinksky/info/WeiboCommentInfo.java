@@ -1,5 +1,6 @@
 package com.thinksky.info;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
 import java.io.Serializable;
 
 /**
@@ -8,7 +9,7 @@ import java.io.Serializable;
 public class WeiboCommentInfo implements Serializable {
     private String id;
     private String content;
-    private UserInfo user;
+    private UserInfoModel user;
     private String ctime;
 
     public void setId(String id) {
@@ -27,11 +28,11 @@ public class WeiboCommentInfo implements Serializable {
         return content;
     }
 
-    public void setUser(UserInfo user) {
+    public void setUser(UserInfoModel user) {
         this.user = user;
     }
 
-    public UserInfo getUser() {
+    public UserInfoModel getUser() {
         return user;
     }
 

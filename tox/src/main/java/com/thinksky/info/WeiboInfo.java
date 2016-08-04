@@ -1,5 +1,6 @@
 package com.thinksky.info;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class WeiboInfo implements Serializable {
     private String ctime;
     private String comment_count;
     private String repost_count;
-    private UserInfo user;
+    private UserInfoModel user;
     private List<String> imgList;
     private String type;
     private String likenum;
@@ -110,11 +111,11 @@ public class WeiboInfo implements Serializable {
         this.repost_count = repost_count;
     }
 
-    public UserInfo getUser() {
+    public UserInfoModel getUser() {
         return user;
     }
 
-    public void setUser(UserInfo user) {
+    public void setUser(UserInfoModel user) {
         this.user = user;
     }
 

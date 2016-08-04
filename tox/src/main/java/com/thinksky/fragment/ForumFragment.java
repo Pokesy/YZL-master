@@ -19,10 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thinksky.adapter.NearAdapter;
-import com.thinksky.info.UserInfo;
 import com.thinksky.myview.MyListView;
 import com.thinksky.myview.MyListView.OnRefreshListener;
 import com.thinksky.net.ThreadPoolUtils;
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.thread.HttpGetThread;
 import com.thinksky.tox.R;
 import com.thinksky.tox.UserInfoActivity;
@@ -44,7 +44,7 @@ public class ForumFragment extends Fragment implements OnClickListener {
     private MyListView myListView;
     private NearAdapter mAdapter = null;
     private MyJson myJson = new MyJson();
-    private List<UserInfo> list = new ArrayList<UserInfo>();
+    private List<UserInfoModel> list = new ArrayList<UserInfoModel>();
     private Button ListBottem = null;
     private int mStart = 0;
     private int mEnd = 5;
@@ -162,7 +162,7 @@ public class ForumFragment extends Fragment implements OnClickListener {
             } else if (msg.what == 200) {
                 String result = (String) msg.obj;
                 if (result != null) {
-                    List<UserInfo> newList = myJson.getNearUserList(result);
+                    List<UserInfoModel> newList = myJson.getNearUserList(result);
                     if (newList != null) {
                         Log.e("liuxiaowei", "newList=" + newList.size()
                                 + "  list=" + list.size());
@@ -181,7 +181,7 @@ public class ForumFragment extends Fragment implements OnClickListener {
                         if (!loadflag) {
                             list.removeAll(list);
                         }
-                        for (UserInfo info : newList) {
+                        for (UserInfoModel info : newList) {
                             list.add(info);
                         }
                         listBottemFlag = true;

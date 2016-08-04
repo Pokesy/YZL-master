@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,13 +13,13 @@ import com.dd.CircularProgressButton;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.model.ActivityModel;
 import com.thinksky.net.ThreadPoolUtils;
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.thread.HttpPostThread;
 import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.UploadActivity;
 import com.thinksky.ui.login.LoginEvent;
-import com.thinksky.utils.JsonConverter;
 import com.thinksky.utils.MyJson;
 import java.util.HashMap;
 import java.util.Map;
@@ -132,7 +130,6 @@ public class login {
           Log.e("qiangpengyu", result);
 
           Url.USERID = myJson.getUserID(result);
-          Url.MYUSERINFO = myJson.getUserAllInfo(result);
           Url.LASTPOSTTIME = System.currentTimeMillis();
 
           Url.SESSIONID = myJson.getUserSessionID(result); //Toast.makeText(context, Url
@@ -140,7 +137,7 @@ public class login {
           // .SESSIONID);
 
           //将用户信息保存到本地
-          saveUserinfo();
+          saveUserInfo(myJson.getUserAllInfo(result));
           ((BaseApplication) LoginActivity.instance.getApplication()).getGlobalComponent()
               .getGlobalBus().post(new LoginEvent());
           LoginActivity.instance.setResult(Activity.RESULT_OK);
@@ -169,19 +166,10 @@ public class login {
     };
   }
 
-  public void saveUserinfo() {
-    SharedPreferences sp = LoginActivity.instance.getSharedPreferences("userInfo", 0);
-    Editor editor = sp.edit();
-    Log.e("I AM SAVING USERINFO", mNamestr + ">>>>>>" + mPasswordstr);
-    editor.putString("username", mNamestr);
-    editor.putString("password", mPasswordstr);
-    editor.putString("uid", Url.USERID);
-    editor.putString("session_id", Url.SESSIONID);
-    editor.putString("user_info", JsonConverter.objectToJson(Url.MYUSERINFO));
-    editor.commit();
-    Log.e("After saving userinfo", sp.getString("username", "kongkong") + sp.getString
-        ("password", ""));
-
+  public void saveUserInfo(UserInfoModel info) {
+    ((BaseApplication) LoginActivity.instance.getApplication()).getGlobalComponent().loginSession
+        ().saveUserInfo(mNamestr, mPasswordstr, Url.USERID, Url.SESSIONID
+        , info);
   }
 
   public void userLogin(String username, String password) {

@@ -1,5 +1,6 @@
 package com.thinksky.info;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
 import java.util.ArrayList;
 
 /**
@@ -50,7 +51,7 @@ public class NewsDetailInfo {
     private String create_time;
     private String view;
     private String comment;
-    private UserInfo user;
+    private UserInfoModel user;
     private ArrayList<ImageInfo> imgList;
     private String content_html;
 
@@ -126,7 +127,7 @@ public class NewsDetailInfo {
         this.comment = comment;
     }
 
-    public void setUser(UserInfo user) {
+    public void setUser(UserInfoModel user) {
         this.user = user;
     }
 
@@ -210,7 +211,7 @@ public class NewsDetailInfo {
         return comment;
     }
 
-    public UserInfo getUser() {
+    public UserInfoModel getUser() {
         return user;
     }
 

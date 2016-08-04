@@ -155,4 +155,37 @@
   <string name="activity_group_info_text_create_time">成立于 : %s</string>
   <string name="activity_group_info_right_title">发话题</string>
   <string name="activity_group_info_member_count">%s个小组成员</string>
+
+  <!-- 个人信息设置 -->
+  <string name="activity_profile_setting_title">个人信息</string>
+  <string name="activity_profile_setting_label_avatar">头像</string>
+  <string name="activity_profile_setting_label_nick_name">昵称</string>
+  <string name="activity_profile_setting_label_gender">性别</string>
+  <string name="activity_profile_setting_label_area">地区</string>
+  <string name="activity_profile_setting_label_birthday">出生年月</string>
+  <string name="activity_profile_setting_label_signature">个性签名</string>
+  <string name="activity_profile_setting_label_qq">QQ</string>
+  <string name="activity_profile_setting_label_email">邮箱</string>
+  <string name="activity_profile_setting_label_register_time">注册时间</string>
+  <string name="activity_profile_setting_label_score">积分</string>
+  <string name="activity_profile_setting_btn_logout">退出登录</string>
+  <string name="activity_profile_setting_default_value">未填</string>
+
+  <!-- 个人信息 -->
+  <string name="activity_profile_myself">我的主页</string>
+  <string name="activity_profile_label_fans">粉丝: </string>
+  <string name="activity_profile_label_follow">关注: </string>
+  <string name="activity_profile_label_area">地区</string>
+  <string name="activity_profile_label_signature">个性签名</string>
+  <string name="activity_profile_label_location">我的位置</string>
+  <string name="activity_profile_label_message">消息</string>
+  <string name="activity_profile_label_collect">收藏</string>
+  <string name="activity_profile_label_invite_friend">邀请好友</string>
+  <string name="activity_profile_label_setting">设置</string>
+  <string name="activity_profile_enter_map">进入地图</string>
+  <string name="activity_profile_title_right_btn">编辑资料</string>
+  <!-- Common -->
+  <string name="gender_male">男</string>
+  <string name="gender_female">女</string>
+  <string name="gender_secret">保密</string>
 </resources>

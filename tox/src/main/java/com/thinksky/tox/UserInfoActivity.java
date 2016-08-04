@@ -22,9 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.thinksky.anim3d.RoundBitmap;
 import com.thinksky.holder.BaseBActivity;
-import com.thinksky.info.UserInfo;
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.ui.login.LogoutEvent;
-import com.thinksky.utils.JsonConverter;
+import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -36,7 +36,7 @@ import net.tsz.afinal.FinalBitmap;
 
 public class UserInfoActivity extends BaseBActivity {
 
-  private UserInfo info = null;
+  private UserInfoModel info = null;
   private ImageView mUserRevise, mUserMore, mUserCamera;
   private LinearLayout mBrief;
   private LinearLayout mUserBrief;
@@ -104,7 +104,8 @@ public class UserInfoActivity extends BaseBActivity {
     userApi.getUserInfo(userUid);
     //判断是否是登陆者信息，如果是就保存当前页面以重复使用
     if (TextUtils.equals(userUid, Url.USERID)) {
-      ImageLoader.loadOptimizedHttpImage(this, Url.MYUSERINFO.getAvatar()).placeholder(R.drawable
+      ImageLoader.loadOptimizedHttpImage(this, getComponent().loginSession().getUserInfo()
+          .getAvatar()).placeholder(R.drawable
           .side_user_avatar)
           .error(R.drawable.side_user_avatar).dontAnimate().into(mUserCamera);
     }
@@ -174,7 +175,7 @@ public class UserInfoActivity extends BaseBActivity {
         case R.id.UserCamera:
           if (TextUtils.equals(userUid, Url.USERID)) {
             Intent intent = new Intent(UserInfoActivity.this, SetUserInfoActivity.class);
-            intent.putExtra("info", Url.MYUSERINFO.getAvatar());
+            //intent.putExtra("info", Url.MYUSERINFO.getAvatar());
             Bundle bundle = new Bundle();
             bundle.putSerializable("inf", info);
             intent.putExtras(bundle);
@@ -183,12 +184,14 @@ public class UserInfoActivity extends BaseBActivity {
           break;
         case R.id.changeMsg:
           if (TextUtils.equals(userUid, Url.USERID)) {
-            Intent intent = new Intent(UserInfoActivity.this, SetUserInfoActivity.class);
-            intent.putExtra("info", Url.MYUSERINFO.getAvatar());
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("inf", info);
-            intent.putExtras(bundle);
-            startActivityForResult(intent, 0);
+            //Intent intent = new Intent(UserInfoActivity.this, SetUserInfoActivity.class);
+            //intent.putExtra("info", Url.MYUSERINFO.getAvatar());
+            //Bundle bundle = new Bundle();
+            //bundle.putSerializable("inf", info);
+            //intent.putExtras(bundle);
+            //startActivityForResult(intent, 0);
+            Intent intent = new Intent(UserInfoActivity.this, ProfileSettingActivity.class);
+            startActivity(intent);
           }
           break;
         case R.id.Logout:
@@ -260,7 +263,7 @@ public class UserInfoActivity extends BaseBActivity {
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == 0 && resultCode == 1) {
-      info = (UserInfo) data.getSerializableExtra("inff");
+      info = (UserInfoModel) data.getSerializableExtra("inff");
       UserName.setText(info.getNickname());
       UserEmail.setText(info.getEmail());
       if (!"".equals(info.getSignature())) {
@@ -273,27 +276,27 @@ public class UserInfoActivity extends BaseBActivity {
       } else {
         UserTitle.setText("保密");
       }
-      if (info.getProvince() == null) {
+      if (info.getP_province() == null) {
         UserTime.setText("");
-      } else if (info.getCity() == null) {
-        UserTime.setText(info.getProvince());
+      } else if (info.getP_city() == null) {
+        UserTime.setText(info.getP_province());
       } else {
-        UserTime.setText(info.getProvince() + " " + info.getCity());
+        UserTime.setText(info.getP_province() + " " + info.getP_city());
       }
       ImageLoader.loadOptimizedHttpImage(this, info.getAvatar()).placeholder(R.drawable
           .side_user_avatar).dontAnimate().into(mUserCamera);
       //mUserCamera.setImageBitmap(BitmapFactory.decodeFile(String.valueOf(info.getAvatar())));
 
       if (TextUtils.equals(userUid, Url.USERID)) {
-        Url.MYUSERINFO.setSex(info.getSex());
-        Url.MYUSERINFO.setNickname(info.getNickname());
-        Url.MYUSERINFO.setEmail(info.getEmail());
-        Url.MYUSERINFO.setSignature(info.getSignature());
-        Url.MYUSERINFO.setProvince(info.getProvince());
-        Url.MYUSERINFO.setCity(info.getCity());
-        Url.MYUSERINFO.setAvatar(info.getAvatar());
-        getSharedPreferences("userInfo", 0).edit().putString("user_info", JsonConverter
-            .objectToJson(Url.MYUSERINFO));
+        UserInfoModel info = getComponent().loginSession().getUserInfo();
+        info.setSex(info.getSex());
+        info.setNickname(info.getNickname());
+        info.setEmail(info.getEmail());
+        info.setSignature(info.getSignature());
+        info.setP_province(info.getP_province());
+        info.setP_city(info.getP_city());
+        info.setAvatar(info.getAvatar());
+        getComponent().loginSession().saveUserInfoModel(info);
       }
     }
   }
@@ -346,17 +349,11 @@ public class UserInfoActivity extends BaseBActivity {
   };
 
   private void clearUserInfo() {
-    SharedPreferences.Editor editor = sp.edit();
-    editor.putString("username", "");
-    editor.putString("password", "");
-    editor.putString("session_id", "");
-    editor.putString("signature", "");
-    editor.putString("user_info", "");
+    getComponent().loginSession().clearUserInfo();
     Url.MYUSERINFO = null;
     Url.LASTPOSTTIME = 0;
     Url.SESSIONID = "";
     Url.USERID = "";
-    editor.commit();
   }
 
   @SuppressLint("HandlerLeak")
@@ -368,10 +365,12 @@ public class UserInfoActivity extends BaseBActivity {
       }
       super.handleMessage(msg);
       if (msg.what == 404) {
-        Toast.makeText(UserInfoActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG).show();
+        Toast.makeText(UserInfoActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG)
+            .show();
         listBottemFlag = true;
       } else if (msg.what == 100) {
-        Toast.makeText(UserInfoActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG).show();
+        Toast.makeText(UserInfoActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG)
+            .show();
         listBottemFlag = true;
       } else if (msg.what == 0) {
         String result = (String) msg.obj;
@@ -384,8 +383,7 @@ public class UserInfoActivity extends BaseBActivity {
               .placeholder(R.drawable.side_user_avatar)
               .error(R.drawable.side_user_avatar).dontAnimate().into(mUserCamera);
           if (TextUtils.equals(userUid, Url.USERID)) {
-            Url.MYUSERINFO = info;
-            saveUserInfoToNative();
+            getComponent().loginSession().saveUserInfoModel(info);
           }
           createUserInfo(info);
         }
@@ -397,22 +395,7 @@ public class UserInfoActivity extends BaseBActivity {
   };
 
 
-  //保存用户信息至本地
-  private void saveUserInfoToNative() {
-
-    SharedPreferences sp = this.getSharedPreferences("userInfo", 0);
-    SharedPreferences.Editor editor = sp.edit();
-    editor.putString("nickname", Url.MYUSERINFO.getNickname());
-    editor.putString("avatar", Url.MYUSERINFO.getAvatar());
-    editor.putString("signature", Url.MYUSERINFO.getSignature());
-    editor.putString("session_id", Url.SESSIONID);
-    editor.putString("user_info", JsonConverter.objectToJson(Url.MYUSERINFO));
-
-    editor.commit();
-  }
-
-
-  private void createUserInfo(UserInfo userInfo) {
+  private void createUserInfo(UserInfoModel userInfo) {
     UserScore.setText(userInfo.getScore());
     UserEmail.setText(userInfo.getEmail());
     UserFans.setText(userInfo.getFans());
@@ -432,16 +415,16 @@ public class UserInfoActivity extends BaseBActivity {
     } else {
       UserTitle.setText("保密");
     }
-    if (userInfo.getProvince() == null) {
+    if (userInfo.getP_province() == null) {
       UserTime.setText("");
-    } else if (userInfo.getCity() == null) {
-      UserTime.setText(userInfo.getProvince());
+    } else if (userInfo.getP_city() == null) {
+      UserTime.setText(userInfo.getP_province());
     } else {
-      UserTime.setText(userInfo.getProvince() + " " + userInfo.getCity());
+      UserTime.setText(userInfo.getP_province() + " " + userInfo.getP_city());
     }
 //        mUserCamera.setImageBitmap(userInfo.getAvatar());
     if (!TextUtils.equals(userUid, Url.USERID)) {
-      if (TextUtils.equals(userInfo.getIsFollow(), "0")) {
+      if (userInfo.getIs_follow() == 0) {
         followFlag = false;
         followBtn.setText("添加关注");
         followBtn.setVisibility(View.VISIBLE);

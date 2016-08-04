@@ -124,11 +124,12 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   }
 
   private void initData() {
-    if (null == Url.MYUSERINFO) {
+    if (!isLogin()) {
       ToastHelper.showToast("请登录", SendQuestionActivity.this);
     } else {
       mWealthView.setText(
-          getResources().getString(R.string.available_wealth_text, Url.MYUSERINFO.getScore()));
+          getResources().getString(R.string.available_wealth_text, getComponent().loginSession()
+              .getUserInfo().getScore()));
     }
   }
 
@@ -332,7 +333,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     }
 
     private boolean isHighLight(int wealth) {
-      return wealth <= Integer.parseInt(Url.MYUSERINFO.getScore());
+      return wealth <= Integer.parseInt(getComponent().loginSession().getUserInfo().getScore());
     }
   }
 

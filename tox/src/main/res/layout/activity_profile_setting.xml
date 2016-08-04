@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+  <com.thinksky.ui.common.TitleBar
+      android:id="@+id/title_bar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#f0f0f0"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+      <RelativeLayout
+          android:id="@+id/avatar_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_avatar"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/avatar_arrow"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginRight="@dimen/margin_small"
+            android:layout_toLeftOf="@id/avatar_arrow"
+            />
+
+      </RelativeLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:background="@color/item_divider"
+          />
+      <RelativeLayout
+          android:id="@+id/nick_name_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_nick_name"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/nick_name_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:background="@color/item_divider"
+          />
+
+      <RelativeLayout
+          android:id="@+id/gender_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_gender"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/gender_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:background="@color/item_divider"
+          />
+      <RelativeLayout
+          android:id="@+id/area_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_area"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/area_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:background="@color/item_divider"
+          />
+
+      <RelativeLayout
+          android:id="@+id/birthday_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_birthday"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/birthday_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:background="@color/item_divider"
+          />
+      <RelativeLayout
+          android:id="@+id/signature_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/margin_small"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_signature"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/signature_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:id="@+id/qq_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_qq"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/qq_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:background="@color/item_divider"
+          />
+      <RelativeLayout
+          android:id="@+id/email_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_email"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/email_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:background="@color/item_divider"
+          />
+
+      <RelativeLayout
+          android:id="@+id/register_time_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_register_time"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/register_time_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:background="@color/item_divider"
+          />
+
+      <RelativeLayout
+          android:id="@+id/score_settings"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/margin_small"
+          style="@style/ProfileMenuContainer"
+          >
+
+        <TextView
+            android:text="@string/activity_profile_setting_label_score"
+            style="@style/Widget.App.TextView.Large.Primary.ProfileMenu"
+            />
+
+        <TextView
+            android:id="@+id/score_value"
+            style="@style/Widget.App.TextView.Small.Secondary.ProfileDetailArrow"
+            />
+
+      </RelativeLayout>
+
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

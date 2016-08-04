@@ -13,7 +13,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -25,10 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.thinksky.fragment.UserPlaceActivity;
 import com.thinksky.holder.BaseBActivity;
-import com.thinksky.info.UserInfo;
 import com.thinksky.net.IsNet;
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.utils.BitmapUtiles;
-import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
@@ -77,8 +75,7 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
   private List<String> scrollImg = new ArrayList<String>();
   private MyJson myJson = new MyJson();
   private UserApi userApi = new UserApi();
-  private UserInfo user;
-  private LoadImg loadImgHeadImg;
+  private UserInfoModel user;
   private String sex = "sex";
   private int sex_flag = 0;
   private Handler myHandler;
@@ -132,7 +129,7 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
   private void setUserInfo() {
     Intent intent = getIntent();
     Log.d("66666", intent.getSerializableExtra("inf") + "");
-    user = (UserInfo) intent.getSerializableExtra("inf");
+    user = (UserInfoModel) intent.getSerializableExtra("inf");
 
     sex_flag = Integer.parseInt(user.getSex());
     if (user.getSex().equals("0")) {
@@ -147,18 +144,18 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
 
     xianshi_nicheng.setText(user.getNickname());
     xianshi_xingbie.setText(sex);
-    xianshi_nianling.setText(user.getBirth());
+    xianshi_nianling.setText(user.getBirthday());
     Log.d("signature", user.getSignature());
     xianshi_qianming.setText(user.getSignature());
     xianshi_email.setText(user.getEmail());
     xianshi_qq.setText(user.getQq());
-    Log.d("Province", user.getProvince() + "  123");
-    if (user.getProvince() == null) {
+    Log.d("Province", user.getP_province() + "  123");
+    if (user.getP_province() == null) {
       xianshi_place.setText("");
-    } else if (user.getCity() == null) {
-      xianshi_place.setText(user.getProvince());
+    } else if (user.getP_city() == null) {
+      xianshi_place.setText(user.getP_city());
     } else {
-      xianshi_place.setText(user.getProvince() + " " + user.getCity());
+      xianshi_place.setText(user.getP_province() + " " + user.getP_city());
     }
   }
 
@@ -166,7 +163,6 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
     Intent intent = getIntent();
     imgHead = intent.getExtras().getString("info");
     Log.d("Anddd", imgHead);
-    loadImgHeadImg = new LoadImg(this);
     touXiang = (ImageView) findViewById(R.id.img_touxing);
     xiangCe = (TextView) findViewById(R.id.textView_xc);
     xiangJi = (TextView) findViewById(R.id.textView_xz);
@@ -348,29 +344,29 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
         Log.d("day:", strs[2]);
         DatePickerDialog dialog = new DatePickerDialog(SetUserInfoActivity.this, new
             DatePickerDialog.OnDateSetListener() {
-          Date date = new Date();
+              Date date = new Date();
 
-          @Override
-          public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            Log.d("monthOfYear>>>>", monthOfYear + "");
+              @Override
+              public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Log.d("monthOfYear>>>>", monthOfYear + "");
 //                        xianshi_nianling.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
-            initFlag(false, false, false, false, true, false, false);
-            userApi.setHandler(myHandler);
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
-            try {
-              date = sf.parse(year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日");
-              long timeStemp = date.getTime();
-              Log.d("date", String.valueOf(date));
-              Log.d("timeStemp", timeStemp / 1000 + "");
-              userApi.changeBirth(timeStemp / 1000 + "");
-              xianshi_nianling.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-              user.setBirth(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-            } catch (ParseException e) {
-              e.printStackTrace();
-            }
+                initFlag(false, false, false, false, true, false, false);
+                userApi.setHandler(myHandler);
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
+                try {
+                  date = sf.parse(year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日");
+                  long timeStemp = date.getTime();
+                  Log.d("date", String.valueOf(date));
+                  Log.d("timeStemp", timeStemp / 1000 + "");
+                  userApi.changeBirth(timeStemp / 1000 + "");
+                  xianshi_nianling.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                  user.setBirthday(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                } catch (ParseException e) {
+                  e.printStackTrace();
+                }
 
-          }
-        }, Integer.parseInt(strs[0]), Integer.parseInt(strs[1]) - 1, Integer.parseInt(strs[2]));
+              }
+            }, Integer.parseInt(strs[0]), Integer.parseInt(strs[1]) - 1, Integer.parseInt(strs[2]));
 
         GregorianCalendar calendar = new GregorianCalendar(1900, 12, 31);
         dialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
@@ -402,8 +398,8 @@ public class SetUserInfoActivity extends BaseBActivity implements View.OnClickLi
       xianshi_place.setText(data.getExtras().getString("name1") + "" + data.getExtras().getString
           ("name2"));
       initFlag(false, false, false, false, false, false, true);
-      user.setProvince(data.getExtras().getString("name1"));
-      user.setCity(data.getExtras().getString("name2"));
+      user.setP_province(data.getExtras().getString("name1"));
+      user.setP_city(data.getExtras().getString("name2"));
 
     }
     if (requestCode == 1 && resultCode == RESULT_OK && null != data) {

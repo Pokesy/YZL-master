@@ -14,6 +14,7 @@ package com.thinksky.serviceinjection;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.RetrofitFactory;
 import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.net.rpc.service.UserService;
 import dagger.Module;
 import dagger.Provides;
 
@@ -29,6 +30,11 @@ public class ServiceModule {
   @Provides
   public AppService providesAppService() {
     return RetrofitFactory.createAppService();
+  }
+
+  @Provides
+  public UserService providesUserService() {
+    return RetrofitFactory.createUserService();
   }
 
 }

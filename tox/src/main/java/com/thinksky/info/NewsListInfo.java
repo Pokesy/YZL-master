@@ -1,5 +1,6 @@
 package com.thinksky.info;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
 import java.io.Serializable;
 
 /**
@@ -47,7 +48,7 @@ public class NewsListInfo implements Serializable{
     private String view;
     private String comment;
     private String approval;
-    private UserInfo user;
+    private UserInfoModel user;
     private String support_count;
 
     public String getSupport_count() {
@@ -134,7 +135,7 @@ public class NewsListInfo implements Serializable{
         return approval;
     }
 
-    public void setUser(UserInfo user) {
+    public void setUser(UserInfoModel user) {
         this.user = user;
     }
 
@@ -206,7 +207,7 @@ public class NewsListInfo implements Serializable{
         return comment;
     }
 
-    public UserInfo getUser() {
+    public UserInfoModel getUser() {
         return user;
     }
 }

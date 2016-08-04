@@ -16,6 +16,7 @@ import com.squareup.otto.Bus;
 import com.thinksky.net.HttpErrorUiNotifier;
 import com.thinksky.net.SessionNotifier;
 import com.thinksky.tox.MainActivity;
+import com.thinksky.ui.LoginSession;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -40,12 +41,11 @@ public interface GlobalComponent {
 
   //CustomAppPreferences appPreferences();
   //
-  //LoginSession loginSession();
+  LoginSession loginSession();
 
   //boolean isLogin();
 
   //@DeviceId
   //String deviceId();
 
-  void inject(MainActivity activity);
 }

@@ -13,7 +13,8 @@ package com.thinksky.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.thinksky.info.UserInfo;
+import com.thinksky.holder.BaseApplication;
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.utils.JsonConverter;
 
 /**
@@ -40,7 +41,7 @@ public class LoginSession {
   }
 
   public void saveUserInfo(String name, String password, String userId, String sessionId,
-                           UserInfo userInfo) {
+                           UserInfoModel userInfo) {
     SharedPreferences.Editor editor = mSp.edit();
     editor.putString(KEY_USER_NAME, name);
     editor.putString(KEY_PASSWORD, password);
@@ -48,12 +49,16 @@ public class LoginSession {
     editor.putString(KEY_SESSION_ID, sessionId);
     editor.putString(KEY_USER_INFO, JsonConverter.objectToJson(userInfo));
     editor.apply();
+    ((BaseApplication) mContext.getApplicationContext()).getGlobalComponent().getGlobalBus().post
+        (new UserInfoChangeEvent());
   }
 
-  public void saveUserInfoModel(UserInfo userInfo) {
+  public void saveUserInfoModel(UserInfoModel userInfo) {
     SharedPreferences.Editor editor = mSp.edit();
     editor.putString(KEY_USER_INFO, JsonConverter.objectToJson(userInfo));
     editor.apply();
+    ((BaseApplication) mContext.getApplicationContext()).getGlobalComponent().getGlobalBus().post
+        (new UserInfoChangeEvent());
   }
 
   public void clearUserInfo() {
@@ -66,9 +71,9 @@ public class LoginSession {
     editor.apply();
   }
 
-  public UserInfo getUserInfo() {
-    return mSp.contains(KEY_USER_INFO) ? JsonConverter.jsonToObject(UserInfo.class, mSp.getString
-        (KEY_USER_INFO, "")) : new UserInfo();
+  public UserInfoModel getUserInfo() {
+    return mSp.contains(KEY_USER_INFO) ? JsonConverter.jsonToObject(UserInfoModel.class, mSp.getString
+        (KEY_USER_INFO, "")) : new UserInfoModel();
   }
 
   public boolean isLogin() {
@@ -93,5 +98,9 @@ public class LoginSession {
 
   public String getUserName() {
     return mSp.getString(KEY_USER_NAME, "");
+  }
+
+  public static class UserInfoChangeEvent {
+
   }
 }

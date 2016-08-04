@@ -1,5 +1,6 @@
 package com.thinksky.info;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
 import java.io.Serializable;
 
 public class Com2Com implements Serializable {
@@ -17,7 +18,7 @@ public class Com2Com implements Serializable {
     private String to_reply_id;
     private String to_uid;
     private String cTime;
-    private UserInfo userInfo;
+    private UserInfoModel userInfo;
     private boolean isLandlord;
 
     public boolean getIsLandlord() {
@@ -28,11 +29,11 @@ public class Com2Com implements Serializable {
         this.isLandlord = isLandlord;
     }
 
-    public UserInfo getUserInfo() {
+    public UserInfoModel getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
+    public void setUserInfo(UserInfoModel userInfo) {
         this.userInfo = userInfo;
     }
 

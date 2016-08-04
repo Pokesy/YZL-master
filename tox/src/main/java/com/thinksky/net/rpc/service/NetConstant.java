@@ -26,6 +26,7 @@ public class NetConstant {
   //public static final String BASE_URL_LOCATION = "http://192.168.15.201:8080/taobei/";
   public static final String BASE_URL_SERVICE_SUFFIX = "/api.php";
   public static final String BASE_URL = BASE_URL_LOCATION;
+  public static final String UPLOAD_AVATAR_URL = "Uploads/Avatar/";
 
   private NetConstant() {
 

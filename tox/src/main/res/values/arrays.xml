@@ -17,4 +17,9 @@
     <item>精彩视频</item>
     <item>百科</item>
   </string-array>
+
+  <array name="avatar_choose_item">
+    <item>拍照</item>
+    <item>从手机相册选择</item>
+  </array>
 </resources>

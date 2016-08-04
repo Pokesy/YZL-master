@@ -3,6 +3,7 @@ package com.thinksky.injection;
 import android.content.Context;
 import com.squareup.otto.Bus;
 import com.thinksky.holder.BaseApplication;
+import com.thinksky.ui.LoginSession;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -47,11 +48,11 @@ public class GlobalModule {
   //      && uid > 0;
   //}
 
-  //@Provides
-  //@Singleton
-  //public LoginSession providesLoginSession() {
-  //  return new LoginSession(mApplication);
-  //}
+  @Provides
+  @Singleton
+  public LoginSession providesLoginSession() {
+    return new LoginSession(mApplication);
+  }
   //
   //@Provides
   //@DeviceId

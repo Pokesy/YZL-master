@@ -12,13 +12,11 @@ import com.bugtags.library.Bugtags;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.thinksky.Face.LocationService;
-import com.thinksky.info.UserInfo;
 import com.thinksky.injection.DaggerGlobalComponent;
 import com.thinksky.injection.GlobalComponent;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.log.Logger;
 import com.thinksky.tox.BuildConfig;
-import com.thinksky.utils.JsonConverter;
 import com.tox.Url;
 
 public class BaseApplication extends Application {
@@ -62,7 +60,6 @@ public class BaseApplication extends Application {
     if (null != sp) {
       Url.SESSIONID = sp.getString("session_id", "");
       Url.USERID = sp.getString("uid", "0");
-      Url.MYUSERINFO = JsonConverter.jsonToObject(UserInfo.class, sp.getString("user_info", ""));
     }
     MultiDex.install(this);
   }

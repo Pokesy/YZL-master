@@ -15,6 +15,10 @@ import com.thinksky.fragment.WendaFragment;
 import com.thinksky.fragment.WendaListActivity;
 import com.thinksky.fragment.WendaMyQuestionActivity;
 import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.net.rpc.service.UserService;
+import com.thinksky.tox.MainActivity;
+import com.thinksky.tox.SettingActivity;
+import com.thinksky.ui.profile.AvatarChoosePresenter;
 import com.thinksky.utils.UpgradeHelper;
 import dagger.Component;
 import javax.inject.Singleton;
@@ -31,6 +35,8 @@ public interface ServiceComponent {
 
   AppService appService();
 
+  UserService userService();
+
   void inject(UpgradeHelper upgradeHelper);
 
   void inject(WendaFragment wendaFragment);
@@ -38,4 +44,10 @@ public interface ServiceComponent {
   void inject(WendaListActivity wendaListActivity);
 
   void inject(WendaMyQuestionActivity wendaMyQuestionActivity);
+
+  void inject(AvatarChoosePresenter avatarChoosePresenter);
+
+  void inject(MainActivity activity);
+
+  void inject(SettingActivity settingActivity);
 }

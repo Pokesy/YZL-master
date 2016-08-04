@@ -1,5 +1,6 @@
 package com.thinksky.info;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class PostComment implements Serializable {
     private String postComId;
-    private UserInfo userInfo;
+    private UserInfoModel userInfo;
     private String postId;
     private String cTime;
     private String uTime;
@@ -59,11 +60,11 @@ public class PostComment implements Serializable {
         this.postComId = postComId;
     }
 
-    public UserInfo getUserInfo() {
+    public UserInfoModel getUserInfo() {
         return userInfo;
     }
 
-    public void setUserInfo(UserInfo userInfo) {
+    public void setUserInfo(UserInfoModel userInfo) {
         this.userInfo = userInfo;
     }
 

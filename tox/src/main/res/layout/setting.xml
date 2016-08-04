@@ -60,6 +60,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="15dp"
+            android:background="@android:color/white"
             >
 
           <TextView
@@ -94,6 +95,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="15dp"
+            android:background="@android:color/white"
             >
 
           <TextView
@@ -134,6 +136,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="15dp"
+            android:background="@android:color/white"
             >
 
           <TextView
@@ -166,6 +169,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="15dp"
+            android:background="@android:color/white"
             >
 
           <TextView
@@ -199,6 +203,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="15dp"
+            android:background="@android:color/white"
             >
 
           <TextView
@@ -219,11 +224,19 @@
               />
         </RelativeLayout>
 
-        <View
+
+        <TextView
+            android:id="@+id/btn_logout"
             android:layout_width="match_parent"
-            android:layout_height="0.5dip"
-            android:background="@color/item_divider"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/activity_profile_setting_btn_logout"
+            style="@style/Widget.App.TextView.Medium.Blue"
+            android:layout_marginTop="@dimen/margin_medium"
             />
+
       </LinearLayout>
     </LinearLayout>
   </ScrollView>

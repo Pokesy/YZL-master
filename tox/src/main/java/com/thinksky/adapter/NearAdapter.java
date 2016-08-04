@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.thinksky.info.UserInfo;
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.tox.R;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -15,11 +15,11 @@ import java.util.List;
 
 public class NearAdapter extends BaseAdapter {
 
-  private List<UserInfo> list;
+  private List<UserInfoModel> list;
   private Context ctx;
   private LoadImg loadImgHeadImg;
 
-  public NearAdapter(Context ctx, List<UserInfo> list) {
+  public NearAdapter(Context ctx, List<UserInfoModel> list) {
     this.ctx = ctx;
     this.list = list;
     loadImgHeadImg = new LoadImg(ctx);

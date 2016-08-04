@@ -1,7 +1,6 @@
 package com.thinksky.tox;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -30,17 +29,23 @@ import com.thinksky.fragment.WeiboFragment;
 import com.thinksky.fragment.YlqFragment;
 import com.thinksky.holder.BaseActivity;
 import com.thinksky.holder.BaseApplication;
-import com.thinksky.injection.DaggerGlobalComponent;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.model.ActivityModel;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.UserInfoModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.qqsliding.widget.DragLayout;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.ui.common.TitleBar;
-import com.thinksky.utils.LoadImg;
+import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
+import javax.inject.Inject;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by jiao on 2016/1/26.
@@ -73,14 +78,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   private DiscoverFragment mallFragment;
 
   //从UserInfoActivity返回的信息
-  private TextView myUserName;
-  private TextView signature;
-  //头像
-  private ImageView mleftHead, sousuo;
-  LinearLayout mLoginThisAPP;
-  private SharedPreferences sp = null;
-  //下载图片
-  private LoadImg loadImgMainImg;
   private Intent intent_Share;
   private static boolean hasCheckd = false;
   /**
@@ -95,16 +92,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   private View mContent;
   private DragLayout dl;
   private ListView lv;
-  private TextView user;
-  private TextView setting;
-  public TextView collect;
-  public TextView invite;
-  public TextView message1;
-  private TextView mFeedbackMenu;
   private LinearLayout drawer_view;
   private RadioGroup mTabGroup;
+  private SlideController mController;
 
   private TitleBar mTitleBar;
+
+  @Inject
+  AppService mAppService;
+
   private View.OnClickListener mWriteFeedListener = new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -140,11 +136,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     return super.onKeyDown(keyCode, event);
   }
 
+  @Override
+  protected void onLogin() {
+    super.onLogin();
+    drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+  }
+
+  @Override
+  protected void onLogout() {
+    super.onLogout();
+    drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
+      drawer_layout.closeDrawer(Gravity.LEFT);
+    }
+  }
+
   protected void initActionbar() {
     mTitleBar = (TitleBar) findViewById(R.id.title_bar);
     setSupportActionBar(mTitleBar.getToolbar());
 
     drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+    if (!isLogin()) {
+      drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    } else {
+      drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+    }
 
     drawer_view = (LinearLayout) findViewById(R.id.drawer_view);
     mContent = drawer_layout.getChildAt(0);
@@ -157,10 +173,36 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             float scale = 1 - slideOffset;
             ViewHelper.setTranslationX(mContent, drawerView.getMeasuredWidth() * (1 - scale));
           }
+
+          @Override
+          public void onDrawerOpened(View drawerView) {
+            super.onDrawerOpened(drawerView);
+            manageRpcCall(mAppService.getProfile(Url.USERID), new
+                UiRpcSubscriberSimple<UserInfoModel>
+                    (MainActivity.this) {
+
+
+                  @Override
+                  protected void onSuccess(UserInfoModel info) {
+                    getComponent().loginSession().saveUserInfoModel(info);
+                    mController.setData();
+                  }
+
+                  @Override
+                  protected void onEnd() {
+
+                  }
+                });
+          }
+
+          @Override
+          public void onDrawerClosed(View drawerView) {
+            super.onDrawerClosed(drawerView);
+          }
         };
     drawerToggle.setDrawerIndicatorEnabled(false);
     //        drawerToggle.setHomeAsUpIndicator(R.drawable.iconfont_gerenshezhi);
-    drawer_layout.setDrawerListener(drawerToggle);
+    drawer_layout.addDrawerListener(drawerToggle);
     drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -180,11 +222,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     mTitleBar.setLeftImgMenu(R.drawable.list, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!drawer_layout.isDrawerOpen(drawer_view)) {
-          drawer_layout.openDrawer(drawer_view);
-        } else {
-          drawer_layout.closeDrawer(drawer_view);
-        }
+        showOrHideDrawer();
       }
     });
   }
@@ -200,35 +238,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   protected void initView() {
     setContentView(R.layout.activity_home);
 
-    loadImgMainImg = new LoadImg(this);
     mTitleBar = (TitleBar) findViewById(R.id.title_bar);
-    myUserName = (TextView) findViewById(R.id.myUserName);
-    mleftHead = (ImageView) findViewById(R.id.iv_bottom);
 
-    sp = getSharedPreferences("userInfo", 0);
-    Log.e(sp.getString("avatar", "空空空"), "");
-
-    myUserName.setText(sp.getString("username", "未登录"));
-    ImageLoader.loadOptimizedHttpImage(this, sp.getString("avatar", "")).placeholder(R.drawable
-        .side_user_avatar)
-        .dontAnimate().into(mleftHead);
-
-    mLoginThisAPP = (LinearLayout) findViewById(R.id.LoginThisAPP);
-    signature = (TextView) findViewById(R.id.signature);
-    user = (TextView) findViewById(R.id.user);
-    setting = (TextView) findViewById(R.id.setting);
-    collect = (TextView) findViewById(R.id.collect);
-    message1 = (TextView) findViewById(R.id.message1);
-    invite = (TextView) findViewById(R.id.invite);
-    mFeedbackMenu = (TextView) findViewById(R.id.feed_back);
-    user.setOnClickListener(MainActivity.this);
-    setting.setOnClickListener(MainActivity.this);
-    message1.setOnClickListener(MainActivity.this);
-    collect.setOnClickListener(MainActivity.this);
-    invite.setOnClickListener(MainActivity.this);
-    mFeedbackMenu.setOnClickListener(MainActivity.this);
-    mLoginThisAPP.setOnClickListener(MainActivity.this);
-    findViewById(R.id.ll1).setOnClickListener(this);
     mFragmentManager = MainActivity.this.getSupportFragmentManager();
     initAllFragment();
     mTabGroup = ((RadioGroup) findViewById(R.id.main_radio));
@@ -256,13 +267,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           }
         });
 
-    //        home.setOnClickListener(MainActivity.this);
-    //        weibo.setOnClickListener(MainActivity.this);
-    //        yulequan.setOnClickListener(MainActivity.this);
-    //        yuyisheng.setOnClickListener(MainActivity.this);
-    //        mall.setOnClickListener(MainActivity.this);
 
     setTabSelection(0);
+  }
+
+  @Override
+  protected void setLeftMenu() {
+    mController = new SlideController(drawer_view);
+    mController.setup();
   }
 
   @Override
@@ -373,11 +385,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
           @Override
           public void onMenuBtnClicked() {
-            if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
-              drawer_layout.closeDrawer(Gravity.LEFT);
-            } else {
-              drawer_layout.openDrawer(Gravity.LEFT);
-            }
+            showOrHideDrawer();
           }
 
           @Override
@@ -398,6 +406,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     mallFragment = new DiscoverFragment();
     mFragmentTransaction.add(R.id.content, mallFragment);
     mFragmentTransaction.commitAllowingStateLoss();
+  }
+
+  private void showOrHideDrawer() {
+    if (!isLogin()) {
+      startActivity(new Intent(MainActivity.this, LoginActivity.class));
+      return;
+    }
+    if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
+      drawer_layout.closeDrawer(Gravity.LEFT);
+    } else {
+      drawer_layout.openDrawer(Gravity.LEFT);
+    }
   }
 
   /**
@@ -427,11 +447,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 @Override
                 public void onMenuBtnClicked() {
-                  if (drawer_layout.isDrawerOpen(Gravity.LEFT)) {
-                    drawer_layout.closeDrawer(Gravity.LEFT);
-                  } else {
-                    drawer_layout.openDrawer(Gravity.LEFT);
-                  }
+                  showOrHideDrawer();
                 }
 
                 @Override
@@ -521,20 +537,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
   }
 
-  //    /**
-  //     * 清除掉所有的选中状态。
-  //     */
-  //    private void clearSelection() {
-  //        messageImage.setImageResource(R.drawable.message_unselected);
-  //        messageText.setTextColor(Color.parseColor("#82858b"));
-  //        contactsImage.setImageResource(R.drawable.contacts_unselected);
-  //        contactsText.setTextColor(Color.parseColor("#82858b"));
-  //        newsImage.setImageResource(R.drawable.news_unselected);
-  //        newsText.setTextColor(Color.parseColor("#82858b"));
-  //        settingImage.setImageResource(R.drawable.setting_unselected);
-  //        settingText.setTextColor(Color.parseColor("#82858b"));
-  //    }
-
   /**
    * 将所有的Fragment都 为 藏状态。
    *
@@ -555,24 +557,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
     if (mallFragment != null) {
       mFragmentTransaction.hide(mallFragment);
-    }
-  }
-
-  protected void setLeftMenu() {
-    //判断是否登入
-    if (BaseFunction.isLogin()) {
-      signature.setVisibility(View.VISIBLE);
-      ImageLoader.loadOptimizedHttpImage(this, Url.MYUSERINFO.getAvatar()).placeholder(R.drawable
-          .side_user_avatar)
-          .dontAnimate().into(mleftHead);
-      myUserName.setText(TextUtils.isEmpty(Url.MYUSERINFO.getNickname()) ? Url.MYUSERINFO
-          .getUsername() : Url.MYUSERINFO.getNickname());
-      signature.setText(TextUtils.isEmpty(Url.MYUSERINFO.getSignature()) ? "这个人很懒，什么都没写" : Url
-          .MYUSERINFO.getSignature());
-    } else {
-      mleftHead.setImageResource(R.drawable.side_user_avatar);
-      signature.setText("");
-      myUserName.setText("未登录");
     }
   }
 
@@ -608,12 +592,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   }
 
   private void inject() {
-    DaggerGlobalComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication()))
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ().getApplication())).serviceModule(new ServiceModule())
         .build().inject(this);
   }
 
   private void checkNewVersion() {
-    if(hasCheckd) {
+    if (hasCheckd) {
       return;
     }
     hasCheckd = true;
@@ -623,6 +608,130 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   @Override
   protected void onDestroy() {
     super.onDestroy();
+  }
+
+  private class SlideController {
+    private View rootView;
+
+    private TitleBar mTitleBar;
+    private ImageView mAvatarView;
+    private TextView mNameView;
+    private ImageView mGenderView;
+    private TextView mFollowView;
+    private TextView mFansView;
+    private TextView mAreaView;
+    private TextView mSignatureView;
+    private TextView mLocationView;
+    private View mMessageMenuView;
+    private View mCollectionView;
+    private View mInviteFriendsView;
+    private View mSettingView;
+
+    public SlideController(View rootView) {
+      this.rootView = rootView;
+      setup();
+      setData();
+    }
+
+    private void setup() {
+      mTitleBar = (TitleBar) rootView.findViewById(R.id.title_bar);
+      mAvatarView = (ImageView) rootView.findViewById(R.id.avatar);
+      mNameView = (TextView) rootView.findViewById(R.id.nick_name);
+      mGenderView = (ImageView) rootView.findViewById(R.id.gender);
+      mFansView = (TextView) rootView.findViewById(R.id.fans_count);
+      mFollowView = (TextView) rootView.findViewById(R.id.follow_count);
+      mAreaView = (TextView) rootView.findViewById(R.id.area_value);
+      mSignatureView = (TextView) rootView.findViewById(R.id.signature_value);
+      mLocationView = (TextView) rootView.findViewById(R.id.enter_map);
+      mMessageMenuView = rootView.findViewById(R.id.menu_message);
+      mCollectionView = rootView.findViewById(R.id.menu_collect);
+      mInviteFriendsView = rootView.findViewById(R.id.menu_invite);
+      mSettingView = rootView.findViewById(R.id.menu_setting);
+
+      mLocationView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          // TODO 跳转到地图界面
+        }
+      });
+
+      mMessageMenuView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          // TODO 跳转到消息中心界面
+        }
+      });
+
+      mCollectionView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          // TODO 跳转到收藏界面
+        }
+      });
+
+      mInviteFriendsView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          // TODO 跳转到邀请朋友
+        }
+      });
+
+      mSettingView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          // 跳转到设置界面
+          Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+          startActivity(intent);
+        }
+      });
+    }
+
+    public void setData() {
+      UserInfoModel info = BaseApplication.getApplication().getGlobalComponent().loginSession()
+          .getUserInfo();
+      ImageLoader.loadOptimizedHttpImage(MainActivity.this, info.getAvatar128()).dontAnimate()
+          .bitmapTransform(new CropCircleTransformation(MainActivity.this)).placeholder(R
+          .drawable.side_user_avatar).into(mAvatarView);
+      mGenderView.setVisibility(View.VISIBLE);
+      if (!TextUtils.isEmpty(info.getSex())) {
+        switch (info.getSex()) {
+          case UserInfoModel.GENDER_MALE:
+            mGenderView.setImageResource(R.drawable.icon_profile_gender_male);
+            break;
+          case UserInfoModel.GENDER_FEMALE:
+            mGenderView.setImageResource(R.drawable.icon_profile_gender_female);
+            break;
+          default:
+            mGenderView.setVisibility(View.GONE);
+            break;
+        }
+      }
+      mNameView.setText(info.getNickname());
+      mAreaView.setText(info.getP_province() + info.getP_city());
+      mSignatureView.setText(info.getSignature());
+      mFansView.setText(info.getFans());
+      mFollowView.setText(info.getFollowing());
+      setTitleBar();
+    }
+
+    private void setTitleBar() {
+      mTitleBar.getTitleBgView().setAlpha(0);
+      mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          drawer_layout.closeDrawer(drawer_view);
+        }
+      });
+      mTitleBar.setRightTextBtn(R.string.activity_profile_title_right_btn, new View
+          .OnClickListener() {
+
+
+        @Override
+        public void onClick(View v) {
+          startActivity(new Intent(MainActivity.this, ProfileSettingActivity.class));
+        }
+      });
+    }
   }
 }
 

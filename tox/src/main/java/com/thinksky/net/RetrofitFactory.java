@@ -14,6 +14,7 @@ package com.thinksky.net;
 import android.util.Log;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.NetConstant;
+import com.thinksky.net.rpc.service.UserService;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import okhttp3.Interceptor;
@@ -43,6 +44,15 @@ public class RetrofitFactory {
                 (Schedulers.newThread())).
             build();
     return retrofit.create(AppService.class);
+  }
+
+  public static UserService createUserService() {
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(NetConstant.BASE_URL)
+        .client(createNormalClient()).addConverterFactory(GsonConverterFactory.create()).
+            addCallAdapterFactory(RxJavaCallAdapterFactory.create().createWithScheduler
+                (Schedulers.newThread())).
+            build();
+    return retrofit.create(UserService.class);
   }
 
   private static OkHttpClient createClient() {

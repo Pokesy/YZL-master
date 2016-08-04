@@ -10,7 +10,7 @@
       android:targetSdkVersion="23"
       tools:overrideLibrary="timber.log"/>
 
-  <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+  <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -165,6 +165,9 @@
     <activity
         android:name=".SettingActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.profile.ProfileSettingActivity"
         android:screenOrientation="portrait"/>
     <activity
         android:name=".LoginActivity"
@@ -397,8 +400,8 @@
         android:theme="@style/ActivityThemeTwo"/>
     <activity
         android:name="com.thinksky.tox.SendQuestionActivity"
-        android:windowSoftInputMode="stateHidden|adjustPan"
-        android:theme="@style/ActivityThemeTwo"/>
+        android:theme="@style/ActivityThemeTwo"
+        android:windowSoftInputMode="stateHidden|adjustPan"/>
     <activity
         android:name="com.thinksky.tox.BaikeItemActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"

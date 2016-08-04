@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.thinksky.fragment.DiscoverFragment;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.ui.common.TitleBar;
@@ -77,7 +78,7 @@ public class RegisterActivity extends BaseBActivity {
     login = new login(RegisterActivity.this, 2);
     login.setLoginHandler();
     initView();
-    if (TextUtils.equals(Url.activityFrom,"LoginActivity")) {
+    if (TextUtils.equals(Url.activityFrom, "LoginActivity")) {
       role.setText("");
       code = "";
       juese = "";
@@ -340,10 +341,12 @@ public class RegisterActivity extends BaseBActivity {
           //TODO 注册后的nickname问题，头像路径问题
           ToastHelper.showToast("注册成功", RegisterActivity.this);
           Url.activityFrom = "registe";
-          Url.MYUSERINFO = myJson.getUserAllInfo(result);
           Url.SESSIONID = myJson.getUserSessionID(result);
-          mUserapi.saveUserInfoToNative(RegisterActivity.this);
-          //                        login.userLogin(username, password);
+          Url.USERID = myJson.getUserID(result);
+          ((BaseApplication) getApplication()).getGlobalComponent()
+              .loginSession
+                  ().saveUserInfo(username, password, Url.USERID, Url.SESSIONID
+              , myJson.getUserAllInfo(result));
           Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
           intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
           startActivity(intent);

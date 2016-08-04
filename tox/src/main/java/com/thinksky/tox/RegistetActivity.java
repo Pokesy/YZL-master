@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.thinksky.fragment.DiscoverFragment;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.ui.common.TitleBar;
@@ -343,7 +344,10 @@ public class RegistetActivity extends BaseBActivity {
           Url.MYUSERINFO = myJson.getUserAllInfo(result);
           Url.SESSIONID = myJson.getUserSessionID(result);
           Url.USERID = myJson.getUserID(result);
-          mUserapi.saveUserInfoToNative(RegistetActivity.this);
+          ((BaseApplication) getApplication()).getGlobalComponent()
+              .loginSession
+                  ().saveUserInfo(username, password, Url.USERID, Url.SESSIONID
+              , myJson.getUserAllInfo(result));
           //                        login.userLogin(username, password);
           Intent intent = new Intent(RegistetActivity.this, MainActivity.class);
           intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

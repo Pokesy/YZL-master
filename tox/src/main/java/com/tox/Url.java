@@ -6,10 +6,10 @@ import android.os.Build;
 import android.os.Environment;
 
 import com.thinksky.info.PostInfo;
-import com.thinksky.info.UserInfo;
 import com.thinksky.info.WeiboCommentInfo;
 import com.thinksky.info.WeiboInfo;
 
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.tox.BuildConfig;
 import java.util.ArrayList;
 import java.util.List;
@@ -211,7 +211,7 @@ public class Url {
     /**
      * 自己的信息
      */
-    public static UserInfo MYUSERINFO = null;
+    public static UserInfoModel MYUSERINFO = null;
     public static String USERID = "";
     public static String SESSIONID = "";
     public static String SharedPreferenceName = "userInfo";
