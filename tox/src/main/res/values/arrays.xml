@@ -22,4 +22,10 @@
     <item>拍照</item>
     <item>从手机相册选择</item>
   </array>
+
+  <array name="gender_items">
+    <item>保密</item>
+    <item>男</item>
+    <item>女</item>
+  </array>
 </resources>

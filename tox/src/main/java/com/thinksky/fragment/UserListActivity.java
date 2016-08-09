@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -14,7 +13,7 @@ import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.R;
-import com.thinksky.tox.UserInfoActivity;
+import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -157,10 +156,7 @@ public class UserListActivity extends BaseBActivity {
       holder.v(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          Intent intent = new Intent(mContext, UserInfoActivity.class);
-          intent.putExtra("userUid", bean.uid);
-//                    intent.putStringArrayListExtra("uidlist", userlist);
-          startActivity(intent);
+          startActivity(ProfileIntentFactory.makeIntent(mContext, bean.uid));
         }
       });
     }

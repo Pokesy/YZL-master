@@ -18,11 +18,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.myview.MoreTextView;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.HotPostModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.ResUtil;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -31,6 +38,8 @@ import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import javax.inject.Inject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kymjs.aframe.bitmap.KJBitmap;
@@ -72,6 +81,10 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
   private int group_id;
   private String userUid;
   String groupId;
+
+  @Inject
+  AppService mAppService;
+
   //对加入群组的状态进行实时判断
   private Handler tempHandler = new Handler() {
     @Override public void handleMessage(Message msg) {
@@ -153,6 +166,7 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_group_detail);
+    inject();
     ctx = this;
     mContext = GroupDetailActivity.this;
     kjBitmap = KJBitmap.create();
@@ -165,7 +179,7 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     //        Log.e("groupInfoMap>>>>>>>>>>>",groupInfoMap.toString());
     group_id = Integer.parseInt(groupInfoMap.get("id"));
     new Thread(new NoticeThread(groupId)).start();
-    new Thread(new HotPostThread(groupId, session_id)).start();
+    loadPost(groupId, session_id);
     groupApi.setHandler(tempHandler);
     groupApi.getGroupInfo(group_id + "");
     backMenu = (ImageView) findViewById(R.id.back_menu);
@@ -197,8 +211,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     hotPostView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent postIntent = new Intent(mContext, GroupPostInfoActivity.class);
-        postIntent.putExtra("post_info",
-            (HashMap<String, String>) parent.getItemAtPosition(position));
+        postIntent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST,
+            ((HotPostListAdapter)parent.getAdapter()).getItem(position));
         startActivity(postIntent);
       }
     });
@@ -218,12 +232,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     if (groupInfoMap.get("group_logo").equals(Url.USERHEADURL + "Public/Core/images/nopic.png")) {
       groupLogo.setImageResource(R.drawable.side_user_avatar);
     } else {
-      //            kjBitmap.display(groupLogo, groupInfoMap.get("group_logo"));
       ResUtil.setRoundImage(groupInfoMap.get("group_logo"), groupLogo);
-      //            ImageLoader.getInstance().displayImage(groupInfoMap.get("group_logo"),groupLogo);
     }
-    //        kjBitmap.display(creatorHead,groupInfoMap.get("user_avatar128"));
-    //        ImageLoader.getInstance().displayImage(groupInfoMap.get("user_logo"), creatorHead);
     ImageLoader.loadOptimizedHttpImage(GroupDetailActivity.this, groupInfoMap.get("user_logo"))
         .into(creatorHead);
     creatorNickName.setText(groupInfoMap.get("user_nickname"));
@@ -346,44 +356,64 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
             groupNotice.setText("本群还没有发表公告！");
           }
           break;
-        case 0x157:
-          arrayList = (ArrayList<HashMap<String, String>>) msg.obj;
-          //                    Log.e("arrayList>>>>>>", arrayList.toString());
-          if (arrayList.size() == 0) {
-            TextView tempView = new TextView(mContext);
-            tempView.setPadding(0, 0, 0, 5);
-            tempView.setGravity(Gravity.CENTER);
-            tempView.setBackgroundResource(R.drawable.item_bg);
-            tempView.setOnClickListener(new View.OnClickListener() {
-              @Override public void onClick(View v) {
-                if (Integer.parseInt(groupInfoMap.get("is_join")) == 1) {
-                  Intent post = new Intent(mContext, PostGroupActivity.class);
-                  post.putExtra("group_id", groupId);
-                  startActivity(post);
-                } else {
-                  ToastHelper.showToast("加群才能发帖", mContext);
-                }
-              }
-            });
-            tempView.setText("还没有帖子，我来发表一个");
-            hotLine.addView(tempView);
-          }
-          hotPostView.setAdapter(new HotPostListAdapter(mContext, arrayList));
-          break;
         default:
           break;
       }
     }
   };
 
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ())).serviceModule(new ServiceModule())
+        .build().inject(this);
+  }
+
+  private void loadPost(final String groupId, String session_id) {
+    manageRpcCall(mAppService.getGroupMyPost(session_id, groupId), new
+        UiRpcSubscriberSimple<HotPostModel>(this) {
+
+
+          @Override
+          protected void onSuccess(HotPostModel hotPostModel) {
+            List<HotPostModel.HotPostBean> arrayList = hotPostModel.getList();
+            if (arrayList.size() == 0) {
+              TextView tempView = new TextView(mContext);
+              tempView.setPadding(0, 0, 0, 5);
+              tempView.setGravity(Gravity.CENTER);
+              tempView.setBackgroundResource(R.drawable.item_bg);
+              tempView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  if (Integer.parseInt(groupInfoMap.get("is_join")) == 1) {
+                    Intent post = new Intent(mContext, PostGroupActivity.class);
+                    post.putExtra("group_id", groupId);
+                    startActivity(post);
+                  } else {
+                    ToastHelper.showToast("加群才能发帖", mContext);
+                  }
+                }
+              });
+              tempView.setText("还没有帖子，我来发表一个");
+              hotLine.addView(tempView);
+            }
+            hotPostView.setAdapter(new HotPostListAdapter(mContext, arrayList));
+          }
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
+  }
+
   //热帖ListView适配器
   class HotPostListAdapter extends BaseAdapter {
 
-    private ArrayList<HashMap<String, String>> topPostList;
+    private List<HotPostModel.HotPostBean> topPostList;
     private Context context;
     ViewHolder viewHolder;
 
-    public HotPostListAdapter(Context context, ArrayList<HashMap<String, String>> data) {
+    public HotPostListAdapter(Context context, List<HotPostModel.HotPostBean> data) {
       this.context = context;
       this.topPostList = data;
     }
@@ -392,7 +422,7 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
       return topPostList.size();
     }
 
-    @Override public Object getItem(int position) {
+    @Override public HotPostModel.HotPostBean getItem(int position) {
       return topPostList.get(position);
     }
 
@@ -412,9 +442,9 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
       } else {
         viewHolder = (ViewHolder) convertView.getTag();
       }
-      viewHolder.postTitle.setText(topPostList.get(position).get("title"));
-      viewHolder.postContent.setText(topPostList.get(position).get("content"));
-      viewHolder.replyCount.setText(topPostList.get(position).get("reply_count"));
+      viewHolder.postTitle.setText(topPostList.get(position).getTitle());
+      viewHolder.postContent.setText(topPostList.get(position).getContent());
+      viewHolder.replyCount.setText(topPostList.get(position).getReply_count());
       return convertView;
     }
   }
@@ -457,54 +487,4 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     }
   }
 
-  //热帖线程
-  class HotPostThread implements Runnable {
-
-    ArrayList<JSONObject> JSONList;
-    ArrayList<HashMap<String, String>> tempList;
-    String groupId;
-    String session_id;
-
-    public HotPostThread(String groupId, String session_id) {
-      this.groupId = groupId;
-      this.session_id = session_id;
-    }
-
-    @Override public void run() {
-      JSONList = groupApi.getHotPost(Url.getApiUrl(Url.HOTPOST), groupId, session_id);
-      tempList = new ArrayList<HashMap<String, String>>();
-      for (int i = 0; i < JSONList.size(); i++) {
-        JSONObject jsonObj = JSONList.get(i);
-        HashMap<String, String> map1 = new HashMap<String, String>();
-        try {
-          map1.put("id", jsonObj.getString("id"));
-          map1.put("uid", jsonObj.getString("uid"));
-          map1.put("group_id", jsonObj.getString("group_id"));
-          map1.put("group_name", groupInfoMap.get("title"));
-          map1.put("title", jsonObj.getString("title"));
-          map1.put("content", jsonObj.getString("content"));
-          map1.put("create_time", jsonObj.getString("create_time"));
-          map1.put("update_time", jsonObj.getString("update_time"));
-          map1.put("last_reply_time", jsonObj.getString("last_reply_time"));
-          map1.put("status", jsonObj.getString("status"));
-          map1.put("view_count", jsonObj.getString("view_count"));
-          map1.put("reply_count", jsonObj.getString("reply_count"));
-          map1.put("is_top", jsonObj.getString("is_top"));
-          map1.put("cate_id", jsonObj.getString("cate_id"));
-          map1.put("supportCount", jsonObj.getString("supportCount"));
-          map1.put("is_support", jsonObj.getString("is_support"));
-          JSONObject tempJSONObj = jsonObj.getJSONObject("user");
-          map1.put("user_nickname", tempJSONObj.getString("nickname"));
-          map1.put("user_logo", Url.IMAGE + tempJSONObj.getString("avatar128"));
-          tempList.add(map1);
-        } catch (JSONException e) {
-          e.printStackTrace();
-        }
-      }
-      Message message = new Message();
-      message.what = 0x157;
-      message.obj = tempList;
-      mHandler.sendMessage(message);
-    }
-  }
 }

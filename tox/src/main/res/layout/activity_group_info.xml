@@ -25,7 +25,8 @@
         android:orientation="vertical"
         >
 
-      <LinearLayout android:id="@+id/group_info_container"
+      <LinearLayout
+          android:id="@+id/group_info_container"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:background="@drawable/bg_group_info"
@@ -51,8 +52,8 @@
               android:layout_marginRight="@dimen/margin_small"
               android:scaleType="centerCrop"
               android:src="@drawable/picture_1_no"
-              more:civ_border_width="0.5dp"
               more:civ_border_color="@android:color/white"
+              more:civ_border_width="0.5dp"
               />
 
           <RelativeLayout
@@ -164,7 +165,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:orientation="vertical"
-            android:padding="@dimen/margin_small"
+            android:paddingRight="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
             >
 
           <TextView
@@ -173,14 +175,16 @@
               android:layout_height="wrap_content"
               android:layout_below="@+id/group_type"
               android:layout_marginBottom="@dimen/margin_small"
+              android:layout_marginLeft="13dp"
               android:includeFontPadding="false"
-              android:layout_marginLeft="3dp"
               tools:text="45个小组成员:"
               style="@style/Widget.App.TextView.Medium.Blue"
               />
           <RelativeLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
               >
             <ImageView
                 android:id="@+id/icon_arrow"
@@ -188,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/margin_small"
+                android:layout_marginLeft="@dimen/margin_smallest"
                 android:src="@drawable/tiaozhuan"
                 />
             <com.thinksky.rsen.view.RRecyclerView
@@ -200,6 +204,70 @@
                 android:tag="HORIZONTAL"
                 />
           </RelativeLayout>
+
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="0.5dp"
+              android:layout_marginBottom="@dimen/margin_small"
+              android:layout_marginTop="@dimen/margin_small"
+              android:background="@color/item_divider"
+              />
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingBottom="10dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              >
+            <TextView
+                android:id="@+id/label_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/icon_notice"
+                android:drawablePadding="@dimen/margin_smallest"
+                android:text="@string/activity_group_info_label_notice"
+                style="@style/Widget.App.TextView.Medium.RedDark"
+                />
+
+            <TextView
+                android:id="@+id/btn_notice_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawablePadding="@dimen/margin_smallest"
+                android:drawableRight="@drawable/tiaozhuan"
+                android:text="@string/activity_group_info_btn_notice_expand"
+                style="@style/Widget.App.TextView.Medium.Secondary"
+                />
+
+            <com.ms.square.android.expandabletextview.ExpandableTextView
+                android:id="@+id/notice_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/label_notice"
+                android:layout_marginTop="@dimen/margin_small"
+                >
+              <TextView
+                  android:id="@id/expandable_text"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/font_color_primary"
+                  android:textSize="@dimen/font_size_medium"
+                  />
+              <ImageButton
+                  android:id="@id/expand_collapse"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="right|bottom"
+                  android:background="@android:color/transparent"
+                  android:padding="16dp"
+                  android:visibility="gone"
+                  />
+            </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+          </RelativeLayout>
+
         </LinearLayout>
 
 

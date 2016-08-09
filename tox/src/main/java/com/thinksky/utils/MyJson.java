@@ -538,8 +538,6 @@ public class MyJson {
       userInfo.setP_province(jsonObject4.optString("name"));
       JSONObject jsonObject2 = new JSONObject(jsonObject.optString("pos_city"));
       userInfo.setP_city(jsonObject2.optString("name"));
-      JSONObject jsonObject3 = new JSONObject(jsonObject.optString("pos_district"));
-      userInfo.setPos_district(jsonObject3.optString("name"));
 
     } catch (JSONException e) {
       Logger.e("MyJson", e, "parse user info");

@@ -184,6 +184,23 @@
   <string name="activity_profile_label_setting">设置</string>
   <string name="activity_profile_enter_map">进入地图</string>
   <string name="activity_profile_title_right_btn">编辑资料</string>
+
+  <!-- 他人信息 -->
+  <string name="activity_other_profile_title">他的主页</string>
+  <string name="activity_other_profile_btn_follow">加关注</string>
+  <string name="activity_other_profile_btn_cancel_follow">取消关注</string>
+  <string name="activity_other_profile_label_location">他的位置</string>
+  <string name="activity_other_profile_label_question">他的问答</string>
+  <string name="activity_other_profile_label_trends">他的动态</string>
+  <string name="activity_other_profile_label_topic">他的话题</string>
+  <string name="activity_other_profile_label_group">他加入的小组</string>
+
+
+  <!-- 公告 -->
+  <string name="activity_group_info_label_notice">公告</string>
+  <string name="activity_group_info_btn_notice_expand">更多</string>
+  <string name="activity_group_info_btn_notice_fold">收起</string>
+
   <!-- Common -->
   <string name="gender_male">男</string>
   <string name="gender_female">女</string>

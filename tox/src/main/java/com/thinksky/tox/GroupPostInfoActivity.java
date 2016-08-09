@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -26,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
@@ -51,6 +51,8 @@ import org.json.JSONObject;
  */
 public class GroupPostInfoActivity extends BaseBActivity implements View.OnClickListener, View
     .OnTouchListener {
+  public static final String BUNDLE_KEY_POST = "post_info";
+  public static final String BUNDLE_KEY_IS_WE_GROUP = "isWeGroup";
   private MyJson myjson = new MyJson();
   private boolean isWeGroup = true;
   LinearLayout loadingBar;
@@ -63,43 +65,40 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   private int post_id;
   private int page = 1;
   private ImageView back_menu;
-  private TextView group_name, chengyuan;
+  private TextView group_name;
   private ScrollView post_scroll;
   private LinearLayout postBody;
   private TextView post_title;
-  private TextView loadingText;
   private CircleImageView user_logo, group_logo;
   private TextView post_user_name;
   private TextView post_create_time;
   private TextView post_content, user_name, qianming, group_count, join, huifu;
-  private LinearLayout reply_bottom_layout;
-  private LinearLayout support_button;
+  private RelativeLayout reply_bottom_layout;
+  private RelativeLayout support_button;
   private TextView supportCountView;
-  private LinearLayout reply_button;
+  private RelativeLayout reply_button;
   private LinearLayout reply_box;
   private EditText reply_editText;
   private TextView replyCountView;
   private TextView sendPostButtn;
-  private HashMap<String, String> postMap;
-  private String position;
+  private HotPostModel.HotPostBean mPostBean;
   HashMap<String, Integer> countMap;
   private Context mContext;
   private int replyCount;
   private int supportCount;
   private ImageView iv1, iv2, iv3;
   private int width;
-  private List<ImageView> mImgList = new ArrayList<ImageView>();
-  private ArrayList<String> img = new ArrayList<String>();
-  private ArrayList<String> logolist = new ArrayList<String>();
+  private List<String> img = new ArrayList<String>();
   private RelativeLayout ll_img;
   private String nickname = "";
-  private RecyclerView recycler;
   private RelativeLayout enter;
   private String group_id;
   private String session_id;
   private String userUid;
   private BaseApi baseApi;
-  private TextView edit_disable_text;
+  private ImageView edit_disable_text;
+  private ImageView mCollectionBtn;
+  private String mAuthorId;
 
   @Override
   @SuppressWarnings(value = {"unchecked"})
@@ -113,14 +112,10 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     userUid = baseApi.getUid();
 
     setContentView(R.layout.activity_group_post_info_copy);
-    postMap = (HashMap<String, String>) getIntent().getExtras().getSerializable("post_info");
-    recycler = (RecyclerView) findViewById(R.id.recycler);
+    mPostBean = (HotPostModel.HotPostBean) getIntent().getExtras().getSerializable(BUNDLE_KEY_POST);
     enter = (RelativeLayout) findViewById(R.id.enter);
-    img = getIntent().getExtras().getStringArrayList("imgList");
-    logolist = getIntent().getExtras().getStringArrayList("logolist");
-    position = getIntent().getExtras().getString("position");
-    Log.e("postMap>>>>>>>>>", postMap.toString());
-    post_id = Integer.parseInt(postMap.get("id"));
+    img = mPostBean.getImgList();
+    post_id = Integer.parseInt(mPostBean.getId());
 
     //获取手机的分辨率
     Display display = getWindowManager().getDefaultDisplay(); //Activity#getWindowManager()
@@ -136,7 +131,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 //        mImgList.add((ImageView) findViewById(R.id.iv_3));
     back_menu = (ImageView) findViewById(R.id.back_menu);
     group_name = (TextView) findViewById(R.id.group_name);
-    chengyuan = (TextView) findViewById(R.id.chengyuan);
     post_scroll = (ScrollView) findViewById(R.id.post_scroll);
     postBody = (LinearLayout) findViewById(R.id.post_body_line);
     post_title = (TextView) findViewById(R.id.post_title);
@@ -145,11 +139,10 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     post_user_name = (TextView) findViewById(R.id.post_user_name);
     post_create_time = (TextView) findViewById(R.id.post_create_time);
     post_content = (TextView) findViewById(R.id.post_content);
-    loadingText = (TextView) findViewById(R.id.loading_text);
     user_name = (TextView) findViewById(R.id.user_name);
     join = (TextView) findViewById(R.id.join);
     huifu = (TextView) findViewById(R.id.huifu);
-    edit_disable_text = (TextView) findViewById(R.id.edit_disable_text);
+    edit_disable_text = (ImageView) findViewById(R.id.edit_disable_text);
     group_count = (TextView) findViewById(R.id.group_count);
     //加载更多按钮
     loadingBar = (LinearLayout) findViewById(R.id.loading_bar);
@@ -157,15 +150,20 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     loadingProBar = (ProgressBar) findViewById(R.id.load_more_pro);
 
     //点赞和回复 块
-    reply_bottom_layout = (LinearLayout) findViewById(R.id.reply_bottom_layout);
-    support_button = (LinearLayout) findViewById(R.id.support_button);
-    reply_button = (LinearLayout) findViewById(R.id.reply_button);
+    reply_bottom_layout = (RelativeLayout) findViewById(R.id.reply_bottom_layout);
+    support_button = (RelativeLayout) findViewById(R.id.support_button);
+    reply_button = (RelativeLayout) findViewById(R.id.reply_button);
     reply_box = (LinearLayout) findViewById(R.id.reply_box);
     supportCountView = (TextView) findViewById(R.id.supportCount);
     replyCountView = (TextView) findViewById(R.id.replyCount);
     reply_editText = (EditText) findViewById(R.id.reply_editText);
     sendPostButtn = (TextView) findViewById(R.id.sendPostButn);
     qianming = (TextView) findViewById(R.id.qianming);
+
+    mCollectionBtn = (ImageView) findViewById(R.id.btn_collect);
+
+    mCollectionBtn.setOnClickListener(this);
+
     back_menu.setOnClickListener(this);
     user_logo.setOnClickListener(this);
     support_button.setOnClickListener(this);
@@ -174,7 +172,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     post_scroll.setOnTouchListener(this);
     edit_disable_text.setOnClickListener(this);
     new PostReplyThread(post_id, page).start();
-    InitPostView(postMap);
+    initPostView(mPostBean);
 
     post_scroll.smoothScrollTo(0, 0);
 
@@ -186,29 +184,39 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         new PostReplyThread(post_id, page).start();
       }
     });
+    showProgressDialog("", true);
   }
 
   //初始化activity
-  public void InitPostView(final HashMap<String, String> postMap) {
-    post_title.setText(postMap.get("title"));
-    post_user_name.setText(postMap.get("user_nickname"));
-    user_name.setText(postMap.get("user_nickname"));
-    if (TextUtils.isEmpty(postMap.get("user_logo"))) {
-      user_logo.setImageResource(R.drawable.side_user_avatar);
-    } else {
-      ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
-          postMap.get("user_logo")).placeholder(R.drawable.side_user_avatar).error(R.drawable
-          .side_user_avatar).dontAnimate().into(user_logo);
-    }
-    post_create_time.setText(postMap.get("create_time"));
-    post_content.setVisibility(TextUtils.isEmpty(postMap.get("content")) ? View.GONE : View
+  public void initPostView(final HotPostModel.HotPostBean bean) {
+    mAuthorId = bean.getUser().getUid();
+    post_title.setText(bean.getTitle());
+    post_user_name.setText(bean.getUser().getNickname());
+    ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
+        bean.getUser().getAvatar64()).placeholder(R.drawable.side_user_avatar).error(R.drawable
+        .side_user_avatar).dontAnimate().into(user_logo);
+    post_create_time.setText(bean.getCreate_time());
+    post_content.setVisibility(TextUtils.isEmpty(bean.getContent()) ? View.GONE : View
         .VISIBLE);
-    post_content.setText(postMap.get("content").replaceAll("\\n", "\n"));
-    support_flag = postMap.get("is_support");
-    qianming.setText(postMap.get("signature"));
-    huifu.setText("回复：" + postMap.get("reply_count"));
-    replyCountView.setText(String.valueOf(postMap.get("reply_count")));
-    group_id = postMap.get("group_id");
+    post_content.setText(TextUtils.isEmpty(bean.getContent()) ? "" : bean.getContent().replaceAll
+        ("\\n", "\n"));
+    support_flag = bean.getIs_support();
+    qianming.setText(bean.getUser().getSignature());
+    huifu.setText("回复：" + bean.getReply_count());
+    replyCountView.setText(String.valueOf(bean.getReply_count()));
+    group_id = bean.getGroup_id();
+
+    if (TextUtils.equals(Url.USERID, mAuthorId)) {
+      mCollectionBtn.setImageResource(R.drawable.icon_delete);
+      mCollectionBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          // TODO 删除
+        }
+      });
+    } else {
+      mCollectionBtn.setImageResource(R.drawable.icon_collect_white_selector);
+    }
 
     RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_XIANGQING, new RsenUrlUtil
         .OnJsonResultListener<MyBean>() {
@@ -261,7 +269,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       @Override
       public void onResult(boolean state, final List<MyBean> beans) {
         if (state) {
-          recycler.setAdapter(new MySubAdapter(GroupPostInfoActivity.this, logolist));
           ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
               .this, beans.get(0).logo).placeholder(R.drawable.picture_1_no).error(R.drawable
               .picture_1_no).dontAnimate().into(group_logo);
@@ -321,7 +328,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
           //ImageLoader.getInstance().displayImage(url, imageView);
           ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
-              .this, url).into(imageView);
+              .this, url).placeholder(R.drawable.picture_no).into(imageView);
           final int in = i;
           imageView.setOnClickListener(new View.OnClickListener() {
 
@@ -329,7 +336,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
             public void onClick(View v) {
               Intent intent = new Intent(GroupPostInfoActivity.this, ImagePagerActivity.class);
               Bundle bundle = new Bundle();
-              bundle.putStringArrayList("image_urls", img);
+              bundle.putStringArrayList("image_urls", (ArrayList<String>) img);
               bundle.putInt("image_index", in);
               intent.putExtras(bundle);
               startActivity(intent);
@@ -534,7 +541,10 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         }
         break;
       case R.id.user_logo:
-        groupApi.goUserInfo(mContext, postMap.get("user_uid"));
+        groupApi.goUserInfo(mContext, mAuthorId);
+        break;
+      case R.id.btn_collect:
+        // TODO 收藏
         break;
       default:
         break;
@@ -555,6 +565,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       if (hasDestroyed()) {
         return;
       }
+      closeProgressDialog();
       switch (msg.what) {
         case 0:
           if (SUPPORT) {
@@ -621,7 +632,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
               }
             }
           }
-          loadingText.setVisibility(View.GONE);
           loadingBar.setVisibility(View.VISIBLE);
           break;
         default:

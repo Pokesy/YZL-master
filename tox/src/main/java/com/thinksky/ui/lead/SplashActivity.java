@@ -23,7 +23,6 @@ import com.thinksky.tox.BuildConfig;
 import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.R;
-import com.thinksky.tox.UserInfoActivity;
 import com.thinksky.utils.MyJson;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -110,10 +109,9 @@ public class SplashActivity extends BaseBActivity {
 //        startActivity(intent);
 //        SplashActivity.this.finish();
     if (!Url.SESSIONID.equals("")) {
-      Intent intent = new Intent(SplashActivity.this,
-          UserInfoActivity.class);
-      intent.putExtra("userUid", Url.USERID);
-      startActivityForResult(intent, 0);
+      Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+      startActivity(intent);
+      SplashActivity.this.finish();
     } else {
       String[] s = new String[ways.size()];
       s = ways.toArray(s);

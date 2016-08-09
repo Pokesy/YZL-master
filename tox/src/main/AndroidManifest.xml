@@ -63,7 +63,7 @@
     <meta-data
         android:name="com.baidu.lbsapi.API_KEY"
 
-        android:value="h3f6RvtB7NCQM3DlT4tpT98nS3FM2EkO"
+        android:value="MVWsYCzjhccitkjpn01znGfdS3YVc21r"
         />
     <!-- Release -->
     <!--android:value="bDINd0L9qHfcXMSZNSGluhXOEWhEBe2Z"-->
@@ -186,8 +186,8 @@
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".UserInfoActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"/>
+        android:name="com.thinksky.ui.profile.OtherProfileActivity"
+        android:screenOrientation="portrait"/>
     <activity
         android:name=".UploadActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"

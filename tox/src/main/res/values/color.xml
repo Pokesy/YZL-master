@@ -127,7 +127,7 @@
 
   <color name="bg_color_main">#F7F7F8</color>
   <color name="bg_color_red">#f26767</color>
-  <color name="bg_color_blue">#007afe</color>
+  <color name="bg_color_blue">#5b85bb</color>
   <color name="bg_color_red_solution">#e83f38</color>
   <!--进度条-->
   <color name="dim_bg">#50000000</color>

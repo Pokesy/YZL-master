@@ -11,13 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.thinksky.fragment.BaseFragment;
 import com.thinksky.rsen.RViewHolder;
+import com.thinksky.ui.basic.BasicFragment;
 
 
 /**
  * Created by dajiao on 15-08-31-031.
  */
-public abstract class RBaseFragment extends Fragment {
+public abstract class RBaseFragment extends BasicFragment {
 
     protected AppCompatActivity mBaseActivity;
     protected ViewGroup rootView;

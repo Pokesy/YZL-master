@@ -90,23 +90,6 @@ public class UserInfoModel extends BaseModel implements Serializable {
   private String title;
   private String signature;
   private String birthday;
-  /**
-   * id : 110100
-   * name : 北京市
-   * level : 2
-   * upid : 110000
-   */
-
-  private PosCityBean pos_city;
-  private Object pos_district;
-  /**
-   * id : 110000
-   * name : 北京市
-   * level : 1
-   * upid : 0
-   */
-
-  private PosProvinceBean pos_province;
   private String isfactory;
   private String isdisplay;
   private String iswechat;
@@ -258,30 +241,6 @@ public class UserInfoModel extends BaseModel implements Serializable {
 
   public void setBirthday(String birthday) {
     this.birthday = birthday;
-  }
-
-  public PosCityBean getPos_city() {
-    return pos_city;
-  }
-
-  public void setPos_city(PosCityBean pos_city) {
-    this.pos_city = pos_city;
-  }
-
-  public Object getPos_district() {
-    return pos_district;
-  }
-
-  public void setPos_district(Object pos_district) {
-    this.pos_district = pos_district;
-  }
-
-  public PosProvinceBean getPos_province() {
-    return pos_province;
-  }
-
-  public void setPos_province(PosProvinceBean pos_province) {
-    this.pos_province = pos_province;
   }
 
   public String getIsfactory() {

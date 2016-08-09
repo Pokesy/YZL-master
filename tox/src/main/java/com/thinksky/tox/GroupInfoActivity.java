@@ -14,7 +14,6 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,14 +30,22 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.otto.Subscribe;
 import com.thinksky.fragment.MyScrollview;
 import com.thinksky.fragment.UserListActivity;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
 import com.thinksky.myview.MoreTextView;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.HotPostModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
@@ -50,6 +57,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -115,6 +123,13 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private TextView mMemberCountView;
   private TextView mCreatorView;
   private TextView mCreateTimeView;
+
+  private ExpandableTextView mNoticeView;
+  private TextView mExpandableBtn;
+
+  @Inject
+  AppService mAppService;
+
   //对加入群组的状态进行实时判断
   private Handler tempHandler = new Handler() {
     @Override
@@ -214,34 +229,13 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     }
   };
 
-  /*数据bean*/
-  public static class RemenhuatiBean {
-    public String title;
-    public String content;
-    public String supportCount;
-    public String is_support;
-    public String nickname;
-    public List<String> imgList;
-    public String id;
-    public String uid;
-    public String group_id;
-    public String create_time;
-    public String update_time;
-    public String last_reply_time;
-    public String status;
-    public String view_count;
-    public String reply_count;
-    public String is_top;
-    public String cate_id;
-    public String user_logo;
-  }
-
 
   @Override
   @SuppressWarnings(value = {"unchecked"})
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_group_info);
+    inject();
     ctx = this;
     mContext = GroupInfoActivity.this;
     session_id = new BaseApi().getSeesionId();
@@ -333,6 +327,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     mCreatorView = (TextView) findViewById(R.id.creator);
     mCreateTimeView = (TextView) findViewById(R.id.create_time);
 
+    mNoticeView = (ExpandableTextView) findViewById(R.id.notice_content);
+    mExpandableBtn = (TextView) findViewById(R.id.btn_notice_show);
+
     enter_cy = (RelativeLayout) findViewById(R.id.enter_cy);
     group_logo.setOnClickListener(this);
     linear_isnull.setOnClickListener(this);
@@ -346,11 +343,16 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     group_scro.setOnScrollListener(new MyScrollview.OnScrollListener() {
       @Override
       public void onScroll(int scrollY) {
-        float alpha = (float)scrollY / (float)containerView.getHeight();
-        Log.i("YZZ", ""+alpha);
+        float alpha = (float) scrollY / (float) containerView.getHeight();
         mTitleBar.getTitleBgView().setAlpha(alpha >= 1.0f ? 1.0f : (alpha));
       }
     });
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ())).serviceModule(new ServiceModule())
+        .build().inject(this);
   }
 
   private void initTitleBar() {
@@ -432,75 +434,34 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   }
 
   private void initTieziList() {
-    RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_XIANGQINGTZ,
-        new RsenUrlUtil.OnJsonResultListener<RemenhuatiBean>() {
+    manageRpcCall(mAppService.getGroupAllPost(String.valueOf(group_id)), new
+        UiRpcSubscriberSimple<HotPostModel>(this) {
           @Override
-          public void onNoNetwork(String msg) {
-            ToastHelper.showToast(msg, Url.context);
-          }
-
-          @Override
-          public Map getMap() {
-            Map map = new HashMap();
-            map.put("group_id", group_id);
-            return map;
-          }
-
-          @Override
-          public void onParseJsonBean(List<RemenhuatiBean> beans, JSONObject jsonObject) {
-            RemenhuatiBean bean = new RemenhuatiBean();
-            try {
-              bean.title = jsonObject.optString("title");
-              bean.content = jsonObject.optString("content");
-              bean.supportCount = jsonObject.optString("supportCount");
-              bean.is_support = jsonObject.optString("is_support");
-              bean.nickname = jsonObject.getJSONObject("user").optString("nickname");
-              bean.user_logo =
-                  RsenUrlUtil.URL_BASE + jsonObject.getJSONObject("user").optString("avatar32");
-              bean.id = jsonObject.optString("id");
-              bean.uid = jsonObject.optString("uid");
-              bean.group_id = jsonObject.optString("group_id");
-              bean.create_time = jsonObject.optString("create_time");
-              bean.update_time = jsonObject.optString("update_time");
-              bean.last_reply_time = jsonObject.optString("last_reply_time");
-              bean.status = jsonObject.optString("status");
-              //                    bean.view_count = jsonObject.getString("view_count");
-              bean.reply_count = jsonObject.optString("reply_count");
-              bean.is_top = jsonObject.optString("is_top");
-
-              bean.cate_id = jsonObject.optString("cate_id");
-              JSONArray imgList = jsonObject.optJSONArray("imgList");
-              List<String> imgs = new ArrayList<String>();
-              for (int i = 0; imgList != null && i < imgList.length(); i++) {
-                imgs.add(imgList.getString(i));
-              }
-              bean.imgList = imgs;
-              beans.add(bean);
-            } catch (JSONException e) {
+          protected void onSuccess(HotPostModel hotPostModel) {
+            if (null == hotPostModel.getList()) {
+              return;
             }
-          }
+            maxNumber = hotPostModel.getList().size();
+            if (hotPostModel.getList().size() != 0) {
+              linear_list.setVisibility(View.VISIBLE);
+              linear_isnull.setVisibility(View.GONE);
 
-          @Override
-          public void onResult(boolean state, List<RemenhuatiBean> beans) {
-            if (state) {
-              maxNumber = beans.size();
-              if (beans.size() != 0) {
-                linear_list.setVisibility(View.VISIBLE);
-                linear_isnull.setVisibility(View.GONE);
+              rm_adapter.resetData(hotPostModel.getList());
 
-                rm_adapter.resetData(beans);
-
-              } else {
-                linear_isnull.setVisibility(View.VISIBLE);
-                linear_list.setVisibility(View.GONE);
-              }
-              linear_body.setVisibility(View.VISIBLE);
-              body_probar.setVisibility(View.GONE);
             } else {
-              //                    ToastHelper.showToast("请求失败", Url.context);
+              linear_isnull.setVisibility(View.VISIBLE);
+              linear_list.setVisibility(View.GONE);
             }
+            linear_body.setVisibility(View.VISIBLE);
+            body_probar.setVisibility(View.GONE);
+          }
+
+          @Override
+          protected void onEnd() {
+
           }
         });
+
   }
 
   @Subscribe
@@ -526,6 +487,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         .error(R.drawable.picture_1_no).placeholder(R.drawable.picture_1_no).dontAnimate().into
         (group_logo);
 
+    mNoticeView.setText(groupInfoMap.get(""));
     init();
   }
 
@@ -904,14 +866,14 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
 
   /*数据适配器*/
-  public class RemenhuatiAdapter extends RBaseAdapter<RemenhuatiBean> {
+  public class RemenhuatiAdapter extends RBaseAdapter<HotPostModel.HotPostBean> {
     Context context;
 
     public RemenhuatiAdapter(Context context) {
       super(context);
     }
 
-    public RemenhuatiAdapter(Context context, List<RemenhuatiBean> datas) {
+    public RemenhuatiAdapter(Context context, List<HotPostModel.HotPostBean> datas) {
       super(context, datas);
     }
 
@@ -921,35 +883,27 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     }
 
     @Override
-    protected void onBindView(RViewHolder holder, int position, final RemenhuatiBean bean) {
-      holder.tV(R.id.title).setText(bean.title);
-      holder.tV(R.id.content).setText(bean.content);
-      holder.tV(R.id.supportCount).setText(bean.supportCount);
-      holder.tV(R.id.reply_count).setText(bean.reply_count);
-      holder.tV(R.id.nickname).setText(bean.nickname);
-      //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
-      //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id
-      // .user_logo),
-      //                    new DisplayImageOptions.Builder()
-      //                            .showImageOnLoading(R.drawable.ic_launcher)
-      //                            .showImageForEmptyUri(R.drawable.ic_launcher)
-      //                            .showImageOnFail(R.drawable.ic_launcher)
-      //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-      //                            .displayer(new RoundedBitmapDisplayer(100)).build());
-      ImageLoader.loadOptimizedHttpImage(GroupInfoActivity.this, bean.user_logo)
+    protected void onBindView(RViewHolder holder, int position, final HotPostModel.HotPostBean
+        bean) {
+      holder.tV(R.id.title).setText(bean.getTitle());
+      holder.tV(R.id.content).setText(bean.getContent());
+      holder.tV(R.id.supportCount).setText(bean.getSupportCount());
+      holder.tV(R.id.reply_count).setText(bean.getReply_count());
+      holder.tV(R.id.nickname).setText(bean.getUser().getNickname());
+      ImageLoader.loadOptimizedHttpImage(GroupInfoActivity.this, bean.getUser().getAvatar64())
           .
               bitmapTransform(new CropCircleTransformation(GroupInfoActivity.this))
           .into(holder.imgV(R.id.user_logo));
-      if (bean.imgList != null && bean.imgList.size() > 0) {
+      if (bean.getImgList() != null && bean.getImgList().size() > 0) {
         holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
 
-        int size = bean.imgList.size();
+        int size = bean.getImgList().size();
         holder.v(R.id.iv_1).setVisibility(size > 0 ? View.VISIBLE : View.GONE);
         holder.v(R.id.iv_2).setVisibility(size > 1 ? View.VISIBLE : View.GONE);
         holder.v(R.id.iv_3).setVisibility(size > 2 ? View.VISIBLE : View.GONE);
 
-        for (int i = 0; i < bean.imgList.size(); i++) {
-          String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
+        for (int i = 0; i < bean.getImgList().size(); i++) {
+          String url = RsenUrlUtil.URL_BASE + bean.getImgList().get(i);
           ImageView imageView = null;
           if (i == 0) {
             imageView = holder.imgV(R.id.iv_1);
@@ -970,7 +924,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
               public void onClick(View v) {
                 Intent intent = new Intent(GroupInfoActivity.this, ImagePagerActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.imgList);
+                bundle.putStringArrayList("image_urls", (ArrayList<String>) bean.getImgList());
                 bundle.putInt("image_index", in);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -986,7 +940,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         @Override
         public void onClick(View v) {
           //                    Bundle bundle = new Bundle();
-          if (!"".equals(bean)) {
+          if (null != bean) {
             launch(mContext, isWeGroup, bean);
           }
         }
@@ -999,44 +953,11 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     }
   }
 
-  public static void launch(Context context, boolean isWeGroup, RemenhuatiBean bean) {
-    HashMap<String, String> map = new HashMap<>();
+  public static void launch(Context context, boolean isWeGroup, HotPostModel.HotPostBean bean) {
     Bundle bundle = new Bundle();
-    //        map.put("id", bean.id);
-    //        map.put("title", bean.title);
-    //        map.put("group_type", bean.group_type);
-    //        map.put("detail", bean.detail);
-    //        map.put("type_name", bean.type_name);
-    //        map.put("post_count", bean.post_count);
-    //        map.put("group_logo", bean.logo);
-    //        map.put("memberCount", bean.memberCount);
-    //        map.put("uid", bean.uid);
 
-    map.put("id", bean.id);
-    map.put("uid", bean.uid);
-    map.put("group_id", bean.group_id);
-    //        map.put("group_name", groupInfoMap.get("title"));
-    map.put("title", bean.title);
-    map.put("content", bean.content);
-    map.put("create_time", bean.create_time);
-    map.put("update_time", bean.update_time);
-    map.put("last_reply_time", bean.last_reply_time);
-    map.put("status", bean.status);
-    map.put("view_count", bean.view_count);
-    map.put("reply_count", bean.reply_count);
-    map.put("is_top", bean.is_top);
-    map.put("cate_id", bean.cate_id);
-    map.put("supportCount", bean.supportCount);
-    map.put("is_support", bean.is_support);
-
-    //        JSONObject tempJSONObj = jsonObj.getJSONObject("user");
-    map.put("user_uid", bean.uid);
-    map.put("user_nickname", bean.nickname);
-    map.put("user_logo", bean.user_logo);
-
-    bundle.putSerializable("post_info", map);
-    bundle.putBoolean("isWeGroup", isWeGroup);
-    bundle.putStringArrayList("imgList", (ArrayList<String>) bean.imgList);
+    bundle.putSerializable(GroupPostInfoActivity.BUNDLE_KEY_POST, bean);
+    bundle.putBoolean(GroupPostInfoActivity.BUNDLE_KEY_IS_WE_GROUP, isWeGroup);
     Intent intent = new Intent(context, GroupPostInfoActivity.class);
     intent.putExtras(bundle);
     context.startActivity(intent);

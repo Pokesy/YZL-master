@@ -38,6 +38,7 @@ import com.thinksky.qqsliding.widget.DragLayout;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
@@ -159,7 +160,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     if (!isLogin()) {
       drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     } else {
-      drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+      drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
     drawer_view = (LinearLayout) findViewById(R.id.drawer_view);
@@ -291,9 +292,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       case R.id.ll1:
       case R.id.user:
         if (!TextUtils.isEmpty(Url.SESSIONID)) {
-          Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
-          intent.putExtra("userUid", Url.USERID);
-          startActivityForResult(intent, 0);
+          startActivity(ProfileIntentFactory.makeIntent(MainActivity.this, Url.USERID));
         } else {
           String[] s = new String[ways.size()];
           s = ways.toArray(s);
@@ -348,21 +347,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           ToastHelper.showToast("请登录", this);
         }
         break;
-      case R.id.LoginThisAPP:
-        if (!Url.SESSIONID.equals("")) {
-          intent = new Intent(MainActivity.this, UserInfoActivity.class);
-          intent.putExtra("userUid", Url.USERID);
-          startActivityForResult(intent, 0);
-        } else {
-          String[] s = new String[ways.size()];
-          s = ways.toArray(s);
-          intent = new Intent(MainActivity.this, LoginActivity.class);
-          intent.putExtra("ways", s);
-          intent.putExtra("entryActivity", ActivityModel.USERINFO);
-          startActivity(intent);
-        }
-        break;
-      // TODO 临时代码
       case R.id.search:
 
         break;
@@ -626,6 +610,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private View mCollectionView;
     private View mInviteFriendsView;
     private View mSettingView;
+    private View mBtnFans;
+    private View mBtnFollow;
 
     public SlideController(View rootView) {
       this.rootView = rootView;
@@ -647,6 +633,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       mCollectionView = rootView.findViewById(R.id.menu_collect);
       mInviteFriendsView = rootView.findViewById(R.id.menu_invite);
       mSettingView = rootView.findViewById(R.id.menu_setting);
+      mBtnFans = rootView.findViewById(R.id.btn_fans);
+      mBtnFollow = rootView.findViewById(R.id.btn_follow);
 
       mLocationView.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -682,6 +670,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           // 跳转到设置界面
           Intent intent = new Intent(MainActivity.this, SettingActivity.class);
           startActivity(intent);
+        }
+      });
+
+      mBtnFans.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+      });
+
+      mBtnFollow.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
         }
       });
     }

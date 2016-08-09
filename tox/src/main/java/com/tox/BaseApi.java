@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.thinksky.net.IsNet;
 import com.thinksky.net.ThreadPoolUtils;
 import com.thinksky.thread.HttpPostThread;
-import com.thinksky.tox.UserInfoActivity;
+import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.utils.MyJson;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +32,7 @@ public class BaseApi {
    * 查看用户资料
    */
   public void goUserInfo(Context mContext, String userUid) {
-    Intent intent = new Intent(mContext, UserInfoActivity.class);
-    intent.putExtra("userUid", userUid);
+    Intent intent = ProfileIntentFactory.makeIntent(mContext, userUid);
     mContext.startActivity(intent);
   }
 

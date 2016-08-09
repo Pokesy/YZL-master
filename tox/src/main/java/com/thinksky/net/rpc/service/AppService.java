@@ -12,6 +12,7 @@
 package com.thinksky.net.rpc.service;
 
 import com.thinksky.net.rpc.model.BaseModel;
+import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.WendaModel;
@@ -31,7 +32,6 @@ import rx.Observable;
  * @version [Taobei Client V20160411, 16/4/19]
  */
 public interface AppService {
-
 
   @GET("api.php")
   Observable<Response<UpgradeModel>> getLatestVersion(@Query("s") String
@@ -68,4 +68,58 @@ public interface AppService {
 
   @GET("api.php?s=user/logout")
   Observable<Response<BaseModel>> logout(@Query("session_id") String sessionId);
+
+
+  @GET(Constant.SET_PROFILE_URL)
+  Observable<Response<BaseModel>> setNickName(@Query("session_id") String sessionId, @Query
+      ("nickname") String nickName);
+
+  @GET(Constant.SET_PROFILE_URL)
+  Observable<Response<BaseModel>> setGender(@Query("session_id") String sessionId, @Query("sex")
+  String sex);
+
+  @GET(Constant.SET_PROFILE_URL)
+  Observable<Response<BaseModel>> setArea(@Query("session_id") String sessionId, @Query
+      ("province") String province, @Query("city") String city);
+
+  @GET(Constant.SET_PROFILE_URL)
+  Observable<Response<BaseModel>> setBirthday(@Query("session_id") String sessionId, @Query
+      ("birthday") String birthday);
+
+  @GET(Constant.SET_PROFILE_URL)
+  Observable<Response<BaseModel>> setSignature(@Query("session_id") String sessionId, @Query
+      ("signature") String signature);
+
+  @GET(Constant.SET_PROFILE_URL)
+  Observable<Response<BaseModel>> setQQ(@Query("session_id") String sessionId, @Query("qq")
+  String qq);
+
+  @GET(Constant.SET_PROFILE_URL)
+  Observable<Response<BaseModel>> setEmail(@Query("session_id") String sessionId, @Query("email")
+  String email);
+
+  @GET("api.php?s=user/doFollow")
+  Observable<Response<BaseModel>> doFollow(@Query("session_id") String sessionId, @Query
+      ("follow_who") String followUserId);
+
+  @GET("api.php?s=user/endFollow")
+  Observable<Response<BaseModel>> endFollow(@Query("session_id") String sessionId, @Query
+      ("follow_who") String followUserId);
+
+  @GET("api.php?s=group/getHotPostAll")
+  Observable<Response<HotPostModel>> getHotPostAll();
+
+  @GET("api.php?s=group/getMyPostAll")
+  Observable<Response<HotPostModel>> getMyPostAll(@Query("session_id") String sessionId);
+
+  @GET("api.php?s=group/getHotPostAll")
+  Observable<Response<HotPostModel>> getGroupMyPost(@Query("session_id") String sessionId,
+                                                    @Query("group_id") String groupId);
+
+  @GET("api.php?s=group/getPostAll")
+  Observable<Response<HotPostModel>> getGroupAllPost(@Query("group_id") String groupId);
+
+  interface Constant {
+    String SET_PROFILE_URL = "api.php?s=user/setProfile";
+  }
 }

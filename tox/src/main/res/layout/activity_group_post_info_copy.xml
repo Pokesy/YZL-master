@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@android:color/white"
     android:orientation="vertical"
     >
 
@@ -11,7 +11,7 @@
   <RelativeLayout
       android:id="@+id/group_post_top"
       android:layout_width="match_parent"
-      android:layout_height="50dp"
+      android:layout_height="?actionBarSize"
       android:layout_alignParentTop="true"
       android:background="@drawable/head_border"
       android:paddingBottom="0dp"
@@ -43,15 +43,14 @@
         />
 
     <ImageView
-        android:id="@+id/cate_menu"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
+        android:id="@+id/btn_collect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:src="@drawable/menu"
-        android:visibility="gone"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:padding="10dp"
+        android:src="@drawable/icon_collect"
         />
   </RelativeLayout>
 
@@ -96,8 +95,8 @@
               android:id="@+id/group_logo"
               android:layout_width="42dp"
               android:layout_height="42dp"
-              android:layout_marginRight="6dp"
-              android:src="@drawable/side_user_avatar"
+              android:layout_marginRight="@dimen/margin_medium"
+              tools:src="@drawable/picture_1_no"
               />
 
           <RelativeLayout
@@ -111,9 +110,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:textColor="@color/font_color_dark_black"
-                android:textSize="14sp"
                 tools:text="发帖人"
+                style="@style/Widget.App.TextView.Large.Blue"
                 />
 
 
@@ -143,8 +141,7 @@
                   android:layout_height="wrap_content"
                   android:layout_alignParentLeft="true"
                   android:text="2015-02-04"
-                  android:textColor="@color/font_color_dark_gray"
-                  android:textSize="13sp"
+                  style="@style/Widget.App.TextView.Medium.Secondary"
                   />
 
               <TextView
@@ -153,8 +150,7 @@
                   android:layout_below="@+id/louzhu"
                   android:layout_marginLeft="6dp"
                   android:text="发布"
-                  android:textColor="@color/font_color_dark_gray"
-                  android:textSize="13sp"
+                  style="@style/Widget.App.TextView.Medium.Secondary"
                   />
 
               <TextView
@@ -193,46 +189,20 @@
             android:orientation="vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="12dp"
+            android:paddingTop="@dimen/margin_xxlarge"
             >
 
           <TextView
               android:id="@+id/post_title"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/margin_large"
+              android:drawablePadding="@dimen/margin_large"
+              android:drawableTop="@drawable/icon_topic_title"
               android:gravity="center"
-              android:textColor="@color/font_color_dark_black"
-              android:textSize="16sp"
               tools:text="帖子标题"
+              style="@style/Widget.App.TextView.XLarge.Primary"
               />
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="15dp"
-              android:layout_marginTop="10dp"
-              android:gravity="center"
-              android:orientation="horizontal"
-              >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="作者："
-                android:textColor="@color/font_color_dark_gray"
-                android:textSize="12sp"
-                />
-
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/font_color_light_black"
-                android:textSize="13sp"
-                tools:text="楼主"
-                />
-          </LinearLayout>
 
           <TextView
               android:id="@+id/post_content"
@@ -240,16 +210,16 @@
               android:layout_height="wrap_content"
               android:layout_marginBottom="12dp"
               android:lineSpacingMultiplier="1.5"
-              android:textColor="@color/font_color_light_black"
-              android:textSize="14sp"
               tools:text="这里是帖子内容，看看一看内容超越第二排是什么情况啊，再看一遍"
+              style="@style/Widget.App.TextView.Medium.Secondary"
               />
           <!--状态部分-->
           <RelativeLayout
               android:id="@+id/img_layout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="15dp"
+              android:layout_marginBottom="@dimen/margin_large"
+              tools:visibility="gone"
               >
             <!--图片部分-->
             <LinearLayout
@@ -286,126 +256,91 @@
                   />
             </LinearLayout>
           </RelativeLayout>
-
-          <include
-              layout="@layout/one_line"
-              />
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center_vertical"
-              android:orientation="horizontal"
-              android:paddingBottom="14dp"
-              android:paddingLeft="20dp"
-              android:paddingRight="12dp"
-              android:paddingTop="14dp"
-              >
-
-            <com.thinksky.redefine.CircleImageView
-                android:id="@+id/user_logo"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/side_user_avatar"
-                />
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                >
-
-              <TextView
-                  android:id="@+id/louzhu1"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="center"
-                  android:layout_marginLeft="10dp"
-                  android:textColor="#999999"
-                  android:textSize="13sp"
-                  tools:text="作者："
-                  />
-
-              <TextView
-                  android:id="@+id/post_user_name"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentTop="true"
-                  android:layout_gravity="center"
-                  android:layout_toEndOf="@+id/louzhu1"
-                  android:layout_toRightOf="@+id/louzhu1"
-                  android:textColor="#666666"
-                  android:textSize="13sp"
-                  tools:text="楼主"
-                  />
-
-              <TextView
-                  android:id="@+id/qianming"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentLeft="true"
-                  android:layout_below="@+id/post_user_name"
-                  android:layout_marginLeft="10dp"
-                  android:layout_marginTop="5dp"
-                  android:singleLine="true"
-                  android:textColor="#666666"
-                  android:textSize="12sp"
-                  tools:text="个性签名aaaaaaaaaaaaaaaaaaa"
-                  />
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:src="@drawable/tiaozhuan"
-                />
-
-          </LinearLayout>
-
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="10dp"
-              android:orientation="vertical"
-              android:visibility="gone"
-              >
-
-            <TextView
-                android:id="@+id/chengyuan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:textColor="#999999"
-                android:textSize="13sp"
-                tools:text="作者："
-                />
-
-            <com.thinksky.rsen.view.RRecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="10dp"
-                android:tag="HORIZONTAL"
-                />
-          </LinearLayout>
-
-          <include layout="@layout/one_line"/>
-
-          <TextView
-              android:id="@+id/huifu"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="12dp"
-              android:layout_marginTop="12dp"
-              android:textColor="@color/font_color_light_black"
-              android:textSize="14sp"
-              tools:text="回复"
-              />
         </LinearLayout>
       </LinearLayout>
 
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@color/bg_color_main"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:paddingBottom="14dp"
+          android:paddingLeft="20dp"
+          android:paddingRight="12dp"
+          android:paddingTop="14dp"
+          >
+
+        <com.thinksky.redefine.CircleImageView
+            android:id="@+id/user_logo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/side_user_avatar"
+            />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+
+          <TextView
+              android:id="@+id/louzhu1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginLeft="10dp"
+              tools:text="作者："
+              style="@style/Widget.App.TextView.Large.Blue"
+              />
+
+          <TextView
+              android:id="@+id/post_user_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentTop="true"
+              android:layout_gravity="center"
+              android:layout_toEndOf="@+id/louzhu1"
+              android:layout_toRightOf="@+id/louzhu1"
+              tools:text="楼主"
+              style="@style/Widget.App.TextView.Large.Blue"
+              />
+
+          <TextView
+              android:id="@+id/qianming"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@+id/post_user_name"
+              android:layout_marginLeft="10dp"
+              android:layout_marginTop="5dp"
+              android:singleLine="true"
+              tools:text="个性签名aaaaaaaaaaaaaaaaaaa"
+              style="@style/Widget.App.TextView.Medium.Secondary"
+              />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/tiaozhuan"
+            />
+
+      </LinearLayout>
+
       <include layout="@layout/one_line"/>
+
+      <TextView
+          android:id="@+id/huifu"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          android:layout_marginLeft="12dp"
+          android:layout_marginTop="12dp"
+          tools:text="回复"
+          style="@style/Widget.App.TextView.Medium.Secondary"
+          />
       <!--评论主体-->
       <LinearLayout
           android:id="@+id/post_body_line"
@@ -448,100 +383,93 @@
               />
         </LinearLayout>
 
-        <include layout="@layout/one_line"/>
       </LinearLayout>
     </LinearLayout>
+
   </ScrollView>
 
   <!--评论发表box-->
   <LinearLayout
       android:id="@+id/bottom_layout"
       android:layout_width="match_parent"
-      android:layout_height="50dp"
+      android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
       android:layout_alignParentLeft="true"
-      android:orientation="horizontal"
+      android:orientation="vertical"
       android:visibility="visible"
       >
-
-    <LinearLayout
+    <include layout="@layout/one_line"/>
+    <RelativeLayout
         android:id="@+id/reply_bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/forum_edit_backgroud"
-        android:gravity="center"
-        android:visibility="visible"
-        android:weightSum="10"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         >
 
-      <TextView
+      <ImageView
           android:id="@+id/edit_disable_text"
-          android:layout_width="0dp"
-          android:layout_height="30dp"
-          android:layout_weight="5.5"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="@dimen/margin_xxlarge"
           android:background="@drawable/shape_reply"
-          android:drawableLeft="@drawable/icon_edit"
-          android:drawablePadding="10dp"
-
-          android:hint="写评论"
-          android:paddingBottom="5dp"
-          android:paddingLeft="8dp"
-          android:paddingTop="5dp"
+          android:src="@drawable/icon_btn_write_comment"
           />
 
-      <LinearLayout
-          android:id="@+id/support_button"
-          android:layout_width="0dp"
-          android:layout_height="35dp"
-
-          android:layout_marginLeft="15dp"
-          android:layout_weight="2"
-
-          android:gravity="center_horizontal|center_vertical"
+      <RelativeLayout
+          android:id="@+id/reply_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/margin_medium"
+          android:padding="10dp"
           >
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:src="@drawable/weidianzan"
-            />
-
-        <TextView
-            android:id="@+id/supportCount"
+            android:id="@+id/icon_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:minWidth="30dp"
-            android:textColor="#787C7F"
-            />
-      </LinearLayout>
-
-      <LinearLayout
-          android:id="@+id/reply_button"
-          android:layout_width="0dp"
-          android:layout_height="35dp"
-
-          android:layout_weight="2"
-
-          android:gravity="center_horizontal|center_vertical"
-          >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:src="@drawable/forum_com"
+            android:src="@drawable/icon_comment_blue"
             />
 
         <TextView
             android:id="@+id/replyCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:minWidth="30dp"
-            android:textColor="#787C7F"
+            android:layout_toRightOf="@id/icon_comment"
+            tools:text="11"
+            style="@style/Widget.App.TextView.Smallest.Blue"
             />
-      </LinearLayout>
-    </LinearLayout>
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:id="@+id/support_button"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginRight="@dimen/margin_medium"
+          android:layout_toLeftOf="@id/reply_button"
+          android:padding="10dp"
+          >
+
+        <ImageView
+            android:id="@+id/icon_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_like_blue"
+            />
+
+        <TextView
+            android:id="@+id/supportCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/icon_like"
+            tools:text="11"
+            style="@style/Widget.App.TextView.Smallest.Blue"
+            />
+      </RelativeLayout>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/reply_box"
@@ -598,17 +526,4 @@
     </LinearLayout>
   </LinearLayout>
 
-  <TextView
-      android:id="@+id/loading_text"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/bottom_layout"
-      android:layout_centerHorizontal="true"
-      android:layout_gravity="center"
-      android:layout_marginBottom="119dp"
-      android:padding="10dp"
-      android:text="加载中..."
-      android:textColor="@color/black"
-      android:textSize="16sp"
-      />
 </RelativeLayout>

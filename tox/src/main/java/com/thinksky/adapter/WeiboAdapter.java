@@ -38,10 +38,6 @@ public class WeiboAdapter extends BaseAdapter {
 
   private List<WeiboInfo> list;
   private Context ctx;
-  private LoadImg loadImgHeadImg;
-  private LoadImg loadImgMainImg;
-  private boolean upFlag = false;
-  private boolean downFlag = false;
   private WeiboApi weiboApi;
 
 
@@ -54,8 +50,6 @@ public class WeiboAdapter extends BaseAdapter {
     this.ctx = ctx;
     this.finalBitmap = finalBitmap;
     this.kjBitmap = kjBitmap;
-    loadImgHeadImg = new LoadImg(ctx);
-    loadImgMainImg = new LoadImg(ctx);
   }
 
 

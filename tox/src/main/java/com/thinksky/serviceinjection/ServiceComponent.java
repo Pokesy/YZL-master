@@ -11,14 +11,23 @@
  */
 package com.thinksky.serviceinjection;
 
+import com.thinksky.fragment.HomeFragment;
+import com.thinksky.fragment.MyhuatiActivity;
+import com.thinksky.fragment.RemenhuatiActivity;
+import com.thinksky.fragment.RemenhuatiFragment;
 import com.thinksky.fragment.WendaFragment;
 import com.thinksky.fragment.WendaListActivity;
 import com.thinksky.fragment.WendaMyQuestionActivity;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.UserService;
+import com.thinksky.tox.GroupDetailActivity;
+import com.thinksky.tox.GroupInfoActivity;
+import com.thinksky.tox.GroupMyActivity;
 import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.SettingActivity;
 import com.thinksky.ui.profile.AvatarChoosePresenter;
+import com.thinksky.ui.profile.OtherProfileActivity;
+import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.utils.UpgradeHelper;
 import dagger.Component;
 import javax.inject.Singleton;
@@ -50,4 +59,22 @@ public interface ServiceComponent {
   void inject(MainActivity activity);
 
   void inject(SettingActivity settingActivity);
+
+  void inject(ProfileSettingActivity profileSettingActivity);
+
+  void inject(OtherProfileActivity otherProfileActivity);
+
+  void inject(HomeFragment homeFragment);
+
+  void inject(MyhuatiActivity myhuatiActivity);
+
+  void inject(RemenhuatiActivity remenhuatiActivity);
+
+  void inject(RemenhuatiFragment remenhuatiFragment);
+
+  void inject(GroupMyActivity groupMyActivity);
+
+  void inject(GroupDetailActivity groupDetailActivity);
+
+  void inject(GroupInfoActivity groupInfoActivity);
 }

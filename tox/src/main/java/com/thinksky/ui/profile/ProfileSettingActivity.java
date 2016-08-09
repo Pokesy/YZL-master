@@ -11,23 +11,38 @@
  */
 package com.thinksky.ui.profile;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.squareup.otto.Subscribe;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
+import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.R;
 import com.thinksky.ui.LoginSession;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.profile.view.AddressChooseView;
 import com.thinksky.utils.imageloader.ImageLoader;
+import com.tox.Url;
+import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -38,6 +53,10 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * @version [Taobei Client V20160411, 16/8/1]
  */
 public class ProfileSettingActivity extends BaseBActivity {
+  private static final int INPUT_TYPE_NICK_NAME = 1;
+  private static final int INPUT_TYPE_SIGNATURE = 2;
+  private static final int INPUT_TYPE_QQ = 3;
+  private static final int INPUT_TYPE_EMAIL = 4;
   @Bind(R.id.avatar)
   ImageView mAvatarView;
   @Bind(R.id.gender_value)
@@ -64,6 +83,12 @@ public class ProfileSettingActivity extends BaseBActivity {
   private AvatarChoosePresenter mAvatarChoosePresenter;
   private UserInfoModel mUserInfo;
 
+  private AlertDialog mAreaChooseDialog;
+  private AlertDialog mGenderChooseDialog;
+
+  @Inject
+  AppService mAppService;
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -71,6 +96,13 @@ public class ProfileSettingActivity extends BaseBActivity {
     ButterKnife.bind(this);
     mAvatarChoosePresenter = new AvatarChoosePresenter(this);
     initView();
+    inject();
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ())).serviceModule(new ServiceModule())
+        .build().inject(this);
   }
 
   private void initView() {
@@ -125,24 +157,207 @@ public class ProfileSettingActivity extends BaseBActivity {
         mAvatarChoosePresenter.showChooseAvatarDialog();
         break;
       case R.id.nick_name_settings:
+        showInputDialog(mUserInfo.getNickname(), INPUT_TYPE_NICK_NAME);
         break;
       case R.id.gender_settings:
+        showGenderChooseDialog();
         break;
       case R.id.area_settings:
+        showAreaChooseDialog();
         break;
       case R.id.birthday_settings:
         break;
       case R.id.signature_settings:
+        showInputDialog(mUserInfo.getSignature(), INPUT_TYPE_SIGNATURE);
         break;
       case R.id.qq_settings:
+        showInputDialog(mUserInfo.getQq(), INPUT_TYPE_QQ);
         break;
       case R.id.email_settings:
+        showInputDialog(mUserInfo.getEmail(), INPUT_TYPE_EMAIL);
         break;
       case R.id.register_time_settings:
         break;
       case R.id.score_settings:
         break;
     }
+  }
+
+  private void showInputDialog(String initText, final int inputType) {
+    final EditText editText = (EditText) LayoutInflater.from(this).inflate(R.layout.dialog_input,
+        null);
+    if (inputType == INPUT_TYPE_QQ) {
+      editText.setInputType(InputType.TYPE_CLASS_PHONE);
+    }
+    editText.setText(initText);
+    AlertDialog dialog = new AlertDialog.Builder(this).setView(editText).setPositiveButton(R
+        .string.btn_confirm, new DialogInterface.OnClickListener() {
+
+
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        if (TextUtils.isEmpty(editText.getText())) {
+          return;
+        }
+        updateInfo(editText.getText().toString(), inputType);
+        dialog.cancel();
+      }
+    }).setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        dialog.cancel();
+      }
+    }).create();
+    dialog.show();
+  }
+
+  private void updateInfo(final String text, int inputType) {
+    switch (inputType) {
+      case INPUT_TYPE_NICK_NAME:
+        manageRpcCall(mAppService.setNickName(Url.SESSIONID, text), new
+            UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity.this) {
+
+
+              @Override
+              protected void onSuccess(BaseModel baseModel) {
+                UserInfoModel model = getComponent().loginSession().getUserInfo();
+                model.setNickname(text);
+                getComponent().loginSession().saveUserInfoModel(model);
+              }
+
+              @Override
+              protected void onEnd() {
+
+              }
+            });
+        break;
+      case INPUT_TYPE_SIGNATURE:
+        manageRpcCall(mAppService.setSignature(Url.SESSIONID, text), new
+            UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity.this) {
+
+
+              @Override
+              protected void onSuccess(BaseModel baseModel) {
+                UserInfoModel model = getComponent().loginSession().getUserInfo();
+                model.setSignature(text);
+                getComponent().loginSession().saveUserInfoModel(model);
+              }
+
+              @Override
+              protected void onEnd() {
+
+              }
+            });
+        break;
+      case INPUT_TYPE_QQ:
+        manageRpcCall(mAppService.setQQ(Url.SESSIONID, text), new
+            UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity.this) {
+
+
+              @Override
+              protected void onSuccess(BaseModel baseModel) {
+                UserInfoModel model = getComponent().loginSession().getUserInfo();
+                model.setQq(text);
+                getComponent().loginSession().saveUserInfoModel(model);
+              }
+
+              @Override
+              protected void onEnd() {
+
+              }
+            });
+        break;
+      case INPUT_TYPE_EMAIL:
+        manageRpcCall(mAppService.setEmail(Url.SESSIONID, text), new
+            UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity.this) {
+
+
+              @Override
+              protected void onSuccess(BaseModel baseModel) {
+                UserInfoModel model = getComponent().loginSession().getUserInfo();
+                model.setEmail(text);
+                getComponent().loginSession().saveUserInfoModel(model);
+              }
+
+              @Override
+              protected void onEnd() {
+
+              }
+            });
+        break;
+    }
+  }
+
+  private void showAreaChooseDialog() {
+    if (null == mAreaChooseDialog) {
+      final AddressChooseView view = new AddressChooseView(this);
+      mAreaChooseDialog = new AlertDialog.Builder(this).setPositiveButton(getString(R
+          .string.btn_confirm), new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+          manageRpcCall(mAppService.setArea(Url.SESSIONID, view.getSelectProvince(), view
+              .getSelectProvince()), new UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity
+              .this) {
+
+
+            @Override
+            protected void onSuccess(BaseModel baseModel) {
+              UserInfoModel model = getComponent().loginSession().getUserInfo();
+              model.setP_province(view.getSelectProvince());
+              model.setP_city(view.getSelectCity());
+              getComponent().loginSession().saveUserInfoModel(model);
+            }
+
+            @Override
+            protected void onEnd() {
+
+            }
+          });
+          mAreaChooseDialog.cancel();
+        }
+      }).setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+          mAreaChooseDialog.cancel();
+        }
+      }).setView(view).create();
+    }
+    if (mAreaChooseDialog.isShowing()) {
+      return;
+    }
+    mAreaChooseDialog.show();
+  }
+
+  private void showGenderChooseDialog() {
+    if (null == mGenderChooseDialog) {
+      final String[] genderItems = getResources().getStringArray(R.array.gender_items);
+      mGenderChooseDialog = new AlertDialog.Builder(this).setItems(genderItems, new
+          DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, final int which) {
+              manageRpcCall(mAppService.setGender(Url.SESSIONID, String.valueOf(which)), new
+                  UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity.this) {
+
+
+                    @Override
+                    protected void onSuccess(BaseModel baseModel) {
+                      UserInfoModel model = getComponent().loginSession().getUserInfo();
+                      model.setSex(String.valueOf(which));
+                      getComponent().loginSession().saveUserInfoModel(model);
+                    }
+
+                    @Override
+                    protected void onEnd() {
+
+                    }
+                  });
+            }
+          }).create();
+    }
+    if (mGenderChooseDialog.isShowing()) {
+      return;
+    }
+    mGenderChooseDialog.show();
   }
 
   @Subscribe
