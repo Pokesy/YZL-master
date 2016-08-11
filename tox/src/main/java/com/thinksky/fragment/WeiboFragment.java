@@ -44,9 +44,9 @@ public class WeiboFragment extends BasicFragment {
   private void initView() {
     mPager.setPagingEnabled(BaseFunction.isLogin());
     mPager.setAdapter(new WeiboPagerAdapter(getChildFragmentManager()));
-    mPager.setOffscreenPageLimit(3);
     mTabLayout.setupWithViewPager(mPager);
     String[] titles = getResources().getStringArray(R.array.weibo_tab_title);
+    mPager.setOffscreenPageLimit(titles.length);
     for (int i = 0; i < titles.length; i++) {
       TabLayout.Tab tab = mTabLayout.getTabAt(i);
       tab.setText(titles[i]);
@@ -118,7 +118,7 @@ public class WeiboFragment extends BasicFragment {
   }
 
   private enum WeiboType {
-    HOT, FOLLOW, MY
+    LATEST,HOT, FOLLOW, MY
   }
 
 }

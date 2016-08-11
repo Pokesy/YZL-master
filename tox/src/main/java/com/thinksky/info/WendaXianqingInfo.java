@@ -48,6 +48,7 @@ public class WendaXianqingInfo {
     private String update_time;
     private String create_time;
     private String is_recommend;
+    private String is_collection;
     /**
      * uid : 1
      * support : 1
@@ -229,6 +230,14 @@ public class WendaXianqingInfo {
 
     public List<String> getQuestionimages() {
         return Questionimages;
+    }
+
+    public String getIs_collection() {
+        return is_collection;
+    }
+
+    public void setIs_collection(String is_collection) {
+        this.is_collection = is_collection;
     }
 
     public static class QuestionAnswerEntity {

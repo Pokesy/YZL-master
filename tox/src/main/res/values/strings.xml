@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <!-- Common -->
+  <string name="gender_male">男</string>
+  <string name="gender_female">女</string>
+  <string name="gender_secret">保密</string>
   <string name="app_name">鱼知乐</string>
   <string name="back_menu">后退</string>
   <string name="clear_cache">清除缓存</string>
@@ -204,8 +208,9 @@
   <string name="share_error_web_chat_not_install">请确认微信已安装</string>
   <string name="share_error_qq_not_install">请确认QQ已安装</string>
   <string name="share_error_sina_not_install">请确认新浪微博已安装</string>
-  <!-- Common -->
-  <string name="gender_male">男</string>
-  <string name="gender_female">女</string>
-  <string name="gender_secret">保密</string>
+
+  <!-- 我的收藏 -->
+  <string name="activity_my_collection_title">我的收藏</string>
+  <string name="question_status_un_resolved">未解决</string>
+  <string name="question_status_resolved">已解决</string>
 </resources>

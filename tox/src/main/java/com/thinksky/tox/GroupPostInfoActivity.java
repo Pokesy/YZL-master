@@ -24,13 +24,20 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.HotPostModel;
+import com.thinksky.net.rpc.model.PostModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
-import com.thinksky.utils.MyJson;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -41,6 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +61,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     .OnTouchListener {
   public static final String BUNDLE_KEY_POST = "post_info";
   public static final String BUNDLE_KEY_IS_WE_GROUP = "isWeGroup";
-  private MyJson myjson = new MyJson();
   private boolean isWeGroup = true;
   LinearLayout loadingBar;
   private static boolean SUPPORT = false;
@@ -100,10 +107,14 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   private ImageView mCollectionBtn;
   private String mAuthorId;
 
+  @Inject
+  AppService mAppService;
+
   @Override
   @SuppressWarnings(value = {"unchecked"})
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    inject();
     mContext = GroupPostInfoActivity.this;
     groupApi = new GroupApi();
     groupApi.setHandler(mHandler);
@@ -185,6 +196,72 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       }
     });
     showProgressDialog("", true);
+    loadPostData();
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ())).serviceModule(new ServiceModule())
+        .build().inject(this);
+  }
+
+  private void loadPostData() {
+    manageRpcCall(mAppService.getPostDetail(Url.SESSIONID, mPostBean.getId()), new
+        UiRpcSubscriberSimple<PostModel>(this) {
+
+
+          @Override
+          protected void onSuccess(PostModel postModel) {
+            mPostBean.setCollection(postModel.getList().get(0).getIs_collection());
+            mCollectionBtn.setSelected(TextUtils.equals(mPostBean.is_collection(), "1"));
+            mCollectionBtn.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                if (TextUtils.equals(mPostBean.is_collection(), "1")) {
+                  manageRpcCall(mAppService.cancelPostBookmark(Url.SESSIONID, mPostBean.getId()),
+                      new UiRpcSubscriberSimple<BaseModel>(GroupPostInfoActivity.this) {
+
+
+                        @Override
+                        protected void onSuccess(BaseModel baseModel) {
+                          mPostBean.setCollection("0");
+                          mCollectionBtn.setSelected(TextUtils.equals(mPostBean.is_collection(),
+                              "1"));
+                        }
+
+                        @Override
+                        protected void onEnd() {
+
+                        }
+                      });
+                } else {
+                  manageRpcCall(mAppService.postBookmark(Url.SESSIONID, mPostBean.getId()),
+                      new UiRpcSubscriberSimple<BaseModel>(GroupPostInfoActivity.this) {
+
+
+                        @Override
+                        protected void onSuccess(BaseModel baseModel) {
+                          mPostBean.setCollection("1");
+                          mCollectionBtn.setSelected(TextUtils.equals(mPostBean.is_collection(),
+                              "1"));
+                        }
+
+                        @Override
+                        protected void onEnd() {
+
+                        }
+                      });
+                }
+              }
+            });
+
+          }
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
   }
 
   //初始化activity
@@ -212,6 +289,20 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
         @Override
         public void onClick(View v) {
           // TODO 删除
+          manageRpcCall(mAppService.deletePost(Url.SESSIONID, bean.getId()), new
+              UiRpcSubscriberSimple<BaseModel>(GroupPostInfoActivity.this) {
+
+
+                @Override
+                protected void onSuccess(BaseModel baseModel) {
+                  performPostDataChangeEvent();
+                }
+
+                @Override
+                protected void onEnd() {
+
+                }
+              });
         }
       });
     } else {

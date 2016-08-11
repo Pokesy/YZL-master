@@ -48,9 +48,10 @@ import org.kymjs.aframe.bitmap.KJBitmap;
  * 热门的fragment
  */
 public class WeiboListFragment extends BasicFragment {
-  private static final int TAB_INDEX_HOT = 0;
-  private static final int TAB_INDEX_FOLLOW = 1;
-  private static final int TAB_INDEX_MY = 2;
+  private static final int TAB_INDEX_LATEST = 0;
+  private static final int TAB_INDEX_HOT = 1;
+  private static final int TAB_INDEX_FOLLOW = 2;
+  private static final int TAB_INDEX_MY = 3;
   private static final int INIT_PAGE = 1;
 
   private static final String KEY_INDEX = "index";
@@ -71,7 +72,6 @@ public class WeiboListFragment extends BasicFragment {
   private Context ctx;
   private WeiboApi weiboApi = new WeiboApi();
   private FinalBitmap finalBitmap;
-  private KJBitmap kjBitmap;
   private ProgressBar mAddMoreProgressBar;
   private int isAdd = 0;
   private String userUid;
@@ -93,6 +93,10 @@ public class WeiboListFragment extends BasicFragment {
     super.onCreate(savedInstanceState);
     int index = getArguments().getInt(KEY_INDEX);
     switch (index) {
+      case TAB_INDEX_LATEST:
+        // TODO 替换成最近动态的url
+        hotUrl = Url.WEIBO;
+        break;
       case TAB_INDEX_HOT:
         hotUrl = Url.WEIBO;
         break;
@@ -116,7 +120,6 @@ public class WeiboListFragment extends BasicFragment {
     finalBitmap = FinalBitmap.create(view.getContext());
     finalBitmap.configMemoryCacheSize((int) (Runtime.getRuntime().maxMemory() / 1024));
     finalBitmap.configBitmapLoadThreadSize(30);
-    kjBitmap = KJBitmap.create();
     baseApi = new BaseApi();
     userUid = baseApi.getUid();
     return view;
@@ -143,7 +146,7 @@ public class WeiboListFragment extends BasicFragment {
     HomeNoValue = (TextView) view.findViewById(R.id.HomeNoValue);
 
 
-    mAdapter = new WeiboAdapter(ctx, weiboList, finalBitmap, kjBitmap);
+    mAdapter = new WeiboAdapter(ctx, weiboList);
     //设置底部加载
     ListBottem = new Button(ctx);
     ListBottem.setBackgroundColor(getResources().getColor(R.color.mycolor));

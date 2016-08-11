@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="weibo_tab_title">
+    <item>最新动态</item>
     <item>热门动态</item>
     <item>我的关注</item>
     <item>我的动态</item>
@@ -28,4 +29,10 @@
     <item>男</item>
     <item>女</item>
   </array>
+
+  <array name="my_collection_tab_titles">
+    <item>话题</item>
+    <item>问答</item>
+  </array>
+
 </resources>

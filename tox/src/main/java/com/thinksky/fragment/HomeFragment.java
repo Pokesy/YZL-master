@@ -504,7 +504,7 @@ public class HomeFragment extends BasicFragment
         bean) {
       holder.tV(R.id.title).setText(bean.getTitle());
       if (!TextUtils.isEmpty(bean.getContent())) {
-        holder.tV(R.id.content).setText(bean.getContent().replace("\\n", "\n"));
+        holder.tV(R.id.content).setText(bean.getContent().replaceAll("\\n", "\n"));
       } else {
         holder.tV(R.id.content).setVisibility(View.GONE);
       }

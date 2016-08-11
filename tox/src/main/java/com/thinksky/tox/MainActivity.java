@@ -40,6 +40,7 @@ import com.thinksky.qqsliding.widget.DragLayout;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.profile.MyCollectionActivity;
 import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -360,6 +361,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         break;
     }
   }
+
   private void showShare() {
     ShareSDK.initSDK(MainActivity.this);
     OnekeyShare oks = new OnekeyShare();
@@ -685,6 +687,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void onClick(View v) {
           // TODO 跳转到收藏界面
+          startActivity(new Intent(MainActivity.this, MyCollectionActivity.class));
         }
       });
 

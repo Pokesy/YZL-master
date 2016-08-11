@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,12 +24,20 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.WendaXianqingInfo;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.BaseModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
+import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -40,6 +49,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONObject;
 
@@ -60,7 +70,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
   private String mQuestionId;
   private BaseApi baseApi;
   private String session_id;
-  private ImageView back_menu, iv1, iv2, iv3, wutu;
+  private ImageView iv1, iv2, iv3, wutu;
   public static boolean upFlag = false;
   public static boolean flag = false;
   public static boolean FLAG = false;
@@ -77,11 +87,16 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
   private RViewHolder holder;
   private RelativeLayout img_layout;
   private ScrollView mScrollView;
+  private TitleBar mTitleBar;
+
+  @Inject
+  AppService mAppService;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_wentixiangqing);
+    inject();
+    setContentView(R.layout.activity_question_detail);
     mScrollView = (ScrollView) findViewById(R.id.post_scroll);
     title = (TextView) findViewById(R.id.title);
     best_answer = (TextView) findViewById(R.id.best_answer);
@@ -93,13 +108,13 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     wutu = (ImageView) findViewById(R.id.wutu);
     huida = (TextView) findViewById(R.id.huida);
     listView = (ListView) findViewById(R.id.listView);
+    mTitleBar = (TitleBar) findViewById(R.id.title_bar);
 //        View headerView = new View(this);
 //        headerView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams
 // .MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.header_height)));
 //        listView.addHeaderView(headerView);
 
     btn_huida = (Button) findViewById(R.id.btn_huida);
-    back_menu = (ImageView) findViewById(R.id.back_menu);
     iv1 = (ImageView) findViewById(R.id.iv_1);
     iv2 = (ImageView) findViewById(R.id.iv_2);
     iv3 = (ImageView) findViewById(R.id.iv_3);
@@ -139,7 +154,6 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       }
     });
 
-    back_menu.setOnClickListener(this);
     btn_huida.setOnClickListener(this);
     sendPostButtn.setOnClickListener(this);
     mListData = new ArrayList<WendaXianqingInfo>();
@@ -148,6 +162,21 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     mQuestionId = getIntent().getStringExtra("question_id");
     initXiangQingData();
     mScrollView.smoothScrollTo(0, 0);
+
+    mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        finish();
+      }
+    });
+
+    mTitleBar.setMiddleTitle("问答");
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ())).serviceModule(new ServiceModule())
+        .build().inject(this);
   }
 
 
@@ -207,6 +236,77 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       public void onResult(boolean state, final List<WendaXianqingInfo> beans) {
         if (state) {
           suid = beans.get(0).getUid();
+
+          if (TextUtils.equals(suid, Url.USERID)) {
+            mTitleBar.setSearchBtn(R.drawable.icon_delete, new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                // TODO 删除
+                manageRpcCall(mAppService.deleteQuestion(Url.SESSIONID, beans.get(0).getId()),
+                    new UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
+
+
+                      @Override
+                      protected void onSuccess(BaseModel baseModel) {
+                        getComponent().getGlobalBus().post(new AnswerChangedEvent());
+                        finish();
+                      }
+
+                      @Override
+                      protected void onEnd() {
+
+                      }
+                    });
+              }
+            });
+          } else {
+            mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0).getIs_collection
+                (), "1"));
+            mTitleBar.setSearchBtn(R.drawable.icon_collect_white_selector, new View
+                .OnClickListener() {
+
+
+              @Override
+              public void onClick(View v) {
+                // TODO 收藏
+                if (TextUtils.equals(beans.get(0).getIs_collection(), "1")) {
+                  manageRpcCall(mAppService.cancelQuestionBookmark(Url.SESSIONID, beans.get(0).getId()), new
+                      UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
+
+
+                    @Override
+                    protected void onSuccess(BaseModel baseModel) {
+                      beans.get(0).setIs_collection("0");
+                      mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
+                          .getIs_collection(), "1"));
+                    }
+
+                    @Override
+                    protected void onEnd() {
+
+                    }
+                  });
+                } else {
+                  manageRpcCall(mAppService.questionBookmark(Url.SESSIONID, beans.get(0).getId()), new
+                      UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
+
+
+                    @Override
+                    protected void onSuccess(BaseModel baseModel) {
+                      beans.get(0).setIs_collection("1");
+                      mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
+                          .getIs_collection(), "1"));
+                    }
+
+                    @Override
+                    protected void onEnd() {
+
+                    }
+                  });
+                }
+              }
+            });
+          }
 
           if (beans.get(0).getImgList().size() != 0 && !beans.get(0).getImgList().contains
               ("Public/images/nopic.png")) {

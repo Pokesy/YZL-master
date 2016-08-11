@@ -12,7 +12,11 @@
 package com.thinksky.net.rpc.service;
 
 import com.thinksky.net.rpc.model.BaseModel;
+import com.thinksky.net.rpc.model.CollectPostModel;
+import com.thinksky.net.rpc.model.CollectQuestionModel;
 import com.thinksky.net.rpc.model.HotPostModel;
+import com.thinksky.net.rpc.model.PostModel;
+import com.thinksky.net.rpc.model.ResponseModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.WendaModel;
@@ -118,6 +122,47 @@ public interface AppService {
 
   @GET("api.php?s=group/getPostAll")
   Observable<Response<HotPostModel>> getGroupAllPost(@Query("group_id") String groupId);
+
+  @GET("api.php?s=question/questionBookmark")
+  Observable<Response<BaseModel>> questionBookmark(@Query("session_id") String sessionId, @Query
+      ("question_id") String questionId);
+
+  @GET("api.php?s=question/rejectBookmark")
+  Observable<Response<BaseModel>> cancelQuestionBookmark(@Query("session_id") String sessionId,
+                                                         @Query
+                                                             ("question_id") String questionId);
+
+  @GET("api.php?s=question/deleteQuestion")
+  Observable<Response<BaseModel>> deleteQuestion(@Query("session_id") String sessionId,
+                                                 @Query("question_id") String questionId);
+
+  @GET("api.php?s=group/postBookmark")
+  Observable<Response<BaseModel>> postBookmark(@Query("session_id") String sessionId, @Query
+      ("post_id") String postId);
+
+  @GET("api.php?s=group/rejectBookmark")
+  Observable<Response<BaseModel>> cancelPostBookmark(@Query("session_id") String sessionId, @Query
+      ("post_id") String postId);
+
+  @GET("api.php?s=group/deletePost")
+  Observable<Response<BaseModel>> deletePost(@Query("session_id") String sessionId,
+                                             @Query("post_id") String postId);
+
+  @GET("api.php?s=Question/getMyQColection")
+  Observable<Response<CollectQuestionModel>> getMyCollectQuestionList(@Query("session_id") String
+                                                                          sessionId, @Query
+                                                                          ("page") int page,
+                                                                      @Query("count") int count);
+
+  @GET("api.php?s=group/getMyPColection")
+  Observable<Response<CollectPostModel>> getMyCollectPostList(@Query("session_id") String
+                                                                   sessionId, @Query
+                                                                   ("page") int page,
+                                                               @Query("count") int count);
+
+  @GET("api.php?s=group/getPostDetail")
+  Observable<Response<PostModel>> getPostDetail(@Query("session_id") String sessionId, @Query
+      ("post_id") String postId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

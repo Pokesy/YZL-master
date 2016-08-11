@@ -40,16 +40,9 @@ public class WeiboAdapter extends BaseAdapter {
   private Context ctx;
   private WeiboApi weiboApi;
 
-
-  private FinalBitmap finalBitmap;
-  private KJBitmap kjBitmap;
-
-  public WeiboAdapter(Context ctx, List<WeiboInfo> list, FinalBitmap finalBitmap, KJBitmap
-      kjBitmap) {
+  public WeiboAdapter(Context ctx, List<WeiboInfo> list) {
     this.list = list;
     this.ctx = ctx;
-    this.finalBitmap = finalBitmap;
-    this.kjBitmap = kjBitmap;
   }
 
 

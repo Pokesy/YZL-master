@@ -255,7 +255,7 @@
     <!--微信分享回调 -->
 
     <activity
-        android:name="sharesdk.demo.wxapi.WXEntryActivity"
+        android:name="cn.sharesdk.onekeyshare.wxapi.WXEntryActivity"
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:exported="true"
         android:screenOrientation="portrait"
@@ -630,6 +630,10 @@
         android:name="com.thinksky.fragment.UserListActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
+
+    <activity
+        android:name="com.thinksky.ui.profile.MyCollectionActivity"
+        android:screenOrientation="portrait"/>
     <!-- Glide Module  -->
     <meta-data
         android:name="com.thinksky.utils.imageloader.GlideImageModule"

@@ -54,7 +54,6 @@
               android:id="@+id/Item_UserName"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="10dp"
               android:singleLine="true"
               tools:text="UserName"
               style="@style/Widget.App.TextView.Large.Blue"

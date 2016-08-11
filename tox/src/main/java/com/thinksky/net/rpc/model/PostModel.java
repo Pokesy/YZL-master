@@ -21,123 +21,93 @@ import java.util.List;
  * @author zhaozeyang
  * @version [Taobei Client V20160411, 16/8/9]
  */
-public class HotPostModel extends BaseModel implements Serializable {
+public class PostModel extends BaseModel implements Serializable {
+
 
   /**
-   * id : 62
-   * uid : 214
-   * group_id : 14
-   * title : 我的小盘子
+   * id : 65
+   * uid : 317
+   * group_id : 18
+   * title : 咯无开空调
    * parse : 0
-   * content :
-   * create_time : 05月27日 11:40
-   * update_time : 05月27日 11:40
+   * content : 酒肉朋友婆娘\n
+   * create_time : 07月08日 16:19
+   * update_time : 07月08日 16:19
    * status : 1
    * last_reply_time :
-   * view_count : 78
-   * reply_count : 31
+   * view_count : 34
+   * reply_count : 6
    * is_top : 0
    * cate_id : 0
-   * summary :
-   * cover : /Uploads/Picture/2016-05-27/5747c18186249.png
-   * imgList : ["/Uploads/Picture/2016-05-27/5747c18186249.png"]
+   * summary : 酒肉朋友婆娘
+   * cover : /Uploads/Picture/2016-07-08/577f61ffef1ad.jpg
+   * imgList : ["/Uploads/Picture/2016-07-08/577f61ffef1ad.jpg"]
    * user : {"avatar32":"Public/images/default_avatar_32_32.jpg",
    * "avatar64":"Public/images/default_avatar_64_64.jpg",
    * "avatar128":"Public/images/default_avatar_128_128.jpg",
    * "avatar256":"Public/images/default_avatar_256_256.jpg",
-   * "avatar512":"Public/images/default_avatar_512_512.jpg","uid":"214","nickname":"13893000015",
-   * "signature":"","username":"","real_nickname":"13893000015"}
-   * supportCount : 11
+   * "avatar512":"Public/images/default_avatar_512_512.jpg","real_nickname":null}
+   * supportCount : 3
+   * groupMemberCount : 9
    * is_support : 0
-   * posts_rply : [{"id":"181","uid":"325","post_id":"62","parse":"0","content":"24",
-   * "create_time":"1469496264","update_time":"1469496264","status":"1",
+   * is_collection : 0
+   * posts_rply : [{"id":"180","uid":"379","post_id":"65","parse":"0","content":"打打闹闹都能",
+   * "create_time":"1469494650","update_time":"1469494650","status":"1",
+   * "rp_user":{"avatar32":"Public/images/default_avatar_32_32.jpg",
+   * "avatar64":"Public/images/default_avatar_64_64.jpg",
+   * "avatar128":"Public/images/default_avatar_128_128.jpg",
+   * "avatar256":"Public/images/default_avatar_256_256.jpg",
+   * "avatar512":"Public/images/default_avatar_512_512.jpg","uid":"379","nickname":"天行健",
+   * "username":"","real_nickname":"天行健"}},{"id":"173","uid":"325","post_id":"65","parse":"0",
+   * "content":"1234","create_time":"1469435151","update_time":"1469435151","status":"1",
    * "rp_user":{"avatar32":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_32_32.jpg",
    * "avatar64":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_64_64.jpg",
    * "avatar128":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_128_128.jpg",
    * "avatar256":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_256_256.jpg",
    * "avatar512":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_512_512.jpg","uid":"325",
-   * "nickname":"昨日重现","username":"","real_nickname":"昨日重现"}},{"id":"182","uid":"325",
-   * "post_id":"62","parse":"0","content":"25","create_time":"1469496275",
-   * "update_time":"1469496275","status":"1",
-   * "rp_user":{"avatar32":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_32_32.jpg",
-   * "avatar64":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_64_64.jpg",
-   * "avatar128":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_128_128.jpg",
-   * "avatar256":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_256_256.jpg",
-   * "avatar512":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_512_512.jpg","uid":"325",
-   * "nickname":"昨日重现","username":"","real_nickname":"昨日重现"}},{"id":"183","uid":"427",
-   * "post_id":"62","parse":"0","content":"26","create_time":"1469674692",
-   * "update_time":"1469674692","status":"1",
-   * "rp_user":{"avatar32":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_32_32.jpg",
-   * "avatar64":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_64_64.jpg",
-   * "avatar128":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_128_128.jpg",
-   * "avatar256":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_256_256.jpg",
-   * "avatar512":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_512_512.jpg","uid":"427",
-   * "nickname":"唐德as","username":"","real_nickname":"唐德as"}},{"id":"184","uid":"427",
-   * "post_id":"62","parse":"0","content":"27","create_time":"1469674731",
-   * "update_time":"1469674731","status":"1",
-   * "rp_user":{"avatar32":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_32_32.jpg",
-   * "avatar64":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_64_64.jpg",
-   * "avatar128":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_128_128.jpg",
-   * "avatar256":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_256_256.jpg",
-   * "avatar512":"Uploads/Avatar/2016-08-02/57a04b6e1c1a4_512_512.jpg","uid":"427",
-   * "nickname":"唐德as","username":"","real_nickname":"唐德as"}},{"id":"186","uid":"373",
-   * "post_id":"62","parse":"0","content":"28","create_time":"1469692753",
-   * "update_time":"1469692753","status":"1",
+   * "nickname":"昨日重现","username":"","real_nickname":"昨日重现"}},{"id":"163","uid":"373",
+   * "post_id":"65","parse":"0","content":"text","create_time":"1469174286",
+   * "update_time":"1469174286","status":"1",
    * "rp_user":{"avatar32":"Uploads/Avatar/2016-07-19/578d91a883242_32_32.png",
    * "avatar64":"Uploads/Avatar/2016-07-19/578d91a883242_64_64.png",
    * "avatar128":"Uploads/Avatar/2016-07-19/578d91a883242_128_128.png",
    * "avatar256":"Uploads/Avatar/2016-07-19/578d91a883242_256_256.png",
    * "avatar512":"Uploads/Avatar/2016-07-19/578d91a883242_512_512.png","real_nickname":null}},
-   * {"id":"190","uid":"373","post_id":"62","parse":"0","content":"在于",
-   * "create_time":"1469779083","update_time":"1469779083","status":"1",
-   * "rp_user":{"avatar32":"Uploads/Avatar/2016-07-19/578d91a883242_32_32.png",
-   * "avatar64":"Uploads/Avatar/2016-07-19/578d91a883242_64_64.png",
-   * "avatar128":"Uploads/Avatar/2016-07-19/578d91a883242_128_128.png",
-   * "avatar256":"Uploads/Avatar/2016-07-19/578d91a883242_256_256.png",
-   * "avatar512":"Uploads/Avatar/2016-07-19/578d91a883242_512_512.png","real_nickname":null}},
-   * {"id":"193","uid":"434","post_id":"62","parse":"0","content":"Dasqwe",
-   * "create_time":"1470040926","update_time":"1470040926","status":"1",
-   * "rp_user":{"avatar32":"Public/images/default_avatar_32_32.jpg",
-   * "avatar64":"Public/images/default_avatar_64_64.jpg",
-   * "avatar128":"Public/images/default_avatar_128_128.jpg",
-   * "avatar256":"Public/images/default_avatar_256_256.jpg",
-   * "avatar512":"Public/images/default_avatar_512_512.jpg","uid":"434","nickname":"dakskj",
-   * "username":"","real_nickname":"dakskj"}},{"id":"194","uid":"434","post_id":"62","parse":"0",
-   * "content":"Sdqwe","create_time":"1470041006","update_time":"1470041006","status":"1",
-   * "rp_user":{"avatar32":"Public/images/default_avatar_32_32.jpg",
-   * "avatar64":"Public/images/default_avatar_64_64.jpg",
-   * "avatar128":"Public/images/default_avatar_128_128.jpg",
-   * "avatar256":"Public/images/default_avatar_256_256.jpg",
-   * "avatar512":"Public/images/default_avatar_512_512.jpg","uid":"434","nickname":"dakskj",
-   * "username":"","real_nickname":"dakskj"}},{"id":"178","uid":"325","post_id":"62","parse":"0",
-   * "content":"1234567","create_time":"1469435239","update_time":"1469435239","status":"1",
+   * {"id":"159","uid":"325","post_id":"65","parse":"0","content":"3","create_time":"1469082169",
+   * "update_time":"1469082169","status":"1",
    * "rp_user":{"avatar32":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_32_32.jpg",
    * "avatar64":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_64_64.jpg",
    * "avatar128":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_128_128.jpg",
    * "avatar256":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_256_256.jpg",
    * "avatar512":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_512_512.jpg","uid":"325",
-   * "nickname":"昨日重现","username":"","real_nickname":"昨日重现"}},{"id":"179","uid":"350",
-   * "post_id":"62","parse":"0","content":"信息","create_time":"1469438796",
-   * "update_time":"1469438796","status":"1",
-   * "rp_user":{"avatar32":"Uploads/Avatar/2016-07-15/578899dd93a64_32_32.png",
-   * "avatar64":"Uploads/Avatar/2016-07-15/578899dd93a64_64_64.png",
-   * "avatar128":"Uploads/Avatar/2016-07-15/578899dd93a64_128_128.png",
-   * "avatar256":"Uploads/Avatar/2016-07-15/578899dd93a64_256_256.png",
-   * "avatar512":"Uploads/Avatar/2016-07-15/578899dd93a64_512_512.png","uid":"350",
-   * "nickname":"婕儿","username":"","real_nickname":"婕儿"}}]
+   * "nickname":"昨日重现","username":"","real_nickname":"昨日重现"}},{"id":"148","uid":"373",
+   * "post_id":"65","parse":"0","content":"high","create_time":"1469065758",
+   * "update_time":"1469065758","status":"1",
+   * "rp_user":{"avatar32":"Uploads/Avatar/2016-07-19/578d91a883242_32_32.png",
+   * "avatar64":"Uploads/Avatar/2016-07-19/578d91a883242_64_64.png",
+   * "avatar128":"Uploads/Avatar/2016-07-19/578d91a883242_128_128.png",
+   * "avatar256":"Uploads/Avatar/2016-07-19/578d91a883242_256_256.png",
+   * "avatar512":"Uploads/Avatar/2016-07-19/578d91a883242_512_512.png","real_nickname":null}},
+   * {"id":"138","uid":"373","post_id":"65","parse":"0","content":"？？？",
+   * "create_time":"1468828768","update_time":"1468828768","status":"1",
+   * "rp_user":{"avatar32":"Uploads/Avatar/2016-07-19/578d91a883242_32_32.png",
+   * "avatar64":"Uploads/Avatar/2016-07-19/578d91a883242_64_64.png",
+   * "avatar128":"Uploads/Avatar/2016-07-19/578d91a883242_128_128.png",
+   * "avatar256":"Uploads/Avatar/2016-07-19/578d91a883242_256_256.png",
+   * "avatar512":"Uploads/Avatar/2016-07-19/578d91a883242_512_512.png","real_nickname":null}}]
    */
 
-  private List<HotPostBean> list;
+  private List<ListBean> list;
 
-  public List<HotPostBean> getList() {
+  public List<ListBean> getList() {
     return list;
   }
 
-  public void setList(List<HotPostBean> list) {
+  public void setList(List<ListBean> list) {
     this.list = list;
   }
 
-  public static class HotPostBean implements Serializable {
+  public static class ListBean {
     private String id;
     private String uid;
     private String group_id;
@@ -154,39 +124,36 @@ public class HotPostModel extends BaseModel implements Serializable {
     private String cate_id;
     private String summary;
     private String cover;
-    private String is_is_collection;
     /**
      * avatar32 : Public/images/default_avatar_32_32.jpg
      * avatar64 : Public/images/default_avatar_64_64.jpg
      * avatar128 : Public/images/default_avatar_128_128.jpg
      * avatar256 : Public/images/default_avatar_256_256.jpg
      * avatar512 : Public/images/default_avatar_512_512.jpg
-     * uid : 214
-     * nickname : 13893000015
-     * signature :
-     * username :
-     * real_nickname : 13893000015
+     * real_nickname : null
      */
 
-    private UserInfoModel user;
+    private UserBean user;
     private String supportCount;
+    private String groupMemberCount;
     private String is_support;
+    private String is_collection;
     private List<String> imgList;
     /**
-     * id : 181
-     * uid : 325
-     * post_id : 62
+     * id : 180
+     * uid : 379
+     * post_id : 65
      * parse : 0
-     * content : 24
-     * create_time : 1469496264
-     * update_time : 1469496264
+     * content : 打打闹闹都能
+     * create_time : 1469494650
+     * update_time : 1469494650
      * status : 1
-     * rp_user : {"avatar32":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_32_32.jpg",
-     * "avatar64":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_64_64.jpg",
-     * "avatar128":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_128_128.jpg",
-     * "avatar256":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_256_256.jpg",
-     * "avatar512":"Uploads/Avatar/2016-08-02/57a04e6b58c0d_512_512.jpg","uid":"325",
-     * "nickname":"昨日重现","username":"","real_nickname":"昨日重现"}
+     * rp_user : {"avatar32":"Public/images/default_avatar_32_32.jpg",
+     * "avatar64":"Public/images/default_avatar_64_64.jpg",
+     * "avatar128":"Public/images/default_avatar_128_128.jpg",
+     * "avatar256":"Public/images/default_avatar_256_256.jpg",
+     * "avatar512":"Public/images/default_avatar_512_512.jpg","uid":"379","nickname":"天行健",
+     * "username":"","real_nickname":"天行健"}
      */
 
     private List<PostsRplyBean> posts_rply;
@@ -319,11 +286,11 @@ public class HotPostModel extends BaseModel implements Serializable {
       this.cover = cover;
     }
 
-    public UserInfoModel getUser() {
+    public UserBean getUser() {
       return user;
     }
 
-    public void setUser(UserInfoModel user) {
+    public void setUser(UserBean user) {
       this.user = user;
     }
 
@@ -335,12 +302,28 @@ public class HotPostModel extends BaseModel implements Serializable {
       this.supportCount = supportCount;
     }
 
+    public String getGroupMemberCount() {
+      return groupMemberCount;
+    }
+
+    public void setGroupMemberCount(String groupMemberCount) {
+      this.groupMemberCount = groupMemberCount;
+    }
+
     public String getIs_support() {
       return is_support;
     }
 
     public void setIs_support(String is_support) {
       this.is_support = is_support;
+    }
+
+    public String getIs_collection() {
+      return is_collection;
+    }
+
+    public void setIs_collection(String is_collection) {
+      this.is_collection = is_collection;
     }
 
     public List<String> getImgList() {
@@ -359,15 +342,64 @@ public class HotPostModel extends BaseModel implements Serializable {
       this.posts_rply = posts_rply;
     }
 
-    public String is_collection() {
-      return is_is_collection;
+    public static class UserBean {
+      private String avatar32;
+      private String avatar64;
+      private String avatar128;
+      private String avatar256;
+      private String avatar512;
+      private Object real_nickname;
+
+      public String getAvatar32() {
+        return avatar32;
+      }
+
+      public void setAvatar32(String avatar32) {
+        this.avatar32 = avatar32;
+      }
+
+      public String getAvatar64() {
+        return avatar64;
+      }
+
+      public void setAvatar64(String avatar64) {
+        this.avatar64 = avatar64;
+      }
+
+      public String getAvatar128() {
+        return avatar128;
+      }
+
+      public void setAvatar128(String avatar128) {
+        this.avatar128 = avatar128;
+      }
+
+      public String getAvatar256() {
+        return avatar256;
+      }
+
+      public void setAvatar256(String avatar256) {
+        this.avatar256 = avatar256;
+      }
+
+      public String getAvatar512() {
+        return avatar512;
+      }
+
+      public void setAvatar512(String avatar512) {
+        this.avatar512 = avatar512;
+      }
+
+      public Object getReal_nickname() {
+        return real_nickname;
+      }
+
+      public void setReal_nickname(Object real_nickname) {
+        this.real_nickname = real_nickname;
+      }
     }
 
-    public void setCollection(String is_is_collection) {
-      this.is_is_collection = is_is_collection;
-    }
-
-    public static class PostsRplyBean implements Serializable{
+    public static class PostsRplyBean {
       private String id;
       private String uid;
       private String post_id;
@@ -377,15 +409,15 @@ public class HotPostModel extends BaseModel implements Serializable {
       private String update_time;
       private String status;
       /**
-       * avatar32 : Uploads/Avatar/2016-08-02/57a04e6b58c0d_32_32.jpg
-       * avatar64 : Uploads/Avatar/2016-08-02/57a04e6b58c0d_64_64.jpg
-       * avatar128 : Uploads/Avatar/2016-08-02/57a04e6b58c0d_128_128.jpg
-       * avatar256 : Uploads/Avatar/2016-08-02/57a04e6b58c0d_256_256.jpg
-       * avatar512 : Uploads/Avatar/2016-08-02/57a04e6b58c0d_512_512.jpg
-       * uid : 325
-       * nickname : 昨日重现
+       * avatar32 : Public/images/default_avatar_32_32.jpg
+       * avatar64 : Public/images/default_avatar_64_64.jpg
+       * avatar128 : Public/images/default_avatar_128_128.jpg
+       * avatar256 : Public/images/default_avatar_256_256.jpg
+       * avatar512 : Public/images/default_avatar_512_512.jpg
+       * uid : 379
+       * nickname : 天行健
        * username :
-       * real_nickname : 昨日重现
+       * real_nickname : 天行健
        */
 
       private RpUserBean rp_user;
@@ -462,7 +494,7 @@ public class HotPostModel extends BaseModel implements Serializable {
         this.rp_user = rp_user;
       }
 
-      public static class RpUserBean implements Serializable{
+      public static class RpUserBean {
         private String avatar32;
         private String avatar64;
         private String avatar128;
