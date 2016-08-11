@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.nineoldandroids.view.ViewHelper;
 import com.squareup.otto.Subscribe;
 import com.thinksky.fragment.CollectListActivity;
@@ -320,24 +322,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         break;
       case R.id.invite:
-        //InputStream is=getResources().openRawResource(R.raw.ic_launcher);
-
-        intent_Share = new Intent(Intent.ACTION_SEND);
-        //Uri imageUri =  Uri.parse("android.resource://package_name/raw/ic_luncher.png");
-        //Uri imageUri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ic_launcher);
-        //intent_Share.putExtra(Intent.EXTRA_STREAM, imageUri);
-        //intent_Share.setType("image/*");
-        intent_Share.putExtra(Intent.EXTRA_SUBJECT, "分享");
-        intent_Share.putExtra(Intent.EXTRA_TEXT, " http://a.app.qq.com/o/simple.jsp?pkgname=com" +
-            ".hengrtech.yuzhile"
-            + "（来自鱼知乐手机客户端）");//分享内容体
-        intent_Share.setType("text/plain");
-
-
-        //intent_Share.putExtra(Intent.ACTION_PACKAGE_ADDED,
-        //    "http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
-        // 分享内容体
-        startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
+        ////InputStream is=getResources().openRawResource(R.raw.ic_launcher);
+        //
+        //intent_Share = new Intent(Intent.ACTION_SEND);
+        ////Uri imageUri =  Uri.parse("android.resource://package_name/raw/ic_luncher.png");
+        ////Uri imageUri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ic_launcher);
+        ////intent_Share.putExtra(Intent.EXTRA_STREAM, imageUri);
+        ////intent_Share.setType("image/*");
+        //intent_Share.putExtra(Intent.EXTRA_SUBJECT, "分享");
+        //intent_Share.putExtra(Intent.EXTRA_TEXT, " http://a.app.qq.com/o/simple.jsp?pkgname=com" +
+        //    ".hengrtech.yuzhile"
+        //    + "（来自鱼知乐手机客户端）");//分享内容体
+        //intent_Share.setType("text/plain");
+        //
+        //
+        ////intent_Share.putExtra(Intent.ACTION_PACKAGE_ADDED,
+        ////    "http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
+        //// 分享内容体
+        //startActivity(Intent.createChooser(intent_Share, "分享"));//分享选择页面标题
+        showShare();
         break;
       case R.id.message1:
         if (BaseFunction.isLogin()) {
@@ -356,6 +359,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       default:
         break;
     }
+  }
+  private void showShare() {
+    ShareSDK.initSDK(MainActivity.this);
+    OnekeyShare oks = new OnekeyShare();
+    //关闭sso授权
+    oks.disableSSOWhenAuthorize();
+
+    // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
+    //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+    // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+    oks.setTitle(getString(R.string.setting));
+    // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+    oks.setTitleUrl("http://sharesdk.cn");
+    // text是分享文本，所有平台都需要这个字段
+    oks.setText("我是分享文本");
+    // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+    //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+    // url仅在微信（包括好友和朋友圈）中使用
+    oks.setUrl("http://sharesdk.cn");
+    // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+    oks.setComment("我是测试评论文本");
+    // site是分享此内容的网站名称，仅在QQ空间使用
+    oks.setSite(getString(R.string.app_name));
+    // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+    oks.setSiteUrl("http://sharesdk.cn");
+
+    // 启动分享GUI
+    oks.show(this);
   }
 
 
@@ -661,6 +692,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void onClick(View v) {
           // TODO 跳转到邀请朋友
+          showShare();
         }
       });
 

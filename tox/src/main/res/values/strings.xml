@@ -200,7 +200,10 @@
   <string name="activity_group_info_label_notice">公告</string>
   <string name="activity_group_info_btn_notice_expand">更多</string>
   <string name="activity_group_info_btn_notice_fold">收起</string>
-
+  <!-- 分享提示 -->
+  <string name="share_error_web_chat_not_install">请确认微信已安装</string>
+  <string name="share_error_qq_not_install">请确认QQ已安装</string>
+  <string name="share_error_sina_not_install">请确认新浪微博已安装</string>
   <!-- Common -->
   <string name="gender_male">男</string>
   <string name="gender_female">女</string>
