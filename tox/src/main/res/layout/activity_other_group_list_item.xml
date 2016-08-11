@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_medium"
+    >
+  <ImageView
+      android:id="@+id/avatar"
+      android:layout_width="32dp"
+      android:layout_height="32dp"
+      android:layout_centerVertical="true"
+      />
+
+  <TextView
+      android:id="@+id/member_count"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
+      android:layout_centerVertical="true"
+      tools:text="1334个成员"
+      style="@style/Widget.App.TextView.Large.Secondary"
+      />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/margin_medium"
+      android:layout_marginRight="@dimen/margin_medium"
+      android:layout_toLeftOf="@id/member_count"
+      android:layout_toRightOf="@id/avatar"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="群组名称"
+        style="@style/Widget.App.TextView.Medium.Blue"
+        />
+
+    <TextView
+        android:id="@+id/group_notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.App.TextView.Medium.Secondary"
+        android:layout_marginTop="@dimen/margin_smallest"
+        tools:text="群组公告"
+        />
+  </LinearLayout>
+
+</RelativeLayout>

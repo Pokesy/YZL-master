@@ -199,10 +199,13 @@ public class OtherProfileActivity extends BaseBActivity {
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.menu_question:
+        startActivity(OtherQuestionListActivity.makeIntent(this, mUserId));
         break;
       case R.id.menu_topic:
+        startActivity(OtherPostListActivity.makeIntent(this, mUserId));
         break;
       case R.id.menu_group:
+        startActivity(OtherGroupListActivity.makeIntent(this, mUserId));
         break;
     }
   }

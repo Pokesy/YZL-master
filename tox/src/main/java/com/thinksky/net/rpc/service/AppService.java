@@ -14,9 +14,9 @@ package com.thinksky.net.rpc.service;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.CollectPostModel;
 import com.thinksky.net.rpc.model.CollectQuestionModel;
+import com.thinksky.net.rpc.model.GroupInfoModel;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.model.PostModel;
-import com.thinksky.net.rpc.model.ResponseModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.WendaModel;
@@ -156,13 +156,25 @@ public interface AppService {
 
   @GET("api.php?s=group/getMyPColection")
   Observable<Response<CollectPostModel>> getMyCollectPostList(@Query("session_id") String
-                                                                   sessionId, @Query
-                                                                   ("page") int page,
-                                                               @Query("count") int count);
+                                                                  sessionId, @Query
+                                                                  ("page") int page,
+                                                              @Query("count") int count);
 
   @GET("api.php?s=group/getPostDetail")
   Observable<Response<PostModel>> getPostDetail(@Query("session_id") String sessionId, @Query
       ("post_id") String postId);
+
+  @GET("api.php?s=Question/getHerQuestionList")
+  Observable<Response<WendaModel>> getHerQuestionList(@Query("uid") String uid, @Query
+      ("page") int page, @Query("count") int count);
+
+  @GET("api.php?s=group/getHerPost")
+  Observable<Response<HotPostModel>> getHerPostList(@Query("uid") String uid, @Query
+      ("page") int page, @Query("count") int count);
+
+  @GET("api.php?s=group/getHerGroup")
+  Observable<Response<GroupInfoModel>> getHerGroup(@Query("uid") String uid, @Query
+      ("page") int page, @Query("count") int count);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

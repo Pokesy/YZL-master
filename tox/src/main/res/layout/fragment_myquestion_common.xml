@@ -16,7 +16,6 @@
         android:layout_height="?actionBarSize"
         android:layout_alignParentTop="true"
         android:background="@color/head"
-        android:gravity="center"
         >
 
       <ImageView

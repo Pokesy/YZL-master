@@ -213,4 +213,11 @@
   <string name="activity_my_collection_title">我的收藏</string>
   <string name="question_status_un_resolved">未解决</string>
   <string name="question_status_resolved">已解决</string>
+
+  <!-- 加入的群组 -->
+  <string name="activity_other_group_list_title">他加入的群组</string>
+  <string name="activity_other_group_member_count">%s个成员</string>
+
+  <!-- 他的话题 -->
+  <string name="activity_other_post_title">他的话题</string>
 </resources>

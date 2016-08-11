@@ -482,10 +482,15 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         .isEmpty(groupInfoMap.get("create_time")) ? "" : groupInfoMap.get("create_time")));
     mMemberCountView.setText(getString(R.string.activity_group_info_member_count, groupInfoMap
         .get("memberCount")));
-    ImageLoader.loadOptimizedHttpImage(this, groupInfoMap.get("group_logo")).bitmapTransform(new
-        CropCircleTransformation(this))
-        .error(R.drawable.picture_1_no).placeholder(R.drawable.picture_1_no).dontAnimate().into
-        (group_logo);
+
+    try {
+      ImageLoader.loadOptimizedHttpImage(this, groupInfoMap.get("group_logo")).bitmapTransform(new
+          CropCircleTransformation(this))
+          .error(R.drawable.picture_1_no).placeholder(R.drawable.picture_1_no).dontAnimate().into
+          (group_logo);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     mNoticeView.setText(groupInfoMap.get(""));
     init();
