@@ -136,4 +136,6 @@
 
   <!-- Register -->
   <color name="font_color_hint_register">#199bb2</color>
+
+  <color name="bg_main">#f2f2f2</color>
 </resources>

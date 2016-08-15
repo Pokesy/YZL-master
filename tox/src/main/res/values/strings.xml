@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Common -->
+  <string name="time_format_minute">%d分钟前</string>
+  <string name="time_format_hour">%d小时前</string>
+  <string name="time_format_just">刚刚</string>
   <string name="gender_male">男</string>
   <string name="gender_female">女</string>
   <string name="gender_secret">保密</string>
@@ -114,6 +117,7 @@
   <string name="activity_wenda_title_solution">已解决</string>
 
   <string name="title_bar_right_btn_write_feed">写动态</string>
+  <string name="title_bar_right_btn_refresh">刷新</string>
 
   <!-- pull to refresh -->
   <string name="pull_to_refresh_from_top_pull_label">下拉刷新</string>
@@ -220,4 +224,16 @@
 
   <!-- 他的话题 -->
   <string name="activity_other_post_title">他的话题</string>
+
+  <!-- 我的消息 -->
+  <string name="activity_my_message_title">我的消息</string>
+
+  <!-- 我的小组 -->
+  <string name="unit_one">个</string>
+  <string name="fragment_my_group_label_topic_count">已发表话题数</string>
+  <string name="fragment_my_group_label_create_group">创建小组</string>
+  <string name="fragment_my_group_label_topic">话题</string>
+  <string name="fragment_my_group_label_member">成员</string>
+  <string name="fragment_my_group_category_create">已创建的小组</string>
+  <string name="fragment_my_group_category_join">已加入的小组</string>
 </resources>

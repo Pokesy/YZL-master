@@ -31,6 +31,7 @@ import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
+import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -135,9 +136,9 @@ public class OtherProfileActivity extends BaseBActivity {
                 @Override
                 protected void onSuccess(BaseModel baseModel) {
                   model.setIs_follow(1);
-                  int followCount = TextUtils.isEmpty(model.getFollowing()) ? 0 : Integer
-                      .parseInt(model.getFollowing());
-                  model.setFollowing(String.valueOf(followCount + 1));
+                  int fansCount = TextUtils.isEmpty(model.getFans()) ? 0 : Integer
+                      .parseInt(model.getFans());
+                  model.setFollowing(String.valueOf(fansCount + 1));
                   bindData(model);
                 }
 
@@ -154,9 +155,9 @@ public class OtherProfileActivity extends BaseBActivity {
                 @Override
                 protected void onSuccess(BaseModel baseModel) {
                   model.setIs_follow(0);
-                  int followCount = TextUtils.isEmpty(model.getFollowing()) ? 0 : Integer
-                      .parseInt(model.getFollowing());
-                  model.setFollowing(String.valueOf(followCount - 1));
+                  int fansCount = TextUtils.isEmpty(model.getFans()) ? 0 : Integer
+                      .parseInt(model.getFans());
+                  model.setFollowing(String.valueOf(fansCount - 1));
                   bindData(model);
                 }
 
@@ -166,6 +167,29 @@ public class OtherProfileActivity extends BaseBActivity {
                 }
               });
         }
+      }
+    });
+
+    if (TextUtils.isEmpty(model.getLatitude()) || TextUtils.isEmpty(model.getLongitude())) {
+      enterMap.setText(R.string.activity_profile_setting_default_value);
+      enterMap.setTextColor(getResources().getColor(R.color.font_color_secondary));
+    } else {
+      enterMap.setText(R.string.activity_profile_enter_map);
+      enterMap.setTextColor(getResources().getColor(R.color.font_color_blue));
+    }
+
+    enterMap.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (TextUtils.isEmpty(model.getLatitude()) || TextUtils.isEmpty(model.getLongitude())) {
+          return;
+        }
+        getComponent().getGlobalBus().post(new MainActivity.EnterMapEvent(TextUtils.equals(model
+            .getIsfactory
+            (), "2"), model.getLongitude(), model.getLatitude()));
+        finish();
+        Intent intent = new Intent(OtherProfileActivity.this, MainActivity.class);
+        startActivity(intent);
       }
     });
 

@@ -115,8 +115,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="15dp"
-        style="@style/Widget.App.TextView.Large.Primary"
         tools:text="　一日，将军潜入花木兰帐内欲行不归，强行要上木兰姐姐，就在这时，将军忽然指着花木兰大叫一声：你~你~你~竟然是个女的......"
+        style="@style/Widget.App.TextView.Large.Primary"
         />
 
 
@@ -226,44 +226,37 @@
         android:layout_height="wrap_content"
         >
 
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/divider"
-          android:background="@color/bg_color_divider"
-          />
-
 
       <LinearLayout
           android:id="@+id/operation_container"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:gravity="center_vertical|right"
-          android:padding="1dp"
-          android:weightSum="9"
           >
 
 
         <LinearLayout
             android:id="@+id/SendRepostWeibo"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="3"
-            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_activity_list_btn"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2"
+            android:paddingLeft="@dimen/margin_large"
+            android:paddingRight="@dimen/margin_large"
             >
 
           <ImageView
               android:id="@+id/Item_repost_img"
               android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
+              android:layout_height="wrap_content"
               android:src="@drawable/icon_retweet"
               />
 
           <TextView
               android:id="@+id/Repost_Text"
               android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
+              android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:paddingLeft="4dp"
               android:text="@string/feed_btn_retweet"
@@ -273,82 +266,64 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="1dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/jbshape"
-            ></LinearLayout>
-
-        <LinearLayout
             android:id="@+id/ListView_itemComment"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
-            android:gravity="center|center_horizontal|center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_activity_list_btn"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2"
+            android:paddingLeft="@dimen/margin_large"
+            android:paddingRight="@dimen/margin_large"
             >
 
           <ImageView
               android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
-              android:src="@drawable/icon_comment_number"
+              android:layout_height="wrap_content"
+              android:src="@drawable/icon_comment_blue"
               />
 
           <TextView
               android:id="@+id/Item_CommentNum"
               android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="3dp"
               android:gravity="center_vertical"
-              android:paddingLeft="3dp"
-              android:text="评论"
-              android:textColor="#9A9A9A"
-              android:textSize="12sp"
+              android:text="1"
+              style="@style/Widget.App.TextView.Medium.Blue"
               />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/jbshape"
-            ></LinearLayout>
 
         <LinearLayout
             android:id="@+id/Item_Up"
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="3"
-            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_activity_list_btn"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2"
+            android:paddingLeft="@dimen/margin_large"
+            android:paddingRight="@dimen/margin_large"
             >
 
           <ImageView
               android:id="@+id/Item_Up_img"
               android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
-              android:src="@drawable/heart"
+              android:layout_height="wrap_content"
+              android:src="@drawable/icon_like_blue"
               />
 
           <TextView
               android:id="@+id/Like_text"
               android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
+              android:layout_height="wrap_content"
               android:layout_marginLeft="4dp"
               android:gravity="center_vertical"
               android:text="0"
-              android:textColor="#9A9A9A"
-              android:textSize="12sp"
+              style="@style/Widget.App.TextView.Medium.Blue"
               />
         </LinearLayout>
 
       </LinearLayout>
-
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/divider"
-          android:layout_alignBottom="@id/operation_container"
-          android:background="@color/bg_color_divider"
-          />
 
     </RelativeLayout>
   </LinearLayout>

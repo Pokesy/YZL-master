@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.squareup.otto.Subscribe;
 import com.thinksky.tox.R;
-import com.thinksky.tox.SegmentControl;
 import com.thinksky.ui.basic.BasicFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class YlqFragment extends BasicFragment implements View.OnClickListener {
     List<Fragment> fragments = new ArrayList<>();
     fragments.add(RemenhuatiFragment.newInstance("label1"));
     fragments.add(XiaozujingxuanFragment.newInstance("label2"));
-    fragments.add(WodexiaozuFragment.newInstance("label3"));
+    fragments.add(new MyGroupFragment());
     //fragments.add(LuntanFragment.newInstance("label4"));
     mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
     mTabLayout.setupWithViewPager(mPager);

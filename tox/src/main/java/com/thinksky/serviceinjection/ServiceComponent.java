@@ -12,6 +12,7 @@
 package com.thinksky.serviceinjection;
 
 import com.thinksky.fragment.HomeFragment;
+import com.thinksky.fragment.MyGroupFragment;
 import com.thinksky.fragment.MyhuatiActivity;
 import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.fragment.RemenhuatiActivity;
@@ -27,7 +28,9 @@ import com.thinksky.tox.GroupMyActivity;
 import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.SettingActivity;
+import com.thinksky.ui.profile.ActivityMessageFragment;
 import com.thinksky.ui.profile.AvatarChoosePresenter;
+import com.thinksky.ui.profile.DoctorMessageFragment;
 import com.thinksky.ui.profile.OtherGroupListActivity;
 import com.thinksky.ui.profile.OtherPostListActivity;
 import com.thinksky.ui.profile.OtherProfileActivity;
@@ -35,6 +38,7 @@ import com.thinksky.ui.profile.OtherQuestionListActivity;
 import com.thinksky.ui.profile.PostCollectionFragment;
 import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.ui.profile.QuestionCollectionFragment;
+import com.thinksky.ui.profile.YLQMessageFragment;
 import com.thinksky.utils.UpgradeHelper;
 import dagger.Component;
 import javax.inject.Singleton;
@@ -98,4 +102,12 @@ public interface ServiceComponent {
   void inject(OtherPostListActivity otherPostListFragment);
 
   void inject(OtherGroupListActivity otherGroupListActivity);
+
+  void inject(ActivityMessageFragment activityMessageFragment);
+
+  void inject(DoctorMessageFragment doctorMessageFragment);
+
+  void inject(YLQMessageFragment ylqMessageFragment);
+
+  void inject(MyGroupFragment myGroupFragment);
 }

@@ -645,6 +645,10 @@
     <activity
         android:name="com.thinksky.ui.profile.OtherGroupListActivity"
         android:screenOrientation="portrait"/>
+
+    <activity
+        android:name="com.thinksky.ui.profile.MyMessageActivity"
+        android:screenOrientation="portrait"/>
     <!-- Glide Module  -->
     <meta-data
         android:name="com.thinksky.utils.imageloader.GlideImageModule"

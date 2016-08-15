@@ -1,9 +1,9 @@
 /*
- * 文件名: QuestionCollectionFragmet
+ * 文件名: ActivityMessageFragment
  * 版    权：  Copyright Hengrtech Tech. Co. Ltd. All Rights Reserved.
  * 描    述: [该类的简要描述]
  * 创建人: zhaozeyang
- * 创建时间:16/8/10
+ * 创建时间:16/8/12
  * 
  * 修改人：
  * 修改时间:
@@ -11,7 +11,6 @@
  */
 package com.thinksky.ui.profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,12 +20,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.squareup.otto.Subscribe;
-import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriberSimple;
-import com.thinksky.net.rpc.model.CollectQuestionModel;
+import com.thinksky.net.rpc.model.CollectPostModel;
+import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
@@ -34,6 +32,7 @@ import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicListAdapter;
 import com.thinksky.ui.basic.BasicPullToRefreshFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
+import com.thinksky.utils.DateUtils;
 import com.tox.Url;
 import javax.inject.Inject;
 
@@ -42,16 +41,15 @@ import javax.inject.Inject;
  * [功能详细描述]
  *
  * @author zhaozeyang
- * @version [Taobei Client V20160411, 16/8/10]
+ * @version [Taobei Client V20160411, 16/8/12]
  */
-public class QuestionCollectionFragment extends BasicPullToRefreshFragment {
-
+public class DoctorMessageFragment extends BasicPullToRefreshFragment {
   @Bind(R.id.list)
   PullToRefreshListView mListView;
 
   @Inject
   AppService mAppService;
-  private QuestionCollectionAdapter mAdapter;
+  private ActivityAdapter mAdapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -65,14 +63,23 @@ public class QuestionCollectionFragment extends BasicPullToRefreshFragment {
   Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_question_collection, container, false);
     ButterKnife.bind(this, view);
-    mAdapter = new QuestionCollectionAdapter();
+    mAdapter = new ActivityAdapter();
     mListView.getRefreshListView().setAdapter(mAdapter);
+    mListView.getRefreshListView().setDividerHeight(1);
     return view;
   }
 
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
+  }
+
+
   private void inject() {
     DaggerServiceComponent.builder().serviceModule(new ServiceModule()).globalModule(new
-        GlobalModule(BaseApplication.getApplication())).build().inject(this);
+        GlobalModule(BaseApplication.getApplication()))
+        .build().inject(this);
   }
 
   @Override
@@ -82,78 +89,50 @@ public class QuestionCollectionFragment extends BasicPullToRefreshFragment {
 
   @Override
   protected void loadData() {
-    manageRpcCall(mAppService.getMyCollectQuestionList(Url.SESSIONID, getCurrentPage(),
-        PAGE_COUNT), new UiRpcSubscriberSimple<CollectQuestionModel>(getActivity()) {
+    // TODO
+    manageRpcCall(mAppService.getAllMessage(Url.SESSIONID, "23"), new
+        UiRpcSubscriberSimple<MessageModel>(getActivity()) {
 
 
-      @Override
-      protected void onSuccess(CollectQuestionModel collectQuestionModel) {
-        if (getCurrentPage() == 0) {
-          mAdapter.clear();
-        }
-        mAdapter.addAll(collectQuestionModel.getList());
-        mAdapter.notifyDataSetChanged();
-        onRefreshLoaded(collectQuestionModel.getList().size() >= PAGE_COUNT);
-      }
+          @Override
+          protected void onSuccess(MessageModel messageModel) {
+            mAdapter.clear();
+            mAdapter.addAll(messageModel.getList());
+            mAdapter.notifyDataSetChanged();
+          }
 
-      @Override
-      protected void onEnd() {
-        resetRefreshStatus();
-      }
-    });
+          @Override
+          protected void onEnd() {
+           resetRefreshStatus();
+          }
+        });
   }
 
-  @Subscribe
-  public void handleQuestionDataChangeEvent(QuestionDetailActivity.AnswerChangedEvent event) {
-    resetCurrentPage();
-    loadData();
-  }
-
-  @Override
-  public void onDestroyView() {
-    super.onDestroyView();
-    ButterKnife.unbind(this);
-  }
-
-  class QuestionCollectionAdapter extends BasicListAdapter<CollectQuestionModel.ListBean> {
+  class ActivityAdapter extends BasicListAdapter<MessageModel.ListBean> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
       ViewHolder holder;
       if (null == convertView) {
         convertView = LayoutInflater.from(getActivity()).inflate(R.layout
-            .fragment_question_colletion_item, parent, false);
+            .fragment_message_item, parent, false);
         holder = new ViewHolder(convertView);
         convertView.setTag(holder);
       } else {
         holder = (ViewHolder) convertView.getTag();
       }
-      final CollectQuestionModel.ListBean bean = getItem(position);
-      holder.title.setText(bean.getTitle());
-      holder.status.setText(TextUtils.equals(bean.getBest_answer(), "1") ? R.string
-          .question_status_resolved : R.string.question_status_un_resolved);
-      holder.answerCount.setText(bean.getAnswer_num());
-      holder.time.setText(bean.getCreate_time());
-      convertView.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          Bundle bundle = new Bundle();
-          bundle.putString("question_id", bean.getId());
-          Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
-          intent.putExtras(bundle);
-          startActivity(intent);
-        }
-      });
+      MessageModel.ListBean listBean = getItem(position);
+      holder.content.setText(listBean.getContent().getContent());
+      holder.content.setTextColor(getResources().getColor(TextUtils.equals(listBean.getIs_read(),
+          "1") ? R.color.font_color_secondary : R.color.font_color_primary));
+      holder.time.setText(listBean.getCreate_time());
       return convertView;
     }
 
+
     class ViewHolder {
-      @Bind(R.id.title)
-      TextView title;
-      @Bind(R.id.status)
-      TextView status;
-      @Bind(R.id.answer_count)
-      TextView answerCount;
+      @Bind(R.id.content)
+      TextView content;
       @Bind(R.id.time)
       TextView time;
 

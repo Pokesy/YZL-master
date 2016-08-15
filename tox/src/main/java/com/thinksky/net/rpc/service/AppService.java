@@ -11,11 +11,13 @@
  */
 package com.thinksky.net.rpc.service;
 
+import com.thinksky.net.rpc.GroupModel;
 import com.thinksky.net.rpc.model.BaseModel;
-import com.thinksky.net.rpc.model.CollectPostModel;
 import com.thinksky.net.rpc.model.CollectQuestionModel;
+import com.thinksky.net.rpc.model.CountModel;
 import com.thinksky.net.rpc.model.GroupInfoModel;
 import com.thinksky.net.rpc.model.HotPostModel;
+import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.model.PostModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
@@ -155,10 +157,10 @@ public interface AppService {
                                                                       @Query("count") int count);
 
   @GET("api.php?s=group/getMyPColection")
-  Observable<Response<CollectPostModel>> getMyCollectPostList(@Query("session_id") String
-                                                                  sessionId, @Query
-                                                                  ("page") int page,
-                                                              @Query("count") int count);
+  Observable<Response<HotPostModel>> getMyCollectPostList(@Query("session_id") String
+                                                              sessionId, @Query
+                                                              ("page") int page,
+                                                          @Query("count") int count);
 
   @GET("api.php?s=group/getPostDetail")
   Observable<Response<PostModel>> getPostDetail(@Query("session_id") String sessionId, @Query
@@ -175,6 +177,19 @@ public interface AppService {
   @GET("api.php?s=group/getHerGroup")
   Observable<Response<GroupInfoModel>> getHerGroup(@Query("uid") String uid, @Query
       ("page") int page, @Query("count") int count);
+
+  @GET("api.php?s=Message/getAllMessage")
+  Observable<Response<MessageModel>> getAllMessage(@Query("session_id") String sessionId, @Query
+      ("module") String module);
+
+  @GET("api.php?s=Message/getMyPostCount")
+  Observable<Response<CountModel>> getMyPostCount(@Query("session_id") String sessionId);
+
+  @GET("api.php?s=group/getWeCreatedGroupAll")
+  Observable<Response<GroupModel>> getCreatedGroup(@Query("session_id") String sessionId);
+
+  @GET("api.php?s=group/getJoinedGroupAll")
+  Observable<Response<GroupModel>> getJoinedGroup(@Query("session_id") String sessionId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

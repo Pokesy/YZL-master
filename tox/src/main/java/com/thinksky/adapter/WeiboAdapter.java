@@ -101,9 +101,9 @@ public class WeiboAdapter extends BaseAdapter {
       hold.imgViewList.get(1).setVisibility(View.GONE);
       hold.imgViewList.get(2).setVisibility(View.GONE);
       hold.UserHead.setTag(list.get(arg0).getUser().getAvatar());
-      hold.Up.setOnTouchListener(new TouchHelper(ctx, "#ededed", "#ffffff", "color"));
-      hold.sendRepost.setOnTouchListener(new TouchHelper(ctx, "#ededed", "#ffffff", "color"));
-      hold.sendComment.setOnTouchListener(new TouchHelper(ctx, "#ededed", "#ffffff", "color"));
+      //hold.Up.setOnTouchListener(new TouchHelper(ctx, "#ededed", "#ffffff", "color"));
+      //hold.sendRepost.setOnTouchListener(new TouchHelper(ctx, "#ededed", "#ffffff", "color"));
+      //hold.sendComment.setOnTouchListener(new TouchHelper(ctx, "#ededed", "#ffffff", "color"));
       //hold.Up.setOnTouchListener(new TouchHelper(ctx,R.drawable.button_vote_active+"",R
       // .drawable.button_vote_enable+"","image"));
       arg1.setTag(hold);
@@ -138,7 +138,7 @@ public class WeiboAdapter extends BaseAdapter {
     }
     if (hold.Up_Img.getTag().equals(list.get(arg0).getWid())) {
       if (list.get(arg0).getIs_supported()) {
-        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
+        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue, ctx));
         hold.upFlag = true;
       }
     } else {
@@ -146,7 +146,7 @@ public class WeiboAdapter extends BaseAdapter {
         hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
         hold.upFlag = true;
       } else {
-        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart_grary, ctx));
+        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like, ctx));
         hold.upFlag = false;
       }
     }
@@ -332,7 +332,7 @@ public class WeiboAdapter extends BaseAdapter {
           if (!hold.upFlag) {
             hold.upFlag = true;
             hold.Up_text.setText(Integer.parseInt(list.get(arg0).getLikenum()) + 1 + "");
-            hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
+            hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like, ctx));
             list.get(arg0).setIs_supported(true);
             list.get(arg0).setLikenum(Integer.parseInt(list.get(arg0).getLikenum()) + 1 + "");
             weiboApi.supportWeibo(list.get(arg0).getWid());

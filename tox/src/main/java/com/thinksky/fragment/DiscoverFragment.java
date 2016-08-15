@@ -37,6 +37,7 @@ import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.DiscoverSelectActivity;
 import com.thinksky.tox.DiscoverSendActivity;
 import com.thinksky.tox.ImagePagerActivity;
+import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SegmentControl;
 import com.thinksky.ui.basic.BasicFragment;
@@ -336,6 +337,30 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
     return view;
   }
 
+  @Subscribe
+  public void handleEnterMapEvent(MainActivity.EnterMapEvent enterMapEvent) {
+    if (enterMapEvent.isFactory) {
+      mSegmentControl.setCurrentIndex(1);
+    } else {
+      mSegmentControl.setCurrentIndex(0);
+    }
+    MyLocationData locData = new MyLocationData.Builder() //设置精确米数
+        .latitude(Double.parseDouble(enterMapEvent.lat))//设置纬度
+        .longitude(Double.parseDouble(enterMapEvent.lng))//设置经度
+        .build();
+
+    // 把定位信息显示地图上
+    mBaiduMap.setMyLocationData(locData);
+    ll = new LatLng(Double.parseDouble(enterMapEvent.lat), Double.parseDouble(enterMapEvent.lng));
+    MapStatus.Builder builder = new MapStatus.Builder();
+    builder.target(ll).zoom(10.0f);
+    //把定位设置为普通模式，该模式下，每次位置更新就不会将地图拖到我的位置。这样不影响拖动地图查看其他位置信息
+    MyLocationConfiguration config =
+        new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, false, null);
+    mBaiduMap.setMyLocationConfigeration(config);
+    mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+  }
+
   private void initView() {
 
     mark.setOnClickListener(new View.OnClickListener() {
@@ -439,6 +464,23 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
       mark.setVisibility(View.VISIBLE);
     }
   };
+
+  @Subscribe
+  public void handleReLocationEvent(ReLocationEvent event) {
+    switch (mCurrentType) {
+      case "1":
+        mPopView.setVisibility(View.GONE);
+        initMarker("1", fish1);
+        break;
+      case "2":
+        mPopView.setVisibility(View.GONE);
+        initMarker("2", fish1);
+        break;
+    }
+  }
+
+  public static class ReLocationEvent {
+  }
 
   public static class FXBean implements Serializable {
 

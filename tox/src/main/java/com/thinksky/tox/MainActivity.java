@@ -26,7 +26,6 @@ import com.thinksky.fragment.CollectListActivity;
 import com.thinksky.fragment.DiscoverFragment;
 import com.thinksky.fragment.HomeFragment;
 import com.thinksky.fragment.IsseuFragment;
-import com.thinksky.fragment.MyMessageActivity;
 import com.thinksky.fragment.WeiboFragment;
 import com.thinksky.fragment.YlqFragment;
 import com.thinksky.holder.BaseActivity;
@@ -44,8 +43,6 @@ import com.thinksky.ui.profile.MyCollectionActivity;
 import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
-import com.tox.BaseFunction;
-import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -121,6 +118,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         intent.putExtra("entryActivity", ActivityModel.SENDWEIBO);
         startActivity(intent);
       }
+    }
+  };
+
+  private View.OnClickListener mRefreshListener = new View.OnClickListener() {
+
+    @Override
+    public void onClick(View v) {
+      getComponent().getGlobalBus().post(new DiscoverFragment.ReLocationEvent());
     }
   };
 
@@ -344,12 +349,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         showShare();
         break;
       case R.id.message1:
-        if (BaseFunction.isLogin()) {
-          Intent intent1 = new Intent(MainActivity.this, MyMessageActivity.class);
-          startActivity(intent1);
-        } else {
-          ToastHelper.showToast("请登录", this);
-        }
         break;
       case R.id.search:
 
@@ -533,7 +532,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         break;
     }
-    mFragmentTransaction.commit();
+    mFragmentTransaction.commitAllowingStateLoss();
     performTitleBarChange(index);
   }
 
@@ -543,10 +542,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTitleBar.setVisibility(View.VISIBLE);
         mTitleBar.setRightTextBtn(R.string.title_bar_right_btn_write_feed, mWriteFeedListener);
         break;
+      case 4:
+        mTitleBar.setVisibility(View.VISIBLE);
+        mTitleBar.setRightTextBtn(R.string.title_bar_right_btn_refresh, mRefreshListener);
+        break;
       case 0:
         mTitleBar.setVisibility(View.GONE);
         break;
-
       default:
         mTitleBar.setRightTextBtnVisible(false);
         mTitleBar.setVisibility(View.VISIBLE);
@@ -622,6 +624,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     getComponent().upgradeHelper().checkUpgradeInfo();
   }
 
+  @Subscribe
+  public void handleEnterMapEvent(EnterMapEvent enterMapEvent) {
+    drawer_layout.closeDrawer(Gravity.LEFT);
+    mTabGroup.check(R.id.rb_mall);
+  }
+
   @Override
   protected void onDestroy() {
     super.onDestroy();
@@ -672,7 +680,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       mLocationView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          // TODO 跳转到地图界面
+          UserInfoModel info = BaseApplication.getApplication().getGlobalComponent().loginSession()
+              .getUserInfo();
+          if (TextUtils.isEmpty(info.getLatitude()) || TextUtils.isEmpty(info.getLongitude())) {
+            return;
+          }
+          getComponent().getGlobalBus().post(new EnterMapEvent(TextUtils.equals(info.getIsfactory
+              (), "2"), info.getLongitude(), info
+              .getLatitude()));
         }
       });
 
@@ -680,13 +695,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void onClick(View v) {
           // TODO 跳转到消息中心界面
+          startActivity(new Intent(MainActivity.this, com.thinksky.ui.profile.MyMessageActivity
+              .class));
         }
       });
 
       mCollectionView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          // TODO 跳转到收藏界面
           startActivity(new Intent(MainActivity.this, MyCollectionActivity.class));
         }
       });
@@ -694,7 +710,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       mInviteFriendsView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          // TODO 跳转到邀请朋友
           showShare();
         }
       });
@@ -748,6 +763,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       mSignatureView.setText(info.getSignature());
       mFansView.setText(info.getFans());
       mFollowView.setText(info.getFollowing());
+      if (TextUtils.isEmpty(info.getLatitude()) || TextUtils.isEmpty(info.getLongitude())) {
+        mLocationView.setText(R.string.activity_profile_setting_default_value);
+        mLocationView.setTextColor(getResources().getColor(R.color.font_color_secondary));
+      } else {
+        mLocationView.setText(R.string.activity_profile_enter_map);
+        mLocationView.setTextColor(getResources().getColor(R.color.font_color_blue));
+      }
       setTitleBar();
     }
 
@@ -768,6 +790,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           startActivity(new Intent(MainActivity.this, ProfileSettingActivity.class));
         }
       });
+    }
+  }
+
+  public static class EnterMapEvent {
+    public boolean isFactory;
+    public String lng;
+    public String lat;
+
+    public EnterMapEvent(boolean isFactory, String lng, String lat) {
+      this.isFactory = isFactory;
+      this.lng = lng;
+      this.lat = lat;
     }
   }
 }

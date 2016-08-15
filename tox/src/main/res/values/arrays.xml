@@ -35,4 +35,9 @@
     <item>问答</item>
   </array>
 
+  <array name="my_message_tab_titles">
+    <item>动态</item>
+    <item>鱼医生</item>
+    <item>鱼乐圈</item>
+  </array>
 </resources>

@@ -140,7 +140,7 @@ public class WeiboListFragment extends BasicFragment {
         LinearLayout.LayoutParams.MATCH_PARENT,
         LinearLayout.LayoutParams.MATCH_PARENT));
     myListView.setDivider(null);
-    myListView.setDividerHeight(0);
+    myListView.setDividerHeight(5);
 //        myListView.setFadingEdgeLength(10);
     mLinearLayout.addView(myListView);
     HomeNoValue = (TextView) view.findViewById(R.id.HomeNoValue);
@@ -265,7 +265,6 @@ public class WeiboListFragment extends BasicFragment {
 
   Handler hand = new Handler() {
     public void handleMessage(Message msg) {
-      Logger.e("YZZ", "hotUrl : %s  handleMessage", hotUrl);
       super.handleMessage(msg);
       if (msg.what == 404) {
         Toast.makeText(ctx, R.string.network_not_normal, Toast.LENGTH_LONG).show();
