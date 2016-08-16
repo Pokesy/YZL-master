@@ -227,6 +227,7 @@
 
   <!-- 我的消息 -->
   <string name="activity_my_message_title">我的消息</string>
+  <string name="activity_my_message_empty_info">这里太安静了哦</string>
 
   <!-- 我的小组 -->
   <string name="unit_one">个</string>
@@ -236,4 +237,10 @@
   <string name="fragment_my_group_label_member">成员</string>
   <string name="fragment_my_group_category_create">已创建的小组</string>
   <string name="fragment_my_group_category_join">已加入的小组</string>
+
+  <!-- 问答 -->
+  <string name="question_list_title_hot">热门问答</string>
+  <string name="question_list_title_max_award">最高悬赏</string>
+  <string name="question_list_title_solution">已解决</string>
+  <string name="question_list_title_bar_btn_ask">提问</string>
 </resources>

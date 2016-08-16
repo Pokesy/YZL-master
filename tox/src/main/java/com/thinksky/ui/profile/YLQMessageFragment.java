@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,6 +44,10 @@ import javax.inject.Inject;
 public class YLQMessageFragment extends BasicPullToRefreshFragment {
   @Bind(R.id.list)
   PullToRefreshListView mListView;
+  @Bind(R.id.empty_info)
+  TextView emptyInfo;
+  @Bind(R.id.empty_layout)
+  FrameLayout emptyLayout;
 
   @Inject
   AppService mAppService;
@@ -93,6 +98,13 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
 
           @Override
           protected void onSuccess(MessageModel messageModel) {
+            if (null == messageModel.getList() || messageModel.getList().size() == 0) {
+              emptyLayout.setVisibility(View.VISIBLE);
+              mListView.setVisibility(View.GONE);
+            } else {
+              emptyLayout.setVisibility(View.GONE);
+              mListView.setVisibility(View.VISIBLE);
+            }
             mAdapter.clear();
             mAdapter.addAll(messageModel.getList());
             mAdapter.notifyDataSetChanged();

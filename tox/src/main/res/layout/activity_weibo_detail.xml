@@ -104,8 +104,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:text="UserName"
-                            android:textColor="#815F3D"
-                            android:textSize="16sp" />
+                            style="@style/Widget.App.TextView.Large.Blue" />
 
                         <TextView
                             android:id="@+id/WeiboDetail_from"
@@ -143,8 +142,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
                         android:text="2014.7.16"
-                        android:textColor="#815F3D"
-                        android:textSize="15sp" />
+                        style="@style/Widget.App.TextView.Medium.Secondary" />
 
                 </RelativeLayout>
 
@@ -362,7 +360,7 @@
                                 android:id="@+id/Detail_Down_Img"
                                 android:layout_width="wrap_content"
                                 android:layout_height="fill_parent"
-                                android:src="@drawable/repost" />
+                                android:src="@drawable/icon_retweet" />
 
                             <TextView
                                 android:id="@+id/Detail_ShareNum"
@@ -396,7 +394,7 @@
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="fill_parent"
-                                android:src="@drawable/icon_comment_number" />
+                                android:src="@drawable/icon_comment_blue" />
 
                             <TextView
                                 android:id="@+id/Detail_ComNum"
@@ -428,7 +426,7 @@
                                 android:id="@+id/Detail_Up_Img"
                                 android:layout_width="wrap_content"
                                 android:layout_height="fill_parent"
-                                android:src="@drawable/heart_grary" />
+                                android:src="@drawable/icon_like_blue" />
 
                             <TextView
                                 android:id="@+id/Detail_Up_text"

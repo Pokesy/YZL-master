@@ -227,6 +227,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
                           mPostBean.setCollection("0");
                           mCollectionBtn.setSelected(TextUtils.equals(mPostBean.is_collection(),
                               "1"));
+                          performPostDataChangeEvent();
                         }
 
                         @Override
@@ -244,6 +245,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
                           mPostBean.setCollection("1");
                           mCollectionBtn.setSelected(TextUtils.equals(mPostBean.is_collection(),
                               "1"));
+                          performPostDataChangeEvent();
                         }
 
                         @Override

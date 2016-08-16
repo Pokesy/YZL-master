@@ -138,15 +138,15 @@ public class WeiboAdapter extends BaseAdapter {
     }
     if (hold.Up_Img.getTag().equals(list.get(arg0).getWid())) {
       if (list.get(arg0).getIs_supported()) {
-        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue, ctx));
+        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
         hold.upFlag = true;
       }
     } else {
       if (list.get(arg0).getIs_supported()) {
-        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
+        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
         hold.upFlag = true;
       } else {
-        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like, ctx));
+        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue, ctx));
         hold.upFlag = false;
       }
     }

@@ -42,13 +42,8 @@ public class IsseuFragment extends BasicFragment implements View.OnClickListener
     mTabLayout = (TabLayout) view.findViewById(R.id.segment_control2);
     mPager = (ViewPager) view.findViewById(R.id.pager);
     List<Fragment> fragments = new ArrayList<>();
-//        WendaFragment wendaFragment = new WendaFragment();
-//        ZhuanjiFragment zhuanjiFragment = new ZhuanjiFragment();
-//        BaikeFragment baikeFragment = new BaikeFragment();
-//        IssueFragment issueFragment = new IssueFragment();
     fragments.add(WendaFragment.newInstance("label1"));
     fragments.add(ZhuanjiFragment.newInstance("label2"));
-//        fragments.add(IssueFragment.newInstance("问答"));
     fragments.add(BaikeFragment.newInstance("label3"));
     mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
     mTabLayout.setupWithViewPager(mPager);

@@ -108,6 +108,8 @@ public class UserInfoModel extends BaseModel implements Serializable {
   private String score;
   private String p_city;
   private String p_province;
+  private String pos_province;
+  private String pos_city;
   private String uid;
   private String mobile;
   private boolean data;
@@ -115,6 +117,7 @@ public class UserInfoModel extends BaseModel implements Serializable {
   private List<?> rank_link;
   private List<String> cover_url;
   private List<String> images;
+  private String reg_time;
 
   public String getAvatar() {
     return avatar;
@@ -387,6 +390,22 @@ public class UserInfoModel extends BaseModel implements Serializable {
     this.p_province = p_province;
   }
 
+  public String getPos_province() {
+    return pos_province;
+  }
+
+  public void setPos_province(String pos_province) {
+    this.pos_province = pos_province;
+  }
+
+  public String getPos_city() {
+    return pos_city;
+  }
+
+  public void setPos_city(String pos_city) {
+    this.pos_city = pos_city;
+  }
+
   public String getUid() {
     return uid;
   }
@@ -441,6 +460,14 @@ public class UserInfoModel extends BaseModel implements Serializable {
 
   public void setImages(List<String> images) {
     this.images = images;
+  }
+
+  public String getReg_time() {
+    return reg_time;
+  }
+
+  public void setReg_time(String reg_time) {
+    this.reg_time = reg_time;
   }
 
   public static class ExpandInfoBean {

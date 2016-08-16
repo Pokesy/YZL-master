@@ -250,7 +250,7 @@ public class WeiboDetailActivity extends BaseBActivity {
                   (Weiboinfo.getLikenum());
               mDetail_Up_text.setText((LikeNum + 1) + "");
               mDetail_Up_Img.setImageBitmap(
-                  BitmapUtiles.drawableTobitmap(R.drawable.heart, WeiboDetailActivity.this));
+                  BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, WeiboDetailActivity.this));
               Weiboinfo.setIs_supported(true);
               Weiboinfo.setLikenum(LikeNum + 1 + "");
               support();
@@ -492,7 +492,7 @@ public class WeiboDetailActivity extends BaseBActivity {
     mDetail_Up_text.setText(Weiboinfo.getLikenum());
     if (Weiboinfo.getIs_supported()) {
       mDetail_Up_Img.setImageBitmap(
-          BitmapUtiles.drawableTobitmap(R.drawable.heart, WeiboDetailActivity.this));
+          BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, WeiboDetailActivity.this));
       upFlag = true;
     }
     if (Weiboinfo.getFrom() == null) {

@@ -30,6 +30,7 @@ import com.thinksky.tox.R;
 import com.thinksky.tox.SendQuestionActivity;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
+import com.thinksky.ui.question.QuestionListActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -38,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 public class WendaFragment extends BasicFragment {
   private static final int PAGE_LIMIT = 10;
@@ -49,7 +49,6 @@ public class WendaFragment extends BasicFragment {
 
   private String mParam1;
   private TextView textView;
-  KJBitmap kjBitmap;
   View rootView;
   PullToRefreshListView listView;
   private ImageView back_menu, iv1, iv2, iv3, wutu;
@@ -88,15 +87,13 @@ public class WendaFragment extends BasicFragment {
           public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId) {
               case R.id.rb_rmht:
-                Intent intent = new Intent(getContext(), WendaListActivity.class);
-                intent.putExtra("whichActivity", "HOT");
-                startActivity(intent);
+                startActivity(QuestionListActivity.makeIntent(getContext(), QuestionListActivity
+                    .TYPE_HOT));
                 cleanCheck();
                 break;
               case R.id.rb_zgxs:
-                Intent intent1 = new Intent(getContext(), WendaListActivity.class);
-                intent1.putExtra("whichActivity", "MON");
-                startActivity(intent1);
+                startActivity(QuestionListActivity.makeIntent(getContext(), QuestionListActivity
+                    .TYPE_MAX_AWARD));
                 cleanCheck();
                 break;
               case R.id.rb_wdtw:
@@ -109,9 +106,8 @@ public class WendaFragment extends BasicFragment {
                 cleanCheck();
                 break;
               case R.id.rb_yjj:
-                Intent intent3 = new Intent(getContext(), WendaListActivity.class);
-                intent3.putExtra("whichActivity", "SOLUTION");
-                startActivity(intent3);
+                startActivity(QuestionListActivity.makeIntent(getContext(), QuestionListActivity
+                    .TYPE_SOLUTION));
                 cleanCheck();
                 break;
               default:

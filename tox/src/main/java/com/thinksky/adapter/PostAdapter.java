@@ -144,14 +144,14 @@ public class PostAdapter extends BaseAdapter {
 
     if (hold.supportImg.getTag().equals(mList.get(position).getPostId())) {
       if (mList.get(position).getIs_support() == 1) {
-        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
+        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
         hold.upFlag = true;
       } else {
         hold.upFlag = false;
       }
     } else {
       if (mList.get(position).getIs_support() == 1) {
-        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
+        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
         hold.upFlag = true;
       } else {
         hold.upFlag = false;
@@ -175,7 +175,7 @@ public class PostAdapter extends BaseAdapter {
                 + "");
             Log.d("post 点赞" + mList.get(position).getPostId(), "");
             forumApi.supportPost(mList.get(position).getPostId());
-            hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.heart, ctx));
+            hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
           } else {
             ToastHelper.showToast("重复点赞", ctx);
           }

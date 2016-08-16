@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriberSimple;
@@ -117,6 +118,12 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
             resetRefreshStatus();
           }
         });
+  }
+
+  @Subscribe
+  public void handlePostDataChageEvent(GroupPostInfoActivity.PostDataChangeEvent event) {
+    resetCurrentPage();
+    loadData();
   }
 
   private void launch(Context context, boolean isWeGroup, HotPostModel.HotPostBean bean) {

@@ -615,10 +615,6 @@
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
     <activity
-        android:name="com.thinksky.fragment.MyMessageActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:theme="@style/ActivityThemeTwo"/>
-    <activity
         android:name="com.thinksky.tox.ReSetPasswordActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
@@ -648,6 +644,9 @@
 
     <activity
         android:name="com.thinksky.ui.profile.MyMessageActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.question.QuestionListActivity"
         android:screenOrientation="portrait"/>
     <!-- Glide Module  -->
     <meta-data

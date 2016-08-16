@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
 
-                    android:src="@drawable/forum_like" />
+                    android:src="@drawable/icon_like" />
 
                 <TextView
                     android:id="@+id/Post_detail_supportCounts"
@@ -165,7 +165,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:src="@drawable/forum_com" />
+                    android:src="@drawable/icon_comment" />
 
                 <TextView
                     android:id="@+id/Post_detail_comCount"

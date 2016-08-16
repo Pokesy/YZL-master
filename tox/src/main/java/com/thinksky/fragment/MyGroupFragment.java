@@ -17,6 +17,7 @@ import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.GroupModel;
 import com.thinksky.net.rpc.model.CountModel;
 import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.R;
@@ -69,6 +70,7 @@ public class MyGroupFragment extends BasicFragment {
   }
 
   private void initView() {
+    topicCount.setText("0");
     mGroupListAdapter = new GroupListAdapter();
     listView.setAdapter(mGroupListAdapter);
   }
@@ -238,7 +240,8 @@ public class MyGroupFragment extends BasicFragment {
         default:
           return convertView;
       }
-      ImageLoader.loadOptimizedHttpImage(getActivity(), bean.getLogo()).placeholder(R.drawable
+      ImageLoader.loadOptimizedHttpImage(getActivity(), NetConstant.BASE_URL + bean.getLogo())
+          .placeholder(R.drawable
           .picture_1_no).dontAnimate().into(holder.groupLogo);
       holder.groupName.setText(bean.getTitle());
       holder.groupDetail.setText(bean.getDetail());

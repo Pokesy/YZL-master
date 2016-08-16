@@ -270,39 +270,43 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
               public void onClick(View v) {
                 // TODO 收藏
                 if (TextUtils.equals(beans.get(0).getIs_collection(), "1")) {
-                  manageRpcCall(mAppService.cancelQuestionBookmark(Url.SESSIONID, beans.get(0).getId()), new
+                  manageRpcCall(mAppService.cancelQuestionBookmark(Url.SESSIONID, beans.get(0)
+                      .getId()), new
                       UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
 
 
-                    @Override
-                    protected void onSuccess(BaseModel baseModel) {
-                      beans.get(0).setIs_collection("0");
-                      mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
-                          .getIs_collection(), "1"));
-                    }
+                        @Override
+                        protected void onSuccess(BaseModel baseModel) {
+                          beans.get(0).setIs_collection("0");
+                          mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
+                              .getIs_collection(), "1"));
+                          getComponent().getGlobalBus().post(new AnswerChangedEvent());
+                        }
 
-                    @Override
-                    protected void onEnd() {
+                        @Override
+                        protected void onEnd() {
 
-                    }
-                  });
+                        }
+                      });
                 } else {
-                  manageRpcCall(mAppService.questionBookmark(Url.SESSIONID, beans.get(0).getId()), new
+                  manageRpcCall(mAppService.questionBookmark(Url.SESSIONID, beans.get(0).getId())
+                      , new
                       UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
 
 
-                    @Override
-                    protected void onSuccess(BaseModel baseModel) {
-                      beans.get(0).setIs_collection("1");
-                      mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
-                          .getIs_collection(), "1"));
-                    }
+                        @Override
+                        protected void onSuccess(BaseModel baseModel) {
+                          beans.get(0).setIs_collection("1");
+                          mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
+                              .getIs_collection(), "1"));
+                          getComponent().getGlobalBus().post(new AnswerChangedEvent());
+                        }
 
-                    @Override
-                    protected void onEnd() {
+                        @Override
+                        protected void onEnd() {
 
-                    }
-                  });
+                        }
+                      });
                 }
               }
             });

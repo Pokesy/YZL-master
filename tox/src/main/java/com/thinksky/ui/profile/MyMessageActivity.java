@@ -61,6 +61,7 @@ public class MyMessageActivity extends BaseBActivity {
     String[] titles = getResources().getStringArray(R.array.my_message_tab_titles);
     MessagePagerAdapter adapter = new MessagePagerAdapter(getSupportFragmentManager());
     mPagers.setAdapter(adapter);
+    mPagers.setOffscreenPageLimit(3);
     mTabLayout.setupWithViewPager(mPagers);
     for (int i = 0; i < titles.length; i++) {
       mTabLayout.getTabAt(i).setText(titles[i]);

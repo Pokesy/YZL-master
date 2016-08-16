@@ -43,6 +43,7 @@ import com.thinksky.tox.NewsDetailActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.question.QuestionListActivity;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
@@ -135,30 +136,25 @@ public class HomeFragment extends BasicFragment
       public void onClick(View v) {
         switch (v.getId()) {
           case R.id.rb_rmht:
-            Intent intent = new Intent(getContext(), WendaListActivity.class);
-            intent.putExtra("whichActivity", "HOT");
-            startActivity(intent);
+            startActivity(QuestionListActivity.makeIntent(getContext(), QuestionListActivity
+                .TYPE_HOT));
             break;
           case R.id.rb_zgxs:
-            Intent intent1 = new Intent(getContext(), WendaListActivity.class);
-            intent1.putExtra("whichActivity", "MON");
-            startActivity(intent1);
+            startActivity(QuestionListActivity.makeIntent(getContext(), QuestionListActivity
+                .TYPE_MAX_AWARD));
             break;
           case R.id.rb_wdtw:
             if (BaseFunction.isLogin()) {
-
               Intent intent2 = new Intent(getContext(), WendaMyQuestionActivity.class);
               startActivity(intent2);
             } else {
-
               ToastHelper.showToast("未登陆，请登陆", getContext());
             }
 
             break;
           case R.id.rb_yjj:
-            Intent intent3 = new Intent(getContext(), WendaListActivity.class);
-            intent3.putExtra("whichActivity", "SOLUTION");
-            startActivity(intent3);
+            startActivity(QuestionListActivity.makeIntent(getContext(), QuestionListActivity
+                .TYPE_SOLUTION));
 
             break;
           default:
@@ -466,7 +462,8 @@ public class HomeFragment extends BasicFragment
   }
 
   protected void initViewData() {
-    manageRpcCall(mAppService.getHotPostAll(), new UiRpcSubscriberSimple<HotPostModel>(getActivity()) {
+    manageRpcCall(mAppService.getHotPostAll(), new UiRpcSubscriberSimple<HotPostModel>
+        (getActivity()) {
       @Override
       protected void onSuccess(HotPostModel hotPostModel) {
         scrollView.setVisibility(View.VISIBLE);

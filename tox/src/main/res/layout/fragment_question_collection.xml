@@ -10,5 +10,22 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />
+  <FrameLayout
+      android:id="@+id/empty_layout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <TextView
+        android:id="@+id/empty_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/margin_xlarge"
+        android:drawableTop="@drawable/icon_default_group_info"
+        android:gravity="center_vertical"
+        android:text="@string/activity_my_message_empty_info"
+        style="@style/Widget.App.TextView.Medium.Secondary"
+        />
+  </FrameLayout>
 
 </LinearLayout>

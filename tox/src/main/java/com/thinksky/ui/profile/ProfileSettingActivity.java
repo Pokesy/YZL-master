@@ -40,6 +40,7 @@ import com.thinksky.tox.R;
 import com.thinksky.ui.LoginSession;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.ui.profile.view.AddressChooseView;
+import com.thinksky.ui.profile.view.DateChooseView;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.Url;
 import javax.inject.Inject;
@@ -85,6 +86,7 @@ public class ProfileSettingActivity extends BaseBActivity {
 
   private AlertDialog mAreaChooseDialog;
   private AlertDialog mGenderChooseDialog;
+  private AlertDialog mBirthdayChooseDialog;
 
   @Inject
   AppService mAppService;
@@ -123,8 +125,9 @@ public class ProfileSettingActivity extends BaseBActivity {
         mGenderValue.setText(R.string.gender_secret);
         break;
     }
-    mAreaValue.setText(!TextUtils.isEmpty(mUserInfo.getP_province()) || !TextUtils.isEmpty(mUserInfo
-        .getP_city())
+    mAreaValue.setText(!TextUtils.isEmpty(mUserInfo.getPos_province()) || !TextUtils.isEmpty
+        (mUserInfo
+        .getPos_city())
         ? mUserInfo.getP_province() + mUserInfo.getP_province() : getString(R.string
         .activity_profile_setting_default_value));
     mBirthdayValue.setText(TextUtils.isEmpty(mUserInfo.getBirthday()) ? getString(R.string
@@ -135,8 +138,7 @@ public class ProfileSettingActivity extends BaseBActivity {
         .activity_profile_setting_default_value) : mUserInfo.getQq());
     mEmailValue.setText(TextUtils.isEmpty(mUserInfo.getEmail()) ? getString(R.string
         .activity_profile_setting_default_value) : mUserInfo.getEmail());
-    // TODO 创建时间
-    //mRegisterTimeValue.setText(mUserInfo.get());
+    mRegisterTimeValue.setText(mUserInfo.getReg_time());
     mScoreValue.setText(mUserInfo.getScore());
 
     mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
@@ -166,6 +168,7 @@ public class ProfileSettingActivity extends BaseBActivity {
         showAreaChooseDialog();
         break;
       case R.id.birthday_settings:
+        showBirthChooseDialog();
         break;
       case R.id.signature_settings:
         showInputDialog(mUserInfo.getSignature(), INPUT_TYPE_SIGNATURE);
@@ -288,6 +291,44 @@ public class ProfileSettingActivity extends BaseBActivity {
     }
   }
 
+  private void showBirthChooseDialog() {
+    if (null == mBirthdayChooseDialog) {
+      final DateChooseView view = new DateChooseView(this);
+      mBirthdayChooseDialog = new AlertDialog.Builder(this).setPositiveButton(getString(R
+          .string.btn_confirm), new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+          manageRpcCall(mAppService.setBirthday(Url.SESSIONID, view.getDate()), new
+              UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity
+                  .this) {
+
+                @Override
+                protected void onSuccess(BaseModel baseModel) {
+                  UserInfoModel model = getComponent().loginSession().getUserInfo();
+                  model.setBirthday(view.getDate());
+                  getComponent().loginSession().saveUserInfoModel(model);
+                }
+
+                @Override
+                protected void onEnd() {
+
+                }
+              });
+          mBirthdayChooseDialog.cancel();
+        }
+      }).setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+          mBirthdayChooseDialog.cancel();
+        }
+      }).setView(view).create();
+    }
+    if (mBirthdayChooseDialog.isShowing()) {
+      return;
+    }
+    mBirthdayChooseDialog.show();
+  }
+
   private void showAreaChooseDialog() {
     if (null == mAreaChooseDialog) {
       final AddressChooseView view = new AddressChooseView(this);
@@ -359,6 +400,7 @@ public class ProfileSettingActivity extends BaseBActivity {
     }
     mGenderChooseDialog.show();
   }
+
 
   @Subscribe
   public void handleUserInfoChangeEvent(LoginSession.UserInfoChangeEvent event) {

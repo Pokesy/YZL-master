@@ -1,16 +1,28 @@
-package com.thinksky.fragment;
+/*
+ * 文件名: QuestionListFragment
+ * 版    权：  Copyright Hengrtech Tech. Co. Ltd. All Rights Reserved.
+ * 描    述: [该类的简要描述]
+ * 创建人: zhaozeyang
+ * 创建时间:16/8/16
+ * 
+ * 修改人：
+ * 修改时间:
+ * 修改内容：[修改内容]
+ */
+package com.thinksky.ui.question;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.holder.BaseApplication;
-import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.WendaModel;
@@ -21,11 +33,9 @@ import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
-import com.thinksky.tox.SendQuestionActivity;
+import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.imageloader.ImageLoader;
-import com.tox.ToastHelper;
-import com.tox.Url;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -34,32 +44,61 @@ import retrofit2.Response;
 import rx.Observable;
 
 /**
- * Created by jiao on 2016/3/13.
+ * [一句话功能简述]<BR>
+ * [功能详细描述]
+ *
+ * @author zhaozeyang
+ * @version [Taobei Client V20160411, 16/8/16]
  */
-public class WendaListActivity extends BaseBActivity {
+public class QuestionListFragment extends BasicFragment {
+  private static final String BUNDLE_KEY_WHICH_ACTIVITY = "bundle_key_which_activity";
+  private static final String BUNDLE_KYE_CATEGORY = "bundle_key_category";
+
   private static final int PAGE_LIMIT = 10;
   private static final int START_PAGE = 1;
   private static final int LOAD_MORE_COUNT = 3;
 
   PullToRefreshListView mListView;
   WendaListAdapter mListAdapter;
-  private ImageView back_menu;
-  private TextView mTitleView;
-  private TextView tiwen;
   private ImageView iv1, iv2, iv3;
 
   @Inject
   AppService mAppService;
   private int mCurrentPage = START_PAGE;
   private String mWhichActivity;
+  private String mCategory;
+
+  public static QuestionListFragment newInstance(String whichActivity, String category) {
+    QuestionListFragment fragment = new QuestionListFragment();
+    Bundle bundle = new Bundle();
+    bundle.putString(BUNDLE_KEY_WHICH_ACTIVITY, whichActivity);
+    bundle.putString(BUNDLE_KYE_CATEGORY, category);
+    fragment.setArguments(bundle);
+    return fragment;
+  }
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_wenda_common);
-    mListView = (PullToRefreshListView) findViewById(R.id.listView);
+    inject();
+    mWhichActivity = getArguments().getString(BUNDLE_KEY_WHICH_ACTIVITY);
+    mCategory = getArguments().getString(BUNDLE_KYE_CATEGORY);
+  }
+
+  @Nullable
+  @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+  Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.activity_wenda_common, container, false);
+    return view;
+  }
+
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mListView = (PullToRefreshListView) view.findViewById(R.id.listView);
     mListView.setPageCount(PAGE_LIMIT);
-    mListAdapter = new WendaListAdapter(this);
+    mListAdapter = new WendaListAdapter(getActivity());
     mListView.getRefreshListView().setAdapter(mListAdapter);
     mListView.setScrollToLoadListener(new PullToRefreshListView.ScrollToLoadListener() {
       @Override
@@ -73,56 +112,20 @@ public class WendaListActivity extends BaseBActivity {
         initData(mWhichActivity);
       }
     }, LOAD_MORE_COUNT);
-    tiwen = (TextView) findViewById(R.id.tiwen);
-    back_menu = (ImageView) findViewById(R.id.back_menu);
-    tiwen.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (isLogin()) {
-          Intent intent = new Intent(WendaListActivity.this, SendQuestionActivity.class);
-          startActivity(intent);
-        } else {
-          ToastHelper.showToast("请登录", Url.context);
-        }
-      }
-    });
     inject();
-    mWhichActivity = getIntent().getStringExtra("whichActivity");
-    initView(mWhichActivity);
     initData(mWhichActivity);
-  }
-
-  private void initView(String whichActivity) {
-    mTitleView = (TextView) findViewById(R.id.group_name);
-    back_menu.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        finish();
-      }
-    });
-    switch (whichActivity) {
-      case "HOT"://热门
-        mTitleView.setText(R.string.activity_wenda_title_hot);
-        break;
-      case "MON"://悬赏
-        mTitleView.setText(R.string.activity_wenda_title_mon);
-        break;
-      case "SOLUTION"://已解决
-        mTitleView.setText(R.string.activity_wenda_title_solution);
-        break;
-    }
   }
 
   private void initData(String whichActivity) {
     Observable<Response<WendaModel>> observable = null;
     switch (whichActivity) {
-      case "HOT"://热门
+      case QuestionListActivity.TYPE_HOT://热门
         observable = mAppService.getHotQuestionList(mCurrentPage, PAGE_LIMIT);
         break;
-      case "MON"://悬赏
+      case QuestionListActivity.TYPE_MAX_AWARD://悬赏
         observable = mAppService.getMonQuestionList(mCurrentPage, PAGE_LIMIT);
         break;
-      case "SOLUTION"://已解决
+      case QuestionListActivity.TYPE_SOLUTION://已解决
         observable = mAppService.getSoluteQuestionList(mCurrentPage, PAGE_LIMIT);
         break;
     }
@@ -130,47 +133,29 @@ public class WendaListActivity extends BaseBActivity {
     if (null == observable) {
       return;
     }
-    manageRpcCall(observable, new
-        UiRpcSubscriberSimple<WendaModel>(this) {
+    manageRpcCall(observable, new UiRpcSubscriberSimple<WendaModel>(getActivity()) {
 
+      @Override
+      protected void onSuccess(WendaModel wendaModel) {
+        if (null == wendaModel.getList() || wendaModel.getList().size() < PAGE_LIMIT) {
+          mListView.setPullUpToRefresh(false);
+        } else {
+          mListView.setPullUpToRefresh(true);
+        }
+        if (mCurrentPage == 0) {
+          mListAdapter.clear();
+        }
+        mListAdapter.addAll(wendaModel.getList());
+        mListAdapter.notifyDataSetChanged();
+        mCurrentPage++;
+      }
 
-          @Override
-          protected void onSuccess(WendaModel wendaModel) {
-            if (null == wendaModel.getList() || wendaModel.getList().size() < PAGE_LIMIT) {
-              mListView.setPullUpToRefresh(false);
-            } else {
-              mListView.setPullUpToRefresh(true);
-            }
-            if (mCurrentPage == 0) {
-              mListAdapter.clear();
-            }
-            mListAdapter.addAll(wendaModel.getList());
-            mListAdapter.notifyDataSetChanged();
-            mCurrentPage++;
-          }
+      @Override
+      protected void onEnd() {
+        mListView.resetPullStatus();
+      }
+    });
 
-          @Override
-          protected void onEnd() {
-            mListView.resetPullStatus();
-          }
-        });
-
-    //RsenUrlUtil.execute(WendaListActivity.this, url, new RsenUrlUtil.OnNetHttpResultListener() {
-    //  @Override
-    //  public void onNoNetwork(String msg) {
-    //    ToastHelper.showToast(msg, Url.context);
-    //  }
-    //
-    //
-    //  @Override
-    //  public void onResult(boolean state, String result, JSONObject jsonObject) {
-    //    if (state) {
-    //      WendaModel  wendaBean = JSON.parseObject(result, WendaModel
-    //          .class);
-    //      mListView.setAdapter(new WendaListAdapter(WendaListActivity.this, wendaBean.getList()));
-    //    }
-    //  }
-    //});
   }
 
   private void inject() {
@@ -253,10 +238,9 @@ public class WendaListActivity extends BaseBActivity {
 //                ((TextView) viewHolder.itemView.findViewById(R.id.best_answer)).setText("已解决");
 //            }
       try {
-        ImageLoader.loadOptimizedHttpImage(WendaListActivity.this, RsenUrlUtil.URL_BASE +
+        ImageLoader.loadOptimizedHttpImage(getActivity(), RsenUrlUtil.URL_BASE +
             listEntity.getUser()
-                .getAvatar32()).bitmapTransform(new CropCircleTransformation(WendaListActivity
-            .this))
+                .getAvatar32()).bitmapTransform(new CropCircleTransformation(getActivity()))
             .error(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).into(viewHolder
             .imgV(R.id.logo));
       } catch (Exception e) {
@@ -308,7 +292,7 @@ public class WendaListActivity extends BaseBActivity {
 
           if (imageView != null) {
             try {
-              ImageLoader.loadOptimizedHttpImage(WendaListActivity.this, url).placeholder(R.drawable
+              ImageLoader.loadOptimizedHttpImage(getActivity(), url).placeholder(R.drawable
                   .picture_no).error(R.drawable.picture_no).into(imageView);
             } catch (Exception e) {
               e.printStackTrace();
@@ -319,7 +303,7 @@ public class WendaListActivity extends BaseBActivity {
 
               @Override
               public void onClick(View v) {
-                Intent intent = new Intent(WendaListActivity.this, ImagePagerActivity.class);
+                Intent intent = new Intent(getActivity(), ImagePagerActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("image_urls",
                     (ArrayList<String>) listEntity.getImgList());

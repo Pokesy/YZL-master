@@ -18,7 +18,6 @@ import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.fragment.RemenhuatiActivity;
 import com.thinksky.fragment.RemenhuatiFragment;
 import com.thinksky.fragment.WendaFragment;
-import com.thinksky.fragment.WendaListActivity;
 import com.thinksky.fragment.WendaMyQuestionActivity;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.UserService;
@@ -39,6 +38,8 @@ import com.thinksky.ui.profile.PostCollectionFragment;
 import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.ui.profile.QuestionCollectionFragment;
 import com.thinksky.ui.profile.YLQMessageFragment;
+import com.thinksky.ui.question.QuestionListActivity;
+import com.thinksky.ui.question.QuestionListFragment;
 import com.thinksky.utils.UpgradeHelper;
 import dagger.Component;
 import javax.inject.Singleton;
@@ -60,8 +61,6 @@ public interface ServiceComponent {
   void inject(UpgradeHelper upgradeHelper);
 
   void inject(WendaFragment wendaFragment);
-
-  void inject(WendaListActivity wendaListActivity);
 
   void inject(WendaMyQuestionActivity wendaMyQuestionActivity);
 
@@ -110,4 +109,8 @@ public interface ServiceComponent {
   void inject(YLQMessageFragment ylqMessageFragment);
 
   void inject(MyGroupFragment myGroupFragment);
+
+  void inject(QuestionListFragment questionListFragment);
+
+  void inject(QuestionListActivity questionListActivity);
 }
