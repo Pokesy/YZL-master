@@ -39,6 +39,8 @@ import com.thinksky.qqsliding.widget.DragLayout;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.profile.FansListActivity;
+import com.thinksky.ui.profile.FollowListActivity;
 import com.thinksky.ui.profile.MyCollectionActivity;
 import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.ui.profile.ProfileSettingActivity;
@@ -726,14 +728,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       mBtnFans.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+          startActivity(FansListActivity.makeIntent(MainActivity.this, Url.USERID));
         }
       });
 
       mBtnFollow.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+          startActivity(FollowListActivity.makeIntent(MainActivity.this, Url.USERID));
         }
       });
     }

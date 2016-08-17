@@ -18,10 +18,12 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.thinksky.fragment.MyScrollview;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
@@ -71,6 +73,16 @@ public class OtherProfileActivity extends BaseBActivity {
 
   @Inject
   AppService mAppService;
+  @Bind(R.id.menu_question)
+  RelativeLayout menuQuestion;
+  @Bind(R.id.menu_topic)
+  RelativeLayout menuTopic;
+  @Bind(R.id.menu_group)
+  RelativeLayout menuGroup;
+  @Bind(R.id.scrollView)
+  MyScrollview scrollView;
+  @Bind(R.id.profile_menu)
+  RelativeLayout profileMenu;
   private String mUserId;
 
   @Override
@@ -186,7 +198,7 @@ public class OtherProfileActivity extends BaseBActivity {
         }
         getComponent().getGlobalBus().post(new MainActivity.EnterMapEvent(TextUtils.equals(model
             .getIsfactory
-            (), "2"), model.getLongitude(), model.getLatitude()));
+                (), "2"), model.getLongitude(), model.getLatitude()));
         finish();
         Intent intent = new Intent(OtherProfileActivity.this, MainActivity.class);
         startActivity(intent);
@@ -219,7 +231,8 @@ public class OtherProfileActivity extends BaseBActivity {
   }
 
 
-  @OnClick({R.id.menu_question, R.id.menu_topic, R.id.menu_group})
+  @OnClick({R.id.menu_question, R.id.menu_topic, R.id.menu_group, R.id.btn_fans, R.id
+      .btn_follow_list})
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.menu_question:
@@ -231,6 +244,12 @@ public class OtherProfileActivity extends BaseBActivity {
       case R.id.menu_group:
         startActivity(OtherGroupListActivity.makeIntent(this, mUserId));
         break;
+      case R.id.btn_fans:
+        startActivity(FansListActivity.makeIntent(this, mUserId));
+        break;
+      case R.id.btn_follow_list:
+        startActivity(FollowListActivity.makeIntent(this, mUserId));
+        break;
     }
   }
 
@@ -239,4 +258,5 @@ public class OtherProfileActivity extends BaseBActivity {
     intent.putExtra(BUNDLE_KEY_USER_ID, userId);
     return intent;
   }
+
 }

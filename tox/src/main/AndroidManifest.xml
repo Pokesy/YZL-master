@@ -648,6 +648,13 @@
     <activity
         android:name="com.thinksky.ui.question.QuestionListActivity"
         android:screenOrientation="portrait"/>
+
+    <activity
+        android:name="com.thinksky.ui.profile.FansListActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.profile.FollowListActivity"
+        android:screenOrientation="portrait"/>
     <!-- Glide Module  -->
     <meta-data
         android:name="com.thinksky.utils.imageloader.GlideImageModule"

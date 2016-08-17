@@ -22,6 +22,7 @@ import com.thinksky.net.rpc.model.PostModel;
 import com.thinksky.net.rpc.model.QuestionCategoryModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
+import com.thinksky.net.rpc.model.UserListModel;
 import com.thinksky.net.rpc.model.WendaModel;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -192,8 +193,14 @@ public interface AppService {
   @GET("api.php?s=group/getJoinedGroupAll")
   Observable<Response<GroupModel>> getJoinedGroup(@Query("session_id") String sessionId);
 
-  @GET("http://www.yuzhile.com/api.php?s=question/getQuestionCategory")
+  @GET("api.php?s=question/getQuestionCategory")
   Observable<Response<QuestionCategoryModel>> getQuestionCategory();
+
+  @GET("api.php?s=user/getMyFans")
+  Observable<Response<UserListModel>> getMyFans(@Query("uid") String userId);
+
+  @GET("api.php?s=user/getMyFollows")
+  Observable<Response<UserListModel>> getMyFollows(@Query("suid") String userId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

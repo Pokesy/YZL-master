@@ -81,20 +81,27 @@
           android:paddingBottom="@dimen/margin_medium"
           android:paddingTop="@dimen/margin_small"
           >
-        <TextView
+        <LinearLayout
+            android:id="@+id/btn_fans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_small"
-            android:text="@string/activity_profile_label_fans"
-            style="@style/Widget.App.TextView.Medium.Primary"
-            />
-        <TextView
-            android:id="@+id/fans_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="99"
-            style="@style/Widget.App.TextView.Medium.Primary"
-            />
+            android:orientation="horizontal"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="@dimen/margin_small"
+              android:text="@string/activity_profile_label_fans"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
+          <TextView
+              android:id="@+id/fans_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="99"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
+        </LinearLayout>
 
         <View
             android:layout_width="0.5dp"
@@ -103,21 +110,27 @@
             android:layout_marginRight="@dimen/margin_medium"
             android:background="@color/item_divider"
             />
-
-        <TextView
+        <LinearLayout
+            android:id="@+id/btn_follow_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/margin_small"
-            android:text="@string/activity_profile_label_follow"
-            style="@style/Widget.App.TextView.Medium.Primary"
-            />
-        <TextView
-            android:id="@+id/follow_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="99"
-            style="@style/Widget.App.TextView.Medium.Primary"
-            />
+            android:orientation="horizontal"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="@dimen/margin_small"
+              android:text="@string/activity_profile_label_follow"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
+          <TextView
+              android:id="@+id/follow_count"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              tools:text="99"
+              style="@style/Widget.App.TextView.Medium.Primary"
+              />
+        </LinearLayout>
       </LinearLayout>
 
       <FrameLayout

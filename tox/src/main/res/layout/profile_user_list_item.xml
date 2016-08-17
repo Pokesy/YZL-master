@@ -17,15 +17,15 @@
         android:layout_centerVertical="true"
         />
 
-    <TextView
-        android:id="@+id/member_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        tools:text="1334个成员"
-        style="@style/Widget.App.TextView.Large.Secondary"
-        />
+    <!--<TextView-->
+    <!--android:id="@+id/member_count"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--tools:text="1334个成员"-->
+    <!--style="@style/Widget.App.TextView.Large.Secondary"-->
+    <!--/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,19 +36,19 @@
         android:orientation="vertical"
         >
       <TextView
-          android:id="@+id/group_name"
+          android:id="@+id/user_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          tools:text="群组名称"
+          tools:text="曾经沧海"
           style="@style/Widget.App.TextView.Medium.Blue"
           />
 
       <TextView
-          android:id="@+id/group_notice"
+          android:id="@+id/signature"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="@dimen/margin_smallest"
-          tools:text="群组公告"
+          tools:text="个性签名"
           style="@style/Widget.App.TextView.Medium.Secondary"
           />
     </LinearLayout>

@@ -222,6 +222,13 @@
   <string name="activity_other_group_list_title">他加入的群组</string>
   <string name="activity_other_group_member_count">%s个成员</string>
 
+
+  <!-- 粉丝 -->
+  <string name="activity_fans_title_mine">我的粉丝</string>
+  <string name="activity_follows_title_mine">我的关注</string>
+  <string name="activity_fans_title_other">他的粉丝</string>
+  <string name="activity_follows_title_other">他的关注</string>
+
   <!-- 他的话题 -->
   <string name="activity_other_post_title">他的话题</string>
 
