@@ -24,7 +24,6 @@ import com.squareup.otto.Subscribe;
 import com.thinksky.adapter.WeiboAdapter;
 import com.thinksky.info.AshamedInfo;
 import com.thinksky.info.WeiboInfo;
-import com.thinksky.log.Logger;
 import com.thinksky.myview.MyListView;
 import com.thinksky.myview.MyListView.OnRefreshListener;
 import com.thinksky.tox.R;
@@ -42,7 +41,6 @@ import java.util.List;
 import net.tsz.afinal.FinalBitmap;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
  * 热门的fragment
@@ -94,8 +92,7 @@ public class WeiboListFragment extends BasicFragment {
     int index = getArguments().getInt(KEY_INDEX);
     switch (index) {
       case TAB_INDEX_LATEST:
-        // TODO 替换成最近动态的url
-        hotUrl = Url.WEIBO;
+        hotUrl = Url.NEWEST_WEIBO;
         break;
       case TAB_INDEX_HOT:
         hotUrl = Url.WEIBO;
@@ -168,6 +165,9 @@ public class WeiboListFragment extends BasicFragment {
             weiboApi.setHandler(hand);
             weiboApi.listMyWeibo(++mCurrentPage, Url.USERID);
 
+          } else if (TextUtils.equals(Url.NEWEST_WEIBO, hotUrl)) {
+            weiboApi.setHandler(hand);
+            weiboApi.listNewestWeibo(++mCurrentPage, Url.USERID);
           }
           listBottom();
           listBottemFlag = false;
@@ -204,6 +204,9 @@ public class WeiboListFragment extends BasicFragment {
             weiboApi.setHandler(hand);
             weiboApi.listMyWeibo(mCurrentPage, Url.USERID);
 
+          } else if (TextUtils.equals(hotUrl, Url.NEWEST_WEIBO)) {
+            weiboApi.setHandler(hand);
+            weiboApi.listNewestWeibo(mCurrentPage, Url.USERID);
           }
           loadflag = false;
         } else {
@@ -214,7 +217,7 @@ public class WeiboListFragment extends BasicFragment {
     //if (!BaseFunction.isLogin()) {
     //  autoLogin();
     //} else {
-      getWeiboList();
+    getWeiboList();
     //}
 
   }
@@ -237,7 +240,7 @@ public class WeiboListFragment extends BasicFragment {
     mCurrentPage = INIT_PAGE;
     if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
       weiboApi.setHandler(hand);
-      if(BaseFunction.isLogin()) {
+      if (BaseFunction.isLogin()) {
         weiboApi.listMyFollowingWeibo(1, Url.SESSIONID);
       }
     } else if (hotUrl.equals(Url.WEIBO)) {
@@ -245,9 +248,12 @@ public class WeiboListFragment extends BasicFragment {
       weiboApi.listAllWeibo(1, 0 + "");
     } else if (hotUrl.equals(Url.MYWEIBO)) {
       weiboApi.setHandler(hand);
-      if(BaseFunction.isLogin()) {
+      if (BaseFunction.isLogin()) {
         weiboApi.listMyWeibo(1, Url.USERID);
       }
+    } else if (TextUtils.equals(hotUrl, Url.NEWEST_WEIBO)) {
+      weiboApi.setHandler(hand);
+      weiboApi.listNewestWeibo(1, Url.USERID);
     }
   }
 
@@ -290,7 +296,7 @@ public class WeiboListFragment extends BasicFragment {
           List<WeiboInfo> newList = myJson.getWeiboList(result);
 //                    ToastHelper.showToast("微博个数"+newList.size(),ctx);
           if (newList != null) {
-            if (newList.size() == 10) {
+            if (newList.size() >= 10) {
               ListBottem.setVisibility(View.VISIBLE);
             } else if (newList.size() == 0) {
               if (list.size() == 0)

@@ -81,6 +81,16 @@ public class WeiboApi extends BaseApi {
 
         execute(handler, Url.getApiUrl(Url.MYFOLLOWINGWEIBO), true);
     }
+    public void listNewestWeibo(int page,String uid) {
+        putArg("page", page + "");
+        putArg("count", "10");
+        //if (!("").equals(uid)) {
+        //    putArg("uid", uid);
+        //}
+
+        execute(handler, Url.getApiUrl(Url.NEWEST_WEIBO), true);
+    }
+
 
     /**
      * 发送文字微博

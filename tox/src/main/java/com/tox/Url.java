@@ -26,6 +26,7 @@ public class Url {
     public static String IMAGE = BuildConfig.URL_BASE ;
     public static String MYWEIBO = "/weibo/listAllWeibo";
     public static String WEIBO = "/weibo/getHotWeibo";
+    public static String NEWEST_WEIBO = "weibo/getNewestWeibo";
     public static String MYFOLLOWINGWEIBO = "/weibo/listMyFollowingWeibo";
     public static String SENDWEIBO = "/weibo/sendWeibo";
     public static String DELETEWEIBO = "/weibo/deleteWeibo";

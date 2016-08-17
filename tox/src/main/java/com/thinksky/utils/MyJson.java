@@ -259,7 +259,7 @@ public class MyJson {
           weiboInfo.setType(listitem.getString("type"));
           //Log.e("WEIBOTYPE>>>>>><<<<<<<<<<<<<<",listitem.getString("type"));
           if (listitem.getString("type").equals("image")) {
-            weiboInfo.setImgList(getImgUrlList(listitem.getJSONArray("images")));
+            weiboInfo.setImgList(getImgUrlList(listitem.optString("images")));
           } else {
             weiboInfo.setImgList(new ArrayList<String>());
           }
@@ -280,7 +280,7 @@ public class MyJson {
 
           }
         } catch (JSONException e) {
-          Log.e("WeiboListJSON解析出错", ">>>>>>>>>>>>>>>>>>>>");
+          Log.e("WeiboListJSON解析出错", e.getMessage());
           continue;
         }
 
@@ -288,7 +288,7 @@ public class MyJson {
         list.add(weiboInfo);
       }
     } catch (JSONException e) {
-      Log.e("WeiboListJSON解析出错", ">>>>>>>>>>>>>>>>>>>>");
+      Log.e("WeiboListJSON解析出错", e.getMessage());
     }
     return list;
   }
@@ -347,6 +347,15 @@ public class MyJson {
     List<String> list = new ArrayList<String>();
     for (int i = 0; i < jsonArray.size(); i++) {
       list.add((String) jsonArray.get(i));
+    }
+    return list;
+  }
+
+  public List<String> getImgUrlList(String jsons) {
+    List<String> list = new ArrayList<String>();
+    String []arrays = jsons.split(",");
+    for (int i = 0; i < arrays.length; i++) {
+      list.add(arrays[i]);
     }
     return list;
   }
