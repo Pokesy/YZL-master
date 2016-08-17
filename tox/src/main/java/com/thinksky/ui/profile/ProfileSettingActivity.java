@@ -125,9 +125,9 @@ public class ProfileSettingActivity extends BaseBActivity {
         mGenderValue.setText(R.string.gender_secret);
         break;
     }
-    mAreaValue.setText(!TextUtils.isEmpty(mUserInfo.getPos_province()) || !TextUtils.isEmpty
+    mAreaValue.setText(!TextUtils.isEmpty(mUserInfo.getP_province()) || !TextUtils.isEmpty
         (mUserInfo
-        .getPos_city())
+        .getP_city())
         ? mUserInfo.getP_province() + mUserInfo.getP_province() : getString(R.string
         .activity_profile_setting_default_value));
     mBirthdayValue.setText(TextUtils.isEmpty(mUserInfo.getBirthday()) ? getString(R.string

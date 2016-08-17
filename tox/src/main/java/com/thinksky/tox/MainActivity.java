@@ -761,8 +761,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
       }
       mNameView.setText(info.getNickname());
-      mAreaView.setText(TextUtils.isEmpty(info.getPos_province()) ? "" : info.getPos_province() +
-          (TextUtils.isEmpty(info.getPos_city()) ? "" : info.getPos_city()));
+      mAreaView.setText(TextUtils.isEmpty(info.getP_province()) ? "" : info.getP_province() +
+          (TextUtils.isEmpty(info.getP_city()) ? "" : info.getP_city()));
       mSignatureView.setText(info.getSignature());
       mFansView.setText(info.getFans());
       mFollowView.setText(info.getFollowing());

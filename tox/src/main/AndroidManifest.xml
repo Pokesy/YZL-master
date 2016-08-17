@@ -575,10 +575,6 @@
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
     <activity
-        android:name="com.thinksky.fragment.WendaMyQuestionActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:theme="@style/ActivityThemeTwo"/>
-    <activity
         android:name="com.thinksky.fragment.QuestionSelectActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>

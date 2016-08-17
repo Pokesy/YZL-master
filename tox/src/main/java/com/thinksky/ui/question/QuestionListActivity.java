@@ -50,6 +50,7 @@ public class QuestionListActivity extends BaseBActivity {
   public static final String TYPE_HOT = "hot";
   public static final String TYPE_MAX_AWARD = "max_award";
   public static final String TYPE_SOLUTION = "solution";
+  public static final String TYPE_MINE = "mine";
   private static final String BUNDLE_KEY_WHICH_ACTIVITY = "which_activity";
   @Bind(R.id.tabs)
   TabLayout tabs;
@@ -90,6 +91,9 @@ public class QuestionListActivity extends BaseBActivity {
         break;
       case TYPE_SOLUTION:
         titleBar.setMiddleTitle(R.string.question_list_title_solution);
+        break;
+      case TYPE_MINE:
+        titleBar.setMiddleTitle(R.string.question_list_title_mine);
         break;
     }
 

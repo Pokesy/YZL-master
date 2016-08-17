@@ -36,6 +36,7 @@ import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.imageloader.ImageLoader;
+import com.tox.Url;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -120,13 +121,17 @@ public class QuestionListFragment extends BasicFragment {
     Observable<Response<WendaModel>> observable = null;
     switch (whichActivity) {
       case QuestionListActivity.TYPE_HOT://热门
-        observable = mAppService.getHotQuestionList(mCurrentPage, PAGE_LIMIT);
+        observable = mAppService.getHotQuestionList(mCurrentPage, PAGE_LIMIT, mCategory);
         break;
       case QuestionListActivity.TYPE_MAX_AWARD://悬赏
-        observable = mAppService.getMonQuestionList(mCurrentPage, PAGE_LIMIT);
+        observable = mAppService.getMonQuestionList(mCurrentPage, PAGE_LIMIT, mCategory);
         break;
       case QuestionListActivity.TYPE_SOLUTION://已解决
-        observable = mAppService.getSoluteQuestionList(mCurrentPage, PAGE_LIMIT);
+        observable = mAppService.getSoluteQuestionList(mCurrentPage, PAGE_LIMIT, mCategory);
+        break;
+      case QuestionListActivity.TYPE_MINE:
+        observable = mAppService.getMyQuestionList(Url.SESSIONID, mCurrentPage, PAGE_LIMIT,
+            mCategory);
         break;
     }
 
@@ -166,6 +171,11 @@ public class QuestionListFragment extends BasicFragment {
 
 
   public class WendaListAdapter extends BaseAdapter {
+    private static final String CATEGORY_HONGYU = "5";
+    private static final String CATEGORY_LONGYU = "6";
+    private static final String CATEGORY_HUYU = "9";
+    private static final String CATEGORY_QICAISHENXIAN = "7";
+    private static final String CATEGORY_OTHER = "8";
     private List<WendaModel.ListBean> datas = new ArrayList<>();
     private Context context;
 
@@ -227,11 +237,27 @@ public class QuestionListFragment extends BasicFragment {
           .getCreate_time());
 //            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(listEntity
 // .getAnswer_num());
-      ((TextView) viewHolder.itemView.findViewById(R.id.score)).setText(listEntity.getScore());
-      if (listEntity.getCategory().equals("1")) {
-        ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("龙鱼");
-      } else {
-        ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("魟鱼");
+      switch (listEntity.getCategory()) {
+        case CATEGORY_HONGYU:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_hongyu);
+          break;
+        case CATEGORY_HUYU:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_huyu);
+          break;
+        case CATEGORY_LONGYU:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_longyu);
+          break;
+        case CATEGORY_QICAISHENXIAN:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_qicaishenxian);
+          break;
+        case CATEGORY_OTHER:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_other);
+          break;
       }
       String s = listEntity.getBest_answer();
 //            if (s.equals("1")) {
@@ -337,4 +363,5 @@ public class QuestionListFragment extends BasicFragment {
       return convertView;
     }
   }
+
 }

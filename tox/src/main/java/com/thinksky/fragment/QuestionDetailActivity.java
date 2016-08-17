@@ -55,7 +55,11 @@ import org.json.JSONObject;
 
 
 public class QuestionDetailActivity extends BaseBActivity implements View.OnClickListener {
-
+  private static final String CATEGORY_HONGYU = "5";
+  private static final String CATEGORY_LONGYU = "6";
+  private static final String CATEGORY_HUYU = "9";
+  private static final String CATEGORY_QICAISHENXIAN = "7";
+  private static final String CATEGORY_OTHER = "8";
   private TextView title;
   private TextView best_answer;
   private TextView money;
@@ -291,22 +295,22 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
                 } else {
                   manageRpcCall(mAppService.questionBookmark(Url.SESSIONID, beans.get(0).getId())
                       , new
-                      UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
+                          UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
 
 
-                        @Override
-                        protected void onSuccess(BaseModel baseModel) {
-                          beans.get(0).setIs_collection("1");
-                          mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
-                              .getIs_collection(), "1"));
-                          getComponent().getGlobalBus().post(new AnswerChangedEvent());
-                        }
+                            @Override
+                            protected void onSuccess(BaseModel baseModel) {
+                              beans.get(0).setIs_collection("1");
+                              mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
+                                  .getIs_collection(), "1"));
+                              getComponent().getGlobalBus().post(new AnswerChangedEvent());
+                            }
 
-                        @Override
-                        protected void onEnd() {
+                            @Override
+                            protected void onEnd() {
 
-                        }
-                      });
+                            }
+                          });
                 }
               }
             });
@@ -379,11 +383,23 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
           money.setText(questionEntity.getScore());
           creat_time.setText(questionEntity.getCreate_time());
           content.setText(questionEntity.getDescription1().replace("\\n", "\n"));
-          if (!"".equals(questionEntity.getCategory()) && "1".equals(questionEntity.getCategory()
-          )) {
-            nickname.setText("龙鱼");
-          } else {
-            nickname.setText("魟鱼");
+
+          switch (questionEntity.getCategory()) {
+            case CATEGORY_HONGYU:
+              nickname.setText(R.string.fish_category_hongyu);
+              break;
+            case CATEGORY_HUYU:
+              nickname.setText(R.string.fish_category_huyu);
+              break;
+            case CATEGORY_LONGYU:
+              nickname.setText(R.string.fish_category_longyu);
+              break;
+            case CATEGORY_QICAISHENXIAN:
+              nickname.setText(R.string.fish_category_qicaishenxian);
+              break;
+            case CATEGORY_OTHER:
+              nickname.setText(R.string.fish_category_other);
+              break;
           }
 
           huida.setText(questionEntity.getAnswer_num() + "条回答");

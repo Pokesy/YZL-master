@@ -249,5 +249,13 @@
   <string name="question_list_title_hot">热门问答</string>
   <string name="question_list_title_max_award">最高悬赏</string>
   <string name="question_list_title_solution">已解决</string>
+  <string name="question_list_title_mine">我的问答</string>
   <string name="question_list_title_bar_btn_ask">提问</string>
+
+  <!-- 种类 -->
+  <string name="fish_category_hongyu">魟鱼</string>
+  <string name="fish_category_longyu">龙鱼</string>
+  <string name="fish_category_huyu">虎鱼</string>
+  <string name="fish_category_qicaishenxian">七彩神仙</string>
+  <string name="fish_category_other">其它鱼类</string>
 </resources>

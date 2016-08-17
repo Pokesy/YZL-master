@@ -108,8 +108,6 @@ public class UserInfoModel extends BaseModel implements Serializable {
   private String score;
   private String p_city;
   private String p_province;
-  private String pos_province;
-  private String pos_city;
   private String uid;
   private String mobile;
   private boolean data;
@@ -388,22 +386,6 @@ public class UserInfoModel extends BaseModel implements Serializable {
 
   public void setP_province(String p_province) {
     this.p_province = p_province;
-  }
-
-  public String getPos_province() {
-    return pos_province;
-  }
-
-  public void setPos_province(String pos_province) {
-    this.pos_province = pos_province;
-  }
-
-  public String getPos_city() {
-    return pos_city;
-  }
-
-  public void setPos_city(String pos_city) {
-    this.pos_city = pos_city;
   }
 
   public String getUid() {

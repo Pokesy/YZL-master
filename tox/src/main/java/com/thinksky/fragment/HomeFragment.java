@@ -145,8 +145,8 @@ public class HomeFragment extends BasicFragment
             break;
           case R.id.rb_wdtw:
             if (BaseFunction.isLogin()) {
-              Intent intent2 = new Intent(getContext(), WendaMyQuestionActivity.class);
-              startActivity(intent2);
+              startActivity(QuestionListActivity.makeIntent(getContext(), QuestionListActivity
+                  .TYPE_MINE));
             } else {
               ToastHelper.showToast("未登陆，请登陆", getContext());
             }

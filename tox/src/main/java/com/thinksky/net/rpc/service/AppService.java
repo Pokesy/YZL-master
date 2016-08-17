@@ -55,21 +55,20 @@ public interface AppService {
 
   @GET("api.php?s=Question/getHotQuestionList")
   Observable<Response<WendaModel>> getHotQuestionList(@Query("page") int page, @Query("count") int
-      count);
+      count, @Query("category") String category);
 
   @GET("api.php?s=Question/getMonQuestionList")
   Observable<Response<WendaModel>> getMonQuestionList(@Query("page") int page, @Query("count") int
-      count);
+      count, @Query("category") String category);
 
   @GET("api.php?s=Question/getSoluteQuestionList")
   Observable<Response<WendaModel>> getSoluteQuestionList(@Query("page") int page, @Query("count")
-  int
-      count);
+  int count, @Query("category") String category);
 
   @GET("api.php?s=Question/getMyQuestionList")
   Observable<Response<WendaModel>> getMyQuestionList(@Query("session_id") String sessionId,
                                                      @Query("page") int page, @Query("count") int
-                                                         count);
+                                                         count, @Query("category") String category);
 
   @GET("api.php?s=user/getProfile")
   Observable<Response<UserInfoModel>> getProfile(@Query("uid") String uid);
@@ -200,7 +199,7 @@ public interface AppService {
   Observable<Response<UserListModel>> getMyFans(@Query("uid") String userId);
 
   @GET("api.php?s=user/getMyFollows")
-  Observable<Response<UserListModel>> getMyFollows(@Query("suid") String userId);
+  Observable<Response<UserListModel>> getMyFollows(@Query("uid") String userId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

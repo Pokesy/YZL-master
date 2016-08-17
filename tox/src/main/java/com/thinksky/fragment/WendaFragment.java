@@ -98,8 +98,8 @@ public class WendaFragment extends BasicFragment {
                 break;
               case R.id.rb_wdtw:
                 if (BaseFunction.isLogin()) {
-                  Intent intent2 = new Intent(getContext(), WendaMyQuestionActivity.class);
-                  startActivity(intent2);
+                  startActivity(QuestionListActivity.makeIntent(getContext(), QuestionListActivity
+                      .TYPE_MINE));
                 } else {
                   ToastHelper.showToast("请登录", Url.context);
                 }
@@ -199,6 +199,11 @@ public class WendaFragment extends BasicFragment {
   }
 
   public class WendaListAdapter extends BaseAdapter {
+    private static final String CATEGORY_HONGYU = "5";
+    private static final String CATEGORY_LONGYU = "6";
+    private static final String CATEGORY_HUYU = "9";
+    private static final String CATEGORY_QICAISHENXIAN = "7";
+    private static final String CATEGORY_OTHER = "8";
     private List<WendaModel.ListBean> datas = new ArrayList<>();
     private Context context;
 
@@ -265,10 +270,27 @@ public class WendaFragment extends BasicFragment {
       ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(
           listEntity.getCreate_time());
       ((TextView) viewHolder.itemView.findViewById(R.id.score)).setText(listEntity.getScore());
-      if (listEntity.getCategory().equals("1")) {
-        ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("龙鱼");
-      } else {
-        ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText("魟鱼");
+      switch (listEntity.getCategory()) {
+        case CATEGORY_HONGYU:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_hongyu);
+          break;
+        case CATEGORY_HUYU:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_huyu);
+          break;
+        case CATEGORY_LONGYU:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_longyu);
+          break;
+        case CATEGORY_QICAISHENXIAN:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_qicaishenxian);
+          break;
+        case CATEGORY_OTHER:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_other);
+          break;
       }
       //            ((TextView) viewHolder.itemView.findViewById(R.id.nickname)).setDrawablel
       // (listEntity.getUser().getNickname());

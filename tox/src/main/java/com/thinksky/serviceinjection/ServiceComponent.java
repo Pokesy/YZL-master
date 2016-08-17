@@ -18,7 +18,6 @@ import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.fragment.RemenhuatiActivity;
 import com.thinksky.fragment.RemenhuatiFragment;
 import com.thinksky.fragment.WendaFragment;
-import com.thinksky.fragment.WendaMyQuestionActivity;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.UserService;
 import com.thinksky.tox.GroupDetailActivity;
@@ -63,8 +62,6 @@ public interface ServiceComponent {
   void inject(UpgradeHelper upgradeHelper);
 
   void inject(WendaFragment wendaFragment);
-
-  void inject(WendaMyQuestionActivity wendaMyQuestionActivity);
 
   void inject(AvatarChoosePresenter avatarChoosePresenter);
 
