@@ -38,6 +38,7 @@ import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.qqsliding.widget.DragLayout;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
+import com.thinksky.ui.LoginSession;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.ui.profile.FansListActivity;
 import com.thinksky.ui.profile.FollowListActivity;
@@ -287,6 +288,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     mController = new SlideController(drawer_view);
     mController.setup();
   }
+
 
   @Override
   protected void init() {
@@ -630,6 +632,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   public void handleEnterMapEvent(EnterMapEvent enterMapEvent) {
     drawer_layout.closeDrawer(Gravity.LEFT);
     mTabGroup.check(R.id.rb_mall);
+  }
+
+  @Subscribe
+  public void handleuserInfoChangeEvent(LoginSession.UserInfoChangeEvent event) {
+    mController.setData();
   }
 
   @Override

@@ -35,6 +35,7 @@ import com.thinksky.ui.profile.OtherGroupListActivity;
 import com.thinksky.ui.profile.OtherPostListActivity;
 import com.thinksky.ui.profile.OtherProfileActivity;
 import com.thinksky.ui.profile.OtherQuestionListActivity;
+import com.thinksky.ui.profile.OtherWeiboActivity;
 import com.thinksky.ui.profile.PostCollectionFragment;
 import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.ui.profile.QuestionCollectionFragment;
@@ -116,4 +117,6 @@ public interface ServiceComponent {
   void inject(FollowListActivity followListActivity);
 
   void inject(FansListActivity fansListActivity);
+
+  void inject(OtherWeiboActivity otherWeiboActivity);
 }

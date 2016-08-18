@@ -23,6 +23,7 @@ import com.thinksky.net.rpc.model.QuestionCategoryModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.UserListModel;
+import com.thinksky.net.rpc.model.WeiboModel;
 import com.thinksky.net.rpc.model.WendaModel;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -178,6 +179,10 @@ public interface AppService {
   @GET("api.php?s=group/getHerGroup")
   Observable<Response<GroupInfoModel>> getHerGroup(@Query("uid") String uid, @Query
       ("page") int page, @Query("count") int count);
+
+  @GET("api.php?s=weibo/getHerWeibo")
+  Observable<Response<WeiboModel>> getHerWeibo(@Query("uid") String uid, @Query("page") int page,
+                                               @Query("count") int count);
 
   @GET("api.php?s=Message/getAllMessage")
   Observable<Response<MessageModel>> getAllMessage(@Query("session_id") String sessionId, @Query

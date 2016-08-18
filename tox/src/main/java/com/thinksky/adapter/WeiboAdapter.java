@@ -22,11 +22,9 @@ import com.thinksky.tox.SendCommentActivity;
 import com.thinksky.tox.UploadActivity;
 import com.thinksky.tox.WeiboDetailActivity;
 import com.thinksky.utils.BitmapUtiles;
-import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
-import com.tox.TouchHelper;
 import com.tox.Url;
 import com.tox.WeiboApi;
 import java.util.ArrayList;
@@ -138,12 +136,14 @@ public class WeiboAdapter extends BaseAdapter {
     }
     if (hold.Up_Img.getTag().equals(list.get(arg0).getWid())) {
       if (list.get(arg0).getIs_supported()) {
-        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
+        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable
+            .icon_like_blue_stroke, ctx));
         hold.upFlag = true;
       }
     } else {
       if (list.get(arg0).getIs_supported()) {
-        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
+        hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable
+            .icon_like_blue_stroke, ctx));
         hold.upFlag = true;
       } else {
         hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue, ctx));
@@ -459,7 +459,8 @@ public class WeiboAdapter extends BaseAdapter {
           ("opensns//opensns", "opensns").replace("/api.php/opensns/", "/api.php/");
     }
     try {
-      ImageLoader.loadOptimizedHttpImage(ctx, url2).placeholder(R.drawable.picture_no).into(weiboImg);
+      ImageLoader.loadOptimizedHttpImage(ctx, url2).placeholder(R.drawable.picture_no).into
+          (weiboImg);
     } catch (Exception e) {
       e.printStackTrace();
     }

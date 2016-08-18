@@ -529,10 +529,6 @@
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"/>
     <activity
-        android:name="com.thinksky.fragment.WendaListActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:screenOrientation="portrait"/>
-    <activity
         android:name="com.thinksky.tox.GroupMyActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"/>
@@ -650,6 +646,9 @@
         android:screenOrientation="portrait"/>
     <activity
         android:name="com.thinksky.ui.profile.FollowListActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.profile.OtherWeiboActivity"
         android:screenOrientation="portrait"/>
     <!-- Glide Module  -->
     <meta-data

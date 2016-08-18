@@ -258,4 +258,5 @@
   <string name="fish_category_huyu">虎鱼</string>
   <string name="fish_category_qicaishenxian">七彩神仙</string>
   <string name="fish_category_other">其它鱼类</string>
+  <string name="activity_other_weibo_title">他的动态</string>
 </resources>

@@ -232,7 +232,7 @@ public class OtherProfileActivity extends BaseBActivity {
 
 
   @OnClick({R.id.menu_question, R.id.menu_topic, R.id.menu_group, R.id.btn_fans, R.id
-      .btn_follow_list})
+      .btn_follow_list, R.id.menu_trends})
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.menu_question:
@@ -249,6 +249,9 @@ public class OtherProfileActivity extends BaseBActivity {
         break;
       case R.id.btn_follow_list:
         startActivity(FollowListActivity.makeIntent(this, mUserId));
+        break;
+      case R.id.menu_trends:
+        startActivity(OtherWeiboActivity.makeIntent(this, mUserId));
         break;
     }
   }

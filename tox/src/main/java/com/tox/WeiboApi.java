@@ -48,6 +48,17 @@ public class WeiboApi extends BaseApi {
         execute(handler, Url.getApiUrl(Url.WEIBO), true);
     }
 
+    public void listOtherWeibo(int page, String uid) {
+        putArg("page", page + "");
+        if (!uid.equals("0")) {
+            putArg("uid", uid);
+        }
+        if (!Url.SESSIONID.equals("")) {
+            putArg("session_id", Url.SESSIONID);
+        }
+        execute(handler, Url.getApiUrl(Url.OTHER_WEIBO), true);
+    }
+
     /**
      * 获取我的微博列表
      *

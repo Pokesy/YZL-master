@@ -24,6 +24,7 @@ import com.aigestudio.wheelpicker.view.WheelStraightPicker;
 import com.thinksky.tox.R;
 import com.thinksky.utils.AddressUtils;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -42,8 +43,12 @@ public class AddressChooseView extends FrameLayout {
 
   private String mSelectedProvince;
   private String mSelectedCity;
+  private String mSelectedProvinceId;
+  private String mSelectedCityId;
   private List<AddressUtils.AddressModel> mAddressModelList;
   private List<List<String>> mCityList = new ArrayList<>();
+  private List<String> mProvinceIds = new ArrayList<>();
+  private HashMap<String, List<String>> mCityIds = new HashMap<>();
 
   public AddressChooseView(Context context) {
     super(context);
@@ -57,12 +62,16 @@ public class AddressChooseView extends FrameLayout {
     List<String> provinceList = new ArrayList<>();
     for (AddressUtils.AddressModel model : mAddressModelList) {
       provinceList.add(model.getName());
+      mProvinceIds.add(model.getId());
       List<AddressUtils.AddressModel.CityBean> cityBeanList = model.getCity();
       List<String> cityNameList = new ArrayList<>();
+      List<String> cityIdList = new ArrayList<>();
       for (AddressUtils.AddressModel.CityBean bean : cityBeanList) {
         cityNameList.add(bean.getName());
+        cityIdList.add(bean.getId());
       }
       mCityList.add(cityNameList);
+      mCityIds.put(model.getId(),cityIdList);
     }
     mProvincePicker.setData(provinceList);
     mProvincePicker.setOnWheelChangeListener(new AbstractWheelPicker.OnWheelChangeListener() {
@@ -74,6 +83,7 @@ public class AddressChooseView extends FrameLayout {
       @Override
       public void onWheelSelected(int index, String data) {
         mSelectedProvince = data;
+        mSelectedProvinceId = mProvinceIds.get(index);
         swapCityList(index);
         mSelectedCity = mCityList.get(index).get(0);
       }
@@ -92,6 +102,7 @@ public class AddressChooseView extends FrameLayout {
       @Override
       public void onWheelSelected(int index, String data) {
         mSelectedCity = data;
+        mSelectedCityId = mCityIds.get(mSelectedProvinceId).get(index);
       }
 
       @Override
@@ -117,5 +128,13 @@ public class AddressChooseView extends FrameLayout {
 
   public String getSelectProvince() {
     return mSelectedProvince;
+  }
+
+  public String getSelectCityId() {
+    return mSelectedCityId;
+  }
+
+  public String getSelectProvinceId() {
+    return mSelectedProvinceId;
   }
 }

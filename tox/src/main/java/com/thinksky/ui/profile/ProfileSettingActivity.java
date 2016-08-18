@@ -128,7 +128,7 @@ public class ProfileSettingActivity extends BaseBActivity {
     mAreaValue.setText(!TextUtils.isEmpty(mUserInfo.getP_province()) || !TextUtils.isEmpty
         (mUserInfo
         .getP_city())
-        ? mUserInfo.getP_province() + mUserInfo.getP_province() : getString(R.string
+        ? mUserInfo.getP_province() + mUserInfo.getP_city() : getString(R.string
         .activity_profile_setting_default_value));
     mBirthdayValue.setText(TextUtils.isEmpty(mUserInfo.getBirthday()) ? getString(R.string
         .activity_profile_setting_default_value) : mUserInfo.getBirthday());
@@ -336,8 +336,8 @@ public class ProfileSettingActivity extends BaseBActivity {
           .string.btn_confirm), new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-          manageRpcCall(mAppService.setArea(Url.SESSIONID, view.getSelectProvince(), view
-              .getSelectProvince()), new UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity
+          manageRpcCall(mAppService.setArea(Url.SESSIONID, view.getSelectProvinceId(), view
+              .getSelectCityId()), new UiRpcSubscriberSimple<BaseModel>(ProfileSettingActivity
               .this) {
 
 
