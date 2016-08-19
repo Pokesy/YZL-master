@@ -1,6 +1,8 @@
 package com.thinksky.fragment;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,11 +22,13 @@ import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
+import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.Url;
 import de.hdodenhof.circleimageview.CircleImageView;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit2.Response;
@@ -229,7 +233,7 @@ public class MyGroupFragment extends BasicFragment {
       } else {
         holder = (ChildViewHolder) convertView.getTag();
       }
-      GroupModel.ListBean bean;
+      final GroupModel.ListBean bean;
       switch (groupPosition) {
         case 0:
           bean = model.getCreateList().get(childPosition);
@@ -242,11 +246,17 @@ public class MyGroupFragment extends BasicFragment {
       }
       ImageLoader.loadOptimizedHttpImage(getActivity(), NetConstant.BASE_URL + bean.getLogo())
           .placeholder(R.drawable
-          .picture_1_no).dontAnimate().into(holder.groupLogo);
+              .picture_1_no).dontAnimate().into(holder.groupLogo);
       holder.groupName.setText(bean.getTitle());
       holder.groupDetail.setText(bean.getDetail());
       holder.topicCount.setText(bean.getPost_count());
       holder.memberCount.setText(bean.getMember_count());
+      convertView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          launch(getActivity(), true, bean);
+        }
+      });
       return convertView;
     }
 
@@ -280,6 +290,28 @@ public class MyGroupFragment extends BasicFragment {
         ButterKnife.bind(this, view);
       }
     }
+  }
+
+  public static void launch(Context context, boolean isWeGroup, GroupModel.ListBean bean) {
+    HashMap<String, String> map = new HashMap<>();
+    Bundle bundle = new Bundle();
+    map.put("id", bean.getId());
+    map.put("title", bean.getTitle());
+    map.put("group_type", bean.getType());
+    map.put("detail", bean.getDetail());
+    map.put("post_count", bean.getPost_count());
+    map.put("group_logo", bean.getLogo());
+    map.put("memberCount", bean.getMember_count());
+    map.put("uid", bean.getUid());
+    map.put("is_join", bean.getIs_join());
+    map.put("user_nickname", bean.getUser().getNickname());
+    map.put("user_logo", bean.getUser().getAvatar64());
+    map.put("create_time", bean.getCreate_time());
+    bundle.putSerializable("group_info", map);
+    bundle.putBoolean("isWeGroup", isWeGroup);
+    Intent intent = new Intent(context, GroupInfoActivity.class);
+    intent.putExtras(bundle);
+    context.startActivity(intent);
   }
 
   private class GroupListModel {

@@ -671,7 +671,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
           if (POSTCOMMENT) {
             replyCount++;
             replyCountView.setText(String.valueOf(replyCount));
-            huifu.setText(String.valueOf(replyCount));
+            huifu.setText("回复:" + String.valueOf(replyCount));
             ToastHelper.showToast("评论成功", mContext);
             countOne = 0;
             page = 0;

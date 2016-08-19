@@ -259,4 +259,12 @@
   <string name="fish_category_qicaishenxian">七彩神仙</string>
   <string name="fish_category_other">其它鱼类</string>
   <string name="activity_other_weibo_title">他的动态</string>
+
+  <!-- 创建群组 -->
+  <string name="activity_create_group_title">创建小组</string>
+  <string name="activity_create_group_label_logo">小组形象</string>
+  <string name="activity_create_group_label_name">名称</string>
+  <string name="activity_create_group_label_category">分类</string>
+  <string name="activity_create_group_label_type">小组类型</string>
+  <string name="activity_create_group_label_description">小组简介</string>
 </resources>

@@ -45,6 +45,8 @@
       android:layout_centerVertical="true"
       android:textColor="@android:color/white"
       android:textSize="@dimen/font_size_xxlarge"
+      android:maxLength="10"
+      android:ellipsize="end"
       android:visibility="gone"
       tools:text="鱼知乐"
       />

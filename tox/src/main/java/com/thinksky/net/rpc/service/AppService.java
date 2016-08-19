@@ -201,10 +201,14 @@ public interface AppService {
   Observable<Response<QuestionCategoryModel>> getQuestionCategory();
 
   @GET("api.php?s=user/getMyFans")
-  Observable<Response<UserListModel>> getMyFans(@Query("uid") String userId);
+  Observable<Response<UserListModel>> getMyFans(@Query("uid") String userId, @Query("page") int
+      page,
+                                                @Query("count") int count);
 
   @GET("api.php?s=user/getMyFollows")
-  Observable<Response<UserListModel>> getMyFollows(@Query("uid") String userId);
+  Observable<Response<UserListModel>> getMyFollows(@Query("uid") String userId, @Query("page")
+  int page,
+                                                   @Query("count") int count);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

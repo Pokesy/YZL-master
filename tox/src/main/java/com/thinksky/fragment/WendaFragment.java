@@ -134,11 +134,13 @@ public class WendaFragment extends BasicFragment {
 
   @Subscribe
   public void handleQuestionSendEvent(SendQuestionActivity.QuestionSendEvent event) {
+    mCurrentPage = 1;
     init();
   }
 
   @Subscribe
   public void handleAnswerChangeEvent(QuestionDetailActivity.AnswerChangedEvent event) {
+    mCurrentPage = 1;
     init();
   }
 
@@ -154,7 +156,7 @@ public class WendaFragment extends BasicFragment {
             } else {
               listView.setPullUpToRefresh(true);
             }
-            if (mCurrentPage == 0) {
+            if (mCurrentPage == 1) {
               mListAdapter.clear();
             }
             mListAdapter.addData(wendaModel.getList());

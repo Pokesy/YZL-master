@@ -113,6 +113,22 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
     mLocationClient.setLocOption(option);
   }
 
+  @Override
+  public void onHiddenChanged(boolean hidden) {
+    super.onHiddenChanged(hidden);
+    if(hidden && !isVisible()) {
+      MyLocationConfiguration config =
+          new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING, false,
+              null);
+      mBaiduMap.setMyLocationConfigeration(config);
+
+      //  设置默认缩放级别。放大我的位置周边信息
+      MapStatusUpdate statusUpdate = MapStatusUpdateFactory.zoomTo(18);
+      mBaiduMap.setMapStatus(statusUpdate);
+    }
+  }
+
+
   public void initMarker(final String str, final BitmapDescriptor fish) {
     mCurrentType = str;
     mBaiduMap.clear();
@@ -434,6 +450,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   @Override
   public void onPause() {
     super.onPause();
+    initLocation();
     //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
     mMapView.onPause();
   }

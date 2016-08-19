@@ -27,7 +27,6 @@ import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.redefine.CircleImageView;
-import com.thinksky.rsen.ResUtil;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -87,7 +86,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
 
   //对加入群组的状态进行实时判断
   private Handler tempHandler = new Handler() {
-    @Override public void handleMessage(Message msg) {
+    @Override
+    public void handleMessage(Message msg) {
       if (msg.what == 0) {
         String result = (String) msg.obj;
         groupInfoMap = groupApi.getGroupInfoMap(result, groupInfoMap);
@@ -120,7 +120,9 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     private ArrayList<HashMap<String, String>> categoryList;
     private ArrayList<HashMap<String, String>> topPostInfoList;
 
-    @Override @SuppressWarnings(value = { "unchecked" }) public void handleMessage(Message msg) {
+    @Override
+    @SuppressWarnings(value = {"unchecked"})
+    public void handleMessage(Message msg) {
       switch (msg.what) {
         case 0:
           if (joinFlag) {
@@ -162,7 +164,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     }
   };
 
-  @Override @SuppressWarnings(value = { "unchecked" })
+  @Override
+  @SuppressWarnings(value = {"unchecked"})
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_group_detail);
@@ -209,10 +212,11 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     backBefore.setOnClickListener(this);
 
     hotPostView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+      @Override
+      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent postIntent = new Intent(mContext, GroupPostInfoActivity.class);
         postIntent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST,
-            ((HotPostListAdapter)parent.getAdapter()).getItem(position));
+            ((HotPostListAdapter) parent.getAdapter()).getItem(position));
         startActivity(postIntent);
       }
     });
@@ -229,13 +233,10 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     groupBelong.setText(groupInfoMap.get("type_name"));
     //        postCount.setText(groupInfoMap.get("post_count"));
     manCount.setText(groupInfoMap.get("memberCount"));
-    if (groupInfoMap.get("group_logo").equals(Url.USERHEADURL + "Public/Core/images/nopic.png")) {
-      groupLogo.setImageResource(R.drawable.side_user_avatar);
-    } else {
-      ResUtil.setRoundImage(groupInfoMap.get("group_logo"), groupLogo);
-    }
+    ImageLoader.loadOptimizedHttpImage(GroupDetailActivity.this, groupInfoMap.get("group_logo"))
+        .placeholder(R.drawable.picture_1_no).dontAnimate().into(groupLogo);
     ImageLoader.loadOptimizedHttpImage(GroupDetailActivity.this, groupInfoMap.get("user_logo"))
-        .into(creatorHead);
+        .dontAnimate().into(creatorHead);
     creatorNickName.setText(groupInfoMap.get("user_nickname"));
     if (Integer.parseInt(groupInfoMap.get("is_join")) == 1) {
       joinFlag = false;
@@ -245,7 +246,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     }
   }
 
-  @Override public void onClick(View v) {
+  @Override
+  public void onClick(View v) {
     int viewId = v.getId();
     switch (viewId) {
       case R.id.back_menu:
@@ -263,9 +265,11 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
             //                        new AlertDialog.Builder(mContext)
             //                                .setTitle("解散群组")
             //                                .setMessage("确定吗？")
-            //                                .setPositiveButton("是", new DialogInterface.OnClickListener() {
+            //                                .setPositiveButton("是", new DialogInterface
+            // .OnClickListener() {
             //                                    @Override
-            //                                    public void onClick(DialogInterface dialog, int which) {
+            //                                    public void onClick(DialogInterface dialog, int
+            // which) {
             //                                        initFlag(false, false, true);
             //                                        groupApi.setHandler(myHandler);
             //                                        groupApi.dismissGroup(group_id + "");
@@ -295,7 +299,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
             new AlertDialog.Builder(mContext).setTitle("退出小组")
                 .setMessage("确定吗？")
                 .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                  @Override public void onClick(DialogInterface dialog, int which) {
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
                     groupApi.setHandler(myHandler);
                     groupApi.quitGroupPost(group_id + "");
                     joinFlag = true;
@@ -345,7 +350,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     private HashMap<String, String> noticeInfoMap;
     private ArrayList<HashMap<String, String>> arrayList;
 
-    @Override public void handleMessage(Message msg) {
+    @Override
+    public void handleMessage(Message msg) {
       switch (msg.what) {
         case 0x155:
           noticeInfoMap = (HashMap<String, String>) msg.obj;
@@ -418,19 +424,23 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
       this.topPostList = data;
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
       return topPostList.size();
     }
 
-    @Override public HotPostModel.HotPostBean getItem(int position) {
+    @Override
+    public HotPostModel.HotPostBean getItem(int position) {
       return topPostList.get(position);
     }
 
-    @Override public long getItemId(int position) {
+    @Override
+    public long getItemId(int position) {
       return 0;
     }
 
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
       if (convertView == null) {
         viewHolder = new ViewHolder();
         convertView =
@@ -467,7 +477,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
       this.groupId = groupId;
     }
 
-    @Override public void run() {
+    @Override
+    public void run() {
       jsonObject = groupApi.getGroupNotice(Url.getApiUrl(Url.GROUPNOTICE), groupId);
       noticeInfo = new HashMap<String, String>();
       //            Log.e("jsonObject>>>>>>",jsonObject.toString());

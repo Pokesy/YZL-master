@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriberSimple;
@@ -100,6 +101,10 @@ public class RemenhuatiFragment extends RBaseFragment {
 
   }
 
+  @Subscribe
+  public void handlePostDataChangeEvent(GroupPostInfoActivity.PostDataChangeEvent event) {
+    initViewData();
+  }
 
   public static void launch(Context context, boolean isWeGroup, HotPostModel.HotPostBean bean) {
     Bundle bundle = new Bundle();

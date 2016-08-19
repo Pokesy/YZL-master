@@ -29,9 +29,9 @@ import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.UserListModel;
 import com.thinksky.net.rpc.service.AppService;
-import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.R;
@@ -97,25 +97,26 @@ public class FansListActivity extends BaseBActivity {
 
 
   private void initData() {
-    manageRpcCall(mAppService.getMyFans(mUserId), new UiRpcSubscriberSimple<UserListModel>
-        (this) {
-      @Override
-      protected void onSuccess(UserListModel userListModel) {
-        recycler.setAdapter(new UserListAdapter(userListModel.getResult()));
-      }
+    manageRpcCall(mAppService.getMyFans(mUserId, 1, Integer.MAX_VALUE), new
+        UiRpcSubscriberSimple<UserListModel>
+            (this) {
+          @Override
+          protected void onSuccess(UserListModel userListModel) {
+            recycler.setAdapter(new UserListAdapter(userListModel.getResult()));
+          }
 
-      @Override
-      protected void onEnd() {
+          @Override
+          protected void onEnd() {
 
-      }
-    });
+          }
+        });
   }
 
   class UserListAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
-    private List<UserListModel.ResultBean> mData;
+    private List<UserInfoModel> mData;
 
-    public UserListAdapter(List<UserListModel.ResultBean> mData) {
+    public UserListAdapter(List<UserInfoModel> mData) {
       this.mData = mData;
     }
 
@@ -128,11 +129,11 @@ public class FansListActivity extends BaseBActivity {
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-      final UserListModel.ResultBean bean = mData.get(position);
-      ImageLoader.loadOptimizedHttpImage(FansListActivity.this, NetConstant.BASE_URL + bean
-          .getAvatar().getAvatar64()).bitmapTransform(new CropCircleTransformation
+      final UserInfoModel bean = mData.get(position);
+      ImageLoader.loadOptimizedHttpImage(FansListActivity.this, bean
+          .getAvatar64()).bitmapTransform(new CropCircleTransformation
           (FansListActivity.this))
-          .placeholder(R.drawable.picture_1_no).into(holder.avatar);
+          .placeholder(R.drawable.side_user_avatar).into(holder.avatar);
       holder.userName.setText(bean.getNickname());
       holder.signature.setText(bean.getSignature());
       holder.itemView.setOnClickListener(new View.OnClickListener() {

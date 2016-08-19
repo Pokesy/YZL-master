@@ -37,13 +37,15 @@
             app:layout_collapseMode="parallax"
             app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
             />
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar"
             android:layout_width="103dp"
             android:layout_height="103dp"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="-51.5dp"
             android:src="@drawable/side_user_avatar"
+            app:civ_border_color="@android:color/white"
+            app:civ_border_width="0.5dp"
             />
       </LinearLayout>
       <LinearLayout
@@ -110,10 +112,10 @@
             />
 
         <LinearLayout
+            android:id="@+id/btn_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:id="@+id/btn_follow"
             >
           <TextView
               android:layout_width="wrap_content"

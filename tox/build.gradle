@@ -68,10 +68,10 @@ android {
       keyPassword rootProject.KEY_PASSWORD
     }
     debug {
-//      storeFile file(rootProject.DEBUG_KEYSTORE)
-//      storePassword rootProject.STORE_PASSWORD
-//      keyAlias rootProject.KEY_ALIAS_DEBUG
-//      keyPassword rootProject.KEY_PASSWORD
+      storeFile file(rootProject.RELEASE_KEYSTORE)
+      storePassword rootProject.STORE_PASSWORD
+      keyAlias rootProject.KEY_ALIAS
+      keyPassword rootProject.KEY_PASSWORD
     }
   }
 
