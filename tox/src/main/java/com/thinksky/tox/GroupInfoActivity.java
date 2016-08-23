@@ -62,7 +62,6 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
  * Created by Administrator on 2015/5/18 0018.
@@ -125,7 +124,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private TextView mCreateTimeView;
 
   private ExpandableTextView mNoticeView;
-  private TextView mExpandableBtn;
+  private View mMenuNotice;
+  private View mNoticeContainer;
 
   @Inject
   AppService mAppService;
@@ -316,6 +316,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     post_count = (TextView) findViewById(R.id.post_count);
     man_count = (TextView) findViewById(R.id.man_count);
     join_status = (TextView) findViewById(R.id.join_status);
+    mMenuNotice = findViewById(R.id.menu_notice);
+    mNoticeContainer = findViewById(R.id.notice_container);
 
     join_group = (LinearLayout) findViewById(R.id.join_group);
     post_at_top = (LinearLayout) findViewById(R.id.post_at_top);
@@ -328,7 +330,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     mCreateTimeView = (TextView) findViewById(R.id.create_time);
 
     mNoticeView = (ExpandableTextView) findViewById(R.id.notice_content);
-    mExpandableBtn = (TextView) findViewById(R.id.btn_notice_show);
 
     enter_cy = (RelativeLayout) findViewById(R.id.enter_cy);
     group_logo.setOnClickListener(this);
@@ -336,6 +337,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     join_group.setOnClickListener(this);
     refreshButn.setOnClickListener(this);
     enter_cy.setOnClickListener(this);
+    mMenuNotice.setOnClickListener(this);
     initGroupView(groupInfoMap);
     postInfoList = new ArrayList<HashMap<String, String>>();
     final View containerView = findViewById(R.id.group_info_container);
@@ -494,7 +496,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
     String notice = groupInfoMap.get("notice");
     mNoticeView.setText(notice);
-    mNoticeView.setVisibility(TextUtils.isEmpty(notice) ? View.GONE : View.VISIBLE);
+    mNoticeContainer.setVisibility(TextUtils.isEmpty(notice) ? View.GONE : View.VISIBLE);
     init();
   }
 
@@ -596,6 +598,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         rotateAnimation.setDuration(2000);
         animationSet.addAnimation(rotateAnimation);
         refreshImage.startAnimation(animationSet);
+        break;
+      case R.id.menu_notice:
         break;
       default:
         break;
@@ -787,7 +791,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-      KJBitmap kjbImage = KJBitmap.create();
       if (convertView == null) {
         viewHolder = new ViewHolder();
         convertView = LayoutInflater.from(mContext).inflate(resource, null);
@@ -801,7 +804,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
       } else {
         viewHolder = (ViewHolder) convertView.getTag();
       }
-      kjbImage.display(viewHolder.user_image, postInfoList.get(position).get("user_logo"));
+      ImageLoader.loadOptimizedHttpImage(GroupInfoActivity.this, postInfoList.get(position).get
+          ("user_logo"))
+          .dontAnimate().placeholder(R.drawable.side_user_avatar).into(viewHolder.user_image);
       //点击头像获取用户信息
       viewHolder.user_image.setOnClickListener(new View.OnClickListener() {
         @Override

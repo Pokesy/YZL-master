@@ -21,6 +21,7 @@ import com.tox.Url;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONObject;
 
 /**
@@ -117,7 +118,7 @@ public class UserListActivity extends BaseBActivity {
       String url = RsenUrlUtil.URL_BASE + bean.avatar128;
       try {
         ImageLoader.loadOptimizedHttpImage(UserListActivity.this, url).error(R.drawable
-            .side_user_avatar)
+            .side_user_avatar).bitmapTransform(new CropCircleTransformation(UserListActivity.this))
             .placeholder(R.drawable.side_user_avatar).into(holder.imgV(R.id.user_logo));
       } catch (Exception e) {
         e.printStackTrace();

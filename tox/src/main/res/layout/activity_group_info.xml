@@ -205,68 +205,76 @@
                 />
           </RelativeLayout>
 
-          <View
-              android:layout_width="match_parent"
-              android:layout_height="0.5dp"
-              android:layout_marginBottom="@dimen/margin_small"
-              android:layout_marginTop="@dimen/margin_small"
-              android:background="@color/item_divider"
-              />
-
-          <RelativeLayout
+          <LinearLayout
+              android:id="@+id/notice_container"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:paddingBottom="10dp"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp"
+              android:orientation="vertical"
               >
-            <TextView
-                android:id="@+id/label_notice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/icon_notice"
-                android:drawablePadding="@dimen/margin_smallest"
-                android:text="@string/activity_group_info_label_notice"
-                style="@style/Widget.App.TextView.Medium.RedDark"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:background="@color/item_divider"
                 />
 
-            <TextView
-                android:id="@+id/btn_notice_show"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:drawablePadding="@dimen/margin_smallest"
-                android:drawableRight="@drawable/tiaozhuan"
-                android:text="@string/activity_group_info_btn_notice_expand"
-                style="@style/Widget.App.TextView.Medium.Secondary"
-                />
-
-            <com.ms.square.android.expandabletextview.ExpandableTextView
-                android:id="@+id/notice_content"
+            <RelativeLayout
+                android:id="@+id/menu_notice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/label_notice"
-                android:layout_marginTop="@dimen/margin_small"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 >
               <TextView
-                  android:id="@id/expandable_text"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textColor="@color/font_color_primary"
-                  android:textSize="@dimen/font_size_medium"
-                  />
-              <ImageButton
-                  android:id="@id/expand_collapse"
+                  android:id="@+id/label_notice"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_gravity="right|bottom"
-                  android:background="@android:color/transparent"
-                  android:padding="16dp"
-                  android:visibility="gone"
+                  android:drawableLeft="@drawable/icon_notice"
+                  android:drawablePadding="@dimen/margin_smallest"
+                  android:text="@string/activity_group_info_label_notice"
+                  style="@style/Widget.App.TextView.Medium.RedDark"
                   />
-            </com.ms.square.android.expandabletextview.ExpandableTextView>
 
-          </RelativeLayout>
+              <TextView
+                  android:id="@+id/btn_notice_show"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:drawablePadding="@dimen/margin_smallest"
+                  android:drawableRight="@drawable/tiaozhuan"
+                  android:text="@string/activity_group_info_btn_notice_expand"
+                  style="@style/Widget.App.TextView.Medium.Secondary"
+                  />
+
+              <com.ms.square.android.expandabletextview.ExpandableTextView
+                  android:id="@+id/notice_content"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@id/label_notice"
+                  android:layout_marginTop="@dimen/margin_small"
+                  >
+                <TextView
+                    android:id="@id/expandable_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/font_color_primary"
+                    android:textSize="@dimen/font_size_medium"
+                    />
+                <ImageButton
+                    android:id="@id/expand_collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:background="@android:color/transparent"
+                    android:padding="16dp"
+                    android:visibility="gone"
+                    />
+              </com.ms.square.android.expandabletextview.ExpandableTextView>
+
+            </RelativeLayout>
+          </LinearLayout>
 
         </LinearLayout>
 
