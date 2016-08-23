@@ -650,6 +650,13 @@
     <activity
         android:name="com.thinksky.ui.profile.OtherWeiboActivity"
         android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.group.CreateGroupActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.group.NoticeInputActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustNothing|stateVisible"/>
     <!-- Glide Module  -->
     <meta-data
         android:name="com.thinksky.utils.imageloader.GlideImageModule"

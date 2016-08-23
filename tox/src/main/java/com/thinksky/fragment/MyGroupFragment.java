@@ -13,6 +13,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriberSimple;
@@ -25,6 +26,7 @@ import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicFragment;
+import com.thinksky.ui.group.CreateGroupActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.Url;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -77,6 +79,13 @@ public class MyGroupFragment extends BasicFragment {
     topicCount.setText("0");
     mGroupListAdapter = new GroupListAdapter();
     listView.setAdapter(mGroupListAdapter);
+
+    createGroup.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(new Intent(getActivity(), CreateGroupActivity.class));
+      }
+    });
   }
 
   private void inject() {
@@ -100,6 +109,11 @@ public class MyGroupFragment extends BasicFragment {
 
           }
         });
+  }
+
+  @Subscribe
+  public void handleCreateGroupSuccessEvent(CreateGroupActivity.CreateGroupSuccessEvent event) {
+    initGroupList();
   }
 
   private void initGroupList() {

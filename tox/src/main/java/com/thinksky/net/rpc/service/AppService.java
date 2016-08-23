@@ -11,11 +11,14 @@
  */
 package com.thinksky.net.rpc.service;
 
+import android.support.annotation.Nullable;
 import com.thinksky.net.rpc.GroupModel;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.CollectQuestionModel;
 import com.thinksky.net.rpc.model.CountModel;
+import com.thinksky.net.rpc.model.GroupDetailModel;
 import com.thinksky.net.rpc.model.GroupInfoModel;
+import com.thinksky.net.rpc.model.GroupTypeModelList;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.model.PostModel;
@@ -200,15 +203,34 @@ public interface AppService {
   @GET("api.php?s=question/getQuestionCategory")
   Observable<Response<QuestionCategoryModel>> getQuestionCategory();
 
+  @GET("api.php?s=group/getGroupType")
+  Observable<Response<GroupTypeModelList>> getGroupType();
+
   @GET("api.php?s=user/getMyFans")
   Observable<Response<UserListModel>> getMyFans(@Query("uid") String userId, @Query("page") int
-      page,
-                                                @Query("count") int count);
+      page, @Query("count") int count);
 
   @GET("api.php?s=user/getMyFollows")
   Observable<Response<UserListModel>> getMyFollows(@Query("uid") String userId, @Query("page")
-  int page,
-                                                   @Query("count") int count);
+  int page, @Query("count") int count);
+
+  @GET("api.php?s=group/addGroup")
+  Observable<BaseModel> createGroup(@Query("session_id") String sessionId, @Query("title") String
+      groupName, @Query("type_id")
+                                    String category, @Query("type") String type, @Query("logo")
+  String logo, @Query("detail")
+                                    String detail, @Nullable @Query("id") String groupId, @Query
+                                        ("notice") String notice);
+
+  @GET("api.php?s=group/addGroup")
+  Observable<BaseModel> createGroupNoLogo(@Query("session_id") String sessionId, @Query("title")
+  String groupName, @Query("type_id")
+                                          String category, @Query("type") String type, @Query
+      ("detail") String detail, @Nullable @Query
+      ("id") String groupId, @Query("notice") String notice);
+
+  @GET("api.php?s=group/getGroupDetail")
+  Observable<GroupDetailModel> getGroupDetail(@Query("group_id") String groupId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

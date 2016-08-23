@@ -34,6 +34,7 @@ public class UploadModel extends BaseModel {
   private String id;
   private String uid;
   private String path;
+  private String url;
   private String driver;
   private String create_time;
   private String status;
@@ -93,5 +94,13 @@ public class UploadModel extends BaseModel {
 
   public void setIs_temp(String is_temp) {
     this.is_temp = is_temp;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
   }
 }

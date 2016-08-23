@@ -264,7 +264,13 @@
   <string name="activity_create_group_title">创建小组</string>
   <string name="activity_create_group_label_logo">小组形象</string>
   <string name="activity_create_group_label_name">名称</string>
-  <string name="activity_create_group_label_category">分类</string>
+  <string name="activity_create_group_label_category">小组标签</string>
   <string name="activity_create_group_label_type">小组类型</string>
   <string name="activity_create_group_label_description">小组简介</string>
+  <string name="activity_create_group_label_notice">公告</string>
+  <string name="activity_create_group_title_btn_create">提交</string>
+  <string name="activity_notice_input_title">公告</string>
+  <string name="activity_notice_input_title_btn_complete">完成</string>
+  <string name="activity_create_group_error_category_null">请选择标签</string>
+  <string name="activity_create_group_error_name_null">请输入群组名称</string>
 </resources>

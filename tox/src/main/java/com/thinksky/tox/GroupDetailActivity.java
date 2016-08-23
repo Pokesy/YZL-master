@@ -23,7 +23,9 @@ import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.myview.MoreTextView;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.GroupDetailModel;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.redefine.CircleImageView;
@@ -183,8 +185,11 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     group_id = Integer.parseInt(groupInfoMap.get("id"));
     new Thread(new NoticeThread(groupId)).start();
     loadPost(groupId, session_id);
+
+
     groupApi.setHandler(tempHandler);
     groupApi.getGroupInfo(group_id + "");
+
     backMenu = (ImageView) findViewById(R.id.back_menu);
     mScrollView = (ScrollView) findViewById(R.id.group_scrollView);
     topPager = (LinearLayout) findViewById(R.id.top_pager);
@@ -222,6 +227,7 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
     });
     mScrollView.smoothScrollTo(0, 0);
   }
+
 
   protected void InitThisView(HashMap<String, String> groupInfoMap) {
 

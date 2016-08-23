@@ -40,4 +40,9 @@
     <item>鱼医生</item>
     <item>鱼乐圈</item>
   </array>
+
+  <array name="group_type_items">
+    <item>公共群组</item>
+    <item>私有群组</item>
+  </array>
 </resources>

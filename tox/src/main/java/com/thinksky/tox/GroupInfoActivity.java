@@ -492,7 +492,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
       e.printStackTrace();
     }
 
-    mNoticeView.setText(groupInfoMap.get(""));
+    String notice = groupInfoMap.get("notice");
+    mNoticeView.setText(notice);
+    mNoticeView.setVisibility(TextUtils.isEmpty(notice) ? View.GONE : View.VISIBLE);
     init();
   }
 

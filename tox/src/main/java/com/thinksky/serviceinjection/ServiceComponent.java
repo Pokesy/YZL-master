@@ -27,6 +27,7 @@ import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.SettingActivity;
 import com.thinksky.ui.group.CreateGroupActivity;
+import com.thinksky.ui.group.LogoChoosePresenter;
 import com.thinksky.ui.profile.ActivityMessageFragment;
 import com.thinksky.ui.profile.AvatarChoosePresenter;
 import com.thinksky.ui.profile.DoctorMessageFragment;
@@ -122,4 +123,6 @@ public interface ServiceComponent {
   void inject(OtherWeiboActivity otherWeiboActivity);
 
   void inject(CreateGroupActivity createGroupActivity);
+
+  void inject(LogoChoosePresenter logoChoosePresenter);
 }
