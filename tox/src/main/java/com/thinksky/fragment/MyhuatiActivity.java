@@ -102,16 +102,16 @@ public class MyhuatiActivity extends BaseBActivity {
         UiRpcSubscriberSimple<HotPostModel>(this) {
 
 
-      @Override
-      protected void onSuccess(HotPostModel hotPostModel) {
-        adapter.resetData(hotPostModel.getList());
-      }
+          @Override
+          protected void onSuccess(HotPostModel hotPostModel) {
+            adapter.resetData(hotPostModel.getList());
+          }
 
-      @Override
-      protected void onEnd() {
+          @Override
+          protected void onEnd() {
 
-      }
-    });
+          }
+        });
 
   }
 
@@ -212,28 +212,7 @@ public class MyhuatiActivity extends BaseBActivity {
       holder.v(R.id.root_layout).setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          //                    Bundle bundle = new Bundle();
           launch(mContext, isWeGroup, bean);
-//                    for (int i = 0; i < bean.imgList.size(); i++) {
-//                        String url = RsenUrlUtil.URL_BASE + bean.imgList.get(i);
-//                        imgViewList.get(i).setVisibility(View.VISIBLE);
-//                        kjBitmap.display(imgViewList.get(i), url);
-//                        final int in = i;
-//                        imgViewList.get(in).setOnClickListener(new View.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(View v) {
-//                                Intent intent = new Intent(getActivity(), ImagePagerActivity
-// .class);
-//                                Bundle bundle = new Bundle();
-//                                bundle.putStringArrayList("image_urls", (ArrayList<String>)
-// bean.imgList);
-//                                bundle.putInt("image_index", in);
-//                                intent.putExtras(bundle);
-//                                startActivity(intent);
-//                            }
-//                        });
-//                    }
         }
       });
     }

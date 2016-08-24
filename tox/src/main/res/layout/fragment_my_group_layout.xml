@@ -22,7 +22,7 @@
         android:padding="@dimen/margin_large"
         >
 
-      <LinearLayout
+      <LinearLayout android:id="@+id/menu_topic"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:layout_weight="1"
@@ -40,6 +40,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               tools:text="10"
+              android:layout_marginRight="5dp"
               style="@style/Widget.App.TextView.Large.RedDark"
               />
           <TextView

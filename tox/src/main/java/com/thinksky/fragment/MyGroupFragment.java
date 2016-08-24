@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,6 +46,8 @@ public class MyGroupFragment extends BasicFragment {
   TextView createGroup;
   @Bind(R.id.list_view)
   ExpandableListView listView;
+  @Bind(R.id.menu_topic)
+  LinearLayout menuTopic;
 
   @Inject
   AppService mAppService;
@@ -83,6 +86,12 @@ public class MyGroupFragment extends BasicFragment {
       @Override
       public void onClick(View v) {
         startActivity(new Intent(getActivity(), CreateGroupActivity.class));
+      }
+    });
+    menuTopic.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(new Intent(getActivity(), MyhuatiActivity.class));
       }
     });
   }

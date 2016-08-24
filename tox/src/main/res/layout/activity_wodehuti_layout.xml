@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/group_post_top"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="?actionBarSize"
         android:layout_alignParentTop="true"
         android:background="@drawable/head_border"
         android:paddingBottom="0dp"
@@ -15,12 +15,11 @@
 
         <ImageView
             android:id="@+id/back_menu"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:padding="10dp"
             android:src="@drawable/arrow_left" />
 
         <TextView
