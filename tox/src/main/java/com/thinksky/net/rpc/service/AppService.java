@@ -18,6 +18,7 @@ import com.thinksky.net.rpc.model.CollectQuestionModel;
 import com.thinksky.net.rpc.model.CountModel;
 import com.thinksky.net.rpc.model.GroupDetailModel;
 import com.thinksky.net.rpc.model.GroupInfoModel;
+import com.thinksky.net.rpc.model.GroupMemberListModel;
 import com.thinksky.net.rpc.model.GroupTypeModelList;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.model.MessageModel;
@@ -218,7 +219,7 @@ public interface AppService {
   Observable<BaseModel> createGroup(@Query("session_id") String sessionId, @Query("title") String
       groupName, @Query("type_id")
                                     String category, @Query("type") String type, @Query("logo")
-  String logo, @Query("detail")
+                                    String logo, @Query("detail")
                                     String detail, @Nullable @Query("id") String groupId, @Query
                                         ("notice") String notice);
 
@@ -226,11 +227,15 @@ public interface AppService {
   Observable<BaseModel> createGroupNoLogo(@Query("session_id") String sessionId, @Query("title")
   String groupName, @Query("type_id")
                                           String category, @Query("type") String type, @Query
-      ("detail") String detail, @Nullable @Query
+                                              ("detail") String detail, @Nullable @Query
       ("id") String groupId, @Query("notice") String notice);
 
   @GET("api.php?s=group/getGroupDetail")
   Observable<GroupDetailModel> getGroupDetail(@Query("group_id") String groupId);
+
+  @GET("api.php?s=group/getGroupMenmber")
+  Observable<GroupMemberListModel> getGroupMember(@Query("id") String groupId, @Query("page") int
+      page, @Query("count") int count);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

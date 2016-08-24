@@ -32,8 +32,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.otto.Subscribe;
+import com.thinksky.fragment.GroupMemberListActivity;
 import com.thinksky.fragment.MyScrollview;
-import com.thinksky.fragment.UserListActivity;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
@@ -514,10 +514,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         sendPost();
         break;
       case R.id.enter_cy:
-        Intent intent1 = new Intent(mContext, UserListActivity.class);
-        intent1.putExtra("group_id", group_id);
-        //                    intent.putStringArrayListExtra("uidlist", userlist);
-        startActivity(intent1);
+        startActivity(GroupMemberListActivity.makeIntent(mContext, String.valueOf(group_id),
+            false));
         break;
       case R.id.group_logo:
         Intent intent = new Intent(mContext, GroupDetailActivity.class);

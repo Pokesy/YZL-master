@@ -273,4 +273,12 @@
   <string name="activity_notice_input_title_btn_complete">完成</string>
   <string name="activity_create_group_error_category_null">请选择标签</string>
   <string name="activity_create_group_error_name_null">请输入群组名称</string>
+
+  <!-- 群组成员列表 -->
+  <string name="activity_group_member_list_title_btn_edit">编辑</string>
+  <string name="activity_group_member_list_title">小组成员</string>
+  <string name="activity_group_member_list_footer_check_all">全选</string>
+  <string name="activity_group_member_list_footer_btn_set_manager">设为管理员</string>
+  <string name="activity_group_member_list_footer_btn_remove">移除</string>
+  <string name="activity_group_member_list_remove_alert">确定移除成员？</string>
 </resources>

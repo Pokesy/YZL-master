@@ -26,7 +26,7 @@ import com.tox.Url;
 public class ProfileIntentFactory {
   public static Intent makeIntent(Context context, String userId) {
     if (TextUtils.equals(userId, Url.USERID)) {
-      return OtherProfileActivity.makeIntent(context, userId);
+      return new Intent(context, MyProfileActivity.class);
     } else {
       return OtherProfileActivity.makeIntent(context, userId);
     }
