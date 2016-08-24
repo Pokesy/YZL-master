@@ -38,15 +38,19 @@ import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.myview.MoreTextView;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.GroupDetailModel;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.group.CreateGroupActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -56,7 +60,6 @@ import com.tox.Url;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
@@ -67,6 +70,7 @@ import org.json.JSONObject;
  * Created by Administrator on 2015/5/18 0018.
  */
 public class GroupInfoActivity extends BaseBActivity implements View.OnClickListener {
+  private static final String BUNDLE_KEY_GROUP_ID = "group_id";
   private List<String> imgs;
   private static boolean PUBLICGROUP = false;
   private static boolean PRIVATEGROUP = false;
@@ -76,7 +80,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   protected ArrayList<HashMap<String, String>> categoryList;
   private RemenhuatiAdapter rm_adapter;
   Context mContext;
-  HashMap<String, String> groupInfoMap;
   Bundle GroupBundle;
   String session_id;
   private String userUid;
@@ -86,7 +89,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   RecyclerView group_post_listView;
   PopupWindow cateWindow;
   private GroupApi groupApi;
-  private int group_id;
+  private String group_id;
   private int cateID = 0;
   private Context ctx;
   private LinearLayout linear_list;
@@ -127,6 +130,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private View mMenuNotice;
   private View mNoticeContainer;
 
+  private boolean mIsCreator;
+  private GroupDetailModel mGroupModel;
+
   @Inject
   AppService mAppService;
 
@@ -135,29 +141,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     @Override
     public void handleMessage(Message msg) {
       if (msg.what == 0) {
-        String result = (String) msg.obj;
-        groupInfoMap = groupApi.getGroupInfoMap(result, groupInfoMap);
-        if (BaseFunction.isLogin()) {
-          join_group.setVisibility(View.VISIBLE);
-          isJoin = Integer.parseInt(groupInfoMap.get("is_join"));
-          if (isJoin == 1) {
-            joinFlag = false;
-            join_status.setText("退出群组");
-          } else if (isJoin == -1) {
-            join_status.setText("已申请，审核中");
-            join_group.setClickable(false);
-          } else if (isJoin != 1) {
-            if (groupInfoMap.get("uid").equals(userUid)) {
-              join_status.setText("管理小组");
-            } else {
-              join_status.setText("加入群组");
-              joinFlag = true;
-            }
-          }
-          initGroupView(groupInfoMap);
-        } else {
-          join_group.setVisibility(View.GONE);
-        }
+
       }
     }
   };
@@ -229,6 +213,11 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     }
   };
 
+  public static Intent makeIntent(Context context, String groupId) {
+    Intent intent = new Intent(context, GroupInfoActivity.class);
+    intent.putExtra(BUNDLE_KEY_GROUP_ID, groupId);
+    return intent;
+  }
 
   @Override
   @SuppressWarnings(value = {"unchecked"})
@@ -245,59 +234,13 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     //获得上个activity传递的群组信息
     GroupBundle = getIntent().getExtras();
     isWeGroup = GroupBundle.getBoolean("isWeGroup");
-    groupInfoMap = (HashMap<String, String>) GroupBundle.getSerializable("group_info");
     memberRecycler = (RecyclerView) findViewById(R.id.memberRecycler);
-    group_id = Integer.parseInt(groupInfoMap.get("id"));
+    group_id = getIntent().getStringExtra(BUNDLE_KEY_GROUP_ID);
 
-    RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_XIANGQING,
-        new RsenUrlUtil.OnJsonResultListener<MyBean>() {
-          @Override
-          public void onNoNetwork(String msg) {
-            ToastHelper.showToast(msg, Url.context);
-          }
-
-          @Override
-          public Map getMap() {
-            Map map = new HashMap();
-            map.put("group_id", group_id);
-            if (BaseFunction.isLogin()) {
-              map.put("session_id", session_id);
-            }
-            return map;
-          }
-
-          @Override
-          public void onParseJsonBean(List<MyBean> beans, JSONObject jsonObject) {
-            try {
-              MyBean bean = new MyBean();
-
-              bean.is_join = jsonObject.getInt("is_join");
-              bean.uid = jsonObject.getString("uid");
-              JSONArray userArray = jsonObject.getJSONArray("GroupMenmber");
-              bean.userList = parseUserList(userArray);
-              //                    bean.uidList = parseUidList(userArray);
-              beans.add(bean);
-            } catch (Exception e) {
-
-            }
-          }
-
-          @Override
-          public void onResult(boolean state, final List<MyBean> beans) {
-            if (state) {
-              //isJoin = beans.get(0).is_join;
-              userlist = beans.get(0).uidList;
-              memberRecycler.setAdapter(
-                  new MySubAdapter(GroupInfoActivity.this, beans.get(0).userList));
-            } else {
-              //                    ToastHelper.showToast("请求失败", Url.context);
-            }
-          }
-        });
     //即时获取群组信息线程
     groupApi.setHandler(tempHandler);
     mUpdateGroupApi.setHandler(tempHandler);
-    groupApi.getGroupInfo(String.valueOf(group_id));
+    getGroupInfo();
 
     post = new Intent(mContext, SendTieziActivity.class);
     post.putExtra("group_id", group_id);
@@ -338,7 +281,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     refreshButn.setOnClickListener(this);
     enter_cy.setOnClickListener(this);
     mMenuNotice.setOnClickListener(this);
-    initGroupView(groupInfoMap);
     postInfoList = new ArrayList<HashMap<String, String>>();
     final View containerView = findViewById(R.id.group_info_container);
 
@@ -355,6 +297,58 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
         ())).serviceModule(new ServiceModule())
         .build().inject(this);
+  }
+
+  private void getGroupInfo() {
+    manageRpcCall(mAppService.getGroupDetail(String.valueOf(group_id)), new
+        UiRpcSubscriber1<GroupDetailModel>(this) {
+
+
+          @Override
+          protected void onSuccess(GroupDetailModel groupDetailModel) {
+            mGroupModel = groupDetailModel;
+            mIsCreator = TextUtils.equals(Url.USERID, mGroupModel.getList().getUid());
+            if (BaseFunction.isLogin()) {
+              initGroupView(groupDetailModel);
+              memberRecycler.setAdapter(
+                  new MySubAdapter(GroupInfoActivity.this, groupDetailModel.getList()
+                      .getGroupMenmber()));
+              join_group.setVisibility(View.VISIBLE);
+              isJoin = Integer.parseInt(groupDetailModel.getList().getIs_join());
+              if (TextUtils.equals(groupDetailModel.getList().getUid(), Url.USERID)) {
+                join_status.setText("管理小组");
+                if (isJoin == 1) {
+                  joinFlag = false;
+                }
+                return;
+              }
+              if (isJoin == 1) {
+                joinFlag = false;
+                join_status.setText("退出群组");
+              } else if (isJoin == -1) {
+                join_status.setText("已申请，审核中");
+                join_group.setClickable(false);
+              } else if (isJoin != 1) {
+                join_status.setText("加入群组");
+                joinFlag = true;
+              }
+            } else {
+              join_group.setVisibility(View.GONE);
+            }
+          }
+
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
+  }
+
+  @Subscribe
+  public void handleGroupMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
+                                                     event) {
+    getGroupInfo();
   }
 
   private void initTitleBar() {
@@ -401,10 +395,10 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   }
 
   /*成员头像*/
-  public class MySubAdapter extends RBaseAdapter<String> {
+  public class MySubAdapter extends RBaseAdapter<GroupDetailModel.ListBean.GroupMenmberBean> {
     private static final int MAX_COUNT = 8;
 
-    public MySubAdapter(Context context, List<String> datas) {
+    public MySubAdapter(Context context, List<GroupDetailModel.ListBean.GroupMenmberBean> datas) {
       super(context, datas);
     }
 
@@ -414,9 +408,12 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     }
 
     @Override
-    protected void onBindView(RViewHolder holder, int position, String bean) {
-      ImageLoader.loadOptimizedHttpImage(GroupInfoActivity.this, bean).bitmapTransform(new
-          CropCircleTransformation(GroupInfoActivity.this))
+    protected void onBindView(RViewHolder holder, int position, GroupDetailModel.ListBean
+        .GroupMenmberBean bean) {
+      ImageLoader.loadOptimizedHttpImage(GroupInfoActivity.this, NetConstant.BASE_URL + bean
+          .getUser().getAvatar64())
+          .bitmapTransform(new
+              CropCircleTransformation(GroupInfoActivity.this))
           .error(R.drawable.side_user_avatar).placeholder(R.drawable.side_user_avatar).into
           (holder.imgV(R.id.logo));
     }
@@ -472,21 +469,26 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   }
 
   //初始化群组固有信息
-  private void initGroupView(HashMap<String, String> groupInfoMap) {
-
-    group_name.setText(groupInfoMap.get("title"));
-    group_detail.setText("群组简介：" + groupInfoMap.get("detail"));
+  private void initGroupView(GroupDetailModel groupDetailModel) {
+    if (null == groupDetailModel) {
+      return;
+    }
+    group_name.setText(groupDetailModel.getList().getTitle());
+    group_detail.setText("群组简介：" + groupDetailModel.getList().getDetail());
     group_detail.setVisibility(View.GONE);
-    mCreatorView.setText(getString(R.string.activity_group_info_text_creator, groupInfoMap.get
-        ("user_nickname")));
+    mCreatorView.setText(getString(R.string.activity_group_info_text_creator, groupDetailModel
+        .getList
+            ().getUser().getNickname()));
     //        group_type_name.setText(groupInfoMap.get("type_name"));
     mCreateTimeView.setText(getString(R.string.activity_group_info_text_create_time, TextUtils
-        .isEmpty(groupInfoMap.get("create_time")) ? "" : groupInfoMap.get("create_time")));
-    mMemberCountView.setText(getString(R.string.activity_group_info_member_count, groupInfoMap
-        .get("memberCount")));
+        .isEmpty(groupDetailModel.getList().getCreate_time()) ? "" : groupDetailModel.getList()
+        .getCreate_time()));
+    mMemberCountView.setText(getString(R.string.activity_group_info_member_count,
+        groupDetailModel.getList().getMember_count()));
 
     try {
-      ImageLoader.loadOptimizedHttpImage(this, groupInfoMap.get("group_logo")).bitmapTransform(new
+      ImageLoader.loadOptimizedHttpImage(this, NetConstant.BASE_URL + groupDetailModel.getList()
+          .getLogo()).bitmapTransform(new
           CropCircleTransformation(this))
           .error(R.drawable.picture_1_no).placeholder(R.drawable.picture_1_no).dontAnimate().into
           (group_logo);
@@ -494,10 +496,15 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
       e.printStackTrace();
     }
 
-    String notice = groupInfoMap.get("notice");
+    String notice = groupDetailModel.getList().getNotice();
     mNoticeView.setText(notice);
     mNoticeContainer.setVisibility(TextUtils.isEmpty(notice) ? View.GONE : View.VISIBLE);
     init();
+  }
+
+  @Subscribe
+  public void handleGroupInfoChangeEvent(CreateGroupActivity.CreateGroupSuccessEvent event) {
+    getGroupInfo();
   }
 
   @Override
@@ -515,33 +522,19 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         break;
       case R.id.enter_cy:
         startActivity(GroupMemberListActivity.makeIntent(mContext, String.valueOf(group_id),
-            false));
+            mIsCreator));
         break;
       case R.id.group_logo:
-        Intent intent = new Intent(mContext, GroupDetailActivity.class);
-        intent.putExtra("groupInfoMap", groupInfoMap);
-        intent.putExtra("is_join", isJoin);
-        startActivity(intent);
+        //Intent intent = new Intent(mContext, GroupDetailActivity.class);
+        //intent.putExtra("groupInfoMap", groupInfoMap);
+        //intent.putExtra("is_join", isJoin);
+        //startActivity(intent);
         break;
       case R.id.join_group:
-        if (!groupApi.getSeesionId().equals("")) {
-          if (groupInfoMap.get("uid").equals(userUid)) {
-            //                        new AlertDialog.Builder(mContext)
-            //                                .setTitle("解散群组")
-            //                                .setMessage("确定吗？")
-            //                                .setPositiveButton("是", new DialogInterface
-            // .OnClickListener() {
-            //                                    @Override
-            //                                    public void onClick(DialogInterface dialog, int
-            // which) {
-            //                                        initFlag(false, false, true);
-            //                                        groupApi.setHandler(myHandler);
-            //                                        groupApi.dismissGroup(group_id + "");
-            //                                    }
-            //                                })
-            //                                .setNegativeButton("否", null)
-            //                                .show();
-            ToastHelper.showToast("请在网站端操作", mContext);
+        if (!TextUtils.isEmpty(groupApi.getSeesionId())) {
+          if (TextUtils.equals(mGroupModel.getList().getUid(), userUid)) {
+            startActivity(CreateGroupActivity.makeIntent(GroupInfoActivity.this, String.valueOf
+                (group_id)));
             break;
           }
           if (isJoin == -1) {
@@ -549,14 +542,14 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
           }
           if (joinFlag) {
             //加入群组
-            if (groupInfoMap.get("group_type").equals("1")) {
+            if (TextUtils.equals(mGroupModel.getList().getType(), "1")) {
               //加入的是私有群组
               initFlag(false, true, false);
             } else {
               initFlag(true, false, false);
             }
             groupApi.setHandler(myHandler);
-            groupApi.joinGroupPost(group_id + "");
+            groupApi.joinGroupPost(group_id + "", mGroupModel.getList().getType());
             joinFlag = false;
           } else {
             //退出群组
@@ -633,7 +626,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
       map1.put("id", jsonObj.getString("id"));
       map1.put("uid", jsonObj.getString("uid"));
       map1.put("group_id", jsonObj.getString("group_id"));
-      map1.put("group_name", groupInfoMap.get("title"));
+      map1.put("group_name", mGroupModel.getList().getTitle());
       map1.put("title", jsonObj.getString("title"));
       map1.put("content", jsonObj.getString("content"));
       map1.put("create_time", jsonObj.getString("create_time"));

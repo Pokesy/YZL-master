@@ -237,6 +237,10 @@ public interface AppService {
   Observable<GroupMemberListModel> getGroupMember(@Query("id") String groupId, @Query("page") int
       page, @Query("count") int count);
 
+  @GET("api.php?s=group/rejectGroupPeople")
+  Observable<BaseModel> removeGroupMember(@Query("session_id") String sessionId, @Query
+      ("group_id") String groupId, @Query("uid") String ids);
+
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
   }

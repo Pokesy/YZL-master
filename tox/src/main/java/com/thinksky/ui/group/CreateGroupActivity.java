@@ -89,6 +89,7 @@ public class CreateGroupActivity extends BaseBActivity {
   private String mCategoryId;
   private String mGroupId;
   private String mNotice;
+  private String mLogoPath;
 
   @Inject
   AppService mAppService;
@@ -126,6 +127,7 @@ public class CreateGroupActivity extends BaseBActivity {
         mEditGroupName = groupDetailModel.getList().getTitle();
         mNotice = groupDetailModel.getList().getNotice();
         mEditDescription = groupDetailModel.getList().getDetail();
+        mLogoPath = groupDetailModel.getList().getLogo();
         initView();
       }
 
@@ -137,11 +139,19 @@ public class CreateGroupActivity extends BaseBActivity {
   }
 
   private void initView() {
+    ImageLoader.loadOptimizedHttpImage(this, mLogoPath).bitmapTransform(new
+        CropCircleTransformation(this))
+        .placeholder(R.drawable.picture_1_no).into(mLogoView);
+    groupName.setText(mEditGroupName);
+    description.setText(mEditDescription);
+    notice.setText(mNotice);
+
     mTypeItems = getResources().getStringArray(R.array.group_type_items);
     groupType.setText(TextUtils.isEmpty(mEditType) ? mTypeItems[0] : mTypeItems[Integer.parseInt
         (mEditType)]);
 
-    titleBar.setMiddleTitle(R.string.activity_create_group_title);
+    titleBar.setMiddleTitle(TextUtils.isEmpty(mGroupId) ? R.string.activity_create_group_title :
+        R.string.activity_create_group_title_edit);
     titleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -210,24 +220,27 @@ public class CreateGroupActivity extends BaseBActivity {
     if (TextUtils.isEmpty(mCategoryId)) {
       return;
     }
-    switch (mCategoryId) {
-      case CATEGORY_HONGYU:
-        groupCategory.setText(R.string.fish_category_hongyu);
-        break;
-      case CATEGORY_HUYU:
-        groupCategory.setText(R.string.fish_category_huyu);
-        break;
-      case CATEGORY_LONGYU:
-        groupCategory.setText(R.string.fish_category_longyu);
-        break;
-      case CATEGORY_QICAISHENXIAN:
-        groupCategory.setText(R.string.fish_category_qicaishenxian);
-        break;
-      case CATEGORY_OTHER:
-        groupCategory.setText(R.string.fish_category_other);
-        break;
-    }
+    manageRpcCall(mAppService.getGroupType(), new
+        UiRpcSubscriberSimple<GroupTypeModelList>(this) {
 
+
+          @Override
+          protected void onSuccess(GroupTypeModelList questionCategoryModel) {
+            mCategoryList = questionCategoryModel.getList();
+            mCategoryItems = new String[mCategoryList.size()];
+            for (int i = 0; i < mCategoryItems.length; i++) {
+              mCategoryItems[i] = mCategoryList.get(i).getTitle();
+              if (TextUtils.equals(mCategoryId, mCategoryList.get(i).getId())) {
+                groupCategory.setText(mCategoryList.get(i).getTitle());
+              }
+            }
+          }
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
   }
 
   private void inject() {

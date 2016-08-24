@@ -29,9 +29,10 @@ public class GroupApi extends BaseApi {
   /**
    * 加入群组
    */
-  public void joinGroupPost(String group_id) {
+  public void joinGroupPost(String group_id, String type) {
     putArg("group_id", group_id);
     putArg("session_id", Url.SESSIONID);
+    putArg("type", type);
     execute(handler, Url.getApiUrl(Url.JOINGROUP), true);
   }
 
@@ -236,7 +237,7 @@ public class GroupApi extends BaseApi {
   }
 
   //群组分类导航
-  public ArrayList<JSONObject> getGroupCategory(String url, int group_id) {
+  public ArrayList<JSONObject> getGroupCategory(String url, String group_id) {
 
     String result;
     JSONArray jsonObjFist;

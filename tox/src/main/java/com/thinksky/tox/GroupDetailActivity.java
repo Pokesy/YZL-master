@@ -23,9 +23,7 @@ import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.myview.MoreTextView;
-import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
-import com.thinksky.net.rpc.model.GroupDetailModel;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.redefine.CircleImageView;
@@ -85,6 +83,7 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
 
   @Inject
   AppService mAppService;
+  private String mGroupType;
 
   //对加入群组的状态进行实时判断
   private Handler tempHandler = new Handler() {
@@ -93,6 +92,7 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
       if (msg.what == 0) {
         String result = (String) msg.obj;
         groupInfoMap = groupApi.getGroupInfoMap(result, groupInfoMap);
+        mGroupType = groupInfoMap.get("group_type");
         Log.e("groupInfoMap>>>>>>>>", groupInfoMap.toString());
         if (BaseFunction.isLogin()) {
           join_group.setVisibility(View.VISIBLE);
@@ -298,7 +298,7 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
               initFlag(true, false, false);
             }
             groupApi.setHandler(myHandler);
-            groupApi.joinGroupPost(group_id + "");
+            groupApi.joinGroupPost(group_id + "", mGroupType);
             joinFlag = false;
           } else {
             //退出群组

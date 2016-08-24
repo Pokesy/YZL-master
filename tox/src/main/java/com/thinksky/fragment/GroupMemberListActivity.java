@@ -1,9 +1,11 @@
 package com.thinksky.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriber1;
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.GroupMemberListModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -87,6 +90,7 @@ public class GroupMemberListActivity extends BaseBActivity {
 
   private void initView() {
     mGroupId = getIntent().getStringExtra(BUNDLE_KEY_GROUP_ID);
+    mIsCreator = getIntent().getBooleanExtra(BUNDLE_KEY_IS_CREATOR, false);
     titleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -95,7 +99,7 @@ public class GroupMemberListActivity extends BaseBActivity {
     });
 
     titleBar.setMiddleTitle(R.string.activity_group_member_list_title);
-    if (!mIsCreator) {
+    if (mIsCreator) {
       titleBar.setRightTextBtn(R.string.activity_group_member_list_title_btn_edit, new View
           .OnClickListener() {
 
@@ -135,7 +139,9 @@ public class GroupMemberListActivity extends BaseBActivity {
     if (isChecked) {
       List<GroupMemberListModel.ListBean> beans = mAdapter.getAllList();
       for (GroupMemberListModel.ListBean bean : beans) {
-        mSelectUserIds.add(bean.getUid());
+        if (!TextUtils.equals(bean.getUid(), Url.USERID)) {
+          mSelectUserIds.add(bean.getUid());
+        }
       }
     }
     mAdapter.notifyDataSetChanged();
@@ -183,11 +189,6 @@ public class GroupMemberListActivity extends BaseBActivity {
             }
             mAdapter.addAll(beans);
             mAdapter.notifyDataSetChanged();
-            if (beans.size() >= PAGE_COUNT) {
-              mCurrentIndex++;
-            } else {
-              mListView.setPullUpToRefresh(false);
-            }
           }
 
           @Override
@@ -203,8 +204,50 @@ public class GroupMemberListActivity extends BaseBActivity {
       case R.id.btn_set_manager:
         break;
       case R.id.btn_remove:
+        removeGroupMembers();
         break;
     }
+  }
+
+  private void removeGroupMembers() {
+    if (mSelectUserIds.size() == 0) {
+      return;
+    }
+    AlertDialog dialog = new AlertDialog.Builder(this).setMessage(R.string
+        .activity_group_member_list_remove_alert)
+        .setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            dialog.cancel();
+            StringBuffer stringBuffer = new StringBuffer();
+            for (String userId : mSelectUserIds) {
+              stringBuffer.append(userId).append(",");
+            }
+            manageRpcCall(mAppService.removeGroupMember(Url.SESSIONID, mGroupId, stringBuffer
+                .substring
+                    (0, stringBuffer.length())), new UiRpcSubscriber1<BaseModel>
+                (GroupMemberListActivity.this) {
+
+
+              @Override
+              protected void onSuccess(BaseModel baseModel) {
+                loadData();
+                getComponent().getGlobalBus().post(new GroupMemberDataChangeEvent());
+              }
+
+              @Override
+              protected void onEnd() {
+
+              }
+            });
+          }
+        }).setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            dialog.cancel();
+          }
+        }).create();
+    dialog.show();
   }
 
   /*成员头像*/
@@ -266,6 +309,8 @@ public class GroupMemberListActivity extends BaseBActivity {
           }
         }
       });
+      holder.guanzhu.setVisibility((TextUtils.equals(Url.USERID, bean.getUid()) || isEditable) ?
+          View.GONE : View.VISIBLE);
 
       holder.itemLayout.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -274,7 +319,8 @@ public class GroupMemberListActivity extends BaseBActivity {
               ()));
         }
       });
-      holder.itemCheck.setVisibility(isEditable ? View.VISIBLE : View.GONE);
+      holder.itemCheck.setVisibility(isEditable && !TextUtils.equals(bean.getUid(), Url.USERID) ?
+          View.VISIBLE : View.GONE);
       holder.itemCheck.setChecked(mSelectUserIds.contains(bean.getUid()));
       holder.itemCheck.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -325,4 +371,7 @@ public class GroupMemberListActivity extends BaseBActivity {
     return intent;
   }
 
+  public class GroupMemberDataChangeEvent {
+
+  }
 }

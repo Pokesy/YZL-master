@@ -262,6 +262,7 @@
 
   <!-- 创建群组 -->
   <string name="activity_create_group_title">创建小组</string>
+  <string name="activity_create_group_title_edit">编辑小组</string>
   <string name="activity_create_group_label_logo">小组形象</string>
   <string name="activity_create_group_label_name">名称</string>
   <string name="activity_create_group_label_category">小组标签</string>

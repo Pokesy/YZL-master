@@ -51,7 +51,6 @@ import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -363,6 +362,12 @@ public class HomeFragment extends BasicFragment
   public void handlePostDataChangeEvent(GroupPostInfoActivity.PostDataChangeEvent event) {
     initdata();
     initViewData();
+  }
+
+  @Subscribe
+  public void handleGroupMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
+                                                   event) {
+    initdata();
   }
 
   protected void initdata() {
@@ -692,26 +697,7 @@ public class HomeFragment extends BasicFragment
   }
 
   public static void launch_xz(Context context, boolean isWeGroup, MyBean bean) {
-    HashMap<String, String> map = new HashMap<>();
-    Bundle bundle = new Bundle();
-    map.put("id", bean.id);
-    map.put("title", bean.title);
-    map.put("group_type", bean.group_type);
-    map.put("detail", bean.detail);
-    map.put("type_name", bean.type_name);
-    map.put("post_count", bean.post_count);
-    map.put("group_logo", bean.logo);
-    map.put("memberCount", bean.menmberCount);
-    map.put("uid", bean.uid);
-    map.put("is_join", bean.is_join);
-    map.put("user_nickname", bean.gm_nickname);
-    map.put("user_logo", bean.gm_logo);
-    map.put("create_time", bean.create_time);
-    bundle.putSerializable("group_info", map);
-    bundle.putBoolean("isWeGroup", isWeGroup);
-    Intent intent = new Intent(context, GroupInfoActivity.class);
-    intent.putExtras(bundle);
-    context.startActivity(intent);
+    context.startActivity(GroupInfoActivity.makeIntent(context, bean.id));
   }
 
   @Override

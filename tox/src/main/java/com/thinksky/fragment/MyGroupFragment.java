@@ -30,7 +30,6 @@ import com.thinksky.ui.group.CreateGroupActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.Url;
 import de.hdodenhof.circleimageview.CircleImageView;
-import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import retrofit2.Response;
@@ -113,6 +112,12 @@ public class MyGroupFragment extends BasicFragment {
 
   @Subscribe
   public void handleCreateGroupSuccessEvent(CreateGroupActivity.CreateGroupSuccessEvent event) {
+    initGroupList();
+  }
+
+  @Subscribe
+  public void handleGroupMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
+                                                   event) {
     initGroupList();
   }
 
@@ -307,25 +312,8 @@ public class MyGroupFragment extends BasicFragment {
   }
 
   public static void launch(Context context, boolean isWeGroup, GroupModel.ListBean bean) {
-    HashMap<String, String> map = new HashMap<>();
-    Bundle bundle = new Bundle();
-    map.put("id", bean.getId());
-    map.put("title", bean.getTitle());
-    map.put("group_type", bean.getType());
-    map.put("detail", bean.getDetail());
-    map.put("post_count", bean.getPost_count());
-    map.put("group_logo", bean.getLogo());
-    map.put("memberCount", bean.getMember_count());
-    map.put("uid", bean.getUid());
-    map.put("is_join", bean.getIs_join());
-    map.put("user_nickname", bean.getUser().getNickname());
-    map.put("user_logo", bean.getUser().getAvatar64());
-    map.put("create_time", bean.getCreate_time());
-    bundle.putSerializable("group_info", map);
-    bundle.putBoolean("isWeGroup", isWeGroup);
-    Intent intent = new Intent(context, GroupInfoActivity.class);
-    intent.putExtras(bundle);
-    context.startActivity(intent);
+    context.startActivity(GroupInfoActivity.makeIntent(context, bean.getId()));
+    ;
   }
 
   private class GroupListModel {
