@@ -16,6 +16,7 @@ import com.thinksky.net.rpc.GroupModel;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.CollectQuestionModel;
 import com.thinksky.net.rpc.model.CountModel;
+import com.thinksky.net.rpc.model.GroupChoiceModel;
 import com.thinksky.net.rpc.model.GroupDetailModel;
 import com.thinksky.net.rpc.model.GroupInfoModel;
 import com.thinksky.net.rpc.model.GroupMemberListModel;
@@ -240,6 +241,13 @@ public interface AppService {
   @GET("api.php?s=group/rejectGroupPeople")
   Observable<BaseModel> removeGroupMember(@Query("session_id") String sessionId, @Query
       ("group_id") String groupId, @Query("uid") String ids);
+
+  @GET("api.php?s=group/ tranferGroupManager")
+  Observable<BaseModel> tranferGroupManager(@Query("session_id") String sessionId, @Query("uid")
+  String userId, @Query("group_id") String groupId);
+
+  @GET("api.php?s=group/getGroupChoice")
+  Observable<GroupChoiceModel> getGroupChoice(@Query("page") int page, @Query("count") int count);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

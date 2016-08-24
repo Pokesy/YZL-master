@@ -139,7 +139,7 @@ public class CreateGroupActivity extends BaseBActivity {
   }
 
   private void initView() {
-    ImageLoader.loadOptimizedHttpImage(this, mLogoPath).bitmapTransform(new
+    ImageLoader.loadOptimizedHttpImage(this, NetConstant.BASE_URL + mLogoPath).bitmapTransform(new
         CropCircleTransformation(this))
         .placeholder(R.drawable.picture_1_no).into(mLogoView);
     groupName.setText(mEditGroupName);

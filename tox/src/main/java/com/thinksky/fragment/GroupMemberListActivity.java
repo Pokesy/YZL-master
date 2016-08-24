@@ -202,11 +202,36 @@ public class GroupMemberListActivity extends BaseBActivity {
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.btn_set_manager:
+        tranferManager();
         break;
       case R.id.btn_remove:
         removeGroupMembers();
         break;
     }
+  }
+
+  private void tranferManager() {
+    if (mSelectUserIds.size() != 1) {
+      return;
+    }
+    manageRpcCall(mAppService.tranferGroupManager(Url.SESSIONID, mSelectUserIds.get(0), mGroupId)
+        , new UiRpcSubscriber1<BaseModel>(this) {
+
+
+          @Override
+          protected void onSuccess(BaseModel baseModel) {
+            quitEdit();
+            mIsCreator = false;
+            titleBar.getTextBtnRight().setVisibility(View.GONE);
+            loadData();
+            getComponent().getGlobalBus().post(new GroupMemberDataChangeEvent());
+          }
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
   }
 
   private void removeGroupMembers() {
@@ -231,6 +256,7 @@ public class GroupMemberListActivity extends BaseBActivity {
 
               @Override
               protected void onSuccess(BaseModel baseModel) {
+                quitEdit();
                 loadData();
                 getComponent().getGlobalBus().post(new GroupMemberDataChangeEvent());
               }

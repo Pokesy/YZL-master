@@ -19,6 +19,7 @@ import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.fragment.RemenhuatiActivity;
 import com.thinksky.fragment.RemenhuatiFragment;
 import com.thinksky.fragment.WendaFragment;
+import com.thinksky.fragment.XiaozujingxuanFragment;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.UserService;
 import com.thinksky.tox.GroupDetailActivity;
@@ -128,4 +129,6 @@ public interface ServiceComponent {
   void inject(LogoChoosePresenter logoChoosePresenter);
 
   void inject(GroupMemberListActivity groupMemberListActivity);
+
+  void inject(XiaozujingxuanFragment xiaozujingxuanFragment);
 }
