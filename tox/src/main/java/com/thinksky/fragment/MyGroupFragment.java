@@ -125,6 +125,11 @@ public class MyGroupFragment extends BasicFragment {
   }
 
   @Subscribe
+  public void handleDissolutionGroupEvent(CreateGroupActivity.DissolutionGroupEvent event) {
+    initGroupList();
+  }
+
+  @Subscribe
   public void handleGroupMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
                                                    event) {
     initGroupList();

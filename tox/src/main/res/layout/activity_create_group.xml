@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -186,5 +187,20 @@
         />
 
   </RelativeLayout>
+
+  <TextView
+      android:id="@+id/btn_dissolution"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_xxlarge"
+      android:background="@android:color/holo_red_dark"
+      android:gravity="center"
+      android:paddingBottom="@dimen/margin_small"
+      android:paddingTop="@dimen/margin_small"
+      android:text="@string/activity_create_group_btn_dissolution"
+      android:visibility="gone"
+      tools:visibility="visible"
+      style="@style/Widget.App.TextView.Large.White"
+      />
 
 </LinearLayout>

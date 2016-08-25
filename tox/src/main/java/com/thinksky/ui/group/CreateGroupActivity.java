@@ -81,6 +81,8 @@ public class CreateGroupActivity extends BaseBActivity {
   TextView description;
   @Bind(R.id.notice)
   TextView notice;
+  @Bind(R.id.btn_dissolution)
+  TextView btnDissolution;
 
   private String mEditGroupName;
   private String mEditDescription;
@@ -185,6 +187,8 @@ public class CreateGroupActivity extends BaseBActivity {
 
             @Override
             protected void onSuccess(BaseModel baseModel) {
+              Toast.makeText(CreateGroupActivity.this, R.string
+                  .activity_create_group_create_success, Toast.LENGTH_SHORT).show();
               getComponent().getGlobalBus().post(new CreateGroupSuccessEvent());
               finish();
             }
@@ -204,6 +208,8 @@ public class CreateGroupActivity extends BaseBActivity {
 
             @Override
             protected void onSuccess(BaseModel baseModel) {
+              Toast.makeText(CreateGroupActivity.this, R.string
+                  .activity_create_group_create_success, Toast.LENGTH_SHORT).show();
               getComponent().getGlobalBus().post(new CreateGroupSuccessEvent());
               finish();
             }
@@ -217,9 +223,11 @@ public class CreateGroupActivity extends BaseBActivity {
       }
     });
 
+    btnDissolution.setVisibility(TextUtils.isEmpty(mCategoryId) ? View.GONE : View.VISIBLE);
     if (TextUtils.isEmpty(mCategoryId)) {
       return;
     }
+
     manageRpcCall(mAppService.getGroupType(), new
         UiRpcSubscriberSimple<GroupTypeModelList>(this) {
 
@@ -250,7 +258,7 @@ public class CreateGroupActivity extends BaseBActivity {
   }
 
   @OnClick({R.id.menu_logo, R.id.menu_group_name, R.id.menu_group_category, R.id.menu_group_type,
-      R.id.menu_description, R.id.menu_notice})
+      R.id.menu_description, R.id.menu_notice, R.id.btn_dissolution})
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.menu_logo:
@@ -271,6 +279,9 @@ public class CreateGroupActivity extends BaseBActivity {
       case R.id.menu_notice:
         startActivityForResult(NoticeInputActivity.makeIntent(this, mNotice), REQUEST_CODE_NOTICE);
         break;
+      case R.id.btn_dissolution:
+        dissolutionGroup();
+        break;
     }
   }
 
@@ -278,6 +289,38 @@ public class CreateGroupActivity extends BaseBActivity {
   protected void onDestroy() {
     super.onDestroy();
     mLogoChoosePresenter.onDestroy();
+  }
+
+  private void dissolutionGroup() {
+    AlertDialog dialog = new AlertDialog.Builder(this).setMessage(R.string
+        .activity_create_group_dissolution_alert)
+        .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+          }
+        }).setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            manageRpcCall(mAppService.endGroup(Url.SESSIONID, mGroupId), new
+                UiRpcSubscriber1<BaseModel>
+                    (CreateGroupActivity.this) {
+                  @Override
+                  protected void onSuccess(BaseModel baseModel) {
+                    Toast.makeText(CreateGroupActivity.this, R.string
+                        .activity_create_group_dissolution_success, Toast.LENGTH_SHORT).show();
+                    getComponent().getGlobalBus().post(new DissolutionGroupEvent());
+                    finish();
+                  }
+
+                  @Override
+                  protected void onEnd() {
+
+                  }
+                });
+          }
+        }).create();
+    dialog.show();
   }
 
   @Subscribe
@@ -407,6 +450,10 @@ public class CreateGroupActivity extends BaseBActivity {
   }
 
   public class CreateGroupSuccessEvent {
+
+  }
+
+  public class DissolutionGroupEvent {
 
   }
 }

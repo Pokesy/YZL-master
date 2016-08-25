@@ -507,6 +507,11 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     getGroupInfo();
   }
 
+  @Subscribe
+  public void handleDissolutionGroupEvent(CreateGroupActivity.DissolutionGroupEvent event) {
+    finish();
+  }
+
   @Override
   public void onClick(View v) {
     int viewID = v.getId();

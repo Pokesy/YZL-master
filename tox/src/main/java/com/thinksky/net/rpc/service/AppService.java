@@ -249,6 +249,9 @@ public interface AppService {
   @GET("api.php?s=group/getGroupChoice")
   Observable<GroupChoiceModel> getGroupChoice(@Query("page") int page, @Query("count") int count);
 
+  @GET("api.php?s=group/endGroup")
+  Observable<BaseModel> endGroup(@Query("session_id") String sessionId, @Query("id") String groupId);
+
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
   }

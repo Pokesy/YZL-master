@@ -274,6 +274,10 @@
   <string name="activity_notice_input_title_btn_complete">完成</string>
   <string name="activity_create_group_error_category_null">请选择标签</string>
   <string name="activity_create_group_error_name_null">请输入群组名称</string>
+  <string name="activity_create_group_btn_dissolution">解散群组</string>
+  <string name="activity_create_group_dissolution_alert">确定解散群组?</string>
+  <string name="activity_create_group_dissolution_success">解散群组成功</string>
+  <string name="activity_create_group_create_success">创建群组成功</string>
 
   <!-- 群组成员列表 -->
   <string name="activity_group_member_list_title_btn_edit">编辑</string>

@@ -129,6 +129,11 @@ public class XiaozujingxuanFragment extends RBaseFragment {
   }
 
   @Subscribe
+  public void handleDissolutionGroupEvent(CreateGroupActivity.DissolutionGroupEvent event) {
+    initViewData();
+  }
+
+  @Subscribe
   public void handleMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
                                                 event) {
     initViewData();
