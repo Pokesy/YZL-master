@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -225,6 +226,8 @@ public class GroupMemberListActivity extends BaseBActivity {
             titleBar.getTextBtnRight().setVisibility(View.GONE);
             loadData();
             getComponent().getGlobalBus().post(new GroupMemberDataChangeEvent());
+            Toast.makeText(GroupMemberListActivity.this, R.string
+                .activity_group_member_list_set_manager_success, Toast.LENGTH_SHORT).show();
           }
 
           @Override

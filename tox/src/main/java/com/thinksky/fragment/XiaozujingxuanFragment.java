@@ -112,7 +112,7 @@ public class XiaozujingxuanFragment extends RBaseFragment {
       holder.tV(R.id.title).setText(bean.getTitle());
       holder.tV(R.id.detail).setText(bean.getDetail());
       holder.tV(R.id.post_count).setText(bean.getPost_count());
-      holder.tV(R.id.member_count).setText(bean.getMember_count());
+      holder.tV(R.id.member_count).setText(bean.getMenmberCount());
             /*item的点击事件*/
       holder.v(R.id.fragment_layout).setOnClickListener(new View.OnClickListener() {
         @Override

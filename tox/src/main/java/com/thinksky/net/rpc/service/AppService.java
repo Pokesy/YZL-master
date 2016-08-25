@@ -242,7 +242,7 @@ public interface AppService {
   Observable<BaseModel> removeGroupMember(@Query("session_id") String sessionId, @Query
       ("group_id") String groupId, @Query("uid") String ids);
 
-  @GET("api.php?s=group/ tranferGroupManager")
+  @GET("api.php?s=group/tranferGroupManager")
   Observable<BaseModel> tranferGroupManager(@Query("session_id") String sessionId, @Query("uid")
   String userId, @Query("group_id") String groupId);
 

@@ -278,7 +278,7 @@ public class MyGroupFragment extends BasicFragment {
       holder.groupName.setText(bean.getTitle());
       holder.groupDetail.setText(bean.getDetail());
       holder.topicCount.setText(bean.getPost_count());
-      holder.memberCount.setText(bean.getMember_count());
+      holder.memberCount.setText(bean.getMenmberCount());
       convertView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

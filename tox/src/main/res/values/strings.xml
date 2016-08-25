@@ -282,4 +282,5 @@
   <string name="activity_group_member_list_footer_btn_set_manager">设为管理员</string>
   <string name="activity_group_member_list_footer_btn_remove">移除</string>
   <string name="activity_group_member_list_remove_alert">确定移除成员？</string>
+  <string name="activity_group_member_list_set_manager_success">设置管理员成功</string>
 </resources>
