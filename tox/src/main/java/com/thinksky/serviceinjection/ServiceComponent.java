@@ -16,7 +16,6 @@ import com.thinksky.fragment.HomeFragment;
 import com.thinksky.fragment.MyGroupFragment;
 import com.thinksky.fragment.MyhuatiActivity;
 import com.thinksky.fragment.QuestionDetailActivity;
-import com.thinksky.fragment.RemenhuatiActivity;
 import com.thinksky.fragment.RemenhuatiFragment;
 import com.thinksky.fragment.WendaFragment;
 import com.thinksky.fragment.XiaozujingxuanFragment;
@@ -81,8 +80,6 @@ public interface ServiceComponent {
   void inject(HomeFragment homeFragment);
 
   void inject(MyhuatiActivity myhuatiActivity);
-
-  void inject(RemenhuatiActivity remenhuatiActivity);
 
   void inject(RemenhuatiFragment remenhuatiFragment);
 

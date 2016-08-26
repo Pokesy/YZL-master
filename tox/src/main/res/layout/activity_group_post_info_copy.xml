@@ -79,103 +79,118 @@
           android:padding="5dp"
           >
 
-
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="14dp"
-            android:paddingTop="10dp"
             >
-
-
-          <com.thinksky.redefine.CircleImageView
-              android:id="@+id/group_logo"
-              android:layout_width="42dp"
-              android:layout_height="42dp"
-              android:layout_marginRight="@dimen/margin_medium"
-              tools:src="@drawable/picture_1_no"
-              />
-
-          <RelativeLayout
-              android:id="@+id/enter"
+          <LinearLayout
+              android:id="@+id/group_container"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:paddingBottom="10dp"
+              android:paddingLeft="14dp"
+              android:paddingTop="10dp"
               >
 
-            <TextView
-                android:id="@+id/group_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                tools:text="发帖人"
-                style="@style/Widget.App.TextView.Large.Blue"
+
+            <com.thinksky.redefine.CircleImageView
+                android:id="@+id/group_logo"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_marginRight="@dimen/margin_medium"
+                tools:src="@drawable/picture_1_no"
                 />
 
-
-            <TextView
-                android:id="@+id/join"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="6dp"
-                android:textColor="#ffffff"
-                android:textSize="12sp"
-                android:visibility="gone"
-                tools:text=" +加入 "
-                />
-
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/enter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/group_name"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
                 >
 
               <TextView
-                  android:id="@+id/post_create_time"
+                  android:id="@+id/group_name"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_alignParentLeft="true"
-                  android:text="2015-02-04"
-                  style="@style/Widget.App.TextView.Medium.Secondary"
+                  android:layout_marginRight="5dp"
+                  tools:text="发帖人"
+                  style="@style/Widget.App.TextView.Large.Blue"
                   />
 
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_below="@+id/louzhu"
-                  android:layout_marginLeft="6dp"
-                  android:text="发布"
-                  style="@style/Widget.App.TextView.Medium.Secondary"
-                  />
 
               <TextView
-                  android:id="@+id/group_count"
+                  android:id="@+id/join"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_below="@+id/louzhu"
-                  android:layout_marginLeft="5dp"
-                  android:text="5"
+                  android:layout_alignParentRight="true"
+                  android:layout_marginTop="6dp"
+                  android:textColor="#ffffff"
+                  android:textSize="12sp"
                   android:visibility="gone"
+                  tools:text=" +加入 "
                   />
 
-              <TextView
-                  android:layout_width="wrap_content"
+              <LinearLayout
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_below="@+id/louzhu"
-                  android:layout_marginLeft="5dp"
-                  android:text="个成员"
-                  android:visibility="gone"
-                  />
-            </LinearLayout>
+                  android:layout_below="@+id/group_name"
+                  android:layout_marginTop="5dp"
+                  android:orientation="horizontal"
+                  >
+
+                <TextView
+                    android:id="@+id/post_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    tools:text="2015-02-04"
+                    style="@style/Widget.App.TextView.Medium.Secondary"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/louzhu"
+                    android:layout_marginLeft="6dp"
+                    android:text="发布"
+                    style="@style/Widget.App.TextView.Medium.Secondary"
+                    />
+
+                <TextView
+                    android:id="@+id/group_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/louzhu"
+                    android:layout_marginLeft="5dp"
+                    android:text="5"
+                    android:visibility="gone"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/louzhu"
+                    android:layout_marginLeft="5dp"
+                    android:text="个成员"
+                    android:visibility="gone"
+                    />
+              </LinearLayout>
 
 
-          </RelativeLayout>
-        </LinearLayout>
+            </RelativeLayout>
+          </LinearLayout>
+          <TextView
+              android:id="@+id/info_group_not_exist"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:padding="@dimen/margin_medium"
+              android:text="该小组已解散"
+              android:visibility="gone"
+              style="@style/Widget.App.TextView.Large.Secondary"
+              />
+        </FrameLayout>
 
         <View
             android:layout_width="match_parent"

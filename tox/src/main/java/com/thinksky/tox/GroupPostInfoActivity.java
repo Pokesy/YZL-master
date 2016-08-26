@@ -27,11 +27,14 @@ import android.widget.TextView;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
+import com.thinksky.net.rpc.model.GroupDetailModel;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.model.PostModel;
 import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.redefine.CircleImageView;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
@@ -40,14 +43,12 @@ import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
-import com.tox.BaseFunction;
 import com.tox.GroupApi;
 import com.tox.ToastHelper;
 import com.tox.Url;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONArray;
@@ -274,11 +275,11 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
         bean.getUser().getAvatar64()).placeholder(R.drawable.side_user_avatar).error(R.drawable
         .side_user_avatar).dontAnimate().into(user_logo);
-    post_create_time.setText(bean.getCreate_time());
     post_content.setVisibility(TextUtils.isEmpty(bean.getContent()) ? View.GONE : View
         .VISIBLE);
     post_content.setText(TextUtils.isEmpty(bean.getContent()) ? "" : bean.getContent().replaceAll
         ("\\n", "\n"));
+    post_create_time.setText(bean.getCreate_time());
     support_flag = bean.getIs_support();
     qianming.setText(bean.getUser().getSignature());
     huifu.setText("回复：" + bean.getReply_count());
@@ -290,7 +291,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       mCollectionBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          // TODO 删除
           manageRpcCall(mAppService.deletePost(Url.SESSIONID, bean.getId()), new
               UiRpcSubscriberSimple<BaseModel>(GroupPostInfoActivity.this) {
 
@@ -311,93 +311,61 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       mCollectionBtn.setImageResource(R.drawable.icon_collect_white_selector);
     }
 
-    RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_XIANGQING, new RsenUrlUtil
-        .OnJsonResultListener<MyBean>() {
-      @Override
-      public void onNoNetwork(String msg) {
-        ToastHelper.showToast(msg, Url.context);
-      }
+    manageRpcCall(mAppService.getGroupDetail(group_id, session_id), new
+        UiRpcSubscriber1<GroupDetailModel>(this) {
 
-      @Override
-      public Map getMap() {
-        Map map = new HashMap();
-        map.put("group_id", group_id);
-        if (BaseFunction.isLogin()) {
-          map.put("session_id", session_id);
-        }
-        return map;
-      }
 
-      @Override
-      public void onParseJsonBean(List<MyBean> beans, JSONObject jsonObject) {
-        try {
-          MyBean bean = new MyBean();
-          bean.logo = RsenUrlUtil.URL_BASE + jsonObject.getString("logo");
-          bean.title = jsonObject.getString("title");
-          bean.detail = jsonObject.getString("detail");
-//                    bean.menmberCount = jsonObject.getString("menmberCount");
-          bean.member_count = jsonObject.getString("member_count");
-
-          bean.group_background = jsonObject.getString("background");
-          bean.type_id = jsonObject.getString("type_id");
-          bean.is_join = jsonObject.getString("is_join");
-          bean.uid = jsonObject.getString("uid");
-          bean.post_count = jsonObject.getString("post_count");
-          bean.group_type = jsonObject.getString("type");
-//                    bean.type_name = jsonObject.getString("type_name");
-//
-          bean.activity = jsonObject.getString("activity");
-
-          bean.id = jsonObject.getString("id");
-          bean.gm_logo = jsonObject.getJSONObject("user").getString("avatar32");
-          bean.gm_nickname = jsonObject.getJSONObject("user").getString("nickname");
-
-          beans.add(bean);
-
-        } catch (Exception e) {
-
-        }
-      }
-
-      @Override
-      public void onResult(boolean state, final List<MyBean> beans) {
-        if (state) {
-          ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
-              .this, beans.get(0).logo).placeholder(R.drawable.picture_1_no).error(R.drawable
-              .picture_1_no).dontAnimate().into(group_logo);
-          group_name.setText(beans.get(0).title);
-
-          group_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              launch(GroupPostInfoActivity.this, isWeGroup, beans.get(0));
-
+          @Override
+          protected void onSuccess(final GroupDetailModel groupDetailModel) {
+            if (null == groupDetailModel || null == groupDetailModel.getList()) {
+              return;
             }
-          });
-          enter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              launch(GroupPostInfoActivity.this, isWeGroup, beans.get(0));
-
+            if (TextUtils.equals(groupDetailModel.getList().getStatus(), "-1")) {
+              findViewById(R.id.group_container).setVisibility(View.GONE);
+              findViewById(R.id.info_group_not_exist).setVisibility(View.VISIBLE);
+            } else {
+              findViewById(R.id.group_container).setVisibility(View.VISIBLE);
+              findViewById(R.id.info_group_not_exist).setVisibility(View.GONE);
             }
-          });
+            ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
+                .this, NetConstant.BASE_URL + groupDetailModel.getList().getLogo()).placeholder(R
+                .drawable.picture_1_no).error(R.drawable
+                .picture_1_no).dontAnimate().into(group_logo);
+            group_name.setText(groupDetailModel.getList().getTitle());
 
-          if (beans.get(0).is_join.equals("0")) {
-            join.setText("已加入");
-            join.setBackgroundColor(Color.GRAY);
-            join.setLinksClickable(false);
-          } else {
-            join.setText("+加入");
-            join.setBackgroundColor(Color.YELLOW);
-            join.setLinksClickable(true);
+            group_logo.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                launch(GroupPostInfoActivity.this, isWeGroup, groupDetailModel.getList());
+
+              }
+            });
+            enter.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                launch(GroupPostInfoActivity.this, isWeGroup, groupDetailModel.getList());
+
+              }
+            });
+
+            if (TextUtils.equals(groupDetailModel.getList().getIs_join(), "0")) {
+              join.setText("已加入");
+              join.setBackgroundColor(Color.GRAY);
+              join.setLinksClickable(false);
+            } else {
+              join.setText("+加入");
+              join.setBackgroundColor(Color.YELLOW);
+              join.setLinksClickable(true);
+            }
+            group_count.setText(groupDetailModel.getList().getMember_count());
           }
-          group_count.setText(beans.get(0).member_count);
-        } else {
-//                    ToastHelper.showToast("请求失败", Url.context);
-        }
-      }
-    });
-//        kjBitmap.display(group_logo, postMap.get("group_logo"));
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
+
     if (img != null && img.size() > 0) {
       ll_img.setVisibility(View.VISIBLE);
 
@@ -537,8 +505,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     public String create_time;
   }
 
-  public static void launch(Context context, boolean isWeGroup, MyBean bean) {
-    context.startActivity(GroupInfoActivity.makeIntent(context, bean.id));;
+  public static void launch(Context context, boolean isWeGroup, GroupDetailModel.ListBean bean) {
+    context.startActivity(GroupInfoActivity.makeIntent(context, bean.getId()));
   }
 
 

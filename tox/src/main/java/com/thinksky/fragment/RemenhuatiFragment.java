@@ -4,21 +4,23 @@ package com.thinksky.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.service.AppService;
-import com.thinksky.rsen.RBaseAdapter;
-import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.fragment.RBaseFragment;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
@@ -26,27 +28,28 @@ import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
+import com.thinksky.ui.basic.BasicListAdapter;
+import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.imageloader.ImageLoader;
-import com.tox.ToastHelper;
-import com.tox.Url;
 import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 
 public class RemenhuatiFragment extends RBaseFragment {
+  private static final int PAGE_COUNT = 20;
+  private static final int INIT_PAGE = 1;
+
   private static final String ARG_PARAM1 = "param1";
-  RecyclerView recyclerView;
+  PullToRefreshListView mListView;
   private RemenhuatiAdapter adapter;
   private boolean isWeGroup = true;
 
   @Inject
   AppService mAppService;
+
+  private int mCurrentIndex;
+  private RemenhuatiAdapter mAdapter = new RemenhuatiAdapter();
 
   public static RemenhuatiFragment newInstance(String param1) {
     RemenhuatiFragment fragment = new RemenhuatiFragment();
@@ -74,31 +77,58 @@ public class RemenhuatiFragment extends RBaseFragment {
   }
 
   @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+  }
+
+  @Override
   protected void initViewData() {
-    manageRpcCall(mAppService.getHotPostAll(), new UiRpcSubscriberSimple<HotPostModel>
-        (getActivity()) {
-      @Override
-      protected void onSuccess(HotPostModel hotPostModel) {
-        adapter.resetData(hotPostModel.getList());
-      }
+    manageRpcCall(mAppService.getHotPostAll(mCurrentIndex, PAGE_COUNT), new
+        UiRpcSubscriberSimple<HotPostModel>
+            (getActivity()) {
+          @Override
+          protected void onSuccess(HotPostModel hotPostModel) {
+            if (null == hotPostModel && null == hotPostModel.getList()) {
+              mListView.setPullUpToRefresh(false);
+              return;
+            }
+            if (mCurrentIndex == INIT_PAGE) {
+              mAdapter.clear();
+            }
+            mAdapter.addAll(hotPostModel.getList());
+            mAdapter.notifyDataSetChanged();
+            if (mAdapter.getAllList().size() >= PAGE_COUNT) {
+              mListView.setPullUpToRefresh(true);
+              mCurrentIndex++;
+            } else {
+              mListView.setPullUpToRefresh(false);
+            }
+          }
 
-      @Override
-      protected void onEnd() {
-
-      }
-    });
+          @Override
+          protected void onEnd() {
+            mListView.resetPullStatus();
+          }
+        });
   }
 
 
   @Override
   protected void initView(View rootView) {
-    recyclerView = (RecyclerView) mViewHolder.v(R.id.recycler);
-    recyclerView.setLayoutManager(new LinearLayoutManager(mBaseActivity, LinearLayoutManager
-        .VERTICAL, false));
-    adapter = new RemenhuatiAdapter(mBaseActivity);
-    recyclerView.setAdapter(adapter);
+    mListView = (PullToRefreshListView) rootView.findViewById(R.id.recycler);
+    mListView.setScrollToLoadListener(new PullToRefreshListView.ScrollToLoadListener() {
+      @Override
+      public void onPullUpLoadData() {
+        initViewData();
+      }
 
-
+      @Override
+      public void onPullDownLoadData() {
+        mCurrentIndex = INIT_PAGE;
+        initViewData();
+      }
+    }, 3);
+    mListView.getRefreshListView().setAdapter(mAdapter);
   }
 
   @Subscribe
@@ -117,68 +147,61 @@ public class RemenhuatiFragment extends RBaseFragment {
   }
 
   /*数据适配器*/
-  public class RemenhuatiAdapter extends RBaseAdapter<HotPostModel.HotPostBean> {
-    Context context;
-
-    public RemenhuatiAdapter(Context context) {
-      super(context);
-      this.context = context;
-    }
-
-    public RemenhuatiAdapter(Context context, List<HotPostModel.HotPostBean> datas) {
-      super(context, datas);
-    }
+  public class RemenhuatiAdapter extends BasicListAdapter<HotPostModel.HotPostBean> {
 
     @Override
-    protected int getItemLayoutId(int viewType) {
-      return R.layout.fragment_remen_ylq_adapter_item;
-    }
-
-    @Override
-    protected void onBindView(RViewHolder holder, int position, final HotPostModel.HotPostBean
-        bean) {
-      holder.tV(R.id.title).setText(bean.getTitle());
-      if (!TextUtils.isEmpty(bean.getContent())) {
-        holder.tV(R.id.content).setText(bean.getContent().replace("\\n", "\n"));
+    public View getView(int position, View convertView, ViewGroup parent) {
+      ViewHolder holder;
+      if (null == convertView) {
+        convertView = LayoutInflater.from(getActivity()).inflate(R.layout
+            .fragment_remen_ylq_adapter_item, parent, false);
+        holder = new ViewHolder(convertView);
+        convertView.setTag(holder);
       } else {
-        holder.tV(R.id.content).setVisibility(View.GONE);
+        holder = (ViewHolder) convertView.getTag();
       }
-      holder.tV(R.id.supportCount).setText(bean.getSupportCount());
-      holder.tV(R.id.nickname).setText(bean.getUser().getNickname());
-      holder.tV(R.id.reply_count).setText(bean.getReply_count());
+      final HotPostModel.HotPostBean bean = getItem(position);
+      holder.title.setText(bean.getTitle());
+      if (!TextUtils.isEmpty(bean.getContent())) {
+        holder.content.setText(bean.getContent().replace("\\n", "\n"));
+      } else {
+        holder.content.setVisibility(View.GONE);
+      }
+      holder.supportCount.setText(bean.getSupportCount());
+      holder.nickname.setText(bean.getUser().getNickname());
+      holder.replyCount.setText(bean.getReply_count());
       try {
-        ImageLoader.loadOptimizedHttpImage(context,
+        ImageLoader.loadOptimizedHttpImage(getActivity(),
             bean.getUser().getAvatar32()).
-            bitmapTransform(new CropCircleTransformation(context)).into(holder.imgV(R.id
-            .user_logo));
+            bitmapTransform(new CropCircleTransformation(getActivity())).into(holder.userLogo);
       } catch (Exception e) {
         e.printStackTrace();
       }
       if (bean.getImgList() != null && bean.getImgList().size() > 0) {
-        holder.v(R.id.img_layout).setVisibility(View.VISIBLE);
+        holder.imgLayout.setVisibility(View.VISIBLE);
 
         int size = bean.getImgList().size();
-        holder.v(R.id.iv_1).setVisibility(size > 0 ? View.VISIBLE : View.GONE);
-        holder.v(R.id.iv_2).setVisibility(size > 1 ? View.VISIBLE : View.GONE);
-        holder.v(R.id.iv_3).setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+        holder.iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
+        holder.iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
+        holder.iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
         int height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_three);
         if (size == 1) {
           height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_single);
           RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
               .LayoutParams
               .MATCH_PARENT, height);
-          holder.v(R.id.images).setLayoutParams(params);
+          holder.images.setLayoutParams(params);
         } else if (size == 2) {
           height = getResources().getDimensionPixelSize(R.dimen.grid_img_height_two);
           RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
               .LayoutParams
               .MATCH_PARENT, height);
-          holder.v(R.id.images).setLayoutParams(params);
+          holder.images.setLayoutParams(params);
         } else {
           RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup
               .LayoutParams
               .MATCH_PARENT, height);
-          holder.v(R.id.images).setLayoutParams(params);
+          holder.images.setLayoutParams(params);
         }
 
         for (int i = 0; i < size; i++) {
@@ -186,11 +209,11 @@ public class RemenhuatiFragment extends RBaseFragment {
 
           ImageView imageView = null;
           if (i == 0) {
-            imageView = holder.imgV(R.id.iv_1);
+            imageView = holder.iv1;
           } else if (i == 1) {
-            imageView = holder.imgV(R.id.iv_2);
+            imageView = holder.iv2;
           } else if (i == 2) {
-            imageView = holder.imgV(R.id.iv_3);
+            imageView = holder.iv3;
           }
 
           if (imageView != null) {
@@ -216,17 +239,51 @@ public class RemenhuatiFragment extends RBaseFragment {
           }
         }
       } else {
-        holder.v(R.id.img_layout).setVisibility(View.GONE);
+        holder.imgLayout.setVisibility(View.GONE);
       }
 
-      holder.v(R.id.root_layout).setOnClickListener(new View.OnClickListener() {
+      holder.rootLayout.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
           //                    Bundle bundle = new Bundle();
-          launch(mContext, isWeGroup, bean);
+          launch(getActivity(), isWeGroup, bean);
 
         }
       });
+      return convertView;
+    }
+
+    class ViewHolder {
+      @Bind(R.id.title)
+      TextView title;
+      @Bind(R.id.content)
+      TextView content;
+      @Bind(R.id.iv_1)
+      ImageView iv1;
+      @Bind(R.id.iv_2)
+      ImageView iv2;
+      @Bind(R.id.iv_3)
+      ImageView iv3;
+      @Bind(R.id.images)
+      LinearLayout images;
+      @Bind(R.id.img_layout)
+      RelativeLayout imgLayout;
+      @Bind(R.id.user_logo)
+      ImageView userLogo;
+      @Bind(R.id.nickname)
+      TextView nickname;
+      @Bind(R.id.reply_count)
+      TextView replyCount;
+      @Bind(R.id.supportCount)
+      TextView supportCount;
+      @Bind(R.id.item_layout)
+      LinearLayout itemLayout;
+      @Bind(R.id.root_layout)
+      RelativeLayout rootLayout;
+
+      ViewHolder(View view) {
+        ButterKnife.bind(this, view);
+      }
     }
   }
 }

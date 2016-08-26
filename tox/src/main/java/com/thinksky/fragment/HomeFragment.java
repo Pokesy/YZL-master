@@ -467,7 +467,7 @@ public class HomeFragment extends BasicFragment
   }
 
   protected void initViewData() {
-    manageRpcCall(mAppService.getHotPostAll(), new UiRpcSubscriberSimple<HotPostModel>
+    manageRpcCall(mAppService.getHotPostAll(0, 10), new UiRpcSubscriberSimple<HotPostModel>
         (getActivity()) {
       @Override
       protected void onSuccess(HotPostModel hotPostModel) {

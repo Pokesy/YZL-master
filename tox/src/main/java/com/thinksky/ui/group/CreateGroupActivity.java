@@ -120,7 +120,8 @@ public class CreateGroupActivity extends BaseBActivity {
       initView();
       return;
     }
-    manageRpcCall(mAppService.getGroupDetail(mGroupId), new UiRpcSubscriber1<GroupDetailModel>
+    manageRpcCall(mAppService.getGroupDetail(mGroupId, Url.SESSIONID), new
+        UiRpcSubscriber1<GroupDetailModel>
         (this) {
       @Override
       protected void onSuccess(GroupDetailModel groupDetailModel) {
@@ -130,6 +131,7 @@ public class CreateGroupActivity extends BaseBActivity {
         mNotice = groupDetailModel.getList().getNotice();
         mEditDescription = groupDetailModel.getList().getDetail();
         mLogoPath = groupDetailModel.getList().getLogo();
+        mLogoId = groupDetailModel.getList().getLogo_id();
         initView();
       }
 

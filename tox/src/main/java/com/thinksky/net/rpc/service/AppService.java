@@ -120,7 +120,8 @@ public interface AppService {
       ("follow_who") String followUserId);
 
   @GET("api.php?s=group/getHotPostAll")
-  Observable<Response<HotPostModel>> getHotPostAll();
+  Observable<Response<HotPostModel>> getHotPostAll(@Query("page") int page, @Query("count") int
+      count);
 
   @GET("api.php?s=group/getMyPostAll")
   Observable<Response<HotPostModel>> getMyPostAll(@Query("session_id") String sessionId);
@@ -232,7 +233,8 @@ public interface AppService {
       ("id") String groupId, @Query("notice") String notice);
 
   @GET("api.php?s=group/getGroupDetail")
-  Observable<GroupDetailModel> getGroupDetail(@Query("group_id") String groupId);
+  Observable<GroupDetailModel> getGroupDetail(@Query("group_id") String groupId, @Query
+      ("session_id") String sessionId);
 
   @GET("api.php?s=group/getGroupMenmber")
   Observable<GroupMemberListModel> getGroupMember(@Query("id") String groupId, @Query("page") int
@@ -250,7 +252,8 @@ public interface AppService {
   Observable<GroupChoiceModel> getGroupChoice(@Query("page") int page, @Query("count") int count);
 
   @GET("api.php?s=group/endGroup")
-  Observable<BaseModel> endGroup(@Query("session_id") String sessionId, @Query("id") String groupId);
+  Observable<BaseModel> endGroup(@Query("session_id") String sessionId, @Query("id") String
+      groupId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

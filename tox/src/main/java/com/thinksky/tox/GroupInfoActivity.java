@@ -300,7 +300,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   }
 
   private void getGroupInfo() {
-    manageRpcCall(mAppService.getGroupDetail(String.valueOf(group_id)), new
+    manageRpcCall(mAppService.getGroupDetail(String.valueOf(group_id), Url.SESSIONID), new
         UiRpcSubscriber1<GroupDetailModel>(this) {
 
 
@@ -347,7 +347,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
   @Subscribe
   public void handleGroupMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
-                                                     event) {
+                                                   event) {
     getGroupInfo();
   }
 
@@ -416,6 +416,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
               CropCircleTransformation(GroupInfoActivity.this))
           .error(R.drawable.side_user_avatar).placeholder(R.drawable.side_user_avatar).into
           (holder.imgV(R.id.logo));
+      holder.tV(R.id.creator_flag).setVisibility(TextUtils.equals(bean.getIsCreator(), "1") ?
+          View.VISIBLE : View.GONE);
     }
 
     @Override

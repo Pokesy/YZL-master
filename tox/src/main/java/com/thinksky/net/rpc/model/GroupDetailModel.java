@@ -20,7 +20,7 @@ import java.util.List;
  * @author zhaozeyang
  * @version [Taobei Client V20160411, 16/8/23]
  */
-public class GroupDetailModel  extends BaseModel{
+public class GroupDetailModel extends BaseModel {
 
   /**
    * id : 24
@@ -87,6 +87,7 @@ public class GroupDetailModel  extends BaseModel{
     private String member_alias;
     private String notice;
     private String is_join;
+    private String logo_id;
     /**
      * avatar32 : Uploads/Avatar/2016-08-02/57a04e6b58c0d_32_32.jpg
      * avatar64 : Uploads/Avatar/2016-08-02/57a04e6b58c0d_64_64.jpg
@@ -268,6 +269,14 @@ public class GroupDetailModel  extends BaseModel{
 
     public void setIs_join(String is_join) {
       this.is_join = is_join;
+    }
+
+    public String getLogo_id() {
+      return logo_id;
+    }
+
+    public void setLogo_id(String logo_id) {
+      this.logo_id = logo_id;
     }
 
     public UserBean getUser() {
