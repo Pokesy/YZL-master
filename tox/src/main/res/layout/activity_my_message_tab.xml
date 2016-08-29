@@ -10,7 +10,7 @@
       android:id="@+id/title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="3dp"
+      android:layout_centerInParent="true"
       android:textColor="@color/tab_layout_text_color"
       tools:text="动态"
       style="@style/Widget.App.TextView.Medium"
@@ -21,7 +21,9 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignRight="@id/title"
+      android:layout_alignTop="@id/title"
       android:layout_marginRight="-5dp"
+      android:layout_marginTop="-5dp"
       android:src="@drawable/iconfonthongdian"
       />
 </RelativeLayout>

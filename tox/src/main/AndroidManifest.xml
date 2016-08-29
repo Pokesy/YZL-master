@@ -615,7 +615,7 @@
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
     <activity
-        android:name="com.thinksky.fragment.GroupMemberListActivity"
+        android:name="com.thinksky.ui.group.GroupMemberListActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
 
@@ -659,6 +659,9 @@
         android:windowSoftInputMode="adjustNothing|stateVisible"/>
     <activity
         android:name="com.thinksky.ui.profile.MyProfileActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.group.CheckMemberListActivity"
         android:screenOrientation="portrait"/>
     <!-- Glide Module  -->
     <meta-data

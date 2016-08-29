@@ -11,7 +11,8 @@
  */
 package com.thinksky.serviceinjection;
 
-import com.thinksky.fragment.GroupMemberListActivity;
+import com.thinksky.ui.group.CheckMemberListActivity;
+import com.thinksky.ui.group.GroupMemberListActivity;
 import com.thinksky.fragment.HomeFragment;
 import com.thinksky.fragment.MyGroupFragment;
 import com.thinksky.fragment.MyhuatiActivity;
@@ -128,4 +129,6 @@ public interface ServiceComponent {
   void inject(GroupMemberListActivity groupMemberListActivity);
 
   void inject(XiaozujingxuanFragment xiaozujingxuanFragment);
+
+  void inject(CheckMemberListActivity checkMemberListActivity);
 }

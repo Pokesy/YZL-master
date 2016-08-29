@@ -20,6 +20,7 @@ import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.group.CreateGroupActivity;
+import com.thinksky.ui.group.GroupMemberListActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
 import java.util.List;
 import javax.inject.Inject;

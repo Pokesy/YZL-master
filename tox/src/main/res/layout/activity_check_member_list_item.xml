@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    >
+
+  <CheckBox
+      android:id="@+id/item_check"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="@dimen/margin_smallest"
+      android:visibility="gone"
+      tools:visibility="visible"
+      />
+
+  <RelativeLayout
+      android:id="@+id/item_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginRight="3dp"
+      android:descendantFocusability="blocksDescendants"
+      android:orientation="horizontal"
+      >
+
+    <TextView
+        android:id="@+id/reject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="33dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/button_profile_follow"
+        android:paddingBottom="4dp"
+        android:paddingLeft="@dimen/margin_medium"
+        android:paddingRight="@dimen/margin_medium"
+        android:paddingTop="4dp"
+        android:src="@drawable/ic_launcher"
+        android:text="@string/activity_check_member_list_item_reject"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        style="@style/Widget.App.TextView.Small.White"
+        />
+
+    <TextView
+        android:id="@+id/accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_small"
+        android:background="@drawable/button_profile_follow"
+        android:paddingBottom="4dp"
+        android:paddingLeft="@dimen/margin_medium"
+        android:paddingRight="@dimen/margin_medium"
+        android:paddingTop="4dp"
+        android:src="@drawable/ic_launcher"
+        android:text="@string/activity_check_member_list_item_accept"
+        android:textColor="@android:color/white"
+        style="@style/Widget.App.TextView.Small.White"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@id/accept"
+        >
+      <!-- 图片 -->
+      <ImageView
+          android:id="@+id/user_logo"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:layout_centerVertical="true"
+          android:src="@drawable/ic_launcher"
+          />
+      <!--附件名称 -->
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="10dp"
+          android:layout_toRightOf="@id/user_logo"
+          android:orientation="vertical"
+          >
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="用户名"
+            style="@style/Widget.App.TextView.Large.Primary"
+            />
+        <TextView
+            android:id="@+id/signature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="日报名称"
+            style="@style/Widget.App.TextView.Medium.Secondary"
+            />
+      </LinearLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/one_line"/>
+  </RelativeLayout>
+</LinearLayout>

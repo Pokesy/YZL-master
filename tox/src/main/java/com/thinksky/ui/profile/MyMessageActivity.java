@@ -18,7 +18,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.thinksky.holder.BaseBActivity;
@@ -41,6 +43,8 @@ public class MyMessageActivity extends BaseBActivity {
   @Bind(R.id.title_bar)
   TitleBar titleBar;
 
+  private View[] mIconViews;
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -61,10 +65,16 @@ public class MyMessageActivity extends BaseBActivity {
     String[] titles = getResources().getStringArray(R.array.my_message_tab_titles);
     MessagePagerAdapter adapter = new MessagePagerAdapter(getSupportFragmentManager());
     mPagers.setAdapter(adapter);
-    mPagers.setOffscreenPageLimit(3);
+    mPagers.setOffscreenPageLimit(titles.length);
     mTabLayout.setupWithViewPager(mPagers);
+    mIconViews = new View[titles.length];
     for (int i = 0; i < titles.length; i++) {
-      mTabLayout.getTabAt(i).setText(titles[i]);
+      View view = LayoutInflater.from(this).inflate(R.layout.activity_my_message_tab, mTabLayout,
+          false);
+      TextView titleView = (TextView) view.findViewById(R.id.title);
+      titleView.setText(titles[i]);
+      mIconViews[i] = view.findViewById(R.id.icon_status);
+      mTabLayout.getTabAt(i).setCustomView(view);
     }
   }
 

@@ -1,4 +1,4 @@
-package com.thinksky.fragment;
+package com.thinksky.ui.group;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -400,7 +400,7 @@ public class GroupMemberListActivity extends BaseBActivity {
     return intent;
   }
 
-  public class GroupMemberDataChangeEvent {
+  public static class GroupMemberDataChangeEvent {
 
   }
 }

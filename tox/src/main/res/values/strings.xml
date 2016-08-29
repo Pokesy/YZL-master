@@ -269,6 +269,7 @@
   <string name="activity_create_group_label_type">小组类型</string>
   <string name="activity_create_group_label_description">小组简介</string>
   <string name="activity_create_group_label_notice">公告</string>
+  <string name="activity_create_group_label_check_member">审核成员</string>
   <string name="activity_create_group_title_btn_create">提交</string>
   <string name="activity_notice_input_title">公告</string>
   <string name="activity_notice_input_title_btn_complete">完成</string>
@@ -287,4 +288,9 @@
   <string name="activity_group_member_list_footer_btn_remove">移除</string>
   <string name="activity_group_member_list_remove_alert">确定移除成员？</string>
   <string name="activity_group_member_list_set_manager_success">设置管理员成功</string>
+
+  <!-- 审核列表 -->
+  <string name="activity_check_member_list_title">审核成员</string>
+  <string name="activity_check_member_list_item_accept">通过</string>
+  <string name="activity_check_member_list_item_reject">拒绝</string>
 </resources>

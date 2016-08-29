@@ -22,6 +22,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
@@ -83,6 +85,12 @@ public class CreateGroupActivity extends BaseBActivity {
   TextView notice;
   @Bind(R.id.btn_dissolution)
   TextView btnDissolution;
+  @Bind(R.id.menu_group_category)
+  RelativeLayout menuGroupCategory;
+  @Bind(R.id.menu_check_member)
+  RelativeLayout menuCheckMember;
+  @Bind(R.id.check_container)
+  LinearLayout checkContainer;
 
   private String mEditGroupName;
   private String mEditDescription;
@@ -122,24 +130,24 @@ public class CreateGroupActivity extends BaseBActivity {
     }
     manageRpcCall(mAppService.getGroupDetail(mGroupId, Url.SESSIONID), new
         UiRpcSubscriber1<GroupDetailModel>
-        (this) {
-      @Override
-      protected void onSuccess(GroupDetailModel groupDetailModel) {
-        mEditType = groupDetailModel.getList().getType();
-        mCategoryId = groupDetailModel.getList().getType_id();
-        mEditGroupName = groupDetailModel.getList().getTitle();
-        mNotice = groupDetailModel.getList().getNotice();
-        mEditDescription = groupDetailModel.getList().getDetail();
-        mLogoPath = groupDetailModel.getList().getLogo();
-        mLogoId = groupDetailModel.getList().getLogo_id();
-        initView();
-      }
+            (this) {
+          @Override
+          protected void onSuccess(GroupDetailModel groupDetailModel) {
+            mEditType = groupDetailModel.getList().getType();
+            mCategoryId = groupDetailModel.getList().getType_id();
+            mEditGroupName = groupDetailModel.getList().getTitle();
+            mNotice = groupDetailModel.getList().getNotice();
+            mEditDescription = groupDetailModel.getList().getDetail();
+            mLogoPath = groupDetailModel.getList().getLogo();
+            mLogoId = groupDetailModel.getList().getLogo_id();
+            initView();
+          }
 
-      @Override
-      protected void onEnd() {
+          @Override
+          protected void onEnd() {
 
-      }
-    });
+          }
+        });
   }
 
   private void initView() {
@@ -226,6 +234,7 @@ public class CreateGroupActivity extends BaseBActivity {
     });
 
     btnDissolution.setVisibility(TextUtils.isEmpty(mCategoryId) ? View.GONE : View.VISIBLE);
+    checkContainer.setVisibility(TextUtils.isEmpty(mCategoryId) ? View.GONE : View.VISIBLE);
     if (TextUtils.isEmpty(mCategoryId)) {
       return;
     }
@@ -260,7 +269,7 @@ public class CreateGroupActivity extends BaseBActivity {
   }
 
   @OnClick({R.id.menu_logo, R.id.menu_group_name, R.id.menu_group_category, R.id.menu_group_type,
-      R.id.menu_description, R.id.menu_notice, R.id.btn_dissolution})
+      R.id.menu_description, R.id.menu_notice, R.id.btn_dissolution, R.id.menu_check_member})
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.menu_logo:
@@ -283,6 +292,9 @@ public class CreateGroupActivity extends BaseBActivity {
         break;
       case R.id.btn_dissolution:
         dissolutionGroup();
+        break;
+      case R.id.menu_check_member:
+        startActivity(CheckMemberListActivity.makeIntent(this, mGroupId));
         break;
     }
   }

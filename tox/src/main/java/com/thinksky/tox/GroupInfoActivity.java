@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.otto.Subscribe;
-import com.thinksky.fragment.GroupMemberListActivity;
 import com.thinksky.fragment.MyScrollview;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
@@ -50,7 +49,9 @@ import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.group.CheckMemberListActivity;
 import com.thinksky.ui.group.CreateGroupActivity;
+import com.thinksky.ui.group.GroupMemberListActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -506,6 +507,12 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
   @Subscribe
   public void handleGroupInfoChangeEvent(CreateGroupActivity.CreateGroupSuccessEvent event) {
+    getGroupInfo();
+  }
+
+  @Subscribe
+  public void handleCheckMemberDataChangeEvent(CheckMemberListActivity.CheckMemberDataChangeEvent
+                                                     event) {
     getGroupInfo();
   }
 

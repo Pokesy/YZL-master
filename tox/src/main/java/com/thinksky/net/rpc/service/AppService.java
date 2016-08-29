@@ -255,6 +255,18 @@ public interface AppService {
   Observable<BaseModel> endGroup(@Query("session_id") String sessionId, @Query("id") String
       groupId);
 
+  @GET("api.php?s=group/getGroupCheckMenmber")
+  Observable<GroupMemberListModel> getGroupCheckMember(@Query("id") String sessionId, @Query
+      ("page") int page, @Query("count") int count);
+
+  @GET("api.php?s=group/rejectGroupPeople")
+  Observable<BaseModel> rejectGroupPeople(@Query("session_id") String sessionId, @Query("uid")
+  String uid, @Query("group_id") String groupId);
+
+  @GET("api.php?s=group/addGroupPeople")
+  Observable<BaseModel> addGroupPeople(@Query("session_id") String sessionId, @Query("uid")
+  String uid, @Query("group_id") String groupId);
+
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
   }
