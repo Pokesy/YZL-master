@@ -35,6 +35,7 @@ import com.thinksky.ui.profile.AvatarChoosePresenter;
 import com.thinksky.ui.profile.DoctorMessageFragment;
 import com.thinksky.ui.profile.FansListActivity;
 import com.thinksky.ui.profile.FollowListActivity;
+import com.thinksky.ui.profile.MyMessageActivity;
 import com.thinksky.ui.profile.OtherGroupListActivity;
 import com.thinksky.ui.profile.OtherPostListActivity;
 import com.thinksky.ui.profile.OtherProfileActivity;
@@ -131,4 +132,6 @@ public interface ServiceComponent {
   void inject(XiaozujingxuanFragment xiaozujingxuanFragment);
 
   void inject(CheckMemberListActivity checkMemberListActivity);
+
+  void inject(MyMessageActivity myMessageActivity);
 }

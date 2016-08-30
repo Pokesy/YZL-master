@@ -23,9 +23,18 @@ import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
+import com.thinksky.net.rpc.model.UnReadCountModel;
+import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.R;
 import com.thinksky.ui.common.TitleBar;
+import com.tox.Url;
+import javax.inject.Inject;
 
 /**
  * [一句话功能简述]<BR>
@@ -43,14 +52,25 @@ public class MyMessageActivity extends BaseBActivity {
   @Bind(R.id.title_bar)
   TitleBar titleBar;
 
+  @Inject
+  AppService mAppService;
+
   private View[] mIconViews;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    inject();
     setContentView(R.layout.activity_my_collection);
     ButterKnife.bind(this);
     initView();
+    loadUnreadCount();
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().serviceModule(new ServiceModule()).globalModule(new
+        GlobalModule(BaseApplication.getApplication()))
+        .build().inject(this);
   }
 
   private void initView() {
@@ -104,5 +124,50 @@ public class MyMessageActivity extends BaseBActivity {
 
   private enum MessagePagerType {
     ACTIVITY, DOCTOR, YLQ
+  }
+
+  private void loadUnreadCount() {
+    manageRpcCall(mAppService.getUnreadCount("4", Url.SESSIONID), new
+        UiRpcSubscriber1<UnReadCountModel>(this) {
+
+
+          @Override
+          protected void onSuccess(UnReadCountModel unReadCountModel) {
+            mIconViews[0].setVisibility(unReadCountModel.getCount() > 0 ? View.VISIBLE : View.GONE);
+          }
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
+    manageRpcCall(mAppService.getUnreadCount("16", Url.SESSIONID), new
+        UiRpcSubscriber1<UnReadCountModel>(this) {
+
+
+          @Override
+          protected void onSuccess(UnReadCountModel unReadCountModel) {
+            mIconViews[2].setVisibility(unReadCountModel.getCount() > 0 ? View.VISIBLE : View.GONE);
+          }
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
+    manageRpcCall(mAppService.getUnreadCount("23", Url.SESSIONID), new
+        UiRpcSubscriber1<UnReadCountModel>(this) {
+
+
+          @Override
+          protected void onSuccess(UnReadCountModel unReadCountModel) {
+            mIconViews[1].setVisibility(unReadCountModel.getCount() > 0 ? View.VISIBLE : View.GONE);
+          }
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
   }
 }

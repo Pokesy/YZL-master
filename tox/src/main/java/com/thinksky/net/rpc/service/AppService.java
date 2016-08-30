@@ -25,6 +25,7 @@ import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.model.PostModel;
 import com.thinksky.net.rpc.model.QuestionCategoryModel;
+import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.UserListModel;
@@ -266,6 +267,10 @@ public interface AppService {
   @GET("api.php?s=group/addGroupPeople")
   Observable<BaseModel> addGroupPeople(@Query("session_id") String sessionId, @Query("uid")
   String uid, @Query("group_id") String groupId);
+
+  @GET("api.php?s=Message/getNoReadCount")
+  Observable<UnReadCountModel> getUnreadCount(@Query("module") String module, @Query
+      ("session_id") String sessionId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
