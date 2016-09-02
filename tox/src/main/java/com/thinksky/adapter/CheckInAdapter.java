@@ -1,6 +1,7 @@
 package com.thinksky.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,8 @@ public class CheckInAdapter extends BaseAdapter {
     } else {
       holder.view = convertView;
     }
-    holder.Username.setText(list.get(position).getUserInfo().getNickname());
+    holder.Username.setText(TextUtils.isEmpty(list.get(position).getUid()) ? context.getString(R
+        .string.activity_user_not_exists) : list.get(position).getUserInfo().getNickname());
     holder.CheckTime.setText(BaseFunction.TimeStamp2Date(list.get(position).getCtime(),
         "HH:mm:ss"));
     holder.RankNum.setText(position + 1 + "");

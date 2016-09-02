@@ -41,6 +41,7 @@ import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.GroupApi;
@@ -731,7 +732,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
         map.get("user_logo")).into(viewHolder.replyUserHead);
 //        kjBitmap.display(viewHolder.replyUserHead, map.get("user_logo"));
-    viewHolder.replyUsername.setText(map.get("nickname"));
+    viewHolder.replyUsername.setText(UserUtils.getUserName(GroupPostInfoActivity.this, map.get
+        ("user_uid"), map.get("nickname")));
 //        viewHolder.replyTime.setText("第" + floorCount + "楼 " + map.get("create_time"));
     viewHolder.replyTime.setText(map.get("create_time"));
     viewHolder.replyContent.setText(map.get("content"));

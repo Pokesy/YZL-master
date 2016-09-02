@@ -22,6 +22,7 @@ import com.thinksky.tox.SendCommentActivity;
 import com.thinksky.tox.UploadActivity;
 import com.thinksky.tox.WeiboDetailActivity;
 import com.thinksky.utils.BitmapUtiles;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -120,7 +121,8 @@ public class WeiboAdapter extends BaseAdapter {
       hold.imgViewList.get(2).setImageResource(R.drawable.picture_no);
     }
 
-    hold.UserName.setText(list.get(arg0).getUser().getNickname());
+    hold.UserName.setText(UserUtils.getUserName(ctx, list.get(arg0).getUser().getUid(), list.get
+        (arg0).getUser().getNickname()));
     hold.MainText.setFaceText(list.get(arg0).getWcontent());
 //        hold.LikeNum.setText(list.get(arg0).getQlike());
 //        hold.Down_text.setText("-" + list.get(arg0).getQunlike());
@@ -332,7 +334,8 @@ public class WeiboAdapter extends BaseAdapter {
           if (!hold.upFlag) {
             hold.upFlag = true;
             hold.Up_text.setText(Integer.parseInt(list.get(arg0).getLikenum()) + 1 + "");
-            hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like, ctx));
+            hold.Up_Img.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable
+                .icon_like_blue_stroke, ctx));
             list.get(arg0).setIs_supported(true);
             list.get(arg0).setLikenum(Integer.parseInt(list.get(arg0).getLikenum()) + 1 + "");
             weiboApi.supportWeibo(list.get(arg0).getWid());
@@ -412,8 +415,6 @@ public class WeiboAdapter extends BaseAdapter {
     if (url.startsWith("http")) {
       url2 = url;
     } else {
-//            return (Url.USERHEADURL+"/"+url).replace("com///","com/").replace("com//","com/")
-// .replace("cn///","cn/").replace("cn//","cn/").replace("net///","net/").replace("net//","net/");
       url2 = (Url.USERHEADURL + "/" + url).replace("opensns///opensns", "opensns").replace
           ("opensns//opensns", "opensns").replace("/api.php/opensns/", "/api.php/");
     }
@@ -425,7 +426,6 @@ public class WeiboAdapter extends BaseAdapter {
       super.handleMessage(msg);
       if (msg.what == 0) {
         Toast.makeText(ctx, "点赞成功", Toast.LENGTH_LONG).show();
-
       } else if (msg.what == 501) {
         Toast.makeText(ctx, "点赞失败，重复点赞", Toast.LENGTH_LONG).show();
       }

@@ -1,6 +1,7 @@
 package com.thinksky.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -58,7 +59,11 @@ public class NearAdapter extends BaseAdapter {
     } else {
       hold = (Holder) arg1.getTag();
     }
-    hold.Near_UserName.setText(list.get(arg0).getNickname());
+    if (!TextUtils.isEmpty(list.get(arg0).getUid())) {
+      hold.Near_UserName.setText(list.get(arg0).getNickname());
+    } else {
+      hold.Near_UserName.setText(R.string.activity_user_not_exists);
+    }
     hold.Near_Distance.setText("0.1km | 1天前");
     hold.Near_Sex.setBackgroundResource(R.drawable.nearby_gender_male);
     hold.Near_Sex.setText("0");

@@ -11,6 +11,7 @@
  */
 package com.thinksky.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,10 +22,12 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
-import com.thinksky.net.rpc.model.CollectPostModel;
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
@@ -33,7 +36,6 @@ import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicListAdapter;
 import com.thinksky.ui.basic.BasicPullToRefreshFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
-import com.thinksky.utils.DateUtils;
 import com.tox.Url;
 import javax.inject.Inject;
 
@@ -114,7 +116,7 @@ public class DoctorMessageFragment extends BasicPullToRefreshFragment {
 
           @Override
           protected void onEnd() {
-           resetRefreshStatus();
+            resetRefreshStatus();
           }
         });
   }
@@ -132,11 +134,34 @@ public class DoctorMessageFragment extends BasicPullToRefreshFragment {
       } else {
         holder = (ViewHolder) convertView.getTag();
       }
-      MessageModel.ListBean listBean = getItem(position);
+      final MessageModel.ListBean listBean = getItem(position);
       holder.content.setText(listBean.getContent().getContent());
       holder.content.setTextColor(getResources().getColor(TextUtils.equals(listBean.getIs_read(),
           "1") ? R.color.font_color_secondary : R.color.font_color_primary));
       holder.time.setText(listBean.getCreate_time());
+      convertView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+          intent.putExtra("question_id", listBean.getContent().getArgs());
+          startActivity(intent);
+          manageRpcCall(mAppService.getMessageContent(listBean.getId()), new
+              UiRpcSubscriber1<BaseModel>(getActivity()) {
+
+
+            @Override
+            protected void onSuccess(BaseModel baseModel) {
+              getComponent().getGlobalBus().post(new MyMessageActivity.MessageReadEvent());
+              loadData();
+            }
+
+            @Override
+            protected void onEnd() {
+
+            }
+          });
+        }
+      });
       return convertView;
     }
 

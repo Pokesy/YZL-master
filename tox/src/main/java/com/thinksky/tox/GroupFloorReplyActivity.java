@@ -20,6 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.redefine.CircleImageView;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.GroupApi;
 import com.tox.ToastHelper;
@@ -62,7 +63,8 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
   private EditText replyEdtext;
   private TextView sendReplyBtn;
 
-  @Override @SuppressWarnings(value = { "unchecked" })
+  @Override
+  @SuppressWarnings(value = {"unchecked"})
   protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
@@ -103,7 +105,8 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
     sendReplyBtn.setOnClickListener(this);
 
     bodyScroView.setOnTouchListener(new View.OnTouchListener() {
-      @Override public boolean onTouch(View v, MotionEvent event) {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
         replyBox.setVisibility(View.GONE);
         InputMethodManager imm =
             (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -136,11 +139,13 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
 
     //发表回复文本框的事件监听器
     replyEdtext.addTextChangedListener(new TextWatcher() {
-      @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
       }
 
-      @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (count != 0) {
           sendReplyBtn.setBackgroundResource(R.drawable.forum_enable_btn_send);
           sendReplyBtn.setTextColor(Color.WHITE);
@@ -150,7 +155,8 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
         }
       }
 
-      @Override public void afterTextChanged(Editable s) {
+      @Override
+      public void afterTextChanged(Editable s) {
         if (s.length() != 0) {
           sendReplyBtn.setBackgroundResource(R.drawable.forum_enable_btn_send);
           sendReplyBtn.setTextColor(Color.WHITE);
@@ -168,7 +174,8 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
     }
   }
 
-  @Override public void onClick(View v) {
+  @Override
+  public void onClick(View v) {
     int viewID = v.getId();
     switch (viewID) {
       case R.id.back_menu:
@@ -231,7 +238,9 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
     private int countTwo = 0;
     private boolean lock = true;
 
-    @Override @SuppressWarnings(value = { "unchecked" }) public void handleMessage(Message msg) {
+    @Override
+    @SuppressWarnings(value = {"unchecked"})
+    public void handleMessage(Message msg) {
       switch (msg.what) {
         case 0:
           ToastHelper.showToast("回复楼中楼成功", GroupFloorReplyActivity.this);
@@ -295,19 +304,22 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
     //        ImageLoader.getInstance().displayImage(tempMap.get("user_logo"),viewHolder.userHead);
     ImageLoader.loadOptimizedHttpImage(mContext, tempMap.get("user_logo"))
         .into(viewHolder.userHead);
-    viewHolder.userName.setText(tempMap.get("nickname"));
+    viewHolder.userName.setText(UserUtils.getUserName(GroupFloorReplyActivity.this, tempMap.get
+        ("user_uid"), tempMap.get("nickname")));
     viewHolder.replyTime.setText(tempMap.get("create_time"));
     viewHolder.replyContent.setText(tempMap.get("content"));
     if (tempMap.get("is_landlord").equals("1")) {
       viewHolder.isLouZhu.setVisibility(View.VISIBLE);
     }
     viewHolder.userHead.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         groupApi.goUserInfo(mContext, tempMap.get("user_uid"));
       }
     });
     viewHolder.view.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
         if (!groupApi.getSeesionId().equals("")) {
           replyBox.setVisibility(View.VISIBLE);
           //打开软键盘并自动获取焦点
@@ -344,7 +356,8 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
       super();
     }
 
-    @Override public void run() {
+    @Override
+    public void run() {
       arrayList = new ArrayList<HashMap<String, String>>();
       jsonObjArrayList = groupApi.getLzlReply("?s=" + Url.POSTLZL, post_id, ReplyId, page);
       for (int i = 0; i < jsonObjArrayList.size(); i++) {

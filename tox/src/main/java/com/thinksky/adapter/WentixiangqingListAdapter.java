@@ -73,9 +73,9 @@ public class WentixiangqingListAdapter extends BaseAdapter {
     holder.creat_time.setText(list.get(position).getCreate_time());
     holder.reply_count.setText(list.get(position).getSupport());
     if ((list.get(position).getIs_supported().equals("0"))) {//已点赞
-      holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
+      holder.dianzan.setBackgroundResource(R.drawable.icon_like_blue_stroke);
     } else {
-      holder.dianzan.setBackgroundResource(R.drawable.iconfontweidianzan);
+      holder.dianzan.setBackgroundResource(R.drawable.icon_like_blue);
     }
     try {
       ImageLoader.loadOptimizedHttpImage(context, list.get(position).getUser().getAvatar32())

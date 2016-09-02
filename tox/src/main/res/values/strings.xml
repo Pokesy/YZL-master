@@ -147,7 +147,7 @@
   <string name="activity_send_tiezi_title"></string>
 
   <!-- 专辑 -->
-  <string name="activity_zhuanji_title">精彩视频</string>
+  <string name="activity_zhuanji_title">视频</string>
 
   <!-- 更新 -->
   <string name="upgrade_info_normal">有新的版本更新，是否下载?</string>
@@ -293,4 +293,6 @@
   <string name="activity_check_member_list_title">审核成员</string>
   <string name="activity_check_member_list_item_accept">通过</string>
   <string name="activity_check_member_list_item_reject">拒绝</string>
+
+  <string name="activity_user_not_exists">用户已注销</string>
 </resources>

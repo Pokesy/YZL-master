@@ -212,8 +212,6 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginBottom="@dimen/margin_large"
-              android:drawablePadding="@dimen/margin_large"
-              android:drawableTop="@drawable/icon_topic_title"
               android:gravity="center"
               tools:text="帖子标题"
               style="@style/Widget.App.TextView.XLarge.Primary"

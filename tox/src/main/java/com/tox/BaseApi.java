@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -32,6 +33,9 @@ public class BaseApi {
    * 查看用户资料
    */
   public void goUserInfo(Context mContext, String userUid) {
+    if (TextUtils.isEmpty(userUid)) {
+      return;
+    }
     Intent intent = ProfileIntentFactory.makeIntent(mContext, userUid);
     mContext.startActivity(intent);
   }

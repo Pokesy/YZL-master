@@ -29,6 +29,7 @@ import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.UserListModel;
+import com.thinksky.net.rpc.model.WeiboDetailModel;
 import com.thinksky.net.rpc.model.WeiboModel;
 import com.thinksky.net.rpc.model.WendaModel;
 import okhttp3.ResponseBody;
@@ -271,6 +272,12 @@ public interface AppService {
   @GET("api.php?s=Message/getNoReadCount")
   Observable<UnReadCountModel> getUnreadCount(@Query("module") String module, @Query
       ("session_id") String sessionId);
+
+  @GET("api.php?s=weibo/getWBDetail")
+  Observable<WeiboDetailModel> getWeiboDetail(@Query("id") String id);
+
+  @GET("api.php?s=Message/getMessageContent")
+  Observable<BaseModel> getMessageContent(@Query("id") String msgId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

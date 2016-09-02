@@ -344,6 +344,9 @@ public class GroupMemberListActivity extends BaseBActivity {
       holder.itemLayout.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+          if (TextUtils.isEmpty(bean.getUid())) {
+            return;
+          }
           startActivity(ProfileIntentFactory.makeIntent(GroupMemberListActivity.this, bean.getUid
               ()));
         }

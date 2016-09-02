@@ -52,6 +52,7 @@ import com.thinksky.ui.common.TitleBar;
 import com.thinksky.ui.group.CheckMemberListActivity;
 import com.thinksky.ui.group.CreateGroupActivity;
 import com.thinksky.ui.group.GroupMemberListActivity;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -512,7 +513,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
   @Subscribe
   public void handleCheckMemberDataChangeEvent(CheckMemberListActivity.CheckMemberDataChangeEvent
-                                                     event) {
+                                                   event) {
     getGroupInfo();
   }
 
@@ -821,7 +822,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
       });
 
       viewHolder.post_title.setText(postInfoList.get(position).get("title"));
-      viewHolder.user_name.setText(postInfoList.get(position).get("user_nickname"));
+      viewHolder.user_name.setText(UserUtils.getUserName(GroupInfoActivity.this, postInfoList.get
+          (position).get("user_uid"), postInfoList.get(position).get("user_nickname")));
       viewHolder.post_category.setText(titleMap.get(postInfoList.get(position).get("cate_id")));
       viewHolder.view_count.setText(postInfoList.get(position).get("view_count"));
       viewHolder.reply_count.setText(postInfoList.get(position).get("reply_count"));

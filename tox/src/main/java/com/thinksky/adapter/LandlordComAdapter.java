@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.thinksky.info.Com2Com;
 import com.thinksky.tox.R;
 import com.thinksky.utils.LoadImg;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ForumApi;
 import java.util.List;
@@ -63,7 +64,8 @@ public class LandlordComAdapter extends BaseAdapter {
     } else {
       holder = (Holder) convertView.getTag();
     }
-    holder.userName.setText(list.get(position).getUserInfo().getNickname());
+    holder.userName.setText(UserUtils.getUserName(ctx, list.get(position).getUid(), list.get
+        (position).getUserInfo().getNickname()));
     holder.comTime.setText(list.get(position).getcTime());
     holder.comContent.setText(list.get(position).getContent());
     try {

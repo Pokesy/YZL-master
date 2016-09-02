@@ -26,6 +26,7 @@ import com.thinksky.fragment.VideoPlayActivity;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.myview.IssueListView;
 import com.thinksky.redefine.CircleImageView;
+import com.thinksky.utils.UserUtils;
 import com.tox.BaseFunction;
 import com.tox.IssueApi;
 import com.tox.IssueData;
@@ -472,7 +473,8 @@ public class IssueDetail extends BaseBActivity {
 //            issDetails.loadDataWithBaseURL(null, comments.get(0).get("content"), "text/html",
 // "utf-8", null);
 //            issDetails.getSettings().setSupportZoom(true);
-      issue_userName.setText(comments.get(0).get("user_name"));
+      issue_userName.setText(UserUtils.getUserName(IssueDetail.this, comments.get(0).get
+          ("user_id"), comments.get(0).get("user_name")));
       detail_supportCounts.setText(comments.get(0).get("support_count"));
       detail_reply_count.setText(comments.get(0).get("reply_count"));
       issue_time.setText(comments.get(0).get("create_time"));
@@ -667,7 +669,8 @@ public class IssueDetail extends BaseBActivity {
           }
         }
       });
-      viewHolder.replyUserName.setText(reply_info.get(position).get("user_name"));
+      viewHolder.replyUserName.setText(UserUtils.getUserName(IssueDetail.this, reply_info.get
+          (position).get("user_id"), reply_info.get(position).get("user_name")));
       viewHolder.replyTextView.setText(reply_info.get(position).get("Comments_content"));
       viewHolder.replyTime.setText(reply_info.get(position).get("Comments_create_time"));
 

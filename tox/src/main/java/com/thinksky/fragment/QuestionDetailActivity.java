@@ -608,13 +608,13 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 
 
       if (!(bean.getIs_supported().equals("0"))) {//已点赞
-        holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
+        holder.dianzan.setBackgroundResource(R.drawable.icon_like_blue_stroke);
 
         string = bean.getIs_supported();
         listflag.add(string);
 
       } else {
-        holder.dianzan.setBackgroundResource(R.drawable.iconfontweidianzan);
+        holder.dianzan.setBackgroundResource(R.drawable.icon_like_blue);
         upFlag = false;
 
       }
@@ -719,7 +719,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
           if (bean.getIs_supported().equals("0")) {
 
             holder.reply_count.setText(Integer.parseInt(bean.getSupport_count()) + 1 + "");
-            holder.dianzan.setBackgroundResource(R.drawable.iconfontdianzan);
+            holder.dianzan.setBackgroundResource(R.drawable.icon_like_blue_stroke);
 //
             RsenUrlUtil.execute(QuestionDetailActivity.this, RsenUrlUtil
                 .URL_SUPPORT_QUESTION_ANSWER, new

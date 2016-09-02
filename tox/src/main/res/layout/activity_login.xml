@@ -137,7 +137,7 @@
                     android:textSize="21sp"
                     app:cpb_textComplete="@string/Complete"
                     app:cpb_textError="@string/Error"
-                    app:cpb_textIdle="登录" />
+                    app:cpb_textIdle="登 录" />
             </RelativeLayout>
         </LinearLayout>
         <RelativeLayout

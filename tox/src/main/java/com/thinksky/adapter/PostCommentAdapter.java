@@ -18,6 +18,7 @@ import com.thinksky.info.PostInfo;
 import com.thinksky.tox.LandLordActivity;
 import com.thinksky.tox.R;
 import com.thinksky.utils.LoadImg;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.ForumApi;
 import com.tox.Url;
@@ -115,7 +116,7 @@ public class PostCommentAdapter extends BaseAdapter {
       holder.photoLayout.addView(view);
       try {
         ImageLoader.loadOptimizedHttpImage(ctx, imgUrl).placeholder(R.drawable.picture_no).into
-              (view);
+            (view);
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -132,7 +133,8 @@ public class PostCommentAdapter extends BaseAdapter {
 
       }
     });
-    holder.userName.setText(postCommentList.get(position).getUserInfo().getNickname());
+    holder.userName.setText(UserUtils.getUserName(ctx, postCommentList.get(position).getUserInfo
+        ().getUid(), postCommentList.get(position).getUserInfo().getNickname()));
     holder.postComContent.setText(postCommentList.get(position).getComContent());
 
     holder.userHead.setOnClickListener(new View.OnClickListener() {
@@ -291,7 +293,8 @@ public class PostCommentAdapter extends BaseAdapter {
     final Com2Com com = postCommentList.get(position).getCom2comList().get(0);
     holder.com1Layout.setVisibility(View.VISIBLE);
     holder.mHalvomgLine.setVisibility(View.VISIBLE);
-    holder.com1Username.setText(com.getUserInfo().getNickname());
+    holder.com1Username.setText(UserUtils.getUserName(ctx, com.getUid(), com.getUserInfo()
+        .getNickname()));
     holder.com1Time.setText(com.getcTime());
     holder.com1Content.setText(com.getContent());
     try {
@@ -312,7 +315,8 @@ public class PostCommentAdapter extends BaseAdapter {
     }
     final Com2Com com1 = postCommentList.get(position).getCom2comList().get(1);
     holder.com2Layout.setVisibility(View.VISIBLE);
-    holder.com2Username.setText(com1.getUserInfo().getNickname());
+    holder.com2Username.setText(UserUtils.getUserName(ctx, com1.getUid(), com1.getUserInfo()
+        .getNickname()));
     holder.com2Time.setText(com1.getcTime());
     holder.com2Content.setText(com1.getContent());
     try {

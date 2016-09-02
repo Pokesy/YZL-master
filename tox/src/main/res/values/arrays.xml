@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="weibo_tab_title">
-    <item>最新动态</item>
-    <item>热门动态</item>
-    <item>我的关注</item>
-    <item>我的动态</item>
+    <item>最新</item>
+    <item>热门</item>
+    <item>关注</item>
+    <item>我的</item>
   </string-array>
 
   <string-array name="ylq_tab_title">
@@ -15,7 +15,7 @@
 
   <string-array name="issue_tab_title">
     <item>问答</item>
-    <item>精彩视频</item>
+    <item>视频</item>
     <item>百科</item>
   </string-array>
 

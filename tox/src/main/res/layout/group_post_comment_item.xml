@@ -71,7 +71,7 @@
                     <ImageView
                         android:id="@+id/reply_floor_btn"
                         android:layout_width="wrap_content"
-                        android:src="@drawable/iconfontweidianzan"
+                        android:src="@drawable/icon_like_blue"
                         android:layout_gravity="right"
                         android:layout_alignParentRight="true"
                         android:paddingRight="10dp"

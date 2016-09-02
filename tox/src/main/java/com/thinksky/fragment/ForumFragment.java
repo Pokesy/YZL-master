@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -131,6 +132,9 @@ public class ForumFragment extends Fragment implements OnClickListener {
   private class MainListOnItemClickListener implements OnItemClickListener {
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                             long arg3) {
+      if (TextUtils.isEmpty(list.get(arg2 - 1).getUid())) {
+        return;
+      }
       startActivity(ProfileIntentFactory.makeIntent(ctx, list.get(arg2 - 1).getUid()));
     }
   }

@@ -15,6 +15,7 @@ import com.thinksky.redefine.FaceTextView;
 import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendCommentActivity;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.Url;
 import com.tox.WeiboApi;
@@ -63,7 +64,8 @@ public class DetailListAdapter extends BaseAdapter {
     hold.UserHead = (ImageView) arg1.findViewById(R.id.Detail_Item_UserHead);
     hold.CommentArea = (LinearLayout) arg1.findViewById(R.id.CommentArea);
 
-    hold.UserName.setText(list.get(arg0).getUser().getNickname());
+    hold.UserName.setText(UserUtils.getUserName(ctx, list.get(arg0).getUser().getUid(), list.get
+        (arg0).getUser().getNickname()));
     hold.Num.setText("" + (arg0 + 1));
     hold.Content.setFaceText(list.get(arg0).getContent());
     hold.Ctime.setText(list.get(arg0).getCtime());

@@ -21,6 +21,7 @@ import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ForumApi;
@@ -115,7 +116,8 @@ public class PostAdapter extends BaseAdapter {
       hold.postImg3.setVisibility(View.GONE);
     }
 
-    hold.userName.setText(mList.get(position).getUserInfo().getNickname());
+    hold.userName.setText(UserUtils.getUserName(ctx, mList.get(position).getUserInfo().getUid(),
+        mList.get(position).getUserInfo().getNickname()));
     hold.publicTime.setText(mList.get(position).getCreatTime());
     hold.postTitle.setText(mList.get(position).getPostTitle());
     if (mList.get(position).getPostContent().length() > 30) {
@@ -144,14 +146,16 @@ public class PostAdapter extends BaseAdapter {
 
     if (hold.supportImg.getTag().equals(mList.get(position).getPostId())) {
       if (mList.get(position).getIs_support() == 1) {
-        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
+        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable
+            .icon_like_blue_stroke, ctx));
         hold.upFlag = true;
       } else {
         hold.upFlag = false;
       }
     } else {
       if (mList.get(position).getIs_support() == 1) {
-        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
+        hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable
+            .icon_like_blue_stroke, ctx));
         hold.upFlag = true;
       } else {
         hold.upFlag = false;
@@ -175,7 +179,8 @@ public class PostAdapter extends BaseAdapter {
                 + "");
             Log.d("post 点赞" + mList.get(position).getPostId(), "");
             forumApi.supportPost(mList.get(position).getPostId());
-            hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, ctx));
+            hold.supportImg.setImageBitmap(BitmapUtiles.drawableTobitmap(R.drawable
+                .icon_like_blue_stroke, ctx));
           } else {
             ToastHelper.showToast("重复点赞", ctx);
           }

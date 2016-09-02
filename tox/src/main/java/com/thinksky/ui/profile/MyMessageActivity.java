@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
@@ -169,5 +170,14 @@ public class MyMessageActivity extends BaseBActivity {
 
           }
         });
+  }
+
+  @Subscribe
+  public void handleMessageReadEvent(MessageReadEvent event) {
+    loadUnreadCount();
+  }
+
+  public static class MessageReadEvent {
+
   }
 }

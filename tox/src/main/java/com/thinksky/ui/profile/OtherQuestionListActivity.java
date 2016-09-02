@@ -163,6 +163,9 @@ public class OtherQuestionListActivity extends BaseBActivity {
     }
 
     public void addAll(List<WendaModel.ListBean> data) {
+      if (null == data) {
+        return;
+      }
       datas.addAll(data);
     }
 

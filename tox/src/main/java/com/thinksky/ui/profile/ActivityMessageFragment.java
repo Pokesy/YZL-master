@@ -11,6 +11,7 @@
  */
 package com.thinksky.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,10 +22,14 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.MessageModel;
+import com.thinksky.net.rpc.model.WeiboDetailModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
@@ -117,6 +122,39 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
         });
   }
 
+  private void getWeiboDetail(final String id, final String messageId) {
+    manageRpcCall(mAppService.getWeiboDetail(id), new UiRpcSubscriber1<WeiboDetailModel>
+        (getActivity()) {
+      @Override
+      protected void onSuccess(WeiboDetailModel weiboDetailModel) {
+        // TODO 设置MAP,跳转到动态详情
+        Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
+        intent.putExtra("question_id", id);
+        startActivity(intent);
+        manageRpcCall(mAppService.getMessageContent(messageId), new
+            UiRpcSubscriber1<BaseModel>(getActivity()) {
+
+
+              @Override
+              protected void onSuccess(BaseModel baseModel) {
+                getComponent().getGlobalBus().post(new MyMessageActivity.MessageReadEvent());
+                loadData();
+              }
+
+              @Override
+              protected void onEnd() {
+
+              }
+            });
+      }
+
+      @Override
+      protected void onEnd() {
+
+      }
+    });
+  }
+
   class ActivityAdapter extends BasicListAdapter<MessageModel.ListBean> {
 
     @Override
@@ -130,11 +168,17 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
       } else {
         holder = (ViewHolder) convertView.getTag();
       }
-      MessageModel.ListBean listBean = getItem(position);
+      final MessageModel.ListBean listBean = getItem(position);
       holder.content.setText(listBean.getContent().getContent());
       holder.content.setTextColor(getResources().getColor(TextUtils.equals(listBean.getIs_read(),
           "1") ? R.color.font_color_secondary : R.color.font_color_primary));
       holder.time.setText(listBean.getCreate_time());
+      convertView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          getWeiboDetail(listBean.getContent().getArgs(), listBean.getId());
+        }
+      });
       return convertView;
     }
 
