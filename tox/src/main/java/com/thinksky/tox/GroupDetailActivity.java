@@ -220,8 +220,8 @@ public class GroupDetailActivity extends BaseBActivity implements View.OnClickLi
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent postIntent = new Intent(mContext, GroupPostInfoActivity.class);
-        postIntent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST,
-            ((HotPostListAdapter) parent.getAdapter()).getItem(position));
+        postIntent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST_ID,
+            ((HotPostListAdapter) parent.getAdapter()).getItem(position).getId());
         startActivity(postIntent);
       }
     });

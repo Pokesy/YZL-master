@@ -359,7 +359,7 @@ public class GroupFloorReplyActivity extends BaseBActivity implements View.OnCli
     @Override
     public void run() {
       arrayList = new ArrayList<HashMap<String, String>>();
-      jsonObjArrayList = groupApi.getLzlReply("?s=" + Url.POSTLZL, post_id, ReplyId, page);
+      jsonObjArrayList = groupApi.getLzlReply("?s=" + Url.POSTLZL, String.valueOf(post_id), ReplyId, page);
       for (int i = 0; i < jsonObjArrayList.size(); i++) {
         JSONObject jsonObj = jsonObjArrayList.get(i);
         HashMap<String, String> map = new HashMap<String, String>();

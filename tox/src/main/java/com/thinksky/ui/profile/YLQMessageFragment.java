@@ -11,6 +11,7 @@
  */
 package com.thinksky.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -22,11 +23,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
+import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicListAdapter;
 import com.thinksky.ui.basic.BasicPullToRefreshFragment;
@@ -130,9 +134,34 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
       } else {
         holder = (ViewHolder) convertView.getTag();
       }
-      MessageModel.ListBean listBean = getItem(position);
+      final MessageModel.ListBean listBean = getItem(position);
       holder.content.setText(listBean.getContent().getContent());
       holder.time.setText(listBean.getCreate_time());
+      convertView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          Intent intent = new Intent(getActivity(), GroupPostInfoActivity.class);
+          intent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST_ID, listBean.getContent().getArgs
+              ());
+          startActivity(intent);
+
+          manageRpcCall(mAppService.getMessageContent(listBean.getId()), new
+              UiRpcSubscriber1<BaseModel>(getActivity()) {
+
+
+                @Override
+                protected void onSuccess(BaseModel baseModel) {
+                  getComponent().getGlobalBus().post(new MyMessageActivity.MessageReadEvent());
+                  loadData();
+                }
+
+                @Override
+                protected void onEnd() {
+
+                }
+              });
+        }
+      });
       return convertView;
     }
 

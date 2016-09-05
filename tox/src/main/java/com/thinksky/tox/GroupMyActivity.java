@@ -129,8 +129,8 @@ public class GroupMyActivity extends BaseBActivity implements View.OnClickListen
       @Override
       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent postIntent = new Intent(mContext, GroupPostInfoActivity.class);
-        postIntent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST, (HotPostModel.HotPostBean) parent.getItemAtPosition
-            (position));
+        postIntent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST_ID, ((HotPostModel.HotPostBean) parent.getItemAtPosition
+            (position)).getId());
         startActivity(postIntent);
       }
     });

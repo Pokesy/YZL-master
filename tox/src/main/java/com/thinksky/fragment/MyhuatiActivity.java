@@ -119,7 +119,7 @@ public class MyhuatiActivity extends BaseBActivity {
   public static void launch(Context context, boolean isWeGroup, HotPostModel.HotPostBean bean) {
     Bundle bundle = new Bundle();
 
-    bundle.putSerializable(GroupPostInfoActivity.BUNDLE_KEY_POST, bean);
+    bundle.putString(GroupPostInfoActivity.BUNDLE_KEY_POST_ID, bean.getId());
     bundle.putBoolean(GroupPostInfoActivity.BUNDLE_KEY_IS_WE_GROUP, isWeGroup);
     Intent intent = new Intent(context, GroupPostInfoActivity.class);
     intent.putExtras(bundle);

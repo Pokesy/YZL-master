@@ -297,7 +297,7 @@ public class GroupApi extends BaseApi {
   }
 
   //获取群组帖子回复数据
-  public ArrayList<JSONObject> getPostReply(String url, int post_id, int page) {
+  public ArrayList<JSONObject> getPostReply(String url, String post_id, int page) {
 
     String result;
     JSONArray jsonObjFist;
@@ -327,7 +327,7 @@ public class GroupApi extends BaseApi {
   }
 
   //获取帖子评论数
-  public JSONObject getPostCount(String url, int post_id) {
+  public JSONObject getPostCount(String url, String post_id) {
 
     String result;
     JSONObject jsonObject;
@@ -351,7 +351,7 @@ public class GroupApi extends BaseApi {
   }
 
   //获取群组帖子回复数据
-  public ArrayList<JSONObject> getLzlReply(String url, int post_id, int to_f_reply_id, int page) {
+  public ArrayList<JSONObject> getLzlReply(String url, String post_id, int to_f_reply_id, int page) {
 
     String result;
     JSONArray jsonObjFist;
