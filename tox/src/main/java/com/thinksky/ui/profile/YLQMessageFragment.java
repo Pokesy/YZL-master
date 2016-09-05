@@ -35,6 +35,7 @@ import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicListAdapter;
 import com.thinksky.ui.basic.BasicPullToRefreshFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
+import com.thinksky.ui.group.CheckMemberListActivity;
 import com.tox.Url;
 import javax.inject.Inject;
 
@@ -140,10 +141,16 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
       convertView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          Intent intent = new Intent(getActivity(), GroupPostInfoActivity.class);
-          intent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST_ID, listBean.getContent().getArgs
-              ());
-          startActivity(intent);
+          if (listBean.getType() == 3) {
+            Intent intent = CheckMemberListActivity.makeIntent(getActivity(), listBean.getContent
+                ().getArgs());
+            startActivity(intent);
+          } else {
+            Intent intent = new Intent(getActivity(), GroupPostInfoActivity.class);
+            intent.putExtra(GroupPostInfoActivity.BUNDLE_KEY_POST_ID, listBean.getContent().getArgs
+                ());
+            startActivity(intent);
+          }
 
           manageRpcCall(mAppService.getMessageContent(listBean.getId()), new
               UiRpcSubscriber1<BaseModel>(getActivity()) {

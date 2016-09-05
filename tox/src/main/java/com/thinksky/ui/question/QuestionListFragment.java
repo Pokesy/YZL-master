@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.otto.Subscribe;
 import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
@@ -147,7 +148,7 @@ public class QuestionListFragment extends BasicFragment {
         } else {
           mListView.setPullUpToRefresh(true);
         }
-        if (mCurrentPage == 0) {
+        if (mCurrentPage <= 1) {
           mListAdapter.clear();
         }
         mListAdapter.addAll(wendaModel.getList());
@@ -161,6 +162,12 @@ public class QuestionListFragment extends BasicFragment {
       }
     });
 
+  }
+
+  @Subscribe
+  public void handleAnswerChangeEvent(QuestionDetailActivity.AnswerChangedEvent event) {
+    mCurrentPage = 0;
+    initData(mWhichActivity);
   }
 
   private void inject() {

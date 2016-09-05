@@ -90,6 +90,7 @@ public class SendCommentActivity extends BaseBActivity implements FaceView.Work 
         mFaceArea=(LinearLayout)findViewById(R.id.Comment_FaceArea);
         mFaceBtn=(LinearLayout)findViewById(R.id.Comment_FaceBtn);
         mFaceBtnArea=(RelativeLayout)findViewById(R.id.Comment_face);
+        Comment_Edit.requestFocus();
         Comment_Back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 SendCommentActivity.this.finish();

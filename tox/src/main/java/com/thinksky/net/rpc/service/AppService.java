@@ -273,7 +273,7 @@ public interface AppService {
   Observable<UnReadCountModel> getUnreadCount(@Query("module") String module, @Query
       ("session_id") String sessionId);
 
-  @GET("api.php?s=weibo/getWBDetail")
+  @GET("api.php?s=weibo/getWeiboD")
   Observable<WeiboDetailModel> getWeiboDetail(@Query("id") String id);
 
   @GET("api.php?s=Message/getMessageContent")

@@ -295,4 +295,8 @@
   <string name="activity_check_member_list_item_reject">拒绝</string>
 
   <string name="activity_user_not_exists">用户已注销</string>
+
+  <!-- 问题详情 -->
+  <string name="activity_question_detail_delete_alert">删除后,问题和悬赏值将无法恢复</string>
+  <string name="activity_question_detail_delete_success">删除成功</string>
 </resources>

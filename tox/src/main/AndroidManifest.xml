@@ -387,7 +387,7 @@
         android:name=".SendCommentActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"
-        android:windowSoftInputMode="adjustResize"/>
+        android:windowSoftInputMode="adjustResize|stateVisible"/>
     <activity
         android:name=".AuditActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"

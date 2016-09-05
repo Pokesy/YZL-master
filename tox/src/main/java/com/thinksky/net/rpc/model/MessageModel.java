@@ -56,6 +56,7 @@ public class MessageModel extends BaseModel {
     private String last_toast;
     private String status;
     private String module;
+    private int type;
     /**
      * id : 531
      * from_id : 427
@@ -148,6 +149,14 @@ public class MessageModel extends BaseModel {
 
     public void setContent(ContentBean content) {
       this.content = content;
+    }
+
+    public int getType() {
+      return type;
+    }
+
+    public void setType(int type) {
+      this.type = type;
     }
 
     public static class ContentBean {

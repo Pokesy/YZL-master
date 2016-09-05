@@ -2,10 +2,12 @@ package com.thinksky.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -23,6 +25,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
@@ -245,22 +248,41 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
             mTitleBar.setSearchBtn(R.drawable.icon_delete, new View.OnClickListener() {
               @Override
               public void onClick(View v) {
-                // TODO 删除
-                manageRpcCall(mAppService.deleteQuestion(Url.SESSIONID, beans.get(0).getId()),
-                    new UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
-
-
+                AlertDialog dialog = new AlertDialog.Builder(QuestionDetailActivity.this).
+                    setMessage(R.string.activity_question_detail_delete_alert)
+                    .setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
                       @Override
-                      protected void onSuccess(BaseModel baseModel) {
-                        getComponent().getGlobalBus().post(new AnswerChangedEvent());
-                        finish();
-                      }
+                      public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        // 删除
+                        manageRpcCall(mAppService.deleteQuestion(Url.SESSIONID, beans.get(0)
+                                .getId()),
+                            new UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
 
+
+                              @Override
+                              protected void onSuccess(BaseModel baseModel) {
+                                Toast.makeText(QuestionDetailActivity.this, R.string
+                                    .activity_question_detail_delete_success, Toast
+                                    .LENGTH_SHORT).show();
+                                getComponent().getGlobalBus().post(new AnswerChangedEvent());
+                                finish();
+                              }
+
+                              @Override
+                              protected void onEnd() {
+
+                              }
+                            });
+                      }
+                    }).setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener
+                        () {
                       @Override
-                      protected void onEnd() {
-
+                      public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
                       }
-                    });
+                    }).create();
+                dialog.show();
               }
             });
           } else {

@@ -30,6 +30,7 @@ import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicListAdapter;
 import com.thinksky.ui.common.PullToRefreshListView;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -168,7 +169,7 @@ public class RemenhuatiFragment extends RBaseFragment {
         holder.content.setVisibility(View.GONE);
       }
       holder.supportCount.setText(bean.getSupportCount());
-      holder.nickname.setText(bean.getUser().getNickname());
+      holder.nickname.setText(UserUtils.getUserName(getActivity(), bean.getUid(), bean.getUser().getNickname()));
       holder.replyCount.setText(bean.getReply_count());
       try {
         ImageLoader.loadOptimizedHttpImage(getActivity(),
