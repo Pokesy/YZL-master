@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.RpcApiError;
 import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.GroupModel;
 import com.thinksky.net.rpc.model.CountModel;
@@ -117,7 +118,23 @@ public class MyGroupFragment extends BasicFragment {
           protected void onEnd() {
 
           }
+
+          @Override
+          public void onApiError(RpcApiError apiError) {
+          }
         });
+  }
+
+  @Override
+  protected void onLogin() {
+    super.onLogin();
+    initPostCount();
+    initGroupList();
+  }
+
+  @Override
+  protected void onLogout() {
+    super.onLogout();
   }
 
   @Subscribe
@@ -161,6 +178,10 @@ public class MyGroupFragment extends BasicFragment {
       @Override
       protected void onEnd() {
 
+      }
+
+      @Override
+      public void onApiError(RpcApiError apiError) {
       }
     });
   }

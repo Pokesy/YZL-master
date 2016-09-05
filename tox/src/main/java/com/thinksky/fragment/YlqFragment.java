@@ -5,13 +5,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.squareup.otto.Subscribe;
+import com.thinksky.myview.CustomViewPager;
 import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicFragment;
+import com.tox.BaseFunction;
+import com.tox.ToastHelper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,9 @@ import java.util.List;
  */
 public class YlqFragment extends BasicFragment implements View.OnClickListener {
   private TabLayout mTabLayout;
-  private ViewPager mPager;
+  private CustomViewPager mPager;
+
+  private int mLastSelectIndex = 0;
 
   @Override
   public void onClick(View view) {
@@ -39,7 +43,7 @@ public class YlqFragment extends BasicFragment implements View.OnClickListener {
 
   private void initView() {
     mTabLayout = (TabLayout) view.findViewById(R.id.segment_control);
-    mPager = (ViewPager) view.findViewById(R.id.pager);
+    mPager = (CustomViewPager) view.findViewById(R.id.pager);
     List<Fragment> fragments = new ArrayList<>();
     fragments.add(RemenhuatiFragment.newInstance("label1"));
     fragments.add(XiaozujingxuanFragment.newInstance("label2"));
@@ -47,11 +51,49 @@ public class YlqFragment extends BasicFragment implements View.OnClickListener {
     //fragments.add(LuntanFragment.newInstance("label4"));
     mPager.setAdapter(new PagerAdapter(getChildFragmentManager(), fragments));
     mTabLayout.setupWithViewPager(mPager);
-    String []titles = getResources().getStringArray(R.array.ylq_tab_title);
-    for(int i=0; i<mTabLayout.getTabCount(); i++) {
+    String[] titles = getResources().getStringArray(R.array.ylq_tab_title);
+    for (int i = 0; i < mTabLayout.getTabCount(); i++) {
       mTabLayout.getTabAt(i).setText(titles[i]);
     }
     mPager.setOffscreenPageLimit(4);
+
+    mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+      @Override
+      public void onTabSelected(TabLayout.Tab tab) {
+        if (tab.getPosition() > 1 && !BaseFunction.isLogin()) {
+          mPager.setCurrentItem(mLastSelectIndex);
+          mTabLayout.getTabAt(mLastSelectIndex).select();
+          ToastHelper.showToast(R.string.prompt_offline, getActivity());
+        } else {
+          mLastSelectIndex = tab.getPosition();
+          mPager.setCurrentItem(tab.getPosition());
+        }
+      }
+
+      @Override
+      public void onTabUnselected(TabLayout.Tab tab) {
+
+      }
+
+      @Override
+      public void onTabReselected(TabLayout.Tab tab) {
+
+      }
+    });
+  }
+
+  @Override
+  protected void onLogin() {
+    super.onLogin();
+    mPager.setPagingEnabled(BaseFunction.isLogin());
+    mTabLayout.getTabAt(mLastSelectIndex).select();
+  }
+
+  @Override
+  protected void onLogout() {
+    super.onLogout();
+    mPager.setPagingEnabled(BaseFunction.isLogin());
+    mTabLayout.getTabAt(0).select();
   }
 
   private static class PagerAdapter extends FragmentPagerAdapter {

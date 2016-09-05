@@ -392,6 +392,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     // 启动分享GUI
     oks.show(this);
+
   }
 
 

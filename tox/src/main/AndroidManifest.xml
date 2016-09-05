@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:versionCode="13"
-    android:versionName="1.0"
+    android:versionName="1.1"
     package="com.thinksky.tox">
 
   <uses-sdk
@@ -277,10 +277,6 @@
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".MessageActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:theme="@style/ActivityThemeTwo"/>
-    <activity
         android:name=".SetUserInfoActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"
@@ -299,10 +295,6 @@
         />
     <activity
         android:name=".EventDetailActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:theme="@style/ActivityThemeTwo"/>
-    <activity
-        android:name=".GroupActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
     <activity
@@ -567,10 +559,6 @@
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
     <activity
-        android:name="com.thinksky.fragment.RemenhuatiActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:theme="@style/ActivityThemeTwo"/>
-    <activity
         android:name="com.thinksky.fragment.QuestionSelectActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:theme="@style/ActivityThemeTwo"/>
@@ -673,6 +661,14 @@
         android:value="GlideModule"
         tools:node="remove"
         />
+    <!-- 下载完成广播接收器 -->
+    <receiver
+        android:name="com.thinksky.utils.UpgradeHelper$DownloadBroadcastReceiver"
+        >
+      <intent-filter>
+        <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
+      </intent-filter>
+    </receiver>
   </application>
 
 </manifest>

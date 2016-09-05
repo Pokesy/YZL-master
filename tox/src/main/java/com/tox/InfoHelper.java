@@ -38,7 +38,7 @@ public class InfoHelper {
                 ToastHelper.showToast("站点关闭", context);
                 break;
             case 401:
-                ToastHelper.showToast("需要登录", context);
+                //ToastHelper.showToast("需要登录", context);
                 break;
             case 400:
                 ToastHelper.showToast("参数格式错误", context);
