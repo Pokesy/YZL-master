@@ -129,7 +129,7 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
   private void launch(Context context, boolean isWeGroup, HotPostModel.HotPostBean bean) {
     Bundle bundle = new Bundle();
 
-    bundle.putSerializable(GroupPostInfoActivity.BUNDLE_KEY_POST, bean);
+    bundle.putString(GroupPostInfoActivity.BUNDLE_KEY_POST_ID, bean.getId());
     bundle.putBoolean("isWeGroup", isWeGroup);
     Intent intent = new Intent(context, GroupPostInfoActivity.class);
     intent.putExtras(bundle);

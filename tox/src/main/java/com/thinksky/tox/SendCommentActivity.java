@@ -196,6 +196,7 @@ public class SendCommentActivity extends BaseBActivity implements FaceView.Work 
                 Toast.makeText(SendCommentActivity.this, "评论成功", Toast.LENGTH_LONG)
                         .show();
                 SendCommentActivity.this.finish();
+                getComponent().getGlobalBus().post(new SendCommentSuccessEvent());
 
             } else {
                 progressDialog.dismiss();
@@ -220,6 +221,10 @@ public class SendCommentActivity extends BaseBActivity implements FaceView.Work 
         ImageSpan span =new ImageSpan(drawable,ImageSpan.ALIGN_BASELINE);
         spannableString.setSpan(span,0,spannableString.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         view.append(spannableString);
+
+    }
+
+    public class SendCommentSuccessEvent {
 
     }
 }

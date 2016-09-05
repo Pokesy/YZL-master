@@ -24,6 +24,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.holder.BaseApplication;
+import com.thinksky.info.WeiboInfo;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
@@ -128,9 +129,16 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
       @Override
       protected void onSuccess(WeiboDetailModel weiboDetailModel) {
         // TODO 设置MAP,跳转到动态详情
-        Intent intent = new Intent(getActivity(), QuestionDetailActivity.class);
-        intent.putExtra("question_id", id);
-        startActivity(intent);
+
+        WeiboInfo info = new WeiboInfo();
+        WeiboDetailModel.ListBean bean = weiboDetailModel.getList();
+        info.setCan_delete(bean.getCan_delete() == 1);
+        info.setComment_count(String.valueOf(bean.getComment_count()));
+        info.setCtime(String.valueOf(bean.getCreate_time()));
+        info.setFrom(bean.getFrom());
+        info.setIs_supported(TextUtils.equals(bean.getIs_supported(), "1"));
+        info.setWcontent(bean.getContent());
+        //info.setWid(bean.getId());
         manageRpcCall(mAppService.getMessageContent(messageId), new
             UiRpcSubscriber1<BaseModel>(getActivity()) {
 

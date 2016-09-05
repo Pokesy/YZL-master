@@ -27,6 +27,7 @@ import com.thinksky.info.WeiboInfo;
 import com.thinksky.myview.MyListView;
 import com.thinksky.myview.MyListView.OnRefreshListener;
 import com.thinksky.tox.R;
+import com.thinksky.tox.SendCommentActivity;
 import com.thinksky.tox.UploadActivity;
 import com.thinksky.tox.WeiboDetailActivity;
 import com.thinksky.ui.basic.BasicFragment;
@@ -348,9 +349,12 @@ public class WeiboListFragment extends BasicFragment {
 
   @Subscribe
   public void handleWeiboSendEvent(UploadActivity.WeiboSendSuccessEvent event) {
-    if (TextUtils.equals(hotUrl, Url.MYWEIBO) || TextUtils.equals(hotUrl, Url.WEIBO)) {
-      createListModel();
-    }
+    createListModel();
+  }
+
+  @Subscribe
+  public void handleSendCommentSuccessEvent(SendCommentActivity.SendCommentSuccessEvent event) {
+    createListModel();
   }
 
   @Subscribe

@@ -31,7 +31,6 @@ import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.GroupDetailModel;
-import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.model.PostModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.NetConstant;
@@ -61,7 +60,7 @@ import org.json.JSONObject;
  */
 public class GroupPostInfoActivity extends BaseBActivity implements View.OnClickListener, View
     .OnTouchListener {
-  public static final String BUNDLE_KEY_POST = "post_info";
+  public static final String BUNDLE_KEY_POST_ID = "post_info_id";
   public static final String BUNDLE_KEY_IS_WE_GROUP = "isWeGroup";
   private boolean isWeGroup = true;
   LinearLayout loadingBar;
@@ -71,7 +70,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   ProgressBar loadingProBar;
   GroupApi groupApi;
   String support_flag;
-  private int post_id;
+  private String post_id;
   private int page = 1;
   private ImageView back_menu;
   private TextView group_name;
@@ -90,7 +89,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   private EditText reply_editText;
   private TextView replyCountView;
   private TextView sendPostButtn;
-  private HotPostModel.HotPostBean mPostBean;
   HashMap<String, Integer> countMap;
   private Context mContext;
   private int replyCount;
@@ -125,10 +123,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     userUid = baseApi.getUid();
 
     setContentView(R.layout.activity_group_post_info_copy);
-    mPostBean = (HotPostModel.HotPostBean) getIntent().getExtras().getSerializable(BUNDLE_KEY_POST);
     enter = (RelativeLayout) findViewById(R.id.enter);
-    img = mPostBean.getImgList();
-    post_id = Integer.parseInt(mPostBean.getId());
+    post_id = getIntent().getStringExtra(BUNDLE_KEY_POST_ID);
 
     //获取手机的分辨率
     Display display = getWindowManager().getDefaultDisplay(); //Activity#getWindowManager()
@@ -185,7 +181,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     post_scroll.setOnTouchListener(this);
     edit_disable_text.setOnClickListener(this);
     new PostReplyThread(post_id, page).start();
-    initPostView(mPostBean);
 
     post_scroll.smoothScrollTo(0, 0);
 
@@ -208,26 +203,27 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   }
 
   private void loadPostData() {
-    manageRpcCall(mAppService.getPostDetail(Url.SESSIONID, mPostBean.getId()), new
+    manageRpcCall(mAppService.getPostDetail(Url.SESSIONID, String.valueOf(post_id)), new
         UiRpcSubscriberSimple<PostModel>(this) {
 
 
           @Override
-          protected void onSuccess(PostModel postModel) {
-            mPostBean.setCollection(postModel.getList().get(0).getIs_collection());
-            mCollectionBtn.setSelected(TextUtils.equals(mPostBean.is_collection(), "1"));
+          protected void onSuccess(final PostModel postModel) {
+            final PostModel.ListBean listBean = postModel.getList().get(0);
+            initPostView(listBean);
+            mCollectionBtn.setSelected(TextUtils.equals(listBean.getIs_collection(), "1"));
             mCollectionBtn.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
-                if (TextUtils.equals(mPostBean.is_collection(), "1")) {
-                  manageRpcCall(mAppService.cancelPostBookmark(Url.SESSIONID, mPostBean.getId()),
+                if (TextUtils.equals(listBean.getIs_collection(), "1")) {
+                  manageRpcCall(mAppService.cancelPostBookmark(Url.SESSIONID, listBean.getId()),
                       new UiRpcSubscriberSimple<BaseModel>(GroupPostInfoActivity.this) {
 
 
                         @Override
                         protected void onSuccess(BaseModel baseModel) {
-                          mPostBean.setCollection("0");
-                          mCollectionBtn.setSelected(TextUtils.equals(mPostBean.is_collection(),
+                          listBean.setIs_collection("0");
+                          mCollectionBtn.setSelected(TextUtils.equals(listBean.getIs_collection(),
                               "1"));
                           performPostDataChangeEvent();
                         }
@@ -238,14 +234,14 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
                         }
                       });
                 } else {
-                  manageRpcCall(mAppService.postBookmark(Url.SESSIONID, mPostBean.getId()),
+                  manageRpcCall(mAppService.postBookmark(Url.SESSIONID, String.valueOf(post_id)),
                       new UiRpcSubscriberSimple<BaseModel>(GroupPostInfoActivity.this) {
 
 
                         @Override
                         protected void onSuccess(BaseModel baseModel) {
-                          mPostBean.setCollection("1");
-                          mCollectionBtn.setSelected(TextUtils.equals(mPostBean.is_collection(),
+                          listBean.setIs_collection("1");
+                          mCollectionBtn.setSelected(TextUtils.equals(listBean.getIs_collection(),
                               "1"));
                           performPostDataChangeEvent();
                         }
@@ -269,7 +265,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   }
 
   //初始化activity
-  public void initPostView(final HotPostModel.HotPostBean bean) {
+  public void initPostView(final PostModel.ListBean bean) {
+    img = bean.getImgList();
     mAuthorId = bean.getUser().getUid();
     post_title.setText(bean.getTitle());
     post_user_name.setText(bean.getUser().getNickname());
@@ -279,7 +276,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     post_content.setVisibility(TextUtils.isEmpty(bean.getContent()) ? View.GONE : View
         .VISIBLE);
     post_content.setText(TextUtils.isEmpty(bean.getContent()) ? "" : bean.getContent().replaceAll
-        ("\\n", "\n"));
+        ("\\\\n", "\\\n"));
     post_create_time.setText(bean.getCreate_time());
     support_flag = bean.getIs_support();
     qianming.setText(bean.getUser().getSignature());
@@ -912,9 +909,9 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     private ArrayList<HashMap<String, String>> postReplyList;
     private ArrayList<JSONObject> jsonObjArrayList;
     private int page;
-    private int post_id;
+    private String post_id;
 
-    public PostReplyThread(int post_id, int page) {
+    public PostReplyThread(String post_id, int page) {
       this.page = page;
       this.post_id = post_id;
     }
