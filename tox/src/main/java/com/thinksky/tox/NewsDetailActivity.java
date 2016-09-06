@@ -101,8 +101,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
           replyInfoList = myJson.getNewsReplyInfo((String) msg.obj);
           if (replyModule.getChildCount() > 0 && replyModule.getChildAt(0).getTag() != null &&
               replyModule.getChildAt(0)
-              .getTag()
-              .equals("isNull")) {
+                  .getTag()
+                  .equals("isNull")) {
             replyModule.removeViewAt(0);
           }
           replyModule.addView(addReplyView(replyInfoList.get(0)), 0);
@@ -131,7 +131,8 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     mContext = NewsDetailActivity.this;
     newsListInfo = (NewsListInfo) getIntent().getExtras().get("newsInfo");
     newsId = newsListInfo.getId();
-    support = getIntent().getExtras().getString("support");
+    support = TextUtils.isEmpty(getIntent().getExtras().getString("support")) ? "0" : getIntent()
+        .getExtras().getString("support");
     newsApi = new NewsApi(mHandler);
     imageLoader = ImageLoader.getInstance();
     taskCollection = new HashSet<AsyncTask>();
@@ -201,12 +202,12 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         mHandler.sendMessage(message);
       }
     });
-    supportCount.setText(support);
+
     backMenu.setOnClickListener(this);
     newsReply.setOnClickListener(this);
     newsShare.setOnClickListener(this);
     sendButn.setOnClickListener(this);
-    supportCount.setOnClickListener(this);
+    //supportCount.setOnClickListener(this);
     edit_disable_text.setOnClickListener(this);
     //获取资讯信息
     newsApi.getNewsInfo(newsListInfo.getId());
@@ -278,59 +279,60 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         finish();
         break;
       case R.id.supportCount:
-        //                if (BaseFunction.isLogin()) {
-        //                    if (bean.getIs_supported().equals("0")) {
+        //if (BaseFunction.isLogin()) {
+        //  if (bean.getIs_supported().equals("0")) {
         //
-        //                        supportCount.setText(Integer.parseInt(support) + 1 + "");
-        //                        supportCount.setBackgroundResource(R.drawable.iconfontdianzan);
-        ////
-        //                        RsenUrlUtil.execute(NewsDetailActivity.this, RsenUrlUtil
-        // .URL_SUPPORT_QUESTION_ANSWER, new RsenUrlUtil.OnJsonResultListener<DiscoverFragment
-        // .FXBean>() {
-        //                            @Override
-        //                            public void onNoNetwork(String msg) {
-        //                                ToastHelper.showToast(msg, Url.context);
-        //                            }
+        //    supportCount.setText(Integer.parseInt(support) + 1 + "");
+        //    supportCount.setBackgroundResource(R.drawable.icon_like_blue_stroke);
+        //    //
+        //    RsenUrlUtil.execute(NewsDetailActivity.this, RsenUrlUtil
+        //        .URL_SUPPORT_QUESTION_ANSWER, new RsenUrlUtil
+        // .OnJsonResultListener<DiscoverFragment
+        //        .FXBean>() {
+        //      @Override
+        //      public void onNoNetwork(String msg) {
+        //        ToastHelper.showToast(msg, Url.context);
+        //      }
         //
-        //                            @Override
-        //                            public Map getMap() {
-        //                                Map map = new HashMap();
-        //                                map.put("session_id", Url.SESSIONID);
-        //                                map.put("answerid", newsId);
-        //                                return map;
+        //      @Override
+        //      public Map getMap() {
+        //        Map map = new HashMap();
+        //        map.put("session_id", Url.SESSIONID);
+        //        map.put("answerid", newsId);
+        //        return map;
         //
-        //                            }
+        //      }
         //
-        //                            @Override
-        //                            public void onParseJsonBean(List<DiscoverFragment.FXBean>
-        // beans, JSONObject jsonObject) {
-        //                                String result = jsonObject.toString();
-        //                                DiscoverFragment.FXBean discoverInfo = JSON.parseObject
-        // (result, DiscoverFragment.FXBean.class);
-        //                                beans.add(discoverInfo);
-        //                            }
+        //      @Override
+        //      public void onParseJsonBean(List<DiscoverFragment.FXBean>
+        //                                      beans, JSONObject jsonObject) {
+        //        String result = jsonObject.toString();
+        //        DiscoverFragment.FXBean discoverInfo = JSON.parseObject
+        //            (result, DiscoverFragment.FXBean.class);
+        //        beans.add(discoverInfo);
+        //      }
         //
-        //                            @Override
-        //                            public void onResult(boolean state, List beans) {
+        //      @Override
+        //      public void onResult(boolean state, List beans) {
         //
-        //                                if (state) {
+        //        if (state) {
         //
-        //                                    ToastHelper.showToast("点赞成功", Url.context);
-        //                                } else {
-        //                                    ToastHelper.showToast("请求失败", Url.context);
-        //                                }
-        ////
+        //          ToastHelper.showToast("点赞成功", Url.context);
+        //        } else {
+        //          ToastHelper.showToast("请求失败", Url.context);
+        //        }
+        //        //
         //
-        //                            }
-        //                        });
-        ////
-        //                    } else {
-        //                        ToastHelper.showToast("点赞失败，重复点赞", NewsDetailActivity.this);
-        //                    }
+        //      }
+        //    });
+        //    //
+        //  } else {
+        //    ToastHelper.showToast("点赞失败，重复点赞", NewsDetailActivity.this);
+        //  }
         //
-        //                } else {
-        //                    ToastHelper.showToast("请先登录", NewsDetailActivity.this);
-        //                }
+        //} else {
+        //  ToastHelper.showToast("请先登录", NewsDetailActivity.this);
+        //}
 
         break;
       case R.id.news_share:
@@ -421,7 +423,10 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
               ToastHelper.showToast("删除成功", activity.mContext);
             } else {
               replyInfoList = myJson.getNewsReplyInfo(result);
-              activity.replyCount.setText(replyInfoList.size() + "");
+              activity.supportCount.setText(activity.newsDetailInfo.getView());
+              activity.replyCount.setText(replyInfoList.size() < Integer.parseInt(activity
+                  .newsDetailInfo.getComment()) ? String.valueOf(activity.newsDetailInfo
+                  .getComment()) : String.valueOf(replyInfoList.size()));
               if (replyInfoList.size() == 0 && activity.replyModule.getChildCount() == 0) {
                 activity.loadingBar.setVisibility(View.GONE);
                 View nullDateView =

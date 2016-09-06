@@ -271,7 +271,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     post_title.setText(bean.getTitle());
     post_user_name.setText(bean.getUser().getNickname());
     ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
-        bean.getUser().getAvatar64()).placeholder(R.drawable.side_user_avatar).error(R.drawable
+        NetConstant.BASE_URL+ bean.getUser().getAvatar64()).placeholder(R.drawable.side_user_avatar).error(R.drawable
         .side_user_avatar).dontAnimate().into(user_logo);
     post_content.setVisibility(TextUtils.isEmpty(bean.getContent()) ? View.GONE : View
         .VISIBLE);
@@ -613,6 +613,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
             ToastHelper.showToast("感谢你的支持", mContext);
             supportCount++;
             supportCountView.setText(supportCount + "");
+            ((ImageView)findViewById(R.id.icon_like)).setImageResource(R.drawable.icon_like_blue_stroke);
             performPostDataChangeEvent();
           }
           if (POSTCOMMENT) {

@@ -365,6 +365,7 @@
         android:screenOrientation="portrait"/>
     <activity
         android:name="com.thinksky.ui.profile.OtherProfileActivity"
+        android:launchMode="singleTask"
         android:screenOrientation="portrait"/>
     <activity
         android:name=".UploadActivity"
@@ -649,6 +650,7 @@
         android:windowSoftInputMode="adjustNothing|stateVisible"/>
     <activity
         android:name="com.thinksky.ui.profile.MyProfileActivity"
+        android:launchMode="singleTask"
         android:screenOrientation="portrait"/>
     <activity
         android:name="com.thinksky.ui.group.CheckMemberListActivity"
