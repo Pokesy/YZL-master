@@ -115,7 +115,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
   private String isdisplay = "1";
   private ImageView mIconView;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_send_discover);
     initView();
@@ -129,7 +130,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     mTogBtn.setSelected(mTogBtn.isSelected());
     // 添加监听事件
     mTogBtn.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
+      @Override
+      public void onClick(View v) {
 
         if (mTogBtn.isSelected()) {
           isdisplay = STATE_DISPLAY;
@@ -196,11 +198,13 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     map.put("uid", userUid);
     RsenUrlUtil.executeGetWidthMap(this, RsenUrlUtil.URL_FXU, map,
         new RsenUrlUtil.OnJsonResultListener<FUBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
-          @Override public void onParseJsonBean(List<FUBean> beans, JSONObject jsonObject) {
+          @Override
+          public void onParseJsonBean(List<FUBean> beans, JSONObject jsonObject) {
 
             try {
               FUBean bean = new FUBean();
@@ -217,7 +221,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             }
           }
 
-          @Override public void onResult(boolean state, List<FUBean> beans) {
+          @Override
+          public void onResult(boolean state, List<FUBean> beans) {
             if (state) {
 
               if (!beans.get(0).address.equals(null) && !TextUtils.isEmpty(beans.get(0).address)) {
@@ -251,7 +256,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         });
   }
 
-  @Override public void onClick(View v) {
+  @Override
+  public void onClick(View v) {
     int id = v.getId();
     switch (id) {
       case R.id.Post_send_photo:
@@ -259,11 +265,12 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
           mAttachLayout.setVisibility(View.GONE);
           mPhotoShowLayout.setVisibility(View.VISIBLE);
         } else {
-          String[] items = { "相册", "拍照" };
+          String[] items = {"相册", "拍照"};
           AlertDialog.Builder builder = new AlertDialog.Builder(this);
           builder.setTitle("操作");
           builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
               switch (which) {
                 case 0:
                   Intent intent3 = new Intent(DiscoverSendActivity.this, ScanPhotoActivity.class);
@@ -301,10 +308,6 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             ToastHelper.showToast("请填写标题", this);
             return;
           }
-          //if (mContentEdit.getText().toString().length() != 11) {
-          //  ToastHelper.showToast("手号码必须是11位", this);
-          //  return;
-          //}
           if (photo_num == 0) {
             ToastHelper.showToast("请选择图片", this);
             return;
@@ -372,13 +375,15 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     }
   }
 
-  @Override public void onBackPressed() {
+  @Override
+  public void onBackPressed() {
     super.onBackPressed();
     FileUtiles.DeleteTempFiles(Url.getDeleteFilesPath());
     DiscoverSendActivity.this.finish();
   }
 
-  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     /**
      * 对ShowImageActivity直接返回的
      */
@@ -554,14 +559,16 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         params.put("session_id", Url.SESSIONID);
         FinalHttp fh = new FinalHttp();
         fh.post(Url.UPLOADIMGURL, params, new AjaxCallBack<Object>() {
-          @Override public void onLoading(long count, long current) {
+          @Override
+          public void onLoading(long count, long current) {
             progressDialog.setProgressNumberFormat("%1dKB/%2dKB");
             ;
             progressDialog.setMax((int) count / 1024);
             progressDialog.setProgress((int) (current / 1024));
           }
 
-          @Override public void onSuccess(Object o) {
+          @Override
+          public void onSuccess(Object o) {
             progressDialog.dismiss();
             String s = myJson.getAttachId(o);
             attachIds.add(s);
@@ -573,7 +580,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             }
           }
 
-          @Override public void onFailure(Throwable t, int errorNo, String strMsg) {
+          @Override
+          public void onFailure(Throwable t, int errorNo, String strMsg) {
             Log.e("上传照片失败", "");
             progressDialog.dismiss();
             Toast.makeText(DiscoverSendActivity.this, "上传照片失败！", Toast.LENGTH_LONG).show();
@@ -598,7 +606,10 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
   }
 
   private void sendWeibo() {
-
+    if (TextUtils.isEmpty(latitude) || TextUtils.isEmpty(longitude)) {
+      Toast.makeText(DiscoverSendActivity.this, "请选择地址", Toast.LENGTH_SHORT).show();
+      return;
+    }
     Map map = new HashMap();
     map.put("session_id", session_id);
     map.put("factory_name", mTitleEdit.getText().toString().trim());
@@ -615,7 +626,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     map.put("isdisplay", isdisplay);
     RsenUrlUtil.executeGetWidthMap(this, RsenUrlUtil.SENDDISCOVER, map,
         new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
-          @Override public void onNoNetwork(String msg) {
+          @Override
+          public void onNoNetwork(String msg) {
             ToastHelper.showToast(msg, Url.context);
           }
 
@@ -627,7 +639,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             beans.add(discoverInfo);
           }
 
-          @Override public void onResult(boolean state, List beans) {
+          @Override
+          public void onResult(boolean state, List beans) {
             progressDialog.dismiss();
             if (state) {
               getComponent().getGlobalBus().post(new MarkEvent(isfactory));
@@ -647,7 +660,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     private LoadImg loadImg;
 
     public PhotoAdapter(Context ctx, FinalBitmap finalBitmap, KJBitmap kjBitmap,
-        List<String> list) {
+                        List<String> list) {
       this.kjBitmap = kjBitmap;
       this.finalBitmap = finalBitmap;
       this.imgUrl = list;
@@ -655,19 +668,23 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
       loadImg = new LoadImg(ctx);
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
       return imgUrl.size();
     }
 
-    @Override public Object getItem(int position) {
+    @Override
+    public Object getItem(int position) {
       return position;
     }
 
-    @Override public long getItemId(int position) {
+    @Override
+    public long getItemId(int position) {
       return position;
     }
 
-    @Override public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
       final Holder holder;
       final View view;
 
@@ -708,17 +725,19 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         }
       }
       holder.imageView.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
           if (imgUrl.get(position).equals("add")) {
             Log.d("Andy12345", img_num + "");
             Log.d("Andy123456", imgUrl.get(position));
             if (img_num < 3) {
               //ToastHelper.showToast("点击了罗",ctx);
-              String[] items = { "相册", "拍照" };
+              String[] items = {"相册", "拍照"};
               AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
               builder.setTitle("操作");
               builder.setItems(items, new DialogInterface.OnClickListener() {
-                @Override public void onClick(DialogInterface dialog, int which) {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
                   switch (which) {
                     case 0:
                       Intent intent3 =
@@ -756,7 +775,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         }
       });
       holder.delImg.setOnClickListener(new View.OnClickListener() {
-        @Override public void onClick(View v) {
+        @Override
+        public void onClick(View v) {
           deleteCell(view, position);
         }
       });
@@ -770,7 +790,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
 
   private void deleteCell(final View v, final int index) {
     Animation.AnimationListener al = new Animation.AnimationListener() {
-      @Override public void onAnimationEnd(Animation arg0) {
+      @Override
+      public void onAnimationEnd(Animation arg0) {
         horizontalListView.scrollTo(0);
         scrollImg.remove(index);
         img_num--;
@@ -780,10 +801,12 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         photoAdapter.notifyDataSetChanged();
       }
 
-      @Override public void onAnimationRepeat(Animation animation) {
+      @Override
+      public void onAnimationRepeat(Animation animation) {
       }
 
-      @Override public void onAnimationStart(Animation animation) {
+      @Override
+      public void onAnimationStart(Animation animation) {
       }
     };
     collapse(v, al);
@@ -793,7 +816,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     final int initialHeight = v.getMeasuredHeight();
 
     Animation anim = new Animation() {
-      @Override protected void applyTransformation(float interpolatedTime, Transformation t) {
+      @Override
+      protected void applyTransformation(float interpolatedTime, Transformation t) {
         if (interpolatedTime == 1) {
           v.setVisibility(View.GONE);
         } else {
@@ -802,7 +826,8 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
         }
       }
 
-      @Override public boolean willChangeBounds() {
+      @Override
+      public boolean willChangeBounds() {
         return true;
       }
     };

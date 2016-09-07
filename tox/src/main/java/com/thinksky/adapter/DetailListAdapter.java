@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.thinksky.info.WeiboCommentInfo;
 import com.thinksky.info.WeiboInfo;
-import com.thinksky.redefine.FaceTextView;
 import com.thinksky.tox.LoginActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendCommentActivity;
@@ -54,59 +54,33 @@ public class DetailListAdapter extends BaseAdapter {
   public View getView(final int arg0, View arg1, ViewGroup arg2) {
     final int position = list.size() - arg0 - 1;
     weiboApi = new WeiboApi();
-    Holder hold = new Holder();
-    arg1 = View.inflate(ctx, R.layout.detail_list_item, null);
-    hold.UserName = (TextView) arg1
-        .findViewById(R.id.Detail_Item_UserName);
-    hold.Num = (TextView) arg1.findViewById(R.id.Detail_Item_Num);
-    hold.Content = (FaceTextView) arg1.findViewById(R.id.Detail_Item_Value);
-    hold.Ctime = (TextView) arg1.findViewById(R.id.Detail_com_time);
-    hold.UserHead = (ImageView) arg1.findViewById(R.id.Detail_Item_UserHead);
-    hold.CommentArea = (LinearLayout) arg1.findViewById(R.id.CommentArea);
+    arg1 = View.inflate(ctx, R.layout.comment_item, null);
+    ViewHolder hold = new ViewHolder(arg1);
 
-    hold.UserName.setText(UserUtils.getUserName(ctx, list.get(arg0).getUser().getUid(), list.get
+    hold.userName.setText(UserUtils.getUserName(ctx, list.get(arg0).getUser().getUid(), list.get
         (arg0).getUser().getNickname()));
-    hold.Num.setText("" + (arg0 + 1));
-    hold.Content.setFaceText(list.get(arg0).getContent());
-    hold.Ctime.setText(list.get(arg0).getCtime());
-    hold.UserName.setOnClickListener(new View.OnClickListener() {
+    hold.content.setText(list.get(arg0).getContent());
+    hold.time.setText(list.get(arg0).getCtime());
+    hold.userName.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-//                weiboApi.goUserInfo(ctx, list.get(arg0).getUser().getUid());
-//                Toast.makeText(ctx, list.get(arg0).getUser().getNickname(), Toast.LENGTH_SHORT)
-// .show();
+        weiboApi.goUserInfo(ctx, list.get(arg0).getUser().getUid());
       }
     });
     try {
       ImageLoader.loadOptimizedHttpImage(ctx, list.get(arg0).getUser().getAvatar()).bitmapTransform
           (new CropCircleTransformation(ctx))
           .placeholder(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).dontAnimate
-          ().into(hold.UserHead);
+          ().into(hold.userAvatar);
     } catch (Exception e) {
 
     }
-    hold.CommentArea.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        CommentToComment(arg0);
-      }
-    });
-    hold.UserHead.setOnClickListener(new View.OnClickListener() {
+    hold.userAvatar.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         weiboApi.goUserInfo(ctx, list.get(arg0).getUser().getUid());
       }
     });
     return arg1;
-  }
-
-  static class Holder {
-    TextView UserName;
-    TextView Num;
-
-    FaceTextView Content;
-    TextView Ctime;
-    LinearLayout CommentArea;
-    ImageView UserHead;
   }
 
   private void CommentToComment(int arg0) {
@@ -122,6 +96,23 @@ public class DetailListAdapter extends BaseAdapter {
     } else {
       Intent intent = new Intent(ctx, LoginActivity.class);
       ctx.startActivity(intent);
+    }
+  }
+
+  static class ViewHolder {
+    @Bind(R.id.user_avatar)
+    ImageView userAvatar;
+    @Bind(R.id.user_name)
+    TextView userName;
+    @Bind(R.id.btn_like)
+    TextView btnLike;
+    @Bind(R.id.time)
+    TextView time;
+    @Bind(R.id.content)
+    TextView content;
+
+    ViewHolder(View view) {
+      ButterKnife.bind(this, view);
     }
   }
 }

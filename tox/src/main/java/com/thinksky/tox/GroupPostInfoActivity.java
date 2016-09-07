@@ -69,7 +69,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   TextView loadingBarText;
   ProgressBar loadingProBar;
   GroupApi groupApi;
-  String support_flag;
   private String post_id;
   private int page = 1;
   private ImageView back_menu;
@@ -266,6 +265,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
   //初始化activity
   public void initPostView(final PostModel.ListBean bean) {
+    SUPPORT = TextUtils.equals(bean.getIs_support(), "1");
+    ((ImageView)findViewById(R.id.icon_like)).setImageResource(SUPPORT ? R.drawable.icon_like_blue_stroke : R.drawable.icon_like_blue);
     img = bean.getImgList();
     mAuthorId = bean.getUser().getUid();
     post_title.setText(bean.getTitle());
@@ -278,7 +279,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     post_content.setText(TextUtils.isEmpty(bean.getContent()) ? "" : bean.getContent().replaceAll
         ("\\\\n", "\\\n"));
     post_create_time.setText(bean.getCreate_time());
-    support_flag = bean.getIs_support();
     qianming.setText(bean.getUser().getSignature());
     huifu.setText("回复：" + bean.getReply_count());
     replyCountView.setText(String.valueOf(bean.getReply_count()));

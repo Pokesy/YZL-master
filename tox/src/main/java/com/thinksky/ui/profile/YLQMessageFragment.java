@@ -14,6 +14,7 @@ package com.thinksky.ui.profile;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,10 +139,12 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
       final MessageModel.ListBean listBean = getItem(position);
       holder.content.setText(listBean.getContent().getContent());
       holder.time.setText(listBean.getCreate_time());
+      holder.content.setTextColor(getResources().getColor(TextUtils.equals(listBean.getIs_read(),
+          "1") ? R.color.font_color_secondary : R.color.font_color_primary));
       convertView.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          if (listBean.getType() == 3) {
+          if (TextUtils.equals(listBean.getContent().getType(), "3")) {
             Intent intent = CheckMemberListActivity.makeIntent(getActivity(), listBean.getContent
                 ().getArgs());
             startActivity(intent);

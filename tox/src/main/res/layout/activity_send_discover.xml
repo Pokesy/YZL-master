@@ -136,7 +136,7 @@
           android:layout_height="wrap_content"
           android:paddingBottom="10dp"
           android:paddingTop="10dp"
-          android:text="上传照片让别人来一睹渔场风采吧(最多3张)"
+          android:text="上传照片让别人来一睹风采吧(最多3张)"
           style="@style/Widget.App.TextView.XLarge.Primary"
           android:layout_marginLeft="10dp"
           />

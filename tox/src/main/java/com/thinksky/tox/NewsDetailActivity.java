@@ -36,7 +36,6 @@ import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.NewsDetailInfo;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.info.NewsReplyInfo;
-import com.thinksky.redefine.CircleImageView;
 import com.thinksky.utils.MyJson;
 import com.tox.ImageLoader;
 import com.tox.NewsApi;
@@ -46,6 +45,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
@@ -79,10 +79,6 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
   private KJBitmap kjBitmap = KJBitmap.create();
   private boolean isReply = false;
   private boolean isDelReply = false;
-  //评论区控件
-  View replyView;
-  CircleImageView replyerHead;
-  TextView replyAvatar, replyTime, replyContent, replyBtn, delReBtn;
   private int page = 1;
   private LinearLayout loadingBar;
   private TextView loadingBarText;
@@ -471,15 +467,9 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
    * 添加评论列表
    */
   public View addReplyView(final NewsReplyInfo replyInfo) {
-    replyView = View.inflate(mContext, R.layout.news_reply_item, null);
-    replyerHead = (CircleImageView) replyView.findViewById(R.id.replyer_head);
-    replyAvatar = (TextView) replyView.findViewById(R.id.reply_avatar);
-    replyTime = (TextView) replyView.findViewById(R.id.reply_time);
-    replyContent = (TextView) replyView.findViewById(R.id.reply_content);
-    replyBtn = (TextView) replyView.findViewById(R.id.reply);
-    delReBtn = (TextView) replyView.findViewById(R.id.del_reply);
+    View replyView = View.inflate(mContext, R.layout.comment_item, null);
 
-    replyerHead.setOnClickListener(new View.OnClickListener() {
+    replyView.findViewById(R.id.user_avatar).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         //点击头像跳转信息
@@ -488,49 +478,33 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
         }
       }
     });
-    //回复评论按钮
-    replyBtn.setOnClickListener(new View.OnClickListener() {
+    replyView.findViewById(R.id.user_name).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (!newsApi.getSeesionId().equals("")) {
-          replyBox.setVisibility(View.VISIBLE);
-          newsApi.openKeyBoard(mContext, replyEditText);
-          replyEditText.setText("回复@" + replyInfo.getUser().getNickname() + "：");
-          //把光标自动放末尾
-          replyEditText.setSelection(replyEditText.getText().length());
-        } else {
-          ToastHelper.showToast("请登录后操作", mContext);
-        }
-      }
-    });
-    delReBtn.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!newsApi.getSeesionId().equals("")) {
-          if (!newsApi.getSeesionId().equals("")) {
-            newsApi.setHandler(mHandler);
-            setBoolean(false, true);
-            newsApi.exetDelReply(replyInfo.getRow_id(), replyInfo.getId());
-          }
-        } else {
-          ToastHelper.showToast("请登录后操作", mContext);
+        //点击头像跳转信息
+        if (replyInfo.getUser() != null) {
+          newsApi.goUserInfo(mContext, replyInfo.getUser().getUid());
         }
       }
     });
     //控件赋值
-    if (replyInfo.getUser() == null) {
-      if (replyInfo.getArea().length() > 0) {
-        replyAvatar.setText("游客（" + replyInfo.getArea() + "）");
-      } else {
-        replyAvatar.setText("游客");
-      }
+    if (replyInfo.getUser() == null || TextUtils.isEmpty(replyInfo.getUser().getUid())) {
+      ((TextView) replyView.findViewById(R.id.user_name)).setText(R.string
+          .activity_user_not_exists);
     } else {
-      com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(NewsDetailActivity.this,
-          replyInfo.getUser().getAvatar().replace("opensns//opensns", "opensns")).into(replyerHead);
-      replyAvatar.setText(replyInfo.getUser().getNickname());
+      ((TextView) replyView.findViewById(R.id.user_name)).setText(replyInfo.getUser().getNickname
+          ());
     }
-    replyTime.setText(replyInfo.getCreate_time());
-    replyContent.setText(replyInfo.getContent());
+    String avatar = null == replyInfo.getUser() ? "" : (TextUtils.isEmpty(replyInfo.getUser()
+        .getAvatar()) ? "" : replyInfo.getUser().getAvatar().replace("opensns//opensns",
+        "opensns"));
+    com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(NewsDetailActivity.this,
+        avatar).bitmapTransform
+        (new CropCircleTransformation(this)).into(
+        (ImageView) replyView.findViewById(R.id.user_avatar));
+
+    ((TextView) replyView.findViewById(R.id.time)).setText(replyInfo.getCreate_time());
+    ((TextView) replyView.findViewById(R.id.content)).setText(replyInfo.getContent());
     return replyView;
   }
 

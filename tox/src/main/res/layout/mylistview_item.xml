@@ -65,7 +65,7 @@
               android:layout_height="wrap_content"
               android:layout_alignParentRight="true"
               tools:text="2014.4"
-              style="@style/Widget.App.TextView.Large.Secondary"
+              style="@style/Widget.App.TextView.Small.Secondary"
               />
 
           <TextView
@@ -74,10 +74,13 @@
               android:layout_height="wrap_content"
               android:layout_alignTop="@id/Item_Ctime"
               android:layout_marginLeft="8dp"
+              android:layout_marginRight="@dimen/margin_small"
+              android:layout_toLeftOf="@id/Item_Ctime"
               android:layout_toRightOf="@id/Item_UserName"
+              android:ellipsize="end"
               android:singleLine="true"
               tools:text="来自:网站端"
-              style="@style/Widget.App.TextView.Large.Secondary"
+              style="@style/Widget.App.TextView.Small.Secondary"
               />
         </RelativeLayout>
       </LinearLayout>

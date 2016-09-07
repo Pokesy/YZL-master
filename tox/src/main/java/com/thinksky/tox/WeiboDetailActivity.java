@@ -64,7 +64,6 @@ public class WeiboDetailActivity extends BaseBActivity {
   private boolean listBottemFlag = true;
   private WeiboApi weiboApi = new WeiboApi();
   private List<ImageView> mImgList = new ArrayList<ImageView>();
-  private SwipeLayout mSwipeLayout;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +132,6 @@ public class WeiboDetailActivity extends BaseBActivity {
     mDetail_ShareNum = (TextView) findViewById(R.id.Detail_ShareNum);
     mWeiboFrom = (TextView) findViewById(R.id.WeiboDetail_from);
 
-    mSwipeLayout = (SwipeLayout) findViewById(R.id.swipeLayout);
     mDetail_Share = (LinearLayout) findViewById(R.id.Detail_Share);
     mDetail_repostWeibo = (LinearLayout) findViewById(R.id.Detail_RepostWeibo);
     //        mDeleteButton = (LinearLayout) findViewById(R.id.delete_button);
@@ -460,7 +458,7 @@ public class WeiboDetailActivity extends BaseBActivity {
     ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, Weiboinfo.getUser().getAvatar
         ()).placeholder(R.drawable.side_user_avatar).dontAnimate().into(mDetail_UserHead);
 
-    if (null != Weiboinfo.getImgList()) {
+    if (null != Weiboinfo.getImgList() && Weiboinfo.getImgList().size() > 0) {
       mDetail_repostWeibo.setVisibility(View.VISIBLE);
       int imageCount = Weiboinfo.getImgList().size();
       if (imageCount > 9) {
@@ -474,7 +472,7 @@ public class WeiboDetailActivity extends BaseBActivity {
         loadWeiboImg(mImgList.get(i), Url.IMAGE + Weiboinfo.getImgList().get(i));
       }
     } else {
-
+      mDetail_repostWeibo.setVisibility(View.GONE);
     }
   }
 

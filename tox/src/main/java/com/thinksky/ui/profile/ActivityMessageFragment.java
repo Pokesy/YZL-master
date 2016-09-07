@@ -22,7 +22,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.info.WeiboInfo;
 import com.thinksky.injection.GlobalModule;
@@ -31,14 +30,17 @@ import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.model.WeiboDetailModel;
+import com.thinksky.net.rpc.model.WeiboModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.R;
+import com.thinksky.tox.WeiboDetailActivity;
 import com.thinksky.ui.basic.BasicListAdapter;
 import com.thinksky.ui.basic.BasicPullToRefreshFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
 import com.tox.Url;
+import java.util.Arrays;
 import javax.inject.Inject;
 
 /**
@@ -129,16 +131,41 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
       @Override
       protected void onSuccess(WeiboDetailModel weiboDetailModel) {
         // TODO 设置MAP,跳转到动态详情
-
+        WeiboDetailModel.ListBean bean = weiboDetailModel.getList().get(0);
         WeiboInfo info = new WeiboInfo();
-        WeiboDetailModel.ListBean bean = weiboDetailModel.getList();
-        info.setCan_delete(bean.getCan_delete() == 1);
-        info.setComment_count(String.valueOf(bean.getComment_count()));
-        info.setCtime(String.valueOf(bean.getCreate_time()));
-        info.setFrom(bean.getFrom());
-        info.setIs_supported(TextUtils.equals(bean.getIs_supported(), "1"));
+        info.setWid(String.valueOf(bean.getId()));
         info.setWcontent(bean.getContent());
-        //info.setWid(bean.getId());
+        info.setRepost_count(String.valueOf(bean.getRepost_count()));
+        info.setLikenum(bean.getSupport_count());
+        info.setCan_delete(bean.isCan_delete());
+        info.setCtime(String.valueOf(bean.getCreate_time()));
+        info.setImgList(Arrays.asList(bean.getImages()));
+        info.setComment_count(String.valueOf(bean.getComment_count()));
+        info.setFrom(bean.getFrom());
+        info.setIs_top(Integer.parseInt(bean.getIs_top()));
+        info.setUser(bean.getUser());
+
+        if (null != bean.getWeibo_data() && !TextUtils.isEmpty(bean.getWeibo_data().getSourse().getId())) {
+          WeiboDetailModel.ListBean.WeiboDataBean weiboDataBean = bean.getWeibo_data();
+          WeiboInfo subInfo = new WeiboInfo();
+          subInfo.setWid(String.valueOf(weiboDataBean.getSourse().getId()));
+          subInfo.setWcontent(weiboDataBean.getSourse().getContent());
+          subInfo.setRepost_count(String.valueOf(weiboDataBean.getSourse().getRepost_count()));
+          subInfo.setLikenum(weiboDataBean.getSourse().getSupport_count());
+          subInfo.setCtime(String.valueOf(weiboDataBean.getSourse().getCreate_time()));
+          subInfo.setImgList(weiboDataBean.getSourse().getImages());
+          subInfo.setComment_count(weiboDataBean.getSourse().getComment_count());
+          subInfo.setFrom(weiboDataBean.getSourse().getFrom());
+          subInfo.setIs_top(Integer.parseInt(weiboDataBean.getSourse().getIs_top()));
+          subInfo.setUser(weiboDataBean.getSourse().getUser());
+          info.setRepostWeiboInfo(subInfo);
+        }
+
+        Intent intent = new Intent(getActivity(), WeiboDetailActivity.class);
+        Bundle bund = new Bundle();
+        bund.putSerializable("WeiboInfo", info);
+        intent.putExtra("value", bund);
+        getActivity().startActivity(intent);
         manageRpcCall(mAppService.getMessageContent(messageId), new
             UiRpcSubscriber1<BaseModel>(getActivity()) {
 
