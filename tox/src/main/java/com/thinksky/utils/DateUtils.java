@@ -27,6 +27,7 @@ public class DateUtils {
   public static final String FORMAT_HOUR_MINUTE = "HH-mm";
   public static final String FORMAT_FULL_TIME = "yyyy-MM-dd HH:MM";
   public static final String FORMAT_FULL_TIME_CHINESE = "yyyy年MM-dd日";
+  public static final String FORMAT_MM_DD_HH_MM = "MM月dd日 HH:mm";
 
   /**
    * 转换的时间格式

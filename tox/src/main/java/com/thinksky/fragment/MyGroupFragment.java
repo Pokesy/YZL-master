@@ -27,6 +27,7 @@ import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.R;
+import com.thinksky.tox.SendTieziActivity;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.group.CreateGroupActivity;
 import com.thinksky.ui.group.GroupMemberListActivity;
@@ -151,6 +152,12 @@ public class MyGroupFragment extends BasicFragment {
   public void handleGroupMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
                                                    event) {
     initGroupList();
+  }
+
+  @Subscribe
+  public void handleGroupPostDataChangeEvent(SendTieziActivity.GroupPostInfoChangeEvent event) {
+    initGroupList();
+    initPostCount();
   }
 
   private void initGroupList() {

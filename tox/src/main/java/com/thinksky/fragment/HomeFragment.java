@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,7 @@ import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.NewsActivity;
 import com.thinksky.tox.NewsDetailActivity;
 import com.thinksky.tox.R;
+import com.thinksky.tox.SendTieziActivity;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.ui.group.GroupMemberListActivity;
@@ -92,6 +94,7 @@ public class HomeFragment extends BasicFragment
   private OnHomeTitleBarClickListener mHomeBtnClickListener;
   private SlideShowView mSlideView;
   private TitleBar mTitleBar;
+  private SwipeRefreshLayout mSwipeLayout;
 
   @Inject
   AppService mAppService;
@@ -109,6 +112,7 @@ public class HomeFragment extends BasicFragment
     mContext = getActivity();
     viewHolder = new RViewHolder(view);
     mTitleBar = (TitleBar) view.findViewById(R.id.title_bar);
+    mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
     inject();
     initView();
     initzx();
@@ -124,6 +128,15 @@ public class HomeFragment extends BasicFragment
   }
 
   private void initView() {
+
+    mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override
+      public void onRefresh() {
+        initzx();
+        initdata();
+        initViewData();
+      }
+    });
 
     mMenuHot = view.findViewById(R.id.rb_rmht);
     mMenuMon = view.findViewById(R.id.rb_zgxs);
@@ -371,6 +384,11 @@ public class HomeFragment extends BasicFragment
     initdata();
   }
 
+  @Subscribe
+  public void handleGroupPostDataChangeEvent(SendTieziActivity.GroupPostInfoChangeEvent event) {
+    initdata();
+  }
+
   protected void initdata() {
     RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_JINGXUAN,
         new RsenUrlUtil.OnJsonResultListener<MyBean>() {
@@ -475,6 +493,7 @@ public class HomeFragment extends BasicFragment
         scrollView.setVisibility(View.VISIBLE);
         load_progressBar.setVisibility(View.GONE);
         rm_adapter.resetData(hotPostModel.getList());
+        mSwipeLayout.setRefreshing(false);
       }
 
       @Override

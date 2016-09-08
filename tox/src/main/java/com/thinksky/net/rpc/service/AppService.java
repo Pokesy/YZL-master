@@ -279,6 +279,10 @@ public interface AppService {
   @GET("api.php?s=Message/getMessageContent")
   Observable<BaseModel> getMessageContent(@Query("id") String msgId);
 
+  @GET("api.php?s=group/sendPost")
+  Observable<BaseModel> sendPost(@Query("session_id") String sessionId, @Query("group_id") String groupId, @Query("title") String title,
+                                 @Query("content") String content, @Query("attach_id") String attachId);
+
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
   }

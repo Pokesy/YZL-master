@@ -116,7 +116,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private int maxNumber = 0;
   private int page = 1;
   private int index = 0;
-  private Intent post;
   private boolean joinFlag = false;
   private int isJoin;
   private long lastClick;
@@ -244,9 +243,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     mUpdateGroupApi.setHandler(tempHandler);
     getGroupInfo();
 
-    post = new Intent(mContext, SendTieziActivity.class);
-    post.putExtra("group_id", group_id);
-
     initTitleBar();
 
     group_scro = (MyScrollview) findViewById(R.id.group_scro);
@@ -310,31 +306,31 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
           protected void onSuccess(GroupDetailModel groupDetailModel) {
             mGroupModel = groupDetailModel;
             mIsCreator = TextUtils.equals(Url.USERID, mGroupModel.getList().getUid());
-            if (BaseFunction.isLogin()) {
-              initGroupView(groupDetailModel);
-              memberRecycler.setAdapter(
-                  new MySubAdapter(GroupInfoActivity.this, groupDetailModel.getList()
-                      .getGroupMenmber()));
-              join_group.setVisibility(View.VISIBLE);
-              isJoin = Integer.parseInt(groupDetailModel.getList().getIs_join());
-              if (TextUtils.equals(groupDetailModel.getList().getUid(), Url.USERID)) {
-                join_status.setText("管理小组");
-                if (isJoin == 1) {
-                  joinFlag = false;
-                }
-                return;
-              }
+            initGroupView(groupDetailModel);
+            memberRecycler.setAdapter(
+                new MySubAdapter(GroupInfoActivity.this, groupDetailModel.getList()
+                    .getGroupMenmber()));
+            join_group.setVisibility(View.VISIBLE);
+            isJoin = Integer.parseInt(groupDetailModel.getList().getIs_join());
+            if (TextUtils.equals(groupDetailModel.getList().getUid(), Url.USERID)) {
+              join_status.setText("管理小组");
               if (isJoin == 1) {
                 joinFlag = false;
-                join_status.setText("退出群组");
-              } else if (isJoin == -1) {
-                join_status.setText("已申请，审核中");
-                join_group.setClickable(false);
-              } else if (isJoin != 1) {
-                join_status.setText("加入群组");
-                joinFlag = true;
               }
-            } else {
+              return;
+            }
+            if (isJoin == 1) {
+              joinFlag = false;
+              join_status.setText("退出群组");
+            } else if (isJoin == -1) {
+              join_status.setText("已申请，审核中");
+              join_group.setClickable(false);
+            } else if (isJoin != 1) {
+              join_status.setText("加入群组");
+              joinFlag = true;
+            }
+
+            if (!BaseFunction.isLogin()) {
               join_group.setVisibility(View.GONE);
             }
           }
@@ -433,6 +429,11 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
     group_post_listView.setLayoutManager(new LinearLayoutManager(this));
     group_post_listView.setAdapter(rm_adapter);
+    initTieziList();
+  }
+
+  @Subscribe
+  public void handleGroupPostDataChangeEvent(SendTieziActivity.GroupPostInfoChangeEvent event) {
     initTieziList();
   }
 
@@ -616,7 +617,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   public void sendPost() {
     if (!joinFlag) {
       //            post.putExtra("categoryList", categoryList);
-      startActivity(post);
+      Intent intent = new Intent(this, SendTieziActivity.class);
+      intent.putExtra("group_id", group_id);
+      startActivity(intent);
     } else {
       ToastHelper.showToast("加群才能发帖", mContext);
     }

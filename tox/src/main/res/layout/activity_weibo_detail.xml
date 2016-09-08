@@ -179,7 +179,7 @@
 
         <LinearLayout
             android:id="@+id/Detail_RepostWeibo"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F7F7F7"
             android:orientation="vertical"

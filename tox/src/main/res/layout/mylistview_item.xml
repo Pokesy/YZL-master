@@ -24,15 +24,15 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/activity_vertical_margin"
       android:layout_weight="1"
+      android:gravity="center_vertical"
       android:orientation="vertical"
       >
 
     <LinearLayout
         android:id="@+id/enterDetail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:weightSum="10"
@@ -41,7 +41,6 @@
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginTop="4dp"
           android:gravity="center_vertical"
           >
 
@@ -54,9 +53,9 @@
               android:id="@+id/Item_UserName"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
               android:singleLine="true"
-              tools:text="UserName"
-              style="@style/Widget.App.TextView.Large.Blue"
+              tools:text="Degung"
               />
 
           <TextView
@@ -64,6 +63,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
               tools:text="2014.4"
               style="@style/Widget.App.TextView.Small.Secondary"
               />
@@ -72,7 +72,7 @@
               android:id="@+id/Weibo_from"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_alignTop="@id/Item_Ctime"
+              android:layout_centerVertical="true"
               android:layout_marginLeft="8dp"
               android:layout_marginRight="@dimen/margin_small"
               android:layout_toLeftOf="@id/Item_Ctime"
@@ -262,9 +262,8 @@
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:paddingLeft="4dp"
-              android:text="@string/feed_btn_retweet"
-              android:textColor="#9A9A9A"
-              android:textSize="12sp"
+              android:text="1"
+              style="@style/Widget.App.TextView.Medium.Blue"
               />
         </LinearLayout>
 

@@ -98,7 +98,7 @@ public class WeiboDetailModel extends BaseModel {
     private int id;
     private String uid;
     private String content;
-    private int create_time;
+    private long create_time;
     private int comment_count;
     private String status;
     private String is_top;
@@ -129,7 +129,7 @@ public class WeiboDetailModel extends BaseModel {
     private int repost_count;
     private String from;
     private String support_count;
-    private String images;
+    private List<String> images;
     private String is_supported;
     /**
      * source : null
@@ -204,11 +204,11 @@ public class WeiboDetailModel extends BaseModel {
       this.content = content;
     }
 
-    public int getCreate_time() {
+    public long getCreate_time() {
       return create_time;
     }
 
-    public void setCreate_time(int create_time) {
+    public void setCreate_time(long create_time) {
       this.create_time = create_time;
     }
 
@@ -276,11 +276,11 @@ public class WeiboDetailModel extends BaseModel {
       this.support_count = support_count;
     }
 
-    public String getImages() {
+    public List<String> getImages() {
       return images;
     }
 
-    public void setImages(String images) {
+    public void setImages(List<String> images) {
       this.images = images;
     }
 
@@ -386,7 +386,7 @@ public class WeiboDetailModel extends BaseModel {
         private String id;
         private String uid;
         private String content;
-        private String create_time;
+        private long create_time;
         private String comment_count;
         private String status;
         private String is_top;
@@ -454,11 +454,11 @@ public class WeiboDetailModel extends BaseModel {
           this.content = content;
         }
 
-        public String getCreate_time() {
+        public long getCreate_time() {
           return create_time;
         }
 
-        public void setCreate_time(String create_time) {
+        public void setCreate_time(long create_time) {
           this.create_time = create_time;
         }
 
@@ -634,7 +634,7 @@ public class WeiboDetailModel extends BaseModel {
         private String id;
         private String uid;
         private String content;
-        private String create_time;
+        private long create_time;
         private String comment_count;
         private String status;
         private String is_top;
@@ -702,11 +702,11 @@ public class WeiboDetailModel extends BaseModel {
           this.content = content;
         }
 
-        public String getCreate_time() {
+        public long getCreate_time() {
           return create_time;
         }
 
-        public void setCreate_time(String create_time) {
+        public void setCreate_time(long create_time) {
           this.create_time = create_time;
         }
 

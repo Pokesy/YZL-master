@@ -11,6 +11,7 @@
  */
 package com.thinksky.serviceinjection;
 
+import com.thinksky.tox.SendTieziActivity;
 import com.thinksky.ui.group.CheckMemberListActivity;
 import com.thinksky.ui.group.GroupMemberListActivity;
 import com.thinksky.fragment.HomeFragment;
@@ -134,4 +135,6 @@ public interface ServiceComponent {
   void inject(CheckMemberListActivity checkMemberListActivity);
 
   void inject(MyMessageActivity myMessageActivity);
+
+  void inject(SendTieziActivity sendTieziActivity);
 }

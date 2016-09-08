@@ -259,7 +259,7 @@ public class MyJson {
           weiboInfo.setType(listitem.getString("type"));
           //Log.e("WEIBOTYPE>>>>>><<<<<<<<<<<<<<",listitem.getString("type"));
           if (listitem.getString("type").equals("image")) {
-            weiboInfo.setImgList(getImgUrlList(listitem.optString("images")));
+            weiboInfo.setImgList(getImgUrlList(listitem.optJSONArray("images")));
           } else {
             weiboInfo.setImgList(new ArrayList<String>());
           }

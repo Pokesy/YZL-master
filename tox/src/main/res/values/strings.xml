@@ -299,4 +299,5 @@
   <!-- 问题详情 -->
   <string name="activity_question_detail_delete_alert">删除后,问题和悬赏值将无法恢复</string>
   <string name="activity_question_detail_delete_success">删除成功</string>
+  <string name="send_post_success">发布成功</string>
 </resources>

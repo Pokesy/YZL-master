@@ -24,7 +24,6 @@ import com.thinksky.info.Com2Com;
 import com.thinksky.info.WeiboCommentInfo;
 import com.thinksky.info.WeiboInfo;
 import com.thinksky.myview.MyDetailsListView;
-import com.thinksky.myview.SwipeLayout;
 import com.thinksky.redefine.FaceTextView;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
@@ -182,50 +181,6 @@ public class WeiboDetailActivity extends BaseBActivity {
         case R.id.Detail_Back:
           WeiboDetailActivity.this.finish();
           break;
-        //                case R.id.delete_button:
-        //                    if (Weiboinfo.getCan_delete()){
-        //                        weiboApi.setHandler(new Handler() {
-        //                            @Override
-        //                            public void handleMessage(Message msg) {
-        //                                switch (msg.what) {
-        //                                    case 0:
-        //                                        Url.activityFrom = "DeleteWeiBoActivity";
-        //                                        ToastHelper.showToast("删除成功",
-        // WeiboDetailActivity.this);
-        //                                        finish();
-        //                                        break;
-        //                                    case 401:
-        //                                        ToastHelper.showToast("操作失败，需要登录",
-        // WeiboDetailActivity.this);
-        //                                        break;
-        //                                    default:
-        //                                        break;
-        //                                }
-        //                            }
-        //                        });
-        //                        new AlertDialog.Builder(WeiboDetailActivity.this)
-        //                                .setMessage("确定删除微博？")
-        //                                .setPositiveButton("确定", new DialogInterface
-        // .OnClickListener() {
-        //                                    @Override
-        //                                    public void onClick(DialogInterface dialog, int
-        // which) {
-        //                                        weiboApi.deleteWeiBo(Weiboinfo.getWid());
-        //                                    }
-        //                                })
-        //                                .setNegativeButton("取消", new DialogInterface
-        // .OnClickListener() {
-        //                                    @Override
-        //                                    public void onClick(DialogInterface dialog, int
-        // which) {
-        //                                        dialog.dismiss();
-        //                                    }
-        //                                }).show();
-        //                    }else {
-        //                        mDeleteButton.setClickable(false);
-        //                        ToastHelper.showToast("没有权限操作",WeiboDetailActivity.this);
-        //                    }
-        //                    break;
         case R.id.Detail_SendComment:
           if (!Url.SESSIONID.equals("")) {
             Intent intent = new Intent(WeiboDetailActivity.this, SendCommentActivity.class);
@@ -248,7 +203,8 @@ public class WeiboDetailActivity extends BaseBActivity {
                   (Weiboinfo.getLikenum());
               mDetail_Up_text.setText((LikeNum + 1) + "");
               mDetail_Up_Img.setImageBitmap(
-                  BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, WeiboDetailActivity.this));
+                  BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke,
+                      WeiboDetailActivity.this));
               Weiboinfo.setIs_supported(true);
               Weiboinfo.setLikenum(LikeNum + 1 + "");
               support();
@@ -380,10 +336,12 @@ public class WeiboDetailActivity extends BaseBActivity {
     public void handleMessage(Message msg) {
       super.handleMessage(msg);
       if (msg.what == 404) {
-        Toast.makeText(WeiboDetailActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG).show();
+        Toast.makeText(WeiboDetailActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG)
+            .show();
         listBottemFlag = true;
       } else if (msg.what == 100) {
-        Toast.makeText(WeiboDetailActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG).show();
+        Toast.makeText(WeiboDetailActivity.this, R.string.network_not_normal, Toast.LENGTH_LONG)
+            .show();
         listBottemFlag = true;
       } else if (msg.what == 0) {
         String result = (String) msg.obj;
@@ -455,8 +413,10 @@ public class WeiboDetailActivity extends BaseBActivity {
   }
 
   private void addImg() {
-    ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, Weiboinfo.getUser().getAvatar
-        ()).placeholder(R.drawable.side_user_avatar).dontAnimate().into(mDetail_UserHead);
+    ImageLoader.loadOptimizedHttpImage(WeiboDetailActivity.this, TextUtils.isEmpty(Weiboinfo
+        .getUser().getAvatar()) ? Weiboinfo.getUser().getAvatar64()
+        : Weiboinfo.getUser().getAvatar()).placeholder(R.drawable.side_user_avatar).dontAnimate()
+        .into(mDetail_UserHead);
 
     if (null != Weiboinfo.getImgList() && Weiboinfo.getImgList().size() > 0) {
       mDetail_repostWeibo.setVisibility(View.VISIBLE);
@@ -490,7 +450,8 @@ public class WeiboDetailActivity extends BaseBActivity {
     mDetail_Up_text.setText(Weiboinfo.getLikenum());
     if (Weiboinfo.getIs_supported()) {
       mDetail_Up_Img.setImageBitmap(
-          BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, WeiboDetailActivity.this));
+          BitmapUtiles.drawableTobitmap(R.drawable.icon_like_blue_stroke, WeiboDetailActivity
+              .this));
       upFlag = true;
     }
     if (Weiboinfo.getFrom() == null) {

@@ -30,7 +30,6 @@ import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.model.WeiboDetailModel;
-import com.thinksky.net.rpc.model.WeiboModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
@@ -39,8 +38,10 @@ import com.thinksky.tox.WeiboDetailActivity;
 import com.thinksky.ui.basic.BasicListAdapter;
 import com.thinksky.ui.basic.BasicPullToRefreshFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
+import com.thinksky.utils.DateUtils;
 import com.tox.Url;
 import java.util.Arrays;
+import java.util.Date;
 import javax.inject.Inject;
 
 /**
@@ -138,26 +139,31 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
         info.setRepost_count(String.valueOf(bean.getRepost_count()));
         info.setLikenum(bean.getSupport_count());
         info.setCan_delete(bean.isCan_delete());
-        info.setCtime(String.valueOf(bean.getCreate_time()));
-        info.setImgList(Arrays.asList(bean.getImages()));
+        info.setCtime(DateUtils.getFormatDateTime(new Date(bean.getCreate_time()), DateUtils
+            .FORMAT_MM_DD_HH_MM));
+        info.setImgList(bean.getImages());
         info.setComment_count(String.valueOf(bean.getComment_count()));
         info.setFrom(bean.getFrom());
         info.setIs_top(Integer.parseInt(bean.getIs_top()));
         info.setUser(bean.getUser());
+        info.setType(bean.getType());
 
-        if (null != bean.getWeibo_data() && !TextUtils.isEmpty(bean.getWeibo_data().getSourse().getId())) {
+        if (null != bean.getWeibo_data() && !TextUtils.isEmpty(bean.getWeibo_data().getSourse()
+            .getId())) {
           WeiboDetailModel.ListBean.WeiboDataBean weiboDataBean = bean.getWeibo_data();
           WeiboInfo subInfo = new WeiboInfo();
           subInfo.setWid(String.valueOf(weiboDataBean.getSourse().getId()));
           subInfo.setWcontent(weiboDataBean.getSourse().getContent());
           subInfo.setRepost_count(String.valueOf(weiboDataBean.getSourse().getRepost_count()));
           subInfo.setLikenum(weiboDataBean.getSourse().getSupport_count());
-          subInfo.setCtime(String.valueOf(weiboDataBean.getSourse().getCreate_time()));
+          subInfo.setCtime(DateUtils.getFormatDateTime(new Date(weiboDataBean.getSourse()
+              .getCreate_time()), DateUtils.FORMAT_MM_DD_HH_MM));
           subInfo.setImgList(weiboDataBean.getSourse().getImages());
           subInfo.setComment_count(weiboDataBean.getSourse().getComment_count());
           subInfo.setFrom(weiboDataBean.getSourse().getFrom());
           subInfo.setIs_top(Integer.parseInt(weiboDataBean.getSourse().getIs_top()));
           subInfo.setUser(weiboDataBean.getSourse().getUser());
+          subInfo.setType(weiboDataBean.getSourse().getType());
           info.setRepostWeiboInfo(subInfo);
         }
 
@@ -168,7 +174,6 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
         getActivity().startActivity(intent);
         manageRpcCall(mAppService.getMessageContent(messageId), new
             UiRpcSubscriber1<BaseModel>(getActivity()) {
-
 
               @Override
               protected void onSuccess(BaseModel baseModel) {

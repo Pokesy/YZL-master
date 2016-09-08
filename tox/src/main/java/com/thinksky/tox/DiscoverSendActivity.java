@@ -323,7 +323,10 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
             Toast.makeText(DiscoverSendActivity.this, "请填写标题", Toast.LENGTH_LONG).show();
             return;
           }
-          if (!mContentEdit.getText().toString().matches("^(13|15|17|18)\\d{9}$")) {
+          if (TextUtils.equals(isfactory, "2") && !mContentEdit.getText().toString().matches("^(13|15|17|18)\\d{9}$")) {
+            Toast.makeText(DiscoverSendActivity.this, "号码填写不正确", Toast.LENGTH_SHORT).show();
+            return;
+          } else if (TextUtils.equals(isfactory, "1") && !mContentEdit.getText().toString().matches("^[0-9a-zA-Z_]+$")) {
             Toast.makeText(DiscoverSendActivity.this, "号码填写不正确", Toast.LENGTH_SHORT).show();
             return;
           }
