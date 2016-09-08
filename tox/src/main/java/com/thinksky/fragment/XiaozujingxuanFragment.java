@@ -19,6 +19,7 @@ import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.R;
+import com.thinksky.tox.SendTieziActivity;
 import com.thinksky.ui.group.CreateGroupActivity;
 import com.thinksky.ui.group.GroupMemberListActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -137,6 +138,11 @@ public class XiaozujingxuanFragment extends RBaseFragment {
   @Subscribe
   public void handleMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
                                                 event) {
+    initViewData();
+  }
+
+  @Subscribe
+  public void handleGroupPostDataChangeEvent(SendTieziActivity.GroupPostInfoChangeEvent event) {
     initViewData();
   }
 
