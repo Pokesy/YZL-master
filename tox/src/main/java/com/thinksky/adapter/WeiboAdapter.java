@@ -191,7 +191,8 @@ public class WeiboAdapter extends BaseAdapter {
           }
         });
         hold.repostLinerLayout.setBackgroundColor(Color.parseColor("#F7F7F7"));
-        hold.repostName.setText("@" + "" + repostWeibo.getUser().getNickname() + "：");
+        hold.repostName.setText("@" + "" + UserUtils.getUserName(ctx, repostWeibo.getUser()
+            .getUid(), repostWeibo.getUser().getNickname() + "："));
         hold.repostName.setTextColor(ctx.getResources().getColor(R.color.repostName));
         hold.repostWeiboTime.setText(repostWeibo.getCtime());
         hold.repostText.setFaceText(repostWeibo.getWcontent());

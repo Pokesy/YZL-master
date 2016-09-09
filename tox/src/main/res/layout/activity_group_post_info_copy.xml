@@ -317,7 +317,8 @@
               android:layout_marginBottom="12dp"
               android:lineSpacingMultiplier="1.5"
               tools:text="这里是帖子内容，看看一看内容超越第二排是什么情况啊，再看一遍"
-              style="@style/Widget.App.TextView.Medium.Secondary"
+              style="@style/Widget.App.TextView.Medium"
+              android:textColor="@color/font_color_light_black"
               />
           <!--状态部分-->
           <RelativeLayout

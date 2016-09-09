@@ -28,6 +28,7 @@ import com.thinksky.redefine.FaceTextView;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
@@ -444,7 +445,8 @@ public class WeiboDetailActivity extends BaseBActivity {
   //初始化微博的详情页的基本信息
   private void addInformation() {
     //mDetail_AshameID.setText("微博ID" + Weiboinfo.getWid());
-    mDetail_UserName.setText(Weiboinfo.getUser().getNickname());
+    mDetail_UserName.setText(UserUtils.getUserName(this, Weiboinfo.getUser().getUid(), Weiboinfo
+        .getUser().getNickname()));
     mDetail_MainText.setFaceText(Weiboinfo.getWcontent());
     mDetail_CommentsNum.setText(Weiboinfo.getComment_count());
     mDetail_Up_text.setText(Weiboinfo.getLikenum());

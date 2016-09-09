@@ -266,13 +266,15 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   //初始化activity
   public void initPostView(final PostModel.ListBean bean) {
     SUPPORT = TextUtils.equals(bean.getIs_support(), "1");
-    ((ImageView)findViewById(R.id.icon_like)).setImageResource(SUPPORT ? R.drawable.icon_like_blue_stroke : R.drawable.icon_like_blue);
+    ((ImageView) findViewById(R.id.icon_like)).setImageResource(SUPPORT ? R.drawable
+        .icon_like_blue_stroke : R.drawable.icon_like_blue);
     img = bean.getImgList();
     mAuthorId = bean.getUser().getUid();
     post_title.setText(bean.getTitle());
     post_user_name.setText(bean.getUser().getNickname());
     ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
-        NetConstant.BASE_URL+ bean.getUser().getAvatar64()).placeholder(R.drawable.side_user_avatar).error(R.drawable
+        NetConstant.BASE_URL + bean.getUser().getAvatar64()).placeholder(R.drawable
+        .side_user_avatar).error(R.drawable
         .side_user_avatar).dontAnimate().into(user_logo);
     post_content.setVisibility(TextUtils.isEmpty(bean.getContent()) ? View.GONE : View
         .VISIBLE);
@@ -318,18 +320,12 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
             if (null == groupDetailModel || null == groupDetailModel.getList()) {
               return;
             }
-            if (TextUtils.equals(groupDetailModel.getList().getStatus(), "-1")) {
-              findViewById(R.id.group_container).setVisibility(View.GONE);
-              findViewById(R.id.info_group_not_exist).setVisibility(View.VISIBLE);
-            } else {
-              findViewById(R.id.group_container).setVisibility(View.VISIBLE);
-              findViewById(R.id.info_group_not_exist).setVisibility(View.GONE);
-            }
             ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity
                 .this, NetConstant.BASE_URL + groupDetailModel.getList().getLogo()).placeholder(R
                 .drawable.picture_1_no).error(R.drawable
                 .picture_1_no).dontAnimate().into(group_logo);
-            group_name.setText(groupDetailModel.getList().getTitle());
+            group_name.setText(TextUtils.equals(groupDetailModel.getList().getStatus(), "-1") ?
+                "[该小组已解散]" : groupDetailModel.getList().getTitle());
 
             group_logo.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -613,7 +609,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
             ToastHelper.showToast("感谢你的支持", mContext);
             supportCount++;
             supportCountView.setText(supportCount + "");
-            ((ImageView)findViewById(R.id.icon_like)).setImageResource(R.drawable.icon_like_blue_stroke);
+            ((ImageView) findViewById(R.id.icon_like)).setImageResource(R.drawable
+                .icon_like_blue_stroke);
             performPostDataChangeEvent();
           }
           if (POSTCOMMENT) {
@@ -685,98 +682,88 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
   public View getItemView(final HashMap<String, String> map, int floorCount) {
 
     map.put("floor_id", String.valueOf(floorCount));
-    ViewHolder viewHolder = new ViewHolder();
     int toReplyCount = Integer.parseInt(map.get("toReplyCount"));
-    viewHolder.view = LayoutInflater.from(mContext).inflate(R.layout.group_post_comment_item, null);
-    viewHolder.replyUserHead = (CircleImageView) viewHolder.view.findViewById(R.id
-        .Post_comItem_UserHead);
-    viewHolder.replyUsername = (TextView) viewHolder.view.findViewById(R.id.Post_commentUsername);
-    viewHolder.replyTime = (TextView) viewHolder.view.findViewById(R.id.Post_reply_time);
-    viewHolder.replyButton = (ImageView) viewHolder.view.findViewById(R.id.reply_floor_btn);
-    viewHolder.replyContent = (TextView) viewHolder.view.findViewById(R.id.reply_content);
-    viewHolder.replyHost = (LinearLayout) viewHolder.view.findViewById(R.id.reply_is_host);
-    //楼中楼模块
-    viewHolder.LzlReplyBox = (LinearLayout) viewHolder.view.findViewById(R.id.lzl_reply_box);
-    viewHolder.lzlOneLayout = (RelativeLayout) viewHolder.view.findViewById(R.id.lzl_one_layout);
-    viewHolder.lzlTwoLayout = (RelativeLayout) viewHolder.view.findViewById(R.id.lzl_two_layout);
-    viewHolder.lzlOneLouzhu = (LinearLayout) viewHolder.view.findViewById(R.id.lzl_one_louzhu);
-    viewHolder.lzlOneUserLogo = (CircleImageView) viewHolder.view.findViewById(R.id
-        .lzl_one_userHead);
-    viewHolder.lzlOneUsername = (TextView) viewHolder.view.findViewById(R.id.lzl_one_username);
-    viewHolder.lzlOneTime = (TextView) viewHolder.view.findViewById(R.id.lzl_one_time);
-    viewHolder.lzlOneReplyContent = (TextView) viewHolder.view.findViewById(R.id
-        .lzl_one_reply_content);
-
-    viewHolder.lzlTwoUserLogo = (CircleImageView) viewHolder.view.findViewById(R.id
-        .lzl_two_userHead);
-    viewHolder.lzlTwoLouzhu = (LinearLayout) viewHolder.view.findViewById(R.id.lzl_two_louzhu);
-    viewHolder.lzlTwoUsername = (TextView) viewHolder.view.findViewById(R.id.lzl_two_username);
-    viewHolder.lzlTwoTime = (TextView) viewHolder.view.findViewById(R.id.lzl_two_time);
-    viewHolder.lzlTwoReplyContent = (TextView) viewHolder.view.findViewById(R.id.lzl_two_content);
-    viewHolder.morLzlReplyBtn = (TextView) viewHolder.view.findViewById(R.id.more_lzl_reply_btn);
-
-    if (toReplyCount > 0) {
-
-      //楼中楼回复异步加载入口
-      LzlTask lzlTask = new LzlTask(viewHolder);
-      lzlTask.execute(Integer.parseInt(map.get("id")));
-    }
-
-    //楼主
-    if (map.get("is_landlord").equals("1")) {
-//            viewHolder.replyHost.setVisibility(View.VISIBLE);
-    }
-    //ImageLoader.getInstance().displayImage(map.get("user_logo"), viewHolder.replyUserHead);
-    ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
-        map.get("user_logo")).into(viewHolder.replyUserHead);
-//        kjBitmap.display(viewHolder.replyUserHead, map.get("user_logo"));
-    viewHolder.replyUsername.setText(UserUtils.getUserName(GroupPostInfoActivity.this, map.get
-        ("user_uid"), map.get("nickname")));
-//        viewHolder.replyTime.setText("第" + floorCount + "楼 " + map.get("create_time"));
-    viewHolder.replyTime.setText(map.get("create_time"));
-    viewHolder.replyContent.setText(map.get("content"));
-
-    viewHolder.replyUserHead.setOnClickListener(new View.OnClickListener() {
+    View replyView = LayoutInflater.from(mContext).inflate(R.layout.comment_item, null);
+    replyView.findViewById(R.id.user_avatar).setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        //点击头像跳转信息
         groupApi.goUserInfo(mContext, map.get("user_uid"));
       }
     });
+    replyView.findViewById(R.id.user_name).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        //点击头像跳转信息
+        groupApi.goUserInfo(mContext, map.get("user_uid"));
+      }
+    });
+    //控件赋值
+    ((TextView) replyView.findViewById(R.id.user_name)).setText(UserUtils.getUserName
+        (GroupPostInfoActivity.this, map.get
+            ("user_uid"), map.get("nickname")));
+    ImageLoader.loadOptimizedHttpImage(GroupPostInfoActivity.this,
+        map.get("user_logo")).dontAnimate().bitmapTransform(new CropCircleTransformation(this))
+        .into((ImageView) replyView.findViewById(R.id.user_avatar));
 
-    //回复楼层按钮
-    viewHolder.replyButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        if (!groupApi.getSeesionId().equals("")) {
-          map.put("keyLock", "1");
-          sendFloorInfo(map);
-        } else {
-          ToastHelper.showToast("请登录后操作", mContext);
-        }
-      }
-    });
-    viewHolder.lzlOneLayout.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        map.put("keyLock", "0");
-        sendFloorInfo(map);
-      }
-    });
-    viewHolder.lzlTwoLayout.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        map.put("keyLock", "0");
-        sendFloorInfo(map);
-      }
-    });
-    viewHolder.morLzlReplyBtn.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        map.put("keyLock", "0");
-        sendFloorInfo(map);
-      }
-    });
-    return viewHolder.view;
+    ((TextView) replyView.findViewById(R.id.time)).setText(map.get("create_time"));
+    ((TextView) replyView.findViewById(R.id.content)).setText(map.get("content"));
+
+//    if (toReplyCount > 0) {
+//
+//      //楼中楼回复异步加载入口
+//      LzlTask lzlTask = new LzlTask(viewHolder);
+//      lzlTask.execute(Integer.parseInt(map.get("id")));
+//    }
+//
+////        kjBitmap.display(viewHolder.replyUserHead, map.get("user_logo"));
+//    viewHolder.replyUsername.setText(UserUtils.getUserName(GroupPostInfoActivity.this, map.get
+//        ("user_uid"), map.get("nickname")));
+////        viewHolder.replyTime.setText("第" + floorCount + "楼 " + map.get("create_time"));
+//    viewHolder.replyTime.setText(map.get("create_time"));
+//    viewHolder.replyContent.setText(map.get("content"));
+//
+//    viewHolder.replyUserHead.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        groupApi.goUserInfo(mContext, map.get("user_uid"));
+//      }
+//    });
+//
+//    //回复楼层按钮
+//    viewHolder.replyButton.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        if (!groupApi.getSeesionId().equals("")) {
+//          map.put("keyLock", "1");
+//          sendFloorInfo(map);
+//        } else {
+//          ToastHelper.showToast("请登录后操作", mContext);
+//        }
+//      }
+//    });
+//    viewHolder.lzlOneLayout.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        map.put("keyLock", "0");
+//        sendFloorInfo(map);
+//      }
+//    });
+//    viewHolder.lzlTwoLayout.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        map.put("keyLock", "0");
+//        sendFloorInfo(map);
+//      }
+//    });
+//    viewHolder.morLzlReplyBtn.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        map.put("keyLock", "0");
+//        sendFloorInfo(map);
+//      }
+//    });
+    return replyView;
   }
 
   //发送请求GroupFloorReplyActivity页面
