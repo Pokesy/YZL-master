@@ -14,8 +14,6 @@
       android:layout_height="?actionBarSize"
       android:layout_alignParentTop="true"
       android:background="@drawable/head_border"
-      android:paddingBottom="0dp"
-      android:paddingTop="0dp"
       >
 
     <ImageView
@@ -76,8 +74,76 @@
           android:layout_height="wrap_content"
           android:background="@color/white"
           android:orientation="vertical"
-          android:padding="5dp"
           >
+        <LinearLayout android:id="@+id/author_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_color_main"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="14dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="12dp"
+            android:paddingTop="14dp"
+            >
+
+          <com.thinksky.redefine.CircleImageView
+              android:id="@+id/user_logo"
+              android:layout_width="45dp"
+              android:layout_height="45dp"
+              android:src="@drawable/side_user_avatar"
+              />
+
+          <RelativeLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              >
+
+            <TextView
+                android:id="@+id/louzhu1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                tools:text="作者："
+                style="@style/Widget.App.TextView.Large.Blue"
+                />
+
+            <TextView
+                android:id="@+id/post_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_toEndOf="@+id/louzhu1"
+                android:layout_toRightOf="@+id/louzhu1"
+                tools:text="楼主"
+                style="@style/Widget.App.TextView.Large.Blue"
+                />
+
+            <TextView
+                android:id="@+id/qianming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/post_user_name"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:singleLine="true"
+                tools:text="个性签名aaaaaaaaaaaaaaaaaaa"
+                style="@style/Widget.App.TextView.Medium.Secondary"
+                />
+          </RelativeLayout>
+
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="12dp"
+              android:src="@drawable/tiaozhuan"
+              />
+
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -92,6 +158,7 @@
               android:paddingBottom="10dp"
               android:paddingLeft="14dp"
               android:paddingTop="10dp"
+              android:visibility="gone"
               >
 
 
@@ -109,15 +176,6 @@
                 android:layout_height="wrap_content"
                 >
 
-              <TextView
-                  android:id="@+id/group_name"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginRight="5dp"
-                  tools:text="发帖人"
-                  style="@style/Widget.App.TextView.Large.Blue"
-                  />
-
 
               <TextView
                   android:id="@+id/join"
@@ -134,28 +192,11 @@
               <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_below="@+id/group_name"
                   android:layout_marginTop="5dp"
                   android:orientation="horizontal"
+                  android:visibility="gone"
                   >
 
-                <TextView
-                    android:id="@+id/post_create_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    tools:text="2015-02-04"
-                    style="@style/Widget.App.TextView.Medium.Secondary"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/louzhu"
-                    android:layout_marginLeft="6dp"
-                    android:text="发布"
-                    style="@style/Widget.App.TextView.Medium.Secondary"
-                    />
 
                 <TextView
                     android:id="@+id/group_count"
@@ -164,7 +205,7 @@
                     android:layout_below="@+id/louzhu"
                     android:layout_marginLeft="5dp"
                     android:text="5"
-                    android:visibility="gone"
+
                     />
 
                 <TextView
@@ -204,18 +245,70 @@
             android:orientation="vertical"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingTop="@dimen/margin_xxlarge"
+            android:paddingTop="@dimen/margin_medium"
             >
 
           <TextView
               android:id="@+id/post_title"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginBottom="@dimen/margin_large"
-              android:gravity="center"
+              android:gravity="left"
               tools:text="帖子标题"
               style="@style/Widget.App.TextView.XLarge.Primary"
               />
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="@dimen/margin_large"
+              android:layout_marginTop="@dimen/margin_medium"
+              >
+            <TextView
+                android:id="@+id/label_group_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="来自于:"
+                style="@style/Widget.App.TextView.Medium.Blue"
+                />
+            <LinearLayout
+                android:id="@+id/send_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                >
+              <TextView
+                  android:id="@+id/post_create_time"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  tools:text="2015-02-04"
+                  style="@style/Widget.App.TextView.Medium.Secondary"
+                  />
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="6dp"
+                  android:text="发布"
+                  style="@style/Widget.App.TextView.Medium.Secondary"
+                  />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/group_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_primary"
+                android:layout_marginRight="@dimen/margin_small"
+                android:layout_toLeftOf="@id/send_time"
+                android:layout_toRightOf="@id/label_group_name"
+                android:ellipsize="end"
+                tools:text="发帖人"
+                style="@style/Widget.App.TextView.Large.Blue"
+                />
+
+          </RelativeLayout>
 
           <TextView
               android:id="@+id/post_content"
@@ -270,76 +363,6 @@
             </LinearLayout>
           </RelativeLayout>
         </LinearLayout>
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/bg_color_main"
-          android:gravity="center_vertical"
-          android:orientation="horizontal"
-          android:paddingBottom="14dp"
-          android:paddingLeft="20dp"
-          android:paddingRight="12dp"
-          android:paddingTop="14dp"
-          >
-
-        <com.thinksky.redefine.CircleImageView
-            android:id="@+id/user_logo"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/side_user_avatar"
-            />
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            >
-
-          <TextView
-              android:id="@+id/louzhu1"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center"
-              android:layout_marginLeft="10dp"
-              tools:text="作者："
-              style="@style/Widget.App.TextView.Large.Blue"
-              />
-
-          <TextView
-              android:id="@+id/post_user_name"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentTop="true"
-              android:layout_gravity="center"
-              android:layout_toEndOf="@+id/louzhu1"
-              android:layout_toRightOf="@+id/louzhu1"
-              tools:text="楼主"
-              style="@style/Widget.App.TextView.Large.Blue"
-              />
-
-          <TextView
-              android:id="@+id/qianming"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentLeft="true"
-              android:layout_below="@+id/post_user_name"
-              android:layout_marginLeft="10dp"
-              android:layout_marginTop="5dp"
-              android:singleLine="true"
-              tools:text="个性签名aaaaaaaaaaaaaaaaaaa"
-              style="@style/Widget.App.TextView.Medium.Secondary"
-              />
-        </RelativeLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/tiaozhuan"
-            />
-
       </LinearLayout>
 
       <include layout="@layout/one_line"/>

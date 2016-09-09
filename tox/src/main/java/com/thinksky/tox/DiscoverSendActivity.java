@@ -132,7 +132,7 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
     mTogBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-
+        mTogBtn.setSelected(!mTogBtn.isSelected());
         if (mTogBtn.isSelected()) {
           isdisplay = STATE_DISPLAY;
         } else {

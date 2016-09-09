@@ -81,13 +81,16 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   BaiduMap mBaiduMap;
   KJBitmap kjBitmap;
   // 初始化全局 bitmap 信息，不用时及时 recycle
-  BitmapDescriptor fish = BitmapDescriptorFactory.fromResource(R.drawable.fish_location);
-  BitmapDescriptor fish1 = BitmapDescriptorFactory.fromResource(R.drawable.placelocation);
+  BitmapDescriptor fish_personal = BitmapDescriptorFactory.fromResource(R.drawable.fish_location);
+  BitmapDescriptor fish_personal_myself = BitmapDescriptorFactory.fromResource(R.drawable
+      .fish_location_myselef);
+  BitmapDescriptor fish_factory = BitmapDescriptorFactory.fromResource(R.drawable.placelocation);
+  BitmapDescriptor fish_factory_myself = BitmapDescriptorFactory.fromResource(R.drawable
+      .place_location_myself);
+
   /**
    * 当前POI的坐标
    */
-
-  private OverlayOptions ooA;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -116,11 +119,8 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   @Override
   public void onHiddenChanged(boolean hidden) {
     super.onHiddenChanged(hidden);
-    if(hidden && !isVisible()) {
-      MyLocationConfiguration config =
-          new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING, false,
-              null);
-      mBaiduMap.setMyLocationConfigeration(config);
+    if (hidden && !isVisible()) {
+      setMyLocationConfig();
 
       //  设置默认缩放级别。放大我的位置周边信息
       MapStatusUpdate statusUpdate = MapStatusUpdateFactory.zoomTo(18);
@@ -129,11 +129,11 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   }
 
 
-  public void initMarker(final String str, final BitmapDescriptor fish) {
+  public void initMarker(final String str) {
     mCurrentType = str;
     mBaiduMap.clear();
 
-    RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_FX,
+    RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_FX + "&session_id=" + Url.SESSIONID,
         new RsenUrlUtil.OnNetHttpResultListener() {
           @Override
           public void onNoNetwork(String msg) {
@@ -157,7 +157,23 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
                   }
                   if (s.equals(str)) {
                     LatLng llA = new LatLng(dd, ff);
-                    ooA = new MarkerOptions().position(llA).icon(fish).zIndex(9).draggable(true);
+                    BitmapDescriptor descriptor;
+                    if (TextUtils.equals(str, "1")) {
+                      if (TextUtils.equals(info.getIsmyself(), "1")) {
+                        descriptor = fish_personal_myself;
+                      } else {
+                        descriptor = fish_personal;
+                      }
+                    } else {
+                      if (TextUtils.equals(info.getIsmyself(), "1")) {
+                        descriptor = fish_factory_myself;
+                      } else {
+                        descriptor = fish_factory;
+                      }
+                    }
+                    OverlayOptions ooA = new MarkerOptions().position(llA).icon(descriptor)
+                        .zIndex(9).draggable
+                        (true);
                     Marker marker = (Marker) mBaiduMap.addOverlay(ooA);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("info", info);
@@ -190,10 +206,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
                 : BaiduMap.MAP_TYPE_SATELLITE);
         break;
       case R.id.bt_myloc://  设置定位为跟随模式，我的位置重新作为屏幕中心
-        MyLocationConfiguration config =
-            new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING, false,
-                null);
-        mBaiduMap.setMyLocationConfigeration(config);
+        setMyLocationConfig();
 
         //  设置默认缩放级别。放大我的位置周边信息
         MapStatusUpdate statusUpdate = MapStatusUpdateFactory.zoomTo(18);
@@ -202,9 +215,18 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
     }
   }
 
+  private void setMyLocationConfig() {
+    BitmapDescriptor descriptor = marks ? (TextUtils.equals(mCurrentType, "1") ?
+        fish_personal_myself : fish_factory_myself) : null;
+    MyLocationConfiguration config =
+        new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING, false,
+            null);
+    mBaiduMap.setMyLocationConfigeration(config);
+  }
+
   @Subscribe
   public void handleMarkEvent(DiscoverSendActivity.MarkEvent event) {
-    initMarker(event.isFactory, TextUtils.equals("1", event.isFactory) ? fish : fish1);
+    initMarker(event.isFactory);
   }
 
   @Override
@@ -240,7 +262,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
     mLocationClient.registerLocationListener(myListener);    //注册监听函数
     initLocation();
     mLocationClient.start();
-    initMarker("1", fish);
+    initMarker("1");
     mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.white));
     mSegmentControl.setOnSegmentControlClickListener(
         new SegmentControl.OnSegmentControlClickListener() {
@@ -250,11 +272,11 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
             switch (index) {
               case 0:
                 mPopView.setVisibility(View.GONE);
-                initMarker("1", fish);
+                initMarker("1");
                 break;
               case 1:
                 mPopView.setVisibility(View.GONE);
-                initMarker("2", fish1);
+                initMarker("2");
                 break;
               default:
                 break;
@@ -281,9 +303,9 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
         }
         dizhi.setText(bean.getAddress());
         //dianhua.setText(bean.getMobile1());
-        if (marker.getIcon().equals(fish1)) {
+        if (TextUtils.equals(mCurrentType, "2")) {
           name.setText(bean.getFactory_name());
-        } else if (marker.getIcon().equals(fish)) {
+        } else if (TextUtils.equals(mCurrentType, "1")) {
           name.setText(bean.getNickname());
         }
 
@@ -371,9 +393,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
     MapStatus.Builder builder = new MapStatus.Builder();
     builder.target(ll).zoom(10.0f);
     //把定位设置为普通模式，该模式下，每次位置更新就不会将地图拖到我的位置。这样不影响拖动地图查看其他位置信息
-    MyLocationConfiguration config =
-        new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, false, null);
-    mBaiduMap.setMyLocationConfigeration(config);
+    setMyLocationConfig();
     mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
   }
 
@@ -419,9 +439,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
       MapStatus.Builder builder = new MapStatus.Builder();
       builder.target(ll).zoom(10.0f);
       //把定位设置为普通模式，该模式下，每次位置更新就不会将地图拖到我的位置。这样不影响拖动地图查看其他位置信息
-      MyLocationConfiguration config =
-          new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, false, null);
-      mBaiduMap.setMyLocationConfigeration(config);
+      setMyLocationConfig();
       mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
       mLocationClient.stop();
     }
@@ -487,11 +505,11 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
     switch (mCurrentType) {
       case "1":
         mPopView.setVisibility(View.GONE);
-        initMarker("1", fish1);
+        initMarker("1");
         break;
       case "2":
         mPopView.setVisibility(View.GONE);
-        initMarker("2", fish1);
+        initMarker("2");
         break;
     }
   }
@@ -678,6 +696,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
       private String mobile1;
       private String address;
       private String wechat;
+      private String ismyself;
       /**
        * qq :
        * 生日 : 2016-03-30
@@ -697,6 +716,14 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
       private int is_follow;
       private List<String> cover_url;
       private List<String> images;
+
+      public String getIsmyself() {
+        return ismyself;
+      }
+
+      public void setIsmyself(String ismyself) {
+        this.ismyself = ismyself;
+      }
 
       public String getWechat() {
         return wechat;

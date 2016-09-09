@@ -173,7 +173,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     mCollectionBtn.setOnClickListener(this);
 
     back_menu.setOnClickListener(this);
-    user_logo.setOnClickListener(this);
+    findViewById(R.id.author_container).setOnClickListener(this);
     support_button.setOnClickListener(this);
     reply_button.setOnClickListener(this);
     sendPostButtn.setOnClickListener(this);
@@ -580,7 +580,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
           ToastHelper.showToast("评论不能为空", mContext);
         }
         break;
-      case R.id.user_logo:
+      case R.id.author_container:
         groupApi.goUserInfo(mContext, mAuthorId);
         break;
       case R.id.btn_collect:
