@@ -594,7 +594,7 @@ public class PagerTab extends ViewGroup {
 
 	/** 如果指示器希望是图片，则继承该接口 */
 	public interface IconTabProvider {
-		public int getPageIconResId(int position);
-		public int getPageSelectedIconResId();
+		int getPageIconResId(int position);
+		int getPageSelectedIconResId();
 	}
 }

@@ -256,8 +256,8 @@ public class DownloadManager {
 
 	public interface DownloadObserver {
 
-		public void onDownloadStateChanged(DownloadInfo info);
+		void onDownloadStateChanged(DownloadInfo info);
 
-		public void onDownloadProgressed(DownloadInfo info);
+		void onDownloadProgressed(DownloadInfo info);
 	}
 }

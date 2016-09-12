@@ -88,7 +88,6 @@ public class PhotoAct extends BaseBActivity {
   public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
     //旋转图片 动作
     Matrix matrix = new Matrix();
-    ;
     matrix.postRotate(angle);
     // 创建新的图片
     Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
@@ -137,8 +136,8 @@ public class PhotoAct extends BaseBActivity {
       float mHight = 854f;
       float scaleWidth;
       float scaleHeight;
-      scaleWidth = ((float) mWeight) / bm.getWidth();
-      scaleHeight = ((float) mHight) / bm.getHeight();
+      scaleWidth = mWeight / bm.getWidth();
+      scaleHeight = mHight / bm.getHeight();
       Matrix matrix = new Matrix();
       matrix.postScale(scaleWidth, scaleHeight);
       Bitmap mbit = null;
@@ -158,7 +157,7 @@ public class PhotoAct extends BaseBActivity {
   }
 
   public interface IMGCallBack1 {
-    public void callback(String data);
+    void callback(String data);
   }
 
 }

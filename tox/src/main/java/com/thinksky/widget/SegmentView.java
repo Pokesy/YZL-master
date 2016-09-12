@@ -125,7 +125,7 @@ public class SegmentView extends LinearLayout {
         }
     }
 
-    public static interface onSegmentViewClickListener{
+    public interface onSegmentViewClickListener{
         /**
          *
          * <p>2014年7月18日</p>
@@ -133,6 +133,6 @@ public class SegmentView extends LinearLayout {
          * @param position 0-左边 1-右边
          * @author RANDY.ZHANG
          */
-        public void onSegmentViewClick(View v, int position);
+        void onSegmentViewClick(View v, int position);
     }
 }

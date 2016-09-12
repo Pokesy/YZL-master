@@ -68,7 +68,7 @@ public class DrawerHScrollView extends HorizontalScrollView {
             change_flag = true;
         }
         if (change_flag){
-            int postionTo = (Integer)positionLeftTopOfPages.get(new Integer(currentPage)).intValue();
+            int postionTo = positionLeftTopOfPages.get(new Integer(currentPage)).intValue();
             Log.v(TAG, "------smoothScrollTo posx:"+postionTo);
             smoothScrollTo(postionTo, 0);
             drawerPresenter.dispatchEvent(totalPages, currentPage);

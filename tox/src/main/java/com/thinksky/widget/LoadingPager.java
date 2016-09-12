@@ -123,7 +123,7 @@ public abstract class LoadingPager extends FrameLayout {
 			mState = START_LOADING;
 
 			ThreadManager manager = new ThreadManager();
-			manager.getLongPool().execute(new TaskRunable());
+			ThreadManager.getLongPool().execute(new TaskRunable());
 		}
 		/**
 		 * 这个地方代码中没有写需要注意

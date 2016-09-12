@@ -155,7 +155,7 @@ public class RegistetActivity extends BaseBActivity {
         Log.d("juese", juese);
       }
     });
-    mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         mCurrentStep.back();
@@ -362,7 +362,6 @@ public class RegistetActivity extends BaseBActivity {
       }
     }
 
-    ;
   };
 
   /* 定义一个倒计时的内部类 */

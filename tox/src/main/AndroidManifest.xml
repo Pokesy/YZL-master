@@ -439,17 +439,9 @@
         android:label="@string/title_activity_forum"
         android:theme="@style/ActivityThemeTwo"/>
     <activity
-        android:name=".ForumActivity2"
-        android:theme="@style/AppBaseThemeRedefine"
-        android:windowSoftInputMode="adjustResize"/>
-    <activity
         android:name=".ForumDetailActivity"
         android:theme="@style/AppBaseThemeRedefine"
         android:windowSoftInputMode="adjustResize"/>
-    <activity
-        android:name=".ForumActivity3"
-        android:label="@string/app_name"
-        android:theme="@style/AppBaseThemeRedefine"/>
     <activity
         android:name=".PostDetailActivity"
         android:configChanges="orientation|keyboardHidden|screenSize"
@@ -654,6 +646,9 @@
         android:screenOrientation="portrait"/>
     <activity
         android:name="com.thinksky.ui.group.CheckMemberListActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.login.LicenceActivity"
         android:screenOrientation="portrait"/>
     <!-- Glide Module  -->
     <meta-data

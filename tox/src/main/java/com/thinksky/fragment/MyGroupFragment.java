@@ -356,7 +356,6 @@ public class MyGroupFragment extends BasicFragment {
 
   public static void launch(Context context, boolean isWeGroup, GroupModel.ListBean bean) {
     context.startActivity(GroupInfoActivity.makeIntent(context, bean.getId()));
-    ;
   }
 
   private class GroupListModel {

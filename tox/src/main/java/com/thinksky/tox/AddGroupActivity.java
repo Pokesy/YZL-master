@@ -199,7 +199,6 @@ public class AddGroupActivity extends BaseBActivity implements AdapterView.OnIte
             PICTURE=picturePath;
             Log.d("取到图片的路径",picturePath);
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            long count = BitmapUtiles.getFileSize_(picturePath);
             cursor.close();
         }
     }
@@ -338,7 +337,6 @@ public class AddGroupActivity extends BaseBActivity implements AdapterView.OnIte
             String title=group_title.getText().toString();
             String id=NUM;
             String content=group_content.getText().toString();
-            String type_id = NUM;
             BufferedReader in = null;
             try {
                 HttpClient httpClient = new DefaultHttpClient();

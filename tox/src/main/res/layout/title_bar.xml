@@ -23,7 +23,7 @@
       android:layout_alignParentLeft="true"
       android:layout_centerVertical="true"
       android:scaleType="center"
-      android:src="@drawable/arrow_left"
+      android:src="@drawable/icon_title_bar_back"
       android:visibility="gone"
       tools:visibility="visible"
       />

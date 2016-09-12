@@ -91,7 +91,7 @@ public class OtherWeiboActivity extends BaseBActivity {
 
     TitleBar titleBar = (TitleBar) findViewById(R.id.title_bar);
     titleBar.setMiddleTitle(R.string.activity_other_weibo_title);
-    titleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    titleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();

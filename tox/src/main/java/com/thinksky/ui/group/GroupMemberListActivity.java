@@ -92,7 +92,7 @@ public class GroupMemberListActivity extends BaseBActivity {
   private void initView() {
     mGroupId = getIntent().getStringExtra(BUNDLE_KEY_GROUP_ID);
     mIsCreator = getIntent().getBooleanExtra(BUNDLE_KEY_IS_CREATOR, false);
-    titleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    titleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         onBackPressed();

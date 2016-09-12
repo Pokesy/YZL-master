@@ -30,6 +30,8 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.otto.Subscribe;
 import com.thinksky.fragment.MyScrollview;
@@ -352,44 +354,85 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private void initTitleBar() {
     mTitleBar = (TitleBar) findViewById(R.id.title_bar);
     mTitleBar.setMiddleTitle(R.string.activity_group_info_title);
-    mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();
       }
     });
-    mTitleBar.setRightTextBtn(R.string.activity_group_info_right_title, new View.OnClickListener() {
+    mTitleBar.setSearchBtn(R.drawable.page_menu_icon, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (BaseFunction.isLogin()) {
-          sendPost();
-        } else {
-          ToastHelper.showToast("请登陆后操作", mContext);
-        }
+        new AlertDialog.Builder(GroupInfoActivity.this).setItems(getResources().getStringArray(R
+            .array.group_info_operation_items), new DialogInterface.OnClickListener() {
+
+
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+              case 0:
+                if (BaseFunction.isLogin()) {
+                  sendPost();
+                } else {
+                  ToastHelper.showToast("请登陆后操作", mContext);
+                }
+                break;
+              case 1:
+                showShare();
+                break;
+            }
+            dialog.cancel();
+          }
+        }).show();
       }
     });
+    //mTitleBar.setRightTextBtn(R.string.activity_group_info_right_title, new View
+    // .OnClickListener() {
+    //  @Override
+    //  public void onClick(View v) {
+    //    if (BaseFunction.isLogin()) {
+    //      sendPost();
+    //    } else {
+    //      ToastHelper.showToast("请登陆后操作", mContext);
+    //    }
+    //  }
+    //});
     mTitleBar.getTitleBgView().setAlpha(0);
   }
 
-  public static class MyBean {
-    public int is_join;
-    public String uid;
-    public List<String> userList;
-    public ArrayList<String> uidList;
-  }
-
-  private List<String> parseUserList(JSONArray userArray) {
-    List<String> userList = new ArrayList<>();
-    for (int i = 0; i < userArray.length(); i++) {
-      try {
-        JSONObject jsonObject = userArray.getJSONObject(i);
-        JSONObject user = jsonObject.getJSONObject("user");
-        userList.add(RsenUrlUtil.URL_BASE + user.getString("avatar32"));
-      } catch (JSONException e) {
-        e.printStackTrace();
-      }
+  private void showShare() {
+    if (null == mGroupModel) {
+      return;
     }
-    return userList;
+    ShareSDK.initSDK(GroupInfoActivity.this);
+    OnekeyShare oks = new OnekeyShare();
+    //关闭sso授权
+    oks.disableSSOWhenAuthorize();
+
+    // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
+    //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+    // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+    oks.setTitle(getString(R.string.app_name));
+    // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+    oks.setTitleUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
+    // text是分享文本，所有平台都需要这个字段
+    oks.setText("群组:" + mGroupModel.getList().getTitle());
+    //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
+    oks.setImageUrl("http://www.yuzhile.com/apk/ic_launcher.png");
+    // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+    //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+    // url仅在微信（包括好友和朋友圈）中使用
+    oks.setUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
+    // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+    oks.setComment("群组:" + mGroupModel.getList().getTitle());
+    // site是分享此内容的网站名称，仅在QQ空间使用
+    oks.setSite(getString(R.string.app_name));
+    // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+    oks.setSiteUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
+
+    // 启动分享GUI
+    oks.show(this);
+
   }
 
   /*成员头像*/

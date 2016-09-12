@@ -30,7 +30,7 @@ public class MyImageView extends ImageView {
     }
 
     public interface OnMeasureListener {
-        public void onMeasureSize(int width, int height);
+        void onMeasureSize(int width, int height);
     }
 
 }

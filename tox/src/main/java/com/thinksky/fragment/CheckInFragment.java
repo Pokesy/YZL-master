@@ -205,7 +205,7 @@ public class CheckInFragment extends Fragment implements View.OnClickListener {
     }
 
     public interface CheckInFragmentCallBack {
-        public void callback(int flag);
+        void callback(int flag);
     }
 
 

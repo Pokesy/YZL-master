@@ -442,7 +442,6 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
       }
     }
 
-    ;
   };
 
   @Override

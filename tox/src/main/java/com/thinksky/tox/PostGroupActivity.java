@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -69,7 +70,7 @@ public class PostGroupActivity extends BaseBActivity implements View.OnClickList
                     arg= (String[]) msg.obj;
 //                    Log.d("wj...",arg[0]);
 //                    Log.d("wj...", arg[1]);
-                    if (arg[0]=="true"){
+                    if (TextUtils.equals(arg[0],"true")){
                         Toast.makeText(PostGroupActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(PostGroupActivity.this,arg[1] + "发布失败",Toast.LENGTH_SHORT).show();

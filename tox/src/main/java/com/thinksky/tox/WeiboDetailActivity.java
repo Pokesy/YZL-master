@@ -382,7 +382,6 @@ public class WeiboDetailActivity extends BaseBActivity {
       }
     }
 
-    ;
   };
 
   @Override

@@ -170,7 +170,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     initXiangQingData();
     mScrollView.smoothScrollTo(0, 0);
 
-    mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();

@@ -66,7 +66,6 @@ public class CameralActivity extends BaseBActivity {
     public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
         //旋转图片 动作
         Matrix matrix = new Matrix();
-        ;
         matrix.postRotate(angle);
         // 创建新的图片
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
@@ -193,8 +192,8 @@ public class CameralActivity extends BaseBActivity {
             float mHight = 854f;
             float scaleWidth;
             float scaleHeight;
-            scaleWidth = ((float) mWeight) / bitmap.getWidth();
-            scaleHeight = ((float) mHight) / bitmap.getHeight();
+            scaleWidth = mWeight / bitmap.getWidth();
+            scaleHeight = mHight / bitmap.getHeight();
             Matrix matrix = new Matrix();
             matrix.postScale(scaleWidth, scaleHeight);
             Bitmap mbit = null;
@@ -214,7 +213,7 @@ public class CameralActivity extends BaseBActivity {
     }
 
     public interface IMGCallBack {
-        public void callback(String data);
+        void callback(String data);
     }
 
 }

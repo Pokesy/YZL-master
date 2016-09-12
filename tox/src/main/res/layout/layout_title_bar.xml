@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:src="@drawable/iconfontfanhui" />
+        android:src="@drawable/icon_title_bar_back" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/title"

@@ -47,7 +47,7 @@ public class AuditActivity extends BaseBActivity {
         mLeft = (Button) mBottemView.findViewById(R.id.AuditLeftBtn);
         mRight = (Button) mBottemView.findViewById(R.id.AuditRightBtn);
         mCenterGroup.setOnMyScroll(mviewMyScroll);
-        mLastScroll = (View) mLast.createView();
+        mLastScroll = mLast.createView();
         mLast.setCallBack(new CallBack() {
 
             @Override
@@ -67,7 +67,7 @@ public class AuditActivity extends BaseBActivity {
             public void onClick(View arg0) {
                 if (!animFlag)
                     return;
-                Animation upanim = (Animation) AnimationUtils.
+                Animation upanim = AnimationUtils.
                         loadAnimation(AuditActivity.this, R.anim.upanim);
                 mLastScroll.startAnimation(upanim);
                 mLast.NextView();
@@ -80,7 +80,7 @@ public class AuditActivity extends BaseBActivity {
             public void onClick(View arg0) {
                 if (!animFlag)
                     return;
-                Animation downanim = (Animation) AnimationUtils.
+                Animation downanim = AnimationUtils.
                         loadAnimation(AuditActivity.this, R.anim.down);
                 mLastScroll.startAnimation(downanim);
                 mLast.NextView();

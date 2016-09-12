@@ -141,7 +141,7 @@ public class ProfileSettingActivity extends BaseBActivity {
     mRegisterTimeValue.setText(mUserInfo.getReg_time());
     mScoreValue.setText(mUserInfo.getScore());
 
-    mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();

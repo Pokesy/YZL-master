@@ -199,7 +199,7 @@ public class SampleListFragment extends ScrollTabHolderFragment implements OnScr
         }
 
         public interface SampListCallBack{
-            public void callback(int flag,int page);
+            void callback(int flag, int page);
         }
 
         private void initView(){

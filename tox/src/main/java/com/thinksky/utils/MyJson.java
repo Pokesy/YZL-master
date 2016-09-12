@@ -162,11 +162,7 @@ public class MyJson {
   public boolean isJSON(String value) {
     if (value != null) {
       value = value.trim();
-      if (value.startsWith("{") && value.endsWith("}")) {
-        return true;
-      } else {
-        return false;
-      }
+      return value.startsWith("{") && value.endsWith("}");
     } else {
       return false;
     }
@@ -428,11 +424,7 @@ public class MyJson {
 
     try {
       JSONObject jsonObject = new JSONObject(value);
-      if (jsonObject.getBoolean("success")) {
-        return true;
-      } else {
-        return false;
-      }
+      return jsonObject.getBoolean("success");
 
     } catch (JSONException e) {
 

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -212,7 +213,7 @@ public class IssueDetail extends BaseBActivity {
           case 1:
             arr[0] = (String) msg.obj;
             Log.d("Handler status", arr[0]);
-            if (arr[0] == "true") {
+            if (TextUtils.equals(arr[0], "true")) {
               Thread thread1 = new ContentThread();
               thread1.start();
               Toast.makeText(IssueDetail.this, "评论成功", Toast.LENGTH_SHORT).show();
@@ -224,7 +225,7 @@ public class IssueDetail extends BaseBActivity {
           case 2:
             arr[0] = (String) msg.obj;
             Log.d("Handler status", arr[0]);
-            if (arr[0] == "true") {
+            if (TextUtils.equals(arr[0], "true")) {
               Thread thread2 = new ContentThread();
               thread2.start();
               Toast.makeText(IssueDetail.this, "回复评论成功", Toast.LENGTH_SHORT).show();
@@ -234,11 +235,12 @@ public class IssueDetail extends BaseBActivity {
           case 3:
             Log.d("Handler status", arr[0]);
             Log.d("Handler message", arr[1]);
-            if (arr[1].equals("需要登录")) {
+            if (TextUtils.equals(arr[1], "需要登录")) {
               Toast.makeText(IssueDetail.this, "未登入", Toast.LENGTH_SHORT).show();
-            } else if (arr[0] == "false" && arr[1].equals("您已经赞过，不能再赞了。")) {
+            } else if (TextUtils.equals(arr[0], "false") && TextUtils.equals(arr[1],
+                "您已经赞过，不能再赞了。")) {
               Toast.makeText(IssueDetail.this, "您已经赞过，不能再赞了。", Toast.LENGTH_SHORT).show();
-            } else if (arr[0] == "true") {
+            } else if (TextUtils.equals(arr[0],"true")) {
               Toast.makeText(IssueDetail.this, "点赞成功", Toast.LENGTH_SHORT).show();
               new IssueInfoTask().execute(issueID);
             }

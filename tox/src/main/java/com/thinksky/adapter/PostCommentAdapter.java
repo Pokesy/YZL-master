@@ -338,7 +338,7 @@ public class PostCommentAdapter extends BaseAdapter {
   }
 
   public interface PostDetailCallBack {
-    public void callback();
+    void callback();
   }
 
   static class Holder {

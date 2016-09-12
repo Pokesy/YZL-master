@@ -130,7 +130,7 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
 
   private void initView() {
     imgLoad = new LoadImg(this);
-    mForumBody = (RelativeLayout) findViewById(R.id.Forum_body);
+    //mForumBody = (RelativeLayout) findViewById(R.id.Forum_body);
     mForumLoading = (RelativeLayout) findViewById(R.id.Forum_loading);
 
     mRefreshListView = (PullToRefreshListView) findViewById(R.id.listView);
@@ -145,7 +145,7 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
     mPostCountView = (TextView) mHeaderView.findViewById(R.id.post_count);
     mTopicCountView = (TextView) mHeaderView.findViewById(R.id.topic_count);
     mForumLogo = (ImageView) mHeaderView.findViewById(R.id.Forum_logo);
-    mForumBackground = (LinearLayout) mHeaderView.findViewById(R.id.Forum_backgroundImg);
+    //mForumBackground = (LinearLayout) mHeaderView.findViewById(R.id.Forum_backgroundImg);
     mForumNameView = (TextView) mHeaderView.findViewById(R.id.forum_name);
     //test
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -195,7 +195,7 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
     mListView.setOnItemClickListener(new MyListItemClickListener());
     isInitView = true;
     //mListView.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.list_item, android.R
-      // .id.text1, mListItems));
+    // .id.text1, mListItems));
   }
 
 
@@ -259,14 +259,12 @@ public class ForumDetailActivity extends BaseBActivity implements View.OnClickLi
       case R.id.Menu:
         super.onBackPressed();
         break;
-      case R.id.writePost:
-        break;
-      case R.id.floating_relativeLayout:
-//                ToastHelper.showToast("refresh刷新",ctx);
-        mCurrentIndex = 1;
-        initFlag(false, false, true, false, false);
-        getForumPost(mForumBean.id);
-        break;
+//      case R.id.floating_relativeLayout:
+////                ToastHelper.showToast("refresh刷新",ctx);
+//        mCurrentIndex = 1;
+//        initFlag(false, false, true, false, false);
+//        getForumPost(mForumBean.id);
+//        break;
       case R.id.Forum_index_send_com:
         //ToastHelper.showToast("发送评论",this);
         String com = editText.getText().toString().trim();

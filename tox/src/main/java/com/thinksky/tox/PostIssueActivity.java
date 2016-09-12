@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -327,7 +328,7 @@ public class PostIssueActivity extends BaseBActivity implements AdapterView.OnIt
                 Log.d("PostIssueActivity2222",mTitleEdit.getText().toString());
 
                 Log.d("获取Session;",session_id);  //判断有没有取到Session_id
-                if(session_id==""){
+                if(TextUtils.isEmpty(session_id)){
                     Toast.makeText(PostIssueActivity.this, "未登入", Toast.LENGTH_SHORT).show();
                 }
                 else if (mTitleEdit.getText().toString().equals("")) {
@@ -510,7 +511,7 @@ public class PostIssueActivity extends BaseBActivity implements AdapterView.OnIt
 
                 }
             }
-        };
+        }
     };
 
     private void uploadImage() {

@@ -279,6 +279,6 @@ public class IssueActivity2 extends BaseBActivity {
 
     //还未使用
     public interface IssueCallBack {
-        public void callback(int flag);
+        void callback(int flag);
     }
 }

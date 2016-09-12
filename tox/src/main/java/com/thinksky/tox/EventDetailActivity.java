@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -297,7 +298,7 @@ public class EventDetailActivity extends BaseBActivity {
               Pattern p = Pattern
                   .compile("^(13|15|18)\\d{9}$");
               Matcher m = p.matcher(join_phone);
-              if (join_name == "") {
+              if (TextUtils.isEmpty(join_name)) {
                 Toast.makeText(EventDetailActivity.this, "请填写姓名", Toast.LENGTH_SHORT).show();
                 return;
               }
@@ -460,7 +461,7 @@ public class EventDetailActivity extends BaseBActivity {
             arg = (String[]) msg.obj;
             Log.d("wj...", arg[0]);
             Log.d("wj...", arg[1]);
-            if (arg[0] == "true") {
+            if (TextUtils.equals(arg[0],"true")) {
               Toast.makeText(EventDetailActivity.this, "回复评论成功", Toast.LENGTH_SHORT).show();
             } else {
               Toast.makeText(EventDetailActivity.this, arg[1], Toast.LENGTH_SHORT).show();
@@ -471,7 +472,7 @@ public class EventDetailActivity extends BaseBActivity {
             ar = (String[]) msg.obj;
             Log.d("wj...", ar[0]);
             Log.d("wj...", ar[1]);
-            if (ar[0] == "true") {
+            if (TextUtils.equals(ar[0],"true")) {
               Toast.makeText(EventDetailActivity.this, "报名成功", Toast.LENGTH_SHORT).show();
               join_event.setText("正在审核中");
               join_event.setClickable(false);
@@ -484,7 +485,7 @@ public class EventDetailActivity extends BaseBActivity {
             arg1 = (String[]) msg.obj;
             Log.d("wj...", arg1[0]);
             Log.d("wj...", arg1[1]);
-            if (arg1[0] == "true") {
+            if (TextUtils.equals(arg1[0],"true")) {
               Toast.makeText(EventDetailActivity.this, "回复楼中楼成功", Toast.LENGTH_SHORT).show();
             } else {
               Toast.makeText(EventDetailActivity.this, arg1[1], Toast.LENGTH_SHORT).show();

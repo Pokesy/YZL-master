@@ -216,8 +216,6 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   }
 
   private void setMyLocationConfig() {
-    BitmapDescriptor descriptor = marks ? (TextUtils.equals(mCurrentType, "1") ?
-        fish_personal_myself : fish_factory_myself) : null;
     MyLocationConfiguration config =
         new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING, false,
             null);

@@ -54,7 +54,7 @@ public class DragLayout extends FrameLayout {
      * 拖拽  DRAGING
      */
     public enum Status {
-        CLOSE, OPEN, DRAGING;
+        CLOSE, OPEN, DRAGING
     }
 
     private OnDragStatusListener mListener;

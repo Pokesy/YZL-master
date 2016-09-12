@@ -379,7 +379,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
 
                 }
             }
-        };
+        }
     };
 
     private void uploadImages() {
@@ -408,7 +408,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                 fh.post(Url.UPLOADIMGURL, params, new AjaxCallBack<Object>() {
                     @Override
                     public void onLoading(long count, long current) {
-                        progressDialog.setProgressNumberFormat("%1dKB/%2dKB");;
+                        progressDialog.setProgressNumberFormat("%1dKB/%2dKB");
                         progressDialog.setMax((int)count/1024);
                         progressDialog.setProgress((int)(current/1024));
                     }

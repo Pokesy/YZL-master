@@ -26,6 +26,7 @@ import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.login.LicenceActivity;
 import com.thinksky.utils.MD5;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseFunction;
@@ -155,7 +156,7 @@ public class RegisterActivity extends BaseBActivity {
         Log.d("juese", juese);
       }
     });
-    mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         mCurrentStep.back();
@@ -163,6 +164,13 @@ public class RegisterActivity extends BaseBActivity {
     });
     mTitleBar.getTitleBgView().setAlpha(0);
     mTitleBar.getTitleView().setVisibility(View.GONE);
+
+    findViewById(R.id.licence).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(new Intent(RegisterActivity.this, LicenceActivity.class));
+      }
+    });
   }
 
   public void nick() {
@@ -360,7 +368,6 @@ public class RegisterActivity extends BaseBActivity {
       }
     }
 
-    ;
   };
 
   /* 定义一个倒计时的内部类 */

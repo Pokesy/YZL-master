@@ -14,8 +14,6 @@ import com.thinksky.widget.LoadingPager.LoadResult;
 
 import java.util.List;
 
-;
-
 public abstract class BaseFragment extends Fragment {
 
     private LoadingPager mContentView;

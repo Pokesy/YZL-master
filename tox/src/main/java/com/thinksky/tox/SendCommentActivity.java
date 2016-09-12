@@ -204,7 +204,6 @@ public class SendCommentActivity extends BaseBActivity implements FaceView.Work 
                 Toast.makeText(SendCommentActivity.this, ",操作太频繁，评论失败", Toast.LENGTH_LONG);
             }
         }
-        ;
     };
 
 

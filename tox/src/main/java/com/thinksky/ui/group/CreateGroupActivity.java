@@ -164,7 +164,7 @@ public class CreateGroupActivity extends BaseBActivity {
 
     titleBar.setMiddleTitle(TextUtils.isEmpty(mGroupId) ? R.string.activity_create_group_title :
         R.string.activity_create_group_title_edit);
-    titleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    titleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();

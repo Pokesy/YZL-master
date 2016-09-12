@@ -20,7 +20,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
-            android:src="@drawable/arrow_left" />
+            android:src="@drawable/icon_title_bar_back" />
 
         <TextView
             android:id="@+id/group_name"

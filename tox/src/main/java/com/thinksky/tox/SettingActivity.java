@@ -226,7 +226,6 @@ public class SettingActivity extends BaseBActivity {
       @Override
       public void onLoading(long count, long current) {
         mProgressDialog.setProgressNumberFormat("%1dKB/%2dKB");
-        ;
         mProgressDialog.setMax((int) count / 1024);
         mProgressDialog.setProgress((int) (current / 1024));
       }

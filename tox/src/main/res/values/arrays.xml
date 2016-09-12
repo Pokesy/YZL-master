@@ -45,4 +45,9 @@
     <item>公共群组</item>
     <item>私有群组</item>
   </array>
+
+  <array name="group_info_operation_items">
+    <item>发话题</item>
+    <item>分享小组</item>
+  </array>
 </resources>

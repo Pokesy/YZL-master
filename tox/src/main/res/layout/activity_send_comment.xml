@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/arrow_left" />
+                android:src="@drawable/icon_title_bar_back" />
         </RelativeLayout>
 
 

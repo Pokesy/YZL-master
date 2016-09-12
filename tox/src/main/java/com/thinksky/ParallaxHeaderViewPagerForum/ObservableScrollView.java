@@ -64,9 +64,9 @@ public class ObservableScrollView extends ScrollView {
         mCallbacks = listener;
     }
 
-    public static interface Callbacks {
-        public void onScrollChanged(int scrollY);
-        public void onDownMotionEvent();
-        public void onUpOrCancelMotionEvent();
+    public interface Callbacks {
+        void onScrollChanged(int scrollY);
+        void onDownMotionEvent();
+        void onUpOrCancelMotionEvent();
     }
 }

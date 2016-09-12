@@ -42,11 +42,11 @@ public class BaseApplication extends Application {
     super.onCreate();
     Logger.init();
     mGlobalComponent = DaggerGlobalComponent.builder().globalModule(new GlobalModule(this)).build();
-    this.mContext = this;
-    this.mMainThreadHandler = new Handler();
-    this.mMainThread = Thread.currentThread();
-    this.mMainThreadId = android.os.Process.myTid();
-    this.mMainThreadLooper = getMainLooper();
+    mContext = this;
+    mMainThreadHandler = new Handler();
+    mMainThread = Thread.currentThread();
+    mMainThreadId = android.os.Process.myTid();
+    mMainThreadLooper = getMainLooper();
     SDKInitializer.initialize(this);
 
     ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));

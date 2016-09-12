@@ -41,14 +41,14 @@ public abstract class BaseActivity extends BaseBActivity {
     // TODO Auto-generated method stub
     super.onResume();
     Bugtags.onResume(this);
-    this.mForegroundActivity = this;
+    mForegroundActivity = this;
   }
 
   @Override
   protected void onPause() {
     super.onPause();
     Bugtags.onPause(this);
-    this.mForegroundActivity = null;
+    mForegroundActivity = null;
   }
 
   @Override

@@ -261,7 +261,7 @@ public class MyListView extends ListView implements OnScrollListener {
     }
 
     public interface OnRefreshListener {
-        public void onRefresh();
+        void onRefresh();
     }
 
     public void onRefreshComplete() {

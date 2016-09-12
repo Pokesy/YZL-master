@@ -311,7 +311,7 @@ public class CollectListActivity extends BaseBActivity {
         public void selectAll() {
             checkState.clear();
             for (int i = 0; i < list.size(); i++) {
-                checkState.add((Integer) i);
+                checkState.add(i);
             }
             notifyDataSetChanged();
         }
@@ -319,10 +319,10 @@ public class CollectListActivity extends BaseBActivity {
         //反选
         public void invert() {
             for (int i = 0; i < list.size(); i++) {
-                if (checkState.contains((Integer) i)) {
+                if (checkState.contains(i)) {
                     checkState.remove((Integer) i);
                 } else {
-                    checkState.add((Integer) i);
+                    checkState.add(i);
                 }
             }
             notifyDataSetChanged();

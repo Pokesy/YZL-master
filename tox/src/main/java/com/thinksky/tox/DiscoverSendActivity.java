@@ -225,21 +225,17 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
           public void onResult(boolean state, List<FUBean> beans) {
             if (state) {
 
-              if (!beans.get(0).address.equals(null) && !TextUtils.isEmpty(beans.get(0).address)) {
+              if (!TextUtils.isEmpty(beans.get(0).address)) {
                 dizhi.setText(beans.get(0).address);
                 address = beans.get(0).address;
               }
-              if (!beans.get(0).latitude.equals(null) && !TextUtils.isEmpty(
-                  beans.get(0).latitude)) {
+              if (!TextUtils.isEmpty(beans.get(0).latitude)) {
                 latitude = beans.get(0).latitude;
               }
-              if (!beans.get(0).longitude.equals(null) && !TextUtils.isEmpty(
-                  beans.get(0).longitude)) {
+              if (!TextUtils.isEmpty(beans.get(0).longitude)) {
                 longitude = beans.get(0).longitude;
               }
-              if (!beans.get(0).mobile1.equals(null)
-                  && !TextUtils.isEmpty(beans.get(0).mobile1)
-                  && TextUtils.equals(isfactory, "2")) {
+              if (!TextUtils.isEmpty(beans.get(0).mobile1)&& TextUtils.equals(isfactory, "2")) {
                 mContentEdit.setText(beans.get(0).mobile1);
               }
               if (!TextUtils.isEmpty(beans.get(0).wechat) && TextUtils.equals(isfactory, "1")) {
@@ -535,7 +531,6 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
       }
     }
 
-    ;
   };
 
   private void uploadImages() {
@@ -565,7 +560,6 @@ public class DiscoverSendActivity extends BaseBActivity implements View.OnClickL
           @Override
           public void onLoading(long count, long current) {
             progressDialog.setProgressNumberFormat("%1dKB/%2dKB");
-            ;
             progressDialog.setMax((int) count / 1024);
             progressDialog.setProgress((int) (current / 1024));
           }

@@ -25,7 +25,7 @@
             android:layout_centerVertical="true"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:src="@drawable/menu" />
+            android:src="@drawable/icon_title_bar_back" />
 
 
         <ImageView

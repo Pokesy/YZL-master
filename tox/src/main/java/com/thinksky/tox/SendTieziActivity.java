@@ -448,7 +448,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
       }
     }
 
-    ;
   };
 
   private void uploadImages() {
@@ -478,7 +477,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
           @Override
           public void onLoading(long count, long current) {
             progressDialog.setProgressNumberFormat("%1dKB/%2dKB");
-            ;
             progressDialog.setMax((int) count / 1024);
             progressDialog.setProgress((int) (current / 1024));
           }

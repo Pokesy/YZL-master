@@ -158,7 +158,7 @@ public class MyProfileActivity extends BaseBActivity {
 
   private void setTitleBar() {
     titleBar.getTitleBgView().setAlpha(0);
-    titleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    titleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();

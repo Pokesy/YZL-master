@@ -44,7 +44,7 @@ public class AuditView {
     }
 
     public View createView() {
-        mView = (View) View.inflate(ctx, R.layout.activity_auditcenter, null);
+        mView = View.inflate(ctx, R.layout.activity_auditcenter, null);
         mText = (TextView) mView.findViewById(R.id.AuditCenterText);
         mImageView = (ImageView) mView.findViewById(R.id.AuditCenterImg);
         // getNET();
@@ -120,7 +120,6 @@ public class AuditView {
             }
         }
 
-        ;
     };
 
     private void Praise() {
@@ -136,6 +135,6 @@ public class AuditView {
     }
 
     public interface CallBack {
-        public void callback(boolean animFlag);
+        void callback(boolean animFlag);
     }
 }

@@ -186,6 +186,6 @@ public class FaceView extends LinearLayout {
 	}
 	
 	public interface Work {
-		public void onClick(int id, String item_str);
-	};
+		void onClick(int id, String item_str);
+	}
 }

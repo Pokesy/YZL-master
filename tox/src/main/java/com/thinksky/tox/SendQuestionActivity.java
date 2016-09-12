@@ -493,7 +493,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
       }
     }
 
-    ;
   };
 
   private void uploadImages() {
@@ -523,7 +522,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
           @Override
           public void onLoading(long count, long current) {
             progressDialog.setProgressNumberFormat("%1dKB/%2dKB");
-            ;
             progressDialog.setMax((int) count / 1024);
             progressDialog.setProgress((int) (current / 1024));
           }

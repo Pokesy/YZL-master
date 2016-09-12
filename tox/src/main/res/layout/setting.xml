@@ -21,7 +21,7 @@
         android:layout_centerVertical="true"
         android:padding="15dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/menu"
+        android:src="@drawable/icon_title_bar_back"
         />
 
 

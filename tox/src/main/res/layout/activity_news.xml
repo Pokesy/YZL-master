@@ -23,7 +23,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:padding="15dp"
-        android:src="@drawable/menu"
+        android:src="@drawable/icon_title_bar_back"
         />
 
     <TextView

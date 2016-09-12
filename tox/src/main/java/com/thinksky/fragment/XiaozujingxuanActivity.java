@@ -169,6 +169,5 @@ public class XiaozujingxuanActivity extends BaseBActivity {
 
   public static void launch(Context context, boolean isWeGroup, MyBean bean) {
     context.startActivity(GroupInfoActivity.makeIntent(context, bean.id));
-    ;
   }
 }

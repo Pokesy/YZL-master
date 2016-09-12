@@ -295,9 +295,9 @@ public class SlideShowView extends FrameLayout {
             currentItem = pos;
             for (int i = 0; i < dotViewsList.size(); i++) {
                 if (i == pos) {
-                    ((View) dotViewsList.get(pos)).setBackgroundResource(R.drawable.diandianliang);
+                    dotViewsList.get(pos).setBackgroundResource(R.drawable.diandianliang);
                 } else {
-                    ((View) dotViewsList.get(i)).setBackgroundResource(R.drawable.diandian);
+                    dotViewsList.get(i).setBackgroundResource(R.drawable.diandian);
                 }
             }
         }

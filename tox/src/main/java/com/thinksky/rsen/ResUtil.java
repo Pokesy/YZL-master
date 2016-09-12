@@ -323,9 +323,9 @@ public class ResUtil {
     public static void setRoundImage(String url, ImageView  view) {
         ImageLoader.getInstance().displayImage(url, view,
                 new DisplayImageOptions.Builder()
-                        .showImageOnLoading(R.drawable.photo_no)
-                        .showImageForEmptyUri(R.drawable.photo_no)
-                        .showImageOnFail(R.drawable.photo_no)
+                        .showImageOnLoading(R.drawable.side_user_avatar)
+                        .showImageForEmptyUri(R.drawable.side_user_avatar)
+                        .showImageOnFail(R.drawable.side_user_avatar)
                         .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                         .displayer(new RoundedBitmapDisplayer(150)).build());
     }

@@ -618,8 +618,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   }
 
   private void inject() {
-    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
-        ().getApplication())).serviceModule(new ServiceModule())
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication())).serviceModule(new ServiceModule())
         .build().inject(this);
   }
 
@@ -788,7 +787,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void setTitleBar() {
       mTitleBar.getTitleBgView().setAlpha(0);
-      mTitleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+      mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
         @Override
         public void onClick(View v) {
           drawer_layout.closeDrawer(drawer_view);

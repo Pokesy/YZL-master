@@ -15,7 +15,7 @@ import org.apache.http.util.EntityUtils;
  */
 public class MyGet {
 
-    public String doGet(String url) throws ClientProtocolException, IOException {
+    public String doGet(String url) throws IOException {
         String result = null;// 我们的网络交互返回值
         HttpGet myGet = new HttpGet(url);
 

@@ -75,7 +75,7 @@ public class QuestionListActivity extends BaseBActivity {
   }
 
   private void initTitleBar() {
-    titleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    titleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();

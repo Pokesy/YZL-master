@@ -115,7 +115,7 @@ public class PictureFragment extends Fragment implements OnClickListener {
                     ThreadPoolUtils.execute(new HttpGetThread(hand, url));
                     listBottemFlag = false;
                 } else if (!listBottemFlag)
-                    Toast.makeText(ctx, "加载中请稍候...", 1).show();
+                    Toast.makeText(ctx, "加载中请稍候...", Toast.LENGTH_SHORT).show();
             }
         });
         myListView.addFooterView(ListBottem, null, false);
@@ -137,7 +137,7 @@ public class PictureFragment extends Fragment implements OnClickListener {
                     ThreadPoolUtils.execute(new HttpGetThread(hand, url));
                     loadflag = false;
                 } else {
-                    Toast.makeText(ctx, "正在刷新，请勿重复刷新", 1).show();
+                    Toast.makeText(ctx, "正在刷新，请勿重复刷新", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -215,17 +215,17 @@ public class PictureFragment extends Fragment implements OnClickListener {
     }
 
     public interface PictureFragmentCallBack {
-        public void callback(int flag);
+        void callback(int flag);
     }
 
     Handler hand = new Handler() {
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             if (msg.what == 404) {
-                Toast.makeText(ctx, "找不到地址", 1).show();
+                Toast.makeText(ctx, "找不到地址", Toast.LENGTH_SHORT).show();
                 listBottemFlag = true;
             } else if (msg.what == 100) {
-                Toast.makeText(ctx, "传输失败", 1).show();
+                Toast.makeText(ctx, "传输失败", Toast.LENGTH_SHORT).show();
                 listBottemFlag = true;
             } else if (msg.what == 200) {
                 String result = (String) msg.obj;
@@ -240,7 +240,7 @@ public class PictureFragment extends Fragment implements OnClickListener {
                             if (list.size() == 0)
                                 HomeNoValue.setVisibility(View.VISIBLE);
                             ListBottem.setVisibility(View.GONE);
-                            Toast.makeText(ctx, "已经没有了...", 1).show();
+                            Toast.makeText(ctx, "已经没有了...", Toast.LENGTH_SHORT).show();
                         } else {
                             ListBottem.setVisibility(View.GONE);
                         }
@@ -264,7 +264,6 @@ public class PictureFragment extends Fragment implements OnClickListener {
             }
         }
 
-        ;
     };
 
 }

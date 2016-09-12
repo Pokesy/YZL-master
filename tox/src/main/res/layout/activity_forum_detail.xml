@@ -3,8 +3,7 @@
     android:id="@+id/Forum_parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.thinksky.tox.ForumActivity2">
+    android:orientation="vertical">
     <!--页头-->
     <RelativeLayout
         android:id="@+id/Forum_top"
@@ -24,7 +23,7 @@
             android:paddingBottom="10dp"
             android:paddingLeft="5dp"
             android:paddingTop="10dp"
-            android:src="@drawable/menu" />
+            android:src="@drawable/icon_title_bar_back" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -100,7 +99,6 @@
             android:id="@+id/kongbai"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/floating_relativeLayout"
             android:alpha="100" />
 
         <LinearLayout

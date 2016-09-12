@@ -156,7 +156,7 @@ public class ZhuanjiActivity extends BaseBActivity {
 
             final ZjBean bean = beans.get(position);
             ((TextView) viewHolder.itemView.findViewById(R.id.title)).setText(bean.title);
-            ((TextView) viewHolder.itemView.findViewById(R.id.xianshi)).setOnClickListener(new View.OnClickListener() {
+            viewHolder.itemView.findViewById(R.id.xianshi).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();

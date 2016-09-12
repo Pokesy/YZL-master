@@ -144,7 +144,7 @@ public class ForumFragment extends Fragment implements OnClickListener {
   }
 
   public interface NearFragmentCallBack {
-    public void callback(int flag);
+    void callback(int flag);
   }
 
   Handler hand = new Handler() {
@@ -195,6 +195,5 @@ public class ForumFragment extends Fragment implements OnClickListener {
       }
     }
 
-    ;
   };
 }

@@ -53,7 +53,7 @@ public class MyScrollView extends ScrollView {
      *
      * @param scrollY 、
      */
-    public void onScroll(int scrollY);
+    void onScroll(int scrollY);
   }
 
   @Override public boolean onInterceptTouchEvent(MotionEvent e) {

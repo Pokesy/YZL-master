@@ -76,7 +76,7 @@ public class MyMessageActivity extends BaseBActivity {
 
   private void initView() {
     titleBar.setMiddleTitle(R.string.activity_my_message_title);
-    titleBar.setLeftImgMenu(R.drawable.arrow_left, new View.OnClickListener() {
+    titleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();

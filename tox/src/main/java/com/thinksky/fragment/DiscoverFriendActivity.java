@@ -85,7 +85,7 @@ public class DiscoverFriendActivity extends BaseBActivity {
          * 通过适配器实现
          * SimpleAdapter参数imageItem为数据源 R.layout.griditem_addpic为布局
          */
-        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.addphoto); //加号
+        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.icon_add_photo); //加号
         imageItem = new ArrayList<HashMap<String, Object>>();
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("itemImage", bmp);

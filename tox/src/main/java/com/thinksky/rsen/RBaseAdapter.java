@@ -22,7 +22,7 @@ public abstract class RBaseAdapter<T> extends RecyclerView.Adapter<RViewHolder> 
         this.mContext = context;
     }
 
-    public static interface OnRecyclerViewItemClickListener {
+    public interface OnRecyclerViewItemClickListener {
         void onItemClick(View view, String data);
     }
 

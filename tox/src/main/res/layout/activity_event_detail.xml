@@ -24,7 +24,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:padding="12dp"
-            android:src="@drawable/arrow_left"
+            android:src="@drawable/icon_title_bar_back"
             android:layout_height="wrap_content" />
     </RelativeLayout>
         <LinearLayout

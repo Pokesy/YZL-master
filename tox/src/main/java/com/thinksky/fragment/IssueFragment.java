@@ -157,7 +157,7 @@ public class IssueFragment extends Fragment {
                             JSONArray fistIssueIDArray = jsonList.get(i).optJSONArray("Modules_id");
                             if (fistIssueIDArray != null) {
                                 JSONObject fistIssueIDObj = (JSONObject) fistIssueIDArray.get(0);
-                                JSONObject jsonObj =  (JSONObject)jsonList.get(i);
+                                JSONObject jsonObj = jsonList.get(i);
                                 if (issue_id == (jsonObj.getInt("issue_id"))) {
                                     imagePicture.setId(Integer.parseInt(jsonObj.getString("id")));
                                     imagePicture.setIssue_id(Integer.parseInt(jsonObj.getString("issue_id")));

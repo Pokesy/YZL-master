@@ -92,7 +92,7 @@ public class LandlordComAdapter extends BaseAdapter {
   }
 
   public interface LandLordCallBack {
-    public void callBack(Com2Com com);
+    void callBack(Com2Com com);
   }
 
   static class Holder {

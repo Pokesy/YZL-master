@@ -79,6 +79,6 @@ public class FrameLinear extends LinearLayout {
     }
 
     public interface MyScroll {
-        abstract void getScrollFlag(boolean flag);
+        void getScrollFlag(boolean flag);
     }
 }

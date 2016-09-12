@@ -182,7 +182,7 @@ public class RsenUrlUtil {
                 ((OnNetHttpResultListener) listener).onNoNetwork("连接超时，请稍后重试");
               }
               if (msg.what == 800) {
-                ((OnNetHttpResultListener) listener).onResult(false, data, null);
+                listener.onResult(false, data, null);
               }
             }
           }

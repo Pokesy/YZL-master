@@ -452,7 +452,7 @@ public class SegmentControl extends View {
 
         int mV;
 
-        private Direction(int v) {
+        Direction(int v) {
             mV = v;
         }
     }

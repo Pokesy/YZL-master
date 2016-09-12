@@ -70,7 +70,7 @@ public class NotesFragment extends Fragment implements OnClickListener {
     }
 
     public interface NotesFragmentCallBack {
-        public void callback(int flag);
+        void callback(int flag);
     }
 
 
