@@ -167,13 +167,13 @@ public class QuestionListFragment extends BasicFragment {
 
   @Subscribe
   public void handleAnswerChangeEvent(QuestionDetailActivity.AnswerChangedEvent event) {
-    mCurrentPage = 0;
+    mCurrentPage = 1;
     initData(mWhichActivity);
   }
 
   @Subscribe
-  public void handleAnswerChangeEvent(SendQuestionActivity.QuestionSendEvent event) {
-    mCurrentPage = 0;
+  public void handleQusetionSendEvent(SendQuestionActivity.QuestionSendEvent event) {
+    mCurrentPage = 1;
     initData(mWhichActivity);
   }
 
