@@ -34,6 +34,7 @@ import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
+import com.thinksky.tox.SendQuestionActivity;
 import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -166,6 +167,12 @@ public class QuestionListFragment extends BasicFragment {
 
   @Subscribe
   public void handleAnswerChangeEvent(QuestionDetailActivity.AnswerChangedEvent event) {
+    mCurrentPage = 0;
+    initData(mWhichActivity);
+  }
+
+  @Subscribe
+  public void handleAnswerChangeEvent(SendQuestionActivity.QuestionSendEvent event) {
     mCurrentPage = 0;
     initData(mWhichActivity);
   }

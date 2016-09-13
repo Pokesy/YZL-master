@@ -21,28 +21,20 @@ public class ShowImageActivity extends BaseBActivity implements View.OnClickList
     private GridView mGridView;
     private List<String> list;
     private ChildAdapter adapter;
-    private FinalBitmap finalBitmap;
     private RelativeLayout mPicConfirm, mPicCancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_image_activity);
-        finalBitmap = FinalBitmap.create(this);
-        finalBitmap.configBitmapLoadThreadSize(10);
-        finalBitmap.configMemoryCacheSize((int) (Runtime.getRuntime().maxMemory() / 1024));
-        finalBitmap.configLoadingImage(R.drawable.friends_sends_pictures_no);
-        finalBitmap.clearCache();
         mGridView = (GridView) findViewById(R.id.child_grid);
         mPicCancel = (RelativeLayout) findViewById(R.id.pic_cancel);
         mPicConfirm = (RelativeLayout) findViewById(R.id.pic_confirm);
         mPicConfirm.setOnClickListener(this);
         mPicCancel.setOnClickListener(this);
-        //mPicCancel.setOnTouchListener(new TouchHelper(ShowImageActivity.this,"#1AA3D1","#4FC1E9","color"));
-        mPicConfirm.setOnTouchListener(new TouchHelper(ShowImageActivity.this, "#1AA3D1", "#4FC1E9", "color"));
         list = getIntent().getStringArrayListExtra("data");
 
-        adapter = new ChildAdapter(this, list, mGridView, finalBitmap);
+        adapter = new ChildAdapter(this, list, mGridView);
         mGridView.setAdapter(adapter);
         //如果
         if (getIntent().getIntExtra("fromActivity", 0) == ActivityModel.UPLOADACTIVITY) {
@@ -53,8 +45,6 @@ public class ShowImageActivity extends BaseBActivity implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-        finalBitmap.onPause();
-        finalBitmap.onDestroy();
         pic_confirm();
     }
 
@@ -63,8 +53,6 @@ public class ShowImageActivity extends BaseBActivity implements View.OnClickList
         int id = view.getId();
         switch (id) {
             case R.id.pic_cancel:
-                finalBitmap.onPause();
-                finalBitmap.onDestroy();
                 finish();
                 break;
             case R.id.pic_confirm:

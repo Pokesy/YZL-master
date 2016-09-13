@@ -3,139 +3,149 @@
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+    >
 
-    <LinearLayout
-        android:layout_width="match_parent"
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@drawable/bg_list_item_white_with_boarder"
+      android:clickable="true"
+      android:orientation="vertical"
+      android:paddingTop="10dp"
+      android:paddingLeft="10dp"
+      android:paddingRight="10dp"
+      >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_list_item_white_with_boarder"
-        android:clickable="true"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
 
-        <RelativeLayout
+      <FrameLayout
+          android:id="@+id/icon_accept_container"
+          android:layout_width="@dimen/comment_user_avatar_size"
+          android:layout_height="wrap_content"
+          >
+
+        <ImageView
+            android:id="@+id/icon_accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/iconfonthuangguan"
+            />
+      </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/icon_accept_container"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content">
+      <ImageView
+          android:id="@+id/avatar32"
+          android:layout_width="@dimen/comment_user_avatar_size"
+          android:layout_height="@dimen/comment_user_avatar_size"
+          android:layout_below="@id/icon_accept_container"
+          android:layout_marginRight="@dimen/margin_small"
+          />
 
-                <ImageView
-                    android:id="@+id/icon_accept"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/iconfonthuangguan" />
-            </FrameLayout>
+      <TextView
+          android:id="@+id/nickname"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@id/avatar32"
+          android:layout_alignTop="@id/avatar32"
+          android:layout_toRightOf="@id/avatar32"
+          android:gravity="center_vertical"
+          android:textColor="@color/font_color_blue"
+          android:textSize="@dimen/font_size_medium"
+          tools:text="慕容紫英 "
+          />
 
-            <ImageView
-                android:id="@+id/avatar32"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_below="@id/icon_accept_container" />
+      <TextView
+          android:id="@+id/creat_time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@id/nickname"
+          android:layout_below="@id/nickname"
+          android:textColor="@color/font_color_dark_gray"
+          android:textSize="@dimen/font_size_medium"
+          tools:text="23秒前"
+          />
 
-            <TextView
-                android:id="@+id/nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/avatar32"
-                android:layout_alignTop="@id/avatar32"
-                android:layout_toRightOf="@id/avatar32"
-                android:gravity="center_vertical"
-                android:textColor="@color/font_color_dark_gray"
-                android:textSize="@dimen/font_size_medium"
-                tools:text="慕容紫英 " />
+      <TextView
+          android:id="@+id/content"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@id/creat_time"
+          android:layout_below="@id/creat_time"
+          android:layout_marginTop="@dimen/margin_small"
+          android:lineSpacingExtra="6dp"
+          tools:text="若夫霪雨霏霏，连月不开，阴风怒号，浊浪排空；日星隐曜，山岳潜形；商旅不行，樯倾楫摧；薄暮冥冥，虎啸猿啼。登斯楼也，则有去国怀乡，忧谗畏讥，满目萧然，感极而悲者矣。"
+          style="@style/Widget.App.TextView.Large.Primary"
+          />
 
-        </RelativeLayout>
-
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_alignTop="@id/nickname"
+          android:gravity="center"
+          android:orientation="horizontal"
+          >
+        <ImageView
+            android:id="@+id/dianzan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/icon_like_blue"
+            />
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/reply_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
-            android:lineSpacingExtra="10dp"
-            android:textColor="@color/font_color_light_black"
-            android:textSize="@dimen/font_size_xlarge"
-            tools:text="昨日之日不可留，今日之日多烦忧 " />
+            android:layout_marginRight="10dp"
+            android:drawablePadding="5dp"
+            android:text="327"
+            android:textColor="@color/font_color_blue"
+            android:textSize="@dimen/font_size_medium"
+            />
+      </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    </RelativeLayout>
 
-            <!--头像名称-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/creat_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/font_color_dark_gray"
-                    android:textSize="@dimen/font_size_medium"
-                    tools:text="23秒前" />
-
-            </LinearLayout>
-            <!--支持数量-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/acept"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="38dp"
-                    android:visibility="gone"
-                    android:textColor="@color/head"
-                    android:text="采纳" />
-
-                <ImageView
-                    android:id="@+id/dianzan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/icon_like_blue" />
-
-                <TextView
-                    android:id="@+id/reply_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:drawablePadding="5dp"
-                    android:text="327"
-                    android:textColor="@color/font_color_blue"
-                    android:textSize="@dimen/font_size_medium" />
-
-            </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
-
-    <!--采纳-->
-
-    <ImageView
-        android:id="@+id/caina"
+    <TextView
+        android:id="@+id/acept"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:src="@drawable/iconfontcaina"
-        android:visibility="gone" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="采纳"
+        android:textColor="@color/head"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="@dimen/margin_primary"
+        android:background="@color/item_divider"
+        />
+
+  </LinearLayout>
+
+  <!--采纳-->
+
+  <ImageView
+      android:id="@+id/caina"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:src="@drawable/iconfontcaina"
+      android:visibility="gone"
+      tools:visibility="visible"
+      />
 
 </RelativeLayout>

@@ -31,8 +31,10 @@ import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.WendaXianqingInfo;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
+import com.thinksky.net.rpc.model.QuestionDetailModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -41,8 +43,10 @@ import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -210,63 +214,77 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
   }
 
   private void initXiangQingData() {
+    manageRpcCall(mAppService.getQuestionDetail(Url.SESSIONID, mQuestionId), new
+        UiRpcSubscriber1<QuestionDetailModel>(this) {
 
-    String url = RsenUrlUtil.URL_WENTI_XIANGQING;
-    RsenUrlUtil.execute(url, new RsenUrlUtil.OnJsonResultListener<WendaXianqingInfo>() {
-      @Override
-      public void onNoNetwork(String msg) {
-        ToastHelper.showToast(msg, Url.context);
-      }
 
-      @Override
-      public Map getMap() {
-        Map map = new HashMap();
-        map.put("session_id", session_id);
-        map.put("questionid", mQuestionId);
-        return map;
-      }
+          @Override
+          protected void onSuccess(QuestionDetailModel questionDetailModel) {
+            final QuestionDetailModel.ListBean bean = questionDetailModel.getList().get(0);
+            suid = bean.getUid();
 
-      @Override
-      public void onParseJsonBean(List<WendaXianqingInfo> beans, JSONObject jsonObject) {
-        try {
+            if (TextUtils.equals(suid, Url.USERID)) {
+              mTitleBar.setSearchBtn(R.drawable.icon_delete, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                  AlertDialog dialog = new AlertDialog.Builder(QuestionDetailActivity.this).
+                      setMessage(R.string.activity_question_detail_delete_alert)
+                      .setPositiveButton(R.string.btn_confirm, new DialogInterface
+                          .OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                          dialog.cancel();
+                          // 删除
+                          manageRpcCall(mAppService.deleteQuestion(Url.SESSIONID, bean.getId()),
+                              new UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
 
-          String result = jsonObject.toString();
-          WendaXianqingInfo wendaXianqingInfo = JSON.parseObject(result, WendaXianqingInfo.class);
-          beans.add(wendaXianqingInfo);
 
-        } catch (Exception e) {
+                                @Override
+                                protected void onSuccess(BaseModel baseModel) {
+                                  Toast.makeText(QuestionDetailActivity.this, R.string
+                                      .activity_question_detail_delete_success, Toast
+                                      .LENGTH_SHORT).show();
+                                  getComponent().getGlobalBus().post(new AnswerChangedEvent());
+                                  finish();
+                                }
 
-        }
-      }
+                                @Override
+                                protected void onEnd() {
 
-      @Override
-      public void onResult(boolean state, final List<WendaXianqingInfo> beans) {
-        if (state) {
-          suid = beans.get(0).getUid();
+                                }
+                              });
+                        }
+                      }).setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener
+                          () {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                          dialog.cancel();
+                        }
+                      }).create();
+                  dialog.show();
+                }
+              });
+            } else {
+              mTitleBar.getSearchView().setSelected(TextUtils.equals(bean.getIs_collection(), "1"));
+              mTitleBar.setSearchBtn(R.drawable.icon_collect_white_selector, new View
+                  .OnClickListener() {
 
-          if (TextUtils.equals(suid, Url.USERID)) {
-            mTitleBar.setSearchBtn(R.drawable.icon_delete, new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                AlertDialog dialog = new AlertDialog.Builder(QuestionDetailActivity.this).
-                    setMessage(R.string.activity_question_detail_delete_alert)
-                    .setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
-                      @Override
-                      public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        // 删除
-                        manageRpcCall(mAppService.deleteQuestion(Url.SESSIONID, beans.get(0)
-                                .getId()),
-                            new UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
+
+                @Override
+                public void onClick(View v) {
+                  // TODO 收藏
+                  if (TextUtils.equals(bean.getIs_collection(), "1")) {
+                    manageRpcCall(mAppService.cancelQuestionBookmark(Url.SESSIONID, bean.getId())
+                        , new
+                            UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
 
 
                               @Override
                               protected void onSuccess(BaseModel baseModel) {
-                                Toast.makeText(QuestionDetailActivity.this, R.string
-                                    .activity_question_detail_delete_success, Toast
-                                    .LENGTH_SHORT).show();
+                                bean.setIs_collection("0");
+                                mTitleBar.getSearchView().setSelected(TextUtils.equals(bean
+                                    .getIs_collection(), "1"));
                                 getComponent().getGlobalBus().post(new AnswerChangedEvent());
-                                finish();
                               }
 
                               @Override
@@ -274,172 +292,131 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 
                               }
                             });
-                      }
-                    }).setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener
-                        () {
-                      @Override
-                      public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                      }
-                    }).create();
-                dialog.show();
-              }
-            });
-          } else {
-            mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0).getIs_collection
-                (), "1"));
-            mTitleBar.setSearchBtn(R.drawable.icon_collect_white_selector, new View
-                .OnClickListener() {
+                  } else {
+                    manageRpcCall(mAppService.questionBookmark(Url.SESSIONID, bean.getId())
+                        , new
+                            UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
 
 
-              @Override
-              public void onClick(View v) {
-                // TODO 收藏
-                if (TextUtils.equals(beans.get(0).getIs_collection(), "1")) {
-                  manageRpcCall(mAppService.cancelQuestionBookmark(Url.SESSIONID, beans.get(0)
-                      .getId()), new
-                      UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
+                              @Override
+                              protected void onSuccess(BaseModel baseModel) {
+                                bean.setIs_collection("1");
+                                mTitleBar.getSearchView().setSelected(TextUtils.equals(bean
+                                    .getIs_collection(), "1"));
+                                getComponent().getGlobalBus().post(new AnswerChangedEvent());
+                              }
 
+                              @Override
+                              protected void onEnd() {
 
-                        @Override
-                        protected void onSuccess(BaseModel baseModel) {
-                          beans.get(0).setIs_collection("0");
-                          mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
-                              .getIs_collection(), "1"));
-                          getComponent().getGlobalBus().post(new AnswerChangedEvent());
-                        }
-
-                        @Override
-                        protected void onEnd() {
-
-                        }
-                      });
-                } else {
-                  manageRpcCall(mAppService.questionBookmark(Url.SESSIONID, beans.get(0).getId())
-                      , new
-                          UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
-
-
-                            @Override
-                            protected void onSuccess(BaseModel baseModel) {
-                              beans.get(0).setIs_collection("1");
-                              mTitleBar.getSearchView().setSelected(TextUtils.equals(beans.get(0)
-                                  .getIs_collection(), "1"));
-                              getComponent().getGlobalBus().post(new AnswerChangedEvent());
-                            }
-
-                            @Override
-                            protected void onEnd() {
-
-                            }
-                          });
-                }
-              }
-            });
-          }
-
-          if (beans.get(0).getImgList().size() != 0 && !beans.get(0).getImgList().contains
-              ("Public/images/nopic.png")) {
-            img_layout.setVisibility(View.VISIBLE);
-
-            int size = beans.get(0).getImgList().size();
-            iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
-            iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
-            iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
-
-            for (int i = 0; i < size; i++) {
-              String url = RsenUrlUtil.URL_BASE + beans.get(0).getImgList().get(i);
-
-              ImageView imageView = null;
-              if (i == 0) {
-                imageView = iv1;
-              } else if (i == 1) {
-                imageView = iv2;
-              } else if (i == 2) {
-                imageView = iv3;
-              }
-
-              if (imageView != null) {
-                try {
-                  ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, url).error(R
-                      .drawable
-                      .picture_no).placeholder(R.drawable.picture_no).into(imageView);
-                } catch (Exception e) {
-                  e.printStackTrace();
-                }
-                final int in = i;
-                imageView.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-                    Intent intent = new Intent(QuestionDetailActivity.this, ImagePagerActivity
-                        .class);
-                    Bundle bundle = new Bundle();
-                    bundle.putStringArrayList("image_urls", (ArrayList<String>) beans.get(0)
-                        .getImgList());
-                    bundle.putInt("image_index", in);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                              }
+                            });
                   }
-                });
-              }
+                }
+              });
             }
 
-          } else {
-            img_layout.setVisibility(View.GONE);
+            final List<String> images = bean.getQuestionimages();
+            if (null != images && images.size() > 0) {
+              img_layout.setVisibility(View.VISIBLE);
+              int size = images.size();
+              iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
+              iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
+              iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
+
+              for (int i = 0; i < size; i++) {
+                String url = RsenUrlUtil.URL_BASE + images.get(i);
+
+                ImageView imageView = null;
+                if (i == 0) {
+                  imageView = iv1;
+                } else if (i == 1) {
+                  imageView = iv2;
+                } else if (i == 2) {
+                  imageView = iv3;
+                }
+
+                if (imageView != null) {
+                  try {
+                    ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, url).error(R
+                        .drawable
+                        .picture_no).placeholder(R.drawable.picture_no).into(imageView);
+                  } catch (Exception e) {
+                    e.printStackTrace();
+                  }
+                  final int in = i;
+                  imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                      Intent intent = new Intent(QuestionDetailActivity.this, ImagePagerActivity
+                          .class);
+                      Bundle bundle = new Bundle();
+                      bundle.putStringArrayList("image_urls", (ArrayList<String>) images);
+                      bundle.putInt("image_index", in);
+                      intent.putExtras(bundle);
+                      startActivity(intent);
+                    }
+                  });
+                }
+              }
+
+            } else {
+              img_layout.setVisibility(View.GONE);
+            }
+            //回答
+
+
+            //问题
+            title.setText(bean.getTitle());
+            if (TextUtils.equals(bean.getBest_answer(), "0")) {
+              best_answer.setText("求助中");
+              best_answer.setSelected(false);
+              FLAG = true;
+            } else {
+              best_answer.setText("已解决");
+              best_answer.setSelected(true);
+              FLAG = false;
+            }
+            money.setText(bean.getScore());
+            creat_time.setText(bean.getCreate_time());
+            content.setText(bean.getDescription1().replace("\\n", "\n"));
+
+            switch (bean.getCategory()) {
+              case CATEGORY_HONGYU:
+                nickname.setText(R.string.fish_category_hongyu);
+                break;
+              case CATEGORY_HUYU:
+                nickname.setText(R.string.fish_category_huyu);
+                break;
+              case CATEGORY_LONGYU:
+                nickname.setText(R.string.fish_category_longyu);
+                break;
+              case CATEGORY_QICAISHENXIAN:
+                nickname.setText(R.string.fish_category_qicaishenxian);
+                break;
+              case CATEGORY_OTHER:
+                nickname.setText(R.string.fish_category_other);
+                break;
+            }
+
+            huida.setText(bean.getAnswer_num() + "条回答");
+            if (("0").equals(bean.getAnswer_num())) {
+              wutu.setVisibility(View.VISIBLE);
+
+            } else {
+              mListAdapter = new WentixiangqingListAdapter(QuestionDetailActivity.this, bean
+                  .getQuestionAnswer());
+              listView.setAdapter(mListAdapter);
+
+            }
+            mScrollView.smoothScrollTo(0, 0);
           }
-          //回答
 
-
-          //问题
-          WendaXianqingInfo questionEntity = beans.get(0);
-          title.setText(questionEntity.getTitle());
-          if (questionEntity.getBest_answer().equals("0")) {
-            best_answer.setText("求助中");
-            best_answer.setSelected(false);
-            FLAG = true;
-          } else {
-            best_answer.setText("已解决");
-            best_answer.setSelected(true);
-            FLAG = false;
-          }
-          money.setText(questionEntity.getScore());
-          creat_time.setText(questionEntity.getCreate_time());
-          content.setText(questionEntity.getDescription1().replace("\\n", "\n"));
-
-          switch (questionEntity.getCategory()) {
-            case CATEGORY_HONGYU:
-              nickname.setText(R.string.fish_category_hongyu);
-              break;
-            case CATEGORY_HUYU:
-              nickname.setText(R.string.fish_category_huyu);
-              break;
-            case CATEGORY_LONGYU:
-              nickname.setText(R.string.fish_category_longyu);
-              break;
-            case CATEGORY_QICAISHENXIAN:
-              nickname.setText(R.string.fish_category_qicaishenxian);
-              break;
-            case CATEGORY_OTHER:
-              nickname.setText(R.string.fish_category_other);
-              break;
-          }
-
-          huida.setText(questionEntity.getAnswer_num() + "条回答");
-          if (("0").equals(questionEntity.getAnswer_num())) {
-            wutu.setVisibility(View.VISIBLE);
-
-          } else {
-            mListAdapter = new WentixiangqingListAdapter(QuestionDetailActivity.this, beans.get(0)
-                .getQuestionAnswer());
-            listView.setAdapter(mListAdapter);
+          @Override
+          protected void onEnd() {
 
           }
-          mScrollView.smoothScrollTo(0, 0);
-        } else {
-          ToastHelper.showToast("请求失败", Url.context);
-        }
-      }
-    });
+        });
   }
 
   @Override
@@ -559,11 +536,12 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 
     private Context context;
 
-    private List<WendaXianqingInfo.QuestionAnswerEntity> list;
+    private List<QuestionDetailModel.ListBean
+        .QuestionAnswerBean> list;
     private LoadImg loadImg;
 
-    public WentixiangqingListAdapter(Context context, List<WendaXianqingInfo
-        .QuestionAnswerEntity> list) {
+    public WentixiangqingListAdapter(Context context, List<QuestionDetailModel.ListBean
+        .QuestionAnswerBean> list) {
       this.context = context;
       this.list = list;
       loadImg = new LoadImg(context);
@@ -613,7 +591,8 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       }
 //            WendaXianqingInfo bean = beans.get(position);
 //            list =bean.getQuestionAnswer();
-      final WendaXianqingInfo.QuestionAnswerEntity bean = list.get(position);
+      final QuestionDetailModel.ListBean
+          .QuestionAnswerBean bean = list.get(position);
       try {
         ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, RsenUrlUtil.URL_BASE + bean
             .getUser().getAvatar32())
@@ -623,7 +602,29 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       } catch (Exception e) {
         e.printStackTrace();
       }
-      holder.nickname.setText(bean.getUser().getNickname());
+      holder.nickname.setText(UserUtils.getUserName(QuestionDetailActivity.this, bean.getUser()
+          .getUid(), bean.getUser().getNickname()));
+      holder.avatar32.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          if (TextUtils.isEmpty(bean.getUser().getUid())) {
+            return;
+          }
+          startActivity(ProfileIntentFactory.makeIntent(QuestionDetailActivity.this, bean.getUser
+              ().getUid()));
+        }
+      });
+
+      holder.nickname.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          if (TextUtils.isEmpty(bean.getUser().getUid())) {
+            return;
+          }
+          startActivity(ProfileIntentFactory.makeIntent(QuestionDetailActivity.this, bean.getUser
+              ().getUid()));
+        }
+      });
       holder.content.setText(bean.getContent().replace("\\n", "\n"));
       holder.creat_time.setText(MyJson.getStandardDate(bean.getCreate_time()));
       holder.reply_count.setText(bean.getSupport_count());
@@ -727,9 +728,11 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     public class DianZanListener implements View.OnClickListener {
 
       final ViewHolder holder;
-      final WendaXianqingInfo.QuestionAnswerEntity bean;
+      final QuestionDetailModel.ListBean
+          .QuestionAnswerBean bean;
 
-      DianZanListener(ViewHolder holder, WendaXianqingInfo.QuestionAnswerEntity bean) {
+      DianZanListener(ViewHolder holder, QuestionDetailModel.ListBean
+          .QuestionAnswerBean bean) {
         this.holder = holder;
         this.bean = bean;
       }

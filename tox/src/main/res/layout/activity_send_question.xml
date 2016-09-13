@@ -248,14 +248,14 @@
                     android:visibility="gone"
                     android:weightSum="10">
 
-                    <org.kymjs.aframe.ui.widget.HorizontalListView
+                    <android.support.v7.widget.RecyclerView
                         android:id="@+id/HorizontalListView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:paddingBottom="15dp"
                         android:paddingTop="15dp">
 
-                    </org.kymjs.aframe.ui.widget.HorizontalListView>
+                    </android.support.v7.widget.RecyclerView>
 
                     <TextView
                         android:id="@+id/photo_count"

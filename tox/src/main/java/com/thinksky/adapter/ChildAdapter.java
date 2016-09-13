@@ -14,6 +14,7 @@ import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.thinksky.redefine.MyImageView;
 import com.thinksky.tox.R;
+import com.thinksky.utils.imageloader.ImageLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import java.util.Map;
 import net.tsz.afinal.FinalBitmap;
 
 public class ChildAdapter extends BaseAdapter {
+  private Context mContext;
   private Point mPoint = new Point(0, 0);//用来封装ImageView的宽和高的对象
   /**
    * 用来存储图片的选中情况
@@ -30,13 +32,11 @@ public class ChildAdapter extends BaseAdapter {
   private GridView mGridView;
   private List<String> list;
   protected LayoutInflater mInflater;
-  private FinalBitmap finalBitmap;
 
-  public ChildAdapter(Context context, List<String> list, GridView mGridView, FinalBitmap
-      finalBitmap) {
+  public ChildAdapter(Context context, List<String> list, GridView mGridView) {
+    mContext = context;
     this.list = list;
     this.mGridView = mGridView;
-    this.finalBitmap = finalBitmap;
     mInflater = LayoutInflater.from(context);
   }
 
@@ -97,26 +97,8 @@ public class ChildAdapter extends BaseAdapter {
     viewHolder.mCheckBox.setChecked(mSelectMap.containsKey(position) ? mSelectMap.get(position) :
         false);
 
-    finalBitmap.display(viewHolder.mImageView, path);
-        /*//利用NativeImageLoader类加载本地图片
-    Bitmap bitmap = NativeImageLoader.getInstance().loadNativeImage(path, mPoint, new
-		NativeImageCallBack() {
-			
-			@Override
-			public void onImageLoader(Bitmap bitmap, String path) {
-				ImageView mImageView = (ImageView) mGridView.findViewWithTag(path);
-				if(bitmap != null && mImageView != null){
-					mImageView.setImageBitmap(bitmap);
-				}
-			}
-		});
-		
-		if(bitmap != null){
-			viewHolder.mImageView.setImageBitmap(bitmap);
-		}else{
-			viewHolder.mImageView.setImageResource(R.drawable.friends_sends_pictures_no);
-		}*/
-
+    ImageLoader.loadOptimizedHttpImage(mContext, path).placeholder(R.drawable.picture_no)
+        .into(viewHolder.mImageView);
     return convertView;
   }
 

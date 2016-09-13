@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +21,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -38,8 +39,8 @@ import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RGridView;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.FileUtiles;
-import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.ForumApi;
@@ -48,23 +49,17 @@ import com.tox.TouchHelper;
 import com.tox.Url;
 import com.tox.WeiboApi;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.tsz.afinal.FinalBitmap;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
-import org.kymjs.aframe.http.KJHttp;
-import org.kymjs.aframe.ui.widget.HorizontalListView;
-import org.kymjs.aframe.utils.FileUtils;
-import org.kymjs.kjframe.http.HttpParams;
 
 public class SendQuestionActivity extends BaseBActivity implements View.OnClickListener {
+  private static final int MAX_IMG_NUM = 9;
   private LinearLayout photoLayout;
   private String mTempPhotoName;
   private EditText mTitleEdit, mContentEdit;
@@ -93,12 +88,10 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   private List<String> attachIds = new ArrayList<String>();
   private TextView score;
   private RelativeLayout backBtn;
-  private HorizontalListView horizontalListView;
+  private RecyclerView horizontalListView;
   private LinearLayout mAttachLayout, mAttachBtn, mFaceBtn;
   private FrameLayout mPhotoShowLayout;
   private PhotoAdapter photoAdapter;
-  private FinalBitmap finalBitmap;
-  private KJBitmap kjBitmap;
   private TextView photoCount;
   private List<String> imgPathList;
   private int photo_num = 0;
@@ -134,8 +127,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   }
 
   private void initView() {
-    kjBitmap = KJBitmap.create();
-    finalBitmap = FinalBitmap.create(this);
     //        forumApi.setHandler(hand);
     Intent intent = getIntent();
     //        forumId=intent.getStringExtra("forumId");
@@ -169,8 +160,10 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     postSendLayout = (ImageView) findViewById(R.id.post_send);
     mAttachLayout = (LinearLayout) findViewById(R.id.Post_attach_layout);
     mPhotoShowLayout = (FrameLayout) findViewById(R.id.Post_photo_layout);
-    horizontalListView = (HorizontalListView) findViewById(R.id.HorizontalListView);
-    photoAdapter = new PhotoAdapter(this, finalBitmap, kjBitmap, scrollImg);
+    horizontalListView = (RecyclerView) findViewById(R.id.HorizontalListView);
+    horizontalListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager
+        .HORIZONTAL, false));
+    photoAdapter = new PhotoAdapter(this, scrollImg);
     horizontalListView.setAdapter(photoAdapter);
     mAttachBtn = (LinearLayout) findViewById(R.id.Post_send_attachBtn);
     title = (LinearLayout) findViewById(R.id.title);
@@ -403,15 +396,16 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
         }
         photo_num += imgPathList.size();
         Log.d("photo_num", photo_num + "");
-        if (photo_num > 3) {
-          Toast.makeText(SendQuestionActivity.this, "不能超过3张哟", Toast.LENGTH_SHORT).show();
+        if (photo_num > MAX_IMG_NUM) {
+          Toast.makeText(SendQuestionActivity.this, "不能超过" + MAX_IMG_NUM + "张哟", Toast
+              .LENGTH_SHORT).show();
           photo_num = photo_num - imgPathList.size();
           scrollImg.add(img_num, "add");
           return;
         }
         for (int i = 0; i < imgPathList.size(); i++) {
           if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
-            if (img_num <= 3) {
+            if (img_num <= MAX_IMG_NUM) {
               Log.d("Andy", img_num + "");
               scrollImg.add(imgPathList.get(i));
               Log.e(">>", scrollImg.get(i));
@@ -423,7 +417,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
             }
           }
         }
-        photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
+        photoCount.setText("已选" + img_num + "张，还剩" + (MAX_IMG_NUM - img_num) + "张");
         scrollImg.add(img_num, "add");
         photoAdapter.notifyDataSetChanged();
       }
@@ -467,12 +461,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     for (int i = 0; i < img_num; i++) {
       imageLists.get(i).setVisibility(View.GONE);
       imgLayList.get(i).setVisibility(View.GONE);
-    }
-  }
-
-  private void ableAddPhoto() {
-    if (img_num >= 3) {
-
     }
   }
 
@@ -553,18 +541,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     }
   }
 
-  private void kjUpload(String path) {
-    HttpParams params = new HttpParams();
-    KJHttp kjHttp = new KJHttp();
-
-    try {
-      params.put("image", FileUtils.getSaveFile(Url.UPLOADTEMPORARYPATH,
-          path.substring(path.lastIndexOf("/") + 1, path.length())));
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
-  }
-
   private void sendWeibo() {
 
     //        Map map = new HashMap();
@@ -619,75 +595,44 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
         });
   }
 
-  public class PhotoAdapter extends BaseAdapter {
-    private KJBitmap kjBitmap;
+  public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder> {
     private List<String> imgUrl = new ArrayList<String>();
     private Context ctx;
-    private FinalBitmap finalBitmap;
-    private LoadImg loadImg;
 
-    public PhotoAdapter(Context ctx, FinalBitmap finalBitmap, KJBitmap kjBitmap,
-                        List<String> list) {
-      this.kjBitmap = kjBitmap;
-      this.finalBitmap = finalBitmap;
+    public PhotoAdapter(Context ctx, List<String> list) {
       this.imgUrl = list;
       this.ctx = ctx;
-      loadImg = new LoadImg(ctx);
     }
 
     @Override
-    public int getCount() {
-      return imgUrl.size();
+    public PhotoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+      View convertView = View.inflate(ctx, R.layout.photo_item, null);
+      PhotoHolder holder = new PhotoHolder(convertView);
+      holder.imageView = (ImageView) convertView.findViewById(R.id.Photo_item);
+      holder.delImg = (ImageView) convertView.findViewById(R.id.delImg);
+      return holder;
     }
 
     @Override
-    public Object getItem(int position) {
-      return position;
-    }
+    public void onBindViewHolder(PhotoHolder holder, final int position) {
+      //holder.imageView.setTag(imgUrl.get(position));
+      holder.delImg.setAlpha(180);
 
-    @Override
-    public long getItemId(int position) {
-      return position;
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-      final Holder holder;
-      final View view;
-
-      if (convertView == null) {
-        holder = new Holder();
-        convertView = View.inflate(ctx, R.layout.photo_item, null);
-        holder.imageView = (ImageView) convertView.findViewById(R.id.Photo_item);
-        holder.imageView.setTag(imgUrl.get(position));
-        holder.delImg = (ImageView) convertView.findViewById(R.id.delImg);
-        holder.delImg.setAlpha(180);
-        convertView.setTag(holder);
-      } else {
-        holder = (Holder) convertView.getTag();
-      }
-      view = convertView;
-
-      if (holder.imageView.getTag().equals(imgUrl.get(position))) {
-        if (imgUrl.get(position).equals("add")) {
-          BitmapDrawable bitmapDrawable =
-              (BitmapDrawable) getResources().getDrawable(R.drawable.add_post_photo);
-          holder.imageView.setImageBitmap(bitmapDrawable.getBitmap());
+      if (TextUtils.equals((String) holder.imageView.getTag(), imgUrl.get(position))) {
+        if (TextUtils.equals(imgUrl.get(position), "add")) {
+          holder.imageView.setImageResource(R.drawable.add_post_photo);
           holder.delImg.setVisibility(View.GONE);
         } else {
-          holder.imageView.setImageBitmap(BitmapUtiles.loadBitmap(imgUrl.get(position), 3));
+          ImageLoader.loadOptimizedHttpImage(ctx, imgUrl.get(position)).into(holder.imageView);
           holder.delImg.setVisibility(View.VISIBLE);
         }
       } else {
-        if (imgUrl.get(position).equals("add")) {
-          holder.imageView.setTag(imgUrl.get(position));
-          BitmapDrawable bitmapDrawable =
-              (BitmapDrawable) getResources().getDrawable(R.drawable.add_post_photo);
-          holder.imageView.setImageBitmap(bitmapDrawable.getBitmap());
+        if (TextUtils.equals(imgUrl.get(position), "add")) {
+          holder.imageView.setImageResource(R.drawable.add_post_photo);
           holder.delImg.setVisibility(View.GONE);
         } else {
           holder.imageView.setTag(imgUrl.get(position));
-          holder.imageView.setImageBitmap(BitmapUtiles.loadBitmap(imgUrl.get(position), 3));
+          ImageLoader.loadOptimizedHttpImage(ctx, imgUrl.get(position)).into(holder.imageView);
           holder.delImg.setVisibility(View.VISIBLE);
         }
       }
@@ -697,7 +642,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
           if (imgUrl.get(position).equals("add")) {
             Log.d("Andy12345", img_num + "");
             Log.d("Andy123456", imgUrl.get(position));
-            if (img_num < 3) {
+            if (img_num < MAX_IMG_NUM) {
               //ToastHelper.showToast("点击了罗",ctx);
               String[] items = {"相册", "拍照"};
               AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
@@ -736,7 +681,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
               builder.setCancelable(true);
               builder.show();
             } else {
-              ToastHelper.showToast("最多上传3张图片", ctx);
+              ToastHelper.showToast("最多上传" + MAX_IMG_NUM + "张图片", ctx);
             }
           }
         }
@@ -744,39 +689,32 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
       holder.delImg.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          deleteCell(view, position);
+          deleteCell(position);
         }
       });
-      return convertView;
     }
 
-    class Holder {
+
+    @Override
+    public int getItemCount() {
+      return imgUrl.size();
+    }
+
+    class PhotoHolder extends RecyclerView.ViewHolder {
       ImageView imageView, delImg;
+
+      public PhotoHolder(View itemView) {
+        super(itemView);
+      }
     }
   }
 
-  private void deleteCell(final View v, final int index) {
-    Animation.AnimationListener al = new Animation.AnimationListener() {
-      @Override
-      public void onAnimationEnd(Animation arg0) {
-        horizontalListView.scrollTo(0);
-        scrollImg.remove(index);
-        img_num--;
-        photo_num--;
-        photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
-        PhotoAdapter.Holder vh = (PhotoAdapter.Holder) v.getTag();
-        photoAdapter.notifyDataSetChanged();
-      }
-
-      @Override
-      public void onAnimationRepeat(Animation animation) {
-      }
-
-      @Override
-      public void onAnimationStart(Animation animation) {
-      }
-    };
-    collapse(v, al);
+  private void deleteCell(final int index) {
+    scrollImg.remove(index);
+    img_num--;
+    photo_num--;
+    photoCount.setText("已选" + img_num + "张，还剩" + (MAX_IMG_NUM - img_num) + "张");
+    photoAdapter.notifyDataSetChanged();
   }
 
   private void collapse(final View v, Animation.AnimationListener al) {

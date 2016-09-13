@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.thinksky.info.ImageBean;
 import com.thinksky.redefine.MyImageView;
 import com.thinksky.tox.R;
+import com.thinksky.utils.imageloader.ImageLoader;
 import java.util.List;
 import net.tsz.afinal.FinalBitmap;
 
@@ -19,7 +20,6 @@ public class GroupAdapter extends BaseAdapter {
   private Point mPoint = new Point(0, 0);//用来封装ImageView的宽和高的对象
   private GridView mGridView;
   protected LayoutInflater mInflater;
-  private FinalBitmap finalBitmap;
   private Context context;
 
   @Override
@@ -38,11 +38,9 @@ public class GroupAdapter extends BaseAdapter {
     return position;
   }
 
-  public GroupAdapter(Context context, List<ImageBean> list, GridView mGridView, FinalBitmap
-      finalBitmap) {
+  public GroupAdapter(Context context, List<ImageBean> list, GridView mGridView) {
     this.list = list;
     this.mGridView = mGridView;
-    this.finalBitmap = finalBitmap;
     this.context = context;
     mInflater = LayoutInflater.from(context);
   }
@@ -56,7 +54,7 @@ public class GroupAdapter extends BaseAdapter {
     String path = mImageBean.getTopImagePath();
     if (convertView == null) {
       viewHolder = new ViewHolder();
-      convertView = mInflater.inflate(R.layout.grid_group_item, null);
+      convertView = mInflater.inflate(R.layout.grid_group_item, parent, false);
       viewHolder.mImageView = (MyImageView) convertView.findViewById(R.id.group_image);
       viewHolder.mTextViewTitle = (TextView) convertView.findViewById(R.id.group_title);
       viewHolder.mTextViewCounts = (TextView) convertView.findViewById(R.id.group_count);
@@ -81,26 +79,7 @@ public class GroupAdapter extends BaseAdapter {
     //给ImageView设置路径Tag,这是异步加载图片的小技巧
     viewHolder.mImageView.setTag(path);
 
-    finalBitmap.display(viewHolder.mImageView, path);
-        /*//利用NativeImageLoader类加载本地图片
-    Bitmap bitmap = NativeImageLoader.getInstance().loadNativeImage(path, mPoint, new
-		NativeImageLoader.NativeImageCallBack() {
-			
-			@Override
-			public void onImageLoader(Bitmap bitmap, String path) {
-				ImageView mImageView = (ImageView) mGridView.findViewWithTag(path);
-				if(bitmap != null && mImageView != null){
-					mImageView.setImageBitmap(bitmap);
-				}
-			}
-		});
-		
-		if(bitmap != null){
-			viewHolder.mImageView.setImageBitmap(bitmap);
-		}else{
-			viewHolder.mImageView.setImageResource(R.drawable.friends_sends_pictures_no);
-		}*/
-
+    ImageLoader.loadOptimizedHttpImage(context, path).into(viewHolder.mImageView);
 
     return convertView;
   }

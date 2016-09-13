@@ -25,6 +25,7 @@ import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.model.PostModel;
 import com.thinksky.net.rpc.model.QuestionCategoryModel;
+import com.thinksky.net.rpc.model.QuestionDetailModel;
 import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
@@ -282,6 +283,9 @@ public interface AppService {
   @GET("api.php?s=group/sendPost")
   Observable<BaseModel> sendPost(@Query("session_id") String sessionId, @Query("group_id") String groupId, @Query("title") String title,
                                  @Query("content") String content, @Query("attach_id") String attachId);
+
+  @GET("api.php?s=Question/getQuestionDetail&page=1&count=" + Integer.MAX_VALUE)
+  Observable<QuestionDetailModel> getQuestionDetail(@Query("session_id") String sessionId, @Query("questionid") String questionId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

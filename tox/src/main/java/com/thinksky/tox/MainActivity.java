@@ -231,7 +231,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     //        lv.setAdapter(new LeftItemAdapter(this));
 
     mTitleBar.setLogoVisible(true);
-    mTitleBar.setLeftImgMenu(R.drawable.list, new View.OnClickListener() {
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_profile, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         showOrHideDrawer();
