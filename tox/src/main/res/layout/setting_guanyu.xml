@@ -4,92 +4,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ECE4D7"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
 
-    <RelativeLayout
-        android:id="@+id/loginTop_guanyu"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/head_border">
+  <RelativeLayout
+      android:id="@+id/loginTop_guanyu"
+      android:layout_width="match_parent"
+      android:layout_height="?actionBarSize"
+      android:background="@drawable/head_border"
+      >
 
-        <ImageView
-            android:id="@+id/guanyuqibai_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/icon_title_bar_back" />
+    <ImageView
+        android:id="@+id/guanyuqibai_back"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/icon_title_bar_back"
+        />
 
-        <TextView
-            android:id="@+id/loginText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:text="关于鱼知乐"
-            android:textColor="@color/tab"
-            android:textSize="17sp" />
+    <TextView
+        android:id="@+id/loginText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="关于"
+        android:textColor="@color/tab"
+        android:textSize="17sp"
+        />
 
-        <ImageView
-            android:id="@+id/Issue_writePost"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="15dp"
-            android:paddingRight="10dp"
-            android:paddingTop="15dp"
-            android:src="@drawable/pencil"
-            android:visibility="gone" />
+    <ImageView
+        android:id="@+id/Issue_writePost"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="15dp"
+        android:src="@drawable/pencil"
+        android:visibility="gone"
+        />
 
-    </RelativeLayout>
+  </RelativeLayout>
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:paddingTop="45dp"
+      >
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_launcher"
+        />
+
+    <TextView android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="18dp"
+        android:text="1.0.1"
+        style="@style/Widget.App.TextView.XXLarge.Primary"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="18dp"
+        android:text="客服QQ：89898989"
+        style="@style/Widget.App.TextView.XLarge.Secondary"
+        />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="客服邮箱：account-service@yuzhile.com"
+        style="@style/Widget.App.TextView.XLarge.Secondary"
+        />
 
-
-        <ImageView
-            android:paddingTop="50dp"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_launcher" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="18dp"
-            android:text="1.0.1"
-            android:textSize="20dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingTop="18dp"
-            android:text="客服QQ：89898989"
-            android:textColor="@color/font_color_dark_gray"
-            android:textSize="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="18dp"
-            android:text="客服邮箱：account-service@yuzhile.com"
-            android:textColor="@color/font_color_dark_gray"
-            android:textSize="20dp" />
-
-    </LinearLayout>
+  </LinearLayout>
 
 
 </LinearLayout>
