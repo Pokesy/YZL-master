@@ -28,15 +28,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.alibaba.fastjson.JSON;
-import com.thinksky.fragment.DiscoverFragment;
 import com.thinksky.fragment.QuestionSelectActivity;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
+import com.thinksky.net.rpc.model.BaseModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
-import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.rsen.view.RGridView;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.FileUtiles;
 import com.thinksky.utils.MyJson;
@@ -50,13 +54,11 @@ import com.tox.Url;
 import com.tox.WeiboApi;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import javax.inject.Inject;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
-import org.json.JSONObject;
 
 public class SendQuestionActivity extends BaseBActivity implements View.OnClickListener {
   private static final int MAX_IMG_NUM = 9;
@@ -108,12 +110,22 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   private TextView dizhi;
   private TextView mWealthView;
 
+  @Inject
+  AppService mAppService;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    inject();
     setContentView(R.layout.activity_send_question);
     initView();
     initData();
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().serviceModule(new ServiceModule()).globalModule(new
+        GlobalModule((BaseApplication) getApplication()))
+        .build().inject(this);
   }
 
   private void initData() {
@@ -542,57 +554,24 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   }
 
   private void sendWeibo() {
+    showProgressDialog("", false);
+    manageRpcCall(mAppService.sendQuestion(session_id, mTitleEdit.getText().toString().trim(),
+        mContentEdit.getText().toString().trim(), score.getText().toString().trim(), category_id,
+        l), new UiRpcSubscriber1<BaseModel>(this) {
 
-    //        Map map = new HashMap();
-    //        map.put("session_id", session_id);
-    //        map.put("title", mTitleEdit.getText().toString().trim());
-    //        map.put("content", mContentEdit.getText().toString().trim());
-    //        map.put("score", score.getText().toString().trim());
-    //        map.put("category_id", category_id);
 
-    RsenUrlUtil.executeNew(this, RsenUrlUtil.URL_SEND_QUESTION,
-        new RsenUrlUtil.OnJsonResultListener<DiscoverFragment.FXBean>() {
-          @Override
-          public void onNoNetwork(String msg) {
-            ToastHelper.showToast(msg, Url.context);
-          }
+      @Override
+      protected void onSuccess(BaseModel baseModel) {
+        getComponent().getGlobalBus().post(new QuestionSendEvent());
+        finish();
+      }
 
-          @Override
-          public Map getMap() {
-            Map map = new HashMap();
-            map.put("session_id", session_id);
-            map.put("title", mTitleEdit.getText().toString().trim());
-            map.put("content", mContentEdit.getText().toString().trim());
-            map.put("score", score.getText().toString().trim());
-            map.put("category_id", category_id);
-            map.put("attach_ids", l);
-            return map;
-          }
+      @Override
+      protected void onEnd() {
+        closeProgressDialog();
+      }
+    });
 
-          @Override
-          public void onParseJsonBean(List<DiscoverFragment.FXBean> beans, JSONObject jsonObject) {
-            String result = jsonObject.toString();
-            DiscoverFragment.FXBean discoverInfo =
-                JSON.parseObject(result, DiscoverFragment.FXBean.class);
-            beans.add(discoverInfo);
-          }
-
-          @Override
-          public void onResult(boolean state, List beans) {
-            progressDialog.dismiss();
-            if (state) {
-              SendQuestionActivity.this.finish();
-              getComponent().getGlobalBus().post(new QuestionSendEvent());
-            }
-          }
-
-          @Override
-          public void onError(int errorCode, String message) {
-            super.onError(errorCode, message);
-            Toast.makeText(SendQuestionActivity.this, message, Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-          }
-        });
   }
 
   public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.PhotoHolder> {

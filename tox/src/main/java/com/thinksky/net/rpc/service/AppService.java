@@ -281,11 +281,19 @@ public interface AppService {
   Observable<BaseModel> getMessageContent(@Query("id") String msgId);
 
   @GET("api.php?s=group/sendPost")
-  Observable<BaseModel> sendPost(@Query("session_id") String sessionId, @Query("group_id") String groupId, @Query("title") String title,
-                                 @Query("content") String content, @Query("attach_id") String attachId);
+  Observable<BaseModel> sendPost(@Query("session_id") String sessionId, @Query("group_id") String
+      groupId, @Query("title") String title,
+                                 @Query("content") String content, @Query("attach_id") String
+                                     attachId);
 
   @GET("api.php?s=Question/getQuestionDetail&page=1&count=" + Integer.MAX_VALUE)
-  Observable<QuestionDetailModel> getQuestionDetail(@Query("session_id") String sessionId, @Query("questionid") String questionId);
+  Observable<QuestionDetailModel> getQuestionDetail(@Query("session_id") String sessionId, @Query
+      ("questionid") String questionId);
+
+  @GET("api.php?s=/question/sendQuestion")
+  Observable<BaseModel> sendQuestion(@Query("session_id") String sessionId, @Query("title")
+  String title, @Query("content") String content, @Query("score") String score, @Query
+      ("category_id") String categoryId, @Query("attach_ids") String attachIds);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
