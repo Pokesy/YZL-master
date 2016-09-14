@@ -12,11 +12,13 @@
   <ScrollView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:padding="@dimen/margin_primary"
       >
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/licence"
         style="@style/Widget.App.TextView.Medium.Primary"
         />
   </ScrollView>

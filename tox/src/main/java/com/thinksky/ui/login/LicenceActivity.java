@@ -48,6 +48,6 @@ public class LicenceActivity extends BaseBActivity {
 
     titleBar.setMiddleTitle(R.string.activity_licence);
 
-    content.setText("");
+    content.setText(R.string.licence);
   }
 }
