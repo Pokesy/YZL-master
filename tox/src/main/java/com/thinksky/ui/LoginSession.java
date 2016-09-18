@@ -16,6 +16,7 @@ import android.content.SharedPreferences;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.utils.JsonConverter;
+import com.tox.Url;
 
 /**
  * [一句话功能简述]<BR>
@@ -68,6 +69,10 @@ public class LoginSession {
     editor.remove(KEY_UID);
     editor.remove(KEY_SESSION_ID);
     editor.remove(KEY_USER_INFO);
+    Url.MYUSERINFO = null;
+    Url.LASTPOSTTIME = 0;
+    Url.SESSIONID = "";
+    Url.USERID = "";
     editor.apply();
   }
 

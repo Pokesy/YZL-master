@@ -36,6 +36,6 @@ public class NetConstant {
     public static final int UNKNOWN_ERROR = -1;
     public static final int SUCCESS = 200;
     public static final int HTTP_ERROR_NOT_FOUND = 404;
-    public static final int SESSION_EXPIRED = 100;
+    public static final int SESSION_EXPIRED = 401;
   }
 }

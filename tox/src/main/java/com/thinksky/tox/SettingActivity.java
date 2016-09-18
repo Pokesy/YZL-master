@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.RpcApiError;
 import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.service.AppService;
@@ -124,10 +125,6 @@ public class SettingActivity extends BaseBActivity {
                       protected void onSuccess(BaseModel baseModel) {
                         getComponent().loginSession().clearUserInfo();
                         getComponent().getGlobalBus().post(new LogoutEvent());
-                        Url.MYUSERINFO = null;
-                        Url.LASTPOSTTIME = 0;
-                        Url.SESSIONID = "";
-                        Url.USERID = "";
                         finish();
                         startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                       }
@@ -135,6 +132,14 @@ public class SettingActivity extends BaseBActivity {
                       @Override
                       protected void onEnd() {
                         closeProgressDialog();
+                      }
+
+                      @Override
+                      public void onApiError(RpcApiError apiError) {
+                        getComponent().loginSession().clearUserInfo();
+                        getComponent().getGlobalBus().post(new LogoutEvent());
+                        finish();
+                        startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                       }
                     });
 

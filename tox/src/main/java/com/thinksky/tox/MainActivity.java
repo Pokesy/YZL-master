@@ -32,7 +32,9 @@ import com.thinksky.holder.BaseActivity;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.model.ActivityModel;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.qqsliding.widget.DragLayout;
@@ -43,6 +45,7 @@ import com.thinksky.ui.common.TitleBar;
 import com.thinksky.ui.profile.FansListActivity;
 import com.thinksky.ui.profile.FollowListActivity;
 import com.thinksky.ui.profile.MyCollectionActivity;
+import com.thinksky.ui.profile.MyMessageActivity;
 import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -50,6 +53,10 @@ import com.tox.Url;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by jiao on 2016/1/26.
@@ -612,13 +619,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     inject();
+    super.onCreate(savedInstanceState);
     checkNewVersion();
   }
 
   private void inject() {
-    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication())).serviceModule(new ServiceModule())
+    DaggerServiceComponent.builder().globalModule(new GlobalModule(BaseApplication.getApplication
+        ())).serviceModule(new ServiceModule())
         .build().inject(this);
   }
 
@@ -639,6 +647,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
   @Subscribe
   public void handleuserInfoChangeEvent(LoginSession.UserInfoChangeEvent event) {
     mController.setData();
+  }
+
+  @Subscribe
+  public void handleMessageReadEvent(MyMessageActivity.MessageReadEvent event) {
+    mController.getUnreadStatus();
   }
 
   @Override
@@ -664,6 +677,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private View mSettingView;
     private View mBtnFans;
     private View mBtnFollow;
+    private ImageView mNewStatusView;
 
     public SlideController(View rootView) {
       this.rootView = rootView;
@@ -687,6 +701,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       mSettingView = rootView.findViewById(R.id.menu_setting);
       mBtnFans = rootView.findViewById(R.id.btn_fans);
       mBtnFollow = rootView.findViewById(R.id.btn_follow);
+      mNewStatusView = (ImageView) rootView.findViewById(R.id.icon_new_msg);
 
       mLocationView.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -783,6 +798,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mLocationView.setTextColor(getResources().getColor(R.color.font_color_blue));
       }
       setTitleBar();
+      getUnreadStatus();
     }
 
     private void setTitleBar() {
@@ -803,6 +819,64 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
       });
     }
+
+    private void getUnreadStatus() {
+      Observable<UnReadCountModel> observable = mAppService.getUnreadCount("4", Url.SESSIONID)
+          .observeOn(AndroidSchedulers.mainThread())
+          .filter(new Func1<UnReadCountModel, Boolean>() {
+            @Override
+            public Boolean call(UnReadCountModel unReadCountModel) {
+              if (unReadCountModel.getCount() > 0) {
+                mNewStatusView.setVisibility(View.VISIBLE);
+              } else {
+                mNewStatusView.setVisibility(View.GONE);
+              }
+              return unReadCountModel.getCount() <= 0;
+            }
+          }).observeOn(Schedulers.newThread()).flatMap(new Func1<UnReadCountModel,
+              Observable<UnReadCountModel>>() {
+            @Override
+            public Observable<UnReadCountModel> call(UnReadCountModel unReadCountModel) {
+              return mAppService.getUnreadCount("16", Url.SESSIONID);
+            }
+          }).observeOn(AndroidSchedulers.mainThread()).filter(new Func1<UnReadCountModel,
+              Boolean>() {
+            @Override
+            public Boolean call(UnReadCountModel unReadCountModel) {
+              if (unReadCountModel.getCount() > 0) {
+                mNewStatusView.setVisibility(View.VISIBLE);
+              } else {
+                mNewStatusView.setVisibility(View.GONE);
+              }
+              return unReadCountModel.getCount() <= 0;
+            }
+          }).observeOn(Schedulers.newThread()).flatMap(new Func1<UnReadCountModel,
+              Observable<UnReadCountModel>>() {
+            @Override
+            public Observable<UnReadCountModel> call(UnReadCountModel unReadCountModel) {
+              return mAppService.getUnreadCount("16", Url.SESSIONID);
+            }
+          });
+
+      manageRpcCall(observable, new UiRpcSubscriber1<UnReadCountModel>(MainActivity.this) {
+        @Override
+        protected void onSuccess(UnReadCountModel unReadCountModel) {
+          if (unReadCountModel.getCount() > 0) {
+            mNewStatusView.setVisibility(View.VISIBLE);
+          } else {
+            mNewStatusView.setVisibility(View.GONE);
+          }
+        }
+
+        @Override
+        protected void onEnd() {
+
+        }
+      });
+
+    }
+
+
   }
 
   public static class EnterMapEvent {
