@@ -109,7 +109,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     inject();
     setContentView(R.layout.activity_question_detail);
     mScrollView = (ScrollView) findViewById(R.id.post_scroll);
-    title = (TextView) findViewById(R.id.title);
+    title = (TextView) findViewById(R.id.question_title);
     best_answer = (TextView) findViewById(R.id.best_answer);
     img_layout = (RelativeLayout) findViewById(R.id.img_layout);
     money = (TextView) findViewById(R.id.money);
