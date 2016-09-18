@@ -547,6 +547,7 @@
           android:padding="@dimen/margin_small"
           android:textColorHint="@color/font_color_dark_gray"
           style="@style/Widget.App.TextView.Medium.Primary"
+          android:maxLength="@integer/comment_max_length"
           />
 
       <TextView
