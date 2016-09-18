@@ -249,8 +249,14 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
           ToastHelper.showToast("未登录", this);
           return;
         }
-        if (mTitleEdit.getText().toString().equals("")) {
+        if (TextUtils.isEmpty(mTitleEdit.getText())) {
           ToastHelper.showToast("请填写标题", this);
+          return;
+        }
+        if (mTitleEdit.getText().length() < getResources().getInteger(R.integer
+            .question_title_min_length)) {
+          ToastHelper.showToast("标题数字不能小于" + getResources().getInteger(R.integer
+              .question_title_min_length), this);
           return;
         }
         if (TextUtils.isEmpty(score.getText())) {

@@ -1,7 +1,7 @@
 package com.thinksky.tox;
 
 /**
- * 发表微博
+ * 发表动态
  */
 
 import android.app.ProgressDialog;
@@ -65,11 +65,11 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
   private LinearLayout mbottom, mFaceArea, mDividingLineT, mDividingLineB;
   private String tempContent = null;
   /**
-   * 统计微博字数
+   * 统计动态字数
    */
   private TextView mlatterCount, mImageLarge, mTitle;
   /**
-   * 用来存放微博图片的水平滑动组件容器
+   * 用来存放动态图片的水平滑动组件容器
    */
   private HorizontalScrollView imgScrollView;
   private ImageView img1, img2, img3, img4, img5, img6, img7, img8, img9;
@@ -125,7 +125,7 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
     mFace = (ImageView) findViewById(R.id.Upload_face);
     //字数统计文本
     mlatterCount = (TextView) findViewById(R.id.weibo_count);
-    //微博图片
+    //动态图片
     imgScrollView = (HorizontalScrollView) findViewById(R.id.weibo_img);
     //显示统计要上传的图片大小
     mImageLarge = (TextView) findViewById(R.id.image_large);
@@ -182,7 +182,7 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
       mCamera.setVisibility(View.GONE);
       mAlbum.setVisibility(View.GONE);
       mImageLarge.setVisibility(View.INVISIBLE);
-      mTitle.setText("转发微博");
+      mTitle.setText("转发动态");
     }
     CameralActivity.setIMGcallback(new IMGCallBack() {
 

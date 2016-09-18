@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_vertical"
-        android:text="发微博"
+        android:text="发动态"
         style="@style/Widget.App.TextView.XXLarge.White"
         />
 
@@ -147,7 +147,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="2.5"
             android:gravity="right"
-            android:text="0/200"
             />
       </LinearLayout>
     </LinearLayout>

@@ -99,11 +99,11 @@ public class MyJson {
         weiboInfo.setIs_supported(weiboObject.getString("is_supported").equals("1") ? true : false);
       }
       if (weiboObject.getString("type").equals("repost")) {
-        //TODO 转发微博JSON解析
+        //TODO 转发动态JSON解析
 
         WeiboInfo repost = getRepostWeiboInfo(weiboObject.getString("data"));
         weiboInfo.setRepostWeiboInfo(repost);
-        // Log.e("转发微博" + weiboInfo.getWid(), repost.getWcontent());
+        // Log.e("转发动态" + weiboInfo.getWid(), repost.getWcontent());
       }
 
     } catch (JSONException e) {
@@ -141,11 +141,11 @@ public class MyJson {
         weiboInfo.setIs_supported(weiboObject.getString("is_supported").equals("1") ? true : false);
       }
       if (weiboObject.getString("type").equals("repost")) {
-        //TODO 转发微博JSON解析
+        //TODO 转发动态JSON解析
 
         WeiboInfo repost = getRepostWeiboInfo(weiboObject.getString("data"));
         weiboInfo.setRepostWeiboInfo(repost);
-        // Log.e("转发微博" + weiboInfo.getWid(), repost.getWcontent());
+        // Log.e("转发动态" + weiboInfo.getWid(), repost.getWcontent());
       }
 
     } catch (JSONException e) {
@@ -263,16 +263,16 @@ public class MyJson {
             weiboInfo.setIs_supported(listitem.getString("is_supported").equals("1"));
           }
           if (listitem.getString("type").equals("repost")) {
-            //TODO 转发微博JSON解析
+            //TODO 转发动态JSON解析
 
             WeiboInfo repost = getRepostWeiboInfo(listitem.getString("data"));
             weiboInfo.setRepostWeiboInfo(repost);
-            // Log.e("转发微博" + weiboInfo.getWid(), repost.getWcontent());
+            // Log.e("转发动态" + weiboInfo.getWid(), repost.getWcontent());
           }
 
           //TODO 虾米音乐解析
           if (listitem.getString("type").equals("xiami")) {
-            Log.d("虾米音乐", "这是一条虾米音乐的微博");
+            Log.d("虾米音乐", "这是一条虾米音乐的动态");
 
           }
         } catch (JSONException e) {
@@ -290,7 +290,7 @@ public class MyJson {
   }
 
   public WeiboInfo getRepostWeiboInfo(String value) {
-    //TODO 转发微博JSON解析
+    //TODO 转发动态JSON解析
     WeiboInfo repostWeibo = new WeiboInfo();
     try {
 
@@ -358,7 +358,7 @@ public class MyJson {
 
   /**
    * @param value Json格式的String 字符串
-   * @discription 解析微博评论的方法
+   * @discription 解析动态评论的方法
    */
   public List<WeiboCommentInfo> getWeiboCommentsList(String value) {
     List<WeiboCommentInfo> list = new ArrayList<WeiboCommentInfo>();

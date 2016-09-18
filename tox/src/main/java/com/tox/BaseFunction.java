@@ -142,7 +142,7 @@ public class BaseFunction {
    * @param imageView 要设置图片的imageview
    * @param imgUrl 图片的网络路径
    * @param loadImg 下载图片的实例对象
-   * @param type 图片显示类型，分头像和微博图片
+   * @param type 图片显示类型，分头像和动态图片
    * @author 小泽玛丽罗
    */
   public static void showImage(Context context, ImageView imageView, String imgUrl, LoadImg

@@ -4,4 +4,12 @@
 
   <integer name="avatar_width">180</integer>
   <integer name="avatar_height">180</integer>
+
+  <integer name="min_password_length">6</integer>
+  <integer name="question_title_min_length">5</integer>
+  <integer name="question_title_max_length">45</integer>
+  <integer name="question_description_max_length">500</integer>
+  <integer name="activity_max_length">140</integer>
+
+  <integer name="comment_max_length">500</integer>
 </resources>

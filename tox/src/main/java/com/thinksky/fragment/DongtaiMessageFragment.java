@@ -201,7 +201,7 @@ public class DongtaiMessageFragment extends Fragment {
          * success : true
          * error_code : 0
          * message : 返回成功
-         * list : [{"id":"194","content_id":"245","from_uid":"106","to_uid":"1","create_time":"04月15日 16:02","is_read":"1","last_toast":"1460707354","status":"1","module":"4","content":{"id":"245","from_id":"106","title":"评论消息","content":"评论内容：Sdfsdfsd","url":"Weibo/Index/weiboDetail","args":"{\"id\":80}","type":"1","create_time":"1460707353","status":"1"}},{"id":"226","content_id":"261","from_uid":"121","to_uid":"1","create_time":"04月20日 15:13","is_read":"0","last_toast":"0","status":"1","module":"4","content":{"id":"261","from_id":"121","title":"红小豆转发了您的微博！","content":"转发提醒","url":"Weibo/Index/weiboDetail","args":"{\"id\":null}","type":"1","create_time":"1461136435","status":"1"}}]
+         * list : [{"id":"194","content_id":"245","from_uid":"106","to_uid":"1","create_time":"04月15日 16:02","is_read":"1","last_toast":"1460707354","status":"1","module":"4","content":{"id":"245","from_id":"106","title":"评论消息","content":"评论内容：Sdfsdfsd","url":"Weibo/Index/weiboDetail","args":"{\"id\":80}","type":"1","create_time":"1460707353","status":"1"}},{"id":"226","content_id":"261","from_uid":"121","to_uid":"1","create_time":"04月20日 15:13","is_read":"0","last_toast":"0","status":"1","module":"4","content":{"id":"261","from_id":"121","title":"红小豆转发了您的动态！","content":"转发提醒","url":"Weibo/Index/weiboDetail","args":"{\"id\":null}","type":"1","create_time":"1461136435","status":"1"}}]
          */
 
         private boolean success;

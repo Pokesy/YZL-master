@@ -173,7 +173,7 @@ public class WeiboAdapter extends BaseAdapter {
         hold.repostName.setText("");
         hold.repostName.setTextColor(ctx.getResources().getColor(R.color.repostName));
         hold.repostWeiboTime.setText(".");
-        hold.repostText.setFaceText("      原微博已删除");
+        hold.repostText.setFaceText("      原动态已删除");
         hold.repostLinerLayout.setVisibility(View.VISIBLE);
         hold.repostText.setVisibility(View.VISIBLE);
         hold.repostWeiboTime.setVisibility(View.GONE);
@@ -283,7 +283,7 @@ public class WeiboAdapter extends BaseAdapter {
       public void onClick(View v) {
         if (!Url.SESSIONID.equalsIgnoreCase("")) {
           Intent intent = new Intent(ctx, UploadActivity.class);
-          Log.e("转发微博被点击啦啦啦啦啦", arg0 + "");
+          Log.e("转发动态被点击啦啦啦啦啦", arg0 + "");
           intent.putExtra("weiboType", "repost");
           if (list.get(number).getType().equals("repost")) {
             if (list.get(number).getUser().equals("null")) {

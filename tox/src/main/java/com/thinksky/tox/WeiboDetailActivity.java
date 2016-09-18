@@ -73,7 +73,7 @@ public class WeiboDetailActivity extends BaseBActivity {
     Intent intent = getIntent();
     Bundle bund = intent.getBundleExtra("value");
     Weiboinfo = (WeiboInfo) bund.getSerializable("WeiboInfo");
-    Log.e("微博内容", Weiboinfo.getWcontent());
+    Log.e("动态内容", Weiboinfo.getWcontent());
     loadImg = new LoadImg(WeiboDetailActivity.this);
     initView();
     addInformation();
@@ -109,7 +109,7 @@ public class WeiboDetailActivity extends BaseBActivity {
       mComment_ProgressBar = (ProgressBar) findViewById(R.id.Comment_ProgressBar);
       mComment_ProgressBar.setVisibility(View.GONE);
       TextView show = (TextView) findViewById(R.id.TextShowNoComment);
-      show.setText("该微博暂无评论！！");
+      show.setText("该动态暂无评论");
       //            show.setHeight(40);
     }
   }
@@ -235,7 +235,7 @@ public class WeiboDetailActivity extends BaseBActivity {
             ToastHelper.showToast("请先登录", WeiboDetailActivity.this);
           }
           break;
-        //删除微博
+        //删除动态
         case R.id.delete_button:
           if (BaseFunction.isLogin()) {
             if (Weiboinfo.getUser().getUid().equals(Url.USERID)) {
@@ -257,7 +257,7 @@ public class WeiboDetailActivity extends BaseBActivity {
                   }
                 }
               });
-              new AlertDialog.Builder(WeiboDetailActivity.this).setMessage("确定删除微博？")
+              new AlertDialog.Builder(WeiboDetailActivity.this).setMessage("确定删除动态？")
                   .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -441,9 +441,9 @@ public class WeiboDetailActivity extends BaseBActivity {
         .placeholder(R.drawable.picture_no).into(weiboImgView);
   }
 
-  //初始化微博的详情页的基本信息
+  //初始化动态的详情页的基本信息
   private void addInformation() {
-    //mDetail_AshameID.setText("微博ID" + Weiboinfo.getWid());
+    //mDetail_AshameID.setText("动态ID" + Weiboinfo.getWid());
     mDetail_UserName.setText(UserUtils.getUserName(this, Weiboinfo.getUser().getUid(), Weiboinfo
         .getUser().getNickname()));
     mDetail_MainText.setFaceText(Weiboinfo.getWcontent());
@@ -471,7 +471,7 @@ public class WeiboDetailActivity extends BaseBActivity {
         mDetail_repostName.setText(" ");
         mDetail_repostName.setVisibility(View.VISIBLE);
         mDetail_repostName.setTextColor(getResources().getColor(R.color.repostName));
-        mDetail_repostContent.setText("" + "   原微博已删除");
+        mDetail_repostContent.setText("" + "   原动态已删除");
         mDetail_repostContent.setVisibility(View.VISIBLE);
         mDetail_repostTime.setText("");
         mDetail_repostTime.setVisibility(View.VISIBLE);

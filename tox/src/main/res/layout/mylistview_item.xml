@@ -123,7 +123,7 @@
         />
 
 
-    <!--转发微博区-->
+    <!--转发动态区-->
 
     <LinearLayout
         android:id="@+id/RepostWeibo"

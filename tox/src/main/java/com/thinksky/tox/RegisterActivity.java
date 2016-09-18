@@ -488,8 +488,17 @@ public class RegisterActivity extends BaseBActivity {
           return;
         }
       }
+      int minPasswordLength = getResources().getInteger(R.integer.min_password_length);
+      if (!TextUtils.isEmpty(password) && password.length() < minPasswordLength) {
+        Toast.makeText(RegisterActivity.this, "密码不能少于" + minPasswordLength + "位", Toast
+            .LENGTH_SHORT).show();
+        return;
+      } else if (TextUtils.isEmpty(password)) {
+        Toast.makeText(RegisterActivity.this, "密码不能为空", Toast
+            .LENGTH_SHORT).show();
+      }
 
-      if (!username.equalsIgnoreCase(null) && !password.equalsIgnoreCase(null) && !"".equals(
+      if (username != null && null != password && !"".equals(
           username) && !"".equals(password) && !"".equals(nickname.getText().toString())) {
         if (!mPassword.getText().toString().equals(reset_password.getText().toString())) {
           Toast.makeText(RegisterActivity.this, "两次输入密码不一致", Toast.LENGTH_SHORT).show();

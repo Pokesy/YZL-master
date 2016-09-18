@@ -20,7 +20,7 @@ public class Url {
     public static Context context = null;
     public static String VERSION = "";
 
-    /*新写的微博接口*/
+    /*新写的动态接口*/
     public static String HTTPURL = BuildConfig.URL_BASE + "api.php";
     public static String USERHEADURL = BuildConfig.URL_BASE;
     public static String IMAGE = BuildConfig.URL_BASE ;
@@ -232,17 +232,17 @@ public class Url {
     public static long LASTPOSTTIME = 0;
     public static long SESSIONIDLIFE = 5;
 
-    //要插入微博
+    //要插入动态
     public static WeiboInfo weiboInfo = null;
     //要插入的帖子
     public static PostInfo postInfo = null;
     //是否要插入帖子
     public static boolean is2InsertPost = false;
-    //是否要插入微博
+    //是否要插入动态
     public static boolean is2InsertWeibo = false;
-    //要插入的微博评论
+    //要插入的动态评论
     public static WeiboCommentInfo weiboCommentInfo = null;
-    //是否要插入微博评论
+    //是否要插入动态评论
     public static boolean is2InsertWeiboCom = false;
 
     public static int SUPPORTED = 1;

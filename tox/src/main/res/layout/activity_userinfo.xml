@@ -186,7 +186,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical|center_horizontal"
                         android:padding="10dp"
-                        android:text="微博"
+                        android:text="动态"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -478,7 +478,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="拼命加载中..."
-                        android:textColor="#815F3D"
+                        android:textColor="#5b85bb"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -505,7 +505,7 @@
                         android:layout_height="25dp"
                         android:background="#2f000000"
                         android:gravity="center_horizontal|center_vertical"
-                        android:text="管理我的所有微博"
+                        android:text="管理我的所有动态"
                         android:textColor="#ffffff" />
 
                     <LinearLayout
@@ -527,7 +527,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="呃，他还没有发表过微博" />
+                            android:text="呃，他还没有发表过动态" />
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>

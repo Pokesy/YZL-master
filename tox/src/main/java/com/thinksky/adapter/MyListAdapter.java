@@ -203,7 +203,7 @@ public class MyListAdapter extends BaseAdapter {
     // Log.e("liuxiaowei", hold.Up.getTag().toString());
       /*  hold.Up.setBackgroundResource(R.drawable.button_vote_enable);
         hold.Up_Img.setImageResource(R.drawable.icon_against_enable);
-        hold.LikeNum.setTextColor(Color.parseColor("#815F3D"));
+        hold.LikeNum.setTextColor(Color.parseColor("#5b85bb"));
 
         if (hold.Up.getTag().equals("0")) {
             hold.Up.setBackgroundResource(R.drawable.button_vote_active);

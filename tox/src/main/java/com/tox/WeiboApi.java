@@ -6,7 +6,7 @@ import android.util.Log;
 import java.util.List;
 
 /**
- * 微博Api
+ * 动态Api
  */
 public class WeiboApi extends BaseApi {
     Handler mHandler;
@@ -21,7 +21,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 删除微博
+     * 删除动态
      */
     public void deleteWeiBo(String weibo_id) {
         if (!Url.SESSIONID.equals("")) {
@@ -32,7 +32,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 获取全站微博列表
+     * 获取全站动态列表
      *
      * @param page
      * @param uid
@@ -60,7 +60,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 获取我的微博列表
+     * 获取我的动态列表
      *
      * @param page
      * @param uid
@@ -79,7 +79,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 获取我关注的人的微博
+     * 获取我关注的人的动态
      *
      * @param page
      */
@@ -104,7 +104,7 @@ public class WeiboApi extends BaseApi {
 
 
     /**
-     * 发送文字微博
+     * 发送文字动态
      *
      * @param content
      */
@@ -121,7 +121,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 转发微博
+     * 转发动态
      *
      * @param content
      * @param source_id
@@ -152,7 +152,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 获取微博详情
+     * 获取动态详情
      *
      * @param weibo_id
      */
@@ -162,7 +162,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 发送微博评论
+     * 发送动态评论
      *
      * @param weibo_id
      * @param content
@@ -175,7 +175,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 获取微博评论
+     * 获取动态评论
      *
      * @param weibo_id
      * @param page
@@ -210,7 +210,7 @@ public class WeiboApi extends BaseApi {
     }
 
     /**
-     * 获取发表微博字数限制
+     * 获取发表动态字数限制
      */
     public void getWeiboWordsLimit() {
 

@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -54,6 +55,9 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * @version [Taobei Client V20160411, 16/8/1]
  */
 public class ProfileSettingActivity extends BaseBActivity {
+  private static final int MAX_NICK_NAME_LENGTH = 8;
+  private static final int MAX_SIGNATURE_LENGTH = 30;
+
   private static final int INPUT_TYPE_NICK_NAME = 1;
   private static final int INPUT_TYPE_SIGNATURE = 2;
   private static final int INPUT_TYPE_QQ = 3;
@@ -191,6 +195,12 @@ public class ProfileSettingActivity extends BaseBActivity {
         null);
     if (inputType == INPUT_TYPE_QQ) {
       editText.setInputType(InputType.TYPE_CLASS_PHONE);
+    }
+    if(inputType == INPUT_TYPE_NICK_NAME) {
+      editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(MAX_NICK_NAME_LENGTH)});
+    }
+    if(inputType == INPUT_TYPE_SIGNATURE) {
+      editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(MAX_SIGNATURE_LENGTH)});
     }
     editText.setText(initText);
     AlertDialog dialog = new AlertDialog.Builder(this).setView(editText).setPositiveButton(R

@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:text="拼命加载中..."
-            android:textColor="#815F3D"
+            android:textColor="#5b85bb"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -118,7 +118,7 @@
         android:paddingRight="20dp"
         android:paddingTop="10dp"
         android:text="暂无糗事哦，快快点击右上角做第一个发表糗事的人吧~"
-        android:textColor="#815F3D"
+        android:textColor="#5b85bb"
         android:textSize="18sp"
         android:visibility="gone" />
 

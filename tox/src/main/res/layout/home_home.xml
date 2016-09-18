@@ -453,7 +453,7 @@
           android:layout_height="wrap_content"
           android:paddingLeft="10dp"
           android:text="界面加载中"
-          android:textColor="#815F3D"
+          android:textColor="#5b85bb"
           android:textSize="18sp"
           android:visibility="gone"
           />

@@ -119,23 +119,24 @@ public class SettingActivity extends BaseBActivity {
                 showProgressDialog("", false);
                 manageRpcCall(mAppService.logout(Url.SESSIONID), new
                     UiRpcSubscriberSimple<BaseModel>
-                    (SettingActivity.this) {
-                  @Override
-                  protected void onSuccess(BaseModel baseModel) {
-                    getComponent().loginSession().clearUserInfo();
-                    getComponent().getGlobalBus().post(new LogoutEvent());
-                    Url.MYUSERINFO = null;
-                    Url.LASTPOSTTIME = 0;
-                    Url.SESSIONID = "";
-                    Url.USERID = "";
-                    finish();
-                  }
+                        (SettingActivity.this) {
+                      @Override
+                      protected void onSuccess(BaseModel baseModel) {
+                        getComponent().loginSession().clearUserInfo();
+                        getComponent().getGlobalBus().post(new LogoutEvent());
+                        Url.MYUSERINFO = null;
+                        Url.LASTPOSTTIME = 0;
+                        Url.SESSIONID = "";
+                        Url.USERID = "";
+                        finish();
+                        startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+                      }
 
-                  @Override
-                  protected void onEnd() {
-                    closeProgressDialog();
-                  }
-                });
+                      @Override
+                      protected void onEnd() {
+                        closeProgressDialog();
+                      }
+                    });
 
               }
             })

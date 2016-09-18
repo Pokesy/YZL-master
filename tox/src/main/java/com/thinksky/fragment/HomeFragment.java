@@ -210,7 +210,7 @@ public class HomeFragment extends BasicFragment
     view.findViewById(R.id.left_img_menu).setOnClickListener(this);
     view.findViewById(R.id.search).setOnClickListener(this);
 
-    mTitleBar.setLeftImgMenu(R.drawable.list, new View.OnClickListener() {
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_profile, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         if (null != mHomeBtnClickListener) {

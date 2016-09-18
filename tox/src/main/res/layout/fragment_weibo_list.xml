@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:textColor="#815F3D"
+        android:textColor="#5b85bb"
         android:textSize="18sp"
         android:visibility="gone"
         />
@@ -46,7 +46,7 @@
       android:paddingRight="20dp"
       android:paddingTop="10dp"
       android:text="暂无动态哦，快点击右上角发表动态吧"
-      android:textColor="#815F3D"
+      android:textColor="#5b85bb"
       android:textSize="18sp"
       android:visibility="gone"
       />

@@ -168,7 +168,7 @@ public class OtherWeiboActivity extends BaseBActivity {
     isAdd++;
   }
 
-  //加载对应的微博列表
+  //加载对应的动态列表
   private void createListModel() {
     HomeNoValue.setVisibility(View.GONE);
     ListBottem.setVisibility(View.GONE);
@@ -224,7 +224,7 @@ public class OtherWeiboActivity extends BaseBActivity {
         }
         if (result != null) {
           List<WeiboInfo> newList = myJson.getWeiboList(result);
-//                    ToastHelper.showToast("微博个数"+newList.size(),ctx);
+//                    ToastHelper.showToast("动态个数"+newList.size(),ctx);
           if (newList != null) {
             if (newList.size() >= 10) {
               ListBottem.setVisibility(View.VISIBLE);

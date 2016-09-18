@@ -203,8 +203,8 @@ public class PictureFragment extends Fragment implements OnClickListener {
     @SuppressWarnings("deprecation")
     private void createTextColor() {
         Drawable background = new BitmapDrawable();
-        mTopMenuOne.setTextColor(Color.parseColor("#815F3D"));
-        mTopMenuTwo.setTextColor(Color.parseColor("#815F3D"));
+        mTopMenuOne.setTextColor(Color.parseColor("#5b85bb"));
+        mTopMenuTwo.setTextColor(Color.parseColor("#5b85bb"));
         mTopMenuOne.setBackgroundDrawable(background);
         mTopMenuTwo.setBackgroundDrawable(background);
         HomeNoValue.setVisibility(View.GONE);

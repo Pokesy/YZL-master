@@ -175,7 +175,7 @@
             />
 
 
-        <!--转发微博区-->
+        <!--转发动态区-->
 
         <LinearLayout
             android:id="@+id/Detail_RepostWeibo"
@@ -373,8 +373,8 @@
             android:layout_height="30dp"
             android:gravity="center"
             android:padding="5dp"
-            android:text="该微博暂无评论"
-            android:textColor="#815F3D"
+            android:text="该动态暂无评论"
+            android:textColor="#5b85bb"
             android:textSize="16sp"
             android:visibility="gone"
             />
@@ -402,8 +402,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="拼命加载中..."
-              android:textColor="#815F3D"
-              android:textSize="16sp"
+              style="@style/Widget.App.TextView.Large.Blue"
               />
         </LinearLayout>
 
