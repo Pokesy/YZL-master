@@ -2,15 +2,12 @@ package com.thinksky.ui.weibo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 import com.thinksky.adapter.WeiboAdapter;
-import com.thinksky.info.AshamedInfo;
 import com.thinksky.info.WeiboInfo;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SendCommentActivity;
@@ -31,12 +27,9 @@ import com.thinksky.utils.MyJson;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.Url;
-import com.tox.UserApi;
 import com.tox.WeiboApi;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 热门的fragment
@@ -54,8 +47,7 @@ public class WeiboListFragment extends BasicFragment {
   private View view;
   private PullToRefreshListView myListView;
   private MyJson myJson = new MyJson();
-  private List<AshamedInfo> list = new ArrayList<AshamedInfo>();
-  private ArrayList<WeiboInfo> weiboList = new ArrayList<WeiboInfo>();
+  private ArrayList<WeiboInfo> weiboList = new ArrayList<>();
   private WeiboAdapter mAdapter = null;
   private Context ctx;
   private WeiboApi weiboApi = new WeiboApi();
@@ -120,7 +112,7 @@ public class WeiboListFragment extends BasicFragment {
       public void onPullUpLoadData() {
         if (hotUrl.equals(Url.WEIBO)) {
           weiboApi.setHandler(hand);
-          weiboApi.listAllWeibo(++mCurrentPage, 0 + "");
+          weiboApi.listAllWeibo(++mCurrentPage, "0");
         } else if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
 
           weiboApi.setHandler(hand);
@@ -137,34 +129,17 @@ public class WeiboListFragment extends BasicFragment {
 
       @Override
       public void onPullDownLoadData() {
-        mCurrentPage = INIT_PAGE;
-        if (hotUrl.equals(Url.WEIBO)) {
-          weiboApi.setHandler(hand);
-          weiboApi.listAllWeibo(mCurrentPage, 0 + "");
-        } else if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
-
-          weiboApi.setHandler(hand);
-          weiboApi.listMyFollowingWeibo(mCurrentPage, Url.SESSIONID);
-        } else if (hotUrl.equals(Url.MYWEIBO)) {
-          weiboApi.setHandler(hand);
-          weiboApi.listMyWeibo(mCurrentPage, Url.USERID);
-
-        } else if (TextUtils.equals(hotUrl, Url.NEWEST_WEIBO)) {
-          weiboApi.setHandler(hand);
-          weiboApi.listNewestWeibo(mCurrentPage, Url.USERID);
-        }
+        createListModel();
       }
     }, 3);
     //设置底部加载
 
-    myListView.setAdapter(mAdapter);
     myListView.getRefreshListView().setOnItemClickListener(new MainListOnItemClickListener());
-    myListView.getRefreshListView().setDivider(new ColorDrawable(getResources().getColor(R.color.item_divider)));
+    myListView.getRefreshListView().setDivider(new ColorDrawable(getResources().getColor(R.color
+        .item_divider)));
     myListView.getRefreshListView().setDividerHeight(1);
 
-    getWeiboList();
-    //}
-
+    createListModel();
   }
 
 
@@ -174,19 +149,19 @@ public class WeiboListFragment extends BasicFragment {
     if (hotUrl.equals(Url.MYFOLLOWINGWEIBO)) {
       weiboApi.setHandler(hand);
       if (BaseFunction.isLogin()) {
-        weiboApi.listMyFollowingWeibo(1, Url.SESSIONID);
+        weiboApi.listMyFollowingWeibo(mCurrentPage, Url.SESSIONID);
       }
     } else if (hotUrl.equals(Url.WEIBO)) {
       weiboApi.setHandler(hand);
-      weiboApi.listAllWeibo(1, 0 + "");
+      weiboApi.listAllWeibo(mCurrentPage, "0");
     } else if (hotUrl.equals(Url.MYWEIBO)) {
       weiboApi.setHandler(hand);
       if (BaseFunction.isLogin()) {
-        weiboApi.listMyWeibo(1, Url.USERID);
+        weiboApi.listMyWeibo(mCurrentPage, Url.USERID);
       }
     } else if (TextUtils.equals(hotUrl, Url.NEWEST_WEIBO)) {
       weiboApi.setHandler(hand);
-      weiboApi.listNewestWeibo(1, Url.USERID);
+      weiboApi.listNewestWeibo(mCurrentPage, Url.USERID);
     }
   }
 
@@ -207,9 +182,8 @@ public class WeiboListFragment extends BasicFragment {
       super.handleMessage(msg);
       if (msg.what == 404) {
         Toast.makeText(ctx, R.string.network_not_normal, Toast.LENGTH_LONG).show();
-        myListView.resetPullStatus();
       } else if (msg.what == 100) {
-        Toast.makeText(ctx, "传输失败", Toast.LENGTH_LONG).show();
+        Toast.makeText(ctx, R.string.network_not_normal, Toast.LENGTH_LONG).show();
       } else if (msg.what == 0) {
         String result = (String) msg.obj;
 //                Log.e("WeiboResult:", result);
@@ -219,15 +193,11 @@ public class WeiboListFragment extends BasicFragment {
           if (newList != null) {
             if (newList.size() >= 10) {
               myListView.setPullUpToRefresh(true);
-            } else if (newList.size() == 0) {
-              if (list.size() == 0)
-                myListView.setPullUpToRefresh(false);
-              Toast.makeText(ctx, "已经没有了...", Toast.LENGTH_LONG).show();
             } else {
               myListView.setPullUpToRefresh(false);
             }
             if (mCurrentPage == INIT_PAGE) {
-              weiboList.removeAll(weiboList);
+              weiboList.clear();
             }
             for (WeiboInfo info : newList) {
               weiboList.add(info);
@@ -242,20 +212,6 @@ public class WeiboListFragment extends BasicFragment {
     }
 
   };
-
-  private void insertWeibo() {
-    if (Url.is2InsertWeibo) {
-      weiboList.add(null);
-      for (int i = weiboList.size() - 1; i > 0; i--) {
-
-        weiboList.set(i, weiboList.get(i - 1));
-      }
-      weiboList.set(0, Url.weiboInfo);
-      mAdapter.notifyDataSetChanged();
-      Url.is2InsertWeibo = false;
-
-    }
-  }
 
   @Subscribe
   public void handleWeiboSendEvent(UploadActivity.WeiboSendSuccessEvent event) {
@@ -274,68 +230,9 @@ public class WeiboListFragment extends BasicFragment {
     }
   }
 
-  private void autoLogin() {
-    SharedPreferences sp = ctx.getSharedPreferences("userInfo", 0);
-    Log.e("START AUTO LOGIN>>>>>>", sp.getString("username", "kongkong") + sp.getString
-        ("password", "kongkong"));
-    if (!sp.getString("username", "").equals("")) {
-      Log.e("START AUTO LOGIN>>>>", "111");
-      UserApi userApi = new UserApi();
-      userApi.setHandler(loginHandler);
-      userApi.autoLogin(sp.getString("username", ""), sp.getString("password", ""));
-    } else {
-      weiboApi.setHandler(hand);
-      //weiboApi.listAllWeibo(mCurrentPage, 0 + "");
-      //createListModel();
-    }
-  }
-
-  Handler loginHandler = new Handler() {
-    public void handleMessage(Message msg) {
-      super.handleMessage(msg);
-      if (msg.what == 404) {
-        Toast.makeText(ctx, "服务器出错", Toast.LENGTH_LONG).show();
-      } else {
-        if (msg.what == 0) {
-          SharedPreferences sp = ctx.getSharedPreferences("userInfo", 0);
-          sp.edit().putString("session_id", myJson.getUserSessionID((String) msg.obj)).commit();
-          sp.edit().putString("uid", myJson.getUserID((String) msg.obj)).commit();
-          String session_id = myJson.getUserSessionID((String) msg.obj);
-          Url.SESSIONID = myJson.getUserSessionID((String) msg.obj);
-          Url.LASTPOSTTIME = System.currentTimeMillis();
-          try {
-            JSONObject jsonObject = new JSONObject((String) msg.obj);
-            Url.WEIBOWORDS = Integer.parseInt(jsonObject.getString("weibo_words_limit"));
-          } catch (JSONException e) {
-
-          }
-
-
-          SharedPreferences sharedPreferences = ctx.getSharedPreferences("Parameters", 0);
-          sharedPreferences.edit().putString("weiboWordsLimit", Url.WEIBOWORDS + "").commit();
-          Url.USERID = sp.getString("uid", "0");
-          getWeiboList();
-          //SplashActivity.this.finish();
-        } else {
-          Toast.makeText(ctx, "autoLogin false", Toast.LENGTH_SHORT).show();
-          getWeiboList();
-          //SplashActivity.this.finish();
-        }
-      }
-
-    }
-  };
-
-  private void getWeiboList() {
-    weiboList.removeAll(weiboList);
-    weiboApi.setHandler(hand);
-    //weiboApi.listAllWeibo(mCurrentPage, Url.USERID);
-    createListModel();
-  }
-
   @Override
   protected void onLogin() {
     super.onLogin();
-    getWeiboList();
+    createListModel();
   }
 }

@@ -50,7 +50,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 public class DiscoverFragment extends BasicFragment implements View.OnClickListener {
   private TextView name;
@@ -79,7 +78,6 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   private LinearLayout mPopView, images;
   MapView mMapView;
   BaiduMap mBaiduMap;
-  KJBitmap kjBitmap;
   // 初始化全局 bitmap 信息，不用时及时 recycle
   BitmapDescriptor fish_personal = BitmapDescriptorFactory.fromResource(R.drawable.fish_location);
   BitmapDescriptor fish_personal_myself = BitmapDescriptorFactory.fromResource(R.drawable
@@ -173,7 +171,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
                     }
                     OverlayOptions ooA = new MarkerOptions().position(llA).icon(descriptor)
                         .zIndex(9).draggable
-                        (true);
+                            (true);
                     Marker marker = (Marker) mBaiduMap.addOverlay(ooA);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("info", info);
@@ -307,15 +305,6 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
           name.setText(bean.getNickname());
         }
 
-        //                iv_round.setImageResource(R.drawable.ab_ic_logo);
-        //                String a = RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32();
-        //                ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar()
-        // .getAvatar32(), iv_round);
-        //为图片控件加载数据
-        kjBitmap = KJBitmap.create();
-        //                kjBitmap.display(iv_round, RsenUrlUtil.URL_BASE + bean.getAvatar()
-        // .getAvatar32());
-
         ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(), iv_round);
         iv_round.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -423,6 +412,10 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
       if (location == null || mMapView == null) {
         return;
       }
+      switch (location.getLocType()) {
+        //case:BDLocation.LOCATION_WHERE_UNKNOW;
+        //return;
+      }
 
       // 构造定位数据
       MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius()) //设置精确米数
@@ -444,6 +437,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
 
     public void onReceivePoi(BDLocation poiLocation) {
     }
+
   }
 
   @Override
