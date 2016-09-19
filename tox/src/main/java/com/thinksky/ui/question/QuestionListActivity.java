@@ -141,8 +141,12 @@ public class QuestionListActivity extends BaseBActivity {
     pager.setAdapter(adapter);
     pager.setOffscreenPageLimit(beans.size());
     tabs.setupWithViewPager(pager);
-    for (int i = 0; i < beans.size(); i++) {
-      tabs.getTabAt(i).setText(beans.get(i).getTitle());
+    for (int i = 0; i < beans.size() + 1; i++) {
+      if (i == 0) {
+        tabs.getTabAt(i).setText(R.string.question_category_all);
+        continue;
+      }
+      tabs.getTabAt(i).setText(beans.get(i - 1).getTitle());
     }
   }
 
@@ -157,12 +161,15 @@ public class QuestionListActivity extends BaseBActivity {
 
     @Override
     public Fragment getItem(int position) {
-      return QuestionListFragment.newInstance(mWhichActivity, mTitles.get(position).getId());
+      if (0 == position) {
+        return QuestionListFragment.newInstance(mWhichActivity, "0");
+      }
+      return QuestionListFragment.newInstance(mWhichActivity, mTitles.get(position - 1).getId());
     }
 
     @Override
     public int getCount() {
-      return null == mTitles ? 0 : mTitles.size();
+      return (null == mTitles ? 0 : mTitles.size()) + 1;
     }
   }
 
