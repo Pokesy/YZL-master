@@ -650,6 +650,12 @@
     <activity
         android:name="com.thinksky.ui.login.LicenceActivity"
         android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.profile.ScoreActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name="com.thinksky.ui.profile.ScoreRuleActivity"
+        android:screenOrientation="portrait"/>
     <!-- Glide Module  -->
     <meta-data
         android:name="com.thinksky.utils.imageloader.GlideImageModule"

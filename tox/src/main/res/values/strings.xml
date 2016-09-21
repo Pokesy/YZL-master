@@ -372,4 +372,30 @@
 7.4　如本协议中的任何条款无论因何种原因完全或部分无效或不具有执行力，本协议的其余条款仍应有效并且有约束力。
 </string>
   <string name="question_category_all">全部</string>
+
+  <!--积分 -->
+  <string name="activity_score_title">我的积分</string>
+  <string name="activity_score_title_bar_btn">积分规则</string>
+  <string name="activity_score_label_total">总积分</string>
+  <string name="activity_score_label_beat">打败了%s的用户</string>
+  <string name="activity_score_label_source">分值来源详解</string>
+
+  <!--积分规则-->
+  <string name="activity_score_rule_title">积分规则</string>
+  <string name="activity_score_rule_what_is_score">积分是用户活跃的见证.随着用户在鱼知乐上的探索和成长,积分会随之增长.积分可以在鱼医生板块,提问时设置悬赏值,吸引更多的用户帮你解决问题</string>
+  <string name="activity_score_rule_label_how_get_score">如何获取积分</string>
+  <string name="activity_score_rule_label_what_is_score">什么是积分</string>
+  <string name="activity_score_rule_score_max">每日最高限%s分</string>
+
+  <!-- 积分通用 -->
+  <string name="activity_score_common_label_scope_of_assessment">评估范围:%1$s-%2$s</string>
+  <string name="activity_score_common_label_login">日常登录</string>
+  <string name="activity_score_common_label_question">问答提问</string>
+  <string name="activity_score_common_label_best_answer">采纳为最佳答案</string>
+  <string name="activity_score_common_label_comment_question">评论他人问答</string>
+  <string name="activity_score_common_label_send_activity">发布动态</string>
+  <string name="activity_score_common_label_comment_activity">评论他人动态</string>
+  <string name="activity_score_common_label_send_post">发话题</string>
+  <string name="activity_score_common_label_comment_post">评论他人话题</string>
+  <string name="activity_score_common_label_set_question_award">问答提问设置悬赏值</string>
 </resources>

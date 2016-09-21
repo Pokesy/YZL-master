@@ -131,7 +131,7 @@ public class ProfileSettingActivity extends BaseBActivity {
     }
     mAreaValue.setText(!TextUtils.isEmpty(mUserInfo.getP_province()) || !TextUtils.isEmpty
         (mUserInfo
-        .getP_city())
+            .getP_city())
         ? mUserInfo.getP_province() + mUserInfo.getP_city() : getString(R.string
         .activity_profile_setting_default_value));
     mBirthdayValue.setText(TextUtils.isEmpty(mUserInfo.getBirthday()) ? getString(R.string
@@ -186,6 +186,7 @@ public class ProfileSettingActivity extends BaseBActivity {
       case R.id.register_time_settings:
         break;
       case R.id.score_settings:
+        startActivity(new Intent(this, ScoreActivity.class));
         break;
     }
   }
@@ -196,11 +197,11 @@ public class ProfileSettingActivity extends BaseBActivity {
     if (inputType == INPUT_TYPE_QQ) {
       editText.setInputType(InputType.TYPE_CLASS_PHONE);
     }
-    if(inputType == INPUT_TYPE_NICK_NAME) {
-      editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(MAX_NICK_NAME_LENGTH)});
+    if (inputType == INPUT_TYPE_NICK_NAME) {
+      editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_NICK_NAME_LENGTH)});
     }
-    if(inputType == INPUT_TYPE_SIGNATURE) {
-      editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(MAX_SIGNATURE_LENGTH)});
+    if (inputType == INPUT_TYPE_SIGNATURE) {
+      editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_SIGNATURE_LENGTH)});
     }
     editText.setText(initText);
     AlertDialog dialog = new AlertDialog.Builder(this).setView(editText).setPositiveButton(R

@@ -511,6 +511,10 @@
     <item name="android:textColor">@color/font_color_yellow</item>
   </style>
 
+  <style name="Widget.App.TextView.Small.Red">
+    <item name="android:textColor">@color/font_color_red</item>
+  </style>
+
   <!-- 中字体 -->
   <style name="Widget.App.TextView.Medium">
     <item name="android:textSize">@dimen/font_size_medium</item>
@@ -645,6 +649,10 @@
 
   <style name="Widget.App.TextView.XXLarge.Yellow">
     <item name="android:textColor">@color/font_color_yellow</item>
+  </style>
+
+  <style name="Widget.App.TextView.XXLarge.Red">
+    <item name="android:textColor">@color/font_color_red_dark</item>
   </style>
 
   <style name="ProfileMenuContainer">

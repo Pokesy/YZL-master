@@ -216,10 +216,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/iconfontfaburenwu"
+            android:drawableLeft="@drawable/icon_question_answer"
             android:drawablePadding="5dp"
             android:textColor="@color/font_color_blue"
             android:textSize="@dimen/font_size_medium"
+            android:gravity="center_vertical"
             tools:text="21"
             />
       </RelativeLayout>
