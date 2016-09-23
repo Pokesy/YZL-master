@@ -72,7 +72,7 @@ public interface AppService {
 
   @GET("api.php?s=Question/getSoluteQuestionList")
   Observable<Response<WendaModel>> getSoluteQuestionList(@Query("page") int page, @Query("count")
-  int count, @Query("category") String category);
+      int count, @Query("category") String category);
 
   @GET("api.php?s=Question/getMyQuestionList")
   Observable<Response<WendaModel>> getMyQuestionList(@Query("session_id") String sessionId,
@@ -92,7 +92,7 @@ public interface AppService {
 
   @GET(Constant.SET_PROFILE_URL)
   Observable<Response<BaseModel>> setGender(@Query("session_id") String sessionId, @Query("sex")
-  String sex);
+      String sex);
 
   @GET(Constant.SET_PROFILE_URL)
   Observable<Response<BaseModel>> setArea(@Query("session_id") String sessionId, @Query
@@ -108,11 +108,11 @@ public interface AppService {
 
   @GET(Constant.SET_PROFILE_URL)
   Observable<Response<BaseModel>> setQQ(@Query("session_id") String sessionId, @Query("qq")
-  String qq);
+      String qq);
 
   @GET(Constant.SET_PROFILE_URL)
   Observable<Response<BaseModel>> setEmail(@Query("session_id") String sessionId, @Query("email")
-  String email);
+      String email);
 
   @GET("api.php?s=user/doFollow")
   Observable<Response<BaseModel>> doFollow(@Query("session_id") String sessionId, @Query
@@ -133,7 +133,7 @@ public interface AppService {
   Observable<Response<HotPostModel>> getGroupMyPost(@Query("session_id") String sessionId,
                                                     @Query("group_id") String groupId);
 
-  @GET("api.php?s=group/getPostAll")
+  @GET("api.php?s=group/getPostAll&count=" + Integer.MAX_VALUE)
   Observable<Response<HotPostModel>> getGroupAllPost(@Query("group_id") String groupId);
 
   @GET("api.php?s=question/questionBookmark")
@@ -218,20 +218,20 @@ public interface AppService {
 
   @GET("api.php?s=user/getMyFollows")
   Observable<Response<UserListModel>> getMyFollows(@Query("uid") String userId, @Query("page")
-  int page, @Query("count") int count);
+      int page, @Query("count") int count);
 
   @GET("api.php?s=group/addGroup")
   Observable<BaseModel> createGroup(@Query("session_id") String sessionId, @Query("title") String
       groupName, @Query("type_id")
-                                    String category, @Query("type") String type, @Query("logo")
-                                    String logo, @Query("detail")
-                                    String detail, @Nullable @Query("id") String groupId, @Query
+                                        String category, @Query("type") String type, @Query("logo")
+                                        String logo, @Query("detail")
+                                        String detail, @Nullable @Query("id") String groupId, @Query
                                         ("notice") String notice);
 
   @GET("api.php?s=group/addGroup")
   Observable<BaseModel> createGroupNoLogo(@Query("session_id") String sessionId, @Query("title")
-  String groupName, @Query("type_id")
-                                          String category, @Query("type") String type, @Query
+      String groupName, @Query("type_id")
+                                              String category, @Query("type") String type, @Query
                                               ("detail") String detail, @Nullable @Query
       ("id") String groupId, @Query("notice") String notice);
 
@@ -249,7 +249,7 @@ public interface AppService {
 
   @GET("api.php?s=group/tranferGroupManager")
   Observable<BaseModel> tranferGroupManager(@Query("session_id") String sessionId, @Query("uid")
-  String userId, @Query("group_id") String groupId);
+      String userId, @Query("group_id") String groupId);
 
   @GET("api.php?s=group/getGroupChoice")
   Observable<GroupChoiceModel> getGroupChoice(@Query("page") int page, @Query("count") int count);
@@ -264,11 +264,11 @@ public interface AppService {
 
   @GET("api.php?s=group/rejectGroupPeople")
   Observable<BaseModel> rejectGroupPeople(@Query("session_id") String sessionId, @Query("uid")
-  String uid, @Query("group_id") String groupId);
+      String uid, @Query("group_id") String groupId);
 
   @GET("api.php?s=group/addGroupPeople")
   Observable<BaseModel> addGroupPeople(@Query("session_id") String sessionId, @Query("uid")
-  String uid, @Query("group_id") String groupId);
+      String uid, @Query("group_id") String groupId);
 
   @GET("api.php?s=Message/getNoReadCount")
   Observable<UnReadCountModel> getUnreadCount(@Query("module") String module, @Query
@@ -292,8 +292,9 @@ public interface AppService {
 
   @GET("api.php?s=/question/sendQuestion")
   Observable<BaseModel> sendQuestion(@Query("session_id") String sessionId, @Query("title")
-  String title, @Query("content") String content, @Query("score") String score, @Query
-      ("category_id") String categoryId, @Query("attach_ids") String attachIds);
+      String title, @Query("content") String content, @Query("score") String score, @Query
+                                         ("category_id") String categoryId, @Query("attach_ids")
+      String attachIds);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

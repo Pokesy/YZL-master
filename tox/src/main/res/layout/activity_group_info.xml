@@ -411,11 +411,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:paddingBottom="40dp"
             >
           <TextView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="#f2f2f2"
+              android:background="@color/bg_color_main"
               android:padding="@dimen/margin_small"
               android:text="@string/activity_group_info_label_topic"
               style="@style/Widget.App.TextView.Large.Secondary"
@@ -457,7 +458,30 @@
       android:id="@+id/title_bar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      tools:alpha="0"
-      tools:visibility="gone"
+      tools:alpha="1"
+      tools:visibility="visible"
       />
+  <FrameLayout
+      android:id="@+id/btn_send_post"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:background="@android:color/white"
+      >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/icon_edit"
+        android:drawablePadding="5dp"
+        android:padding="@dimen/margin_small"
+        android:text="@string/activity_group_info_btn_send_post"
+        style="@style/Widget.App.TextView.Medium.Blue"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@color/item_divider"
+        />
+  </FrameLayout>
 </RelativeLayout>

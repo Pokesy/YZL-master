@@ -99,15 +99,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/activity_score_label_source"
+            android:text="@string/activity_score_label_source"
             style="@style/Widget.App.TextView.Large.Secondary"
             />
-        <TextView android:id="@+id/assessment"
+        <TextView
+            android:id="@+id/assessment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textColor="@color/font_color_light_gray"
+            android:visibility="gone"
             tools:text="评估范围:2016.02.20-2016.07.29"
             style="@style/Widget.App.TextView.Small"
             />

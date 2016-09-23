@@ -678,6 +678,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private View mBtnFans;
     private View mBtnFollow;
     private ImageView mNewStatusView;
+    private TextView mLevelView;
 
     public SlideController(View rootView) {
       this.rootView = rootView;
@@ -702,6 +703,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       mBtnFans = rootView.findViewById(R.id.btn_fans);
       mBtnFollow = rootView.findViewById(R.id.btn_follow);
       mNewStatusView = (ImageView) rootView.findViewById(R.id.icon_new_msg);
+      mLevelView = (TextView) rootView.findViewById(R.id.level);
 
       mLocationView.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -797,6 +799,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mLocationView.setText(R.string.activity_profile_enter_map);
         mLocationView.setTextColor(getResources().getColor(R.color.font_color_blue));
       }
+      mLevelView.setText(info.getTitle());
       setTitleBar();
       getUnreadStatus();
     }

@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="+10"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -73,7 +73,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_login"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="每日限一次"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="+1"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -112,7 +112,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_question"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="每日最高限2分"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>
@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="+5"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -151,7 +151,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_best_answer"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="每日最高限5分"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>
@@ -179,7 +179,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="+1"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -190,7 +190,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_comment_question"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="每日最高限25分"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>
@@ -218,7 +218,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="+2"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -229,7 +229,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_send_activity"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="每日最高限20分"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>
@@ -257,7 +257,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="+1"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -268,7 +268,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_comment_activity"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="每日最高限20分"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>
@@ -296,7 +296,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="+2"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -307,7 +307,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_send_post"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="每日最高限20分"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>
@@ -335,7 +335,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="+1"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -346,7 +346,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_comment_post"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="每日最高限20分"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>
@@ -374,7 +374,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            tools:text="+10"
+            android:text="自定义"
             style="@style/Widget.App.TextView.Large.RedDark"
             />
 
@@ -385,7 +385,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/margin_xlarge"
             android:layout_toLeftOf="@id/score_set_question_award"
-            tools:text="@string/activity_score_rule_score_max"
+            android:text="不限"
             style="@style/Widget.App.TextView.Small.Secondary"
             />
       </RelativeLayout>

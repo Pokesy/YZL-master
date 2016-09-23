@@ -135,6 +135,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
   private boolean mIsCreator;
   private GroupDetailModel mGroupModel;
+  private View mBtnSendPost;
 
   @Inject
   AppService mAppService;
@@ -247,6 +248,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
     initTitleBar();
 
+    mBtnSendPost = findViewById(R.id.btn_send_post);
     group_scro = (MyScrollview) findViewById(R.id.group_scro);
     linear_list = (LinearLayout) findViewById(R.id.linear_list);
     linear_body = (LinearLayout) findViewById(R.id.linear_body);
@@ -289,6 +291,17 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
       public void onScroll(int scrollY) {
         float alpha = (float) scrollY / (float) containerView.getHeight();
         mTitleBar.getTitleBgView().setAlpha(alpha >= 1.0f ? 1.0f : (alpha));
+      }
+    });
+
+    mBtnSendPost.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (BaseFunction.isLogin()) {
+          sendPost();
+        } else {
+          ToastHelper.showToast("请登陆后操作", mContext);
+        }
       }
     });
   }
@@ -360,43 +373,12 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         finish();
       }
     });
-    mTitleBar.setSearchBtn(R.drawable.page_menu_icon, new View.OnClickListener() {
+    mTitleBar.setSearchBtn(R.drawable.icon_title_bar_share, new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        new AlertDialog.Builder(GroupInfoActivity.this).setItems(getResources().getStringArray(R
-            .array.group_info_operation_items), new DialogInterface.OnClickListener() {
-
-
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-              case 0:
-                if (BaseFunction.isLogin()) {
-                  sendPost();
-                } else {
-                  ToastHelper.showToast("请登陆后操作", mContext);
-                }
-                break;
-              case 1:
-                showShare();
-                break;
-            }
-            dialog.cancel();
-          }
-        }).show();
+        showShare();
       }
     });
-    //mTitleBar.setRightTextBtn(R.string.activity_group_info_right_title, new View
-    // .OnClickListener() {
-    //  @Override
-    //  public void onClick(View v) {
-    //    if (BaseFunction.isLogin()) {
-    //      sendPost();
-    //    } else {
-    //      ToastHelper.showToast("请登陆后操作", mContext);
-    //    }
-    //  }
-    //});
     mTitleBar.getTitleBgView().setAlpha(0);
   }
 
@@ -414,7 +396,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
     oks.setTitle(getString(R.string.app_name));
     // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-    oks.setTitleUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
+    oks.setTitleUrl("http://www.yuzhile.com/index.php?s=/mob/group/group_share/id/ " + group_id +
+        ".html");
     // text是分享文本，所有平台都需要这个字段
     oks.setText("群组:" + mGroupModel.getList().getTitle());
     //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
@@ -422,13 +405,15 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
     //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
     // url仅在微信（包括好友和朋友圈）中使用
-    oks.setUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
+    oks.setUrl("http://www.yuzhile.com/index.php?s=/mob/group/group_share/id/ " + group_id + "" +
+        ".html");
     // comment是我对这条分享的评论，仅在人人网和QQ空间使用
     oks.setComment("群组:" + mGroupModel.getList().getTitle());
     // site是分享此内容的网站名称，仅在QQ空间使用
     oks.setSite(getString(R.string.app_name));
     // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-    oks.setSiteUrl("http://a.app.qq.com/o/simple.jsp?pkgname=com.hengrtech.yuzhile");
+    oks.setSiteUrl("http://www.yuzhile.com/index.php?s=/mob/group/group_share/id/ " + group_id +
+        ".html");
 
     // 启动分享GUI
     oks.show(this);

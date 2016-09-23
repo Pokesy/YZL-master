@@ -398,4 +398,7 @@
   <string name="activity_score_common_label_send_post">发话题</string>
   <string name="activity_score_common_label_comment_post">评论他人话题</string>
   <string name="activity_score_common_label_set_question_award">问答提问设置悬赏值</string>
+
+  <!-- 群组 -->
+  <string name="activity_group_info_btn_send_post">发话题</string>
 </resources>
