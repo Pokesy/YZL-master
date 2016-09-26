@@ -11,16 +11,24 @@
  */
 package com.thinksky.ui.profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
+import com.thinksky.net.rpc.model.ScoreModel;
+import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.R;
 import com.thinksky.ui.common.TitleBar;
+import com.tox.Url;
+import javax.inject.Inject;
 
 /**
  * [一句话功能简述]<BR>
@@ -38,27 +46,43 @@ public class ScoreActivity extends BaseBActivity {
   TextView score;
   @Bind(R.id.beat)
   TextView beat;
-  @Bind(R.id.assessment)
-  TextView assessment;
-  @Bind(R.id.sore_login)
-  TextView soreLogin;
-  @Bind(R.id.score_question)
-  TextView scoreQuestion;
-  @Bind(R.id.sore_best_answer)
-  TextView soreBestAnswer;
-  @Bind(R.id.score_send_activity)
-  TextView scoreSendActivity;
-  @Bind(R.id.score_send_post)
-  TextView scoreSendPost;
-  @Bind(R.id.score_set_question_award)
-  TextView scoreSetQuestionAward;
+
+  @Inject
+  AppService mAppService;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    inject();
     setContentView(R.layout.activity_score);
     ButterKnife.bind(this);
     initTitleBar();
+    initDada();
+  }
+
+
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule((BaseApplication)
+        getApplication())).serviceModule(new ServiceModule())
+        .build().inject(this);
+  }
+
+  private void initDada() {
+    manageRpcCall(mAppService.getScore(Url.SESSIONID), new UiRpcSubscriber1<ScoreModel>
+        (ScoreActivity.this) {
+      @Override
+      protected void onSuccess(ScoreModel scoreModel) {
+        currentTime.setText(scoreModel.getList().getDate());
+        score.setText(scoreModel.getList().getScore1());
+        beat.setText(getString(R.string.activity_score_label_beat, scoreModel.getList().getRatio
+            () + "%"));
+      }
+
+      @Override
+      protected void onEnd() {
+
+      }
+    });
   }
 
   private void initTitleBar() {
@@ -67,12 +91,6 @@ public class ScoreActivity extends BaseBActivity {
       @Override
       public void onClick(View v) {
         onBackPressed();
-      }
-    });
-    titleBar.setRightTextBtn(R.string.activity_score_title_bar_btn, new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        startActivity(new Intent(ScoreActivity.this, ScoreRuleActivity.class));
       }
     });
   }

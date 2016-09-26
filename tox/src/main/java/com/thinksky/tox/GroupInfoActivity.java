@@ -401,7 +401,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     // text是分享文本，所有平台都需要这个字段
     oks.setText("群组:" + mGroupModel.getList().getTitle());
     //分享网络图片，新浪微博分享网络图片需要通过审核后申请高级写入接口，否则请注释掉测试新浪微博
-    oks.setImageUrl("http://www.yuzhile.com/apk/ic_launcher.png");
+    String imageUrl = TextUtils.isEmpty(mGroupModel.getList().getLogo()) ? "http://www.yuzhile" +
+        ".com/apk/ic_launcher.png" : NetConstant.BASE_URL + mGroupModel.getList().getLogo();
+    oks.setImageUrl(imageUrl);
     // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
     //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
     // url仅在微信（包括好友和朋友圈）中使用

@@ -26,7 +26,13 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
+import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
+import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.R;
 import com.thinksky.tox.SettingActivity;
@@ -35,7 +41,12 @@ import com.thinksky.ui.common.TitleBar;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.Url;
 import de.hdodenhof.circleimageview.CircleImageView;
+import javax.inject.Inject;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * [一句话功能简述]<BR>
@@ -63,14 +74,28 @@ public class MyProfileActivity extends BaseBActivity {
   TextView enterMap;
   @Bind(R.id.title_bar)
   TitleBar titleBar;
+  @Bind(R.id.level)
+  TextView level;
+
+  @Inject
+  AppService mAppService;
+  @Bind(R.id.icon_new_msg)
+  ImageView mNewStatusView;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    inject();
     setContentView(R.layout.profile_drawer_layout);
     ButterKnife.bind(this);
     initView();
     setData();
+  }
+
+  private void inject() {
+    DaggerServiceComponent.builder().globalModule(new GlobalModule((BaseApplication)
+        getApplication())).serviceModule(new ServiceModule())
+        .build().inject(this);
   }
 
   @OnClick({R.id.btn_fans, R.id.btn_follow, R.id.menu_message, R.id.menu_collect, R.id
@@ -84,7 +109,7 @@ public class MyProfileActivity extends BaseBActivity {
         startActivity(FollowListActivity.makeIntent(this, Url.USERID));
         break;
       case R.id.menu_message:
-        startActivity(new Intent(this, com.thinksky.ui.profile.MyMessageActivity
+        startActivity(new Intent(this, MyMessageActivity
             .class));
         break;
       case R.id.menu_collect:
@@ -117,7 +142,7 @@ public class MyProfileActivity extends BaseBActivity {
             .getLatitude()));
       }
     });
-
+    getUnreadStatus();
   }
 
   public void setData() {
@@ -141,8 +166,10 @@ public class MyProfileActivity extends BaseBActivity {
       }
     }
     nickName.setText(info.getNickname());
-    areaValue.setText(TextUtils.isEmpty(info.getP_province()) ? "" : info.getP_province() +
-        (TextUtils.isEmpty(info.getP_city()) ? "" : info.getP_city()));
+    String area = TextUtils.isEmpty(info.getP_province()) ? "" : info.getP_province() +
+        (TextUtils.isEmpty(info.getP_city()) ? "" : info.getP_city());
+    areaValue.setText(TextUtils.isEmpty(area) ? getResources().getString(R.string
+        .activity_profile_setting_default_value) : area);
     signatureValue.setText(info.getSignature());
     fansCount.setText(info.getFans());
     followCount.setText(info.getFollowing());
@@ -153,7 +180,13 @@ public class MyProfileActivity extends BaseBActivity {
       enterMap.setText(R.string.activity_profile_enter_map);
       enterMap.setTextColor(getResources().getColor(R.color.font_color_blue));
     }
+    level.setText(info.getTitle());
     setTitleBar();
+  }
+
+  @Subscribe
+  public void handleMessageReadEvent(MyMessageActivity.MessageReadEvent event) {
+    getUnreadStatus();
   }
 
   private void setTitleBar() {
@@ -207,5 +240,61 @@ public class MyProfileActivity extends BaseBActivity {
   @Subscribe
   public void handleuserInfoChangeEvent(LoginSession.UserInfoChangeEvent event) {
     setData();
+  }
+
+  private void getUnreadStatus() {
+    Observable<UnReadCountModel> observable = mAppService.getUnreadCount("4", Url.SESSIONID)
+        .observeOn(AndroidSchedulers.mainThread())
+        .filter(new Func1<UnReadCountModel, Boolean>() {
+          @Override
+          public Boolean call(UnReadCountModel unReadCountModel) {
+            if (unReadCountModel.getCount() > 0) {
+              mNewStatusView.setVisibility(View.VISIBLE);
+            } else {
+              mNewStatusView.setVisibility(View.GONE);
+            }
+            return unReadCountModel.getCount() <= 0;
+          }
+        }).observeOn(Schedulers.newThread()).flatMap(new Func1<UnReadCountModel,
+            Observable<UnReadCountModel>>() {
+          @Override
+          public Observable<UnReadCountModel> call(UnReadCountModel unReadCountModel) {
+            return mAppService.getUnreadCount("16", Url.SESSIONID);
+          }
+        }).observeOn(AndroidSchedulers.mainThread()).filter(new Func1<UnReadCountModel,
+            Boolean>() {
+          @Override
+          public Boolean call(UnReadCountModel unReadCountModel) {
+            if (unReadCountModel.getCount() > 0) {
+              mNewStatusView.setVisibility(View.VISIBLE);
+            } else {
+              mNewStatusView.setVisibility(View.GONE);
+            }
+            return unReadCountModel.getCount() <= 0;
+          }
+        }).observeOn(Schedulers.newThread()).flatMap(new Func1<UnReadCountModel,
+            Observable<UnReadCountModel>>() {
+          @Override
+          public Observable<UnReadCountModel> call(UnReadCountModel unReadCountModel) {
+            return mAppService.getUnreadCount("23", Url.SESSIONID);
+          }
+        });
+
+    manageRpcCall(observable, new UiRpcSubscriber1<UnReadCountModel>(MyProfileActivity.this) {
+      @Override
+      protected void onSuccess(UnReadCountModel unReadCountModel) {
+        if (unReadCountModel.getCount() > 0) {
+          mNewStatusView.setVisibility(View.VISIBLE);
+        } else {
+          mNewStatusView.setVisibility(View.GONE);
+        }
+      }
+
+      @Override
+      protected void onEnd() {
+
+      }
+    });
+
   }
 }

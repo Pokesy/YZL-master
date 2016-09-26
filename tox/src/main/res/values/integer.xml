@@ -10,6 +10,7 @@
   <integer name="question_title_max_length">45</integer>
   <integer name="question_description_max_length">500</integer>
   <integer name="activity_max_length">140</integer>
+  <integer name="group_notice_max_length">100</integer>
 
   <integer name="comment_max_length">500</integer>
 </resources>

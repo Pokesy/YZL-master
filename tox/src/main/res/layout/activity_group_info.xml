@@ -259,6 +259,7 @@
                     android:id="@id/expandable_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="@integer/group_notice_max_length"
                     android:textColor="@color/font_color_primary"
                     android:textSize="@dimen/font_size_medium"
                     />

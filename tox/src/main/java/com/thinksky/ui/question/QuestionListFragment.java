@@ -91,7 +91,7 @@ public class QuestionListFragment extends BasicFragment {
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-  Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.activity_wenda_common, container, false);
     return view;
   }
@@ -249,8 +249,8 @@ public class QuestionListFragment extends BasicFragment {
           .getAnswer_num());
       ((TextView) viewHolder.itemView.findViewById(R.id.creat_time)).setText(listEntity
           .getCreate_time());
-//            ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(listEntity
-// .getAnswer_num());
+      ((TextView) viewHolder.itemView.findViewById(R.id.score)).setText(listEntity
+          .getScore());
       switch (listEntity.getCategory()) {
         case CATEGORY_HONGYU:
           ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string

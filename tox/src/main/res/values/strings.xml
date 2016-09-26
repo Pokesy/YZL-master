@@ -179,6 +179,8 @@
   <string name="activity_profile_setting_btn_logout">退出登录</string>
   <string name="activity_profile_setting_default_value">未填</string>
 
+  <string name="activity_profile_setting_signature_hint">个性签名最大长度为%d个字符</string>
+
   <!-- 个人信息 -->
   <string name="activity_profile_myself">我的主页</string>
   <string name="activity_profile_label_fans">粉丝: </string>

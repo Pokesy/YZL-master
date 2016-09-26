@@ -225,7 +225,8 @@ public class WeiboListFragment extends BasicFragment {
 
   @Subscribe
   public void handleDeleteWeiboEvent(WeiboDetailActivity.DeleteWeiboEvent event) {
-    if (TextUtils.equals(hotUrl, Url.MYWEIBO) || TextUtils.equals(hotUrl, Url.WEIBO)) {
+    if (TextUtils.equals(hotUrl, Url.MYWEIBO) || TextUtils.equals(hotUrl, Url.WEIBO)
+        || TextUtils.equals(hotUrl, Url.NEWEST_WEIBO)) {
       createListModel();
     }
   }

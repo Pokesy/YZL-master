@@ -73,7 +73,23 @@
             android:src="@drawable/icon_profile_gender_female"
             />
       </LinearLayout>
-
+      <FrameLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@android:color/white"
+          >
+        <TextView
+            android:id="@+id/level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_profile_level"
+            android:gravity="center"
+            tools:text="LV8 养鱼专家"
+            style="@style/Widget.App.TextView.Small.Blue"
+            />
+      </FrameLayout>
       <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -134,28 +150,6 @@
               />
         </LinearLayout>
       </LinearLayout>
-
-      <FrameLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:background="@android:color/white"
-          android:paddingBottom="@dimen/margin_small"
-          >
-        <TextView
-            android:id="@+id/btn_follow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/button_profile_follow"
-            android:gravity="center"
-            android:minWidth="100dp"
-            android:paddingBottom="@dimen/margin_smallest"
-            android:paddingTop="@dimen/margin_smallest"
-            tools:text="@string/activity_other_profile_btn_follow"
-            style="@style/Widget.App.TextView.Large.White"
-            />
-      </FrameLayout>
 
       <View
           android:layout_width="match_parent"

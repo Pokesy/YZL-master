@@ -202,6 +202,8 @@ public class ProfileSettingActivity extends BaseBActivity {
     }
     if (inputType == INPUT_TYPE_SIGNATURE) {
       editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_SIGNATURE_LENGTH)});
+      editText.setHint(getString(R.string.activity_profile_setting_signature_hint,
+          MAX_SIGNATURE_LENGTH));
     }
     editText.setText(initText);
     AlertDialog dialog = new AlertDialog.Builder(this).setView(editText).setPositiveButton(R

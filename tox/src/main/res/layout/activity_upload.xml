@@ -12,9 +12,9 @@
       android:layout_width="match_parent"
       android:layout_height="?actionBarSize"
       android:background="@drawable/head_border"
+      android:paddingBottom="0dp"
       android:paddingLeft="@dimen/margin_small"
       android:paddingRight="@dimen/margin_small"
-      android:paddingBottom="0dp"
       android:paddingTop="0dp"
       >
 
@@ -94,9 +94,9 @@
           android:layout_height="150dp"
           android:background="@android:color/white"
           android:gravity="start"
-          style="@style/Widget.App.TextView.Medium.Primary"
-          android:textColorHint="@color/font_color_hint"
           android:hint="请发表话题内容"
+          android:textColorHint="@color/font_color_hint"
+          style="@style/Widget.App.TextView.Medium.Primary"
           />
 
       <LinearLayout
@@ -130,6 +130,7 @@
             android:layout_height="25dp"
             android:layout_weight="1.2"
             android:src="@drawable/icon_emotion"
+            android:visibility="gone"
             />
 
         <TextView

@@ -787,8 +787,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
       }
       mNameView.setText(info.getNickname());
-      mAreaView.setText(TextUtils.isEmpty(info.getP_province()) ? "" : info.getP_province() +
-          (TextUtils.isEmpty(info.getP_city()) ? "" : info.getP_city()));
+      String area = TextUtils.isEmpty(info.getP_province()) ? "" : info.getP_province() +
+          (TextUtils.isEmpty(info.getP_city()) ? "" : info.getP_city());
+      mAreaView.setText(TextUtils.isEmpty(area) ? getResources().getString(R.string
+          .activity_profile_setting_default_value) : area);
       mSignatureView.setText(info.getSignature());
       mFansView.setText(info.getFans());
       mFollowView.setText(info.getFollowing());
@@ -857,7 +859,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
               Observable<UnReadCountModel>>() {
             @Override
             public Observable<UnReadCountModel> call(UnReadCountModel unReadCountModel) {
-              return mAppService.getUnreadCount("16", Url.SESSIONID);
+              return mAppService.getUnreadCount("23", Url.SESSIONID);
             }
           });
 

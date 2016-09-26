@@ -54,7 +54,7 @@
             <View
                 android:layout_width="20dp"
                 android:layout_height="@dimen/divider"
-                android:background="@color/font_color_red"
+                android:background="@color/font_color_red_dark"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
             <View
                 android:layout_width="20dp"
                 android:layout_height="@dimen/divider"
-                android:background="@color/font_color_red"
+                android:background="@color/font_color_red_dark"
                 />
 
           </LinearLayout>
@@ -76,7 +76,8 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               tools:text="886"
-              style="@style/Widget.App.TextView.XXLarge.Secondary"
+              style="@style/Widget.App.TextView.XXLarge.Red"
+              android:textStyle="bold"
               />
         </LinearLayout>
 
@@ -90,193 +91,381 @@
             />
 
       </LinearLayout>
-      <RelativeLayout
+      <LinearLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/bg_main"
-          android:padding="@dimen/margin_medium"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
           >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/activity_score_label_source"
+            android:background="@color/bg_main"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/activity_score_rule_label_what_is_score"
             style="@style/Widget.App.TextView.Large.Secondary"
             />
         <TextView
-            android:id="@+id/assessment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textColor="@color/font_color_light_gray"
-            android:visibility="gone"
-            tools:text="评估范围:2016.02.20-2016.07.29"
-            style="@style/Widget.App.TextView.Small"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/activity_score_rule_what_is_score"
+            style="@style/Widget.App.TextView.Medium.Secondary"
             />
-      </RelativeLayout>
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/margin_large"
-          >
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/activity_score_common_label_login"
-            style="@style/Widget.App.TextView.Large.Primary"
+            android:background="@color/bg_main"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/activity_score_rule_label_how_get_score"
+            style="@style/Widget.App.TextView.Large.Secondary"
             />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_login"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
 
-        <TextView
-            android:id="@+id/sore_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            tools:text="+10"
-            style="@style/Widget.App.TextView.Large.RedDark"
-            />
-      </RelativeLayout>
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/divider"
-          android:background="@color/item_divider"
-          />
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/margin_large"
-          >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/activity_score_common_label_question"
-            style="@style/Widget.App.TextView.Large.Primary"
-            />
+          <TextView
+              android:id="@+id/score_login"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="+10"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
 
-        <TextView
-            android:id="@+id/score_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            tools:text="+10"
-            style="@style/Widget.App.TextView.Large.RedDark"
+          <TextView
+              android:id="@+id/score_login_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_login"
+              android:text="每日限一次"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/item_divider"
             />
-      </RelativeLayout>
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/divider"
-          android:background="@color/item_divider"
-          />
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/margin_large"
-          >
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/activity_score_common_label_best_answer"
-            style="@style/Widget.App.TextView.Large.Primary"
-            />
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_question"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
 
-        <TextView
-            android:id="@+id/sore_best_answer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            tools:text="+10"
-            style="@style/Widget.App.TextView.Large.RedDark"
-            />
-      </RelativeLayout>
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/divider"
-          android:background="@color/item_divider"
-          />
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/margin_large"
-          >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/activity_score_common_label_send_activity"
-            style="@style/Widget.App.TextView.Large.Primary"
-            />
+          <TextView
+              android:id="@+id/score_question"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="+1"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
 
-        <TextView
-            android:id="@+id/score_send_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            tools:text="+10"
-            style="@style/Widget.App.TextView.Large.RedDark"
+          <TextView
+              android:id="@+id/score_question_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_question"
+              android:text="每日最高限2分"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/item_divider"
             />
-      </RelativeLayout>
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/divider"
-          android:background="@color/item_divider"
-          />
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/margin_large"
-          >
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/activity_score_common_label_send_post"
-            style="@style/Widget.App.TextView.Large.Primary"
-            />
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_best_answer"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
 
-        <TextView
-            android:id="@+id/score_send_post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            tools:text="+10"
-            style="@style/Widget.App.TextView.Large.RedDark"
-            />
-      </RelativeLayout>
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/divider"
-          android:background="@color/item_divider"
-          />
-      <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="@dimen/margin_large"
-          >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/activity_score_common_label_set_question_award"
-            style="@style/Widget.App.TextView.Large.Primary"
-            />
+          <TextView
+              android:id="@+id/score_best_answer"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="+5"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
 
-        <TextView
-            android:id="@+id/score_set_question_award"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            tools:text="+10"
-            style="@style/Widget.App.TextView.Large.RedDark"
+          <TextView
+              android:id="@+id/score_best_answer_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_best_answer"
+              android:text="每日最高限5分"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/item_divider"
             />
-      </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_comment_question"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
+
+          <TextView
+              android:id="@+id/score_comment_question"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="+1"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
+
+          <TextView
+              android:id="@+id/score_comment_question_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_comment_question"
+              android:text="每日最高限25分"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/item_divider"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_send_activity"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
+
+          <TextView
+              android:id="@+id/score_send_activity"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="+2"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
+
+          <TextView
+              android:id="@+id/score_send_activity_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_send_activity"
+              android:text="每日最高限20分"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/item_divider"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_comment_activity"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
+
+          <TextView
+              android:id="@+id/score_comment_activity"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="+1"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
+
+          <TextView
+              android:id="@+id/score_comment_activity_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_comment_activity"
+              android:text="每日最高限20分"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/item_divider"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_send_post"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
+
+          <TextView
+              android:id="@+id/score_send_post"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="+2"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
+
+          <TextView
+              android:id="@+id/score_send_post_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_send_post"
+              android:text="每日最高限20分"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/item_divider"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_comment_post"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
+
+          <TextView
+              android:id="@+id/score_comment_post"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="+1"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
+
+          <TextView
+              android:id="@+id/score_comment_post_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_comment_post"
+              android:text="每日最高限20分"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@color/item_divider"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_large"
+            >
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:text="@string/activity_score_common_label_set_question_award"
+              style="@style/Widget.App.TextView.Large.Primary"
+              />
+
+          <TextView
+              android:id="@+id/score_set_question_award"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:text="自定义"
+              style="@style/Widget.App.TextView.Large.RedDark"
+              />
+
+          <TextView
+              android:id="@+id/score_set_question_award_max"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/margin_xlarge"
+              android:layout_toLeftOf="@id/score_set_question_award"
+              android:text="不限"
+              style="@style/Widget.App.TextView.Small.Secondary"
+              />
+        </RelativeLayout>
+      </LinearLayout>
 
     </LinearLayout>
   </ScrollView>

@@ -26,6 +26,7 @@ import com.thinksky.net.rpc.model.MessageModel;
 import com.thinksky.net.rpc.model.PostModel;
 import com.thinksky.net.rpc.model.QuestionCategoryModel;
 import com.thinksky.net.rpc.model.QuestionDetailModel;
+import com.thinksky.net.rpc.model.ScoreModel;
 import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
@@ -296,6 +297,8 @@ public interface AppService {
                                          ("category_id") String categoryId, @Query("attach_ids")
       String attachIds);
 
+  @GET("api.php?s=user/ratio")
+  Observable<ScoreModel> getScore(@Query("session_id") String sessionId);
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
   }

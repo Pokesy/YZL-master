@@ -512,7 +512,7 @@
   </style>
 
   <style name="Widget.App.TextView.Small.Red">
-    <item name="android:textColor">@color/font_color_red</item>
+    <item name="android:textColor">@color/font_color_red_dark</item>
   </style>
 
   <!-- 中字体 -->

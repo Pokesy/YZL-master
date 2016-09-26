@@ -60,8 +60,6 @@ public class OtherProfileActivity extends BaseBActivity {
   TextView fansCount;
   @Bind(R.id.follow_count)
   TextView followCount;
-  @Bind(R.id.btn_follow)
-  TextView btnFollow;
   @Bind(R.id.area_value)
   TextView areaValue;
   @Bind(R.id.signature_value)
@@ -83,6 +81,8 @@ public class OtherProfileActivity extends BaseBActivity {
   MyScrollview scrollView;
   @Bind(R.id.profile_menu)
   RelativeLayout profileMenu;
+  @Bind(R.id.level)
+  TextView level;
   private String mUserId;
 
   @Override
@@ -131,35 +131,15 @@ public class OtherProfileActivity extends BaseBActivity {
       areaValue.setText(model.getP_province() + " " + model.getP_city());
     }
     signatureValue.setText(model.getSignature());
+
     if (model.getIs_follow() == 1) {
-      btnFollow.setText(R.string.activity_other_profile_btn_cancel_follow);
-    } else {
-      btnFollow.setText(R.string.activity_other_profile_btn_follow);
-    }
-    btnFollow.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        // 关注或者取消关注
-        if (model.getIs_follow() != 1) {
-          manageRpcCall(mAppService.doFollow(Url.SESSIONID, model.getUid()), new
-              UiRpcSubscriberSimple<BaseModel>(OtherProfileActivity.this) {
+      titleBar.setRightTextBtn(R.string.activity_other_profile_btn_cancel_follow, new View
+          .OnClickListener() {
 
 
-                @Override
-                protected void onSuccess(BaseModel baseModel) {
-                  model.setIs_follow(1);
-                  int fansCount = TextUtils.isEmpty(model.getFans()) ? 0 : Integer
-                      .parseInt(model.getFans());
-                  model.setFollowing(String.valueOf(fansCount + 1));
-                  bindData(model);
-                }
+        @Override
+        public void onClick(View v) {
 
-                @Override
-                protected void onEnd() {
-
-                }
-              });
-        } else {
           manageRpcCall(mAppService.endFollow(Url.SESSIONID, model.getUid()), new
               UiRpcSubscriberSimple<BaseModel>(OtherProfileActivity.this) {
 
@@ -179,8 +159,34 @@ public class OtherProfileActivity extends BaseBActivity {
                 }
               });
         }
-      }
-    });
+      });
+    } else {
+      titleBar.setRightTextBtn(R.string.activity_other_profile_btn_follow, new View
+          .OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+          manageRpcCall(mAppService.doFollow(Url.SESSIONID, model.getUid()), new
+              UiRpcSubscriberSimple<BaseModel>(OtherProfileActivity.this) {
+
+
+                @Override
+                protected void onSuccess(BaseModel baseModel) {
+                  model.setIs_follow(1);
+                  int fansCount = TextUtils.isEmpty(model.getFans()) ? 0 : Integer
+                      .parseInt(model.getFans());
+                  model.setFollowing(String.valueOf(fansCount + 1));
+                  bindData(model);
+                }
+
+                @Override
+                protected void onEnd() {
+
+                }
+              });
+        }
+      });
+    }
 
     if (TextUtils.isEmpty(model.getLatitude()) || TextUtils.isEmpty(model.getLongitude())) {
       enterMap.setText(R.string.activity_profile_setting_default_value);
@@ -204,6 +210,8 @@ public class OtherProfileActivity extends BaseBActivity {
         startActivity(intent);
       }
     });
+
+    level.setText(model.getTitle());
 
     titleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
       @Override

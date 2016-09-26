@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -40,6 +39,7 @@ import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -48,7 +48,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.kymjs.aframe.bitmap.KJBitmap;
 
 /**
  * Created by 王杰 on 2015/3/20.
@@ -85,7 +84,6 @@ public class IssueDetail extends BaseBActivity {
   ArrayList<HashMap<String, String>> reply_info;
 
   ArrayList<HashMap<String, String>> replyList;
-  KJBitmap kjBitmap;
   IssueListAdapter myAdapter;
   Handler mHandler;
   //定义点赞的按钮
@@ -105,11 +103,6 @@ public class IssueDetail extends BaseBActivity {
   TextView issue_index_send_com;
   //声明访问网站的按钮
   private LinearLayout issue_internet;
-//    //声明回复评论---
-//    private LinearLayout issue_huifu;
-//    private EditText issue_huifu_edittext;
-//    private TextView issue_huifu_send_com;
-//    private LinearLayout huiFuPingLun;
 
   //JSON解析点赞
   private void MyJson(String result) {
@@ -239,9 +232,10 @@ public class IssueDetail extends BaseBActivity {
               Toast.makeText(IssueDetail.this, "未登入", Toast.LENGTH_SHORT).show();
             } else if (TextUtils.equals(arr[0], "false") && TextUtils.equals(arr[1],
                 "您已经赞过，不能再赞了。")) {
-              Toast.makeText(IssueDetail.this, "您已经赞过，不能再赞了。", Toast.LENGTH_SHORT).show();
-            } else if (TextUtils.equals(arr[0],"true")) {
+              //Toast.makeText(IssueDetail.this, "您已经赞过，不能再赞了。", Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.equals(arr[0], "true")) {
               Toast.makeText(IssueDetail.this, "点赞成功", Toast.LENGTH_SHORT).show();
+              findViewById(R.id.dianzan).setSelected(true);
               new IssueInfoTask().execute(issueID);
             }
             break;
@@ -373,17 +367,6 @@ public class IssueDetail extends BaseBActivity {
           reply_info.add(reply_infos.get(i));
         }
         //
-//                if (reply_infos.size() > 5) {
-//                    reply_info = new ArrayList<HashMap<String, String>>();
-//                    for (int i = 0; i < 5; i++) {
-//                        reply_info.add(reply_infos.get(i));
-//                    }
-//                } else {
-//                    reply_info = new ArrayList<HashMap<String, String>>();
-//                    for (int i = 0; i < reply_infos.size(); i++) {
-//                        reply_info.add(reply_infos.get(i));
-//                    }
-//                }
         pinglunshu.setText("评论" + "(" + reply_info.size() + ")");
         myAdapter = new IssueListAdapter(IssueDetail.this, reply_info, R.layout
             .issue_detail_listview_item,
@@ -486,18 +469,11 @@ public class IssueDetail extends BaseBActivity {
         issue_signature.setText("主人太懒，还没有个性签名");
       }
       //为图片控件加载数据
-      kjBitmap = KJBitmap.create();
       String u = comments.get(0).get("cover_url").replace("opensns//opensns", "opensns");
 //            kjBitmap.display(issue_image, u);
 //            ImageLoader.getInstance().displayImage(u, issue_image);
       com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this, u).into
           (issue_image);
-//            ResUtil.setRoundImage(comments.get(0).get("cover_url"), issue_image);
-//            issue_image.setVisibility(View.VISIBLE);
-//            image_progress.setVisibility(View.GONE);
-//            kjBitmap.display(issue_userImage, comments.get(0).get("user_image"));
-//            ImageLoader.getInstance().displayImage(comments.get(0).get("user_image"),
-// issue_userImage);
       com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this,
           comments.get(0).get("issue_userImage")).into(issue_userImage);
       issue_userImage.setOnClickListener(new View.OnClickListener() {
@@ -570,99 +546,33 @@ public class IssueDetail extends BaseBActivity {
     TextView replyUserName;
     TextView replyTime;
     TextView replyTextView;
-    RelativeLayout huiFuPingLun;
-    LinearLayout issue_huifu;
-    EditText issue_huifu_edittext;
-    TextView issue_huifu_send_com;
   }
 
   private class IssueListAdapter extends SimpleAdapter {
-    KJBitmap kjbImage;
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
       final ViewHolder viewHolder;
-      kjbImage = KJBitmap.create();
       if (convertView == null) {
         viewHolder = new ViewHolder();
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.issue_detail_listview_item,
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.comment_item,
             null);
         //获取listView中的控件
-        viewHolder.replyUserImage = (ImageView) convertView.findViewById(R.id.replyUserImage);
-        viewHolder.replyUserName = (TextView) convertView.findViewById(R.id.replyUserName);
-        viewHolder.replyTime = (TextView) convertView.findViewById(R.id.replyTime);
-        viewHolder.replyTextView = (TextView) convertView.findViewById(R.id.replyTextView);
-        //获取回复专辑中的评论
-        viewHolder.huiFuPingLun = (RelativeLayout) convertView.findViewById(R.id.huiFuPingLun);
-        viewHolder.issue_huifu = (LinearLayout) convertView.findViewById(R.id.issue_huifu);
-        viewHolder.issue_huifu_edittext = (EditText) convertView.findViewById(R.id
-            .issue_huifu_edittext);
-        viewHolder.issue_huifu_send_com = (TextView) convertView.findViewById(R.id
-            .issue_huifu_send_com);
+        viewHolder.replyUserImage = (ImageView) convertView.findViewById(R.id.user_avatar);
+        viewHolder.replyUserName = (TextView) convertView.findViewById(R.id.user_name);
+        viewHolder.replyTime = (TextView) convertView.findViewById(R.id.time);
+        viewHolder.replyTextView = (TextView) convertView.findViewById(R.id.content);
         convertView.setTag(viewHolder);
       } else {
         viewHolder = (ViewHolder) convertView.getTag();
       }
-      viewHolder.huiFuPingLun.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          if (viewHolder.issue_huifu.getVisibility() == View.GONE) {
-            viewHolder.issue_huifu.setVisibility(View.VISIBLE);
-          } else {
-            viewHolder.issue_huifu.setVisibility(View.GONE);
-          }
-        }
-      });
-      viewHolder.issue_huifu_send_com.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          final String s = viewHolder.issue_huifu_edittext.getText().toString();
-          if (s.equals("")) {
-            Toast.makeText(IssueDetail.this, "回复不能为空", Toast.LENGTH_SHORT).show();
-            return;
-          }
-          final String name = viewHolder.replyUserName.getText().toString();
-          new Thread(new Runnable() {
-            @Override
-            public void run() {
-              HttpClient httpClient = new DefaultHttpClient();
-              String url = Url.HTTPURL + "?s=" + Url.SENDISSUECOMMENT + "&session_id=" +
-                  session_id + "&row_id=" + issueID + "&content=";
-              HttpGet httpGet = new HttpGet(url + URLEncoder.encode("回复 @" + name + ":" + s));
-              try {
-                HttpResponse resp = httpClient.execute(httpGet);
-                //检查响应的状态是否正常,检查状态码的值是否等于200
-                int code = resp.getStatusLine().getStatusCode();
-                if (code == 200) {
-                  //从响应对象当中取出数据
-                  HttpEntity entity = resp.getEntity();
-                  InputStream in = entity.getContent();
-                  BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                  String line = reader.readLine();
-                  MyJson(line);
-                  Message msg = handler.obtainMessage();
-                  msg.what = 2;
-                  msg.obj = arr[0];
-                  handler.sendMessage(msg);
-                }
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            }
-          }).start();
-//                         Toast.makeText(IssueDetail.this,name,Toast.LENGTH_SHORT).show();
-          viewHolder.issue_huifu.setVisibility(View.GONE);
-        }
-      });
       //给控件赋值
-      if (null != reply_info.get(position).get("user_image")) {
-//                kjbImage.display(viewHolder.replyUserImage, reply_info.get(position).get
-// ("user_image"));
-//                ImageLoader.getInstance().displayImage(reply_info.get(position).get
-// ("user_image"), viewHolder.replyUserImage);
-        com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this,
-            reply_info.get(position).get("user_image")).into(viewHolder.replyUserImage);
-      }
+      com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this,
+          reply_info.get(position).get("user_image")).bitmapTransform(new
+          CropCircleTransformation(IssueDetail.this))
+          .placeholder(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar)
+          .dontAnimate().into(viewHolder
+          .replyUserImage);
       viewHolder.replyUserImage.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

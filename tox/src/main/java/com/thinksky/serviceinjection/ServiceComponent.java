@@ -38,6 +38,7 @@ import com.thinksky.ui.profile.DoctorMessageFragment;
 import com.thinksky.ui.profile.FansListActivity;
 import com.thinksky.ui.profile.FollowListActivity;
 import com.thinksky.ui.profile.MyMessageActivity;
+import com.thinksky.ui.profile.MyProfileActivity;
 import com.thinksky.ui.profile.OtherGroupListActivity;
 import com.thinksky.ui.profile.OtherPostListActivity;
 import com.thinksky.ui.profile.OtherProfileActivity;
@@ -46,6 +47,7 @@ import com.thinksky.ui.profile.OtherWeiboActivity;
 import com.thinksky.ui.profile.PostCollectionFragment;
 import com.thinksky.ui.profile.ProfileSettingActivity;
 import com.thinksky.ui.profile.QuestionCollectionFragment;
+import com.thinksky.ui.profile.ScoreActivity;
 import com.thinksky.ui.profile.YLQMessageFragment;
 import com.thinksky.ui.question.QuestionListActivity;
 import com.thinksky.ui.question.QuestionListFragment;
@@ -140,4 +142,8 @@ public interface ServiceComponent {
   void inject(SendTieziActivity sendTieziActivity);
 
   void inject(SendQuestionActivity sendQuestionActivity);
+
+  void inject(MyProfileActivity myProfileActivity);
+
+  void inject(ScoreActivity scoreActivity);
 }
