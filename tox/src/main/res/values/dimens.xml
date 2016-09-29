@@ -74,6 +74,6 @@
   <!-- 分割线大小 -->
   <dimen name="line_size">0.5dp</dimen>
 
-  <dimen name="comment_user_avatar_size">24dp</dimen>
+  <dimen name="comment_user_avatar_size">30dp</dimen>
 
 </resources>

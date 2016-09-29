@@ -23,11 +23,8 @@ import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.sharesdk.framework.ShareSDK;
@@ -41,6 +38,7 @@ import com.thinksky.injection.GlobalModule;
 import com.thinksky.myview.MoreTextView;
 import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.GroupDetailModel;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.service.AppService;
@@ -54,7 +52,6 @@ import com.thinksky.ui.common.TitleBar;
 import com.thinksky.ui.group.CheckMemberListActivity;
 import com.thinksky.ui.group.CreateGroupActivity;
 import com.thinksky.ui.group.GroupMemberListActivity;
-import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -76,9 +73,6 @@ import org.json.JSONObject;
 public class GroupInfoActivity extends BaseBActivity implements View.OnClickListener {
   private static final String BUNDLE_KEY_GROUP_ID = "group_id";
   private List<String> imgs;
-  private static boolean PUBLICGROUP = false;
-  private static boolean PRIVATEGROUP = false;
-  private static boolean DISMISSGROUP = false;
   protected MyScrollview group_scro;
   protected RelativeLayout refreshButn, enter_cy;
   protected ArrayList<HashMap<String, String>> categoryList;
@@ -94,7 +88,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   PopupWindow cateWindow;
   private GroupApi groupApi;
   private String group_id;
-  private int cateID = 0;
   private Context ctx;
   private LinearLayout linear_list;
   private LinearLayout linear_body;
@@ -102,24 +95,13 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   private RelativeLayout body_probar;
   private ImageView group_logo;
   private TextView group_name;
-  private TextView group_type;
-  private TextView group_type_name;
-  private TextView post_count;
-  private TextView man_count;
   private TextView join_status;
   private LinearLayout join_group;
-  private LinearLayout post_at_top;
   private MoreTextView group_detail;
   private ImageView refreshImage;
   private ArrayList<String> userlist;
   private HashMap<String, String> titleMap;
   private ArrayList<HashMap<String, String>> postInfoList;
-  private boolean count = true;
-  private int maxNumber = 0;
-  private int page = 1;
-  private int index = 0;
-  private boolean joinFlag = false;
-  private int isJoin;
   private long lastClick;
   private RecyclerView memberRecycler;
   private GroupApi mUpdateGroupApi;
@@ -140,6 +122,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   @Inject
   AppService mAppService;
 
+  private boolean mIsPublicGroup;
+  private JoinStatus mJoinStatus;
+
   //对加入群组的状态进行实时判断
   private Handler tempHandler = new Handler() {
     @Override
@@ -158,58 +143,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     @SuppressWarnings(value = {"unchecked"})
     public void handleMessage(Message msg) {
       switch (msg.what) {
-        case 0:
-          if (DISMISSGROUP) {
-            Intent intent = new Intent();
-            intent.putExtra("isWeGroup", isWeGroup);
-            setResult(1, intent);
-            GroupInfoActivity.this.finish();
-            break;
-          }
-          if (joinFlag) {
-            joinFlag = false;
-            ToastHelper.showToast("退出群组成功", ctx);
-            join_status.setText("加入群组");
-            mUpdateGroupApi.getGroupInfo(String.valueOf(group_id));
-          } else {
-            if (PUBLICGROUP) {
-              joinFlag = false;
-              ToastHelper.showToast("加入群组成功", ctx);
-              join_status.setText("退出群组");
-              mUpdateGroupApi.getGroupInfo(String.valueOf(group_id));
-            }
-            if (PRIVATEGROUP) {
-              join_group.setClickable(false);
-              ToastHelper.showToast("申请加入群组成功", ctx);
-              join_status.setText("正在审核");
-            }
-          }
-          break;
-        case 800:
-          if (PUBLICGROUP) {
-            if (joinFlag) {
-              join_status.setText("加入群组");
-              ToastHelper.showToast("退群失败，还未加入该群", ctx);
-            } else {
-              join_status.setText("退出群组");
-              ToastHelper.showToast("你已加入该群", ctx);
-            }
-          }
-          if (PRIVATEGROUP) {
-            join_status.setText("已申请，审核中");
-            join_group.setClickable(false);
-          }
-          break;
         case 0x120:
           categoryList = (ArrayList<HashMap<String, String>>) msg.obj;
-          //                    Log.e("categoryList>>>>>>>>",categoryList.toString());
           createCatePopWindow(categoryList);
-          break;
-        case 0x122:
-
-          break;
-        //置顶区帖子
-        case 0x124:
           break;
         default:
           break;
@@ -256,16 +192,12 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     body_probar = (RelativeLayout) findViewById(R.id.body_probar);
     group_logo = (ImageView) findViewById(R.id.group_logo);
     group_name = (TextView) findViewById(R.id.group_name);
-    group_type = (TextView) findViewById(R.id.group_type);
     //        group_type_name = (TextView) findViewById(R.id.group_type_name);
-    post_count = (TextView) findViewById(R.id.post_count);
-    man_count = (TextView) findViewById(R.id.man_count);
     join_status = (TextView) findViewById(R.id.join_status);
     mMenuNotice = findViewById(R.id.menu_notice);
     mNoticeContainer = findViewById(R.id.notice_container);
 
     join_group = (LinearLayout) findViewById(R.id.join_group);
-    post_at_top = (LinearLayout) findViewById(R.id.post_at_top);
     group_post_listView = (RecyclerView) findViewById(R.id.group_post_listView);
     group_detail = (MoreTextView) findViewById(R.id.group_detail);
     refreshButn = (RelativeLayout) findViewById(R.id.refresh_butn);
@@ -326,28 +258,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                 new MySubAdapter(GroupInfoActivity.this, groupDetailModel.getList()
                     .getGroupMenmber()));
             join_group.setVisibility(View.VISIBLE);
-            isJoin = Integer.parseInt(groupDetailModel.getList().getIs_join());
-            if (TextUtils.equals(groupDetailModel.getList().getUid(), Url.USERID)) {
-              join_status.setText("管理小组");
-              if (isJoin == 1) {
-                joinFlag = false;
-              }
-              return;
-            }
-            if (isJoin == 1) {
-              joinFlag = false;
-              join_status.setText("退出群组");
-            } else if (isJoin == -1) {
-              join_status.setText("已申请，审核中");
-              join_group.setClickable(false);
-            } else if (isJoin != 1) {
-              join_status.setText("加入群组");
-              joinFlag = true;
-            }
-
-            if (!BaseFunction.isLogin()) {
-              join_group.setVisibility(View.GONE);
-            }
+            mIsPublicGroup = !TextUtils.equals(groupDetailModel.getList().getType(),
+                GroupDetailModel.GROUP_TYPE_PRIVATE);
+            setJoinStatus();
           }
 
 
@@ -356,6 +269,42 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
           }
         });
+  }
+
+  private void setJoinStatus() {
+    switch (mGroupModel.getList().getIs_join()) {
+      case GroupDetailModel.GROUP_JOIN_STATUS_JOINED:
+        mJoinStatus = JoinStatus.JOIN;
+        break;
+      case GroupDetailModel.GROUP_JOIN_STATUS_REVIEW:
+        mJoinStatus = JoinStatus.REVIEW;
+        break;
+      default:
+        mJoinStatus = JoinStatus.UN_JOIN;
+        break;
+    }
+    if (TextUtils.equals(mGroupModel.getList().getUid(), Url.USERID)) {
+      join_status.setText(R.string.activity_group_info_btn_manage_group);
+      return;
+    }
+    switch (mJoinStatus) {
+      case JOIN:
+        join_status.setText(R.string.activity_group_info_btn_quit_group);
+        join_group.setClickable(true);
+        break;
+      case UN_JOIN:
+        join_status.setText(R.string.activity_group_info_btn_join_group);
+        join_group.setClickable(true);
+        break;
+      case REVIEW:
+        join_status.setText(R.string.activity_group_info_btn_review);
+        join_group.setClickable(false);
+        break;
+    }
+
+    if (!BaseFunction.isLogin()) {
+      join_group.setVisibility(View.GONE);
+    }
   }
 
   @Subscribe
@@ -475,7 +424,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
             if (null == hotPostModel.getList()) {
               return;
             }
-            maxNumber = hotPostModel.getList().size();
             if (hotPostModel.getList().size() != 0) {
               linear_list.setVisibility(View.VISIBLE);
               linear_isnull.setVisibility(View.GONE);
@@ -570,12 +518,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         startActivity(GroupMemberListActivity.makeIntent(mContext, String.valueOf(group_id),
             mIsCreator));
         break;
-      case R.id.group_logo:
-        //Intent intent = new Intent(mContext, GroupDetailActivity.class);
-        //intent.putExtra("groupInfoMap", groupInfoMap);
-        //intent.putExtra("is_join", isJoin);
-        //startActivity(intent);
-        break;
       case R.id.join_group:
         if (!TextUtils.isEmpty(groupApi.getSeesionId())) {
           if (TextUtils.equals(mGroupModel.getList().getUid(), userUid)) {
@@ -583,34 +525,24 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
                 (group_id)));
             break;
           }
-          if (isJoin == -1) {
-            join_group.setClickable(false);
-          }
-          if (joinFlag) {
-            //加入群组
-            if (TextUtils.equals(mGroupModel.getList().getType(), "1")) {
-              //加入的是私有群组
-              initFlag(false, true, false);
-            } else {
-              initFlag(true, false, false);
-            }
-            groupApi.setHandler(myHandler);
-            groupApi.joinGroupPost(group_id + "", mGroupModel.getList().getType());
-            joinFlag = false;
-          } else {
-            //退出群组
-            new AlertDialog.Builder(mContext).setTitle("退出群组")
-                .setMessage("确定吗？")
-                .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which) {
-                    groupApi.setHandler(myHandler);
-                    groupApi.quitGroupPost(group_id + "");
-                    joinFlag = true;
-                  }
-                })
-                .setNegativeButton("否", null)
-                .show();
+          switch (mGroupModel.getList().getIs_join()) {
+            case GroupDetailModel.GROUP_JOIN_STATUS_JOINED:
+              new AlertDialog.Builder(mContext).setTitle("退出群组")
+                  .setMessage("确定吗？")
+                  .setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                      quitGroup();
+                      dialog.cancel();
+                    }
+                  })
+                  .setNegativeButton(R.string.btn_cancel, null)
+                  .show();
+              break;
+            case GroupDetailModel.GROUP_JOIN_STATUS_REVIEW:
+              break;
+            default:
+              joinGroup();
           }
         } else {
           ToastHelper.showToast("请登陆后操作", mContext);
@@ -625,9 +557,6 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
         }
         lastClick = System.currentTimeMillis();
         postInfoList.clear();
-        page = 1;
-        count = true;
-        //                new GroupPostThread(page, cateID).start();
         AnimationSet animationSet = new AnimationSet(true);
         RotateAnimation rotateAnimation =
             new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5F,
@@ -643,9 +572,62 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     }
   }
 
+  private void joinGroup() {
+    showProgressDialog("", true);
+    manageRpcCall(mAppService.joinGroup(Url.SESSIONID, group_id, mGroupModel.getList().getType())
+        , new UiRpcSubscriber1<BaseModel>(this) {
+
+
+          @Override
+          protected void onSuccess(BaseModel baseModel) {
+            if (mIsPublicGroup) {
+              Toast.makeText(GroupInfoActivity.this, R.string.activity_group_info_join_success,
+                  Toast.LENGTH_SHORT).show();
+              mGroupModel.getList().setIs_join(GroupDetailModel.GROUP_JOIN_STATUS_JOINED);
+            } else {
+              Toast.makeText(GroupInfoActivity.this, R.string.activity_group_info_join_review,
+                  Toast.LENGTH_SHORT).show();
+              mGroupModel.getList().setIs_join(GroupDetailModel.GROUP_JOIN_STATUS_REVIEW);
+            }
+            getComponent().getGlobalBus().post(new GroupMemberListActivity
+                .GroupMemberDataChangeEvent());
+            //setJoinStatus();
+            getGroupInfo();
+          }
+
+          @Override
+          protected void onEnd() {
+            closeProgressDialog();
+          }
+        });
+  }
+
+  private void quitGroup() {
+    showProgressDialog("", true);
+    Toast.makeText(mContext, R.string.activity_group_info_quit_success, Toast.LENGTH_SHORT).show();
+    manageRpcCall(mAppService.quitGroup(Url.SESSIONID, group_id), new UiRpcSubscriber1<BaseModel>
+        (this) {
+
+
+      @Override
+      protected void onSuccess(BaseModel baseModel) {
+        mGroupModel.getList().setIs_join(GroupDetailModel.GROUP_JOIN_STATUS_UN_JOIN);
+        //setJoinStatus();
+        getGroupInfo();
+        getComponent().getGlobalBus().post(new GroupMemberListActivity
+            .GroupMemberDataChangeEvent());
+      }
+
+      @Override
+      protected void onEnd() {
+        closeProgressDialog();
+      }
+    });
+  }
+
   //判断发帖权限
   public void sendPost() {
-    if (!joinFlag) {
+    if (mJoinStatus.ordinal() == JoinStatus.JOIN.ordinal()) {
       //            post.putExtra("categoryList", categoryList);
       Intent intent = new Intent(this, SendTieziActivity.class);
       intent.putExtra("group_id", group_id);
@@ -739,12 +721,8 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
 
             v.setClickable(false);
             postInfoList.clear();
-            count = true;
-            page = 1;
             setBackColor(post_cateLinear);
             v.setBackgroundColor(Color.parseColor("#EDEDED"));
-            cateID = v.getId();
-            //                        new GroupPostThread(page, cateID).start();
             //防暴力点击
             new Handler().postDelayed(new Runnable() {
               @Override
@@ -767,166 +745,12 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     }
   }
 
-  //标记加入的是私有还是共有群组
-  public void initFlag(boolean publicgroup, boolean privategroup, boolean dismissgroup) {
-    PUBLICGROUP = publicgroup;
-    PRIVATEGROUP = privategroup;
-    DISMISSGROUP = dismissgroup;
-  }
-
-  //解决ListView在scrollView中显示不全
-  public static class Utility {
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-      //获取ListView对应的Adapter
-      ListAdapter listAdapter = listView.getAdapter();
-      if (listAdapter == null) {
-        // pre-condition
-        return;
-      }
-
-      int totalHeight = 0;
-      for (int i = 0, len = listAdapter.getCount(); i < len;
-           i++) {   //listAdapter.getCount()返回数据项的数目
-        View listItem = listAdapter.getView(i, null, listView);
-        listItem.measure(0, 0);  //计算子项View 的宽高
-        //                int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth()
-        // , View.MeasureSpec.AT_MOST);
-        //                listItem.measure(desiredWidth, 0);
-        totalHeight += listItem.getMeasuredHeight();  //统计所有子项的总高度
-      }
-
-      ViewGroup.LayoutParams params = listView.getLayoutParams();
-      params.height = totalHeight + (listView.getDividerHeight() * listAdapter.getCount());
-      //listView.getDividerHeight()获取子项间分隔符占用的高度
-      //params.height最后得到整个ListView完整显示需要的高度
-      listView.setLayoutParams(params);
-    }
-  }
-
-  //ListView适配器
-  private class GroupListAdapter extends SimpleAdapter {
-
-    private ArrayList<HashMap<String, String>> postInfoList;
-    private int resource;
-    private ViewHolder viewHolder;
-
-    public GroupListAdapter(Context context, ArrayList<HashMap<String, String>> data, int resource,
-                            String[] from, int[] to) {
-      super(context, data, resource, from, to);
-      this.resource = resource;
-      this.postInfoList = data;
-    }
-
-    @Override
-    public long getItemId(int position) {
-      return Integer.parseInt(postInfoList.get(position).get("id"));
-    }
-
-    @Override
-    public int getCount() {
-      return postInfoList.size();
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-
-      if (convertView == null) {
-        viewHolder = new ViewHolder();
-        convertView = LayoutInflater.from(mContext).inflate(resource, null);
-        viewHolder.user_image = (ImageView) convertView.findViewById(R.id.user_image);
-        viewHolder.post_title = (TextView) convertView.findViewById(R.id.post_title);
-        viewHolder.user_name = (TextView) convertView.findViewById(R.id.user_name);
-        viewHolder.post_category = (TextView) convertView.findViewById(R.id.post_category);
-        viewHolder.view_count = (TextView) convertView.findViewById(R.id.view_count);
-        viewHolder.reply_count = (TextView) convertView.findViewById(R.id.reply_count);
-        convertView.setTag(viewHolder);
-      } else {
-        viewHolder = (ViewHolder) convertView.getTag();
-      }
-      ImageLoader.loadOptimizedHttpImage(GroupInfoActivity.this, postInfoList.get(position).get
-          ("user_logo"))
-          .dontAnimate().placeholder(R.drawable.side_user_avatar).into(viewHolder.user_image);
-      //点击头像获取用户信息
-      viewHolder.user_image.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          groupApi.goUserInfo(mContext, postInfoList.get(position).get("user_uid"));
-        }
-      });
-
-      viewHolder.post_title.setText(postInfoList.get(position).get("title"));
-      viewHolder.user_name.setText(UserUtils.getUserName(GroupInfoActivity.this, postInfoList.get
-          (position).get("user_uid"), postInfoList.get(position).get("user_nickname")));
-      viewHolder.post_category.setText(titleMap.get(postInfoList.get(position).get("cate_id")));
-      viewHolder.view_count.setText(postInfoList.get(position).get("view_count"));
-      viewHolder.reply_count.setText(postInfoList.get(position).get("reply_count"));
-      return convertView;
-    }
-  }
-
-  //控件缓存器
-  private class ViewHolder {
-    ImageView user_image;
-    TextView post_title;
-    TextView user_name;
-    TextView post_category;
-    TextView view_count;
-    TextView reply_count;
-  }
-
-  //帖子分类导航线程
-  class CategoryThread extends Thread implements Runnable {
-
-    private ArrayList<JSONObject> jsonObjArrayList;
-
-    public CategoryThread() {
-      super();
-    }
-
-    @Override
-    public void run() {
-      categoryList = new ArrayList<HashMap<String, String>>();
-      titleMap = new HashMap<String, String>();
-      jsonObjArrayList = groupApi.getGroupCategory("?s=" + Url.POSTCATEGORY, group_id);
-      HashMap<String, String> map = new HashMap<String, String>();
-      map.put("id", "0");
-      map.put("group_id", String.valueOf(group_id));
-      map.put("title", "全部分类");
-      map.put("status", "1");
-      categoryList.add(map);
-      for (int i = 0; i < jsonObjArrayList.size(); i++) {
-        JSONObject jsonObj = jsonObjArrayList.get(i);
-        HashMap<String, String> map1 = new HashMap<String, String>();
-        try {
-          titleMap.put(jsonObj.getString("id"), jsonObj.getString("title"));
-          map1.put("id", jsonObj.getString("id"));
-          map1.put("group_id", jsonObj.getString("group_id"));
-          map1.put("title", jsonObj.getString("title"));
-          map1.put("status", jsonObj.getString("status"));
-
-          categoryList.add(map1);
-        } catch (JSONException e) {
-          e.printStackTrace();
-        }
-      }
-      Message message = new Message();
-      message.what = 0x120;
-      message.obj = categoryList;
-      myHandler.sendMessage(message);
-    }
-  }
-
-
   /*数据适配器*/
   public class RemenhuatiAdapter extends RBaseAdapter<HotPostModel.HotPostBean> {
     Context context;
 
     public RemenhuatiAdapter(Context context) {
       super(context);
-    }
-
-    public RemenhuatiAdapter(Context context, List<HotPostModel.HotPostBean> datas) {
-      super(context, datas);
     }
 
     @Override
@@ -1013,5 +837,9 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     Intent intent = new Intent(context, GroupPostInfoActivity.class);
     intent.putExtras(bundle);
     context.startActivity(intent);
+  }
+
+  private enum JoinStatus {
+    JOIN, UN_JOIN, REVIEW;
   }
 }

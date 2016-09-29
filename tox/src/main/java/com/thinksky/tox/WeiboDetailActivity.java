@@ -455,7 +455,7 @@ public class WeiboDetailActivity extends BaseBActivity {
               .this));
       upFlag = true;
     }
-    if (Weiboinfo.getFrom() == null) {
+    if (TextUtils.isEmpty(Weiboinfo.getFrom())) {
       mWeiboFrom.setText("来自:网站端");
     } else {
       mWeiboFrom.setText("来自:" + Weiboinfo.getFrom());

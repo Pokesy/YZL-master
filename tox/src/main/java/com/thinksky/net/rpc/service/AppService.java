@@ -295,10 +295,19 @@ public interface AppService {
   Observable<BaseModel> sendQuestion(@Query("session_id") String sessionId, @Query("title")
       String title, @Query("content") String content, @Query("score") String score, @Query
                                          ("category_id") String categoryId, @Query("attach_ids")
-      String attachIds);
+                                         String attachIds);
 
   @GET("api.php?s=user/ratio")
   Observable<ScoreModel> getScore(@Query("session_id") String sessionId);
+
+  @GET("/api.php?s=group/joinGroup")
+  Observable<BaseModel> joinGroup(@Query("session_id") String sessionId, @Query("group_id")
+      String groupId, @Query("type") String type);
+
+  @GET("/api.php?s=group/quitGroup")
+  Observable<BaseModel> quitGroup(@Query("session_id") String sessionId, @Query("group_id")
+      String groupId);
+
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
   }

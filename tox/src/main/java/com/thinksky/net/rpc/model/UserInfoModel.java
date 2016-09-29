@@ -118,7 +118,10 @@ public class UserInfoModel extends BaseModel implements Serializable {
   private String reg_time;
 
   public String getAvatar() {
-    return avatar;
+    if (!TextUtils.isEmpty(avatar) && avatar.startsWith(NetConstant.BASE_URL)) {
+      return avatar;
+    }
+    return getAvatar64();
   }
 
   public void setAvatar(String avatar) {

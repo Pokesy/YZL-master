@@ -166,7 +166,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     });
 
     btn_huida.setOnClickListener(this);
-    sendPostButtn.setOnClickListener(this);
+    sendPostButtn. setOnClickListener(this);
     mListData = new ArrayList<WendaXianqingInfo>();
     baseApi = new BaseApi();
     session_id = baseApi.getSeesionId();
@@ -575,16 +575,13 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
         holder = new ViewHolder();
         holder.avatar32 = (ImageView) convertView.findViewById(R.id.avatar32);
         holder.dianzan = (ImageView) convertView.findViewById(R.id.dianzan);
-        holder.caina = (ImageView) convertView.findViewById(R.id.caina);
+        holder.caina = (ImageView) convertView.findViewById(R.id  .caina);
         holder.nickname = (TextView) convertView.findViewById(R.id.nickname);
         holder.content = (TextView) convertView.findViewById(R.id.content);
         holder.creat_time = (TextView) convertView.findViewById(R.id.creat_time);
         holder.reply_count = (TextView) convertView.findViewById(R.id.reply_count);
         holder.acept = (TextView) convertView.findViewById(R.id.acept);
         holder.mIconAccept = (ImageView) convertView.findViewById(R.id.icon_accept);
-        if (FLAG && BaseFunction.isLogin() && suid.equals(Url.USERID)) {
-          holder.acept.setVisibility(View.VISIBLE);
-        }
         convertView.setTag(holder);
       } else {
         holder = (ViewHolder) convertView.getTag();
@@ -593,6 +590,9 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 //            list =bean.getQuestionAnswer();
       final QuestionDetailModel.ListBean
           .QuestionAnswerBean bean = list.get(position);
+      if (FLAG && BaseFunction.isLogin() && !bean.getUid().equals(Url.USERID)) {
+        holder.acept.setVisibility(View.VISIBLE);
+      }
       try {
         ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, RsenUrlUtil.URL_BASE + bean
             .getUser().getAvatar32())

@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,9 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * @version [Taobei Client V20160411, 16/8/19]
  */
 public class CreateGroupActivity extends BaseBActivity {
+  private static final int MAX_NAME_LENGTH = 10;
+  private static final int MAX_DESC_LENGTH = 30;
+
   private static final int REQUEST_CODE_NOTICE = 0x10;
   private static final String BUNDLE_KEY_GROUP_ID = "group_id";
   private static final int EDIT_TYPE_GROUP_NAME = 0;
@@ -422,10 +426,12 @@ public class CreateGroupActivity extends BaseBActivity {
         switch (editType) {
           case EDIT_TYPE_GROUP_NAME:
             mEditGroupName = editText.getText().toString();
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_NAME_LENGTH)});
             groupName.setText(mEditGroupName);
             break;
           case EDIT_TYPE_DESCRIPTION:
             mEditDescription = editText.getText().toString();
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_DESC_LENGTH)});
             description.setText(mEditDescription);
             break;
         }

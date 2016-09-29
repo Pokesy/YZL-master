@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.widget.Toast;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriberSimple;
@@ -108,7 +109,13 @@ public class AvatarChoosePresenter {
               Uri imageUri = Uri.fromFile(savedFile);
               intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
               intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-              mContext.startActivityForResult(intent, REQUEST_CODE_CAPTURE);
+
+              try {
+                mContext.startActivityForResult(intent, REQUEST_CODE_CAPTURE);
+              } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(mContext, R.string.permission_info_camara, Toast.LENGTH_SHORT).show();
+              }
               break;
             case INDEX_ALBUM:
               intent = new Intent(Intent.ACTION_PICK, null);

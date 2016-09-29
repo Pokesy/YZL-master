@@ -170,7 +170,7 @@ public class WeiboListFragment extends BasicFragment {
                             long arg3) {
       Intent intent = new Intent(ctx, WeiboDetailActivity.class);
       Bundle bund = new Bundle();
-      bund.putSerializable("WeiboInfo", weiboList.get(arg2 - 1));
+      bund.putSerializable("WeiboInfo", weiboList.get(arg2));
       intent.putExtra("value", bund);
       startActivity(intent);
     }

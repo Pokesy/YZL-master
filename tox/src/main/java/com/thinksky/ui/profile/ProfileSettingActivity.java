@@ -113,7 +113,7 @@ public class ProfileSettingActivity extends BaseBActivity {
 
   private void initView() {
     mUserInfo = getComponent().loginSession().getUserInfo();
-    ImageLoader.loadOptimizedHttpImage(this, mUserInfo.getAvatar64()).dontAnimate().placeholder(R
+    ImageLoader.loadOptimizedHttpImage(this, mUserInfo.getAvatar()).dontAnimate().placeholder(R
         .drawable.side_user_avatar)
         .bitmapTransform(new CropCircleTransformation(this)).into(mAvatarView);
     mNickNameValue.setText(TextUtils.isEmpty(mUserInfo.getNickname()) ? getString(R.string

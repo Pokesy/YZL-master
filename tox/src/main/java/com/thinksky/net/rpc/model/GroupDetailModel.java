@@ -21,6 +21,10 @@ import java.util.List;
  * @version [Taobei Client V20160411, 16/8/23]
  */
 public class GroupDetailModel extends BaseModel {
+  public static final String GROUP_JOIN_STATUS_JOINED = "1";
+  public static final String GROUP_JOIN_STATUS_REVIEW = "-1";
+  public static final String GROUP_JOIN_STATUS_UN_JOIN = "0";
+  public static final String GROUP_TYPE_PRIVATE = "1";
 
   /**
    * id : 24

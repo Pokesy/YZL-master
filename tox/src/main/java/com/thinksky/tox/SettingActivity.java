@@ -271,30 +271,19 @@ public class SettingActivity extends BaseBActivity {
         message.what = 0x005;
         handler.sendMessage(message);
 //                Toast.makeText(SettingActivity.this, "点击清除缓存", Toast.LENGTH_LONG).show();
-      }
-      if (mID == R.id.setting_chongzhimima) {
+      } else if (mID == R.id.setting_chongzhimima) {
         if (BaseFunction.isLogin()) {
           Intent intent3 = new Intent(SettingActivity.this, ChangePasswordActivity.class);
           startActivity(intent3);
         } else {
           ToastHelper.showToast("请先登录", Url.context);
-
         }
-      }
-      if (mID == R.id.setting_yijianfankui) {
+      } else if (mID == R.id.setting_yijianfankui) {
         Intent intent2 = new Intent(SettingActivity.this, Setting_yijianActivity.class);
         startActivity(intent2);
-      }
-
-      if (mID == R.id.setting_banbenjiance) {
-        mProgressDialog1.setTitle("检查更新");
-        mProgressDialog1.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog1.setCancelable(false);
-        mProgressDialog1.show();
-        mWeiboApi.checkUpdate();
-//                Toast.makeText(SettingActivity.this, "亲，已经是最新版本了", Toast.LENGTH_LONG).show();
-      }
-      if (mID == R.id.setting_guanyuqiubai) {
+      } else if (mID == R.id.setting_banbenjiance) {
+        getComponent().upgradeHelper().checkUpgradeInfo();
+      } else if (mID == R.id.setting_guanyuqiubai) {
         Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
         startActivity(intent);
       }

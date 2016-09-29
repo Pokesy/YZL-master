@@ -24,12 +24,11 @@
       >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/comment_user_avatar_size"
+        android:layout_height="wrap_content"
         >
       <TextView android:id="@+id/user_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_centerVertical="true"
           tools:text="春花秋月何时了"
           style="@style/Widget.App.TextView.Large.Blue"
           />
@@ -45,24 +44,24 @@
           android:gravity="center"
           android:visibility="gone"
           tools:text="327"
-          tools:visibility="visible"
+          tools:visibility="gone"
           style="@style/Widget.App.TextView.Medium.Blue"
           />
-    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        tools:text="2016-05-24 12:25"
-        style="@style/Widget.App.TextView.Small.Secondary"
-        />
+      <TextView
+          android:id="@+id/time"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:text="2016-05-24 12:25"
+          style="@style/Widget.App.TextView.Small.Secondary"
+          android:layout_alignParentRight="true"
+          />
+    </RelativeLayout>
 
     <TextView android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginTop="4dp"
         android:lineSpacingExtra="6dp"
         tools:text="若夫霪雨霏霏，连月不开，阴风怒号，浊浪排空；日星隐曜，山岳潜形；商旅不行，樯倾楫摧；薄暮冥冥，虎啸猿啼。登斯楼也，则有去国怀乡，忧谗畏讥，满目萧然，感极而悲者矣。"
         style="@style/Widget.App.TextView.Large.Primary"

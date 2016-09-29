@@ -296,7 +296,7 @@
   <string name="activity_check_member_list_item_accept">通过</string>
   <string name="activity_check_member_list_item_reject">拒绝</string>
 
-  <string name="activity_user_not_exists">用户已注销</string>
+  <string name="activity_user_not_exists">用户已删除</string>
 
   <!-- 问题详情 -->
   <string name="activity_question_detail_delete_alert">删除后,问题和悬赏值将无法恢复</string>
@@ -403,4 +403,14 @@
 
   <!-- 群组 -->
   <string name="activity_group_info_btn_send_post">发话题</string>
+  <string name="activity_group_info_btn_manage_group">管理小组</string>
+  <string name="activity_group_info_btn_quit_group">退出群组</string>
+  <string name="activity_group_info_btn_join_group">加入群组</string>
+  <string name="activity_group_info_btn_review">已申请,审核中</string>
+  <string name="activity_group_info_join_success">加入小组成功</string>
+  <string name="activity_group_info_quit_success">退出小组成功</string>
+  <string name="activity_group_info_join_review">已提交申请,审核中</string>
+
+  <string name="permission_info_camara">请确认应用已经获取访问摄像头权限</string>
+
 </resources>
