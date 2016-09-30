@@ -33,8 +33,10 @@ import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.log.Logger;
 import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.rpc.model.BaseModel;
+import com.thinksky.net.rpc.model.UploadImageModel;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
@@ -56,9 +58,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Response;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 public class SendQuestionActivity extends BaseBActivity implements View.OnClickListener {
   private static final int MAX_IMG_NUM = 9;
@@ -112,6 +121,8 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
 
   @Inject
   AppService mAppService;
+
+  private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -468,7 +479,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     }
     if (scrollImg.size() != 0) {
       scrollImg.remove(scrollImg.size() - 1);
-      long count = BitmapUtiles.getFileSize(scrollImg);
       scrollImg.add(scrollImg.size(), "add");
     } else {
       scrollImg.add(scrollImg.size(), "add");
@@ -503,60 +513,51 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
 
   private void uploadImages() {
     attachIds.clear();
-    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-    progressDialog.setTitle("发布中请等待");
-    progressDialog.setCanceledOnTouchOutside(false);
-    progressDialog.show();
+    showProgressDialog("发布中,请等待", false);
     for (int i = 0; i < scrollImg.size() - 1; i++) {
-      //            kjUpload(scrollImg.get(i));
-      AjaxParams params = new AjaxParams();
-      try {
-        String path1 = scrollImg.get(i);
-        //Log.e("原路径", path1);
-        String path = BitmapUtiles.getOnlyUploadImgPath(scrollImg.get(i));
-        Log.e("压缩后路径", path);
 
-        // Toast.makeText(SendPostActivity.this, "压缩后路径" + path, Toast.LENGTH_LONG).show();
-                /*String name=path.substring(path.lastIndexOf("/")+1,path.length());
-                File file= FileUtils.getSaveFile(Url.UPLOADTEMPORARYPATH,name);*/
-        File file = new File(BitmapUtiles.getOnlyUploadImgPath(scrollImg.get(i)));
-        params.put("image", file);
-        params.put("image", path1);
-        params.put("session_id", Url.SESSIONID);
-        FinalHttp fh = new FinalHttp();
-        fh.post(Url.UPLOADIMGURL, params, new AjaxCallBack<Object>() {
-          @Override
-          public void onLoading(long count, long current) {
-            progressDialog.setProgressNumberFormat("%1dKB/%2dKB");
-            progressDialog.setMax((int) count / 1024);
-            progressDialog.setProgress((int) (current / 1024));
-          }
+      File file = new File(scrollImg.get(i));
 
-          @Override
-          public void onSuccess(Object o) {
-            progressDialog.dismiss();
-            String s = myJson.getAttachId(o);
-            attachIds.add(s);
-            Log.e("上传照片成功", o.toString());
-            if (attachIds.size() == scrollImg.size() - 1) {
-              //                            progressDialog1.show(SendQuestionActivity.this, "提示",
-              // "发布中...", true, false);
-              l = WeiboApi.getAttachIds(attachIds);
-              sendWeibo();
+      RequestBody requestFile =
+          RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+      MultipartBody.Part body =
+          MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+      String url = "api.php?s=public/uploadimage&session_id=" + Url.SESSIONID;
+      Subscription subscription = mAppService.upload(url, body).subscribeOn(Schedulers.io())
+          .observeOn
+              (AndroidSchedulers.mainThread())
+          .subscribe(new Action1<Response<UploadImageModel>>() {
+            @Override
+            public void call(Response<UploadImageModel> uploadImageModelResponse) {
+              attachIds.add(uploadImageModelResponse.body().getMessage().getId());
+              if (attachIds.size() == scrollImg.size() - 1) {
+                l = WeiboApi.getAttachIds(attachIds);
+                sendWeibo();
+              }
             }
-          }
+          }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+              Logger.e("YZZ", throwable.getMessage());
+              Toast.makeText(SendQuestionActivity.this, "上传图片失败", Toast.LENGTH_SHORT).show();
+              closeProgressDialog();
+            }
+          }, new Action0() {
+            @Override
+            public void call() {
+              closeProgressDialog();
+            }
+          });
+      mSubscriptions.add(subscription);
 
-          @Override
-          public void onFailure(Throwable t, int errorNo, String strMsg) {
-            Log.e("上传照片失败", "");
-            progressDialog.dismiss();
-            Toast.makeText(SendQuestionActivity.this, "上传照片失败！", Toast.LENGTH_LONG).show();
-          }
-        });
-      } catch (Exception e) {
-
-      }
     }
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    mSubscriptions.unsubscribe();
   }
 
   private void sendWeibo() {

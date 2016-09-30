@@ -183,7 +183,7 @@ public class WeiboDetailActivity extends BaseBActivity {
           WeiboDetailActivity.this.finish();
           break;
         case R.id.Detail_SendComment:
-          if (!Url.SESSIONID.equals("")) {
+          if (!TextUtils.isEmpty(Url.SESSIONID)) {
             Intent intent = new Intent(WeiboDetailActivity.this, SendCommentActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("weiboInfo", Weiboinfo);
@@ -406,6 +406,7 @@ public class WeiboDetailActivity extends BaseBActivity {
         }
         commentInfoList.set(0, Url.weiboCommentInfo);
       }
+      mDetail_CommentsNum.setText(String.valueOf(commentInfoList.size()));
       Url.is2InsertWeiboCom = false;
 
       mAdapter.notifyDataSetChanged();

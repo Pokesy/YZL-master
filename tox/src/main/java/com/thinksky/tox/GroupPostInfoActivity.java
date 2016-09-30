@@ -1,6 +1,7 @@
 package com.thinksky.tox;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -8,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -24,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
@@ -209,7 +212,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
           @Override
           protected void onSuccess(final PostModel postModel) {
             final PostModel.ListBean listBean = postModel.getList().get(0);
-            initPostView(listBean);
             mCollectionBtn.setSelected(TextUtils.equals(listBean.getIs_collection(), "1"));
             mCollectionBtn.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -253,6 +255,7 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
                 }
               }
             });
+            initPostView(listBean);
 
           }
 
@@ -291,20 +294,37 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       mCollectionBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          manageRpcCall(mAppService.deletePost(Url.SESSIONID, bean.getId()), new
-              UiRpcSubscriberSimple<BaseModel>(GroupPostInfoActivity.this) {
-
-
+          new AlertDialog.Builder(GroupPostInfoActivity.this).setMessage(R.string
+              .group_post_info_delete_confirm)
+              .setPositiveButton(R.string.btn_confirm, new DialogInterface.OnClickListener() {
                 @Override
-                protected void onSuccess(BaseModel baseModel) {
-                  performPostDataChangeEvent();
-                }
+                public void onClick(DialogInterface dialog, int which) {
+                  dialog.dismiss();
+                  manageRpcCall(mAppService.deletePost(Url.SESSIONID, bean.getId()), new
+                      UiRpcSubscriberSimple<BaseModel>(GroupPostInfoActivity.this) {
 
-                @Override
-                protected void onEnd() {
 
+                        @Override
+                        protected void onSuccess(BaseModel baseModel) {
+                          Toast.makeText(GroupPostInfoActivity.this, R.string
+                              .group_post_info_delete_success, Toast.LENGTH_SHORT)
+                              .show();
+                          performPostDataChangeEvent();
+                          finish();
+                        }
+
+                        @Override
+                        protected void onEnd() {
+
+                        }
+                      });
                 }
-              });
+              }).setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+            }
+          }).show();
         }
       });
     } else {
@@ -465,39 +485,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
     return userList;
   }
 
-  public static class MyBean {
-
-    public String nickname;
-
-    //        public String menmberCount;
-    public String member_count;
-    public List<String> userList;//用户头像
-    public List<String> postList;
-    public String id;
-    public String logo;
-    public String title;
-    //        public String group_id;
-    public String group_type;
-    public String detail;
-    public String type_name;
-    public String post_count;
-
-    public String uid;
-    public String group_logo;
-    public String group_background;
-    public String type_id;
-    public String activity;
-    public String is_join;
-    public String ht_reply_count;
-    public String ht_support_count;
-    public String ht_logo;
-    public String ht_content;
-    public String ht_creat_time;
-    public String ht_nickname;
-    public String gm_logo;
-    public String gm_nickname;
-    public String create_time;
-  }
 
   public static void launch(Context context, boolean isWeGroup, GroupDetailModel.ListBean bean) {
     context.startActivity(GroupInfoActivity.makeIntent(context, bean.getId()));

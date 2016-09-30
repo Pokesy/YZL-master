@@ -1,7 +1,6 @@
 package com.thinksky.tox;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
-import com.thinksky.info.PostInfo;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.rpc.model.BaseModel;
@@ -38,13 +35,9 @@ import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.FileUtiles;
-import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
-import com.tox.BaseApi;
 import com.tox.BaseFunction;
-import com.tox.ForumApi;
 import com.tox.ToastHelper;
-import com.tox.TouchHelper;
 import com.tox.Url;
 import com.tox.WeiboApi;
 import java.io.File;
@@ -52,19 +45,15 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import net.tsz.afinal.FinalBitmap;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
-import org.kymjs.aframe.bitmap.KJBitmap;
-import org.kymjs.aframe.http.KJHttp;
 import org.kymjs.aframe.ui.widget.HorizontalListView;
 import org.kymjs.aframe.utils.FileUtils;
 import org.kymjs.kjframe.http.HttpParams;
 
 
 public class SendTieziActivity extends BaseBActivity implements View.OnClickListener {
-  private LinearLayout photoLayout;
   private String mTempPhotoName;
   private EditText mTitleEdit, mContentEdit;
 
@@ -75,12 +64,8 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
    * 已选择准备上传的图片数量
    */
   private int img_num = 0;
-  private ImageView img1, img2, img3, img4, img5, img6, img7, img8, img9, img10;
 
   private List<RelativeLayout> imgLayList = new ArrayList<RelativeLayout>();
-  private RelativeLayout imgLay1, imgLay2, imgLay3, imgLay4, imgLay5, imgLay6, imgLay7, imgLay8,
-      imgLay9;
-  private ProgressDialog progressDialog, progressDialog1;
   /**
    * 用来保存准备选择上传的图片路径
    */
@@ -88,26 +73,18 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
   private List<String> scrollImg = new ArrayList<String>();
   private List<ImageView> imgList = new ArrayList<ImageView>();
   private MyJson myJson = new MyJson();
-  private ForumApi forumApi = new ForumApi();
   private List<String> attachIds = new ArrayList<String>();
   //    private TextView score;
   private RelativeLayout backBtn;
   private HorizontalListView horizontalListView;
-  private LinearLayout mAttachLayout, mAttachBtn, mFaceBtn;
+  private LinearLayout mAttachBtn;
   private FrameLayout mPhotoShowLayout;
   private PhotoAdapter photoAdapter;
-  private FinalBitmap finalBitmap;
-  private KJBitmap kjBitmap;
   private TextView photoCount;
   private List<String> imgPathList;
   private int photo_num = 0;
-  private LinearLayout title;
-  private LinearLayout attachBtns;
-  private int fishid = 1;
-  private BaseApi baseApi;
   private String l;
   private String group_id;
-  private String category_id;
 
   @Inject
   AppService mAppService;
@@ -130,29 +107,8 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
         .build().inject(this);
   }
 
-//    private void initData() {
-//        mWealthView.setText(getResources().getString(R.string.available_wealth_text, Url
-// .MYUSERINFO.getScore()));
-//    }
-
   private void initView() {
-    kjBitmap = KJBitmap.create();
-    finalBitmap = FinalBitmap.create(this);
-//        forumApi.setHandler(hand);
-    Intent intent = getIntent();
-//        forumId=intent.getStringExtra("forumId");
-//        address = intent.getStringExtra("address");
-//        longitude = intent.getStringExtra("longitude");
-//        latitude = intent.getStringExtra("latitude");
-    photoLayout = (LinearLayout) findViewById(R.id.Post_send_photo);
-//        score_select = (LinearLayout) findViewById(R.id.score_select);
-//        dizhi = (TextView) findViewById(R.id.dizhi);
-//        score = (TextView) findViewById(R.id.score);
-    photoLayout.setOnClickListener(this);
-    photoLayout.setOnTouchListener(new TouchHelper(this, R.drawable.borderradius_postsend + "", R
-        .drawable.borderradius_postsend_touched + "", "drawable"));
-    baseApi = new BaseApi();
-    strs = new ArrayList<String>();
+    strs = new ArrayList<>();
     strs.add("0");
     strs.add("5");
     strs.add("10");
@@ -169,24 +125,16 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
 //        mWealthView = (TextView) findViewById(R.id.available_wealth);
     mTitleEdit = (EditText) findViewById(R.id.Post_send_titleEdit);
     postSendLayout = (ImageView) findViewById(R.id.post_send);
-    mAttachLayout = (LinearLayout) findViewById(R.id.Post_attach_layout);
     mPhotoShowLayout = (FrameLayout) findViewById(R.id.Post_photo_layout);
     horizontalListView = (HorizontalListView) findViewById(R.id.HorizontalListView);
-    photoAdapter = new PhotoAdapter(this, finalBitmap, kjBitmap, scrollImg);
+    photoAdapter = new PhotoAdapter(this, scrollImg);
     horizontalListView.setAdapter(photoAdapter);
     mAttachBtn = (LinearLayout) findViewById(R.id.Post_send_attachBtn);
-    title = (LinearLayout) findViewById(R.id.title);
-    attachBtns = (LinearLayout) findViewById(R.id.attachBtns);
-    mFaceBtn = (LinearLayout) findViewById(R.id.Post_send_faceBtn);
     backBtn = (RelativeLayout) findViewById(R.id.Post_send_Back);
-//        score.setOnClickListener(this);
     backBtn.setOnClickListener(this);
-    mFaceBtn.setOnClickListener(this);
     mAttachBtn.setOnClickListener(this);
     postSendLayout.setOnClickListener(this);
-//        dizhi.setOnClickListener(this);
 
-    progressDialog = new ProgressDialog(this);
     photoCount = (TextView) findViewById(R.id.photo_count);
     initList();
   }
@@ -199,46 +147,42 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
   public void onClick(View v) {
     int id = v.getId();
     switch (id) {
-      case R.id.Post_send_photo:
-        if (scrollImg.size() != 0) {
-          mAttachLayout.setVisibility(View.GONE);
-          mPhotoShowLayout.setVisibility(View.VISIBLE);
-        } else {
-          String[] items = {"相册", "拍照"};
-          AlertDialog.Builder builder = new AlertDialog.Builder(this);
-          builder.setTitle("操作");
-          builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-              switch (which) {
-                case 0:
-                  Intent intent3 = new Intent(SendTieziActivity.this, ScanPhotoActivity.class);
-                  startActivityForResult(intent3, 9);
-                  break;
-                case 1:
-                  Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                  File file = new File(Environment.getExternalStorageDirectory() + "/tox/photos");
-                  mTempPhotoName = System.currentTimeMillis() + ".png";
-                  if (!file.exists()) {
-                    file.mkdirs();
+      case R.id.Post_send_attachBtn:
 
-                    File photo = new File(file, mTempPhotoName);
-                    Uri u = Uri.fromFile(photo);
-                    intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
-                  } else {
+        String[] items = {"相册", "拍照"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("操作");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+              case 0:
+                Intent intent3 = new Intent(SendTieziActivity.this, ScanPhotoActivity.class);
+                startActivityForResult(intent3, 9);
+                break;
+              case 1:
+                Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File file = new File(Environment.getExternalStorageDirectory() + "/tox/photos");
+                mTempPhotoName = System.currentTimeMillis() + ".png";
+                if (!file.exists()) {
+                  file.mkdirs();
 
-                    File photo = new File(file, mTempPhotoName);
-                    Uri u = Uri.fromFile(photo);
-                    intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
-                  }
-                  startActivityForResult(intent1, 1);
-                  break;
-              }
+                  File photo = new File(file, mTempPhotoName);
+                  Uri u = Uri.fromFile(photo);
+                  intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
+                } else {
+
+                  File photo = new File(file, mTempPhotoName);
+                  Uri u = Uri.fromFile(photo);
+                  intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
+                }
+                startActivityForResult(intent1, 1);
+                break;
             }
-          });
-          builder.setCancelable(true);
-          builder.show();
-        }
+          }
+        });
+        builder.setCancelable(true);
+        builder.show();
 
         break;
       case R.id.post_send:
@@ -259,12 +203,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
           }
 
           if (BaseFunction.isLogin()) {
-
-
-//                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//                        progressDialog.setTitle("发布中请等待");
-//                        progressDialog.setCanceledOnTouchOutside(false);
-//                        progressDialog.show();
             sendWeibo();
           } else {
             Toast.makeText(SendTieziActivity.this, "未登入", Toast.LENGTH_LONG).show();
@@ -272,15 +210,15 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
         }
 
         break;
-      case R.id.Post_send_attachBtn:
-        if (mAttachLayout.isShown()) {
-          mAttachLayout.setVisibility(View.GONE);
-          mPhotoShowLayout.setVisibility(View.GONE);
-        } else {
-          mAttachLayout.setVisibility(View.VISIBLE);
-          mPhotoShowLayout.setVisibility(View.GONE);
-        }
-        break;
+      //case R.id.Post_send_attachBtn:
+      //  if (mAttachLayout.isShown()) {
+      //    mAttachLayout.setVisibility(View.GONE);
+      //    mPhotoShowLayout.setVisibility(View.GONE);
+      //  } else {
+      //    mAttachLayout.setVisibility(View.VISIBLE);
+      //    mPhotoShowLayout.setVisibility(View.GONE);
+      //  }
+      //  break;
 
       case R.id.Post_send_Back:
         SendTieziActivity.this.finish();
@@ -347,7 +285,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
       List<String> imgPathList = data.getStringArrayListExtra("data");
       Log.e("选图返回", "");
       if (imgPathList.size() > 0) {
-        mAttachLayout.setVisibility(View.GONE);
         mPhotoShowLayout.setVisibility(View.VISIBLE);
         if (scrollImg.size() != 0) {
           scrollImg.remove((scrollImg.size() - 1));
@@ -385,7 +322,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
       File temFile = new File(Environment.getExternalStorageDirectory() + "/tox/photos/" +
           mTempPhotoName);
       if (temFile.exists()) {
-        mAttachLayout.setVisibility(View.GONE);
         mPhotoShowLayout.setVisibility(View.VISIBLE);
         if (scrollImg.size() != 0) {
           scrollImg.remove((scrollImg.size() - 1));
@@ -407,7 +343,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
     }
     if (scrollImg.size() != 0) {
       scrollImg.remove(scrollImg.size() - 1);
-      long count = BitmapUtiles.getFileSize(scrollImg);
       scrollImg.add(scrollImg.size(), "add");
     } else {
       scrollImg.add(scrollImg.size(), "add");
@@ -422,33 +357,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
     }
   }
 
-  private void ableAddPhoto() {
-    if (img_num >= 3) {
-
-    }
-
-  }
-
-
-  Handler hand = new Handler() {
-    public void handleMessage(android.os.Message msg) {
-      super.handleMessage(msg);
-      if (msg.what == 0) {
-        progressDialog.dismiss();
-        Log.e("after dismiss", "");
-        String result = (String) msg.obj;
-        if (result != null) {
-          PostInfo postInfo = myJson.getPostInfo(result);
-          FileUtiles.DeleteTempFiles(Url.getDeleteFilesPath());
-          Url.postInfo = postInfo;
-          Url.is2InsertPost = true;
-          SendTieziActivity.this.finish();
-
-        }
-      }
-    }
-
-  };
 
   private void uploadImages() {
     attachIds.clear();
@@ -476,20 +384,14 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
         fh.post(Url.UPLOADIMGURL, params, new AjaxCallBack<Object>() {
           @Override
           public void onLoading(long count, long current) {
-            progressDialog.setProgressNumberFormat("%1dKB/%2dKB");
-            progressDialog.setMax((int) count / 1024);
-            progressDialog.setProgress((int) (current / 1024));
           }
 
           @Override
           public void onSuccess(Object o) {
-            progressDialog.dismiss();
             String s = myJson.getAttachId(o);
             attachIds.add(s);
             Log.e("上传照片成功", o.toString());
             if (attachIds.size() == scrollImg.size() - 1) {
-//                            progressDialog1.show(SendTieziActivity.this, "提示", "发布中...", true,
-// false);
               l = WeiboApi.getAttachIds(attachIds);
               sendWeibo();
             }
@@ -498,7 +400,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
           @Override
           public void onFailure(Throwable t, int errorNo, String strMsg) {
             Log.e("上传照片失败", "");
-            progressDialog.dismiss();
             Toast.makeText(SendTieziActivity.this, "上传照片失败！", Toast.LENGTH_LONG).show();
           }
         });
@@ -510,7 +411,6 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
 
   private void kjUpload(String path) {
     HttpParams params = new HttpParams();
-    KJHttp kjHttp = new KJHttp();
 
     try {
       params.put("image", FileUtils.getSaveFile(Url.UPLOADTEMPORARYPATH, path.substring(path
@@ -546,19 +446,12 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
   }
 
   public class PhotoAdapter extends BaseAdapter {
-    private KJBitmap kjBitmap;
     private List<String> imgUrl = new ArrayList<String>();
     private Context ctx;
-    private FinalBitmap finalBitmap;
-    private LoadImg loadImg;
 
-    public PhotoAdapter(Context ctx, FinalBitmap finalBitmap, KJBitmap kjBitmap, List<String>
-        list) {
-      this.kjBitmap = kjBitmap;
-      this.finalBitmap = finalBitmap;
+    public PhotoAdapter(Context ctx, List<String> list) {
       this.imgUrl = list;
       this.ctx = ctx;
-      loadImg = new LoadImg(ctx);
     }
 
     @Override
@@ -695,6 +588,9 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
         photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
         PhotoAdapter.Holder vh = (PhotoAdapter.Holder) v.getTag();
         photoAdapter.notifyDataSetChanged();
+        if (img_num == 0) {
+          mPhotoShowLayout.setVisibility(View.GONE);
+        }
       }
 
       @Override

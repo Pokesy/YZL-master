@@ -41,6 +41,8 @@ public class WeiboListFragment extends BasicFragment {
   private static final int TAB_INDEX_MY = 3;
   private static final int INIT_PAGE = 1;
 
+  private static final int PAGE_COUNT = 10;
+
   private static final String KEY_INDEX = "index";
 
   private String hotUrl;
@@ -106,6 +108,7 @@ public class WeiboListFragment extends BasicFragment {
 
     mAdapter = new WeiboAdapter(ctx, weiboList);
     myListView.setAdapter(mAdapter);
+    myListView.setPageCount(PAGE_COUNT);
 
     myListView.setScrollToLoadListener(new PullToRefreshListView.ScrollToLoadListener() {
       @Override
@@ -191,7 +194,7 @@ public class WeiboListFragment extends BasicFragment {
           List<WeiboInfo> newList = myJson.getWeiboList(result);
 //                    ToastHelper.showToast("动态个数"+newList.size(),ctx);
           if (newList != null) {
-            if (newList.size() >= 10) {
+            if (newList.size() >= PAGE_COUNT) {
               myListView.setPullUpToRefresh(true);
             } else {
               myListView.setPullUpToRefresh(false);

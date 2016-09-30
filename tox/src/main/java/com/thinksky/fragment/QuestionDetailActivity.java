@@ -166,7 +166,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     });
 
     btn_huida.setOnClickListener(this);
-    sendPostButtn. setOnClickListener(this);
+    sendPostButtn.setOnClickListener(this);
     mListData = new ArrayList<WendaXianqingInfo>();
     baseApi = new BaseApi();
     session_id = baseApi.getSeesionId();
@@ -575,7 +575,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
         holder = new ViewHolder();
         holder.avatar32 = (ImageView) convertView.findViewById(R.id.avatar32);
         holder.dianzan = (ImageView) convertView.findViewById(R.id.dianzan);
-        holder.caina = (ImageView) convertView.findViewById(R.id  .caina);
+        holder.caina = (ImageView) convertView.findViewById(R.id.caina);
         holder.nickname = (TextView) convertView.findViewById(R.id.nickname);
         holder.content = (TextView) convertView.findViewById(R.id.content);
         holder.creat_time = (TextView) convertView.findViewById(R.id.creat_time);
@@ -632,7 +632,6 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 
       if (!(bean.getIs_supported().equals("0"))) {//已点赞
         holder.dianzan.setBackgroundResource(R.drawable.icon_like_blue_stroke);
-
         string = bean.getIs_supported();
         listflag.add(string);
 
@@ -741,6 +740,9 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       @Override
       public void onClick(View v) {
         if (BaseFunction.isLogin()) {
+          if (TextUtils.equals(Url.USERID, bean.getUid())) {
+            return;
+          }
           if (bean.getIs_supported().equals("0")) {
 
             holder.reply_count.setText(Integer.parseInt(bean.getSupport_count()) + 1 + "");

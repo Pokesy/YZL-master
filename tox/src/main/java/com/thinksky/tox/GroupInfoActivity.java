@@ -416,24 +416,26 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
     initTieziList();
   }
 
+  @Subscribe
+  public void handleGroupPostDataDeleteEvent(GroupPostInfoActivity.PostDataChangeEvent event) {
+    initTieziList();
+  }
+
   private void initTieziList() {
     manageRpcCall(mAppService.getGroupAllPost(String.valueOf(group_id)), new
         UiRpcSubscriberSimple<HotPostModel>(this) {
           @Override
           protected void onSuccess(HotPostModel hotPostModel) {
-            if (null == hotPostModel.getList()) {
-              return;
-            }
-            if (hotPostModel.getList().size() != 0) {
+            if (null != hotPostModel.getList() && hotPostModel.getList().size() != 0) {
               linear_list.setVisibility(View.VISIBLE);
               linear_isnull.setVisibility(View.GONE);
-
               rm_adapter.resetData(hotPostModel.getList());
-
             } else {
               linear_isnull.setVisibility(View.VISIBLE);
               linear_list.setVisibility(View.GONE);
+              rm_adapter.resetData(new ArrayList<HotPostModel.HotPostBean>());
             }
+
             linear_body.setVisibility(View.VISIBLE);
             body_probar.setVisibility(View.GONE);
           }

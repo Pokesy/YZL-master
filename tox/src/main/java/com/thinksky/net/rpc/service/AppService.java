@@ -29,14 +29,20 @@ import com.thinksky.net.rpc.model.QuestionDetailModel;
 import com.thinksky.net.rpc.model.ScoreModel;
 import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
+import com.thinksky.net.rpc.model.UploadImageModel;
+import com.thinksky.net.rpc.model.UploadModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.UserListModel;
 import com.thinksky.net.rpc.model.WeiboDetailModel;
 import com.thinksky.net.rpc.model.WeiboModel;
 import com.thinksky.net.rpc.model.WendaModel;
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
@@ -307,6 +313,10 @@ public interface AppService {
   @GET("/api.php?s=group/quitGroup")
   Observable<BaseModel> quitGroup(@Query("session_id") String sessionId, @Query("group_id")
       String groupId);
+
+  @Multipart
+  @POST
+  Observable<Response<UploadImageModel>> upload(@Url String url, @Part MultipartBody.Part file);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

@@ -145,13 +145,13 @@
               android:id="@+id/Post_send_attachBtn"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
-              android:gravity="center"
               android:layout_marginLeft="5dp"
+              android:gravity="center"
               >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/icon_add_photo"
                 />
           </LinearLayout>
@@ -182,119 +182,37 @@
           android:background="@color/bg_color_divider_dark"
           />
 
-      <RelativeLayout
-          android:id="@+id/Post_footer"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
 
-          android:background="#EDF1F2"
-          android:visibility="visible"
+      <FrameLayout
+          android:id="@+id/Post_photo_layout"
+          android:layout_width="match_parent"
+          android:layout_height="200dp"
+          android:background="#DFE3E4"
+          android:gravity="center"
+          android:orientation="horizontal"
+          android:visibility="gone"
+          android:weightSum="10"
           >
 
-        <!--页脚btn对应的控制区-->
-        <LinearLayout
-            android:id="@+id/Post_attach_layout"
+        <org.kymjs.aframe.ui.widget.HorizontalListView
+            android:id="@+id/HorizontalListView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="#DFE3E4"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:visibility="gone"
-
-            android:weightSum="10"
+            android:layout_height="match_parent"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
             >
 
+        </org.kymjs.aframe.ui.widget.HorizontalListView>
 
-          <LinearLayout
-              android:id="@+id/Post_send_photo"
-              android:layout_width="70dp"
-              android:layout_height="70dp"
-              android:layout_marginLeft="15dp"
-              android:background="@drawable/borderradius_postsend"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:padding="5dp"
-              >
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="0dp"
-                android:layout_weight="6"
-                android:src="@drawable/photo"
-                />
-
-            <TextView
-                android:layout_width="30dp"
-                android:layout_height="0dp"
-                android:layout_weight="4.5"
-                android:gravity="center"
-                android:text="图片"
-                android:textColor="#455562"
-                />
-          </LinearLayout>
-
-          <LinearLayout
-              android:id="@+id/Post_send_takePhoto"
-              android:layout_width="70dp"
-              android:layout_height="70dp"
-              android:layout_marginLeft="15dp"
-              android:background="@drawable/borderradius_postsend"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
-              android:padding="5dp"
-              android:visibility="gone"
-              >
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="0dp"
-                android:layout_weight="6"
-                android:src="@drawable/camera_send_post"
-                />
-
-            <TextView
-                android:layout_width="30dp"
-                android:layout_height="0dp"
-                android:layout_weight="4.5"
-                android:gravity="center"
-                android:text="拍照"
-                android:textColor="#455562"
-                />
-          </LinearLayout>
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/Post_photo_layout"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/Post_attach_layout"
-            android:background="#DFE3E4"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            android:weightSum="10"
-            >
-
-          <org.kymjs.aframe.ui.widget.HorizontalListView
-              android:id="@+id/HorizontalListView"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:paddingBottom="15dp"
-              android:paddingTop="15dp"
-              >
-
-          </org.kymjs.aframe.ui.widget.HorizontalListView>
-
-          <TextView
-              android:id="@+id/photo_count"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center_horizontal|bottom"
-              android:layout_marginBottom="10dp"
-              android:text="已选0张，还剩9张可选"
-              />
-        </FrameLayout>
-      </RelativeLayout>
+        <TextView
+            android:id="@+id/photo_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="10dp"
+            android:text="已选0张，还剩9张可选"
+            />
+      </FrameLayout>
 
 
     </LinearLayout>

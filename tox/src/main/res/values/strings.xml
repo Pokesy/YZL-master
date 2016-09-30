@@ -412,5 +412,7 @@
   <string name="activity_group_info_join_review">已提交申请,审核中</string>
 
   <string name="permission_info_camara">请确认应用已经获取访问摄像头权限</string>
+  <string name="group_post_info_delete_confirm">确认删除</string>
+  <string name="group_post_info_delete_success">删除成功</string>
 
 </resources>
