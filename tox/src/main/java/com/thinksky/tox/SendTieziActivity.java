@@ -146,9 +146,9 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
   @Override
   public void onClick(View v) {
     int id = v.getId();
+    hideInputWindow(mContentEdit);
     switch (id) {
       case R.id.Post_send_attachBtn:
-
         String[] items = {"相册", "拍照"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("操作");

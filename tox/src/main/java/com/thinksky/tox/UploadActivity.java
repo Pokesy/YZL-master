@@ -297,6 +297,7 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
     @Override
     public void onClick(View v) {
       int ID = v.getId();
+      hideInputWindow(mWeiboEdit);
       switch (ID) {
         case R.id.close:
           UploadActivity.this.finish();

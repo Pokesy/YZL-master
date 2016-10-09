@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bugtags.library.Bugtags;
 import com.squareup.otto.Subscribe;
@@ -120,6 +122,33 @@ public class BaseBActivity extends AppCompatActivity {
   public void closeProgressDialog() {
     if (null != mProgressDialog) {
       mProgressDialog.dismiss();
+    }
+  }
+
+  /**
+   * 当焦点停留在view上时，隐藏输入法栏
+   *
+   * @param view view
+   */
+  protected void hideInputWindow(View view) {
+    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+    if (null != imm && null != view) {
+      imm.hideSoftInputFromWindow(view.getWindowToken(),
+          InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+  }
+
+  /**
+   * 当焦点停留在view上时，显示输入法栏
+   *
+   * @param view view
+   */
+  protected void showInputWindow(View view) {
+    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
+    if (null != imm && null != view) {
+      imm.showSoftInput(view, 0);
     }
   }
 

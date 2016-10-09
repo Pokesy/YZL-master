@@ -2,8 +2,11 @@ package com.thinksky.ui.basic;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
@@ -20,7 +23,7 @@ public abstract class BasicFragment extends Fragment implements RpcCallManager {
   private final String mClassName = getClass().getSimpleName();
 
   /**
-   *   是否进入pause状态
+   * 是否进入pause状态
    */
   private boolean mIsPaused;
 
@@ -318,6 +321,35 @@ public abstract class BasicFragment extends Fragment implements RpcCallManager {
     closeProgressDialog();
     getComponent().getGlobalBus().unregister(mSessionEventsHandler);
     getComponent().getGlobalBus().unregister(this);
+  }
+
+  /**
+   * 当焦点停留在view上时，隐藏输入法栏
+   *
+   * @param view view
+   */
+  protected void hideInputWindow(View view) {
+    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context
+        .INPUT_METHOD_SERVICE);
+
+    if (null != imm && null != view) {
+      imm.hideSoftInputFromWindow(view.getWindowToken(),
+          InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+  }
+
+  /**
+   * 当焦点停留在view上时，显示输入法栏
+   *
+   * @param view view
+   */
+  protected void showInputWindow(View view) {
+    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context
+        .INPUT_METHOD_SERVICE);
+
+    if (null != imm && null != view) {
+      imm.showSoftInput(view, 0);
+    }
   }
 
 
