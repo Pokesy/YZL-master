@@ -244,7 +244,7 @@
                             android:background="#ffffff"
                             android:gravity="center_vertical"
                             android:paddingLeft="5dp"
-                            android:text="积分"
+                            android:text="鱼乐豆"
                             android:textSize="16sp" />
 
                         <TextView

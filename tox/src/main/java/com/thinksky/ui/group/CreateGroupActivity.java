@@ -413,6 +413,14 @@ public class CreateGroupActivity extends BaseBActivity {
   private void showInputDialog(String initText, final int editType) {
     final EditText editText = (EditText) LayoutInflater.from(this).inflate(R.layout.dialog_input,
         null);
+    switch (editType) {
+      case EDIT_TYPE_GROUP_NAME:
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_NAME_LENGTH)});
+        break;
+      case EDIT_TYPE_DESCRIPTION:
+        editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_DESC_LENGTH)});
+        break;
+    }
     editText.setText(initText);
     AlertDialog dialog = new AlertDialog.Builder(this).setView(editText).setPositiveButton(R
         .string.btn_confirm, new DialogInterface.OnClickListener() {
@@ -420,18 +428,13 @@ public class CreateGroupActivity extends BaseBActivity {
 
       @Override
       public void onClick(DialogInterface dialog, int which) {
-        if (TextUtils.isEmpty(editText.getText())) {
-          return;
-        }
         switch (editType) {
           case EDIT_TYPE_GROUP_NAME:
             mEditGroupName = editText.getText().toString();
-            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_NAME_LENGTH)});
             groupName.setText(mEditGroupName);
             break;
           case EDIT_TYPE_DESCRIPTION:
             mEditDescription = editText.getText().toString();
-            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX_DESC_LENGTH)});
             description.setText(mEditDescription);
             break;
         }
