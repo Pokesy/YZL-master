@@ -34,6 +34,7 @@ import com.thinksky.injection.GlobalModule;
 import com.thinksky.model.ActivityModel;
 import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.service.AppService;
@@ -42,6 +43,7 @@ import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.ui.LoginSession;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.login.LogoutEvent;
 import com.thinksky.ui.profile.FansListActivity;
 import com.thinksky.ui.profile.FollowListActivity;
 import com.thinksky.ui.profile.MyCollectionActivity;
@@ -622,6 +624,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     inject();
     super.onCreate(savedInstanceState);
     checkNewVersion();
+    checkIsLogin();
   }
 
   private void inject() {
@@ -636,6 +639,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
     hasCheckd = true;
     getComponent().upgradeHelper().checkUpgradeInfo();
+  }
+
+  private void checkIsLogin() {
+    // 由于可能出现未知原因导致Session过期,所以在已登录的情况下先去服务器校验是否登录
+    if (isLogin()) {
+      manageRpcCall(mAppService.checkIsLogin(Url.SESSIONID), new UiRpcSubscriber1<BaseModel>(this) {
+        @Override
+        protected void onSuccess(BaseModel baseModel) {
+          if (baseModel.isSuccess()) {
+            return;
+          }
+          getComponent().loginSession().clearUserInfo();
+          getComponent().getGlobalBus().post(new LogoutEvent());
+          finish();
+          startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }
+
+        @Override
+        protected void onEnd() {
+
+        }
+      });
+    }
   }
 
   @Subscribe

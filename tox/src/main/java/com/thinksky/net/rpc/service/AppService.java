@@ -30,7 +30,6 @@ import com.thinksky.net.rpc.model.ScoreModel;
 import com.thinksky.net.rpc.model.UnReadCountModel;
 import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UploadImageModel;
-import com.thinksky.net.rpc.model.UploadModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.UserListModel;
 import com.thinksky.net.rpc.model.WeiboDetailModel;
@@ -317,6 +316,9 @@ public interface AppService {
   @Multipart
   @POST
   Observable<Response<UploadImageModel>> upload(@Url String url, @Part MultipartBody.Part file);
+
+  @GET("api.php?s=user/islogin")
+  Observable<BaseModel> checkIsLogin(@Query("session_id") String sessionId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";
