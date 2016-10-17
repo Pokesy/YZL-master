@@ -29,7 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class ZhuanjiFragment extends Fragment {
+public class  ZhuanjiFragment extends Fragment {
     private List<String> pictureListUrls;
     View rootView;
     ListView listView;

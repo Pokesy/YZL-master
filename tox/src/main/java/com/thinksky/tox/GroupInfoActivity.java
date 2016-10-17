@@ -123,7 +123,7 @@ public class GroupInfoActivity extends BaseBActivity implements View.OnClickList
   AppService mAppService;
 
   private boolean mIsPublicGroup;
-  private JoinStatus mJoinStatus;
+  private JoinStatus mJoinStatus = JoinStatus.UN_JOIN;
 
   //对加入群组的状态进行实时判断
   private Handler tempHandler = new Handler() {

@@ -32,7 +32,20 @@ public class VideoPlayActivity extends BaseBActivity {
         closeProgressDialog();
       }
     });
+    videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+      @Override
+      public boolean onError(MediaPlayer mp, int what, int extra) {
+        finish();
+        return false;
+      }
+    });
     videoView.setVideoURI(uri);
     videoView.setMediaController(mController);
+  }
+
+  @Override
+  public void onBackPressed() {
+    //super.onBackPressed();
+    finish();
   }
 }

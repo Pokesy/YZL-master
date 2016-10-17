@@ -50,6 +50,8 @@ public class AddressChooseView extends FrameLayout {
   private List<String> mProvinceIds = new ArrayList<>();
   private HashMap<String, List<String>> mCityIds = new HashMap<>();
 
+  private boolean hasSelected = false;
+
   public AddressChooseView(Context context) {
     super(context);
     initView();
@@ -77,15 +79,19 @@ public class AddressChooseView extends FrameLayout {
     mProvincePicker.setOnWheelChangeListener(new AbstractWheelPicker.OnWheelChangeListener() {
       @Override
       public void onWheelScrolling(float deltaX, float deltaY) {
-
+         hasSelected = false;
       }
 
       @Override
       public void onWheelSelected(int index, String data) {
+        if(hasSelected) {
+          return;
+        }
         mSelectedProvince = data;
         mSelectedProvinceId = mProvinceIds.get(index);
         swapCityList(index);
         mSelectedCity = mCityList.get(index).get(0);
+        hasSelected = true;
       }
 
       @Override
@@ -115,7 +121,11 @@ public class AddressChooseView extends FrameLayout {
   }
 
   private void swapCityList(int provinceIndex) {
+    mCityPicker.clearCache();
     mCityPicker.setData(mCityList.get(provinceIndex));
+    for(String city : mCityList.get(provinceIndex)) {
+      System.out.println(city);
+    }
   }
 
   public String getSelectAddress() {

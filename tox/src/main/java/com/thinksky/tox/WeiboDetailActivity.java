@@ -465,8 +465,7 @@ public class WeiboDetailActivity extends BaseBActivity {
     mDetail_ShareNum.setText(Weiboinfo.getRepost_count());
     mDetail_Ctime.setText(Weiboinfo.getCtime());
     if (Weiboinfo.getType().equals("repost")) {
-      Log.d("123545", Weiboinfo.getRepostWeiboInfo().getUser() + "");
-      if (Weiboinfo.getRepostWeiboInfo().getUser() == null) {
+      if (null == Weiboinfo.getRepostWeiboInfo() || Weiboinfo.getRepostWeiboInfo().getUser() == null) {
         mDetail_repostWeibo.setVisibility(View.VISIBLE);
         mDetail_repostWeibo.setBackgroundColor(Color.parseColor("#F7F7F7"));
         mDetail_repostName.setText(" ");

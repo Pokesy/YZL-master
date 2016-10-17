@@ -498,10 +498,15 @@ public class NewsDetailActivity extends BaseBActivity implements View.OnClickLis
     String avatar = null == replyInfo.getUser() ? "" : (TextUtils.isEmpty(replyInfo.getUser()
         .getAvatar()) ? "" : replyInfo.getUser().getAvatar().replace("opensns//opensns",
         "opensns"));
-    com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(NewsDetailActivity.this,
-        avatar).bitmapTransform
-        (new CropCircleTransformation(this)).into(
-        (ImageView) replyView.findViewById(R.id.user_avatar));
+
+    try {
+      com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(NewsDetailActivity.this,
+          avatar).bitmapTransform
+          (new CropCircleTransformation(this)).into(
+          (ImageView) replyView.findViewById(R.id.user_avatar));
+    } catch (Exception e) {
+
+    }
 
     ((TextView) replyView.findViewById(R.id.time)).setText(replyInfo.getCreate_time());
     ((TextView) replyView.findViewById(R.id.content)).setText(replyInfo.getContent());
