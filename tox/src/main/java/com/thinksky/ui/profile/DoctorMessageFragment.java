@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -49,12 +50,14 @@ import javax.inject.Inject;
 public class DoctorMessageFragment extends BasicPullToRefreshFragment {
   @Bind(R.id.list)
   PullToRefreshListView mListView;
+  @Inject
+  AppService mAppService;
   @Bind(R.id.empty_info)
   TextView emptyInfo;
   @Bind(R.id.empty_layout)
   FrameLayout emptyLayout;
-  @Inject
-  AppService mAppService;
+  @Bind(R.id.stub_import)
+  ViewStub stubImport;
   private ActivityAdapter mAdapter;
 
   @Override
@@ -66,7 +69,7 @@ public class DoctorMessageFragment extends BasicPullToRefreshFragment {
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-  Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_question_collection, container, false);
     ButterKnife.bind(this, view);
     mAdapter = new ActivityAdapter();
@@ -95,7 +98,8 @@ public class DoctorMessageFragment extends BasicPullToRefreshFragment {
 
   @Override
   protected void loadData() {
-    // TODO
+    stubImport.inflate();
+    stubImport.setVisibility(View.VISIBLE);
     manageRpcCall(mAppService.getAllMessage(Url.SESSIONID, "23"), new
         UiRpcSubscriberSimple<MessageModel>(getActivity()) {
 
@@ -117,6 +121,7 @@ public class DoctorMessageFragment extends BasicPullToRefreshFragment {
           @Override
           protected void onEnd() {
             resetRefreshStatus();
+            stubImport.setVisibility(View.GONE);
           }
         });
   }
@@ -149,17 +154,17 @@ public class DoctorMessageFragment extends BasicPullToRefreshFragment {
               UiRpcSubscriber1<BaseModel>(getActivity()) {
 
 
-            @Override
-            protected void onSuccess(BaseModel baseModel) {
-              getComponent().getGlobalBus().post(new MyMessageActivity.MessageReadEvent());
-              loadData();
-            }
+                @Override
+                protected void onSuccess(BaseModel baseModel) {
+                  getComponent().getGlobalBus().post(new MyMessageActivity.MessageReadEvent());
+                  loadData();
+                }
 
-            @Override
-            protected void onEnd() {
+                @Override
+                protected void onEnd() {
 
-            }
-          });
+                }
+              });
         }
       });
       return convertView;

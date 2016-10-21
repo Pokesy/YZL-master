@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.injection.ActivityComponent;
@@ -21,6 +22,8 @@ import rx.Subscriber;
 
 public abstract class BasicFragment extends Fragment implements RpcCallManager {
   private final String mClassName = getClass().getSimpleName();
+
+  private MaterialDialog mProgressDialog;
 
   /**
    * 是否进入pause状态
@@ -83,14 +86,13 @@ public abstract class BasicFragment extends Fragment implements RpcCallManager {
    * @param cancelable 对话框可取消标志
    */
   protected void showProgressDialog(String message, boolean cancelable) {
-    //if (mProgressDialog == null) {
-    //  //mProDialog = new ProgressDialog(getActivity(), cancelable);
-    //  mProgressDialog = new SpotsDialog(getActivity());
-    //  mProgressDialog.setCancelable(cancelable);
-    //  mProgressDialog.setCanceledOnTouchOutside(cancelable);
-    //}
-    //mProgressDialog.setMessage(message);
-    //showProgressDialog(mProgressDialog);
+    if (mProgressDialog == null) {
+      //mProDialog = new ProgressDialog(getActivity(), cancelable);
+      mProgressDialog = new MaterialDialog.Builder(getActivity()).content(message)
+          .progress(true, 0)
+          .cancelable(cancelable).build();
+    }
+    mProgressDialog.show();
   }
 
   /**
@@ -142,10 +144,10 @@ public abstract class BasicFragment extends Fragment implements RpcCallManager {
    */
   protected void closeProgressDialog() {
     // 关闭ProgressDialog
-    //if (null != mProgressDialog) {
-    //  mProgressDialog.dismiss();
-    //  mProgressDialog = null;
-    //}
+    if (null != mProgressDialog) {
+      mProgressDialog.dismiss();
+      mProgressDialog = null;
+    }
   }
 
   /**

@@ -19,6 +19,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -59,6 +61,13 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
 
   @Inject
   AppService mAppService;
+  @Bind(R.id.empty_info)
+  TextView emptyInfo;
+  @Bind(R.id.empty_layout)
+  FrameLayout emptyLayout;
+  @Bind(R.id.stub_import)
+  ViewStub stubImport;
+
   private PostCollectionAdapter mAdapter;
 
   @Override
@@ -70,7 +79,7 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-  Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_question_collection, container, false);
     ButterKnife.bind(this, view);
     mAdapter = new PostCollectionAdapter();
@@ -99,6 +108,8 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
 
   @Override
   protected void loadData() {
+    stubImport.inflate();
+    stubImport.setVisibility(View.VISIBLE);
     manageRpcCall(mAppService.getMyCollectPostList(Url.SESSIONID, getCurrentPage(), PAGE_COUNT),
         new UiRpcSubscriberSimple<HotPostModel>(getActivity()) {
 
@@ -108,6 +119,11 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
             if (getCurrentPage() == 0) {
               mAdapter.clear();
             }
+            if (null == model.getList() || model.getList().size() == 0) {
+              emptyLayout.setVisibility(View.VISIBLE);
+            } else {
+              emptyLayout.setVisibility(View.GONE);
+            }
             mAdapter.addAll(model.getList());
             mAdapter.notifyDataSetChanged();
             onRefreshLoaded(model.getList().size() >= PAGE_COUNT);
@@ -116,6 +132,7 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
           @Override
           protected void onEnd() {
             resetRefreshStatus();
+            stubImport.setVisibility(View.GONE);
           }
         });
   }

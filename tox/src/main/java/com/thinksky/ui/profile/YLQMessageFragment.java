@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -54,6 +55,8 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
   TextView emptyInfo;
   @Bind(R.id.empty_layout)
   FrameLayout emptyLayout;
+  @Bind(R.id.stub_import)
+  ViewStub stubImport;
 
   @Inject
   AppService mAppService;
@@ -97,7 +100,8 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
 
   @Override
   protected void loadData() {
-    // TODO
+    stubImport.inflate();
+    stubImport.setVisibility(View.VISIBLE);
     manageRpcCall(mAppService.getAllMessage(Url.SESSIONID, "16"), new
         UiRpcSubscriberSimple<MessageModel>(getActivity()) {
 
@@ -109,6 +113,7 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
               mListView.setVisibility(View.GONE);
             } else {
               emptyLayout.setVisibility(View.GONE);
+
               mListView.setVisibility(View.VISIBLE);
             }
             mAdapter.clear();
@@ -119,6 +124,7 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
           @Override
           protected void onEnd() {
             resetRefreshStatus();
+            stubImport.setVisibility(View.GONE);
           }
         });
   }
