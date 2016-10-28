@@ -156,6 +156,7 @@ public class OtherWeiboActivity extends BaseBActivity {
     //if (!BaseFunction.isLogin()) {
     //  autoLogin();
     //} else {
+    showProgressDialog("", true);
     getWeiboList();
     //}
 
@@ -214,6 +215,7 @@ public class OtherWeiboActivity extends BaseBActivity {
         Toast.makeText(ctx, "传输失败", Toast.LENGTH_LONG).show();
         listBottemFlag = true;
       } else if (msg.what == 0) {
+        closeProgressDialog();
         String result = (String) msg.obj;
 //                Log.e("WeiboResult:", result);
         if (isAdd != 0) {

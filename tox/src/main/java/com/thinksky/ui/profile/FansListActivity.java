@@ -97,6 +97,7 @@ public class FansListActivity extends BaseBActivity {
 
 
   private void initData() {
+    showProgressDialog("", false);
     manageRpcCall(mAppService.getMyFans(mUserId, 1, Integer.MAX_VALUE), new
         UiRpcSubscriberSimple<UserListModel>
             (this) {
@@ -107,7 +108,7 @@ public class FansListActivity extends BaseBActivity {
 
           @Override
           protected void onEnd() {
-
+            closeProgressDialog();
           }
         });
   }

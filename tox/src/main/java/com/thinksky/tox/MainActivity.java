@@ -795,7 +795,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void setData() {
       UserInfoModel info = BaseApplication.getApplication().getGlobalComponent().loginSession()
           .getUserInfo();
-      ImageLoader.loadOptimizedHttpImage(MainActivity.this, info.getAvatar()).dontAnimate()
+      String avatar = TextUtils.isEmpty(info.getAvatar128()) ? info.getAvatar() : info.getAvatar128();
+      ImageLoader.loadOptimizedHttpImage(MainActivity.this, avatar).dontAnimate()
           .bitmapTransform(new CropCircleTransformation(MainActivity.this)).placeholder(R
           .drawable.side_user_avatar).into(mAvatarView);
       mGenderView.setVisibility(View.VISIBLE);

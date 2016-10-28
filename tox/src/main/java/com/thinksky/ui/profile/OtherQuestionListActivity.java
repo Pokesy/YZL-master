@@ -109,6 +109,7 @@ public class OtherQuestionListActivity extends BaseBActivity {
   }
 
   private void init() {
+    showProgressDialog("", false);
     manageRpcCall(mAppService.getHerQuestionList(mUserId, mCurrentPage, PAGE_LIMIT), new
         UiRpcSubscriberSimple<WendaModel>(this) {
 
@@ -131,6 +132,7 @@ public class OtherQuestionListActivity extends BaseBActivity {
           @Override
           protected void onEnd() {
             mListView.resetPullStatus();
+            closeProgressDialog();
           }
         });
   }

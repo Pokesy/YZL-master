@@ -123,7 +123,8 @@ public class WeiboAdapter extends BaseAdapter {
 
     hold.UserName.setText(UserUtils.getUserName(ctx, list.get(arg0).getUser().getUid(), list.get
         (arg0).getUser().getNickname()));
-    hold.MainText.setFaceText(list.get(arg0).getWcontent());
+    hold.MainText.setFaceText(list.get(arg0).getWcontent().replaceAll("/br", "<br/>").replaceAll("/n",
+        "<br />").replaceAll("\n", "<br />"));
 //        hold.LikeNum.setText(list.get(arg0).getQlike());
 //        hold.Down_text.setText("-" + list.get(arg0).getQunlike());
     hold.CommentNum.setText(list.get(arg0).getRepost_count());

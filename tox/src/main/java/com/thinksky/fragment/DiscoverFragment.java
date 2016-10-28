@@ -32,7 +32,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.squareup.otto.Subscribe;
-import com.thinksky.rsen.ResUtil;
+import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.DiscoverSelectActivity;
 import com.thinksky.tox.DiscoverSendActivity;
@@ -49,6 +49,7 @@ import com.tox.Url;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONObject;
 
 public class DiscoverFragment extends BasicFragment implements View.OnClickListener {
@@ -56,6 +57,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   private TextView dizhi;
   private TextView dianhua;
   private ImageView iv_round;
+  private View mUserInfoContainer;
   public LocationClient mLocationClient = null;
   public BDLocationListener myListener = new MyLocationListener();
   private LatLng ll = new LatLng(37.463175, 121.400244);
@@ -237,6 +239,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
     mark = (Button) view.findViewById(R.id.button_mark);
     name = (TextView) view.findViewById(R.id.name);
     iv_round = (ImageView) view.findViewById(R.id.iv_round);
+    mUserInfoContainer = view.findViewById(R.id.user_info_container);
     iv_1 = (ImageView) view.findViewById(R.id.iv_1);
     iv_2 = (ImageView) view.findViewById(R.id.iv_2);
     iv_3 = (ImageView) view.findViewById(R.id.iv_3);
@@ -305,8 +308,12 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
           name.setText(bean.getNickname());
         }
 
-        ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(), iv_round);
-        iv_round.setOnClickListener(new View.OnClickListener() {
+        //ResUtil.setRoundImage(RsenUrlUtil.URL_BASE + bean.getAvatar().getAvatar32(), iv_round);
+        ImageLoader.loadOptimizedHttpImage(getActivity(), NetConstant.BASE_URL + bean.getAvatar()
+            .getAvatar32()).bitmapTransform(new CropCircleTransformation(getActivity()))
+            .placeholder(R.drawable.default_avatar).dontAnimate()
+            .into(iv_round);
+        mUserInfoContainer.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
             baseApi.goUserInfo(getActivity(), bean.getUid());

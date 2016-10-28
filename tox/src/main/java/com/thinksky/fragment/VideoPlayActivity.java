@@ -19,7 +19,7 @@ public class VideoPlayActivity extends BaseBActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.zjsp);
 
-    showProgressDialog("正在加载视频", false);
+    showProgressDialog("正在加载视频", true);
     videoView = (VideoView) findViewById(R.id.video);
     mController = new MediaController(this);
     Bundle id = this.getIntent().getExtras();
@@ -44,8 +44,8 @@ public class VideoPlayActivity extends BaseBActivity {
   }
 
   @Override
-  public void onBackPressed() {
-    //super.onBackPressed();
-    finish();
+  protected void onDestroy() {
+    super.onDestroy();
+    videoView.stopPlayback();
   }
 }

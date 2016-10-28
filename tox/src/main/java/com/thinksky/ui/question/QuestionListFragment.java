@@ -272,6 +272,10 @@ public class QuestionListFragment extends BasicFragment {
           ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
               .fish_category_other);
           break;
+        default:
+          ((TextView) viewHolder.itemView.findViewById(R.id.category)).setText(R.string
+              .fish_category_other);
+          break;
       }
       String s = listEntity.getBest_answer();
 //            if (s.equals("1")) {

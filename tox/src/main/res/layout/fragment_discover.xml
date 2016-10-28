@@ -6,231 +6,252 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/head_border"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/bmapView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true" />
-
-        <Button
-            android:id="@+id/button_mark"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:background="@drawable/button_mark"
-            android:text="去标记"
-            android:textColor="#ffffff" />
-
-
-        <com.thinksky.tox.SegmentControl
-            android:id="@+id/segment_control"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
-            android:textSize="16sp"
-            segmentcontrol:cornerRadius="4dip"
-            segmentcontrol:direction="horizon"
-            segmentcontrol:horizonGap="25dip"
-            segmentcontrol:selectedBackgroundColors="@color/head"
-            segmentcontrol:selectedIndex="0"
-            segmentcontrol:texts="鱼友|渔场"
-            segmentcontrol:verticalGap="@dimen/margin_small" />
-
-        <!--<com.thinksky.widget.SegmentView-->
-        <!--android:id="@+id/segment_view"-->
-        <!--android:layout_width="160dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="20dp" />-->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:orientation="vertical"
-            >
-
-            <Button
-                android:id="@+id/bt_traffic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="交通图" />
-
-            <Button
-                android:id="@+id/bt_satellite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="卫星图" />
-
-            <Button
-                android:id="@+id/bt_myloc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我的位置" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/pop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-android:visibility="gone"
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
       >
 
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-
-                android:layout_gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_round"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="10dp" />
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
-                    tools:text="yuchang yuchang " />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="end"
-                    android:paddingRight="20dp"
-                    android:text="举报"
-                    android:visibility="gone" />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-
-                android:background="#f2f2f2" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_user"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/near" />
-
-                <TextView
-                    android:id="@+id/dizhi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="13dp"
-                    tools:text="yuchangyuchang" />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+    <Button
+        android:id="@+id/button_mark"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_mark"
+        android:text="去标记"
+        android:textColor="#ffffff"
+        />
 
 
-                android:background="#f2f2f2" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+    <com.thinksky.tox.SegmentControl
+        android:id="@+id/segment_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:textSize="16sp"
+        segmentcontrol:cornerRadius="4dip"
+        segmentcontrol:direction="horizon"
+        segmentcontrol:horizonGap="25dip"
+        segmentcontrol:selectedBackgroundColors="@color/head"
+        segmentcontrol:selectedIndex="0"
+        segmentcontrol:texts="鱼友|渔场"
+        segmentcontrol:verticalGap="@dimen/margin_small"
+        />
 
-                <ImageView android:id="@+id/icon_contact"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/phone" />
+    <!--<com.thinksky.widget.SegmentView-->
+    <!--android:id="@+id/segment_view"-->
+    <!--android:layout_width="160dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_horizontal"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="20dp" />-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        >
 
-                <TextView
-                    android:id="@+id/dianhua"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingLeft="13dp"
-                    tools:text="yuchang yuchang " />
+      <Button
+          android:id="@+id/bt_traffic"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="交通图"
+          />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="end"
-                    android:paddingRight="20dp"
-                    android:text="举报"
-                    android:visibility="gone" />
-            </LinearLayout>
+      <Button
+          android:id="@+id/bt_satellite"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="卫星图"
+          />
 
-            <LinearLayout
-                android:id="@+id/images"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:orientation="horizontal">
+      <Button
+          android:id="@+id/bt_myloc"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="我的位置"
+          />
+    </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/iv_1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="10dp"
+    <LinearLayout
+        android:id="@+id/pop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
 
-                    android:scaleType="centerCrop"
-                    android:visibility="invisible" />
 
-                <ImageView
-                    android:id="@+id/iv_2"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="10dp"
+      <LinearLayout
+          android:id="@+id/user_info_container"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:orientation="horizontal"
+          android:paddingBottom="10dp"
+          android:paddingTop="10dp"
+          >
 
-                    android:scaleType="centerCrop"
-                    android:visibility="invisible" />
+        <ImageView
+            android:id="@+id/iv_round"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            />
 
-                <ImageView
-                    android:id="@+id/iv_3"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="10dp"
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            tools:text="yuchang yuchang "
+            />
 
-                    android:scaleType="centerCrop"
-                    android:visibility="invisible" />
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:paddingRight="20dp"
+            android:text="举报"
+            android:visibility="gone"
+            />
+      </LinearLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#f2f2f2"
+          />
 
-</LinearLayout><!--<com.thinksky.rsen.view.RRecyclerView--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content">-->
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:orientation="horizontal"
+          android:paddingBottom="10dp"
+          android:paddingTop="10dp"
+          >
 
-    <!--</com.thinksky.rsen.view.RRecyclerView>-->
+        <ImageView
+            android:id="@+id/iv_user"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/near"
+            />
+
+        <TextView
+            android:id="@+id/dizhi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="13dp"
+            tools:text="yuchangyuchang"
+            />
+      </LinearLayout>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="#f2f2f2"
+          />
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:orientation="horizontal"
+          android:paddingBottom="10dp"
+          android:paddingTop="10dp"
+          >
+
+        <ImageView
+            android:id="@+id/icon_contact"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/phone"
+            />
+
+        <TextView
+            android:id="@+id/dianhua"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="未填写"
+            android:paddingLeft="13dp"
+            android:textColorHint="@color/font_color_secondary"
+            tools:text="yuchang yuchang "
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:paddingRight="20dp"
+            android:text="举报"
+            android:visibility="gone"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/images"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="10dp"
+          android:layout_marginRight="10dp"
+          android:orientation="horizontal"
+          android:paddingBottom="10dp"
+          android:paddingTop="10dp"
+          >
+
+        <ImageView
+            android:id="@+id/iv_1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/iv_2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
+
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/iv_3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
+
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            />
+      </LinearLayout>
+    </LinearLayout>
+  </RelativeLayout>
+
+</LinearLayout>

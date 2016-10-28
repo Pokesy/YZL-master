@@ -97,6 +97,7 @@ public class FollowListActivity extends BaseBActivity {
 
 
   private void initData() {
+    showProgressDialog("", true);
     manageRpcCall(mAppService.getMyFollows(mUserId, 1, Integer.MAX_VALUE), new
         UiRpcSubscriberSimple<UserListModel>
             (this) {
@@ -107,7 +108,7 @@ public class FollowListActivity extends BaseBActivity {
 
           @Override
           protected void onEnd() {
-
+            closeProgressDialog();
           }
         });
   }

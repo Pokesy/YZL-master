@@ -104,6 +104,7 @@ public class OtherPostListActivity extends BaseBActivity {
   }
 
   private void initViewData() {
+    showProgressDialog("", false);
     manageRpcCall(mAppService.getHerPostList(mUid, mCurrentPage, PAGE_COUNT), new
         UiRpcSubscriberSimple<HotPostModel>
             (this) {
@@ -120,6 +121,7 @@ public class OtherPostListActivity extends BaseBActivity {
           @Override
           protected void onEnd() {
             mListView.resetPullStatus();
+            closeProgressDialog();
           }
         });
   }
