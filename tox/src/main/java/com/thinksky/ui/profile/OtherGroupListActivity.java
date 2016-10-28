@@ -94,6 +94,7 @@ public class OtherGroupListActivity extends BaseBActivity {
 
 
   private void initData() {
+    showProgressDialog("", true);
     manageRpcCall(mAppService.getHerGroup(mUserId, 1, Integer.MAX_VALUE), new
         UiRpcSubscriberSimple<GroupInfoModel>(this) {
 
@@ -105,7 +106,7 @@ public class OtherGroupListActivity extends BaseBActivity {
 
           @Override
           protected void onEnd() {
-
+            closeProgressDialog();
           }
         });
   }
