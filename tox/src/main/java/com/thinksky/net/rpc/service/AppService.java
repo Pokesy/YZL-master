@@ -32,6 +32,7 @@ import com.thinksky.net.rpc.model.UpgradeModel;
 import com.thinksky.net.rpc.model.UploadImageModel;
 import com.thinksky.net.rpc.model.UserInfoModel;
 import com.thinksky.net.rpc.model.UserListModel;
+import com.thinksky.net.rpc.model.VideoModel;
 import com.thinksky.net.rpc.model.WeiboDetailModel;
 import com.thinksky.net.rpc.model.WeiboModel;
 import com.thinksky.net.rpc.model.WendaModel;
@@ -86,7 +87,8 @@ public interface AppService {
                                                          count, @Query("category") String category);
 
   @GET("api.php?s=user/getProfile")
-  Observable<Response<UserInfoModel>> getProfile(@Query("uid") String uid);
+  Observable<Response<UserInfoModel>> getProfile(@Query("uid") String uid, @Query("session_id")
+      String sessionId);
 
   @GET("api.php?s=user/logout")
   Observable<Response<BaseModel>> logout(@Query("session_id") String sessionId);
@@ -94,7 +96,7 @@ public interface AppService {
 
   @GET(Constant.SET_PROFILE_URL)
   Observable<Response<BaseModel>> setNickName(@Query("session_id") String sessionId, @Query
-      ("nickname") String nickName);
+      ("name") String nickName);
 
   @GET(Constant.SET_PROFILE_URL)
   Observable<Response<BaseModel>> setGender(@Query("session_id") String sessionId, @Query("sex")
@@ -247,7 +249,7 @@ public interface AppService {
 
   @GET("api.php?s=group/getGroupMenmber")
   Observable<GroupMemberListModel> getGroupMember(@Query("id") String groupId, @Query("page") int
-      page, @Query("count") int count);
+      page, @Query("count") int count, @Query("session_id") String sessionId);
 
   @GET("api.php?s=group/rejectGroupPeople")
   Observable<BaseModel> removeGroupMember(@Query("session_id") String sessionId, @Query
@@ -319,6 +321,13 @@ public interface AppService {
 
   @GET("api.php?s=user/islogin")
   Observable<BaseModel> checkIsLogin(@Query("session_id") String sessionId);
+
+  @GET("api.php?s=Question/setBestAnswer")
+  Observable<BaseModel> acceptAnswer(@Query("session_id") String sessionId, @Query("answerid")
+      String answerId);
+
+  @GET("api.php?s=Issue/getIssuelist")
+  Observable<VideoModel> getVideoList(@Query("issue_id") String issueId);
 
   interface Constant {
     String SET_PROFILE_URL = "api.php?s=user/setProfile";

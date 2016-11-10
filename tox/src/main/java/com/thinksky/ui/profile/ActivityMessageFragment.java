@@ -41,7 +41,6 @@ import com.thinksky.ui.basic.BasicPullToRefreshFragment;
 import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.utils.DateUtils;
 import com.tox.Url;
-import java.util.Arrays;
 import java.util.Date;
 import javax.inject.Inject;
 
@@ -62,8 +61,8 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
   TextView emptyInfo;
   @Bind(R.id.empty_layout)
   FrameLayout emptyLayout;
-  @Bind(R.id.stub_import)
-  ViewStub stubImport;
+  @Bind(R.id.viewStub)
+  View stubImport;
   private ActivityAdapter mAdapter;
 
   @Override
@@ -103,8 +102,6 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
 
   @Override
   protected void loadData() {
-    stubImport.inflate();
-    stubImport.setVisibility(View.VISIBLE);
     manageRpcCall(mAppService.getAllMessage(Url.SESSIONID, "4"), new
         UiRpcSubscriberSimple<MessageModel>(getActivity()) {
 
@@ -113,10 +110,8 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
           protected void onSuccess(MessageModel messageModel) {
             if (null == messageModel.getList() || messageModel.getList().size() == 0) {
               emptyLayout.setVisibility(View.VISIBLE);
-              mListView.setVisibility(View.GONE);
             } else {
               emptyLayout.setVisibility(View.GONE);
-              mListView.setVisibility(View.VISIBLE);
             }
             mAdapter.clear();
             mAdapter.addAll(messageModel.getList());
@@ -126,9 +121,14 @@ public class ActivityMessageFragment extends BasicPullToRefreshFragment {
           @Override
           protected void onEnd() {
             resetRefreshStatus();
-            stubImport.setVisibility(View.GONE);
+            dismissInitProgress();
           }
         });
+  }
+
+  @Override
+  protected View getInitProgress() {
+    return stubImport;
   }
 
   private void getWeiboDetail(final String id, final String messageId) {

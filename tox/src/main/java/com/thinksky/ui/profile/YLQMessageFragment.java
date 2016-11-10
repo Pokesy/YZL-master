@@ -18,7 +18,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -55,8 +54,8 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
   TextView emptyInfo;
   @Bind(R.id.empty_layout)
   FrameLayout emptyLayout;
-  @Bind(R.id.stub_import)
-  ViewStub stubImport;
+  @Bind(R.id.viewStub)
+  View stubImport;
 
   @Inject
   AppService mAppService;
@@ -71,7 +70,7 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-  Bundle savedInstanceState) {
+      Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_question_collection, container, false);
     ButterKnife.bind(this, view);
     mAdapter = new ActivityAdapter();
@@ -100,8 +99,6 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
 
   @Override
   protected void loadData() {
-    stubImport.inflate();
-    stubImport.setVisibility(View.VISIBLE);
     manageRpcCall(mAppService.getAllMessage(Url.SESSIONID, "16"), new
         UiRpcSubscriberSimple<MessageModel>(getActivity()) {
 
@@ -110,10 +107,7 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
           protected void onSuccess(MessageModel messageModel) {
             if (null == messageModel.getList() || messageModel.getList().size() == 0) {
               emptyLayout.setVisibility(View.VISIBLE);
-              mListView.setVisibility(View.GONE);
             } else {
-              emptyLayout.setVisibility(View.GONE);
-
               mListView.setVisibility(View.VISIBLE);
             }
             mAdapter.clear();
@@ -124,9 +118,14 @@ public class YLQMessageFragment extends BasicPullToRefreshFragment {
           @Override
           protected void onEnd() {
             resetRefreshStatus();
-            stubImport.setVisibility(View.GONE);
+            dismissInitProgress();
           }
         });
+  }
+
+  @Override
+  protected View getInitProgress() {
+    return stubImport;
   }
 
   class ActivityAdapter extends BasicListAdapter<MessageModel.ListBean> {

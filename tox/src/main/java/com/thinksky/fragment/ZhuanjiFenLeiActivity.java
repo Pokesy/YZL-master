@@ -10,34 +10,42 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
+import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
+import com.thinksky.net.rpc.model.VideoModel;
+import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
+import com.thinksky.serviceinjection.DaggerServiceComponent;
+import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.IssueDetail;
 import com.thinksky.tox.R;
 import com.thinksky.utils.imageloader.ImageLoader;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import org.json.JSONException;
-import org.json.JSONObject;
+import javax.inject.Inject;
 
 
 public class ZhuanjiFenLeiActivity extends BaseBActivity {
 
   View rootView;
   ListView listView;
-  private isseuAdapter adapter;
+  private IssueAdapter adapter;
   ImageView back_menu;
   String tit;
   String isseu_id;
   TextView group_name;
   private RecyclerView gridView;
 
+  @Inject
+  AppService mAppService;
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    inject();
     setContentView(R.layout.zhuanji_fenlei_activity);
     listView = (ListView) findViewById(R.id.listView);
     back_menu = (ImageView) findViewById(R.id.back_menu);
@@ -47,7 +55,7 @@ public class ZhuanjiFenLeiActivity extends BaseBActivity {
     group_name = (TextView) findViewById(R.id.group_name);
     group_name.setText(tit);
 
-    adapter = new isseuAdapter(this);
+    adapter = new IssueAdapter(this);
     gridView.setAdapter(adapter);
     back_menu.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -57,70 +65,37 @@ public class ZhuanjiFenLeiActivity extends BaseBActivity {
     });
 
 
-    RsenUrlUtil.execute(this, RsenUrlUtil.URL_ZJ_FL, new RsenUrlUtil
-        .OnJsonResultListener<ZjFLBean>() {
-
+    manageRpcCall(mAppService.getVideoList(isseu_id), new UiRpcSubscriber1<VideoModel>
+        (ZhuanjiFenLeiActivity.this) {
       @Override
-      public void onNoNetwork(String msg) {
-
+      protected void onSuccess(VideoModel videoModel) {
+        adapter.resetData(videoModel.getList());
       }
 
       @Override
-      public Map getMap() {
-        Map map = new HashMap();
-        map.put("issue", isseu_id);
-        return map;
+      protected void onEnd() {
 
       }
-
-      @Override
-      public void onParseJsonBean(List<ZjFLBean> beans, JSONObject jsonObject) {
-
-
-        try {
-          ZjFLBean bean = new ZjFLBean();
-
-          bean.title = jsonObject.getString("title");//title 赋值
-          bean.id = jsonObject.getInt("id");
-          bean.reply_count = jsonObject.getString("reply_count");
-          bean.support_count = jsonObject.getString("support_count");
-          bean.cover_url = jsonObject.getString("cover_url");
-          bean.content = jsonObject.getString("content");
-          //其他字段。。。赋值
-
-          beans.add(bean);
-        } catch (JSONException e) {
-          e.printStackTrace();
-        }
-      }
-
-
-      @Override
-      public void onResult(boolean state, List<ZjFLBean> beans) {
-        adapter.resetData(beans);
-
-      }
-
     });
+
   }
 
-  @Override
-  public void onResume() {
-
-    super.onResume();
-
+  private void inject() {
+    DaggerServiceComponent.builder().serviceModule(new ServiceModule()).globalModule(new
+        GlobalModule((BaseApplication) getApplication()))
+        .build().inject(this);
   }
 
   /*数据适配器*/
-  public class isseuAdapter extends RBaseAdapter<ZjFLBean> {
+  public class IssueAdapter extends RBaseAdapter<VideoModel.ListBean> {
     Context context;
 
-    public isseuAdapter(Context context) {
+    public IssueAdapter(Context context) {
       super(context);
       this.context = context;
     }
 
-    public isseuAdapter(Context context, List<ZjFLBean> datas) {
+    public IssueAdapter(Context context, List<VideoModel.ListBean> datas) {
       super(context, datas);
     }
 
@@ -130,16 +105,16 @@ public class ZhuanjiFenLeiActivity extends BaseBActivity {
     }
 
     @Override
-    protected void onBindView(RViewHolder holder, int position, final ZjFLBean bean) {
-      holder.tV(R.id.title).setText(bean.title);
+    protected void onBindView(RViewHolder holder, int position, final VideoModel.ListBean bean) {
+      holder.tV(R.id.title).setText(bean.getTitle());
 
-      holder.tV(R.id.content).setText(bean.content.replace("\\n", "\n"));
-      holder.tV(R.id.reply_count).setText(bean.reply_count);
-      holder.tV(R.id.support_count).setText(bean.support_count);
+      holder.tV(R.id.content).setText(bean.getContent().replace("\\n", "\n"));
+      holder.tV(R.id.reply_count).setText(bean.getReply_count());
+      holder.tV(R.id.support_count).setText(bean.getSupport_count());
       //ImageLoader.getInstance().displayImage(RsenUrlUtil.URL_BASE + bean.cover_url,
       //        holder.imgV(R.id.imageView));
       try {
-        ImageLoader.loadOptimizedHttpImage(context, RsenUrlUtil.URL_BASE + bean.cover_url).into
+        ImageLoader.loadOptimizedHttpImage(context, RsenUrlUtil.URL_BASE + bean.getCover_url()).into
             (holder.imgV(R.id.imageView));
       } catch (Exception e) {
         e.printStackTrace();
@@ -148,7 +123,7 @@ public class ZhuanjiFenLeiActivity extends BaseBActivity {
         @Override
         public void onClick(View v) {
           Bundle bundle = new Bundle();
-          bundle.putInt("id", bean.id);
+          bundle.putInt("id", Integer.parseInt(bean.getId()));
           Intent intent1 = new Intent(ZhuanjiFenLeiActivity.this, IssueDetail.class);
           intent1.putExtras(bundle);
           startActivity(intent1);

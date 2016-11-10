@@ -22,7 +22,8 @@ public abstract class UiRpcSubscriber<T> extends Subscriber<Response<ResponseMod
   public UiRpcSubscriber(Context context) {
     mContext = context;
     httpErrorUiNotifier =
-        ((BaseApplication) context.getApplicationContext()).getGlobalComponent().httpErrorUiNotifier();
+        ((BaseApplication) context.getApplicationContext()).getGlobalComponent()
+            .httpErrorUiNotifier();
     sessionNotifier = ((BaseApplication) context.getApplicationContext()).getGlobalComponent()
         .sessionNotifier();
   }
@@ -56,10 +57,17 @@ public abstract class UiRpcSubscriber<T> extends Subscriber<Response<ResponseMod
         && responseModelResponse.body().getResult() == 1) {
       // 存储token
       //if (!TextUtils.isEmpty(responseModelResponse.body().getToken())) {
-      //  ((BaseApplication) mContext.getApplicationContext()).getGlobalComponent().appPreferences().put
+      //  ((BaseApplication) mContext.getApplicationContext()).getGlobalComponent()
+      // .appPreferences().put
       //      (CustomAppPreferences.KEY_COOKIE_SESSION_ID,
       //          responseModelResponse.body().getToken());
       //}
+      if (!responseModelResponse.body().isSuccess()) {
+        onApiError(new RpcApiError(responseModelResponse.body().getResult(), responseModelResponse
+            .body().getMessage()));
+        onCompleted();
+        return;
+      }
       onSuccess(responseModelResponse.body().getData());
       return;
     }

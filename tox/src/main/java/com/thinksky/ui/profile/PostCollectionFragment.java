@@ -65,8 +65,8 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
   TextView emptyInfo;
   @Bind(R.id.empty_layout)
   FrameLayout emptyLayout;
-  @Bind(R.id.stub_import)
-  ViewStub stubImport;
+  @Bind(R.id.viewStub)
+  View stubImport;
 
   private PostCollectionAdapter mAdapter;
 
@@ -108,8 +108,6 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
 
   @Override
   protected void loadData() {
-    stubImport.inflate();
-    stubImport.setVisibility(View.VISIBLE);
     manageRpcCall(mAppService.getMyCollectPostList(Url.SESSIONID, getCurrentPage(), PAGE_COUNT),
         new UiRpcSubscriberSimple<HotPostModel>(getActivity()) {
 
@@ -132,9 +130,14 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
           @Override
           protected void onEnd() {
             resetRefreshStatus();
-            stubImport.setVisibility(View.GONE);
+            dismissInitProgress();
           }
         });
+  }
+
+  @Override
+  protected View getInitProgress() {
+    return stubImport;
   }
 
   @Subscribe

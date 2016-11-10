@@ -198,7 +198,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
           @Override
           public void onDrawerOpened(View drawerView) {
             super.onDrawerOpened(drawerView);
-            manageRpcCall(mAppService.getProfile(Url.USERID), new
+            manageRpcCall(mAppService.getProfile(Url.USERID, Url.SESSIONID), new
                 UiRpcSubscriberSimple<UserInfoModel>
                     (MainActivity.this) {
 
@@ -795,7 +795,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void setData() {
       UserInfoModel info = BaseApplication.getApplication().getGlobalComponent().loginSession()
           .getUserInfo();
-      String avatar = TextUtils.isEmpty(info.getAvatar128()) ? info.getAvatar() : info.getAvatar128();
+      String avatar = TextUtils.isEmpty(info.getAvatar128()) ? info.getAvatar() : info
+          .getAvatar128();
       ImageLoader.loadOptimizedHttpImage(MainActivity.this, avatar).dontAnimate()
           .bitmapTransform(new CropCircleTransformation(MainActivity.this)).placeholder(R
           .drawable.side_user_avatar).into(mAvatarView);
@@ -824,9 +825,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
       if (TextUtils.isEmpty(info.getLatitude()) || TextUtils.isEmpty(info.getLongitude())) {
         mLocationView.setText(R.string.activity_profile_setting_default_value);
         mLocationView.setTextColor(getResources().getColor(R.color.font_color_secondary));
+        mLocationView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
       } else {
         mLocationView.setText(R.string.activity_profile_enter_map);
         mLocationView.setTextColor(getResources().getColor(R.color.font_color_blue));
+        mLocationView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.tiaozhuan, 0);
       }
       mLevelView.setText(info.getTitle());
       setTitleBar();

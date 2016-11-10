@@ -372,12 +372,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
      * 对ShowImageActivity直接返回的
      */
 
-    if (resultCode == RESULT_OK) {
-      Bundle b = data.getExtras(); //data为B中回传的Intent
-      category_id = b.getString("category_id");//str即为回传的值
-
-      dizhi.setText(b.getString("title"));
-    }
     if (requestCode == 8 && resultCode == 999) {
       Log.e("scroll返回", "");
       imgPathList = data.getStringArrayListExtra("data");
@@ -472,10 +466,15 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
             img_num++;
           }
         }
-        photoCount.setText("已选" + img_num + "张，还剩" + (3 - img_num) + "张");
+        photoCount.setText("已选" + img_num + "张，还剩" + (MAX_IMG_NUM - img_num) + "张");
         scrollImg.add(img_num, "add");
         photoAdapter.notifyDataSetChanged();
       }
+    } else if (resultCode == RESULT_OK) {
+      Bundle b = data.getExtras(); //data为B中回传的Intent
+      category_id = b.getString("category_id");//str即为回传的值
+
+      dizhi.setText(b.getString("title"));
     }
     if (scrollImg.size() != 0) {
       scrollImg.remove(scrollImg.size() - 1);

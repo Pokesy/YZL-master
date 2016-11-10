@@ -157,6 +157,8 @@
           android:id="@+id/enter_cy"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:clickable="true"
+          android:descendantFocusability="blocksDescendants"
           >
 
         <LinearLayout
@@ -201,6 +203,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/icon_arrow"
+                android:clickable="false"
                 android:tag="HORIZONTAL"
                 />
           </RelativeLayout>

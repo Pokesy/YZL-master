@@ -14,6 +14,7 @@ package com.thinksky.ui.basic;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewStub;
 import com.thinksky.ui.common.PullToRefreshListView;
 
 /**
@@ -32,6 +33,7 @@ public abstract class BasicPullToRefreshFragment extends BasicFragment {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    showInitProgress();
     getListView().setScrollToLoadListener(new PullToRefreshListView.ScrollToLoadListener() {
       @Override
       public void onPullUpLoadData() {
@@ -47,17 +49,32 @@ public abstract class BasicPullToRefreshFragment extends BasicFragment {
     loadData();
   }
 
+  protected void showInitProgress() {
+    if (null != getInitProgress()) {
+      getInitProgress().setVisibility(View.VISIBLE);
+    }
+  }
+
+  protected void dismissInitProgress() {
+    if (null != getInitProgress()) {
+      getInitProgress().setVisibility(View.GONE);
+    }
+  }
+
+
   protected abstract PullToRefreshListView getListView();
 
   protected abstract void loadData();
+
+  protected abstract View getInitProgress();
 
   protected void resetRefreshStatus() {
     getListView().resetPullStatus();
   }
 
   protected void onRefreshLoaded(boolean hasNew) {
-    if(hasNew) {
-      mCurrentPage ++;
+    if (hasNew) {
+      mCurrentPage++;
     }
     getListView().setPullUpToRefresh(hasNew);
   }

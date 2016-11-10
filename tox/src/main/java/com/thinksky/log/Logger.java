@@ -11,9 +11,9 @@
  */
 package com.thinksky.log;
 
+import android.util.Log;
 import com.thinksky.tox.BuildConfig;
 import okhttp3.logging.HttpLoggingInterceptor;
-import timber.log.Timber;
 
 /**
  * Logger<BR>
@@ -21,46 +21,49 @@ import timber.log.Timber;
  * @author zhaozeyang
  * @version [Taobei Client V20160411, 16/4/19]
  */
-public class Logger implements HttpLoggingInterceptor.Logger{
+public class Logger implements HttpLoggingInterceptor.Logger {
   public static void init() {
     if (BuildConfig.DEBUG) {
-      Timber.plant(new CustomDebugTree());
+      //Timber.plant(new CustomDebugTree());
     }
   }
 
   public static void d(String tag, String message, Object... objects) {
-    Timber.tag(tag);
-    Timber.d(message, objects);
+    Log.d(tag, message);
+    //Timber.tag(tag);
+    //Timber.d(message, objects);
   }
 
   public static void i(String tag, String message, Object... objects) {
-    Timber.tag(tag);
-    Timber.i(message, objects);
+    //Timber.tag(tag);
+    //Timber.i(message, objects);
   }
 
   public static void e(String tag, Throwable throwable, String message, Object... objects) {
-    Timber.tag(tag);
-    Timber.e(throwable, message, objects);
+    //Timber.tag(tag);
+    //Timber.e(throwable, message, objects);
+    Log.e(tag, message, throwable);
   }
 
   public static void e(String tag, String message, Object... objects) {
-    Timber.tag(tag);
-    Timber.e(message, objects);
+    //Timber.tag(tag);
+    //Timber.e(message, objects);
+    Log.e(tag, message);
   }
 
   public static void w(String tag, Throwable throwable, String message, Object... objects) {
-    Timber.tag(tag);
-    Timber.w(throwable, message, objects);
+    //Timber.tag(tag);
+    //Timber.w(throwable, message, objects);
   }
 
   public static void w(String tag, String message, Object... objects) {
-    Timber.tag(tag);
-    Timber.w(message, objects);
+    //Timber.tag(tag);
+    //Timber.w(message, objects);
   }
 
   @Override
   public void log(String message) {
-    Timber.tag("Server");
-    Timber.d(message);
+    //Timber.tag("Server");
+    //Timber.d(message);
   }
 }

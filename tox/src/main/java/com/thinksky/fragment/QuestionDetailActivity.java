@@ -44,7 +44,6 @@ import com.thinksky.tox.ImagePagerActivity;
 import com.thinksky.tox.R;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.ui.profile.ProfileIntentFactory;
-import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
 import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
@@ -77,7 +76,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
   private ListView listView;
   private Button btn_huida;
   List<WendaXianqingInfo> mListData;
-  WentixiangqingListAdapter mListAdapter;
+  AnswerListAdapter mListAdapter;
   private String mQuestionId;
   private BaseApi baseApi;
   private String session_id;
@@ -404,7 +403,8 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
               wutu.setVisibility(View.VISIBLE);
 
             } else {
-              mListAdapter = new WentixiangqingListAdapter(QuestionDetailActivity.this, bean
+              wutu.setVisibility(View.GONE);
+              mListAdapter = new AnswerListAdapter(QuestionDetailActivity.this, bean
                   .getQuestionAnswer());
               listView.setAdapter(mListAdapter);
 
@@ -442,7 +442,6 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
         break;
       //发表评论按钮
       case R.id.sendPostButn:
-        // TODO 显示进度条 转个菊花
         showProgressDialog();
         if (reply_editText.getText().length() > 0 && !"".equals(reply_editText.getText().toString
             ().trim())) {
@@ -477,12 +476,6 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
   }
 
   private void send() {
-
-//        Map map = new HashMap();
-//        map.put("session_id", session_id);
-//        map.put("content", reply_editText.getText().toString().trim());
-//        map.put("question_id", mQuestionId);
-
 
     RsenUrlUtil.execute(this, RsenUrlUtil.URL_SEND_QUESTION_ANSWER, new RsenUrlUtil
         .OnJsonResultListener<DiscoverFragment.FXBean>() {
@@ -532,19 +525,17 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 
   }
 
-  public class WentixiangqingListAdapter extends BaseAdapter {
+  public class AnswerListAdapter extends BaseAdapter {
 
     private Context context;
 
     private List<QuestionDetailModel.ListBean
         .QuestionAnswerBean> list;
-    private LoadImg loadImg;
 
-    public WentixiangqingListAdapter(Context context, List<QuestionDetailModel.ListBean
+    public AnswerListAdapter(Context context, List<QuestionDetailModel.ListBean
         .QuestionAnswerBean> list) {
       this.context = context;
       this.list = list;
-      loadImg = new LoadImg(context);
     }
 
 
@@ -590,8 +581,10 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 //            list =bean.getQuestionAnswer();
       final QuestionDetailModel.ListBean
           .QuestionAnswerBean bean = list.get(position);
-      if (FLAG && BaseFunction.isLogin() && !bean.getUid().equals(Url.USERID)) {
+      if (FLAG && BaseFunction.isLogin() && !TextUtils.equals(bean.getUid(), Url.USERID)) {
         holder.acept.setVisibility(View.VISIBLE);
+      } else {
+        holder.acept.setVisibility(View.GONE);
       }
       try {
         ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, RsenUrlUtil.URL_BASE + bean
@@ -665,54 +658,30 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
         @Override
         public void onClick(View v) {
           if (!bean.getUid().equals(Url.USERID)) {
-            RsenUrlUtil.execute(RsenUrlUtil.URL_SET_BEST_ANSWER, new RsenUrlUtil
-                .OnJsonResultListener<DianzanBean>() {
-              @Override
-              public void onNoNetwork(String msg) {
-                ToastHelper.showToast(msg, Url.context);
-              }
 
-              @Override
-              public Map getMap() {
-                Map map = new HashMap();
-                map.put("session_id", session_id);
-                map.put("answerid", list.get(position).getId());
-                return map;
-              }
-
-              @Override
-              public void onParseJsonBean(List<DianzanBean> beans, JSONObject jsonObject) {
-                try {
-                  DianzanBean bean = new DianzanBean();
-                  bean.message = jsonObject.getString("message");
-                  bean.success = jsonObject.getString("success");
-                  beans.add(bean);
-                } catch (Exception e) {
-
-                }
-              }
-
-              @Override
-              public void onResult(boolean state, List<DianzanBean> beans) {
-                if (state) {
-                  ToastHelper.showToast("采纳了", Url.context);
-                  runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                      holder.acept.setVisibility(View.GONE);
-                      holder.caina.setVisibility(View.VISIBLE);
-                      initXiangQingData();
-                    }
-                  });
-
-                  notifyDataSetChanged();
-                } else {
-                  ToastHelper.showToast("请求失败", Url.context);
-                }
+            manageRpcCall(mAppService.acceptAnswer(session_id, list.get(position).getId()), new
+                UiRpcSubscriber1<BaseModel>(QuestionDetailActivity.this) {
 
 
-              }
-            });
+                  @Override
+                  protected void onSuccess(BaseModel baseModel) {
+                    runOnUiThread(new Runnable() {
+                      @Override
+                      public void run() {
+                        holder.acept.setVisibility(View.GONE);
+                        holder.caina.setVisibility(View.VISIBLE);
+                        initXiangQingData();
+                      }
+                    });
+
+                    notifyDataSetChanged();
+                  }
+
+                  @Override
+                  protected void onEnd() {
+
+                  }
+                });
           } else {
             ToastHelper.showToast("不能采纳自己的回答", Url.context);
           }
@@ -741,6 +710,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       public void onClick(View v) {
         if (BaseFunction.isLogin()) {
           if (TextUtils.equals(Url.USERID, bean.getUid())) {
+            Toast.makeText(context, "不能给自己点赞", Toast.LENGTH_SHORT).show();
             return;
           }
           if (bean.getIs_supported().equals("0")) {

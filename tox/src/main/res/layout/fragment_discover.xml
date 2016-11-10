@@ -30,7 +30,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/button_mark"
         android:text="去标记"
-        android:textColor="#ffffff"
+        style="@style/Widget.App.TextView.Small.White"
         />
 
 

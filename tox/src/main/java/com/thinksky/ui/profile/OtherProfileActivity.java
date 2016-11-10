@@ -151,6 +151,7 @@ public class OtherProfileActivity extends BaseBActivity {
                       .parseInt(model.getFans());
                   model.setFollowing(String.valueOf(fansCount - 1));
                   bindData(model);
+                  getComponent().getGlobalBus().post(new FollowEvent());
                 }
 
                 @Override
@@ -177,6 +178,7 @@ public class OtherProfileActivity extends BaseBActivity {
                       .parseInt(model.getFans());
                   model.setFollowing(String.valueOf(fansCount + 1));
                   bindData(model);
+                  getComponent().getGlobalBus().post(new FollowEvent());
                 }
 
                 @Override
@@ -225,7 +227,7 @@ public class OtherProfileActivity extends BaseBActivity {
   }
 
   private void loadData() {
-    manageRpcCall(mAppService.getProfile(mUserId), new UiRpcSubscriberSimple<UserInfoModel>(this) {
+    manageRpcCall(mAppService.getProfile(mUserId, Url.SESSIONID), new UiRpcSubscriberSimple<UserInfoModel>(this) {
       @Override
       protected void onSuccess(UserInfoModel model) {
         bindData(model);
@@ -268,6 +270,10 @@ public class OtherProfileActivity extends BaseBActivity {
     Intent intent = new Intent(context, OtherProfileActivity.class);
     intent.putExtra(BUNDLE_KEY_USER_ID, userId);
     return intent;
+  }
+
+  public class FollowEvent {
+
   }
 
 }

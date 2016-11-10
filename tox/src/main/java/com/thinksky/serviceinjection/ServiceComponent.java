@@ -11,10 +11,6 @@
  */
 package com.thinksky.serviceinjection;
 
-import com.thinksky.tox.SendQuestionActivity;
-import com.thinksky.tox.SendTieziActivity;
-import com.thinksky.ui.group.CheckMemberListActivity;
-import com.thinksky.ui.group.GroupMemberListActivity;
 import com.thinksky.fragment.HomeFragment;
 import com.thinksky.fragment.MyGroupFragment;
 import com.thinksky.fragment.MyhuatiActivity;
@@ -22,15 +18,21 @@ import com.thinksky.fragment.QuestionDetailActivity;
 import com.thinksky.fragment.RemenhuatiFragment;
 import com.thinksky.fragment.WendaFragment;
 import com.thinksky.fragment.XiaozujingxuanFragment;
+import com.thinksky.fragment.ZhuanjiFenLeiActivity;
 import com.thinksky.net.rpc.service.AppService;
 import com.thinksky.net.rpc.service.UserService;
+import com.thinksky.tox.DiscoverSendActivity;
 import com.thinksky.tox.GroupDetailActivity;
 import com.thinksky.tox.GroupInfoActivity;
 import com.thinksky.tox.GroupMyActivity;
 import com.thinksky.tox.GroupPostInfoActivity;
 import com.thinksky.tox.MainActivity;
+import com.thinksky.tox.SendQuestionActivity;
+import com.thinksky.tox.SendTieziActivity;
 import com.thinksky.tox.SettingActivity;
+import com.thinksky.ui.group.CheckMemberListActivity;
 import com.thinksky.ui.group.CreateGroupActivity;
+import com.thinksky.ui.group.GroupMemberListActivity;
 import com.thinksky.ui.group.LogoChoosePresenter;
 import com.thinksky.ui.profile.ActivityMessageFragment;
 import com.thinksky.ui.profile.AvatarChoosePresenter;
@@ -146,4 +148,8 @@ public interface ServiceComponent {
   void inject(MyProfileActivity myProfileActivity);
 
   void inject(ScoreActivity scoreActivity);
+
+  void inject(DiscoverSendActivity discoverSendActivity);
+
+  void inject(ZhuanjiFenLeiActivity zhuanjiFenLeiActivity);
 }

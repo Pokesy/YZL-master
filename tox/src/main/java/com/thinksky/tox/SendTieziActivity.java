@@ -376,7 +376,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
         // Toast.makeText(SendPostActivity.this, "压缩后路径" + path, Toast.LENGTH_LONG).show();
                 /*String name=path.substring(path.lastIndexOf("/")+1,path.length());
                 File file= FileUtils.getSaveFile(Url.UPLOADTEMPORARYPATH,name);*/
-        File file = new File(BitmapUtiles.getOnlyUploadImgPath(scrollImg.get(i)));
+        File file = new File(path1);
         params.put("image", file);
         params.put("image", path1);
         params.put("session_id", Url.SESSIONID);
@@ -404,7 +404,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
           }
         });
       } catch (Exception e) {
-
+        Log.e("SendTieziActivity", e.getMessage());
       }
     }
   }

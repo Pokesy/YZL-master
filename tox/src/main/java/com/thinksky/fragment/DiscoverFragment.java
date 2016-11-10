@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -32,6 +33,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.squareup.otto.Subscribe;
+import com.thinksky.log.Logger;
 import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.tox.DiscoverSelectActivity;
@@ -52,7 +54,13 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import org.json.JSONObject;
 
+import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
+
 public class DiscoverFragment extends BasicFragment implements View.OnClickListener {
+  private static final String CATEGORY_PERSONAL = "1";
+  private static final String CATEGORY_FACTORY = "2";
+  private static final String IS_SELF = "1";
+  private static final String IS_DISPLAY = "1";
   private TextView name;
   private TextView dizhi;
   private TextView dianhua;
@@ -72,7 +80,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   private ImageView iv_3;
   private Button mark;
   public static boolean marks = false;
-  private String mCurrentType = "1";
+  private String mCurrentType = CATEGORY_PERSONAL;
   private ImageView mIconView;
   /**
    * 点击POI后弹出的泡泡
@@ -129,8 +137,8 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   }
 
 
-  public void initMarker(final String str) {
-    mCurrentType = str;
+  public void initMarker(final String type) {
+    mCurrentType = type;
     mBaiduMap.clear();
 
     RsenUrlUtil.execute(this.getActivity(), RsenUrlUtil.URL_FX + "&session_id=" + Url.SESSIONID,
@@ -142,43 +150,47 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
 
           @Override
           public void onResult(boolean state, String result, JSONObject jsonObject) {
-            if (state && TextUtils.equals(mCurrentType, str)) {
+            if (state && TextUtils.equals(mCurrentType, type)) {
               final FXBean wendaBean = JSON.parseObject(result, FXBean.class);
 
               for (FXBean.ResultEntity info : wendaBean.getResult()) {
-                String s = info.getIsfactory();
-                if (info.getIsdisplay().equals("1") && !TextUtils.isEmpty(info.getLatitude())) {
+                if (TextUtils.equals(info.getIsdisplay(), IS_DISPLAY) && !TextUtils.isEmpty(info
+                    .getLatitude())) {
                   String d = info.getLatitude();
                   String f = info.getLongitude();
                   double dd = Double.parseDouble(d);
                   double ff = Double.parseDouble(f);
-                  if (!TextUtils.isEmpty(userUid) && userUid.equals(info.getUid())) {
+                  if (TextUtils.equals(userUid, info.getUid())) {
                     marks = true;
                   }
-                  if (s.equals(str)) {
-                    LatLng llA = new LatLng(dd, ff);
-                    BitmapDescriptor descriptor;
-                    if (TextUtils.equals(str, "1")) {
-                      if (TextUtils.equals(info.getIsmyself(), "1")) {
-                        descriptor = fish_personal_myself;
-                      } else {
-                        descriptor = fish_personal;
-                      }
+                  LatLng llA = new LatLng(dd, ff);
+                  BitmapDescriptor descriptor;
+                  if (TextUtils.equals(type, CATEGORY_PERSONAL)) {
+                    if (TextUtils.equals(info.getIsmyself(), IS_SELF)) {
+                      descriptor = fish_personal_myself;
                     } else {
-                      if (TextUtils.equals(info.getIsmyself(), "1")) {
-                        descriptor = fish_factory_myself;
-                      } else {
-                        descriptor = fish_factory;
-                      }
+                      descriptor = fish_personal;
                     }
-                    OverlayOptions ooA = new MarkerOptions().position(llA).icon(descriptor)
-                        .zIndex(9).draggable
-                            (true);
-                    Marker marker = (Marker) mBaiduMap.addOverlay(ooA);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("info", info);
-                    marker.setExtraInfo(bundle);
+                  } else {
+                    if (TextUtils.equals(info.getIsmyself(), IS_SELF)) {
+                      descriptor = fish_factory_myself;
+                    } else {
+                      descriptor = fish_factory;
+                    }
                   }
+                  MarkerOptions options = new MarkerOptions().position(llA).icon(descriptor)
+                      .draggable
+                          (true);
+                  OverlayOptions ooA;
+                  if (TextUtils.equals(info.getIsmyself(), IS_SELF)) {
+                    ooA = options.zIndex(999);
+                  } else {
+                    ooA = options.zIndex(9);
+                  }
+                  Marker marker = (Marker) mBaiduMap.addOverlay(ooA);
+                  Bundle bundle = new Bundle();
+                  bundle.putSerializable("info", info);
+                  marker.setExtraInfo(bundle);
                 }
               }
               if (marks) {
@@ -230,7 +242,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.fragment_discover, null);
+    view = inflater.inflate(R.layout.fragment_discover, container, false);
     mMapView = (MapView) view.findViewById(R.id.bmapView);
     mPopView = (LinearLayout) view.findViewById(R.id.pop);
     images = (LinearLayout) view.findViewById(R.id.images);
@@ -261,7 +273,7 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
     mLocationClient.registerLocationListener(myListener);    //注册监听函数
     initLocation();
     mLocationClient.start();
-    initMarker("1");
+    initMarker(CATEGORY_PERSONAL);
     mSegmentControl.setSelectedTextColor(getResources().getColor(android.R.color.white));
     mSegmentControl.setOnSegmentControlClickListener(
         new SegmentControl.OnSegmentControlClickListener() {
@@ -271,11 +283,11 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
             switch (index) {
               case 0:
                 mPopView.setVisibility(View.GONE);
-                initMarker("1");
+                initMarker(CATEGORY_PERSONAL);
                 break;
               case 1:
                 mPopView.setVisibility(View.GONE);
-                initMarker("2");
+                initMarker(CATEGORY_FACTORY);
                 break;
               default:
                 break;
@@ -291,10 +303,10 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
 
         mPopView.setVisibility(View.VISIBLE);
         mark.setVisibility(View.GONE);
-        if (TextUtils.equals("1", bean.isfactory)) {
+        if (TextUtils.equals(CATEGORY_PERSONAL, bean.isfactory)) {
           mIconView.setImageResource(R.drawable.weixin);
           dianhua.setText(bean.getWechat());
-        } else if (TextUtils.equals("2", bean.isfactory)) {
+        } else if (TextUtils.equals(CATEGORY_FACTORY, bean.isfactory)) {
           dianhua.setText(bean.getMobile1());
           mIconView.setImageResource(R.drawable.phone);
         } else {
@@ -302,9 +314,9 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
         }
         dizhi.setText(bean.getAddress());
         //dianhua.setText(bean.getMobile1());
-        if (TextUtils.equals(mCurrentType, "2")) {
+        if (TextUtils.equals(mCurrentType, CATEGORY_FACTORY)) {
           name.setText(bean.getFactory_name());
-        } else if (TextUtils.equals(mCurrentType, "1")) {
+        } else if (TextUtils.equals(mCurrentType, CATEGORY_PERSONAL)) {
           name.setText(bean.getNickname());
         }
 
@@ -419,26 +431,31 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
       if (location == null || mMapView == null) {
         return;
       }
-      switch (location.getLocType()) {
-        //case:BDLocation.LOCATION_WHERE_UNKNOW;
-        //return;
+      if (location.getLocType() == BDLocation.TypeGpsLocation || location.getLocType() ==
+          BDLocation.TypeNetWorkLocation) {
+        // 构造定位数据
+        MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
+            //设置精确米数
+            .latitude(location.getLatitude())//设置纬度
+            .longitude(location.getLongitude())//设置经度
+            .build();
+
+        // 把定位信息显示地图上
+        mBaiduMap.setMyLocationData(locData);
+
+        ll = new LatLng(location.getLatitude(), location.getLongitude());
+        MapStatus.Builder builder = new MapStatus.Builder();
+        builder.target(ll).zoom(10.0f);
+        //把定位设置为普通模式，该模式下，每次位置更新就不会将地图拖到我的位置。这样不影响拖动地图查看其他位置信息
+        setMyLocationConfig();
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+      } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {
+        Logger.d(TAG, "Offline");
+      } else {
+        Logger.d(TAG, "exception");
+        Toast.makeText(getActivity(), R.string.address_tips_location_fail, Toast.LENGTH_SHORT)
+            .show();
       }
-
-      // 构造定位数据
-      MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius()) //设置精确米数
-          .latitude(location.getLatitude())//设置纬度
-          .longitude(location.getLongitude())//设置经度
-          .build();
-
-      // 把定位信息显示地图上
-      mBaiduMap.setMyLocationData(locData);
-
-      ll = new LatLng(location.getLatitude(), location.getLongitude());
-      MapStatus.Builder builder = new MapStatus.Builder();
-      builder.target(ll).zoom(10.0f);
-      //把定位设置为普通模式，该模式下，每次位置更新就不会将地图拖到我的位置。这样不影响拖动地图查看其他位置信息
-      setMyLocationConfig();
-      mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
       mLocationClient.stop();
     }
 
@@ -501,16 +518,8 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
 
   @Subscribe
   public void handleReLocationEvent(ReLocationEvent event) {
-    switch (mCurrentType) {
-      case "1":
-        mPopView.setVisibility(View.GONE);
-        initMarker("1");
-        break;
-      case "2":
-        mPopView.setVisibility(View.GONE);
-        initMarker("2");
-        break;
-    }
+    mPopView.setVisibility(View.GONE);
+    initMarker(mCurrentType);
   }
 
   public static class ReLocationEvent {

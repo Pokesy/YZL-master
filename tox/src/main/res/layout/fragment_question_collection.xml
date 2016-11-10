@@ -5,11 +5,6 @@
     android:orientation="vertical"
     >
 
-  <com.thinksky.ui.common.PullToRefreshListView
-      android:id="@+id/list"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      />
   <FrameLayout
       android:id="@+id/empty_layout"
       android:layout_width="match_parent"
@@ -29,13 +24,25 @@
         />
   </FrameLayout>
 
-  <ViewStub
-      android:id="@+id/stub_import"
+  <com.thinksky.ui.common.PullToRefreshListView
+      android:id="@+id/list"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:inflatedId="@+id/panel_import"
-      android:layout="@layout/progress_layout"
+      android:layout_height="match_parent"
       />
+
+  <FrameLayout
+      android:id="@+id/viewStub"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        />
+
+  </FrameLayout>
 
 </FrameLayout>

@@ -113,7 +113,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
         mAttachLayout=(LinearLayout)findViewById(R.id.Post_attach_layout);
         mPhotoShowLayout=(FrameLayout)findViewById(R.id.Post_photo_layout);
         horizontalListView=(HorizontalListView)findViewById(R.id.HorizontalListView);
-        photoAdapter=new PhotoAdapter(this,finalBitmap,kjBitmap,scrollImg);
+        photoAdapter=new PhotoAdapter(this,scrollImg);
         horizontalListView.setAdapter(photoAdapter);
         mAttachBtn=(LinearLayout)findViewById(R.id.Post_send_attachBtn);
         mFaceBtn=(LinearLayout)findViewById(R.id.Post_send_faceBtn);
@@ -456,17 +456,11 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
     }
 
     public class PhotoAdapter extends BaseAdapter {
-        private KJBitmap kjBitmap;
         private List<String> imgUrl=new ArrayList<String>();
         private Context ctx;
-        private FinalBitmap finalBitmap;
-        private LoadImg loadImg;
-        public PhotoAdapter(Context ctx,FinalBitmap finalBitmap,KJBitmap kjBitmap,List<String> list) {
-            this.kjBitmap=kjBitmap;
-            this.finalBitmap=finalBitmap;
+        public PhotoAdapter(Context ctx,List<String> list) {
             this.imgUrl=list;
             this.ctx=ctx;
-            loadImg=new LoadImg(ctx);
         }
 
         @Override

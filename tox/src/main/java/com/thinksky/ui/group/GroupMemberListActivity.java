@@ -20,10 +20,12 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.squareup.otto.Subscribe;
 import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.injection.GlobalModule;
 import com.thinksky.net.UiRpcSubscriber1;
+import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.GroupMemberListModel;
 import com.thinksky.net.rpc.service.AppService;
@@ -34,6 +36,7 @@ import com.thinksky.tox.R;
 import com.thinksky.ui.basic.BasicListAdapter;
 import com.thinksky.ui.common.PullToRefreshListView;
 import com.thinksky.ui.common.TitleBar;
+import com.thinksky.ui.profile.OtherProfileActivity;
 import com.thinksky.ui.profile.ProfileIntentFactory;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseFunction;
@@ -175,7 +178,8 @@ public class GroupMemberListActivity extends BaseBActivity {
   }
 
   private void loadData() {
-    manageRpcCall(mAppService.getGroupMember(mGroupId, mCurrentIndex, PAGE_COUNT), new
+    manageRpcCall(mAppService.getGroupMember(mGroupId, mCurrentIndex, PAGE_COUNT, Url.SESSIONID),
+        new
         UiRpcSubscriber1<GroupMemberListModel>(this) {
 
 
@@ -279,6 +283,13 @@ public class GroupMemberListActivity extends BaseBActivity {
     dialog.show();
   }
 
+
+  @Subscribe
+  public void handleFollowEvent(OtherProfileActivity.FollowEvent event) {
+    mCurrentIndex = INIT_PAGE;
+    loadData();
+  }
+
   /*成员头像*/
   public class MySubAdapter extends BasicListAdapter<GroupMemberListModel.ListBean> {
     private boolean isEditable;
@@ -326,12 +337,41 @@ public class GroupMemberListActivity extends BaseBActivity {
         @Override
         public void onClick(View v) {
           if (BaseFunction.isLogin()) {
+            showProgressDialog("", false);
             if (TextUtils.equals(bean.getIsfollow(), "0")) {
-              holder.guanzhu.setText("取消关注");
-              holder.guanzhu.setSelected(true);
+              manageRpcCall(mAppService.doFollow(Url.SESSIONID, bean.getUid()), new
+                  UiRpcSubscriberSimple<BaseModel>(GroupMemberListActivity.this) {
+
+
+                    @Override
+                    protected void onSuccess(BaseModel baseModel) {
+                      holder.guanzhu.setText("取消关注");
+                      bean.setIsfollow("1");
+                      holder.guanzhu.setSelected(true);
+                    }
+
+                    @Override
+                    protected void onEnd() {
+                      closeProgressDialog();
+                    }
+                  });
             } else {
-              holder.guanzhu.setText("加关注");
-              holder.guanzhu.setSelected(false);
+              manageRpcCall(mAppService.endFollow(Url.SESSIONID, bean.getUid()), new
+                  UiRpcSubscriberSimple<BaseModel>(GroupMemberListActivity.this) {
+
+
+                    @Override
+                    protected void onSuccess(BaseModel baseModel) {
+                      holder.guanzhu.setText("加关注");
+                      holder.guanzhu.setSelected(false);
+                      bean.setIsfollow("0");
+                    }
+
+                    @Override
+                    protected void onEnd() {
+                      closeProgressDialog();
+                    }
+                  });
             }
           } else {
             ToastHelper.showToast("请登录", Url.context);
@@ -405,5 +445,26 @@ public class GroupMemberListActivity extends BaseBActivity {
 
   public static class GroupMemberDataChangeEvent {
 
+  }
+
+  private void doFollow(String userId) {
+
+  }
+
+  private void endFollow(String userId) {
+    manageRpcCall(mAppService.endFollow(Url.SESSIONID, userId), new
+        UiRpcSubscriberSimple<BaseModel>(GroupMemberListActivity.this) {
+
+
+          @Override
+          protected void onSuccess(BaseModel baseModel) {
+
+          }
+
+          @Override
+          protected void onEnd() {
+
+          }
+        });
   }
 }

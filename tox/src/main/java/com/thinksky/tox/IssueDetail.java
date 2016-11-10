@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -196,7 +195,7 @@ public class IssueDetail extends BaseBActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    Log.d("YZZ", "IssueDetail onCreate");
     setContentView(R.layout.activity_issue_detail);
     handler = new Handler() {
       @Override
@@ -472,10 +471,15 @@ public class IssueDetail extends BaseBActivity {
       String u = comments.get(0).get("cover_url").replace("opensns//opensns", "opensns");
 //            kjBitmap.display(issue_image, u);
 //            ImageLoader.getInstance().displayImage(u, issue_image);
-      com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this, u).into
-          (issue_image);
-      com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this,
-          comments.get(0).get("issue_userImage")).into(issue_userImage);
+
+      try {
+        com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this, u).into
+            (issue_image);
+        com.thinksky.utils.imageloader.ImageLoader.loadOptimizedHttpImage(IssueDetail.this,
+            comments.get(0).get("issue_userImage")).into(issue_userImage);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       issue_userImage.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

@@ -56,32 +56,32 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="100dp"
+      android:orientation="horizontal"
       android:paddingLeft="20dp"
       android:paddingRight="20dp"
-      android:orientation="horizontal"
       >
 
     <TextView
         android:id="@+id/button_friend"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_weight="1"
         android:layout_gravity="left|bottom"
+        android:layout_marginRight="50dp"
+        android:layout_weight="1"
         android:background="@drawable/bg_dis_select"
         android:drawableLeft="@drawable/friend_progress"
         android:gravity="center"
         android:padding="10dp"
         android:text="鱼友"
         style="@style/Widget.App.TextView.Large.Secondary"
-        android:layout_marginRight="50dp"
         />
 
     <TextView
         android:id="@+id/button_fishing"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_weight="1"
         android:layout_gravity="right|bottom"
+        android:layout_weight="1"
         android:background="@drawable/bg_dis_select"
         android:drawableLeft="@drawable/fish_progress"
         android:gravity="center"
@@ -90,5 +90,13 @@
         style="@style/Widget.App.TextView.Large.Secondary"
         />
   </LinearLayout>
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/margin_large"
+      android:text="一个账号同一时间只能向大家展示一种身份，点击编辑可以重新选择展示的身份。"
+      style="@style/Widget.App.TextView.Small.Secondary"
+      />
 
 </LinearLayout>

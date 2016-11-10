@@ -28,14 +28,16 @@ import java.util.Map;
 
 
 public class ScanPhotoActivity extends BaseBActivity {
+  public static final int RESULT_CODE_CHOOSE_IMG = 99;
+  private static final int REQUEST_CODE_IMG_LIST = 10;
+  private static final int SCAN_OK = 1;
   private static final int MAX_IMG_NUM = 9;
-  private HashMap<String, List<String>> mGruopMap = new HashMap<String, List<String>>();
+  private HashMap<String, List<String>> mGroupMap = new HashMap<String, List<String>>();
   private List<ImageBean> list = new ArrayList<ImageBean>();
-  private final static int SCAN_OK = 1;
   private ProgressDialog mProgressDialog;
   private GroupAdapter adapter;
   private GridView mGroupGridView;
-  private List<String> selectedImag = new ArrayList<String>();
+  private List<String> selectedImg = new ArrayList<String>();
   private List<String> lists;
   private Handler mHandler = new Handler() {
 
@@ -46,8 +48,7 @@ public class ScanPhotoActivity extends BaseBActivity {
         case SCAN_OK:
           //关闭进度条
           mProgressDialog.dismiss();
-
-          adapter = new GroupAdapter(ScanPhotoActivity.this, list = subGroupOfImage(mGruopMap),
+          adapter = new GroupAdapter(ScanPhotoActivity.this, list = subGroupOfImage(mGroupMap),
               mGroupGridView);
           mGroupGridView.setAdapter(adapter);
           break;
@@ -67,10 +68,10 @@ public class ScanPhotoActivity extends BaseBActivity {
       @Override
       public void onItemClick(AdapterView<?> parent, View view,
                               int position, long id) {
-        List<String> childList = mGruopMap.get(list.get(position).getFolderName());
+        List<String> childList = mGroupMap.get(list.get(position).getFolderName());
         Intent mIntent = new Intent(ScanPhotoActivity.this, ShowImageActivity.class);
         mIntent.putStringArrayListExtra("data", (ArrayList<String>) childList);
-        startActivityForResult(mIntent, 10);
+        startActivityForResult(mIntent, REQUEST_CODE_IMG_LIST);
       }
     });
 
@@ -78,7 +79,7 @@ public class ScanPhotoActivity extends BaseBActivity {
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == 10 && resultCode == 999) {
+    if (requestCode == REQUEST_CODE_IMG_LIST && resultCode == 999) {
       lists = data.getStringArrayListExtra("data");
       Log.e("size>>>", lists.size() + "");
       if (lists.size() > MAX_IMG_NUM) {
@@ -87,8 +88,8 @@ public class ScanPhotoActivity extends BaseBActivity {
         return;
       }
       for (int i = 0; i < lists.size(); i++) {
-        selectedImag.add(lists.get(i));
-        Log.e("选择图片", selectedImag.get(i));
+        selectedImg.add(lists.get(i));
+        Log.e("选择图片", selectedImg.get(i));
       }
     }
     Back();
@@ -96,8 +97,8 @@ public class ScanPhotoActivity extends BaseBActivity {
 
   public void Back() {
     Intent data = new Intent();
-    data.putStringArrayListExtra("data", (ArrayList<String>) selectedImag);
-    setResult(99, data);
+    data.putStringArrayListExtra("data", (ArrayList<String>) selectedImg);
+    setResult(RESULT_CODE_CHOOSE_IMG, data);
     finish();
   }
 
@@ -136,12 +137,12 @@ public class ScanPhotoActivity extends BaseBActivity {
           String parentName = new File(path).getParentFile().getName();
 
           //根据父路径名将图片放入到mGruopMap中
-          if (!mGruopMap.containsKey(parentName)) {
-            List<String> chileList = new ArrayList<String>();
-            chileList.add(path);
-            mGruopMap.put(parentName, chileList);
+          if (!mGroupMap.containsKey(parentName)) {
+            List<String> childList = new ArrayList<String>();
+            childList.add(path);
+            mGroupMap.put(parentName, childList);
           } else {
-            mGruopMap.get(parentName).add(path);
+            mGroupMap.get(parentName).add(path);
           }
         }
 
