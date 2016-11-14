@@ -280,7 +280,7 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
         v.setOnLongClickListener(new View.OnLongClickListener() {
           @Override
           public boolean onLongClick(View v) {
-            Intent mIntent = new Intent(UploadActivity.this, ShowImageActivity.class);
+            Intent mIntent = new Intent(UploadActivity.this, ImageChooseListActivity.class);
             mIntent.putStringArrayListExtra("data", (ArrayList<String>) scrollImg);
             mIntent.putExtra("fromActivity", ActivityModel.UPLOADACTIVITY);
             startActivityForResult(mIntent, 8);
@@ -346,11 +346,11 @@ public class UploadActivity extends BaseBActivity implements FaceView.Work {
           break;
         case R.id.album:
           //Intent intent3 = new Intent(UploadActivity.this, PhotoAct.class);
-          Intent intent3 = new Intent(UploadActivity.this, ScanPhotoActivity.class);
+          Intent intent3 = new Intent(UploadActivity.this, AlbumListActivity.class);
           startActivityForResult(intent3, 9);
           break;
         case R.id.weibo_img:
-          Intent mIntent = new Intent(UploadActivity.this, ShowImageActivity.class);
+          Intent mIntent = new Intent(UploadActivity.this, ImageChooseListActivity.class);
           mIntent.putStringArrayListExtra("data", (ArrayList<String>) scrollImg);
           startActivityForResult(mIntent, 8);
           break;

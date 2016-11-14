@@ -21,10 +21,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.thinksky.log.Logger;
 import com.thinksky.tox.R;
-import com.thinksky.utils.BitmapUtiles;
+import com.thinksky.utils.imageloader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +58,7 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
   private void initView() {
     View childView = LayoutInflater.from(getContext()).inflate(R.layout.img_display_view, this,
         false);
+    ButterKnife.bind(this, childView);
     addView(childView);
     imgList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager
         .HORIZONTAL, false));
@@ -105,13 +108,18 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
   }
 
   @Override
-  public void setOnItemDeleteClickListener(OnItemDeleteClickListener listener) {
+  public List<String> getSelectedImgPaths() {
+    return mAdapter.getImgPaths();
+  }
 
+  @Override
+  public void setOnItemDeleteClickListener(OnItemDeleteClickListener listener) {
+    onItemDeleteClickListener = listener;
   }
 
   @Override
   public void setOnAddImgClickListener(OnAddImgClickListener listener) {
-
+    onAddImgClickListener = listener;
   }
 
   class ItemHolder extends RecyclerView.ViewHolder {
@@ -152,6 +160,9 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
     }
 
     public void delete(int index) {
+      if (index == mImgPaths.size() - 1) {
+        return;
+      }
       mImgPaths.remove(index);
       notifyDataSetChanged();
       updateCountView();
@@ -159,7 +170,12 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
 
     public void clear() {
       mImgPaths.clear();
+      mImgPaths.add(PLACE_HOLDER_IMG_STR);
       notifyDataSetChanged();
+    }
+
+    public List<String> getImgPaths() {
+      return mImgPaths.subList(0, mImgPaths.size() - 1);
     }
 
     @Override
@@ -172,11 +188,16 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
     @Override
     public void onBindViewHolder(ItemHolder holder, final int position) {
       if (position == mImgPaths.size() - 1) {
-        holder.src.setImageResource(R.drawable.add_post_photo);
+        Logger.d("YZZ", "set default img");
+          holder.src.setImageResource(R.drawable.add_post_photo);
         holder.btnDelete.setVisibility(View.GONE);
         holder.src.setOnClickListener(new OnClickListener() {
           @Override
           public void onClick(View v) {
+            if (mImgPaths.size() - 1 >= mMaxItemCount) {
+              Toast.makeText(getContext(), "不能添加更多图片", Toast.LENGTH_SHORT).show();
+              return;
+            }
             performAddClicked();
           }
         });
@@ -193,15 +214,16 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
       holder.btnDelete.setOnClickListener(new OnClickListener() {
         @Override
         public void onClick(View v) {
-          performDeleteCliked(position);
+          performDeleteClicked(position);
         }
       });
-      holder.src.setImageBitmap(BitmapUtiles.loadBitmap(mImgPaths.get(position), 4));
+      String path = mImgPaths.get(position);
+      ImageLoader.loadOptimizedHttpImage(getContext(), path).dontAnimate().into(holder.src);
     }
 
     @Override
     public int getItemCount() {
-      return mMaxItemCount;
+      return mImgPaths.size() >= MAX_ITEM_COUNT ? mMaxItemCount : mImgPaths.size();
     }
 
   }
@@ -212,10 +234,11 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
         mMaxItemCount));
   }
 
-  private void performDeleteCliked(int index) {
+  private void performDeleteClicked(int index) {
     if (null != onItemDeleteClickListener) {
       onItemDeleteClickListener.onItemDeleteClicked(index, mAdapter.mImgPaths.get(index));
     }
+    mAdapter.delete(index);
   }
 
   private void performAddClicked() {

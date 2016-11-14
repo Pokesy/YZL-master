@@ -700,7 +700,7 @@ public class PostIssueActivity extends BaseBActivity implements AdapterView.OnIt
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which) {
                                         case 0:
-                                            Intent intent3 = new Intent(PostIssueActivity.this, ScanPhotoActivity.class);
+                                            Intent intent3 = new Intent(PostIssueActivity.this, AlbumListActivity.class);
                                             startActivityForResult(intent3, 9);
                                             break;
                                         case 1:

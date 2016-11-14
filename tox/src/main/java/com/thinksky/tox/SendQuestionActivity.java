@@ -226,7 +226,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
             public void onClick(DialogInterface dialog, int which) {
               switch (which) {
                 case 0:
-                  Intent intent3 = new Intent(SendQuestionActivity.this, ScanPhotoActivity.class);
+                  Intent intent3 = new Intent(SendQuestionActivity.this, AlbumListActivity.class);
                   startActivityForResult(intent3, 9);
                   break;
                 case 1:
@@ -638,7 +638,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                   switch (which) {
                     case 0:
                       Intent intent3 =
-                          new Intent(SendQuestionActivity.this, ScanPhotoActivity.class);
+                          new Intent(SendQuestionActivity.this, AlbumListActivity.class);
                       startActivityForResult(intent3, 9);
                       break;
                     case 1:

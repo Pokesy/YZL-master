@@ -37,6 +37,8 @@ public interface IImageDisplayView {
 
   void clear();
 
+  List<String> getSelectedImgPaths();
+
   void setOnItemDeleteClickListener(OnItemDeleteClickListener listener);
 
   void setOnAddImgClickListener(OnAddImgClickListener listener);

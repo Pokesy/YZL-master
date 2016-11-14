@@ -157,7 +157,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
           public void onClick(DialogInterface dialog, int which) {
             switch (which) {
               case 0:
-                Intent intent3 = new Intent(SendTieziActivity.this, ScanPhotoActivity.class);
+                Intent intent3 = new Intent(SendTieziActivity.this, AlbumListActivity.class);
                 startActivityForResult(intent3, 9);
                 break;
               case 1:
@@ -528,7 +528,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
                 public void onClick(DialogInterface dialog, int which) {
                   switch (which) {
                     case 0:
-                      Intent intent3 = new Intent(SendTieziActivity.this, ScanPhotoActivity.class);
+                      Intent intent3 = new Intent(SendTieziActivity.this, AlbumListActivity.class);
                       startActivityForResult(intent3, 9);
                       break;
                     case 1:

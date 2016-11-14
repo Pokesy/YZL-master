@@ -419,4 +419,10 @@
   <!-- 图片选择组件 -->
   <string name="image_display_view_count">已选择%1$d张图片,共%2$d张图片</string>
 
+  <!-- 发现编辑新建信息界面 -->
+  <string name="activity_discover_send_info_choose_img">请选择至少一张图片</string>
+  <string name="activity_discover_send_info_login">请登陆后再操作</string>
+  <string name="activity_discover_send_info_number_format">输入格式不正确</string>
+  <string name="activity_discover_send_info_title">请填写标题</string>
+
 </resources>

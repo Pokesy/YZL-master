@@ -64,69 +64,24 @@
       tools:background="@android:color/white"
       >
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@+id/attachBtns"
-        android:background="#DFE3E4"
-        />
-    <!--页脚btn区-->
-    <LinearLayout
-        android:id="@+id/attachBtns"
+    <TextView
+        android:id="@+id/textView11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical"
-        android:weightSum="10"
-        >
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="上传照片让别人来一睹风采吧(最多3张)"
+        style="@style/Widget.App.TextView.XLarge.Primary"
+        />
 
-      <TextView
-          android:id="@+id/textView11"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="10dp"
-          android:paddingBottom="10dp"
-          android:paddingTop="10dp"
-          android:text="上传照片让别人来一睹风采吧(最多3张)"
-          style="@style/Widget.App.TextView.XLarge.Primary"
-          />
 
-      <ImageView
-          android:id="@+id/Post_send_attachBtn"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:padding="10dp"
-          android:src="@drawable/icon_add_photo"
-          />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/Post_photo_layout"
+    <com.thinksky.ui.common.ImageDisplayView
+        android:id="@+id/pic_display_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/app_bg_color"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        tools:visibility="gone"
-        >
+        android:layout_height="150dp"
+        android:layout_below="@id/textView11"
+        />
 
-      <com.thinksky.ui.common.ImageDisplayView
-          android:id="@+id/pic_display_view"
-          android:layout_width="match_parent"
-          android:layout_height="150dp"
-          />
-
-      <TextView
-          android:id="@+id/photo_count"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal|bottom"
-          android:layout_marginBottom="10dp"
-          android:text="已选0张，还剩3张可选"
-          />
-    </FrameLayout>
   </RelativeLayout>
 
   <RelativeLayout
@@ -189,7 +144,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:background="@color/bg_color_divider"
             />
 
@@ -240,7 +195,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:background="@color/bg_color_divider"
             />
 
@@ -279,8 +234,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-
+            android:layout_height="0.5dp"
             android:background="#e4e4e4"
             />
 
@@ -319,7 +273,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:background="#e4e4e4"
             />
       </LinearLayout>

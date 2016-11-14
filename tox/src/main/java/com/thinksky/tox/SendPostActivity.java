@@ -31,7 +31,6 @@ import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.FileUtiles;
-import com.thinksky.utils.LoadImg;
 import com.thinksky.utils.MyJson;
 import com.tox.BaseFunction;
 import com.tox.ForumApi;
@@ -148,7 +147,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case 0:
-                                    Intent intent3 = new Intent(SendPostActivity.this, ScanPhotoActivity.class);
+                                    Intent intent3 = new Intent(SendPostActivity.this, AlbumListActivity.class);
                                     startActivityForResult(intent3, 9);
                                     break;
                                 case 1:
@@ -535,7 +534,7 @@ public class SendPostActivity extends BaseBActivity implements View.OnClickListe
                                     public void onClick(DialogInterface dialog, int which) {
                                         switch (which) {
                                             case 0:
-                                                Intent intent3 = new Intent(SendPostActivity.this, ScanPhotoActivity.class);
+                                                Intent intent3 = new Intent(SendPostActivity.this, AlbumListActivity.class);
                                                 startActivityForResult(intent3, 9);
                                                 break;
                                             case 1:

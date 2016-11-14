@@ -2,33 +2,42 @@ package com.thinksky.tox;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
 import com.thinksky.adapter.ChildAdapter;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.model.ActivityModel;
+import com.thinksky.ui.common.TitleBar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowImageActivity extends BaseBActivity implements View.OnClickListener {
+public class ImageChooseListActivity extends BaseBActivity {
   public static final int RESULT_CODE_CHOOSE_IMG_SUCCESS = 999;
 
   private GridView mGridView;
   private List<String> list;
   private ChildAdapter adapter;
-  private RelativeLayout mPicConfirm, mPicCancel;
+  private TitleBar mTitleBar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.show_image_activity);
     mGridView = (GridView) findViewById(R.id.child_grid);
-    mPicCancel = (RelativeLayout) findViewById(R.id.pic_cancel);
-    mPicConfirm = (RelativeLayout) findViewById(R.id.pic_confirm);
-    mPicConfirm.setOnClickListener(this);
-    mPicCancel.setOnClickListener(this);
+    mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        finish();
+      }
+    });
+    mTitleBar.setRightTextBtn(R.string.btn_confirm, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        pic_confirm();
+      }
+    });
+    mTitleBar.setMiddleTitle("选取图片");
     list = getIntent().getStringArrayListExtra("data");
 
     adapter = new ChildAdapter(this, list, mGridView);
@@ -36,27 +45,6 @@ public class ShowImageActivity extends BaseBActivity implements View.OnClickList
     //如果
     if (getIntent().getIntExtra("fromActivity", 0) == ActivityModel.UPLOADACTIVITY) {
       adapter.setImgSelected();
-    }
-
-  }
-
-  @Override
-  public void onBackPressed() {
-    pic_confirm();
-  }
-
-  @Override
-  public void onClick(View view) {
-    int id = view.getId();
-    switch (id) {
-      case R.id.pic_cancel:
-        finish();
-        break;
-      case R.id.pic_confirm:
-        pic_confirm();
-        break;
-      default:
-        break;
     }
   }
 
@@ -69,11 +57,8 @@ public class ShowImageActivity extends BaseBActivity implements View.OnClickList
     List<String> selectedImgPath = new ArrayList<String>();
     for (int i = 0; i < selectedID.size(); i++) {
       selectedImgPath.add(list.get(selectedID.get(i)));
-      Log.d("图片路径", list.get(selectedID.get(i)));
-      Log.d("图片路径212", selectedID.size() + "");
     }
     data.putStringArrayListExtra("data", (ArrayList<String>) selectedImgPath);
-
     setResult(RESULT_CODE_CHOOSE_IMG_SUCCESS, data);
     finish();
   }

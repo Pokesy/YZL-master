@@ -30,6 +30,7 @@ import com.thinksky.tox.MainActivity;
 import com.thinksky.tox.SendQuestionActivity;
 import com.thinksky.tox.SendTieziActivity;
 import com.thinksky.tox.SettingActivity;
+import com.thinksky.ui.common.ImageDisplayPresenter;
 import com.thinksky.ui.group.CheckMemberListActivity;
 import com.thinksky.ui.group.CreateGroupActivity;
 import com.thinksky.ui.group.GroupMemberListActivity;
@@ -152,4 +153,6 @@ public interface ServiceComponent {
   void inject(DiscoverSendActivity discoverSendActivity);
 
   void inject(ZhuanjiFenLeiActivity zhuanjiFenLeiActivity);
+
+  void inject(ImageDisplayPresenter imageDisplayPresenter);
 }

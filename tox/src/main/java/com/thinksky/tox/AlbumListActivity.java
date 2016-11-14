@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.thinksky.adapter.GroupAdapter;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.ImageBean;
+import com.thinksky.ui.common.TitleBar;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ScanPhotoActivity extends BaseBActivity {
+public class AlbumListActivity extends BaseBActivity {
   public static final int RESULT_CODE_CHOOSE_IMG = 99;
   private static final int REQUEST_CODE_IMG_LIST = 10;
   private static final int SCAN_OK = 1;
@@ -39,6 +40,9 @@ public class ScanPhotoActivity extends BaseBActivity {
   private GridView mGroupGridView;
   private List<String> selectedImg = new ArrayList<String>();
   private List<String> lists;
+
+  private TitleBar mTitleBar;
+
   private Handler mHandler = new Handler() {
 
     @Override
@@ -48,7 +52,7 @@ public class ScanPhotoActivity extends BaseBActivity {
         case SCAN_OK:
           //关闭进度条
           mProgressDialog.dismiss();
-          adapter = new GroupAdapter(ScanPhotoActivity.this, list = subGroupOfImage(mGroupMap),
+          adapter = new GroupAdapter(AlbumListActivity.this, list = subGroupOfImage(mGroupMap),
               mGroupGridView);
           mGroupGridView.setAdapter(adapter);
           break;
@@ -61,6 +65,14 @@ public class ScanPhotoActivity extends BaseBActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.photo_scan_main);
+    mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+    mTitleBar.setMiddleTitle("相册");
+    mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        finish();
+      }
+    });
     mGroupGridView = (GridView) findViewById(R.id.main_grid);
     getImages();
     mGroupGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,7 +81,7 @@ public class ScanPhotoActivity extends BaseBActivity {
       public void onItemClick(AdapterView<?> parent, View view,
                               int position, long id) {
         List<String> childList = mGroupMap.get(list.get(position).getFolderName());
-        Intent mIntent = new Intent(ScanPhotoActivity.this, ShowImageActivity.class);
+        Intent mIntent = new Intent(AlbumListActivity.this, ImageChooseListActivity.class);
         mIntent.putStringArrayListExtra("data", (ArrayList<String>) childList);
         startActivityForResult(mIntent, REQUEST_CODE_IMG_LIST);
       }
@@ -79,11 +91,16 @@ public class ScanPhotoActivity extends BaseBActivity {
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == REQUEST_CODE_IMG_LIST && resultCode == 999) {
+    if (requestCode == REQUEST_CODE_IMG_LIST) {
+      if (resultCode != ImageChooseListActivity.RESULT_CODE_CHOOSE_IMG_SUCCESS) {
+        return;
+      }
       lists = data.getStringArrayListExtra("data");
-      Log.e("size>>>", lists.size() + "");
+      if (list.size() == 0) {
+        return;
+      }
       if (lists.size() > MAX_IMG_NUM) {
-        Toast.makeText(ScanPhotoActivity.this, "图片不能超过" + MAX_IMG_NUM + "张哟", Toast.LENGTH_SHORT)
+        Toast.makeText(AlbumListActivity.this, "图片不能超过" + MAX_IMG_NUM + "张哟", Toast.LENGTH_SHORT)
             .show();
         return;
       }
@@ -91,11 +108,11 @@ public class ScanPhotoActivity extends BaseBActivity {
         selectedImg.add(lists.get(i));
         Log.e("选择图片", selectedImg.get(i));
       }
+      back();
     }
-    Back();
   }
 
-  public void Back() {
+  public void back() {
     Intent data = new Intent();
     data.putStringArrayListExtra("data", (ArrayList<String>) selectedImg);
     setResult(RESULT_CODE_CHOOSE_IMG, data);
@@ -119,7 +136,7 @@ public class ScanPhotoActivity extends BaseBActivity {
       @Override
       public void run() {
         Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        ContentResolver mContentResolver = ScanPhotoActivity.this.getContentResolver();
+        ContentResolver mContentResolver = AlbumListActivity.this.getContentResolver();
 
         //只查询jpeg和png的图片
         Cursor mCursor = mContentResolver.query(mImageUri, null,

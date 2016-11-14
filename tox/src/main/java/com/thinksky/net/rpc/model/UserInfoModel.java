@@ -110,7 +110,7 @@ public class UserInfoModel extends BaseModel implements Serializable {
   private String p_province;
   private String uid;
   private String mobile;
-  private boolean data;
+  private String data;
   private int is_follow;
   private List<?> rank_link;
   private List<String> cover_url;
@@ -407,11 +407,11 @@ public class UserInfoModel extends BaseModel implements Serializable {
     this.mobile = mobile;
   }
 
-  public boolean isData() {
+  public String getData() {
     return data;
   }
 
-  public void setData(boolean data) {
+  public void setData(String data) {
     this.data = data;
   }
 

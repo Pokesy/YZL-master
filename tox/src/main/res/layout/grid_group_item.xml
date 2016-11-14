@@ -1,48 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+  <RelativeLayout
+      android:id="@+id/framelayout"
+      android:layout_width="150dp"
+      android:layout_height="140dp"
+      >
 
     <FrameLayout
-        android:id="@+id/framelayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <com.thinksky.redefine.MyImageView
-            android:id="@+id/group_image"
-            android:background="@drawable/albums_bg"
-            android:src="@drawable/friends_sends_pictures_no"
-            android:paddingLeft="20dip"
-            android:paddingRight="20dip"
-            android:paddingTop="18dip"
-            android:paddingBottom="30dip"
-            android:scaleType="fitXY"
-            android:layout_width="fill_parent"
-            android:layout_height="150dip" />
-
-        <TextView
-            android:id="@+id/group_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/albums_icon_bg"
-            android:gravity="center"
-            android:layout_marginBottom="10dip"
-            android:text="5"
-            android:layout_gravity="bottom|center_horizontal" />
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:background="@drawable/albums_bg"
+        android:padding="10dp"
+        >
+      <com.thinksky.redefine.MyImageView
+          android:id="@+id/group_image"
+          android:layout_width="100dp"
+          android:layout_height="105dp"
+          android:layout_gravity="center"
+          android:paddingBottom="18dp"
+          android:scaleType="centerCrop"
+          android:src="@drawable/friends_sends_pictures_no"
+          />
     </FrameLayout>
 
     <TextView
-        android:id="@+id/group_title"
-        android:layout_width="fill_parent"
+        android:id="@+id/group_count"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/bg_gray_border"
         android:gravity="center"
-        android:layout_below="@id/framelayout"
-        android:layout_centerHorizontal="true"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text="Camera"
-        android:textSize="16sp" />
+        android:paddingBottom="3dp"
+        android:layout_marginBottom="8dp"
+        android:paddingTop="3dp"
+        android:text="5"
+        style="@style/Widget.App.TextView.Small.Secondary"
+        />
+  </RelativeLayout>
+
+  <TextView
+      android:id="@+id/group_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:gravity="center"
+      android:singleLine="true"
+      tools:text="相册名称"
+      style="@style/Widget.App.TextView.Medium.Blue"
+      />
 
 </LinearLayout>

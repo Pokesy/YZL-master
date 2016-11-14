@@ -6,76 +6,17 @@
     android:orientation="vertical"
     >
 
-  <RelativeLayout
+  <com.thinksky.ui.common.TitleBar
+      android:id="@+id/title_bar"
       android:layout_width="match_parent"
       android:layout_height="?actionBarSize"
-      android:background="@drawable/head_border"
-      android:paddingBottom="0dp"
-      android:paddingTop="0dp"
-      >
-
-    <RelativeLayout
-        android:id="@+id/pic_confirm"
-        android:layout_width="65dp"
-        android:layout_height="fill_parent"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        >
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerVertical="true"
-          android:paddingLeft="10dp"
-          android:paddingRight="10dp"
-          android:text="确定"
-          android:textColor="@color/tab"
-          android:textSize="17dp"
-          />
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center_vertical"
-        android:text="选择图片"
-        android:textColor="@color/tab"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        />
-
-    <RelativeLayout
-        android:id="@+id/pic_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:paddingBottom="5dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        >
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerVertical="true"
-          android:paddingLeft="10dp"
-          android:paddingRight="10dp"
-          android:text="取消"
-          android:textColor="@color/tab"
-          android:textSize="17dp"
-          />
-    </RelativeLayout>
-  </RelativeLayout>
+      />
 
   <GridView
       android:id="@+id/child_grid"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="#ffffff"
+      android:background="@android:color/white"
       android:cacheColorHint="@android:color/transparent"
       android:columnWidth="90dip"
       android:gravity="center"
@@ -85,5 +26,5 @@
       android:padding="5dip"
       android:stretchMode="columnWidth"
       android:verticalSpacing="5dip"
-      ></GridView>
+      />
 </LinearLayout>
