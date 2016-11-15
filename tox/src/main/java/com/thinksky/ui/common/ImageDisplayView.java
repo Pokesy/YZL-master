@@ -178,6 +178,10 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
       return mImgPaths.subList(0, mImgPaths.size() - 1);
     }
 
+    public void setMaxItemCount(int maxItemCount) {
+      mMaxItemCount = maxItemCount;
+    }
+
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view = LayoutInflater.from(getContext()).inflate(R.layout.img_display_view_item,
@@ -189,7 +193,7 @@ public class ImageDisplayView extends FrameLayout implements IImageDisplayView {
     public void onBindViewHolder(ItemHolder holder, final int position) {
       if (position == mImgPaths.size() - 1) {
         Logger.d("YZZ", "set default img");
-          holder.src.setImageResource(R.drawable.add_post_photo);
+        holder.src.setImageResource(R.drawable.add_post_photo);
         holder.btnDelete.setVisibility(View.GONE);
         holder.src.setOnClickListener(new OnClickListener() {
           @Override

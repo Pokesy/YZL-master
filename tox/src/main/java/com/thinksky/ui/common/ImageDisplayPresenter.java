@@ -85,6 +85,7 @@ public class ImageDisplayPresenter {
     mMaxCount = maxCount;
     iImageDisplayView = displayView;
     Logger.d("ImageDisplayPresenter constructor", iImageDisplayView.toString());
+    iImageDisplayView.setMaxCount(mMaxCount);
 
     iImageDisplayView.setOnAddImgClickListener(new IImageDisplayView.OnAddImgClickListener() {
       @Override
