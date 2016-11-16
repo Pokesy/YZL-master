@@ -285,7 +285,8 @@ public class QuestionListFragment extends BasicFragment {
         ImageLoader.loadOptimizedHttpImage(getActivity(), RsenUrlUtil.URL_BASE +
             listEntity.getUser()
                 .getAvatar32()).bitmapTransform(new CropCircleTransformation(getActivity()))
-            .error(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).into(viewHolder
+            .error(R.drawable.side_user_avatar).error(R.drawable.side_user_avatar).dontAnimate()
+            .into(viewHolder
             .imgV(R.id.logo));
       } catch (Exception e) {
         e.printStackTrace();
@@ -305,22 +306,9 @@ public class QuestionListFragment extends BasicFragment {
         iv1 = viewHolder.imgV(R.id.iv_1);
         iv2 = viewHolder.imgV(R.id.iv_2);
         iv3 = viewHolder.imgV(R.id.iv_3);
-        //LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1
-        // .getLayoutParams();
-        //linearParams.width = (getScreenWidth(context)-45)/3; // 当控件的高强制设成365象素
-        //linearParams.height=(getScreenWidth(context)-60)/3;
-        //iv1.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
-        //iv2.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
-        //iv3.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
         iv1.setVisibility(size > 0 ? View.VISIBLE : View.GONE);
         iv2.setVisibility(size > 1 ? View.VISIBLE : View.GONE);
         iv3.setVisibility(size > 2 ? View.VISIBLE : View.GONE);
-        //DisplayMetrics metric = new DisplayMetrics();
-        //getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-        //int width = metric.widthPixels;     // 屏幕宽度（像素）
-        //int height = metric.heightPixels;   // 屏幕高度（像素）
-        //float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
-        //int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
 
         for (int i = 0; i < size; i++) {
           String url = RsenUrlUtil.URL_BASE + listEntity.getImgList().get(i);

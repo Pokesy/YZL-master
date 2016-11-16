@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
@@ -32,6 +33,8 @@ import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.tox.AlbumListActivity;
 import com.thinksky.tox.ImageChooseListActivity;
 import com.thinksky.tox.R;
+import com.thinksky.utils.ImageUtils;
+import com.thinksky.utils.ScalingUtil;
 import com.tox.Url;
 import java.io.File;
 import java.util.ArrayList;
@@ -76,6 +79,7 @@ public class ImageDisplayPresenter {
   private int mNeedUploadCount = 0;
 
   private HashMap<String, String> mUploadedCache = new HashMap<>();
+  private HashMap<String, Bitmap> mUploadBitmapCache = new HashMap<>();
   @Inject
   AppService mAppService;
 
@@ -85,7 +89,7 @@ public class ImageDisplayPresenter {
     mMaxCount = maxCount;
     iImageDisplayView = displayView;
     Logger.d("ImageDisplayPresenter constructor", iImageDisplayView.toString());
-    iImageDisplayView.setMaxCount(mMaxCount);
+    iImageDisplayView.setMaxCount(maxCount);
 
     iImageDisplayView.setOnAddImgClickListener(new IImageDisplayView.OnAddImgClickListener() {
       @Override
@@ -207,7 +211,14 @@ public class ImageDisplayPresenter {
         mNeedUploadCount--;
         continue;
       }
-      File file = new File(path);
+      File file;
+      if (mUploadBitmapCache.containsKey(path)) {
+        byte[] bytes = ImageUtils.bitmap2Bytes(mUploadBitmapCache.get(path), 100);
+        file = ImageUtils.byte2File(bytes, mContext.getExternalFilesDir(null) +
+            "uploads", "temp.jpg");
+      } else {
+        file = new File(path);
+      }
 
       RequestBody requestFile =
           RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -277,6 +288,14 @@ public class ImageDisplayPresenter {
 
   public void onDestroy() {
     mSubscriptions.unsubscribe();
+    Iterator<Map.Entry<String, Bitmap>> it = mUploadBitmapCache.entrySet().iterator();
+    while (it.hasNext()) {
+      Map.Entry<String, Bitmap> entry = it.next();
+      Bitmap bitmap = entry.getValue();
+      if (null != bitmap && !bitmap.isRecycled()) {
+        bitmap.recycle();
+      }
+    }
   }
 
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -334,11 +353,22 @@ public class ImageDisplayPresenter {
             List<String> mAddPath = new ArrayList<>();
             mAddPath.add(temFile.getPath());
             iImageDisplayView.add(mAddPath);
+            mUploadBitmapCache.put(temFile.getPath(), scaleImg(temFile.getPath(), 800, 800));
             Logger.d("ImageDisplayPresenter camera", iImageDisplayView.toString());
           }
         }
       }
     }
+  }
+
+  public Bitmap scaleImg(String path, int width, int height) {
+    if (TextUtils.isEmpty(path)) {
+      return null;
+    }
+    Bitmap bitmap = ScalingUtil.decodeFile(path, width, height, ScalingUtil
+        .ScalingLogic.FIT);
+    bitmap = ScalingUtil.createScaledBitmap(bitmap, width, height, ScalingUtil.ScalingLogic.FIT);
+    return bitmap;
   }
 
   public interface UploadCallback {

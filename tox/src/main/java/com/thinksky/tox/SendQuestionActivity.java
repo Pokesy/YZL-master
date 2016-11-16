@@ -5,11 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,7 +33,6 @@ import com.thinksky.holder.BaseApplication;
 import com.thinksky.holder.BaseBActivity;
 import com.thinksky.info.PostInfo;
 import com.thinksky.injection.GlobalModule;
-import com.thinksky.log.Logger;
 import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.UploadImageModel;
@@ -45,7 +44,9 @@ import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
 import com.thinksky.utils.BitmapUtiles;
 import com.thinksky.utils.FileUtiles;
+import com.thinksky.utils.ImageUtils;
 import com.thinksky.utils.MyJson;
+import com.thinksky.utils.ScalingUtil;
 import com.thinksky.utils.imageloader.ImageLoader;
 import com.tox.BaseApi;
 import com.tox.BaseFunction;
@@ -56,7 +57,10 @@ import com.tox.Url;
 import com.tox.WeiboApi;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -98,7 +102,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   private ForumApi forumApi = new ForumApi();
   private List<String> attachIds = new ArrayList<String>();
   private TextView score;
-  private RelativeLayout backBtn;
+  private View backBtn;
   private RecyclerView horizontalListView;
   private LinearLayout mAttachLayout, mAttachBtn, mFaceBtn;
   private FrameLayout mPhotoShowLayout;
@@ -118,6 +122,8 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   private String category_id;
   private TextView dizhi;
   private TextView mWealthView;
+
+  private HashMap<String, Bitmap> mUploadBitmapCache = new HashMap<>();
 
   @Inject
   AppService mAppService;
@@ -165,7 +171,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
         R.drawable.borderradius_postsend_touched + "", "drawable"));
     baseApi = new BaseApi();
     session_id = baseApi.getSeesionId();
-    strs = new ArrayList<String>();
+    strs = new ArrayList<>();
     strs.add("0");
     strs.add("5");
     strs.add("10");
@@ -192,7 +198,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     title = (LinearLayout) findViewById(R.id.title);
     attachBtns = (LinearLayout) findViewById(R.id.attachBtns);
     mFaceBtn = (LinearLayout) findViewById(R.id.Post_send_faceBtn);
-    backBtn = (RelativeLayout) findViewById(R.id.Post_send_Back);
+    backBtn = findViewById(R.id.Post_send_Back);
     score.setOnClickListener(this);
     backBtn.setOnClickListener(this);
     mFaceBtn.setOnClickListener(this);
@@ -211,6 +217,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
 
   @Override
   public void onClick(View v) {
+    hideInputWindow(mContentEdit);
     int id = v.getId();
     switch (id) {
       case R.id.Post_send_photo:
@@ -231,20 +238,19 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                   break;
                 case 1:
                   Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                  File file = new File(Environment.getExternalStorageDirectory() + "/tox/photos");
-                  mTempPhotoName = System.currentTimeMillis() + ".png";
+                  File file = new File(getExternalFilesDir(null)
+                      + File.separator
+                      + getPackageName()
+                      + File.separator
+                      + "photos"
+                      + File.separator);
+                  mTempPhotoName = System.currentTimeMillis() + ".jpg";
                   if (!file.exists()) {
                     file.mkdirs();
-
-                    File photo = new File(file, mTempPhotoName);
-                    Uri u = Uri.fromFile(photo);
-                    intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
-                  } else {
-
-                    File photo = new File(file, mTempPhotoName);
-                    Uri u = Uri.fromFile(photo);
-                    intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
                   }
+                  File photo = new File(file, mTempPhotoName);
+                  Uri u = Uri.fromFile(photo);
+                  intent1.putExtra(MediaStore.EXTRA_OUTPUT, u);
                   startActivityForResult(intent1, 1);
                   break;
               }
@@ -366,6 +372,16 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     SendQuestionActivity.this.finish();
   }
 
+  public Bitmap scaleImg(String path, int width, int height) {
+    if (TextUtils.isEmpty(path)) {
+      return null;
+    }
+    Bitmap bitmap = ScalingUtil.decodeFile(path, width, height, ScalingUtil
+        .ScalingLogic.FIT);
+    bitmap = ScalingUtil.createScaledBitmap(bitmap, width, height, ScalingUtil.ScalingLogic.FIT);
+    return bitmap;
+  }
+
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     /**
@@ -392,13 +408,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
               imgList.get(img_num)
                   .setBackgroundDrawable(
                       new BitmapDrawable(BitmapUtiles.loadBitmap(imgPathList.get(i), 4)));
-                            /*imgList.get(img_num).setImageBitmap(BitmapUtiles.loadBitmap
-                            (imgPathList.get(i), 4));
-                            imgList.get(img_num).setLayoutParams(new ViewGroup.LayoutParams
-                            (ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams
-                            .FILL_PARENT));
-                            imgList.get(img_num).setMinimumHeight(100);
-                            imgList.get(img_num).setMinimumWidth(80);*/
               img_num++;
             }
           }
@@ -432,10 +441,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
               Log.d("Andy", img_num + "");
               scrollImg.add(imgPathList.get(i));
               Log.e(">>", scrollImg.get(i));
-                           /* imgList.get(img_num).setVisibility(View.VISIBLE);
-                            imgLayList.get(getAbleLocation()).setVisibility(View.VISIBLE);
-                            imgList.get(getAbleLocation()).setImageBitmap(BitmapUtiles.loadBitmap
-                            (imgPathList.get(i), 2));*/
               img_num++;
             }
           }
@@ -449,7 +454,12 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
        */
     } else if (requestCode == 1 && resultCode == RESULT_OK) {
       File temFile =
-          new File(Environment.getExternalStorageDirectory() + "/tox/photos/" + mTempPhotoName);
+          new File(getExternalFilesDir(null)
+              + File.separator
+              + getPackageName()
+              + File.separator
+              + "photos"
+              + File.separator + mTempPhotoName);
       if (temFile.exists()) {
         mAttachLayout.setVisibility(View.GONE);
         mPhotoShowLayout.setVisibility(View.VISIBLE);
@@ -463,6 +473,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
           if (img_num <= 3) {
 
             scrollImg.add(temFile.getPath());
+            mUploadBitmapCache.put(temFile.getPath(), scaleImg(temFile.getPath(), 800, 800));
             img_num++;
           }
         }
@@ -514,8 +525,14 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     attachIds.clear();
     showProgressDialog("发布中,请等待", false);
     for (int i = 0; i < scrollImg.size() - 1; i++) {
-
-      File file = new File(scrollImg.get(i));
+      File file;
+      if (mUploadBitmapCache.containsKey(scrollImg.get(i))) {
+        byte[] bytes = ImageUtils.bitmap2Bytes(mUploadBitmapCache.get(scrollImg.get(i)), 100);
+        file = ImageUtils.byte2File(bytes, getExternalFilesDir(null) +
+            "uploads", "temp.jpg");
+      } else {
+        file = new File(scrollImg.get(i));
+      }
 
       RequestBody requestFile =
           RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -538,7 +555,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
           }, new Action1<Throwable>() {
             @Override
             public void call(Throwable throwable) {
-              Logger.e("YZZ", throwable.getMessage());
               Toast.makeText(SendQuestionActivity.this, "上传图片失败", Toast.LENGTH_SHORT).show();
               closeProgressDialog();
             }
@@ -557,6 +573,14 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
   protected void onDestroy() {
     super.onDestroy();
     mSubscriptions.unsubscribe();
+    Iterator<Map.Entry<String, Bitmap>> it = mUploadBitmapCache.entrySet().iterator();
+    while (it.hasNext()) {
+      Map.Entry<String, Bitmap> entry = it.next();
+      Bitmap bitmap = entry.getValue();
+      if (null != bitmap && !bitmap.isRecycled()) {
+        bitmap.recycle();
+      }
+    }
   }
 
   private void sendWeibo() {
@@ -625,10 +649,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
         @Override
         public void onClick(View v) {
           if (imgUrl.get(position).equals("add")) {
-            Log.d("Andy12345", img_num + "");
-            Log.d("Andy123456", imgUrl.get(position));
             if (img_num < MAX_IMG_NUM) {
-              //ToastHelper.showToast("点击了罗",ctx);
               String[] items = {"相册", "拍照"};
               AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
               builder.setTitle("操作");
@@ -643,21 +664,19 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
                       break;
                     case 1:
                       Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                      File file =
-                          new File(Environment.getExternalStorageDirectory() + "/tox/photos");
-                      mTempPhotoName = System.currentTimeMillis() + ".png";
+                      File file = new File(getExternalFilesDir(null)
+                          + File.separator
+                          + getPackageName()
+                          + File.separator
+                          + "photos"
+                          + File.separator);
+                      mTempPhotoName = System.currentTimeMillis() + ".jpg";
                       if (!file.exists()) {
                         file.mkdirs();
-
-                        File photo = new File(file, mTempPhotoName);
-                        Uri u = Uri.fromFile(photo);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
-                      } else {
-
-                        File photo = new File(file, mTempPhotoName);
-                        Uri u = Uri.fromFile(photo);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
                       }
+                      File photo = new File(file, mTempPhotoName);
+                      Uri u = Uri.fromFile(photo);
+                      intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
                       startActivityForResult(intent, 1);
                       break;
                   }
