@@ -32,7 +32,7 @@
           >
 
         <ImageView
-            android:id="@+id/icon_accept"
+            android:id="@+id/icon_best_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -116,7 +116,7 @@
 
 
     <TextView
-        android:id="@+id/acept"
+        android:id="@+id/accept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -139,7 +139,7 @@
   <!--采纳-->
 
   <ImageView
-      android:id="@+id/caina"
+      android:id="@+id/accept_watermark"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_centerInParent="true"

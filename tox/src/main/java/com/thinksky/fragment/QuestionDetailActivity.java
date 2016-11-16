@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -36,7 +35,6 @@ import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.QuestionDetailModel;
 import com.thinksky.net.rpc.service.AppService;
-import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
@@ -82,19 +80,16 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
   private String session_id;
   private ImageView iv1, iv2, iv3, wutu;
   public static boolean upFlag = false;
-  public static boolean flag = false;
-  public static boolean FLAG = false;
-  private SharedPreferences sp = null;
+  public static boolean mHasBestAnswer = false;
+  private static boolean mIsAuthor = false;
   private LinearLayout reply_button;
   private LinearLayout reply_box;
   private EditText reply_editText;
-  private TextView sendPostButtn;
-  private List<String> listflag = new ArrayList<String>();
-  private StringBuffer sb = new StringBuffer();
+  private TextView sendPostButton;
+  private List<String> listFlag = new ArrayList<>();
   private String string = null;
-  private String suid;
+  private String mAuthorId;
   private ProgressDialog mProgressDialog;
-  private RViewHolder holder;
   private RelativeLayout img_layout;
   private ScrollView mScrollView;
   private TitleBar mTitleBar;
@@ -119,10 +114,6 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     huida = (TextView) findViewById(R.id.huida);
     listView = (ListView) findViewById(R.id.listView);
     mTitleBar = (TitleBar) findViewById(R.id.title_bar);
-//        View headerView = new View(this);
-//        headerView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams
-// .MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.header_height)));
-//        listView.addHeaderView(headerView);
 
     btn_huida = (Button) findViewById(R.id.btn_huida);
     iv1 = (ImageView) findViewById(R.id.iv_1);
@@ -133,7 +124,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     reply_button = (LinearLayout) findViewById(R.id.reply_button);
     reply_box = (LinearLayout) findViewById(R.id.reply_box);
     reply_editText = (EditText) findViewById(R.id.reply_editText);
-    sendPostButtn = (TextView) findViewById(R.id.sendPostButn);
+    sendPostButton = (TextView) findViewById(R.id.sendPostButn);
     //发表回复文本框的事件监听器
     reply_editText.addTextChangedListener(new TextWatcher() {
       @Override
@@ -144,33 +135,33 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       @Override
       public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (count != 0) {
-          sendPostButtn.setBackgroundResource(R.drawable.forum_enable_btn_send);
-          sendPostButtn.setTextColor(Color.WHITE);
+          sendPostButton.setBackgroundResource(R.drawable.forum_enable_btn_send);
+          sendPostButton.setTextColor(Color.WHITE);
         } else {
-          sendPostButtn.setBackgroundResource(R.drawable.border);
-          sendPostButtn.setTextColor(Color.parseColor("#A9ADB0"));
+          sendPostButton.setBackgroundResource(R.drawable.border);
+          sendPostButton.setTextColor(Color.parseColor("#A9ADB0"));
         }
       }
 
       @Override
       public void afterTextChanged(Editable s) {
         if (s.length() != 0) {
-          sendPostButtn.setBackgroundResource(R.drawable.forum_enable_btn_send);
-          sendPostButtn.setTextColor(Color.WHITE);
+          sendPostButton.setBackgroundResource(R.drawable.forum_enable_btn_send);
+          sendPostButton.setTextColor(Color.WHITE);
         } else {
-          sendPostButtn.setBackgroundResource(R.drawable.border);
-          sendPostButtn.setTextColor(Color.parseColor("#A9ADB0"));
+          sendPostButton.setBackgroundResource(R.drawable.border);
+          sendPostButton.setTextColor(Color.parseColor("#A9ADB0"));
         }
       }
     });
 
     btn_huida.setOnClickListener(this);
-    sendPostButtn.setOnClickListener(this);
-    mListData = new ArrayList<WendaXianqingInfo>();
+    sendPostButton.setOnClickListener(this);
+    mListData = new ArrayList<>();
     baseApi = new BaseApi();
     session_id = baseApi.getSeesionId();
     mQuestionId = getIntent().getStringExtra("question_id");
-    initXiangQingData();
+    initDetailData();
     mScrollView.smoothScrollTo(0, 0);
 
     mTitleBar.setLeftImgMenu(R.drawable.icon_title_bar_back, new View.OnClickListener() {
@@ -212,7 +203,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     cancelDialog();
   }
 
-  private void initXiangQingData() {
+  private void initDetailData() {
     manageRpcCall(mAppService.getQuestionDetail(Url.SESSIONID, mQuestionId), new
         UiRpcSubscriber1<QuestionDetailModel>(this) {
 
@@ -220,9 +211,9 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
           @Override
           protected void onSuccess(QuestionDetailModel questionDetailModel) {
             final QuestionDetailModel.ListBean bean = questionDetailModel.getList().get(0);
-            suid = bean.getUid();
-
-            if (TextUtils.equals(suid, Url.USERID)) {
+            mAuthorId = bean.getUid();
+            mIsAuthor = TextUtils.equals(mAuthorId, Url.USERID);
+            if (mIsAuthor) {
               mTitleBar.setSearchBtn(R.drawable.icon_delete, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -362,19 +353,17 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
             } else {
               img_layout.setVisibility(View.GONE);
             }
-            //回答
-
 
             //问题
             title.setText(bean.getTitle());
             if (TextUtils.equals(bean.getBest_answer(), "0")) {
               best_answer.setText("求助中");
               best_answer.setSelected(false);
-              FLAG = true;
+              mHasBestAnswer = false;
             } else {
               best_answer.setText("已解决");
               best_answer.setSelected(true);
-              FLAG = false;
+              mHasBestAnswer = true;
             }
             money.setText(bean.getScore());
             creat_time.setText(bean.getCreate_time());
@@ -401,7 +390,6 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
             huida.setText(bean.getAnswer_num() + "条回答");
             if (("0").equals(bean.getAnswer_num())) {
               wutu.setVisibility(View.VISIBLE);
-
             } else {
               wutu.setVisibility(View.GONE);
               mListAdapter = new AnswerListAdapter(QuestionDetailActivity.this, bean
@@ -445,8 +433,8 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
         showProgressDialog();
         if (reply_editText.getText().length() > 0 && !"".equals(reply_editText.getText().toString
             ().trim())) {
-          sendPostButtn.setBackgroundResource(R.drawable.border);
-          sendPostButtn.setTextColor(Color.parseColor("#A9ADB0"));
+          sendPostButton.setBackgroundResource(R.drawable.border);
+          sendPostButton.setTextColor(Color.parseColor("#A9ADB0"));
           reply_button.setVisibility(View.VISIBLE);
           reply_box.setVisibility(View.GONE);
           InputMethodManager imm2 = (InputMethodManager) getSystemService(Context
@@ -515,7 +503,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
           @Override
           public void run() {
             cancelDialog();
-            initXiangQingData();
+            initDetailData();
             wutu.setVisibility(View.GONE);
             getComponent().getGlobalBus().post(new AnswerChangedEvent());
           }
@@ -566,26 +554,29 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
         holder = new ViewHolder();
         holder.avatar32 = (ImageView) convertView.findViewById(R.id.avatar32);
         holder.dianzan = (ImageView) convertView.findViewById(R.id.dianzan);
-        holder.caina = (ImageView) convertView.findViewById(R.id.caina);
+        holder.accept_watermark = (ImageView) convertView.findViewById(R.id.accept_watermark);
         holder.nickname = (TextView) convertView.findViewById(R.id.nickname);
         holder.content = (TextView) convertView.findViewById(R.id.content);
         holder.creat_time = (TextView) convertView.findViewById(R.id.creat_time);
         holder.reply_count = (TextView) convertView.findViewById(R.id.reply_count);
-        holder.acept = (TextView) convertView.findViewById(R.id.acept);
-        holder.mIconAccept = (ImageView) convertView.findViewById(R.id.icon_accept);
+        holder.btnAccept = (TextView) convertView.findViewById(R.id.accept);
+        holder.mIconBestAnswer = (ImageView) convertView.findViewById(R.id.icon_best_answer);
         convertView.setTag(holder);
       } else {
         holder = (ViewHolder) convertView.getTag();
       }
-//            WendaXianqingInfo bean = beans.get(position);
-//            list =bean.getQuestionAnswer();
+
       final QuestionDetailModel.ListBean
           .QuestionAnswerBean bean = list.get(position);
-      if (FLAG && BaseFunction.isLogin() && !TextUtils.equals(bean.getUid(), Url.USERID)) {
-        holder.acept.setVisibility(View.VISIBLE);
+      // 如果登录并且当前登录账号是问题的作者并且回答不是当前登录的账号
+      if (BaseFunction.isLogin() && mIsAuthor
+          && !TextUtils.equals(bean.getUid(), Url.USERID)) {
+        holder.btnAccept.setVisibility(mHasBestAnswer ? View.GONE : View.VISIBLE);
       } else {
-        holder.acept.setVisibility(View.GONE);
+        holder.btnAccept.setVisibility(View.GONE);
       }
+      holder.mIconBestAnswer.setVisibility(bean.getIsbest() == 0 ? View.GONE : View.VISIBLE);
+      holder.accept_watermark.setVisibility(bean.getIsbest() == 0 ? View.GONE : View.VISIBLE);
       try {
         ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, RsenUrlUtil.URL_BASE + bean
             .getUser().getAvatar32())
@@ -626,7 +617,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       if (!(bean.getIs_supported().equals("0"))) {//已点赞
         holder.dianzan.setBackgroundResource(R.drawable.icon_like_blue_stroke);
         string = bean.getIs_supported();
-        listflag.add(string);
+        listFlag.add(string);
 
       } else {
         holder.dianzan.setBackgroundResource(R.drawable.icon_like_blue);
@@ -635,18 +626,6 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       }
 
 
-      if (bean.getIsbest() != 0) {
-        //采纳
-        holder.caina.setVisibility(View.VISIBLE);
-        holder.mIconAccept.setVisibility(View.VISIBLE);
-      } else {
-        holder.caina.setVisibility(View.GONE);
-        holder.mIconAccept.setVisibility(View.GONE);
-      }
-
-//            BaseFunction.showImage(context, holder.avatar32, bean.getUser().getAvatar32(),
-// loadImg, Url.IMGTYPE_HEAD);
-
             /*点击图标和文本,都支持点赞操作*/
       holder.dianzan.setOnClickListener(new DianZanListener(holder, bean));
       holder.reply_count.setOnClickListener(new DianZanListener(holder, bean));
@@ -654,10 +633,11 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
       holder.reply_count.setOnClickListener(new DianZanListener(holder, bean));
 
             /*采纳*/
-      holder.acept.setOnClickListener(new View.OnClickListener() {
+      holder.btnAccept.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          if (!bean.getUid().equals(Url.USERID)) {
+          // 如果我是问题的提问者，并且当前答案啊不是自己的答案
+          if (mIsAuthor && !bean.getUid().equals(Url.USERID)) {
 
             manageRpcCall(mAppService.acceptAnswer(session_id, list.get(position).getId()), new
                 UiRpcSubscriber1<BaseModel>(QuestionDetailActivity.this) {
@@ -668,9 +648,10 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
                     runOnUiThread(new Runnable() {
                       @Override
                       public void run() {
-                        holder.acept.setVisibility(View.GONE);
-                        holder.caina.setVisibility(View.VISIBLE);
-                        initXiangQingData();
+                        holder.btnAccept.setVisibility(View.GONE);
+                        holder.accept_watermark.setVisibility(View.VISIBLE);
+                        initDetailData();
+                        getComponent().getGlobalBus().post(new AnswerChangedEvent());
                       }
                     });
 
@@ -772,13 +753,13 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
   static class ViewHolder {
     ImageView avatar32;
     ImageView dianzan;
-    ImageView caina;
-    ImageView mIconAccept;
+    ImageView accept_watermark;
+    ImageView mIconBestAnswer;
     TextView nickname;
     TextView content;
     TextView creat_time;
     TextView reply_count;
-    TextView acept;
+    TextView btnAccept;
   }
 
   public static class DianzanBean {

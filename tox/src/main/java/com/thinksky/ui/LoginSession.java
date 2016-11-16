@@ -57,7 +57,7 @@ public class LoginSession {
   public void saveUserInfoModel(UserInfoModel userInfo) {
     SharedPreferences.Editor editor = mSp.edit();
     editor.putString(KEY_USER_INFO, JsonConverter.objectToJson(userInfo));
-    editor.apply();
+    editor.commit();
     ((BaseApplication) mContext.getApplicationContext()).getGlobalComponent().getGlobalBus().post
         (new UserInfoChangeEvent());
   }

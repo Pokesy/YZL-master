@@ -795,8 +795,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void setData() {
       UserInfoModel info = BaseApplication.getApplication().getGlobalComponent().loginSession()
           .getUserInfo();
-      String avatar = TextUtils.isEmpty(info.getAvatar128()) ? info.getAvatar() : info
-          .getAvatar128();
+      String avatar = info.getAvatar();
       ImageLoader.loadOptimizedHttpImage(MainActivity.this, avatar).dontAnimate()
           .bitmapTransform(new CropCircleTransformation(MainActivity.this)).placeholder(R
           .drawable.side_user_avatar).into(mAvatarView);
