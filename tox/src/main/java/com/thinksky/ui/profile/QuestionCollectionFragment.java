@@ -96,7 +96,7 @@ public class QuestionCollectionFragment extends BasicPullToRefreshFragment {
 
       @Override
       protected void onSuccess(CollectQuestionModel collectQuestionModel) {
-        if (getCurrentPage() == 0) {
+        if (getCurrentPage() == START_PAGE) {
           mAdapter.clear();
         }
         if (null == collectQuestionModel.getList() || collectQuestionModel.getList().size() == 0) {

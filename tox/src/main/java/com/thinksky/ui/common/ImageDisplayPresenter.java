@@ -215,7 +215,7 @@ public class ImageDisplayPresenter {
       if (mUploadBitmapCache.containsKey(path)) {
         byte[] bytes = ImageUtils.bitmap2Bytes(mUploadBitmapCache.get(path), 100);
         file = ImageUtils.byte2File(bytes, mContext.getExternalFilesDir(null) +
-            "uploads", "temp.jpg");
+            "uploads", "temp_" + System.currentTimeMillis() + ".jpg");
       } else {
         file = new File(path);
       }
@@ -310,14 +310,18 @@ public class ImageDisplayPresenter {
         iImageDisplayView.hide();
       } else {
         iImageDisplayView.show();
+        List<String> mAddPaths = new ArrayList<>();
         for (int i = 0; i < imgPathList.size(); i++) {
           if (!isExistsInList(imgPathList.get(i), mSelectedImgPath)) {
             if (mSelectedImgPath.size() < mMaxCount) {
               mSelectedImgPath.add(imgPathList.get(i));
+              mUploadBitmapCache.put(imgPathList.get(i), scaleImg(imgPathList.get(i), 800, 800));
             }
           }
         }
-        iImageDisplayView.add(mSelectedImgPath);
+        if (mAddPaths.size() > 0) {
+          iImageDisplayView.add(mAddPaths);
+        }
       }
     }
     /**
@@ -326,17 +330,22 @@ public class ImageDisplayPresenter {
     else if (resultCode == AlbumListActivity.RESULT_CODE_CHOOSE_IMG && requestCode ==
         REQUEST_CODE_SCAN) {
       List<String> imgPathList = data.getStringArrayListExtra("data");
+      List<String> mAddPaths = new ArrayList<>();
       if (imgPathList.size() > 0) {
         iImageDisplayView.show();
         for (int i = 0; i < imgPathList.size(); i++) {
           if (!isExistsInList(imgPathList.get(i), mSelectedImgPath)) {
             if (mSelectedImgPath.size() < mMaxCount) {
               mSelectedImgPath.add(imgPathList.get(i));
+              mAddPaths.add(imgPathList.get(i));
+              mUploadBitmapCache.put(imgPathList.get(i), scaleImg(imgPathList.get(i), 800, 800));
             }
           }
         }
       }
-      iImageDisplayView.add(mSelectedImgPath);
+      if (mAddPaths.size() > 0) {
+        iImageDisplayView.add(mAddPaths);
+      }
       /**
        * 表示从拍照的Activity返回
        */

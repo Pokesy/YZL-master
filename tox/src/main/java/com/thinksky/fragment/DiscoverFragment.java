@@ -686,7 +686,6 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
        * upid : 370000
        */
 
-      private PosCityEntity pos_city;
       private Object pos_district;
       private String pos_community;
       private String score1;
@@ -859,14 +858,6 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
 
       public void setPos_province(Object pos_province) {
         this.pos_province = pos_province;
-      }
-
-      public PosCityEntity getPos_city() {
-        return pos_city;
-      }
-
-      public void setPos_city(PosCityEntity pos_city) {
-        this.pos_city = pos_city;
       }
 
       public Object getPos_district() {

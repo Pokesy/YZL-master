@@ -382,7 +382,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:drawableLeft="@drawable/remenhuati"
-                android:text="热门话题"
+                android:text="最新话题"
                 style="@style/HomeFragmentLabelText"
                 />
 

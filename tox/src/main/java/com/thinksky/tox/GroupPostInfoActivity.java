@@ -211,6 +211,12 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
 
           @Override
           protected void onSuccess(final PostModel postModel) {
+            if (null == postModel || null == postModel.getList()) {
+              Toast.makeText(GroupPostInfoActivity.this, R.string
+                  .activity_group_detail_info_not_exist, Toast.LENGTH_SHORT).show();
+              finish();
+              return;
+            }
             final PostModel.ListBean listBean = postModel.getList().get(0);
             mCollectionBtn.setSelected(TextUtils.equals(listBean.getIs_collection(), "1"));
             mCollectionBtn.setOnClickListener(new View.OnClickListener() {
@@ -592,15 +598,11 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
       switch (msg.what) {
         case 0:
           if (SUPPORT) {
-            Log.d("TAG", "感谢你的支持");
-            ToastHelper.showToast("感谢你的支持", mContext);
             supportCount++;
             supportCountView.setText(supportCount + "");
             ((ImageView) findViewById(R.id.icon_like)).setImageResource(R.drawable
                 .icon_like_blue_stroke);
-            performPostDataChangeEvent();
-          }
-          if (POSTCOMMENT) {
+          } else if (POSTCOMMENT) {
             replyCount++;
             replyCountView.setText(String.valueOf(replyCount));
             huifu.setText("回复:" + String.valueOf(replyCount));
@@ -608,8 +610,8 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
             countOne = 0;
             page = 0;
             new PostReplyThread(post_id, page).start();
-            performPostDataChangeEvent();
           }
+          performPostDataChangeEvent();
           break;
         case 800:
           Log.d("TAG", "点赞失败");
@@ -621,7 +623,6 @@ public class GroupPostInfoActivity extends BaseBActivity implements View.OnClick
           replyCount = countMap.get("replyCount");
           supportCountView.setText(supportCount + "");
           replyCountView.setText(replyCount + "");
-          performPostDataChangeEvent();
           break;
         case 0x130:
           postReplyList = (ArrayList<HashMap<String, String>>) msg.obj;

@@ -18,9 +18,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
-import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -403,6 +400,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
           if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
             if (img_num <= 3) {
               scrollImg.add(imgPathList.get(i));
+              mUploadBitmapCache.put(imgPathList.get(i), scaleImg(imgPathList.get(i), 800, 800));
               imgList.get(img_num).setVisibility(View.VISIBLE);
               imgList.get(img_num).setTag(imgPathList.get(i));
               imgList.get(img_num)
@@ -438,9 +436,8 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
         for (int i = 0; i < imgPathList.size(); i++) {
           if (!BaseFunction.isExistsInList(imgPathList.get(i), scrollImg)) {
             if (img_num <= MAX_IMG_NUM) {
-              Log.d("Andy", img_num + "");
               scrollImg.add(imgPathList.get(i));
-              Log.e(">>", scrollImg.get(i));
+              mUploadBitmapCache.put(imgPathList.get(i), scaleImg(imgPathList.get(i), 800, 800));
               img_num++;
             }
           }
@@ -529,7 +526,7 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
       if (mUploadBitmapCache.containsKey(scrollImg.get(i))) {
         byte[] bytes = ImageUtils.bitmap2Bytes(mUploadBitmapCache.get(scrollImg.get(i)), 100);
         file = ImageUtils.byte2File(bytes, getExternalFilesDir(null) +
-            "uploads", "temp.jpg");
+            "uploads", "temp_" + System.currentTimeMillis() + ".jpg");
       } else {
         file = new File(scrollImg.get(i));
       }
@@ -719,36 +716,6 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     photo_num--;
     photoCount.setText("已选" + img_num + "张，还剩" + (MAX_IMG_NUM - img_num) + "张");
     photoAdapter.notifyDataSetChanged();
-  }
-
-  private void collapse(final View v, Animation.AnimationListener al) {
-    final int initialHeight = v.getMeasuredHeight();
-
-    Animation anim = new Animation() {
-      @Override
-      protected void applyTransformation(float interpolatedTime, Transformation t) {
-        if (interpolatedTime == 1) {
-          v.setVisibility(View.GONE);
-        } else {
-          v.getLayoutParams().height = initialHeight - (int) (initialHeight * interpolatedTime);
-          v.requestLayout();
-        }
-      }
-
-      @Override
-      public boolean willChangeBounds() {
-        return true;
-      }
-    };
-    TranslateAnimation translateAnimation =
-        new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0f,
-            Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 1f);
-
-    if (al != null) {
-      translateAnimation.setAnimationListener(al);
-    }
-    translateAnimation.setDuration(300);
-    v.startAnimation(translateAnimation);
   }
 
   public class QuestionSendEvent {

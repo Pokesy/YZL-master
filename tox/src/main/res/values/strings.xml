@@ -425,4 +425,6 @@
   <string name="activity_discover_send_info_number_format">输入格式不正确</string>
   <string name="activity_discover_send_info_title">请填写标题</string>
 
+  <!-- 话题详情 -->
+  <string name="activity_group_detail_info_not_exist">该帖子不存在或者已删除</string>
 </resources>

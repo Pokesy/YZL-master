@@ -1,5 +1,6 @@
 package com.thinksky.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.thinksky.info.AshamedInfo;
@@ -349,7 +350,7 @@ public class MyJson {
 
   public List<String> getImgUrlList(String jsons) {
     List<String> list = new ArrayList<String>();
-    String []arrays = jsons.split(",");
+    String[] arrays = jsons.split(",");
     for (int i = 0; i < arrays.length; i++) {
       list.add(arrays[i]);
     }
@@ -537,8 +538,11 @@ public class MyJson {
       userInfo.setQq(jsonObject1.optString("qq"));
       JSONObject jsonObject4 = new JSONObject(jsonObject.optString("pos_province"));
       userInfo.setP_province(jsonObject4.optString("name"));
-      JSONObject jsonObject2 = new JSONObject(jsonObject.optString("pos_city"));
-      userInfo.setP_city(jsonObject2.optString("name"));
+      String posCityStr = jsonObject.optString("pos_city");
+      if (!TextUtils.isEmpty(posCityStr)) {
+        JSONObject jsonObject2 = new JSONObject(posCityStr);
+        userInfo.setP_city(jsonObject2.optString("name"));
+      }
 
     } catch (JSONException e) {
       Logger.e("MyJson", e, "parse user info");

@@ -26,7 +26,7 @@ import com.thinksky.ui.common.PullToRefreshListView;
  */
 public abstract class BasicPullToRefreshFragment extends BasicFragment {
   protected static final int PAGE_COUNT = 20;
-  private static final int START_PAGE = 1;
+  protected static final int START_PAGE = 1;
   private static final int LOAD_MORE_VALUE = 3;
   private int mCurrentPage = START_PAGE;
 

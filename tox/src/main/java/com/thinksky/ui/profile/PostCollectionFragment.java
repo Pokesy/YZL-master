@@ -114,7 +114,7 @@ public class PostCollectionFragment extends BasicPullToRefreshFragment {
 
           @Override
           protected void onSuccess(HotPostModel model) {
-            if (getCurrentPage() == 0) {
+            if (getCurrentPage() == START_PAGE) {
               mAdapter.clear();
             }
             if (null == model.getList() || model.getList().size() == 0) {

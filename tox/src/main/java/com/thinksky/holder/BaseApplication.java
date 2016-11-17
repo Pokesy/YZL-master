@@ -38,7 +38,8 @@ public class BaseApplication extends Application {
 
   private GlobalComponent mGlobalComponent;
 
-  @Override public void onCreate() {
+  @Override
+  public void onCreate() {
     super.onCreate();
     Logger.init();
     mGlobalComponent = DaggerGlobalComponent.builder().globalModule(new GlobalModule(this)).build();
@@ -50,9 +51,8 @@ public class BaseApplication extends Application {
     SDKInitializer.initialize(this);
 
     ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(this));
-    if (BuildConfig.DEBUG) {
-      Bugtags.start("309e5c0b10a89d083fcb08b0c17543e2", this, Bugtags.BTGInvocationEventBubble);
-    }
+    Bugtags.start("309e5c0b10a89d083fcb08b0c17543e2", this, BuildConfig.DEBUG ? Bugtags
+        .BTGInvocationEventBubble : Bugtags.BTGInvocationEventNone);
 
     locationService = new LocationService(getApplicationContext());
     mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
