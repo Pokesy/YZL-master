@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <integer name="nick_name_length">8</integer>
   <integer name="phone_number_length">11</integer>
 
   <integer name="avatar_width">400</integer>

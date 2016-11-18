@@ -24,7 +24,13 @@ import com.thinksky.tox.R;
  */
 public class UserUtils {
   public static String getUserName(Context context, String userId, String userName) {
-    return TextUtils.isEmpty(userId) ? context.getString(R.string.activity_user_not_exists) :
-        userName;
+    int nameLength = context.getResources().getInteger(R.integer.nick_name_length);
+    if (TextUtils.isEmpty(userId)) {
+      return context.getString(R.string.activity_user_not_exists);
+    } else if (TextUtils.isEmpty(userName)) {
+      return "";
+    }
+    return userName.length() > nameLength ? userName.substring(0, nameLength)
+        : userName;
   }
 }
