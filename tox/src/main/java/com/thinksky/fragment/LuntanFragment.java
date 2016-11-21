@@ -115,8 +115,8 @@ public class LuntanFragment extends Fragment {
 //    }
 //
 //    protected class PageItemImageView extends ImageView {
-//        public PageItemImageView(Context context) {
-//            super(context);
+//        public PageItemImageView(Context mContext) {
+//            super(mContext);
 //            Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
 //                    R.drawable.icon_page_normal);
 //            this.setImageBitmap(bitmap);
@@ -340,7 +340,7 @@ public class LuntanFragment extends Fragment {
             viewHolder.userLogo = new ImageView(context);
             viewHolder.titleView = new TextView(context);
             viewHolder.countView = new TextView(context);
-//            viewHolder.replyview = new TextView(context);
+//            viewHolder.replyview = new TextView(mContext);
             viewHolder.rootLayout.setLayoutParams(new GridView.LayoutParams(-1, -1));
 
             viewHolder.itemLayout.setOrientation(LinearLayout.VERTICAL);
@@ -479,8 +479,8 @@ public class LuntanFragment extends Fragment {
                 public void onClick(View v) {
 ////                    Bundle bundle = new Bundle();
 ////                    bundle.putString("key", bean.);
-//                    Intent intent = new Intent(context, IssueActivity1.class);
-//                    context.startActivity(intent);
+//                    Intent intent = new Intent(mContext, IssueActivity1.class);
+//                    mContext.startActivity(intent);
                 }
             });
             return convertView;

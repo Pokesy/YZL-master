@@ -179,7 +179,7 @@ public class DongtaiMessageFragment extends Fragment {
 ////                    Toast.makeText(inflater.getContext(), "" + position, Toast.LENGTH_SHORT).show();
 //                    Bundle bundle = new Bundle();
 //                    bundle.putString("id", list.get(position).getId());
-//                    Intent intent = new Intent(context, BaikeItemActivity.class);
+//                    Intent intent = new Intent(mContext, BaikeItemActivity.class);
 //                    intent.putExtras(bundle);
 //                    startActivity(intent);
 //                }

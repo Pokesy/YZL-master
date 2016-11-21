@@ -174,7 +174,7 @@ public class CheckInFragment extends Fragment implements View.OnClickListener {
                 initRequest();
             } else {
                 InfoHelper.ShowMessageInfo(context, msg.what);
-              /*  Toast.makeText(context,"已经签到",Toast.LENGTH_LONG).show();
+              /*  Toast.makeText(mContext,"已经签到",Toast.LENGTH_LONG).show();
                 mCheckInText.setText("已签到");
                 mCheckIn.setClickable(false);*/
             }

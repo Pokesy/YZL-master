@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
@@ -26,9 +25,12 @@ import com.thinksky.holder.BaseApplication;
 import com.thinksky.info.NewsListInfo;
 import com.thinksky.info.NewsListInfo1;
 import com.thinksky.injection.GlobalModule;
+import com.thinksky.net.UiRpcSubscriber1;
 import com.thinksky.net.UiRpcSubscriberSimple;
+import com.thinksky.net.rpc.model.GroupChoiceModel;
 import com.thinksky.net.rpc.model.HotPostModel;
 import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.rsen.RBaseAdapter;
 import com.thinksky.rsen.RViewHolder;
 import com.thinksky.rsen.RsenUrlUtil;
@@ -47,9 +49,8 @@ import com.thinksky.ui.basic.BasicFragment;
 import com.thinksky.ui.common.TitleBar;
 import com.thinksky.ui.group.GroupMemberListActivity;
 import com.thinksky.ui.question.QuestionListActivity;
-import com.thinksky.utils.MyJson;
+import com.thinksky.utils.UserUtils;
 import com.thinksky.utils.imageloader.ImageLoader;
-import com.tox.BaseApi;
 import com.tox.BaseFunction;
 import com.tox.ToastHelper;
 import com.tox.Url;
@@ -70,23 +71,15 @@ public class HomeFragment extends BasicFragment
   private View view;
   private TextView zx_show, rm_show, ht_show, zj_show, time, count, support_count;
   private Intent intent;
-  private RecyclerView Zx_listView, Emht_listView;
-  private RGridView Rm_listView;
-  private ListView list;
+  private RecyclerView mNewsListView, mHotPostListView;
+  private RGridView mGroupGridView;
   private LinearLayout load_progressBar;
-  private RemenhuatiAdapter rm_adapter;
-  private MyAdapter xz_adapter;
+  private HotPostAdapter mHotPostAdapter;
   private boolean isWeGroup = true;
   private MyScrollview scrollView;
-  private FrameLayout bofangshipin;
+  private FrameLayout mBtnVideoPlay;
   private Context mContext;
-  private MyJson myjson = new MyJson();
-  private ListView newsListView;
   private RViewHolder viewHolder;
-  private ArrayList<NewsListInfo1> newsListInfos;
-  private BaseApi baseApi;
-  private String session_id;
-  private LinearLayout ll_zx;
   private View mMenuHot;
   private View mMenuMon;
   private View mMenuMyQuestion;
@@ -102,12 +95,9 @@ public class HomeFragment extends BasicFragment
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    view = inflater.inflate(R.layout.home_home, null);
+    view = inflater.inflate(R.layout.home_home, container, false);
     mSlideView = (SlideShowView) view.findViewById(R.id.slideshowView);
     scrollView = (MyScrollview) view.findViewById(R.id.scrollView);
-    list = (ListView) view.findViewById(R.id.list);
-    baseApi = new BaseApi();
-    session_id = baseApi.getSeesionId();
     scrollView.setOnScrollListener(this);
     mContext = getActivity();
     viewHolder = new RViewHolder(view);
@@ -115,9 +105,9 @@ public class HomeFragment extends BasicFragment
     mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);
     inject();
     initView();
-    initzx();
-    initdata();
-    initViewData();
+    loadNewsData();
+    loadGroupData();
+    loadHotPostData();
     return view;
   }
 
@@ -132,9 +122,9 @@ public class HomeFragment extends BasicFragment
     mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override
       public void onRefresh() {
-        initzx();
-        initdata();
-        initViewData();
+        loadNewsData();
+        loadGroupData();
+        loadHotPostData();
       }
     });
 
@@ -182,22 +172,21 @@ public class HomeFragment extends BasicFragment
     mMenuMyQuestion.setOnClickListener(menuClickListener);
     mMenuSolution.setOnClickListener(menuClickListener);
 
-    bofangshipin = (FrameLayout) view.findViewById(R.id.bofangshipin);
-    newsListView = (ListView) view.findViewById(R.id.news_listView);
-    Rm_listView = (RGridView) view.findViewById(R.id.Rm_listView);
-    Zx_listView = (RecyclerView) view.findViewById(R.id.Zx_listView);
-    Emht_listView = (RecyclerView) view.findViewById(R.id.Emht_listView);
+    mBtnVideoPlay = (FrameLayout) view.findViewById(R.id.bofangshipin);
+    mGroupGridView = (RGridView) view.findViewById(R.id.Rm_listView);
+    mNewsListView = (RecyclerView) view.findViewById(R.id.Zx_listView);
+    mHotPostListView = (RecyclerView) view.findViewById(R.id.Emht_listView);
     time = (TextView) view.findViewById(R.id.time);
     count = (TextView) view.findViewById(R.id.count);
     support_count = (TextView) view.findViewById(R.id.support_count);
-    //        Zx_listView.setLayoutManager(new LinearLayoutManager(mBaseActivity,
+    //        mNewsListView.setLayoutManager(new LinearLayoutManager(mBaseActivity,
     // LinearLayoutManager.VERTICAL, false));
-    Emht_listView.setLayoutManager(
+    mHotPostListView.setLayoutManager(
         new LinearLayoutManager(mBaseActivity, LinearLayoutManager.VERTICAL, false));
 
-    rm_adapter = new RemenhuatiAdapter(mBaseActivity);
+    mHotPostAdapter = new HotPostAdapter(mBaseActivity);
 
-    Emht_listView.setAdapter(rm_adapter);
+    mHotPostListView.setAdapter(mHotPostAdapter);
 
     zx_show = (TextView) view.findViewById(R.id.zx_show);
     rm_show = (TextView) view.findViewById(R.id.rm_show);
@@ -281,8 +270,7 @@ public class HomeFragment extends BasicFragment
     mBaseActivity = (AppCompatActivity) activity;
   }
 
-  private void initzx() {
-    newsListInfos = new ArrayList<NewsListInfo1>();
+  private void loadNewsData() {
     RsenUrlUtil.execute(mContext, RsenUrlUtil.NEWSALL, new RsenUrlUtil.OnNetHttpResultListener() {
       @Override
       public void onNoNetwork(String msg) {
@@ -293,8 +281,7 @@ public class HomeFragment extends BasicFragment
       public void onResult(boolean state, String result, JSONObject jsonObject) {
         if (state) {
           NewsListInfo1 list = JSON.parseObject(result, NewsListInfo1.class);
-
-          Zx_listView.setAdapter(new ZixunAdapter(mBaseActivity, list.getList()));
+          mNewsListView.setAdapter(new NewsListAdapter(mBaseActivity, list.getList()));
         }
       }
     });
@@ -309,15 +296,11 @@ public class HomeFragment extends BasicFragment
   /**
    * 数据适配器
    */
-  public class ZixunAdapter extends RBaseAdapter<NewsListInfo> {
+  public class NewsListAdapter extends RBaseAdapter<NewsListInfo> {
     Context context;
 
-    public ZixunAdapter(Context context) {
-      super(context);
-    }
-
-    public ZixunAdapter(Context context, List<NewsListInfo> datas) {
-      super(context, datas);
+    public NewsListAdapter(Context context, List<NewsListInfo> data) {
+      super(context, data);
     }
 
     @Override
@@ -341,17 +324,6 @@ public class HomeFragment extends BasicFragment
       } catch (Exception e) {
         e.printStackTrace();
       }
-      //ImageLoader.getInstance().displayImage(Url.IMAGE + bean.getCover(), holder.imgV(R.id
-      // .snapshots));
-      //            ResUtil.setRoundImage(bean.user_logo, holder.imgV(R.id.user_logo));
-      //            ImageLoader.getInstance().displayImage(bean.user_logo, holder.imgV(R.id
-      // .user_logo),
-      //                    new DisplayImageOptions.Builder()
-      //                            .showImageOnLoading(R.drawable.ic_launcher)
-      //                            .showImageForEmptyUri(R.drawable.ic_launcher)
-      //                            .showImageOnFail(R.drawable.ic_launcher)
-      //                            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-      //                            .displayer(new RoundedBitmapDisplayer(100)).build());
 
       holder.v(R.id.ll_zx).setOnClickListener(new View.OnClickListener() {
         @Override
@@ -374,68 +346,34 @@ public class HomeFragment extends BasicFragment
 
   @Subscribe
   public void handlePostDataChangeEvent(GroupPostInfoActivity.PostDataChangeEvent event) {
-    initdata();
-    initViewData();
+    loadGroupData();
+    loadHotPostData();
   }
 
   @Subscribe
   public void handleGroupMemberDataChangeEvent(GroupMemberListActivity.GroupMemberDataChangeEvent
                                                    event) {
-    initdata();
+    loadGroupData();
   }
 
   @Subscribe
   public void handleGroupPostDataChangeEvent(SendTieziActivity.GroupPostInfoChangeEvent event) {
-    initdata();
+    loadGroupData();
   }
 
-  protected void initdata() {
-    RsenUrlUtil.execute(RsenUrlUtil.URL_XIAOZU_JINGXUAN,
-        new RsenUrlUtil.OnJsonResultListener<MyBean>() {
-          @Override
-          public void onNoNetwork(String msg) {
-            ToastHelper.showToast(msg, Url.context);
-          }
+  protected void loadGroupData() {
+    manageRpcCall(mAppService.getGroupChoice(0, 4), new UiRpcSubscriber1<GroupChoiceModel>
+        (getActivity()) {
+      @Override
+      protected void onSuccess(GroupChoiceModel groupChoiceModel) {
+        mGroupGridView.setAdapter(new GroupListAdapter(getActivity(), groupChoiceModel.getList()));
+      }
 
-          @Override
-          public void onParseJsonBean(List<MyBean> beans, JSONObject jsonObject) {
-            MyBean bean = new MyBean();
-            try {
-              bean.logo = RsenUrlUtil.URL_BASE + jsonObject.getString("logo");
-              bean.title = jsonObject.getString("title");
-              bean.detail = jsonObject.getString("detail");
-              bean.menmberCount = jsonObject.getString("menmberCount");
-              bean.member_count = jsonObject.getString("member_count");
+      @Override
+      protected void onEnd() {
 
-              bean.group_background = jsonObject.getString("background");
-              bean.type_id = jsonObject.getString("type_id");
-              bean.is_join = jsonObject.getString("is_join");
-              bean.uid = jsonObject.getString("uid");
-              bean.post_count = jsonObject.getString("post_count");
-              bean.group_type = jsonObject.getString("type");
-              //                    bean.type_name = jsonObject.getString("type_name");
-              //
-              bean.activity = jsonObject.getString("activity");
-
-              bean.id = jsonObject.getString("id");
-              bean.gm_logo = jsonObject.getJSONObject("user").getString("avatar32");
-              bean.gm_nickname = jsonObject.getJSONObject("user").getString("nickname");
-              bean.create_time = jsonObject.getString("create_time");
-            } catch (JSONException e) {
-            }
-            beans.add(bean);
-          }
-
-          @Override
-          public void onResult(boolean state, List<MyBean> beans) {
-            //                xz_adapter.resetData(beans);
-            if (state) {
-              Rm_listView.setAdapter(new MyAdapter(mBaseActivity, beans));
-            } else {
-              ToastHelper.showToast("请求失败", Url.context);
-            }
-          }
-        });
+      }
+    });
   }
 
   @Override
@@ -467,7 +405,7 @@ public class HomeFragment extends BasicFragment
                   time.setText(beans.get(0).IssueList.get(0).create_time);
                   count.setText(beans.get(0).IssueList.get(0).reply_count);
                   support_count.setText(beans.get(0).IssueList.get(0).support_count);
-                  bofangshipin.setOnClickListener(new View.OnClickListener() {
+                  mBtnVideoPlay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                       Bundle bundle = new Bundle();
@@ -485,14 +423,14 @@ public class HomeFragment extends BasicFragment
         });
   }
 
-  protected void initViewData() {
+  protected void loadHotPostData() {
     manageRpcCall(mAppService.getHotPostAll(0, 10), new UiRpcSubscriberSimple<HotPostModel>
         (getActivity()) {
       @Override
       protected void onSuccess(HotPostModel hotPostModel) {
         scrollView.setVisibility(View.VISIBLE);
         load_progressBar.setVisibility(View.GONE);
-        rm_adapter.resetData(hotPostModel.getList());
+        mHotPostAdapter.resetData(hotPostModel.getList());
         mSwipeLayout.setRefreshing(false);
       }
 
@@ -505,15 +443,12 @@ public class HomeFragment extends BasicFragment
   }
 
   /*数据适配器*/
-  public class RemenhuatiAdapter extends RBaseAdapter<HotPostModel.HotPostBean> {
-    Context context;
+  public class HotPostAdapter extends RBaseAdapter<HotPostModel.HotPostBean> {
+    Context mContext;
 
-    public RemenhuatiAdapter(Context context) {
+    public HotPostAdapter(Context context) {
       super(context);
-    }
-
-    public RemenhuatiAdapter(Context context, List<HotPostModel.HotPostBean> datas) {
-      super(context, datas);
+      mContext = context;
     }
 
     @Override
@@ -532,7 +467,8 @@ public class HomeFragment extends BasicFragment
       }
       holder.tV(R.id.supportCount).setText(bean.getSupportCount());
       holder.tV(R.id.reply_count).setText(bean.getReply_count());
-      holder.tV(R.id.nickname).setText(bean.getUser().getNickname());
+      holder.tV(R.id.nickname).setText(UserUtils.getUserName(mContext, bean.getUser().getUid(),
+          bean.getUser().getNickname()));
       try {
         ImageLoader.loadOptimizedHttpImage(getActivity(), bean.getUser().getAvatar32())
             .bitmapTransform(new CropCircleTransformation(getActivity()))
@@ -618,6 +554,9 @@ public class HomeFragment extends BasicFragment
 
     @Override
     public int getItemCount() {
+      if (null == mAllDatas) {
+        return 0;
+      }
       return mAllDatas.size() > 50 ? 50 : mAllDatas.size();
     }
   }
@@ -632,27 +571,10 @@ public class HomeFragment extends BasicFragment
     context.startActivity(intent);
   }
 
-  //    private List<String> parseUserList(JSONArray userArray) {
-  //        List<String> userList = new ArrayList<>();
-  //        for (int i = 0; i < userArray.length(); i++) {
-  //            try {
-  //                JSONObject jsonObject = userArray.getJSONObject(i);
-  //                JSONObject user = jsonObject.getJSONObject("user");
-  //                userList.add(RsenUrlUtil.URL_BASE + user.getString("avatar32"));
-  //            } catch (JSONException e) {
-  //                e.printStackTrace();
-  //            }
-  //        }
-  //        return userList;
-  //    }
+  public class GroupListAdapter extends RBaseAdapter<GroupChoiceModel.ListBean> {
 
-  public class MyAdapter extends RBaseAdapter<MyBean> {
-    public MyAdapter(Context context) {
-      super(context);
-    }
-
-    public MyAdapter(Context context, List<MyBean> datas) {
-      super(context, datas);
+    public GroupListAdapter(Context context, List<GroupChoiceModel.ListBean> data) {
+      super(context, data);
     }
 
     @Override
@@ -661,26 +583,26 @@ public class HomeFragment extends BasicFragment
     }
 
     @Override
-    protected void onBindView(RViewHolder holder, int position, final MyBean bean) {
+    protected void onBindView(RViewHolder holder, int position, final GroupChoiceModel.ListBean
+        listBean) {
       try {
-        ImageLoader.loadOptimizedHttpImage(getActivity(), bean.logo).bitmapTransform(new
+        ImageLoader.loadOptimizedHttpImage(getActivity(), NetConstant.BASE_URL + listBean.getLogo
+            ()).bitmapTransform(new
             CropCircleTransformation(getActivity())).placeholder(R.drawable.picture_1_no).error(R
             .drawable.picture_1_no).into
             (holder.imgV(R.id.logo));
       } catch (Exception e) {
         e.printStackTrace();
       }
-      holder.tV(R.id.title).setText(bean.title);
-      holder.tV(R.id.detail).setText(bean.detail);
-      holder.tV(R.id.post_count).setText(bean.post_count);
-      holder.tV(R.id.member_count).setText(bean.menmberCount);
+      holder.tV(R.id.title).setText(listBean.getTitle());
+      holder.tV(R.id.detail).setText(listBean.getDetail());
+      holder.tV(R.id.post_count).setText(listBean.getPost_count());
+      holder.tV(R.id.member_count).setText(listBean.getMember_count());
       //item的点击事件
       holder.v(R.id.fragment_layout).setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          launch_xz(mContext, isWeGroup, bean);
-          //                    GroupInfoActivity.MyBean bean = new GroupInfoActivity.MyBean();
-          //                    GroupInfoActivity.launch(mContext,isWeGroup,bean);
+          launch_xz(mContext, listBean.getId());
         }
       });
     }
@@ -691,33 +613,8 @@ public class HomeFragment extends BasicFragment
     }
   }
 
-  public static class MyBean {
-    public String menmberCount;
-    public String member_count;
-    public List<String> userList;//用户头像
-    public String id;
-    public String logo;
-    public String title;
-    //        public String group_id;
-    public String group_type;
-    public String detail;
-    public String type_name;
-    public String post_count;
-
-    public String uid;
-    public String group_logo;
-    public String group_background;
-    public String type_id;
-    public String activity;
-    public String is_join;
-
-    public String gm_logo;
-    public String gm_nickname;
-    public String create_time;
-  }
-
-  public static void launch_xz(Context context, boolean isWeGroup, MyBean bean) {
-    context.startActivity(GroupInfoActivity.makeIntent(context, bean.id));
+  public static void launch_xz(Context context, String groupId) {
+    context.startActivity(GroupInfoActivity.makeIntent(context, groupId));
   }
 
   @Override

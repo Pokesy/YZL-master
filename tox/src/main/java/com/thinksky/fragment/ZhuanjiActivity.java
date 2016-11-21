@@ -229,7 +229,7 @@ public class ZhuanjiActivity extends BaseBActivity {
                     Intent intent = new Intent(context, IssueDetail.class);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
-//                    IssueDetailFragmentActivity1.launch(context, bean.id);
+//                    IssueDetailFragmentActivity1.launch(mContext, bean.id);
                 }
             });
             return convertView;

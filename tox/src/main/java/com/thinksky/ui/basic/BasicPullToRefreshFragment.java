@@ -42,7 +42,7 @@ public abstract class BasicPullToRefreshFragment extends BasicFragment {
 
       @Override
       public void onPullDownLoadData() {
-        mCurrentPage = 0;
+        mCurrentPage = START_PAGE;
         loadData();
       }
     }, LOAD_MORE_VALUE);

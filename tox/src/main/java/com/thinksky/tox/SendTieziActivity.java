@@ -98,7 +98,7 @@ public class SendTieziActivity extends BaseBActivity implements View.OnClickList
     Intent intent = getIntent();
     group_id = intent.getExtras().getString("group_id");
     initView();
-//        initData();
+//        loadGroupData();
   }
 
   private void inject() {

@@ -173,7 +173,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 //                    new MyThread().start();
 //                    loadFlag = false;
 //                } else {
-//                    Toast.makeText(context, "正在加载中，请勿重复刷新", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(mContext, "正在加载中，请勿重复刷新", Toast.LENGTH_LONG).show();
 //                }
 //            }
 //        });

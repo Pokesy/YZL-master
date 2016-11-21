@@ -325,8 +325,8 @@ public class WendaFragment extends BasicFragment {
         iv3 = viewHolder.imgV(R.id.iv_3);
         //LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) iv1
         // .getLayoutParams();
-        //linearParams.width = (getScreenWidth(context)-45)/3; // 当控件的高强制设成365象素
-        //linearParams.height=(getScreenWidth(context)-60)/3;
+        //linearParams.width = (getScreenWidth(mContext)-45)/3; // 当控件的高强制设成365象素
+        //linearParams.height=(getScreenWidth(mContext)-60)/3;
         //iv1.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
         //iv2.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
         //iv3.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件aaa
@@ -391,7 +391,7 @@ public class WendaFragment extends BasicFragment {
           .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //                    RsenCommonActivity.showActivity(context, RsenCommonActivity
+              //                    RsenCommonActivity.showActivity(mContext, RsenCommonActivity
               // .TYPE_QDETAIL, null);
               //Toast.makeText(v.getContext(), "Click Me " + position, Toast.LENGTH_LONG).show();
               Bundle bundle = new Bundle();
