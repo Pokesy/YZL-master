@@ -358,7 +358,9 @@ public class SendQuestionActivity extends BaseBActivity implements View.OnClickL
     }
 
     private boolean isHighLight(int wealth) {
-      return wealth <= Integer.parseInt(getComponent().loginSession().getUserInfo().getScore());
+      return wealth <= Integer.parseInt(TextUtils.isEmpty(getComponent().loginSession()
+          .getUserInfo().getScore()) ? "0"
+          : getComponent().loginSession().getUserInfo().getScore());
     }
   }
 
