@@ -237,7 +237,7 @@ public class CreateGroupActivity extends BaseBActivity {
       }
     });
 
-    btnDissolution.setVisibility(TextUtils.isEmpty(mCategoryId) ? View.GONE : View.VISIBLE);
+    btnDissolution.setVisibility(TextUtils.isEmpty(mCategoryId) ? View.GONE : View.GONE);
     checkContainer.setVisibility(TextUtils.isEmpty(mCategoryId) ? View.GONE : View.VISIBLE);
     if (TextUtils.isEmpty(mCategoryId)) {
       return;
@@ -259,7 +259,7 @@ public class CreateGroupActivity extends BaseBActivity {
             }
           }
 
-          @Override
+        @Override
           protected void onEnd() {
 
           }

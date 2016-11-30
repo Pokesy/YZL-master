@@ -35,6 +35,7 @@ import com.thinksky.net.UiRpcSubscriberSimple;
 import com.thinksky.net.rpc.model.BaseModel;
 import com.thinksky.net.rpc.model.QuestionDetailModel;
 import com.thinksky.net.rpc.service.AppService;
+import com.thinksky.net.rpc.service.NetConstant;
 import com.thinksky.rsen.RsenUrlUtil;
 import com.thinksky.serviceinjection.DaggerServiceComponent;
 import com.thinksky.serviceinjection.ServiceModule;
@@ -93,6 +94,8 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
   private RelativeLayout img_layout;
   private ScrollView mScrollView;
   private TitleBar mTitleBar;
+  private TextView mAuthorNameView;
+  private ImageView mAuthorAvatarView;
 
   @Inject
   AppService mAppService;
@@ -114,6 +117,8 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
     huida = (TextView) findViewById(R.id.huida);
     listView = (ListView) findViewById(R.id.listView);
     mTitleBar = (TitleBar) findViewById(R.id.title_bar);
+    mAuthorNameView = (TextView) findViewById(R.id.author);
+    mAuthorAvatarView = (ImageView) findViewById(R.id.author_avatar);
 
     btn_huida = (Button) findViewById(R.id.btn_huida);
     iv1 = (ImageView) findViewById(R.id.iv_1);
@@ -255,7 +260,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
                 }
               });
             } else {
-              mTitleBar.getSearchView().setSelected(TextUtils.equals(bean.getIs_collection(), "1"));
+              mTitleBar.getSearchView().setSelected(bean.getIs_collection() == 1);
               mTitleBar.setSearchBtn(R.drawable.icon_collect_white_selector, new View
                   .OnClickListener() {
 
@@ -263,7 +268,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
                 @Override
                 public void onClick(View v) {
                   // TODO 收藏
-                  if (TextUtils.equals(bean.getIs_collection(), "1")) {
+                  if (bean.getIs_collection() == 1) {
                     manageRpcCall(mAppService.cancelQuestionBookmark(Url.SESSIONID, bean.getId())
                         , new
                             UiRpcSubscriberSimple<BaseModel>(QuestionDetailActivity.this) {
@@ -271,9 +276,8 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 
                               @Override
                               protected void onSuccess(BaseModel baseModel) {
-                                bean.setIs_collection("0");
-                                mTitleBar.getSearchView().setSelected(TextUtils.equals(bean
-                                    .getIs_collection(), "1"));
+                                bean.setIs_collection(0);
+                                mTitleBar.getSearchView().setSelected(bean.getIs_collection() == 1);
                                 getComponent().getGlobalBus().post(new AnswerChangedEvent());
                               }
 
@@ -290,9 +294,8 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 
                               @Override
                               protected void onSuccess(BaseModel baseModel) {
-                                bean.setIs_collection("1");
-                                mTitleBar.getSearchView().setSelected(TextUtils.equals(bean
-                                    .getIs_collection(), "1"));
+                                bean.setIs_collection(1);
+                                mTitleBar.getSearchView().setSelected(bean.getIs_collection() == 1);
                                 getComponent().getGlobalBus().post(new AnswerChangedEvent());
                               }
 
@@ -354,6 +357,24 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
               img_layout.setVisibility(View.GONE);
             }
 
+            mAuthorNameView.setText(UserUtils.getUserName(QuestionDetailActivity.this, bean
+                .getUid(), null == bean.getUser() ? "" : bean.getUser().getNickname()));
+            ImageLoader.loadOptimizedHttpImage(QuestionDetailActivity.this, null == bean.getUser
+                () ? "" : NetConstant.BASE_URL
+                + bean.getUser().getAvatar64()).placeholder(R.drawable.side_user_avatar)
+                .bitmapTransform(new CropCircleTransformation(QuestionDetailActivity.this)).into
+                (mAuthorAvatarView);
+            findViewById(R.id.author_container).setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                if (TextUtils.isEmpty(bean.getUid())) {
+                  return;
+                }
+                startActivity(new Intent(ProfileIntentFactory.makeIntent(QuestionDetailActivity
+                    .this, bean.getUid())));
+              }
+            });
+
             //问题
             title.setText(bean.getTitle());
             if (TextUtils.equals(bean.getBest_answer(), "0")) {
@@ -405,6 +426,7 @@ public class QuestionDetailActivity extends BaseBActivity implements View.OnClic
 
           }
         });
+
   }
 
   @Override

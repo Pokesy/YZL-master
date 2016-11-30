@@ -22,78 +22,6 @@ import java.util.List;
  */
 public class QuestionDetailModel extends BaseModel {
 
-  /**
-   * id : 106
-   * uid : 162
-   * category : 5
-   * title : 有奖征集养鱼爱好者
-   * description1 : 平台内部封闭测试，您都能找的到，小乐实在佩服！接下来您在平台任意板块分享自己的爱鱼并在本帖回答，就有机会中奖哦，奖品保密，大家可以试试，万一中了呢^_^
-   * answer_num : 5
-   * best_answer : 0
-   * good_question : 0
-   * status : 1
-   * is_recommend : 0
-   * create_time : 05月27日 10:50
-   * update_time : 05月27日 10:50
-   * data : a:1:{s:10:"attach_ids";s:3:"420";}
-   * score : 20
-   * Questionimages : ["Uploads/Picture/2016-05-27/5747b5bdba105_100_100.png"]
-   * imgList : []
-   * category_title : 魟鱼
-   * QuestionAnswer : [{"id":"329","uid":"391","question_id":"106","content":"在哪里？",
-   * "support":"0","oppose":"0","status":"1","update_time":"1473217302",
-   * "create_time":"1473217302","user":{"avatar32":"Uploads/Avatar/2016-09-07/57cf8925abc50_32_32
-   * .jpg","avatar64":"Uploads/Avatar/2016-09-07/57cf8925abc50_64_64.jpg",
-   * "avatar128":"Uploads/Avatar/2016-09-07/57cf8925abc50_128_128.jpg",
-   * "avatar256":"Uploads/Avatar/2016-09-07/57cf8925abc50_256_256.jpg",
-   * "avatar512":"Uploads/Avatar/2016-09-07/57cf8925abc50_512_512.jpg","uid":"391",
-   * "nickname":"15589510233","signature":"他来听我的演唱会","username":"",
-   * "real_nickname":"15589510233"},"create_time1":"09月07日 11:01","update_time1":"09月07日 11:01",
-   * "imgList":[],"isbest":0,"support_count":"0","is_supported":"0","issetbest":0},{"id":"328",
-   * "uid":"391","question_id":"106","content":"回答到哪里了?","support":"0","oppose":"0","status":"1",
-   * "update_time":"1473217286","create_time":"1473217286",
-   * "user":{"avatar32":"Uploads/Avatar/2016-09-07/57cf8925abc50_32_32.jpg",
-   * "avatar64":"Uploads/Avatar/2016-09-07/57cf8925abc50_64_64.jpg",
-   * "avatar128":"Uploads/Avatar/2016-09-07/57cf8925abc50_128_128.jpg",
-   * "avatar256":"Uploads/Avatar/2016-09-07/57cf8925abc50_256_256.jpg",
-   * "avatar512":"Uploads/Avatar/2016-09-07/57cf8925abc50_512_512.jpg","uid":"391",
-   * "nickname":"15589510233","signature":"他来听我的演唱会","username":"",
-   * "real_nickname":"15589510233"},"create_time1":"09月07日 11:01","update_time1":"09月07日 11:01",
-   * "imgList":[],"isbest":0,"support_count":"0","is_supported":"0","issetbest":0},{"id":"327",
-   * "uid":"391","question_id":"106","content":"我不知道，我不知道，什么都不知道","support":"0","oppose":"0",
-   * "status":"1","update_time":"1473217267","create_time":"1473217267",
-   * "user":{"avatar32":"Uploads/Avatar/2016-09-07/57cf8925abc50_32_32.jpg",
-   * "avatar64":"Uploads/Avatar/2016-09-07/57cf8925abc50_64_64.jpg",
-   * "avatar128":"Uploads/Avatar/2016-09-07/57cf8925abc50_128_128.jpg",
-   * "avatar256":"Uploads/Avatar/2016-09-07/57cf8925abc50_256_256.jpg",
-   * "avatar512":"Uploads/Avatar/2016-09-07/57cf8925abc50_512_512.jpg","uid":"391",
-   * "nickname":"15589510233","signature":"他来听我的演唱会","username":"",
-   * "real_nickname":"15589510233"},"create_time1":"09月07日 11:01","update_time1":"09月07日 11:01",
-   * "imgList":[],"isbest":0,"support_count":"0","is_supported":"0","issetbest":0},{"id":"212",
-   * "uid":"148","question_id":"106","content":"Zha di le","support":"1","oppose":"0",
-   * "status":"1","update_time":"1464769574","create_time":"1464769574",
-   * "user":{"avatar32":"Public/images/default_avatar_32_32.jpg",
-   * "avatar64":"Public/images/default_avatar_64_64.jpg",
-   * "avatar128":"Public/images/default_avatar_128_128.jpg",
-   * "avatar256":"Public/images/default_avatar_256_256.jpg",
-   * "avatar512":"Public/images/default_avatar_512_512.jpg","real_nickname":null},
-   * "create_time1":"06月01日 16:26","update_time1":"06月01日 16:26","imgList":[],"isbest":0,
-   * "support_count":"1","is_supported":"0","issetbest":0},{"id":"211","uid":"214",
-   * "question_id":"106","content":"咋地了？","support":"1","oppose":"0","status":"1",
-   * "update_time":"1464320501","create_time":"1464320501",
-   * "user":{"avatar32":"Public/images/default_avatar_32_32.jpg",
-   * "avatar64":"Public/images/default_avatar_64_64.jpg",
-   * "avatar128":"Public/images/default_avatar_128_128.jpg",
-   * "avatar256":"Public/images/default_avatar_256_256.jpg",
-   * "avatar512":"Public/images/default_avatar_512_512.jpg","uid":"214","nickname":"13893000015",
-   * "signature":"","username":"","real_nickname":"13893000015"},"create_time1":"05月27日 11:41",
-   * "update_time1":"05月27日 11:41","imgList":[],"isbest":0,"support_count":"1",
-   * "is_supported":"0","issetbest":0}]
-   * cover_url :
-   * is_collection : 0
-   * is_author : 0
-   */
-
   private List<ListBean> list;
 
   public List<ListBean> getList() {
@@ -105,6 +33,46 @@ public class QuestionDetailModel extends BaseModel {
   }
 
   public static class ListBean {
+    /**
+     * id : 418
+     * uid : 325
+     * category : 11
+     * title : 123456
+     * description1 : 789654
+     * answer_num : 1
+     * best_answer : 0
+     * good_question : 0
+     * status : 1
+     * is_recommend : 0
+     * create_time : 今天09:14
+     * update_time : 今天09:14
+     * data : a:1:{s:10:"attach_ids";s:0:"";}
+     * score : 0
+     * Questionimages : []
+     * imgList : []
+     * category_title : 龙鱼
+     * QuestionAnswer : [{"id":"614","uid":"325","question_id":"418","content":"111",
+     * "support":"0","oppose":"0","status":"1","update_time":"1480295694",
+     * "create_time":"1480295694",
+     * "user":{"avatar32":"Uploads/Avatar/2016-11-16/582bccb99abb2_32_32.jpg",
+     * "avatar64":"Uploads/Avatar/2016-11-16/582bccb99abb2_64_64.jpg",
+     * "avatar128":"Uploads/Avatar/2016-11-16/582bccb99abb2_128_128.jpg",
+     * "avatar256":"Uploads/Avatar/2016-11-16/582bccb99abb2_256_256.jpg",
+     * "avatar512":"Uploads/Avatar/2016-11-16/582bccb99abb2_512_512.jpg","uid":"325",
+     * "nickname":"此情可待","signature":"花姑娘在哪里","username":"","real_nickname":"此情可待"},
+     * "create_time1":"今天09:14","update_time1":"今天09:14","imgList":[],"isbest":0,
+     * "support_count":"0","is_supported":"0","issetbest":0}]
+     * user : {"avatar32":"Uploads/Avatar/2016-11-16/582bccb99abb2_32_32.jpg",
+     * "avatar64":"Uploads/Avatar/2016-11-16/582bccb99abb2_64_64.jpg",
+     * "avatar128":"Uploads/Avatar/2016-11-16/582bccb99abb2_128_128.jpg",
+     * "avatar256":"Uploads/Avatar/2016-11-16/582bccb99abb2_256_256.jpg",
+     * "avatar512":"Uploads/Avatar/2016-11-16/582bccb99abb2_512_512.jpg","uid":"325",
+     * "nickname":"此情可待","signature":"花姑娘在哪里","username":"","real_nickname":"此情可待"}
+     * cover_url :
+     * is_author : 1
+     * is_collection : 0
+     */
+
     private String id;
     private String uid;
     private String category;
@@ -120,36 +88,12 @@ public class QuestionDetailModel extends BaseModel {
     private String data;
     private String score;
     private String category_title;
+    private UserBean user;
     private String cover_url;
-    private String is_collection;
     private String is_author;
+    private int is_collection;
     private List<String> Questionimages;
-    private List<String> imgList;
-    /**
-     * id : 329
-     * uid : 391
-     * question_id : 106
-     * content : 在哪里？
-     * support : 0
-     * oppose : 0
-     * status : 1
-     * update_time : 1473217302
-     * create_time : 1473217302
-     * user : {"avatar32":"Uploads/Avatar/2016-09-07/57cf8925abc50_32_32.jpg",
-     * "avatar64":"Uploads/Avatar/2016-09-07/57cf8925abc50_64_64.jpg",
-     * "avatar128":"Uploads/Avatar/2016-09-07/57cf8925abc50_128_128.jpg",
-     * "avatar256":"Uploads/Avatar/2016-09-07/57cf8925abc50_256_256.jpg",
-     * "avatar512":"Uploads/Avatar/2016-09-07/57cf8925abc50_512_512.jpg","uid":"391",
-     * "nickname":"15589510233","signature":"他来听我的演唱会","username":"","real_nickname":"15589510233"}
-     * create_time1 : 09月07日 11:01
-     * update_time1 : 09月07日 11:01
-     * imgList : []
-     * isbest : 0
-     * support_count : 0
-     * is_supported : 0
-     * issetbest : 0
-     */
-
+    private List<?> imgList;
     private List<QuestionAnswerBean> QuestionAnswer;
 
     public String getId() {
@@ -272,20 +216,20 @@ public class QuestionDetailModel extends BaseModel {
       this.category_title = category_title;
     }
 
+    public UserBean getUser() {
+      return user;
+    }
+
+    public void setUser(UserBean user) {
+      this.user = user;
+    }
+
     public String getCover_url() {
       return cover_url;
     }
 
     public void setCover_url(String cover_url) {
       this.cover_url = cover_url;
-    }
-
-    public String getIs_collection() {
-      return is_collection;
-    }
-
-    public void setIs_collection(String is_collection) {
-      this.is_collection = is_collection;
     }
 
     public String getIs_author() {
@@ -296,6 +240,14 @@ public class QuestionDetailModel extends BaseModel {
       this.is_author = is_author;
     }
 
+    public int getIs_collection() {
+      return is_collection;
+    }
+
+    public void setIs_collection(int is_collection) {
+      this.is_collection = is_collection;
+    }
+
     public List<String> getQuestionimages() {
       return Questionimages;
     }
@@ -304,11 +256,11 @@ public class QuestionDetailModel extends BaseModel {
       this.Questionimages = Questionimages;
     }
 
-    public List<String> getImgList() {
+    public List<?> getImgList() {
       return imgList;
     }
 
-    public void setImgList(List<String> imgList) {
+    public void setImgList(List<?> imgList) {
       this.imgList = imgList;
     }
 
@@ -320,7 +272,138 @@ public class QuestionDetailModel extends BaseModel {
       this.QuestionAnswer = QuestionAnswer;
     }
 
+    public static class UserBean {
+      /**
+       * avatar32 : Uploads/Avatar/2016-11-16/582bccb99abb2_32_32.jpg
+       * avatar64 : Uploads/Avatar/2016-11-16/582bccb99abb2_64_64.jpg
+       * avatar128 : Uploads/Avatar/2016-11-16/582bccb99abb2_128_128.jpg
+       * avatar256 : Uploads/Avatar/2016-11-16/582bccb99abb2_256_256.jpg
+       * avatar512 : Uploads/Avatar/2016-11-16/582bccb99abb2_512_512.jpg
+       * uid : 325
+       * nickname : 此情可待
+       * signature : 花姑娘在哪里
+       * username :
+       * real_nickname : 此情可待
+       */
+
+      private String avatar32;
+      private String avatar64;
+      private String avatar128;
+      private String avatar256;
+      private String avatar512;
+      private String uid;
+      private String nickname;
+      private String signature;
+      private String username;
+      private String real_nickname;
+
+      public String getAvatar32() {
+        return avatar32;
+      }
+
+      public void setAvatar32(String avatar32) {
+        this.avatar32 = avatar32;
+      }
+
+      public String getAvatar64() {
+        return avatar64;
+      }
+
+      public void setAvatar64(String avatar64) {
+        this.avatar64 = avatar64;
+      }
+
+      public String getAvatar128() {
+        return avatar128;
+      }
+
+      public void setAvatar128(String avatar128) {
+        this.avatar128 = avatar128;
+      }
+
+      public String getAvatar256() {
+        return avatar256;
+      }
+
+      public void setAvatar256(String avatar256) {
+        this.avatar256 = avatar256;
+      }
+
+      public String getAvatar512() {
+        return avatar512;
+      }
+
+      public void setAvatar512(String avatar512) {
+        this.avatar512 = avatar512;
+      }
+
+      public String getUid() {
+        return uid;
+      }
+
+      public void setUid(String uid) {
+        this.uid = uid;
+      }
+
+      public String getNickname() {
+        return nickname;
+      }
+
+      public void setNickname(String nickname) {
+        this.nickname = nickname;
+      }
+
+      public String getSignature() {
+        return signature;
+      }
+
+      public void setSignature(String signature) {
+        this.signature = signature;
+      }
+
+      public String getUsername() {
+        return username;
+      }
+
+      public void setUsername(String username) {
+        this.username = username;
+      }
+
+      public String getReal_nickname() {
+        return real_nickname;
+      }
+
+      public void setReal_nickname(String real_nickname) {
+        this.real_nickname = real_nickname;
+      }
+    }
+
     public static class QuestionAnswerBean {
+      /**
+       * id : 614
+       * uid : 325
+       * question_id : 418
+       * content : 111
+       * support : 0
+       * oppose : 0
+       * status : 1
+       * update_time : 1480295694
+       * create_time : 1480295694
+       * user : {"avatar32":"Uploads/Avatar/2016-11-16/582bccb99abb2_32_32.jpg",
+       * "avatar64":"Uploads/Avatar/2016-11-16/582bccb99abb2_64_64.jpg",
+       * "avatar128":"Uploads/Avatar/2016-11-16/582bccb99abb2_128_128.jpg",
+       * "avatar256":"Uploads/Avatar/2016-11-16/582bccb99abb2_256_256.jpg",
+       * "avatar512":"Uploads/Avatar/2016-11-16/582bccb99abb2_512_512.jpg","uid":"325",
+       * "nickname":"此情可待","signature":"花姑娘在哪里","username":"","real_nickname":"此情可待"}
+       * create_time1 : 今天09:14
+       * update_time1 : 今天09:14
+       * imgList : []
+       * isbest : 0
+       * support_count : 0
+       * is_supported : 0
+       * issetbest : 0
+       */
+
       private String id;
       private String uid;
       private String question_id;
@@ -330,20 +413,7 @@ public class QuestionDetailModel extends BaseModel {
       private String status;
       private String update_time;
       private String create_time;
-      /**
-       * avatar32 : Uploads/Avatar/2016-09-07/57cf8925abc50_32_32.jpg
-       * avatar64 : Uploads/Avatar/2016-09-07/57cf8925abc50_64_64.jpg
-       * avatar128 : Uploads/Avatar/2016-09-07/57cf8925abc50_128_128.jpg
-       * avatar256 : Uploads/Avatar/2016-09-07/57cf8925abc50_256_256.jpg
-       * avatar512 : Uploads/Avatar/2016-09-07/57cf8925abc50_512_512.jpg
-       * uid : 391
-       * nickname : 15589510233
-       * signature : 他来听我的演唱会
-       * username :
-       * real_nickname : 15589510233
-       */
-
-      private UserBean user;
+      private UserBeanX user;
       private String create_time1;
       private String update_time1;
       private int isbest;
@@ -424,11 +494,11 @@ public class QuestionDetailModel extends BaseModel {
         this.create_time = create_time;
       }
 
-      public UserBean getUser() {
+      public UserBeanX getUser() {
         return user;
       }
 
-      public void setUser(UserBean user) {
+      public void setUser(UserBeanX user) {
         this.user = user;
       }
 
@@ -488,7 +558,20 @@ public class QuestionDetailModel extends BaseModel {
         this.imgList = imgList;
       }
 
-      public static class UserBean {
+      public static class UserBeanX {
+        /**
+         * avatar32 : Uploads/Avatar/2016-11-16/582bccb99abb2_32_32.jpg
+         * avatar64 : Uploads/Avatar/2016-11-16/582bccb99abb2_64_64.jpg
+         * avatar128 : Uploads/Avatar/2016-11-16/582bccb99abb2_128_128.jpg
+         * avatar256 : Uploads/Avatar/2016-11-16/582bccb99abb2_256_256.jpg
+         * avatar512 : Uploads/Avatar/2016-11-16/582bccb99abb2_512_512.jpg
+         * uid : 325
+         * nickname : 此情可待
+         * signature : 花姑娘在哪里
+         * username :
+         * real_nickname : 此情可待
+         */
+
         private String avatar32;
         private String avatar64;
         private String avatar128;
