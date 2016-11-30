@@ -150,10 +150,13 @@ public class DiscoverFragment extends BasicFragment implements View.OnClickListe
 
           @Override
           public void onResult(boolean state, String result, JSONObject jsonObject) {
-            if (state && TextUtils.equals(mCurrentType, type)) {
+            if (state) {
               final FXBean wendaBean = JSON.parseObject(result, FXBean.class);
 
               for (FXBean.ResultEntity info : wendaBean.getResult()) {
+                if (!TextUtils.equals(mCurrentType, info.getIsfactory())) {
+                  continue;
+                }
                 if (TextUtils.equals(info.getIsdisplay(), IS_DISPLAY) && !TextUtils.isEmpty(info
                     .getLatitude())) {
                   String d = info.getLatitude();
