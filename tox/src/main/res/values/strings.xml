@@ -152,6 +152,7 @@
 
   <!-- 更新 -->
   <string name="upgrade_info_normal">有新的版本更新，是否下载?</string>
+  <string name="upgrade_info_no_new_version">当前已是最新版本</string>
   <string name="check_upgrade_failed">检测更新失败</string>
   <string name="btn_confirm">确定</string>
   <string name="btn_cancel">取消</string>

@@ -228,6 +228,8 @@ public class UpgradeHelper {
                   return;
                 }
                 if (!model.isSuccess()) {
+                  Toast.makeText(mContext, R.string.upgrade_info_no_new_version, Toast
+                      .LENGTH_SHORT).show();
                   return;
                 }
                 showNormalConfirmDialog(NetConstant.BASE_URL + model.getFile());
